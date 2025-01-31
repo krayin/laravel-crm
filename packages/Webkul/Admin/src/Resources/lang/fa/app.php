@@ -1876,6 +1876,12 @@ return [
         'destroy-success'   => 'سرنخ با موفقیت حذف شد.',
         'destroy-failed'    => 'سرنخ قابل حذف نیست.',
 
+        'file' => [
+            'invalid-format'   => 'فرمت JSON نامعتبر است.',
+            'invalid-response' => 'فرمت پاسخ AI نامعتبر است.',
+            'not-found'        => 'فایل یافت نشد.',
+        ],
+
         'index' => [
             'title'      => 'سرنخ‌ها',
             'create-btn' => 'ایجاد سرنخ',
@@ -1939,6 +1945,15 @@ return [
             'view-switcher' => [
                 'all-pipelines'       => 'تمام خطوط تولید',
                 'create-new-pipeline' => 'ایجاد خط تولید جدید',
+            ],
+
+            'upload' => [
+                'create-lead' => 'ایجاد سرنخ با استفاده از هوش مصنوعی',
+                'file'        => 'بارگذاری فایل',
+                'file-info'   => 'فقط فایل‌های با فرمت PDF پذیرفته می‌شوند.',
+                'save-btn'    => 'ذخیره',
+                'sample-pdf'  => 'نمونه PDF',
+                'upload-pdf'  => 'بارگذاری PDF',
             ],
         ],
 
@@ -2073,22 +2088,49 @@ return [
             ],
 
             'email' => [
-                'title' => 'Email Settings',
-                'info'  => 'Email configuration for the application.',
+                'title' => 'تنظیمات ایمیل',
+                'info'  => 'پیکربندی ایمیل برای برنامه.',
 
                 'imap' => [
-                    'title' => 'IMAP Settings',
-                    'info'  => 'IMAP email configuration for receiving emails.',
+                    'title' => 'تنظیمات IMAP',
+                    'info'  => 'پیکربندی ایمیل IMAP برای دریافت ایمیل‌ها.',
 
                     'account' => [
-                        'title'         => 'IMAP Account',
-                        'title-info'    => 'Configure your IMAP account settings here.',
-                        'host'          => 'Host',
-                        'port'          => 'Port',
-                        'encryption'    => 'Encryption Type',
-                        'validate-cert' => 'Validate SSL Certificate',
-                        'username'      => 'IMAP Username',
-                        'password'      => 'IMAP Password',
+                        'title'         => 'حساب IMAP',
+                        'title-info'    => 'تنظیمات حساب IMAP خود را اینجا پیکربندی کنید.',
+                        'host'          => 'میزبان',
+                        'port'          => 'پورت',
+                        'encryption'    => 'نوع رمزگذاری',
+                        'validate-cert' => 'اعتبارسنجی گواهی SSL',
+                        'username'      => 'نام کاربری IMAP',
+                        'password'      => 'رمز عبور IMAP',
+                    ],
+                ],
+            ],
+
+            'magic-ai' => [
+                'title' => 'هوش مصنوعی جادویی',
+                'info'  => 'پیکربندی هوش مصنوعی جادویی برای برنامه.',
+
+                'settings' => [
+                    'api-domain'          => 'دامنه API LLM',
+                    'api-domain-info'     => 'فقط برای Olama و Grow، مثال: http://localhost:11434',
+                    'api-key'             => 'کلید API',
+                    'api-key-info'        => 'لطفاً اطمینان حاصل کنید که از یک کلید API منحصر به فرد برای هر نوع مدل استفاده کنید تا عملکرد و امنیت بهینه حفظ شود.',
+                    'enable'              => 'فعال کردن',
+                    'info'                => 'تجربه خود را با ویژگی هوش مصنوعی جادویی با وارد کردن کلید API منحصر به فرد خود و نشان دادن یکپارچه‌سازی آسان بهبود بخشید. کنترل بر روی اعتبارنامه‌های OpenAI خود را به دست آورید و تنظیمات را بر اساس نیازهای خاص خود سفارشی کنید.',
+                    'pdf-generation'      => 'تولید PDF',
+                    'pdf-generation-info' => 'ویژگی تولید PDF را فعال کنید تا به طور خودکار داده‌ها را از فایل‌های PDF استخراج کرده و به فرمت متنی تبدیل کنید. با فعال کردن این ویژگی، بهره‌وری و کارایی خود را افزایش دهید تا جریان کاری خود را ساده کنید.',
+                    'title'               => 'تنظیمات عمومی',
+
+                    'models'     => [
+                        'deepseek-r1'  => 'DeepSeek-R1 8db',
+                        'gemini-flash' => 'Gemini-1.5 Flash',
+                        'gpt-4o'       => 'GPT-4.0',
+                        'gpt-4o-mini'  => 'GPT-4.0 mini',
+                        'llama'        => 'Llama 3.3 (Groq)',
+                        'ollama'       => 'Ollama (llama3.2:latest)',
+                        'title'        => 'مدل‌ها',
                     ],
                 ],
             ],

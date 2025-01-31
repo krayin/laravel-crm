@@ -25,6 +25,11 @@
         {!! view_render_event('admin.leads.index.header.right.before') !!}
 
         <div class="flex items-center gap-x-2.5">
+            <!-- Upload File for Lead Creation -->
+            @if(core()->getConfigData('general.magic_ai.pdf_generation.enabled'))
+                @include('admin::leads.index.upload')
+            @endif
+
             @if ((request()->view_type ?? "kanban") == "table")
                 <!-- Export Modal -->
                 <x-admin::datagrid.export :src="route('admin.leads.index')" />

@@ -29,6 +29,77 @@ return [
                 'options' => 'Webkul\Core\Core@locales',
             ],
         ],
+    ], [
+        'key'  => 'general.magic_ai',
+        'name' => 'admin::app.configuration.index.magic-ai.title',
+        'info' => 'admin::app.configuration.index.magic-ai.info',
+        'icon' => 'icon-setting',
+        'sort' => 3,
+    ], [
+        'key'    => 'general.magic_ai.settings',
+        'name'   => 'admin::app.configuration.index.magic-ai.settings.title',
+        'info'   => 'admin::app.configuration.index.magic-ai.settings.info',
+        'sort'   => 1,
+        'fields' => [
+            [
+                'name'          => 'enable',
+                'title'         => 'admin::app.configuration.index.magic-ai.settings.enable',
+                'type'          => 'boolean',
+                'channel_based' => true,
+            ], [
+                'name'          => 'model',
+                'title'         => 'admin::app.configuration.index.magic-ai.settings.models.title',
+                'type'          => 'select',
+                'channel_based' => true,
+                'depends'       => 'enable:1',
+                'options'       => [
+                    [
+                        'title' => 'admin::app.configuration.index.magic-ai.settings.models.gpt-4o',
+                        'value' => 'gpt-4o',
+                    ], [
+                        'title' => 'admin::app.configuration.index.magic-ai.settings.models.gpt-4o-mini',
+                        'value' => 'gpt-4o-mini',
+                    ], [
+                        'title' => 'admin::app.configuration.index.magic-ai.settings.models.gemini-flash',
+                        'value' => 'gemini-1.5-flash',
+                    ], [
+                        'title' => 'admin::app.configuration.index.magic-ai.settings.models.deepseek-r1',
+                        'value' => 'deepseek-r1:8b',
+                    ], [
+                        'title' => 'admin::app.configuration.index.magic-ai.settings.models.ollama',
+                        'value' => 'llama3.2:latest',
+                    ], [
+                        'title' => 'admin::app.configuration.index.magic-ai.settings.models.llama',
+                        'value' => 'llama-3.3-70b-versatile',
+                    ],
+                ],
+            ], [
+                'name'          => 'api_key',
+                'title'         => 'admin::app.configuration.index.magic-ai.settings.api-key',
+                'type'          => 'password',
+                'depends'       => 'enable:1,model:gpt-4o,model:gpt-4o-mini,model:gemini-1.5-flash,model:llama-3.3-70b-versatile',
+                'validation'    => 'required_if:enable,1',
+                'info'          => 'admin::app.configuration.index.magic-ai.settings.api-key-info',
+            ], [
+                'name'          => 'api_domain',
+                'title'         => 'admin::app.configuration.index.magic-ai.settings.api-domain',
+                'type'          => 'text',
+                'info'          => 'admin::app.configuration.index.magic-ai.settings.api-domain-info',
+                'depends'       => 'enable:1',
+            ],
+        ],
+    ], [
+        'key'    => 'general.magic_ai.pdf_generation',
+        'name'   => 'admin::app.configuration.index.magic-ai.settings.pdf-generation',
+        'info'   => 'admin::app.configuration.index.magic-ai.settings.pdf-generation-info',
+        'sort'   => 1,
+        'fields' => [
+            [
+                'name'          => 'enabled',
+                'title'         => 'admin::app.configuration.index.magic-ai.settings.enable',
+                'type'          => 'boolean',
+            ],
+        ],
     ],
 
     /**

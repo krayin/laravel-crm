@@ -1769,6 +1769,12 @@ return [
         'destroy-success'   => 'Xóa khách hàng tiềm năng thành công.',
         'destroy-failed'    => 'Không thể xóa khách hàng tiềm năng.',
 
+        'file' => [
+            'invalid-format'   => 'Định dạng JSON không hợp lệ.',
+            'invalid-response' => 'Định dạng phản hồi AI không hợp lệ.',
+            'not-found'        => 'Không tìm thấy tệp.',
+        ],
+
         'index' => [
             'title'      => 'Khách Hàng Tiềm Năng',
             'create-btn' => 'Tạo Khách Hàng Tiềm Năng',
@@ -1832,6 +1838,15 @@ return [
             'view-switcher' => [
                 'all-pipelines'       => 'Tất Cả Các Quy Trình',
                 'create-new-pipeline' => 'Tạo Quy Trình Mới',
+            ],
+
+            'upload' => [
+                'create-lead' => 'Tạo Khách Hàng Tiềm Năng Bằng AI',
+                'file'        => 'Tải Lên Tệp',
+                'file-info'   => 'Chỉ chấp nhận các tệp định dạng PDF.',
+                'save-btn'    => 'Lưu',
+                'sample-pdf'  => 'PDF Mẫu',
+                'upload-pdf'  => 'Tải Lên PDF',
             ],
         ],
 
@@ -1945,22 +1960,70 @@ return [
 
     'configuration' => [
         'index' => [
-            'back'         => 'Quay Lại',
-            'save-btn'     => 'Lưu Cấu Hình',
-            'save-success' => 'Lưu Cấu Hình Thành Công.',
-            'search'       => 'Tìm Kiếm',
-            'title'        => 'Cấu Hình',
+            'back'         => 'Quay lại',
+            'save-btn'     => 'Lưu Cấu hình',
+            'save-success' => 'Cấu hình đã được lưu thành công.',
+            'search'       => 'Tìm kiếm',
+            'title'        => 'Cấu hình',
 
             'general'  => [
                 'title'   => 'Chung',
-                'info'    => 'Cấu Hình Chung',
+                'info'    => 'Cấu hình chung',
 
                 'general' => [
                     'title'           => 'Chung',
                     'info'            => 'Cập nhật cài đặt chung của bạn tại đây.',
                     'locale-settings' => [
-                        'title'       => 'Cài Đặt Ngôn Ngữ',
-                        'title-info'  => 'Định nghĩa ngôn ngữ sử dụng trong giao diện người dùng, chẳng hạn như tiếng Anh (en), tiếng Pháp (fr) hoặc tiếng Nhật (ja).',
+                        'title'       => 'Cài đặt ngôn ngữ',
+                        'title-info'  => 'Định nghĩa ngôn ngữ được sử dụng trong giao diện người dùng, như tiếng Ả Rập (ar), tiếng Anh (en), tiếng Tây Ban Nha (es), tiếng Ba Tư (fa) và tiếng Thổ Nhĩ Kỳ (tr).',
+                    ],
+                ],
+            ],
+
+            'email' => [
+                'title' => 'Cài đặt Email',
+                'info'  => 'Cấu hình email cho ứng dụng.',
+
+                'imap' => [
+                    'title' => 'Cài đặt IMAP',
+                    'info'  => 'Cấu hình email IMAP để nhận email.',
+
+                    'account' => [
+                        'title'         => 'Tài khoản IMAP',
+                        'title-info'    => 'Cấu hình cài đặt tài khoản IMAP của bạn tại đây.',
+                        'host'          => 'Máy chủ',
+                        'port'          => 'Cổng',
+                        'encryption'    => 'Loại mã hóa',
+                        'validate-cert' => 'Xác thực chứng chỉ SSL',
+                        'username'      => 'Tên người dùng IMAP',
+                        'password'      => 'Mật khẩu IMAP',
+                    ],
+                ],
+            ],
+
+            'magic-ai' => [
+                'title' => 'Magic AI',
+                'info'  => 'Cấu hình Magic AI cho ứng dụng.',
+
+                'settings' => [
+                    'api-domain'          => 'Tên miền API LLM',
+                    'api-domain-info'     => 'Dành cho Olama và Grow, Ví dụ: http://localhost:11434',
+                    'api-key'             => 'Khóa API',
+                    'api-key-info'        => 'Hãy đảm bảo rằng bạn sử dụng một khóa API duy nhất cho mỗi loại mô hình để duy trì hiệu suất và bảo mật tối ưu.',
+                    'enable'              => 'Kích hoạt',
+                    'info'                => 'Nâng cao trải nghiệm của bạn với tính năng Magic AI bằng cách nhập Khóa API độc quyền của bạn và chỉ định tích hợp dễ dàng. Nắm quyền kiểm soát thông tin đăng nhập OpenAI của bạn và tùy chỉnh cài đặt theo nhu cầu cụ thể của bạn.',
+                    'pdf-generation'      => 'Tạo PDF',
+                    'pdf-generation-info' => 'Kích hoạt tính năng Tạo PDF để tự động trích xuất dữ liệu từ các tệp PDF và chuyển đổi chúng thành định dạng văn bản. Nâng cao năng suất và hiệu quả của bạn bằng cách kích hoạt tính năng này để tối ưu hóa quy trình làm việc của bạn.',
+                    'title'               => 'Cài đặt chung',
+
+                    'models'     => [
+                        'deepseek-r1'  => 'DeepSeek-R1 8db',
+                        'gemini-flash' => 'Gemini-1.5 Flash',
+                        'gpt-4o'       => 'GPT-4.0',
+                        'gpt-4o-mini'  => 'GPT-4.0 mini',
+                        'llama'        => 'Llama 3.3 (Groq)',
+                        'ollama'       => 'Ollama (llama3.2:latest)',
+                        'title'        => 'Mô hình',
                     ],
                 ],
             ],

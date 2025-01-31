@@ -1874,6 +1874,12 @@ return [
         'destroy-success'   => 'Lead deleted successfully.',
         'destroy-failed'    => 'Lead can not be deleted.',
 
+        'file' => [
+            'invalid-format'   => 'Invalid JSON format.',
+            'invalid-response' => 'Invalid AI response format.',
+            'not-found'        => 'File not found.',
+        ],
+
         'index' => [
             'title'      => 'Leads',
             'create-btn' => 'Create Lead',
@@ -1937,6 +1943,15 @@ return [
             'view-switcher' => [
                 'all-pipelines'       => 'All Pipelines',
                 'create-new-pipeline' => 'Create New Pipeline',
+            ],
+
+            'upload' => [
+                'create-lead' => 'Create Lead Using AI',
+                'file'        => 'File Upload',
+                'file-info'   => 'Only PDF format files are accepted.',
+                'save-btn'    => 'Save',
+                'sample-pdf'  => 'Sample PDF',
+                'upload-pdf'  => 'Upload PDF',
             ],
         ],
 
@@ -2087,6 +2102,33 @@ return [
                         'validate-cert' => 'Validate SSL Certificate',
                         'username'      => 'IMAP Username',
                         'password'      => 'IMAP Password',
+                    ],
+                ],
+            ],
+
+            'magic-ai' => [
+                'title' => 'Magic AI',
+                'info'  => 'Magic AI configuration for the application.',
+
+                'settings' => [
+                    'api-domain'          => 'LLM API Domain',
+                    'api-domain-info'     => ' For Olama And Grow only, Exp:- http://localhost:11434',
+                    'api-key'             => 'API Key',
+                    'api-key-info'        => 'Please ensure that you use a unique API key for each model type to maintain optimal performance and security.',
+                    'enable'              => 'Enable',
+                    'info'                => 'Enhance your experience with the Magic AI feature by entering your exclusive API Key and indicating the effortless integration. Seize command over your OpenAI credentials and customize the settings according to your specific needs.',
+                    'pdf-generation'      => 'PDF Generation',
+                    'pdf-generation-info' => 'Enable the PDF Generation feature to automatically extract data from PDF files and convert them into text format. Enhance your productivity and efficiency by enabling this feature to streamline your workflow.',
+                    'title'               => 'General Settings',
+
+                    'models'     => [
+                        'deepseek-r1'  => 'DeepSeek-R1 8db',
+                        'gemini-flash' => 'Gemini-1.5 Flash',
+                        'gpt-4o'       => 'GPT-4.0',
+                        'gpt-4o-mini'  => 'GPT-4.0 mini',
+                        'llama'        => 'Llama 3.3 (Groq)',
+                        'ollama'       => 'Ollama (llama3.2:latest)',
+                        'title'        => 'Models',
                     ],
                 ],
             ],

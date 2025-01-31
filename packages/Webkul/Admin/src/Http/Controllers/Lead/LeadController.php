@@ -19,12 +19,14 @@ use Webkul\Admin\Http\Resources\StageResource;
 use Webkul\Attribute\Repositories\AttributeRepository;
 use Webkul\Contact\Repositories\PersonRepository;
 use Webkul\DataGrid\Enums\DateRangeOptionEnum;
+use Webkul\Lead\Helpers\Lead;
 use Webkul\Lead\Repositories\LeadRepository;
 use Webkul\Lead\Repositories\PipelineRepository;
 use Webkul\Lead\Repositories\ProductRepository;
 use Webkul\Lead\Repositories\SourceRepository;
 use Webkul\Lead\Repositories\StageRepository;
 use Webkul\Lead\Repositories\TypeRepository;
+use Webkul\Lead\Services\LeadService;
 use Webkul\Tag\Repositories\TagRepository;
 use Webkul\User\Repositories\UserRepository;
 
@@ -44,6 +46,7 @@ class LeadController extends Controller
         protected StageRepository $stageRepository,
         protected LeadRepository $leadRepository,
         protected ProductRepository $productRepository,
+        protected PersonRepository $personRepository
     ) {
         request()->request->add(['entity_type' => 'leads']);
     }
@@ -624,5 +627,71 @@ class LeadController extends Controller
                 'filterable_options' => DateRangeOptionEnum::options(),
             ],
         ];
+    }
+
+    /**
+     * Create Lead with specified AI.
+     */
+    public function createByAI(LeadForm $request)
+    {
+        if (! $pdfFile = $request->file('file')) {
+            return response()->json([
+                'status'  => 'error',
+                'message' => trans('admin::app.leads.file.not-found'),
+            ], 400);
+        }
+
+        $extractedData = LeadService::extractDataFromPdf($pdfFile->getPathName());
+
+        if (! empty($extractedData['error'])) {
+            return response()->json([
+                'status'  => 'error',
+                'message' => $extractedData['error'],
+            ], 400);
+        }
+
+        $leadData = Lead::mapAIDataToLead($extractedData);
+
+        if (
+            ! empty($leadData['status'])
+            && $leadData['status'] === 'error'
+        ) {
+            return response()->json([
+                'status'  => 'error',
+                'message' => $leadData['message'],
+            ], 400);
+        }
+
+        return self::leadCreate($leadData);
+    }
+
+    /**
+     * Create lead independent entity.
+     */
+    private function leadCreate($data)
+    {
+        $person = $this->personRepository->create($data['person']);
+
+        $pipeline = $this->pipelineRepository->getDefaultPipeline();
+
+        $stage = $pipeline->stages()->first();
+
+        $data = array_merge($data, [
+            'lead_pipeline_id'       => $pipeline->id,
+            'lead_pipeline_stage_id' => $stage->id,
+            'expected_close_date'    => Carbon::now()->addDays(7),
+            'person'                 => [
+                'id'              => $person->id,
+                'organization_id' => $data['person']['organization_id'] ?? null,
+            ],
+        ]);
+
+        $lead = $this->leadRepository->create($data);
+
+        Event::dispatch('lead.create.after', $lead);
+
+        return response()->json([
+            'message' => trans('admin::app.leads.create-success'),
+        ], 200);
     }
 }
