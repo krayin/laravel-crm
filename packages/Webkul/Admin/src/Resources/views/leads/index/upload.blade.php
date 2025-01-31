@@ -1,11 +1,17 @@
 <v-upload>
-    <button type="button" class="secondary-button">
+    <button
+        type="button"
+        class="secondary-button"
+    >
         @lang('admin::app.leads.index.upload.upload-pdf')
     </button>
 </v-upload>
 
 @pushOnce('scripts')
-    <script type="text/x-template" id="upload-template">
+    <script
+        type="text/x-template"
+        id="upload-template"
+    >
         <div>
             <button
                 type="button"
