@@ -107,28 +107,26 @@
                     userForm.append('_method', 'post');
 
                     this.$axios.post("{{ route('admin.leads.create_by_ai') }}", userForm, {
-                            headers: {
-                                'Content-Type': 'multipart/form-data',
-                            }
-                        })
-                        .then (response => {
-                            this.isLoading = false;
+                        headers: {
+                            'Content-Type': 'multipart/form-data',
+                        }
+                    })
+                    .then (response => {
+                        this.isLoading = false;
 
-                            this.$emitter.emit('add-flash', { type: 'success', message: response.data.message });
+                        this.$emitter.emit('add-flash', { type: 'success', message: response.data.message });
 
-                            this.$refs.userUpdateAndCreateModal.close();
+                        this.$refs.userUpdateAndCreateModal.close();
 
-                            window.location.reload();
-                        })
-                        .catch (error => {
-                            this.isLoading = false;
+                        window.location.reload();
+                    })
+                    .catch (error => {
+                        this.isLoading = false;
 
-                            this.$emitter.emit('add-flash', { type: 'error', message: error.response.data.message });
+                        this.$emitter.emit('add-flash', { type: 'error', message: error.response.data.message });
 
-                            this.$refs.userUpdateAndCreateModal.close();
-                        });
-
-                    console.log(userForm.get('file'));
+                        this.$refs.userUpdateAndCreateModal.close();
+                    });
                 },
             },
         });
