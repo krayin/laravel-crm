@@ -30,7 +30,6 @@ use Webkul\Lead\Services\LeadService;
 use Webkul\Tag\Repositories\TagRepository;
 use Webkul\User\Repositories\UserRepository;
 
-
 class LeadController extends Controller
 {
     /**
