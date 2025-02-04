@@ -231,12 +231,11 @@ return [
                 'ai-add-image-btn'  => 'Magic AI',
                 'allowed-types'     => 'png, jpeg, jpg',
                 'not-allowed-error' => 'Seuls les formats (.jpeg, .jpg, .png, ..) sont acceptés.',
-                //TODO 
                 'placeholders' => [
-                    'front'     => 'Front',
-                    'next'      => 'Next',
-                    'size'      => 'Size',
-                    'use-cases' => 'Use Cases',
+                    'front'     => 'Devant',
+                    'next'      => 'A côté',
+                    'size'      => 'Taille',
+                    'use-cases' => 'Cas d\'utilisation',
                     'zoom'      => 'Zoom',
                 ],
             ],
