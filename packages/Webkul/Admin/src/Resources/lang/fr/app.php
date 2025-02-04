@@ -1193,7 +1193,7 @@ return [
                     'is-default'  => 'Est par défaut',
                     'name'        => 'Nom',
                     'no'          => 'Non',
-                    'rotten-days' => 'Jours pérmimés',
+                    'rotten-days' => 'Jours périmés',
                     'yes'         => 'Oui',
                 ],
             ],
