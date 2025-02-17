@@ -31,7 +31,7 @@
                 <div class="mb-2 flex flex-col gap-0.5">
                     {!! view_render_event('admin.products.view.left.title.before', ['product' => $product]) !!}
 
-                    <h3 class="text-lg font-bold dark:text-white">
+                    <h3 class="break-words text-lg font-bold dark:text-white">
                         {{ $product->name }}
                     </h3>
                     
@@ -39,7 +39,7 @@
 
                     {!! view_render_event('admin.products.view.left.sku.before', ['product' => $product]) !!}
 
-                    <p class="text-sm font-normal dark:text-white">
+                    <p class="break-words text-sm font-normal dark:text-white">
                         @lang('admin::app.products.view.sku') : {{ $product->sku }}
                     </p>
 

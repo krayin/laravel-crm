@@ -1,3 +1,177 @@
+## **v2.0.5 (17th of January 2025)** - *Release*
+
+* #1953[fixed] Users get dead unauthorized page without dashboard permissions.
+
+* #1938[fixed] Add Character Limit in Activity Title and Description.
+
+* #1936[fixed] In Leads when we add tags and there when we add Long Tag Name without space causes UI issue. 
+
+* #1935[fixed] Duplication of won and lost stages regarding pipeline on prospect detail view
+
+* #1934[fixed] Was the ability to export leads/contacts removed in 2.0 ?
+
+* #1917[fixed] UI Issue in Activity Description on Activities Page: Content Limit Needed.
+
+* #1915[fixed] Character Validation for Warehouse and Quotes Address Fields
+
+* #1914[fixed] Exceptional Error Displayed When Previewing Webform Without Admin Login 
+
+* #1873[fixed] FIlters Drop down for Type and Entity Type is having other translation missing. 
+
+* #1868[fixed] Workflow Webhook not work 
+
+* #1853[fixed] Menu Caching causing menu use old role menu access, not real menu 
+
+* #1850[fixed] Failing to access webform when not logged in
+
+* #1848[fixed] In Webform when we click on Add Attribute Button, there we can see translation is missing.
+
+* #1846[fixed] Placeholder Entries Not Visible in Webform Preview Page 
+
+* #1840[fixed] UI Issue When Adding Long Entries in Pipeline Stage Name Section 
+
+* #1838[fixed] In leads Filter we need to change the placeholder Text for Expected Delivery Date and Created Date.
+
+* #1836[fixed] UI Issue in Email Input Section of Compose Mail Box
+
+* #1835[fixed] Shimmer Effect Missing on Create Quote Form Page
+
+* #1834[fixed] In Lead Won/Lost drop down arrow positiion is not working.
+
+* #1833[fixed] Assigned Organization Not Displayed in New Lead When Person with Organization is Selected .
+
+* #1831[fixed] Shimmer Effect Missing on Create Lead Form Page
+
+* #1829[fixed] User Edit and Current Password Mandatory Field Validation Not Working.
+
+* #1828[fixed] UI issue is appearing when we assign Inventory to the product in location.
+
+* #1827[fixed] Delete Icon in the Location and QTY assigning to product is not aligned properly.
+
+* #1825[fixed] Datagrid "Action" Heading Misaligned.
+
+* #1824[fixed] Need to update the Text in Dashboard Open Leads By States. Change it to Open Leads By Stages.
+
+* #1823[fixed] Shimmer effect in the WebForm Page is not appropriate.
+
+* #1822[fixed] When viewing person profile and there when we remove 1 email and save it. All emails entry appears empty.
+
+* #1821[fixed] When I am updating the Phone Number and Email drop-down to Work to Home or Home to Work, it is not functionaling properly.
+
+* #1820[fixed] Change the text to Mega Search in Mega Search Bar
+
+* #1819[fixed] In Mega Search Add button Email option, Clicking on it should directly open the create mail pop-up box.
+
+* #1817[fixed] Sales Details Bar Graph Not Displaying Properly Due to UI Issue with Lost Leads Graph for todays sale.
+
+* #1812[fixed] Adjust Font Size and Line Height Alignment in Leads Section Without Entries
+
+* #1811[fixed] Add a Scrollbar for Long Warehouse Entries in Product Inventory Addition
+
+* #1808[fixed] Remove Location Validation in Activities 
+
+* #1807[fixed] Organization Name in Person View Page Should be in Black Color. 
+
+* #1806[fixed] Update Button in Filters Not Visible in Dark Theme
+
+* #1804[fixed] Creating a Quote Without a Product Leads to a "Not Found" Page
+
+* #1803[fixed] Creating a Quote without Product leads to Not Found page.
+
+* #1802[fixed] Enhance Saved Filter Entry UI and Make Cross Icon Visible.
+
+* #1801[fixed] Add Back Button in Save/Update Filter Section 
+
+* #1800[fixed] Add Proper Spacing and Padding in Calendar Filter
+
+* #1799[fixed] Enable Auto-Save for Text Fields in Filters Without Requiring "Enter"
+
+* #1798[fixed] Lead Name Not Displaying Properly in "Open Leads By States" Dashboard Widget in Dark Mode.
+
+* #1797[fixed] Update the Format of Organization Address on Person View Page  
+
+* #1796[fixed] Negative Inventory Appears in "On Hand" When Allocated Inventory Exceeds "In Stock"
+
+* #1795[fixed] Deleting Email and Contact Number from Lead Also Removes Them from the Person
+
+* #1794[fixed] Organization Details Removed from Person After Lead Creation Without Adding Organization in Lead 
+
+* #1793[fixed] Spelling Mistake in URL for Calendar When Viewing Activities
+
+* #1792[fixed] Activity Link Redirects to Lead Section Instead of Specific Lead.
+
+* #1791[fixed] Add Proper Spacing Between the Comment and Date Columns in Activities
+
+* #1790[fixed] Display Quote Subject, Person, and Custom Attributes in Quote Print.
+
+* #1789[fixed] Custom Attributes Assigned to Quotes Are Not Visible
+
+* #1788[fixed] Deleting a Source Also Deletes Related Leads .
+
+* #1787[fixed] Total Lead Entry Not Displayed on Dashboard Bar Graph in Leads. 
+
+* #1786[fixed] Inappropriate Validation Allows Negative Price in Product Creation.
+
+* #1785[fixed] Proper Character Validation Needed for Name and Job Title in Person Section.
+
+* #1784[fixed] Proper Character Validation Needed for Name, City, Address, and Zip Code in Organization 
+
+* #1782[fixed] Text Type Attribute Validation is not working in leads section.
+
+* #1781[fixed] Dashboard Pie Chart Not Displaying Colors for All Lead Details
+
+* #1767[fixed] Date and Time Format in RTL view for User Settings is not appropriate.
+
+* #1764[fixed] Remove the Mandatory Asterisk sign from the Make as Default in Pipeline.
+
+* #1762[fixed] User Deleted When Assigned Custom Role is Removed. 
+
+* #1761[fixed] Custom Role Created Without Selecting Options Causes Exception on User Login 
+
+* #1760[fixed] Incorrect Text Displayed in Create Group Modal Box 
+
+* #1758[fixed] Add Character Limit Validation for Tags Configuration
+
+* #1755[fixed] GUI Installer: Admin Password Accepts Fewer Than Minimum Required Characters
+
+* #1744[fixed] Deleted Options still appearing when we are check the select type attribute when editing it.
+
+* #1742[fixed] Attribute Created File Type and assigned to product. PDF is not appearing on Product View Page.
+
+* #1741[fixed] Attribute Created and assigned to product. Attribute is not appearing on Product View Page.
+
+* #1732[fixed] Create a new attribute and assign it to Quotes, we are unable to see the assigned Attribute data.
+
+* #1701[fixed] XSS vulnerability at Note function. 
+
+* #1691[fixed] Mails details are not stored in Activities and changelog in ech section of Krayin.
+
+* #1690[fixed] Compose Mail, Mail To Entry issue is appearing. This issue is appearing in almost all mail related section. 
+
+* #1687[fixed] Need to add correct translation for the Sources text in Settings section.
+
+* #1679[fixed] Workflow Mails are not working. Files are missing due to which mails are not working also Translations are missing.
+
+* #1649[fixed] Drag and Drop Leads Card on Kanban error because fixing sortOrder of #1594
+
+* #1614[fixed] When we create a webform without enable lead toggle button, there we can see attribute options are not appear. 
+
+* #1611[fixed] When Priniting to pdf, cuurency Symbol gets printed with ? instead of the Symbol.
+
+* #1609[fixed] Error displaying person contacts
+
+* #1603[fixed] Bug: Page resets when entering the first character in "URL And Parameters" while creating a Webhook on mobile
+
+* #1598[fixed] Translation Variables Displayed Instead of Text in Email Notifications
+
+* #1595[fixed] REST API: ReflectionException "Class 'Webkul\Attribute\Http\Requests\AttributeForm' does not exist" in Krayin CRM v2.0.1 Bug
+
+* #1961[fixed] Changing activity schedule from / to date not saving
+
+* #1954[fixed] Decimal values must be saved in product Price.
+
+
+
 ## **v2.0.4 (19th of December 2024)** - *Release*
 
 Added support for Brazilian Portuguese (PT_BR) Language.

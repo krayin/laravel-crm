@@ -23,7 +23,9 @@ trait LogsActivity
                     'type'    => 'system',
                     'title'   => trans('admin::app.activities.created'),
                     'is_done' => 1,
-                    'user_id' => auth()->id(),
+                    'user_id' => auth()->check()
+                        ? auth()->id()
+                        : null,
                 ]);
 
                 $model->activities()->attach($activity->id);
