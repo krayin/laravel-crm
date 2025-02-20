@@ -49,15 +49,17 @@
                                 <x-admin::form.control-group.control
                                     type="file"
                                     id="file"
-                                    name="file"
+                                    name="files"
                                     rules="required|mimes:pdf"
                                     :label="trans('admin::app.leads.index.upload.file')"
                                     ::disabled="isLoading"
+                                    multiple
+                                    @onchange="handleFileUpload"
                                 />
 
                                 <p class="mt-1 text-xs text-gray-600 dark:text-gray-300">@lang('admin::app.leads.index.upload.file-info')</p>
 
-                                <x-admin::form.control-group.error control-name="file" />
+                                <x-admin::form.control-group.error control-name="files" />
                             </x-admin::form.control-group>
 
                             <!-- Sample Downloadable file -->
@@ -95,23 +97,40 @@
             data() {
                 return {
                     isLoading: false,
+
+                    selectedFiles: [],
                 };
             },
 
             methods: {
-                create (params, {resetForm, setErrors}) {
+                handleFileUpload(event) {
+                    console.log('sdsd');
+                    
+                    this.selectedFiles = Array.from(event.target.files);
+                },
+
+                create(params, { resetForm, setErrors }) {
+                    if (this.selectedFiles.length === 0) {
+                        this.$emitter.emit('add-flash', { type: 'error', message: "Please select at least one file." });
+                        return;
+                    }
+
                     this.isLoading = true;
 
-                    const userForm = new FormData(this.$refs.userForm);
+                    const formData = new FormData();
 
-                    userForm.append('_method', 'post');
+                    this.selectedFiles.forEach((file, index) => {
+                        formData.append(`files[${index}]`, file);
+                    });
 
-                    this.$axios.post("{{ route('admin.leads.create_by_ai') }}", userForm, {
+                    formData.append('_method', 'post');
+
+                    this.$axios.post("{{ route('admin.leads.create_by_ai') }}", formData, {
                         headers: {
                             'Content-Type': 'multipart/form-data',
                         }
                     })
-                    .then (response => {
+                    .then(response => {
                         this.isLoading = false;
 
                         this.$emitter.emit('add-flash', { type: 'success', message: response.data.message });
@@ -120,7 +139,7 @@
 
                         window.location.reload();
                     })
-                    .catch (error => {
+                    .catch(error => {
                         this.isLoading = false;
 
                         this.$emitter.emit('add-flash', { type: 'error', message: error.response.data.message });

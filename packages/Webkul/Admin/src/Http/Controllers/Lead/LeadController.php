@@ -632,9 +632,10 @@ class LeadController extends Controller
     /**
      * Create Lead with specified AI.
      */
-    public function createByAI(LeadForm $request)
+    public function createByAI()
     {
-        if (! $pdfFile = $request->file('file')) {
+        dd(request()->all());
+        if (! $pdfFile = request()->file('file')) {
             return response()->json([
                 'status'  => 'error',
                 'message' => trans('admin::app.leads.file.not-found'),
