@@ -27,3 +27,9 @@ package-lock.json
 /vendor
 yarn.lock
 yarn-error.log
+
+# Playwright
+node_modules/
+/test-results/
+/blob-report/
+/playwright/.cache/
