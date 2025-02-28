@@ -13,14 +13,12 @@
         <div class="flex flex-col gap-2 rounded-lg border border-gray-200 bg-white text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
             <div class="flex items-center justify-between px-4 py-2">
                 <div class="flex flex-col gap-2">
-                    <div class="flex cursor-pointer items-center">
-                        {!! view_render_event('admin.settings.pipelines.create.breadcrumbs.before') !!}
+                    {!! view_render_event('admin.settings.pipelines.create.breadcrumbs.before') !!}
 
-                        <!-- Breadcrumbs -->
-                        <x-admin::breadcrumbs name="settings.pipelines.create" />
+                    <!-- Breadcrumbs -->
+                    <x-admin::breadcrumbs name="settings.pipelines.create" />
 
-                        {!! view_render_event('admin.settings.pipelines.create.breadcrumbs.after') !!}
-                    </div>
+                    {!! view_render_event('admin.settings.pipelines.create.breadcrumbs.after') !!}
 
                     <!-- Title -->
                     <div class="text-xl font-bold dark:text-white">
