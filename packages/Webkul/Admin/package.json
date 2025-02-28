@@ -6,7 +6,7 @@
         "build": "vite build"
     },
     "devDependencies": {
-        "@playwright/test": "^1.48.1",
+        "@playwright/test": "^1.50.1",
         "@types/node": "^22.7.8",
         "autoprefixer": "^10.4.16",
         "axios": "^1.7.4",
@@ -21,8 +21,8 @@
         "@vee-validate/rules": "^4.9.1",
         "@vitejs/plugin-vue": "^4.2.3",
         "chartjs-chart-funnel": "^4.2.1",
-        "dotenv": "^16.4.7",
         "dompurify": "^3.1.7",
+        "dotenv": "^16.4.7",
         "flatpickr": "^4.6.13",
         "mitt": "^3.0.1",
         "playwright": "^1.48.1",
