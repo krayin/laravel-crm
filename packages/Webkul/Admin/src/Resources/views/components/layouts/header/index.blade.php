@@ -1,8 +1,6 @@
-<header class="sticky top-0 z-[10001] flex items-center justify-between border-b border-gray-200 bg-white px-4 py-2.5 transition-all dark:border-gray-800 dark:bg-gray-900">
+<header class="sticky top-0 z-[10001] flex items-center justify-between gap-1 border-b border-gray-200 bg-white px-4 py-2.5 transition-all dark:border-gray-800 dark:bg-gray-900">
     <!-- logo -->
     <div class="flex items-center gap-1.5">
-        <i class="icon-menu hidden cursor-pointer rounded-md p-1.5 text-2xl hover:bg-gray-100 dark:hover:bg-gray-950 max-lg:block"></i>
-
         <a href="{{ route('admin.dashboard.index') }}">
             <img
                 class="h-10"
@@ -16,7 +14,7 @@
     <div class="flex items-center gap-1.5">
         <!-- Mega Search Bar Vue Component -->
         <v-mega-search>
-            <div class="relative flex w-[525px] max-w-[525px] items-center max-lg:w-[400px] ltr:ml-2.5 rtl:mr-2.5">
+            <div class="relative flex w-[525px] max-w-[525px] items-center max-lg:w-[400px] max-md:w-[200px] ltr:ml-2.5 rtl:mr-2.5">
                 <i class="icon-search absolute top-1.5 flex items-center text-2xl ltr:left-3 rtl:right-3"></i>
 
                 <input
@@ -253,7 +251,7 @@
         type="text/x-template"
         id="v-mega-search-template"
     >
-        <div class="relative flex w-[525px] max-w-[525px] items-center max-lg:w-[400px] ltr:ml-2.5 rtl:mr-2.5">
+        <div class="relative flex w-[525px] max-w-[525px] items-center max-lg:w-[400px] max-md:w-[200px] ltr:ml-2.5 rtl:mr-2.5">
             <i class="icon-search absolute top-1.5 flex items-center text-2xl ltr:left-3 rtl:right-3"></i>
 
             <input

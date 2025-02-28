@@ -6,17 +6,15 @@
     <div class="flex flex-col gap-4">
         <div class="flex items-center justify-between rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
             <div class="flex flex-col gap-2">
-                <div class="flex cursor-pointer items-center">
-                    {!! view_render_event('admin.mail.create.breadcrumbs.before') !!}
+                {!! view_render_event('admin.mail.create.breadcrumbs.before') !!}
 
-                    <!-- breadcrumbs -->
-                    <x-admin::breadcrumbs
-                        name="mail.route"
-                        :entity="request('route')"
-                    />
+                <!-- breadcrumbs -->
+                <x-admin::breadcrumbs
+                    name="mail.route"
+                    :entity="request('route')"
+                />
 
-                    {!! view_render_event('admin.mail.create.breadcrumbs.after') !!}
-                </div>
+                {!! view_render_event('admin.mail.create.breadcrumbs.after') !!}
 
                 <div class="text-xl font-bold dark:text-white">
                     <!-- title -->
