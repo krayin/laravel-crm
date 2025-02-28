@@ -20,12 +20,9 @@
     </div>
 
     <div class="flex items-center gap-2.5">
-        <div class="flex items-center gap-2.5 md:hidden">
+        <div class="md:hidden">
             <!-- Mega Search Bar -->
-            @include('admin::components.layouts.header.mega-search')
-    
-            <!-- Quick Creation Bar -->
-            @include('admin::components.layouts.header.quick-creation')
+            @include('admin::components.layouts.header.mobile.mega-search')
         </div>
         
         <!-- Dark mode -->
@@ -36,6 +33,11 @@
                 ></span>
             </div>
         </v-dark>
+
+        <div class="md:hidden">
+            <!-- Quick Creation Bar -->
+            @include('admin::components.layouts.header.quick-creation')
+        </div>
         
         <!-- Admin profile -->
         <x-admin::dropdown position="bottom-{{ in_array(app()->getLocale(), ['fa', 'ar']) ? 'left' : 'right' }}">
