@@ -137,22 +137,26 @@
 
                         <!-- Create Leads -->
                         <x-admin::form.control-group>
-                            <x-admin::form.control-group.label class="required">
+                            <x-admin::form.control-group.label
+                                class="required"
+                                for="create_lead"
+                            >
                                 @lang('admin::app.settings.webforms.edit.create-lead')
                             </x-admin::form.control-group.label>
 
-                            <label class="relative inline-flex cursor-pointer items-center">
+                            <input
+                                type="hidden"
+                                name="create_lead"
+                                :value="0"
+                            />
 
-                                <input
-                                    type="checkbox"
-                                    name="create_lead"
-                                    id="create_lead"
-                                    class="peer sr-only"
-                                    v-model="createLead"
-                                >
-
-                                <div class="peer h-5 w-9 cursor-pointer rounded-full bg-gray-200 after:absolute after:top-0.5 after:h-4 after:w-4 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-blue-600 peer-checked:after:border-white peer-focus:outline-none peer-focus:ring-blue-300 dark:bg-gray-800 dark:after:border-white dark:after:bg-white dark:peer-checked:bg-gray-950 after:ltr:left-0.5 peer-checked:after:ltr:translate-x-full after:rtl:right-0.5 peer-checked:after:rtl:-translate-x-full"></div>
-                            </label>
+                            <x-admin::form.control-group.control
+                                type="switch"
+                                name="create_lead"
+                                value="1"
+                                :label="trans('admin::app.settings.webforms.edit.create-lead')"
+                                v-model="createLead"
+                            />
                         </x-admin::form.control-group>
 
                         <!-- Customize webform -->
@@ -168,7 +172,7 @@
                             </div>
                         </div>
 
-                        <!-- Backgroud Color Picker -->
+                        <!-- Background Color Picker -->
                         <v-color-picker
                             name="background_color"
                             title="@lang('admin::app.settings.webforms.edit.background-color')"
