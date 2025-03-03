@@ -61,7 +61,7 @@
             id="v-quote-template"
         >
             <div class="box-shadow flex flex-col gap-4 rounded-lg border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900 max-xl:flex-wrap">
-                <div class="flex gap-2 border-b border-gray-200 dark:border-gray-800">                       
+                <div class="flex w-full gap-2 border-b border-gray-200 dark:border-gray-800">                       
                     {!! view_render_event('admin.contacts.quotes.create.tabs.before') !!}
 
                     <template
@@ -104,7 +104,7 @@
 
                         {!! view_render_event('admin.contacts.quotes.create.attribute.form_controls.before') !!}
 
-                        <div class="w-1/2">
+                        <div class="w-1/2 max-md:w-full">
                             <x-admin::attributes
                                 :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
                                     'entity_type' => 'quotes',

@@ -14,7 +14,7 @@
                 <div class="shimmer h-[17px] w-1/3"></div>
             </div>
 
-            <div class="w-1/2">
+            <div class="w-1/2 max-md:w-full">
                 <!-- Subject -->
                 <div class="mb-4 w-full">
                     <div class="shimmer mb-1.5 h-5 w-[60px]"></div>
@@ -74,7 +74,7 @@
                     <div class="mb-4 w-full">
                         <div class="shimmer mb-1.5 h-5 w-28"></div>
 
-                        <div class="flex gap-4">
+                        <div class="flex gap-4 max-md:flex-wrap">
                             <div class="shimmer mb-4 h-[223px] w-full rounded"></div>
 
                             <div class="grid w-full">
@@ -90,7 +90,7 @@
                     <div class="mb-4 w-full">
                         <div class="shimmer mb-1.5 h-5 w-28"></div>
 
-                        <div class="flex gap-4">
+                        <div class="flex gap-4 max-md:flex-wrap">
                             <div class="shimmer mb-4 h-[223px] w-full rounded"></div>
 
                             <div class="grid w-full">

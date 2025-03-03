@@ -102,7 +102,7 @@
                             </p>
                         </div>
 
-                        <div class="w-1/2">
+                        <div class="w-1/2 max-md:w-full">
                             {!! view_render_event('admin.leads.edit.lead_details.attributes.before', ['lead' => $lead]) !!}
 
                             <!-- Lead Details Title and Description -->

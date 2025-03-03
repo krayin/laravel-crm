@@ -12,7 +12,7 @@
     <script type="text/x-template" id="v-lead-stages-template">
         <!-- Stages Container -->
         <div
-            class="flex"
+            class="flex flex-wrap gap-2"
             :class="{'opacity-50 pointer-events-none': isUpdating}"
         >
             <!-- Stages Item -->
