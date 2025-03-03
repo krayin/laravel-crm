@@ -341,6 +341,21 @@ function getImageFile(
     return path.join(directory, imageFiles[randomIndex]);
 }
 
+/**
+ * Generate a random date from today onwards in YYYY-MM-DD format.
+ */
+function generateDate(): string {
+    const today = new Date().getTime();
+    const futureEnd = new Date(2030, 11, 31).getTime();
+    const randomDate = new Date(today + Math.random() * (futureEnd - today));
+
+    return randomDate.toISOString().split('T')[0];
+}
+
+
+/**
+ * Confirm the modal dialog.
+ */
 function confirmModal(message, page) {
     return new Promise(async (resolve, reject) => {
         await page.waitForSelector("text=" + message);
@@ -371,5 +386,6 @@ export {
     generateHostname,
     randomElement,
     getImageFile,
+    generateDate,
     confirmModal,
 };

@@ -45,6 +45,9 @@ test.describe("warehouse management", () => {
         );
         await iconDelete[0].click();
 
+        /**
+         * Delete confirmation modal.
+         */
         await confirmModal("Are you sure", adminPage);
 
         await expect(
