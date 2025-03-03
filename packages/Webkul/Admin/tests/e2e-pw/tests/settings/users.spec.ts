@@ -13,27 +13,34 @@ test.describe("user management", () => {
          */
         await adminPage.getByRole("button", { name: "Create User" }).click();
 
-        await adminPage.locator('input[name="name"]').fill(generateFullName());
-        await adminPage.locator('input[name="email"]').fill(generateEmail());
-        await adminPage.locator('input[name="password"]').fill("admin123");
 
+        /**
+         * Filling the form with user details.
+         */
+        await adminPage
+            .locator('input[name="name"]')
+            .fill(generateFullName());
+        await adminPage
+            .locator('input[name="email"]')
+            .fill(generateEmail());
+        await adminPage
+            .locator('input[name="password"]')
+            .fill("admin123");
         await adminPage
             .locator('input[name="confirm_password"]')
             .fill("admin123");
-        await adminPage.locator('select[name="role_id"]').selectOption("1");
-
-        await adminPage.locator('select[name="view_permission"]').selectOption("1");
-
-        await adminPage.locator('select[name="groups[]"]').selectOption("1");
-
-
-        // Clicking the status and verify the toggle state.
-        // await adminPage.click('label[for="status"]');
-        // const toggleInput = await adminPage.locator('input[name="status"]');
-        // await expect(toggleInput).toBeChecked();
+        await adminPage
+            .locator('select[name="role_id"]')
+            .selectOption("1");
+        await adminPage
+            .locator('select[name="view_permission"]')
+            .selectOption("global");
+        await adminPage
+            .locator('select[name="groups[]"]')
+            .selectOption("1");
 
         /**
-         * Saving user and closing the modal.
+         * Save user and close the modal.
          */
         await adminPage.getByRole("button", { name: "Save User" }).click();
 
