@@ -1,5 +1,6 @@
 import { test, expect } from "../../../setup";
-import { generateFullName, confirmModal } from "../../../utils/faker";
+import { generateFullName } from "../../../utils/faker";
+import { confirmModal } from "../../../utils/components";
 
 test.describe("type management", () => {
     test("should create a type", async ({ adminPage }) => {

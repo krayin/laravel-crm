@@ -1,5 +1,6 @@
 import { test, expect } from "../../../setup";
-import { generateFullName, generateDescription, generateDate, confirmModal } from "../../../utils/faker";
+import { generateFullName, generateDescription, generateDate } from "../../../utils/faker";
+import { confirmModal } from "../../../utils/components";
 
 test.describe("event management", () => {
     test("should create a event", async ({ adminPage }) => {

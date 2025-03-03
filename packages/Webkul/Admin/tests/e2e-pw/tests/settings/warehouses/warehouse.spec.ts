@@ -1,5 +1,5 @@
 import { test, expect } from "../../../setup";
-import { confirmModal } from "../../../utils/faker";
+import { confirmModal } from "../../../utils/components";
 
 test.describe("warehouse management", () => {
     test("should create a warehouse", async ({ adminPage }) => {
