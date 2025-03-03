@@ -1,5 +1,5 @@
 import { test, expect } from "../../../setup";
-import { generateFullName, generateEmail } from "../../../utils/faker";
+import { generateFullName, generateEmail, confirmModal } from "../../../utils/faker";
 
 test.describe("user management", () => {
     test("should create a user", async ({ adminPage }) => {
@@ -100,16 +100,7 @@ test.describe("user management", () => {
         );
         await iconDelete[0].click();
 
-        await adminPage.waitForSelector("text=Are you sure");
-        const agreeButton = await adminPage.locator(
-            'button.primary-button:has-text("Agree")'
-        );
-
-        if (await agreeButton.isVisible()) {
-            await agreeButton.click();
-        } else {
-            console.error("Agree button not found or not visible.");
-        }
+        await confirmModal("Are you sure", adminPage);
 
         await expect(
             adminPage.getByText("User deleted successfully.")

@@ -1,5 +1,5 @@
 import { test, expect } from "../../../setup";
-import { generateFullName } from "../../../utils/faker";
+import { generateFullName, confirmModal } from "../../../utils/faker";
 
 test.describe("type management", () => {
     test("should create a type", async ({ adminPage }) => {
@@ -77,16 +77,7 @@ test.describe("type management", () => {
         );
         await iconDelete[0].click();
 
-        await adminPage.waitForSelector("text=Are you sure");
-        const agreeButton = await adminPage.locator(
-            'button.primary-button:has-text("Agree")'
-        );
-
-        if (await agreeButton.isVisible()) {
-            await agreeButton.click();
-        } else {
-            console.error("Agree button not found or not visible.");
-        }
+        await confirmModal("Are you sure", adminPage);
 
         await expect(
             adminPage.getByText("Type deleted successfully.")
