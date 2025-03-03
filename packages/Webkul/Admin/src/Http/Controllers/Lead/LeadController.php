@@ -33,6 +33,11 @@ use Webkul\User\Repositories\UserRepository;
 class LeadController extends Controller
 {
     /**
+     * Supported formats.
+     */
+    protected array $supportedFormats = ['pdf'];
+
+    /**
      * Create a new controller instance.
      *
      * @return void
@@ -634,65 +639,66 @@ class LeadController extends Controller
      */
     public function createByAI()
     {
-        dd(request()->all());
-        if (! $pdfFile = request()->file('file')) {
+        $supportedFormats = implode(',', $this->supportedFormats);
+
+        $leadData = [];
+
+        foreach (request()->file('files') as $file) {
+            $this->validate(request(), [
+                'file' => 'required_in|extensions:'.$supportedFormats.'|mimes:'.$supportedFormats,
+            ]);
+
+            $extractedData = LeadService::extractDataFromPdf($file->getPathName());
+
+            $lead = Lead::mapAIDataToLead($extractedData);
+
+            $leadData[] = $lead;
+        }
+
+        if (empty($leadData)) {
             return response()->json([
                 'status'  => 'error',
-                'message' => trans('admin::app.leads.file.not-found'),
+                'message' => trans('admin::app.leads.no-valid-files'),
             ], 400);
         }
 
-        $extractedData = LeadService::extractDataFromPdf($pdfFile->getPathName());
-
-        if (! empty($extractedData['error'])) {
-            return response()->json([
-                'status'  => 'error',
-                'message' => $extractedData['error'],
-            ], 400);
-        }
-
-        $leadData = Lead::mapAIDataToLead($extractedData);
-
-        if (
-            ! empty($leadData['status'])
-            && $leadData['status'] === 'error'
-        ) {
-            return response()->json([
-                'status'  => 'error',
-                'message' => $leadData['message'],
-            ], 400);
-        }
-
-        return self::leadCreate($leadData);
+        return self::leadCreateMultiple($leadData);
     }
 
     /**
-     * Create lead independent entity.
+     * Create multiple leads.
      */
-    private function leadCreate($data)
+    private function leadCreateMultiple($data)
     {
-        $person = $this->personRepository->create($data['person']);
+        $leads = [];
 
-        $pipeline = $this->pipelineRepository->getDefaultPipeline();
+        foreach ($data as $lead) {
+            $person = $this->personRepository->create($lead['person']);
 
-        $stage = $pipeline->stages()->first();
+            $pipeline = $this->pipelineRepository->getDefaultPipeline();
 
-        $data = array_merge($data, [
-            'lead_pipeline_id'       => $pipeline->id,
-            'lead_pipeline_stage_id' => $stage->id,
-            'expected_close_date'    => Carbon::now()->addDays(7),
-            'person'                 => [
-                'id'              => $person->id,
-                'organization_id' => $data['person']['organization_id'] ?? null,
-            ],
-        ]);
+            $stage = $pipeline->stages()->first();
 
-        $lead = $this->leadRepository->create($data);
+            $leadData = array_merge($lead, [
+                'lead_pipeline_id'       => $pipeline->id,
+                'lead_pipeline_stage_id' => $stage->id,
+                'expected_close_date'    => Carbon::now()->addDays(7),
+                'person'                 => [
+                    'id'              => $person->id,
+                    'organization_id' => $lead['person']['organization_id'] ?? null,
+                ],
+            ]);
 
-        Event::dispatch('lead.create.after', $lead);
+            $lead = $this->leadRepository->create($leadData);
+
+            Event::dispatch('lead.create.after', $lead);
+
+            $leads[] = $lead;
+        }
 
         return response()->json([
             'message' => trans('admin::app.leads.create-success'),
+            'leads'   => $leads,
         ], 200);
     }
 }

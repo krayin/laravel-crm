@@ -54,10 +54,12 @@
                                     :label="trans('admin::app.leads.index.upload.file')"
                                     ::disabled="isLoading"
                                     multiple
-                                    @onchange="handleFileUpload"
+                                    @change="handleFileUpload"
                                 />
 
-                                <p class="mt-1 text-xs text-gray-600 dark:text-gray-300">@lang('admin::app.leads.index.upload.file-info')</p>
+                                <p class="mt-1 text-xs text-gray-600 dark:text-gray-300">
+                                    @lang('admin::app.leads.index.upload.file-info')
+                                </p>
 
                                 <x-admin::form.control-group.error control-name="files" />
                             </x-admin::form.control-group>
@@ -104,8 +106,6 @@
 
             methods: {
                 handleFileUpload(event) {
-                    console.log('sdsd');
-                    
                     this.selectedFiles = Array.from(event.target.files);
                 },
 
@@ -125,6 +125,10 @@
 
                     formData.append('_method', 'post');
 
+                    this.sendRequest(formData);
+                },
+
+                sendRequest(formData) {
                     this.$axios.post("{{ route('admin.leads.create_by_ai') }}", formData, {
                         headers: {
                             'Content-Type': 'multipart/form-data',
@@ -137,7 +141,7 @@
 
                         this.$refs.userUpdateAndCreateModal.close();
 
-                        window.location.reload();
+                        this.$parent.$refs.leadsKanban.boot()
                     })
                     .catch(error => {
                         this.isLoading = false;
