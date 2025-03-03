@@ -16,9 +16,9 @@
         
             <div 
                 v-show="isSearchVisible" 
-                class="absolute left-1/2 top-2.5 z-[10002] flex w-full max-w-full -translate-x-1/2 items-center px-2"
+                class="absolute left-1/2 top-3 z-[10002] flex w-full max-w-full -translate-x-1/2 items-center px-2"
             >
-                <i class="icon-search absolute top-1.5 flex items-center text-2xl ltr:left-3 rtl:right-3"></i>
+                <i class="icon-search absolute top-2 flex items-center text-2xl ltr:left-4 rtl:right-4"></i>
 
                 <input
                     type="text"
@@ -30,6 +30,8 @@
                     v-debounce="500"
                     ref="searchInput"
                 >
+
+                <i class="icon-cross-large absolute top-2 flex items-center text-2xl ltr:right-4 rtl:left-4"></i>
 
                 <div
                     class="absolute top-10 z-10 w-full rounded-lg border bg-white shadow-[0px_0px_0px_0px_rgba(0,0,0,0.10),0px_1px_3px_0px_rgba(0,0,0,0.10),0px_5px_5px_0px_rgba(0,0,0,0.09),0px_12px_7px_0px_rgba(0,0,0,0.05),0px_22px_9px_0px_rgba(0,0,0,0.01),0px_34px_9px_0px_rgba(0,0,0,0.00)] dark:border-gray-800 dark:bg-gray-900"
@@ -451,8 +453,8 @@
                         .finally(() => this.isLoading = false);
                 },
 
-                handleFocusOut(e) {
-                    if (! this.$el.contains(e.target)) {
+                handleFocusOut(e) {   
+                    if (! this.$el.contains(e.target) || e.target.classList.contains('icon-cross-large')) {
                         this.isDropdownOpen = false;
                         
                         if (! this.isDropdownOpen) {
