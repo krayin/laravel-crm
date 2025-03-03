@@ -1120,6 +1120,7 @@ return [
                         'name'        => 'Name',
                         'date'        => 'Date',
                         'description' => 'Description',
+                        'save-btn'    => 'Save Event',
                     ],
 
                     'edit' => [

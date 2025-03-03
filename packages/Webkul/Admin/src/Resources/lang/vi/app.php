@@ -1118,6 +1118,7 @@ return [
                         'name'        => 'Tên',
                         'date'        => 'Ngày',
                         'description' => 'Mô tả',
+                        'save-btn'    => 'Lưu Sự kiện',
                     ],
 
                     'edit' => [
