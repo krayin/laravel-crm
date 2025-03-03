@@ -56,7 +56,7 @@
                 {!! view_render_event('admin.settings.workflows.create.form_controls.before') !!}
                 
                 <!-- Tab Switcher -->
-                <div class="flex gap-2 border-b border-gray-200 dark:border-gray-800">
+                <div class="flex w-full gap-2 border-b border-gray-200 dark:border-gray-800">
                     <!-- Tabs -->
                     <template 
                         v-for="tab in tabs"

@@ -15,7 +15,7 @@
         type="text/x-template"
         id="v-kanban-search-template"
     >
-        <div class="relative flex max-w-[445px] items-center max-sm:w-full max-sm:max-w-full">
+        <div class="relative flex max-w-[445px] items-center max-md:w-full max-md:max-w-full">
             <div class="icon-search absolute top-1.5 flex items-center text-2xl ltr:left-3 rtl:right-3"></div>
 
             <input

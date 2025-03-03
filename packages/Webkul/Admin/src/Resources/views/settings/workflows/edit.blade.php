@@ -59,7 +59,7 @@
                 {!! view_render_event('admin.settings.workflows.edit.form_controls.before') !!}
                 
                 <!-- Tab Switcher -->
-                <div class="flex gap-2 border-b border-gray-200 dark:border-gray-800">
+                <div class="flex w-full gap-2 border-b border-gray-200 dark:border-gray-800">
                     <!-- Tabs -->
                     <template 
                         v-for="tab in tabs"
@@ -97,7 +97,7 @@
                             </p>
                         </div>
 
-                        <div class="w-1/2">
+                        <div class="w-1/2 max-md:w-full">
                             <x-admin::form.control-group>
                                 <x-admin::form.control-group.label class="required">
                                     @lang('admin::app.settings.workflows.edit.name')
@@ -287,7 +287,7 @@
                             </p>
                         </div>
 
-                        <x-admin::table class="!w-1/2">
+                        <x-admin::table>
                             <!-- Table Head -->
                             <x-admin::table.thead>
                                 <x-admin::table.thead.tr>

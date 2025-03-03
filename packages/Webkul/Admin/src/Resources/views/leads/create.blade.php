@@ -64,7 +64,7 @@
             <div class="box-shadow flex flex-col gap-4 rounded-lg border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900 max-xl:flex-wrap">
                 {!! view_render_event('admin.leads.edit.form_controls.before') !!}
                 
-                <div class="flex gap-2 border-b border-gray-200 dark:border-gray-800">
+                <div class="flex w-full gap-2 border-b border-gray-200 dark:border-gray-800">
                     <!-- Tabs -->
                     <template v-for="tab in tabs" :key="tab.id">
                         {!! view_render_event('admin.leads.create.tabs.before') !!}
@@ -103,7 +103,7 @@
                             </p>
                         </div>
 
-                        <div class="w-1/2">
+                        <div class="w-1/2 max-md:w-full">
                             {!! view_render_event('admin.leads.create.details.attributes.before') !!}
 
                             <!-- Lead Details Title and Description -->
