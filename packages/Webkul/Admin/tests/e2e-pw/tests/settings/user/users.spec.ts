@@ -1,5 +1,5 @@
-import { test, expect } from "../../setup";
-import { generateFullName, generateEmail } from "../../utils/faker";
+import { test, expect } from "../../../setup";
+import { generateFullName, generateEmail } from "../../../utils/faker";
 
 test.describe("user management", () => {
     test("should create a user", async ({ adminPage }) => {
