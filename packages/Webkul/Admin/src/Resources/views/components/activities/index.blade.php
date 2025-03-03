@@ -40,7 +40,7 @@
             {!! view_render_event('admin.components.activities.content.before') !!}
 
             <div class="w-full rounded-md border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900">
-                <div class="flex gap-2 border-b border-gray-200 dark:border-gray-800">
+                <div class="flex gap-2 overflow-y-hidden border-b border-gray-200 dark:border-gray-800">
                     {!! view_render_event('admin.components.activities.content.types.before') !!}
 
                     <div
@@ -102,13 +102,13 @@
                                                     <div class="flex items-center gap-1">
                                                         <span>:</span>
 
-                                                        <span>
+                                                        <span class="max-md:break-all">
                                                             @{{ (activity.additional.old.label ? String(activity.additional.old.label).replaceAll('<br>', ' ') : "@lang('admin::app.components.activities.index.empty')") }}
                                                         </span>
 
                                                         <span class="icon-stats-up rotate-90 text-xl"></span>
 
-                                                        <span>
+                                                        <span class="break-all">
                                                             @{{ (activity.additional.new.label ? String(activity.additional.new.label).replaceAll('<br>', ' ') : "@lang('admin::app.components.activities.index.empty')") }}
                                                         </span>
                                                     </div>
