@@ -267,14 +267,14 @@ function generateDescription(length = 255) {
 
     let description = "";
 
-    while (description.length < length) {
+    while (length > 0) {
         let phrase = phrases[Math.floor(Math.random() * phrases.length)];
 
-        if (description.length + phrase.length <= length) {
+        if (phrase.length <= length) {
             description += (description ? " " : "") + phrase;
+            length -= phrase.length;
         } else {
-            description +=
-                " " + phrase.substring(0, length - description.length);
+            description += " " + phrase.substring(0, length);
             break;
         }
     }
