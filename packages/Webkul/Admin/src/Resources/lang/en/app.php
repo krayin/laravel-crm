@@ -2065,11 +2065,14 @@ return [
 
     'configuration' => [
         'index' => [
-            'back'         => 'Back',
-            'save-btn'     => 'Save Configuration',
-            'save-success' => 'Configuration Saved Successfully.',
-            'search'       => 'Search',
-            'title'        => 'Configuration',
+            'back'           => 'Back',
+            'delete'         => 'Delete',
+            'save-btn'       => 'Save Configuration',
+            'save-success'   => 'Configuration Saved Successfully.',
+            'search'         => 'Search',
+            'select-country' => 'Select Country',
+            'select-state'   => 'Select State',
+            'title'          => 'Configuration',
 
             'general'  => [
                 'title'   => 'General',
@@ -2081,6 +2084,50 @@ return [
                     'locale-settings' => [
                         'title'       => 'Locale Settings',
                         'title-info'  => 'Defines the language used in the user interface, such as Arabic (ar), English (en), Spanish (es), Persian(fa) and Turkish (tr).',
+                    ],
+
+                    'admin-logo' => [
+                        'logo-image' => 'Logo Image',
+                        'title'      => 'Admin Logo',
+                        'title-info' => 'Configure logo image for your admin panel.',
+                    ],
+                ],
+
+                'settings' => [
+                    'title' => 'Settings',
+                    'info'  => 'Update your settings here.',
+
+                    'footer' => [
+                        'info'       => 'We can configure the powered by section here.',
+                        'powered-by' => 'Powered by text editor',
+                        'title'      => 'Powered by Section Configurations',
+                    ],
+
+                    'menu' => [
+                        'activities'     => 'Activities',
+                        'configuration'  => 'Configuration',
+                        'contacts'       => 'Contacts',
+                        'dashboard'      => 'Dashboard',
+                        'draft'          => 'Draft',
+                        'inbox'          => 'Inbox',
+                        'info'           => 'We can configure the menu items name here.',
+                        'leads'          => 'Leads',
+                        'mail'           => 'Mail',
+                        'organizations'  => 'Organizations',
+                        'outbox'         => 'Outbox',
+                        'persons'        => 'Persons',
+                        'products'       => 'Products',
+                        'quotes'         => 'Quotes',
+                        'sent'           => 'Sent',
+                        'settings'       => 'Settings',
+                        'title'          => 'Menu Item Configurations',
+                        'trash'          => 'Trash',
+                    ],
+
+                    'menu-color' => [
+                        'brand-color' => 'Brand Color',
+                        'info'        => 'We can change the menu items colors here.',
+                        'title'       => 'Menu Item Color Configurations',
                     ],
                 ],
             ],

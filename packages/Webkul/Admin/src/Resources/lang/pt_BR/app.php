@@ -1881,11 +1881,14 @@ return [
 
     'configuration' => [
         'index' => [
-            'back'         => 'Voltar',
-            'save-btn'     => 'Salvar Configuração',
-            'save-success' => 'Configuração Salva com Sucesso.',
-            'search'       => 'Pesquisar',
-            'title'        => 'Configuração',
+            'back'           => 'Voltar',
+            'delete'         => 'Excluir',
+            'save-btn'       => 'Salvar Configuração',
+            'save-success'   => 'Configuração Salva com Sucesso.',
+            'search'         => 'Pesquisar',
+            'select-country' => 'Selecionar País',
+            'select-state'   => 'Selecionar Estado',
+            'title'          => 'Configuração',
 
             'general'  => [
                 'title'   => 'Geral',
@@ -1894,9 +1897,16 @@ return [
                 'general' => [
                     'title'           => 'Geral',
                     'info'            => 'Atualize suas configurações gerais aqui.',
+
                     'locale-settings' => [
                         'title'       => 'Configurações de Localidade',
                         'title-info'  => 'Define o idioma usado na interface do usuário, como Árabe (ar), Inglês (en), Espanhol (es), Persa (fa) e Turco (tr).',
+                    ],
+
+                    'admin-logo' => [
+                        'logo-image' => 'Imagem do Logo',
+                        'title'      => 'Logo do Admin',
+                        'title-info' => 'Configure a imagem do logo para o seu painel de administração.',
                     ],
                 ],
             ],
@@ -1946,6 +1956,46 @@ return [
                         'ollama'       => 'Ollama (llama3.2:latest)',
                         'title'        => 'Modelos',
                     ],
+                ],
+            ],
+
+            'settings' => [
+                'title' => 'Configurações',
+                'info'  => 'Atualize suas configurações aqui.',
+
+                'footer' => [
+                    'info'       => 'Podemos configurar a seção powered by aqui.',
+                    'powered-by' => 'Editor de texto "Powered by"',
+                    'title'      => 'Configurações da Seção Powered by',
+                ],
+
+                'menu' => [
+                    'activities'     => 'Atividades',
+                    'configuration'  => 'Configuração',
+                    'contacts'       => 'Contatos',
+                    'dashboard'      => 'Painel de Controle',
+                    'draft'          => 'Rascunho',
+                    'inbox'          => 'Caixa de Entrada',
+                    'info'           => 'Podemos configurar o nome dos itens do menu aqui.',
+                    'leads'          => 'Leads',
+                    'mail'           => 'Correio',
+                    'organizations'  => 'Organizações',
+                    'outbox'         => 'Caixa de Saída',
+                    'persons'        => 'Pessoas',
+                    'products'       => 'Produtos',
+                    'quotes'         => 'Cotações',
+                    'sent'           => 'Enviado',
+                    'settings'       => 'Configurações',
+                    'title'          => 'Configurações de Itens do Menu',
+                    'trash'          => 'Lixeira',
+                ],
+
+                'menu-color' => [
+                    'active-background-color' => 'Cor de Fundo Ativa',
+                    'active-text-color'       => 'Cor do Texto Ativo',
+                    'info'                    => 'Podemos alterar as cores dos itens do menu aqui.',
+                    'text-color'              => 'Cor do Texto',
+                    'title'                   => 'Configurações de Cor dos Itens do Menu',
                 ],
             ],
         ],
