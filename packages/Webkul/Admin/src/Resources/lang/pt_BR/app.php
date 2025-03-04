@@ -1090,6 +1090,78 @@ return [
             ],
         ],
 
+        'marketing' => [
+            'events' => [
+                'index' => [
+                    'create-btn'          => 'Criar Evento',
+                    'title'               => 'Eventos',
+                    'create-success'      => 'Evento criado com sucesso.',
+                    'update-success'      => 'Evento atualizado com sucesso.',
+                    'delete-success'      => 'Evento excluído com sucesso.',
+                    'delete-failed'       => 'Não é possível excluir o evento.',
+                    'mass-delete-success' => 'Eventos excluídos com sucesso',
+
+                    'datagrid'   => [
+                        'delete'       => 'Excluir',
+                        'edit'         => 'Editar',
+                        'id'           => 'ID',
+                        'name'         => 'Nome',
+                        'description'  => 'Descrição',
+                        'date'         => 'Data',
+                    ],
+
+                    'create'     => [
+                        'title'       => 'Criar Evento',
+                        'name'        => 'Nome',
+                        'date'        => 'Data',
+                        'description' => 'Descrição',
+                        'save-btn'    => 'Salvar Evento',
+                    ],
+
+                    'edit' => [
+                        'title' => 'Editar Evento',
+                    ],
+                ],
+            ],
+
+            'campaigns' => [
+                'index' => [
+                    'create-btn'          => 'Criar Campanha',
+                    'title'               => 'Campanhas',
+                    'create-success'      => 'Campanha criada com sucesso.',
+                    'update-success'      => 'Campanha atualizada com sucesso.',
+                    'delete-success'      => 'Campanha excluída com sucesso.',
+                    'delete-failed'       => 'Não é possível excluir a campanha.',
+                    'mass-delete-success' => 'Campanhas excluídas com sucesso',
+
+                    'datagrid'   => [
+                        'id'       => 'ID',
+                        'name'     => 'Nome',
+                        'subject'  => 'Assunto',
+                        'status'   => 'Status',
+                        'active'   => 'Ativo',
+                        'inactive' => 'Inativo',
+                        'edit'     => 'Editar',
+                        'delete'   => 'Excluir',
+                    ],
+
+                    'create'     => [
+                        'title'          => 'Criar Campanha',
+                        'name'           => 'Nome',
+                        'type'           => 'Tipo',
+                        'subject'        => 'Assunto',
+                        'event'          => 'Evento',
+                        'email-template' => 'Modelo de Email',
+                        'status'         => 'Status',
+                    ],
+
+                    'edit' => [
+                        'title' => 'Editar Campanha',
+                    ],
+                ],
+            ],
+        ],
+
         'tags' => [
             'index' => [
                 'create-btn'     => 'Criar Tag',
@@ -2124,7 +2196,6 @@ return [
         'back'                 => 'Voltar',
         'name'                 => 'Nome',
         'configuration'        => 'Configuração',
-        'activities'           => 'Atividades',
         'howdy'                => 'Olá!',
         'warehouses'           => 'Armazéns',
         'warehouse'            => 'Armazém',

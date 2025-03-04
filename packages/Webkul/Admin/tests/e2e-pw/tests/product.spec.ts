@@ -6,7 +6,7 @@ test.describe("product management", () => {
         /**
          * Go to the product listing page.
          */
-        await adminPage.goto("admin/admin/products");
+        await adminPage.goto("admin/products");
 
         await adminPage.getByRole('link', { name: 'Create Product' }).click();
 
@@ -27,7 +27,7 @@ test.describe("product management", () => {
         /**
          * Go to the product listing page.
          */
-        await adminPage.goto("admin/admin/products");
+        await adminPage.goto("admin/products");
         await adminPage.waitForSelector('a.primary-button', { state: 'visible' });
 
         /**
@@ -50,7 +50,7 @@ test.describe("product management", () => {
          /**
          * Go to the product listing page.
          */
-        await adminPage.goto('admin/admin/products');
+        await adminPage.goto('admin/products');
         await adminPage.waitForSelector('a.primary-button', { state: 'visible' });
 
         /**

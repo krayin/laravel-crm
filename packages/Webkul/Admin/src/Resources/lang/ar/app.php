@@ -1118,6 +1118,7 @@ return [
                         'name'        => 'الاسم',
                         'date'        => 'التاريخ',
                         'description' => 'الوصف',
+                        'save-btn'    => 'حفظ الحدث',
                     ],
 
                     'edit' => [

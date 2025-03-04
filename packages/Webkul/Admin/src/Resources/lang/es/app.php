@@ -1121,6 +1121,7 @@ return [
                         'name'        => 'Nombre',
                         'date'        => 'Fecha',
                         'description' => 'Descripción',
+                        'save-btn'    => 'Guardar Evento',
                     ],
 
                     'edit' => [

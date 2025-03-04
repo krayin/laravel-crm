@@ -1122,6 +1122,7 @@ return [
                         'name'        => 'نام',
                         'date'        => 'تاریخ',
                         'description' => 'توضیحات',
+                        'save-btn'    => 'ذخیره رویداد',
                     ],
 
                     'edit' => [

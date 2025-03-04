@@ -14,7 +14,6 @@ test.describe("user management", () => {
          */
         await adminPage.getByRole("button", { name: "Create User" }).click();
 
-
         /**
          * Filling the form with user details.
          */
@@ -39,6 +38,9 @@ test.describe("user management", () => {
         await adminPage
             .locator('select[name="groups[]"]')
             .selectOption("1");
+
+        // Clicking on the status toggler to make the user active.
+        await adminPage.click('label[for="status"]');
 
         /**
          * Save user and close the modal.

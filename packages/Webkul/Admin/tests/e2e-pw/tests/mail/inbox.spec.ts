@@ -1,7 +1,6 @@
 import { test, expect } from '../../setup';
 import { generateEmail, generateEmailSubject, generateDescription } from '../../utils/faker';
 
-
 async function composeMail(adminPage, ccMail = false, bccMail = false) {
     /**
      * Reaching to the mail listing page.
@@ -13,15 +12,6 @@ async function composeMail(adminPage, ccMail = false, bccMail = false) {
      */
     await adminPage.getByRole('button', { name: 'Compose Mail' }).click();
     await adminPage.fill('input[name="temp-reply_to"]', generateEmail());
-
-    if (ccMail) {
-        // Add Code for ccMail.
-    }
-
-    if (bccMail) {
-        // Add Code for bccMail.
-    }
-
     await adminPage.fill('input[name="subject"]', generateEmailSubject());
     await adminPage.fill('textarea[name="reply"]', generateDescription());
 
