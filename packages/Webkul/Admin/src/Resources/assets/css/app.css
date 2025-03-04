@@ -642,3 +642,7 @@
 .tox .tox-toolbar__group:last-child button:hover {
     @apply border-0 !bg-[#3389ec] text-white shadow-none;
 }
+
+.tox.tox-silver-sink.tox-tinymce-aux {
+    z-index: 99999;
+}
