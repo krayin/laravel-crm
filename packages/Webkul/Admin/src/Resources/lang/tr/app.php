@@ -1878,8 +1878,10 @@ return [
         'destroy-failed'    => 'Lead silinemedi.',
 
         'file' => [
+            'empty-content'    => 'PDF içeriği boş veya çıkarılamadı.',
             'invalid-format'   => 'Geçersiz JSON formatı.',
             'invalid-response' => 'Geçersiz AI yanıt formatı.',
+            'missing-api-key'  => 'API anahtarı veya model yapılandırması eksik.',
             'not-found'        => 'Dosya bulunamadı.',
         ],
 
@@ -1949,12 +1951,13 @@ return [
             ],
 
             'upload' => [
-                'create-lead' => 'AI Kullanarak Lead Oluştur',
-                'file'        => 'Dosya Yükle',
-                'file-info'   => 'Sadece PDF formatındaki dosyalar kabul edilir.',
-                'save-btn'    => 'Kaydet',
-                'sample-pdf'  => 'Örnek PDF',
-                'upload-pdf'  => 'PDF Yükle',
+                'create-lead'   => 'AI Kullanarak Lead Oluştur',
+                'file'          => 'Dosya Yükle',
+                'file-info'     => 'Sadece PDF formatındaki dosyalar kabul edilir.',
+                'file-required' => 'Devam etmek için lütfen en az bir geçerli dosya seçin.',
+                'sample-pdf'    => 'Örnek PDF',
+                'save-btn'      => 'Kaydet',
+                'upload-pdf'    => 'PDF Yükle',
             ],
         ],
 
@@ -2163,6 +2166,8 @@ return [
                 'info'  => 'Uygulama için Sihirli AI yapılandırması.',
 
                 'settings' => [
+                    'accepted-types'      => 'Kabul edilen türler',
+                    'accepted-types-info' => 'PDF oluşturma için kabul edilen dosya türlerinin virgülle ayrılmış listesi.',
                     'api-domain'          => 'LLM API Alanı',
                     'api-domain-info'     => 'Sadece Olama ve Grow için, Ör: http://localhost:11434',
                     'api-key'             => 'API Anahtarı',

@@ -1878,8 +1878,10 @@ return [
         'destroy-failed'    => 'سرنخ قابل حذف نیست.',
 
         'file' => [
+            'empty-content'    => 'محتوای PDF خالی است یا نمی‌توان آن را استخراج کرد.',
             'invalid-format'   => 'فرمت JSON نامعتبر است.',
             'invalid-response' => 'فرمت پاسخ AI نامعتبر است.',
+            'missing-api-key'  => 'کلید API یا پیکربندی مدل گم شده است.',
             'not-found'        => 'فایل یافت نشد.',
         ],
 
@@ -1949,12 +1951,13 @@ return [
             ],
 
             'upload' => [
-                'create-lead' => 'ایجاد سرنخ با استفاده از هوش مصنوعی',
-                'file'        => 'بارگذاری فایل',
-                'file-info'   => 'فقط فایل‌های با فرمت PDF پذیرفته می‌شوند.',
-                'save-btn'    => 'ذخیره',
-                'sample-pdf'  => 'نمونه PDF',
-                'upload-pdf'  => 'بارگذاری PDF',
+                'create-lead'   => 'ایجاد سرنخ با استفاده از هوش مصنوعی',
+                'file'          => 'بارگذاری فایل',
+                'file-info'     => 'فقط فایل‌های با فرمت PDF پذیرفته می‌شوند.',
+                'file-required' => 'لطفاً حداقل یک فایل معتبر برای ادامه انتخاب کنید.',
+                'sample-pdf'    => 'نمونه PDF',
+                'save-btn'      => 'ذخیره',
+                'upload-pdf'    => 'بارگذاری PDF',
             ],
         ],
 
@@ -2163,6 +2166,8 @@ return [
                 'info'  => 'پیکربندی هوش مصنوعی جادویی برای برنامه.',
 
                 'settings' => [
+                    'accepted-types'      => 'انواع پذیرفته شده',
+                    'accepted-types-info' => 'لیست انواع فایل‌های پذیرفته شده برای تولید PDF به صورت جدا شده با کاما.',
                     'api-domain'          => 'دامنه API LLM',
                     'api-domain-info'     => 'فقط برای Olama و Grow، مثال: http://localhost:11434',
                     'api-key'             => 'کلید API',

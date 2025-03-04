@@ -1874,8 +1874,10 @@ return [
         'destroy-failed'    => 'لا يمكن حذف العميل المحتمل.',
 
         'file' => [
+            'empty-content'    => 'محتوى PDF فارغ أو لم يتمكن من الاستخراج.',
             'invalid-format'   => 'تنسيق JSON غير صالح.',
             'invalid-response' => 'تنسيق استجابة الذكاء الاصطناعي غير صالح.',
+            'missing-api-key'  => 'مفتاح API أو تكوين النموذج مفقود.',
             'not-found'        => 'الملف غير موجود.',
         ],
 
@@ -1945,12 +1947,13 @@ return [
             ],
 
             'upload' => [
-                'create-lead' => 'إنشاء عميل محتمل باستخدام الذكاء الاصطناعي',
-                'file'        => 'تحميل ملف',
-                'file-info'   => 'يتم قبول ملفات بصيغة PDF فقط.',
-                'save-btn'    => 'حفظ',
-                'sample-pdf'  => 'نموذج PDF',
-                'upload-pdf'  => 'تحميل PDF',
+                'create-lead'   => 'إنشاء عميل محتمل باستخدام الذكاء الاصطناعي',
+                'file'          => 'تحميل ملف',
+                'file-info'     => 'يتم قبول ملفات بصيغة PDF فقط.',
+                'file-required' => 'يرجى اختيار ملف صالح واحد على الأقل للمتابعة.',
+                'sample-pdf'    => 'نموذج PDF',
+                'save-btn'      => 'حفظ',
+                'upload-pdf'    => 'تحميل PDF',
             ],
         ],
 
@@ -2120,6 +2123,8 @@ return [
                 'info'  => 'تكوين الذكاء الاصطناعي السحري للتطبيق.',
 
                 'settings' => [
+                    'accepted-types'      => 'الأنواع المقبولة',
+                    'accepted-types-info' => 'قائمة بأنواع الملفات المقبولة لتوليد PDF، مفصولة بفواصل.',
                     'api-domain'          => 'نطاق API لـ LLM',
                     'api-domain-info'     => 'لـ Olama و Grow فقط، مثال: http://localhost:11434',
                     'api-key'             => 'مفتاح API',
