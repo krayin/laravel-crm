@@ -40,6 +40,9 @@ test.describe("user management", () => {
             .locator('select[name="groups[]"]')
             .selectOption("1");
 
+        // Clicking on the status toggler to make the user active.
+        await adminPage.click('label[for="status"]');
+
         /**
          * Save user and close the modal.
          */
