@@ -11,7 +11,7 @@
                 <div class="flex cursor-pointer items-center">
                     {!! view_render_event('admin.settings.groups.index.breadcrumbs.before') !!}
 
-                    <!-- Bredcrumbs -->
+                    <!-- Breadcrumbs -->
                     <x-admin::breadcrumbs name="settings.groups" />
 
                     {!! view_render_event('admin.settings.groups.index.breadcrumbs.after') !!}
