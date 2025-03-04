@@ -46,18 +46,27 @@
                                     @lang('admin::app.leads.index.upload.file')
                                 </x-admin::form.control-group.label>
 
+                                @php
+                                    $acceptedTypes = core()->getConfigData('general.magic_ai.pdf_generation.accepted_types');
+                                @endphp
+
                                 <x-admin::form.control-group.control
                                     type="file"
-                                    id="file"
-                                    name="file"
-                                    rules="required|mimes:pdf"
+                                    id="files"
+                                    name="files"
+                                    rules="required|mimes:{{ $acceptedTypes }}"
                                     :label="trans('admin::app.leads.index.upload.file')"
                                     ::disabled="isLoading"
+                                    ref="file"
+                                    accept="{{ $acceptedTypes }}"
+                                    multiple
                                 />
 
-                                <p class="mt-1 text-xs text-gray-600 dark:text-gray-300">@lang('admin::app.leads.index.upload.file-info')</p>
+                                <p class="mt-1 text-xs text-gray-600 dark:text-gray-300">
+                                    @lang('admin::app.leads.index.upload.file-info')
+                                </p>
 
-                                <x-admin::form.control-group.error control-name="file" />
+                                <x-admin::form.control-group.error control-name="files" />
                             </x-admin::form.control-group>
 
                             <!-- Sample Downloadable file -->
@@ -99,31 +108,44 @@
             },
 
             methods: {
-                create (params, {resetForm, setErrors}) {
+                create(params, { resetForm, setErrors }) {
+                    const selectedFiles = this.$refs.file?.files;  
+
+                    if (selectedFiles.length === 0) {
+                        this.$emitter.emit('add-flash', { type: 'error', message: "@lang('admin::app.leads.index.upload.file-required')" });
+
+                        return;
+                    }
+
                     this.isLoading = true;
 
-                    const userForm = new FormData(this.$refs.userForm);
+                    const formData = new FormData();
 
-                    userForm.append('_method', 'post');
+                    selectedFiles.forEach((file, index) => {
+                        formData.append(`files[${index}]`, file);
+                    });
 
-                    this.$axios.post("{{ route('admin.leads.create_by_ai') }}", userForm, {
+                    formData.append('_method', 'post');
+
+                    this.sendRequest(formData);
+                },
+
+                sendRequest(formData) {
+                    this.$axios.post("{{ route('admin.leads.create_by_ai') }}", formData, {
                         headers: {
                             'Content-Type': 'multipart/form-data',
                         }
                     })
-                    .then (response => {
-                        this.isLoading = false;
-
+                    .then(response => {
                         this.$emitter.emit('add-flash', { type: 'success', message: response.data.message });
 
-                        this.$refs.userUpdateAndCreateModal.close();
-
-                        window.location.reload();
+                        this.$parent.$refs.leadsKanban.boot()
                     })
-                    .catch (error => {
-                        this.isLoading = false;
-
+                    .catch(error => {
                         this.$emitter.emit('add-flash', { type: 'error', message: error.response.data.message });
+                    })
+                    .finally(() => {
+                        this.isLoading = false;
 
                         this.$refs.userUpdateAndCreateModal.close();
                     });

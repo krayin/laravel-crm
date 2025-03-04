@@ -1763,8 +1763,10 @@ return [
         'destroy-failed'    => 'Lead não pode ser excluído.',
 
         'file' => [
+            'empty-content'    => 'O conteúdo do PDF está vazio ou não pôde ser extraído.',
             'invalid-format'   => 'Formato JSON inválido.',
             'invalid-response' => 'Formato de resposta AI inválido.',
+            'missing-api-key'  => 'Chave API ou configuração do modelo ausente.',
             'not-found'        => 'Arquivo não encontrado.',
         ],
 
@@ -1834,12 +1836,13 @@ return [
             ],
 
             'upload' => [
-                'create-lead' => 'Criar Lead Usando AI',
-                'file'        => 'Upload de Arquivo',
-                'file-info'   => 'Apenas arquivos em formato PDF são aceitos.',
-                'save-btn'    => 'Salvar',
-                'sample-pdf'  => 'PDF de Exemplo',
-                'upload-pdf'  => 'Carregar PDF',
+                'create-lead'   => 'Criar Lead Usando AI',
+                'file'          => 'Upload de Arquivo',
+                'file-info'     => 'Apenas arquivos em formato PDF são aceitos.',
+                'file-required' => 'Por favor, selecione pelo menos um arquivo válido para prosseguir.',
+                'sample-pdf'    => 'PDF de Exemplo',
+                'save-btn'      => 'Salvar',
+                'upload-pdf'    => 'Carregar PDF',
             ],
         ],
 
@@ -2009,6 +2012,8 @@ return [
                 'info'  => 'Configuração do Magic AI para a aplicação.',
 
                 'settings' => [
+                    'accepted-types'      => 'Tipos aceitos',
+                    'accepted-types-info' => 'Lista separada por vírgulas de tipos de arquivos aceitos para geração de PDF.',
                     'api-domain'          => 'Domínio da API LLM',
                     'api-domain-info'     => 'Para Olama e Grow apenas, Ex: http://localhost:11434',
                     'api-key'             => 'Chave API',

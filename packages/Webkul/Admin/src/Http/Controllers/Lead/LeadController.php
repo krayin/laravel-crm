@@ -632,66 +632,92 @@ class LeadController extends Controller
     /**
      * Create Lead with specified AI.
      */
-    public function createByAI(LeadForm $request)
+    public function createByAI()
     {
-        if (! $pdfFile = $request->file('file')) {
+        $leadData = [];
+
+        $errorMessages = [];
+
+        foreach (request()->file('files') as $file) {
+            $lead = $this->processFile($file, core()->getConfigData('general.magic_ai.pdf_generation.accepted_types'));
+
+            if ($lead['status'] === 'error') {
+                $errorMessages[] = $lead['message'];
+            } else {
+                $leadData[] = $lead;
+            }
+        }
+
+        if (empty($leadData) && ! empty($errorMessages)) {
             return response()->json([
                 'status'  => 'error',
-                'message' => trans('admin::app.leads.file.not-found'),
+                'message' => implode(', ', $errorMessages),
             ], 400);
         }
 
-        $extractedData = LeadService::extractDataFromPdf($pdfFile->getPathName());
-
-        if (! empty($extractedData['error'])) {
+        if (empty($leadData)) {
             return response()->json([
                 'status'  => 'error',
-                'message' => $extractedData['error'],
+                'message' => trans('admin::app.leads.no-valid-files'),
             ], 400);
         }
 
-        $leadData = Lead::mapAIDataToLead($extractedData);
-
-        if (
-            ! empty($leadData['status'])
-            && $leadData['status'] === 'error'
-        ) {
-            return response()->json([
-                'status'  => 'error',
-                'message' => $leadData['message'],
-            ], 400);
-        }
-
-        return self::leadCreate($leadData);
+        return self::createLeads($leadData);
     }
 
     /**
-     * Create lead independent entity.
+     * Summary of processFile method.
+     *
+     * @param  mixed  $file
+     * @param  mixed  $supportedFormats
      */
-    private function leadCreate($data)
+    private function processFile($file, $supportedFormats)
     {
-        $person = $this->personRepository->create($data['person']);
-
-        $pipeline = $this->pipelineRepository->getDefaultPipeline();
-
-        $stage = $pipeline->stages()->first();
-
-        $data = array_merge($data, [
-            'lead_pipeline_id'       => $pipeline->id,
-            'lead_pipeline_stage_id' => $stage->id,
-            'expected_close_date'    => Carbon::now()->addDays(7),
-            'person'                 => [
-                'id'              => $person->id,
-                'organization_id' => $data['person']['organization_id'] ?? null,
-            ],
+        $this->validate(request(), [
+            'file' => 'required_in|extensions:'.$supportedFormats.'|mimes:'.$supportedFormats,
         ]);
 
-        $lead = $this->leadRepository->create($data);
+        $extractedData = LeadService::extractDataFromPdf($file->getPathName());
 
-        Event::dispatch('lead.create.after', $lead);
+        $lead = Lead::mapAIDataToLead($extractedData);
+
+        return $lead;
+    }
+
+    /**
+     * Create multiple leads.
+     */
+    private function createLeads($data)
+    {
+        $leads = [];
+
+        foreach ($data as $lead) {
+            $person = $this->personRepository->create($lead['person']);
+
+            $pipeline = $this->pipelineRepository->getDefaultPipeline();
+
+            $stage = $pipeline->stages()->first();
+
+            $leadData = array_merge($lead, [
+                'lead_pipeline_id'       => $pipeline->id,
+                'lead_pipeline_stage_id' => $stage->id,
+                'expected_close_date'    => Carbon::now()->addDays(7),
+                'person'                 => [
+                    'id'              => $person->id,
+                    'organization_id' => $lead['person']['organization_id'] ?? null,
+                ],
+            ]);
+
+            $lead = $this->leadRepository->create($leadData);
+
+            Event::dispatch('lead.create.after', $lead);
+
+            $leads[] = $lead;
+        }
 
         return response()->json([
             'message' => trans('admin::app.leads.create-success'),
+            'leads'   => $leads,
         ], 200);
     }
 }

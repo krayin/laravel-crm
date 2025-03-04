@@ -1771,8 +1771,10 @@ return [
         'destroy-failed'    => 'Không thể xóa khách hàng tiềm năng.',
 
         'file' => [
+            'empty-content'    => 'Nội dung PDF trống hoặc không thể trích xuất.',
             'invalid-format'   => 'Định dạng JSON không hợp lệ.',
             'invalid-response' => 'Định dạng phản hồi AI không hợp lệ.',
+            'missing-api-key'  => 'Thiếu khóa API hoặc cấu hình mô hình.',
             'not-found'        => 'Không tìm thấy tệp.',
         ],
 
@@ -1842,12 +1844,13 @@ return [
             ],
 
             'upload' => [
-                'create-lead' => 'Tạo Khách Hàng Tiềm Năng Bằng AI',
-                'file'        => 'Tải Lên Tệp',
-                'file-info'   => 'Chỉ chấp nhận các tệp định dạng PDF.',
-                'save-btn'    => 'Lưu',
-                'sample-pdf'  => 'PDF Mẫu',
-                'upload-pdf'  => 'Tải Lên PDF',
+                'create-lead'   => 'Tạo Khách Hàng Tiềm Năng Bằng AI',
+                'file'          => 'Tải Lên Tệp',
+                'file-info'     => 'Chỉ chấp nhận các tệp định dạng PDF.',
+                'file-required' => 'Vui lòng chọn ít nhất một tệp hợp lệ để tiếp tục.',
+                'sample-pdf'    => 'PDF Mẫu',
+                'save-btn'      => 'Lưu',
+                'upload-pdf'    => 'Tải Lên PDF',
             ],
         ],
 
@@ -2016,6 +2019,8 @@ return [
                 'info'  => 'Cấu hình Magic AI cho ứng dụng.',
 
                 'settings' => [
+                    'accepted-types'      => 'Các loại tệp được chấp nhận',
+                    'accepted-types-info' => 'Danh sách các loại tệp được chấp nhận cho việc tạo PDF, cách nhau bằng dấu phẩy.',
                     'api-domain'          => 'Tên miền API LLM',
                     'api-domain-info'     => 'Dành cho Olama và Grow, Ví dụ: http://localhost:11434',
                     'api-key'             => 'Khóa API',
@@ -2034,8 +2039,8 @@ return [
                         'llama'        => 'Llama 3.3 (Groq)',
                         'ollama'       => 'Ollama (llama3.2:latest)',
                         'title'        => 'Mô hình',
-                        'title'       => 'Cài đặt Ngôn ngữ',
-                        'title-info'  => 'Định nghĩa ngôn ngữ sử dụng trong giao diện người dùng, như tiếng Ả Rập (ar), tiếng Anh (en), tiếng Tây Ban Nha (es), tiếng Ba Tư (fa) và tiếng Thổ Nhĩ Kỳ (tr).',
+                        'title'        => 'Cài đặt Ngôn ngữ',
+                        'title-info'   => 'Định nghĩa ngôn ngữ sử dụng trong giao diện người dùng, như tiếng Ả Rập (ar), tiếng Anh (en), tiếng Tây Ban Nha (es), tiếng Ba Tư (fa) và tiếng Thổ Nhĩ Kỳ (tr).',
                     ],
                 ],
             ],

@@ -22,7 +22,7 @@ class LeadService
             $parser = new Parser;
 
             if (empty($pdfText = trim($parser->parseFile($pdfPath)->getText()))) {
-                throw new Exception('PDF content is empty or could not be extracted.');
+                throw new Exception(trans('admin::app.leads.file.empty-content'));
             }
 
             return self::processPromptWithAI($pdfText);
@@ -40,7 +40,7 @@ class LeadService
         $apiKey = core()->getConfigData('general.magic_ai.settings.api_key');
 
         if (! $apiKey || ! $model) {
-            return ['error' => 'Missing API key or model configuration.'];
+            return ['error' => trans('admin::app.leads.file.missing-api-key')];
         }
 
         if (str_contains($model, Lead::GEMINI_MODEL)) {

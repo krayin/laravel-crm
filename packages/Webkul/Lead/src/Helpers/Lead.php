@@ -22,6 +22,9 @@ class Lead
      */
     const PERSON_ENTITY = 'persons';
 
+    /**
+     * Const Variable for OPEN_AI_MODEL_URL.
+     */
     const OPEN_AI_MODEL_URL = 'https://api.openai.com/v1/chat/completions';
 
     /**
@@ -29,6 +32,13 @@ class Lead
      */
     public static function mapAIDataToLead($aiData)
     {
+        if (! empty($aiData['error'])) {
+            return [
+                'status'  => 'error',
+                'message' => $aiData['error'],
+            ];
+        }
+
         $isGeminiModel = str_contains(core()->getConfigData('general.magic_ai.settings.model'), self::GEMINI_MODEL);
 
         $content = $isGeminiModel ? $aiData['candidates'][0]['content']['parts'][0]['text'] : $aiData['choices'][0]['message']['content'];
@@ -95,6 +105,9 @@ class Lead
         return $data;
     }
 
+    /**
+     * Prepares the lead prompt data.
+     */
     private static function prepareLeadData($finalData)
     {
         return [
