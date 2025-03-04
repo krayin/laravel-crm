@@ -2066,11 +2066,14 @@ return [
 
     'configuration' => [
         'index' => [
-            'back'         => 'Volver',
-            'save-btn'     => 'Guardar Configuración',
-            'save-success' => 'Configuración Guardada Exitosamente.',
-            'search'       => 'Buscar',
-            'title'        => 'Configuración',
+            'back'           => 'Regresar',
+            'delete'         => 'Eliminar',
+            'save-btn'       => 'Guardar Configuración',
+            'save-success'   => 'Configuración Guardada Exitosamente.',
+            'search'         => 'Buscar',
+            'select-country' => 'Seleccionar País',
+            'select-state'   => 'Seleccionar Estado',
+            'title'          => 'Configuración',
 
             'general'  => [
                 'title'   => 'General',
@@ -2078,10 +2081,56 @@ return [
 
                 'general' => [
                     'title'           => 'General',
-                    'info'            => 'Actualiza tus ajustes generales aquí.',
+                    'info'            => 'Actualiza tus configuraciones generales aquí.',
                     'locale-settings' => [
-                        'title'       => 'Configuración Regional',
-                        'title-info'  => 'Define el idioma utilizado en la interfaz de usuario, como árabe (ar), inglés (en), español (es), persa (fa) y turco (tr).',
+                        'title'       => 'Configuraciones de Idioma',
+                        'title-info'  => 'Define el idioma utilizado en la interfaz de usuario, como Árabe (ar), Inglés (en), Español (es), Persa (fa) y Turco (tr).',
+                    ],
+
+                    'admin-logo' => [
+                        'logo-image' => 'Imagen del Logo',
+                        'title'      => 'Logo del Administrador',
+                        'title-info' => 'Configura la imagen del logo para tu panel de administración.',
+                    ],
+                ],
+
+                'settings' => [
+                    'title' => 'Configuraciones',
+                    'info'  => 'Actualiza tus configuraciones aquí.',
+
+                    'footer' => [
+                        'info'       => 'Podemos configurar la sección de powered by aquí.',
+                        'powered-by' => 'Editor de texto impulsado por',
+                        'title'      => 'Configuraciones de la Sección Powered by',
+                    ],
+
+                    'menu' => [
+                        'activities'     => 'Actividades',
+                        'configuration'  => 'Configuración',
+                        'contacts'       => 'Contactos',
+                        'dashboard'      => 'Tablero',
+                        'draft'          => 'Borrador',
+                        'inbox'          => 'Bandeja de Entrada',
+                        'info'           => 'Podemos configurar los nombres de los elementos del menú aquí.',
+                        'leads'          => 'Leads',
+                        'mail'           => 'Correo',
+                        'organizations'  => 'Organizaciones',
+                        'outbox'         => 'Bandeja de Salida',
+                        'persons'        => 'Personas',
+                        'products'       => 'Productos',
+                        'quotes'         => 'Cotizaciones',
+                        'sent'           => 'Enviados',
+                        'settings'       => 'Configuraciones',
+                        'title'          => 'Configuraciones de Elementos del Menú',
+                        'trash'          => 'Papelera',
+                    ],
+
+                    'menu-color' => [
+                        'active-background-color' => 'Color de Fondo Activo',
+                        'active-text-color'       => 'Color de Texto Activo',
+                        'info'                    => 'Podemos cambiar los colores de los elementos del menú aquí.',
+                        'text-color'              => 'Color de Texto',
+                        'title'                   => 'Configuraciones de Color de Elementos del Menú',
                     ],
                 ],
             ],

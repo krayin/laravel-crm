@@ -2067,11 +2067,14 @@ return [
 
     'configuration' => [
         'index' => [
-            'back'         => 'Geri',
-            'save-btn'     => 'Yapılandırmayı Kaydet',
-            'save-success' => 'Yapılandırma Başarıyla Kaydedildi.',
-            'search'       => 'Ara',
-            'title'        => 'Yapılandırma',
+            'back'           => 'Geri',
+            'delete'         => 'Sil',
+            'save-btn'       => 'Yapılandırmayı Kaydet',
+            'save-success'   => 'Yapılandırma Başarıyla Kaydedildi.',
+            'search'         => 'Ara',
+            'select-country' => 'Ülke Seç',
+            'select-state'   => 'Eyalet Seç',
+            'title'          => 'Yapılandırma',
 
             'general'  => [
                 'title'   => 'Genel',
@@ -2079,10 +2082,56 @@ return [
 
                 'general' => [
                     'title'           => 'Genel',
-                    'info'            => 'Genel ayarlarınızı buradan güncelleyebilirsiniz.',
+                    'info'            => 'Genel ayarlarınızı burada güncelleyin.',
                     'locale-settings' => [
                         'title'       => 'Yerel Ayarlar',
                         'title-info'  => 'Kullanıcı arayüzünde kullanılan dili tanımlar, örneğin Arapça (ar), İngilizce (en), İspanyolca (es), Farsça (fa) ve Türkçe (tr).',
+                    ],
+
+                    'admin-logo' => [
+                        'logo-image' => 'Logo Resmi',
+                        'title'      => 'Yönetici Logosu',
+                        'title-info' => 'Yönetici paneliniz için logo resmini yapılandırın.',
+                    ],
+                ],
+
+                'settings' => [
+                    'title' => 'Ayarlar',
+                    'info'  => 'Ayarlarınızı burada güncelleyin.',
+
+                    'footer' => [
+                        'info'       => 'Powered by bölümünü burada yapılandırabiliriz.',
+                        'powered-by' => 'Powered by metin düzenleyici',
+                        'title'      => 'Powered by Bölüm Yapılandırmaları',
+                    ],
+
+                    'menu' => [
+                        'activities'     => 'Aktiviteler',
+                        'configuration'  => 'Yapılandırma',
+                        'contacts'       => 'İletişim',
+                        'dashboard'      => 'Gösterge Paneli',
+                        'draft'          => 'Taslak',
+                        'inbox'          => 'Gelen Kutusu',
+                        'info'           => 'Menü öğelerinin adlarını burada yapılandırabiliriz.',
+                        'leads'          => 'Leadler',
+                        'mail'           => 'Mail',
+                        'organizations'  => 'Organizasyonlar',
+                        'outbox'         => 'Gönderilenler',
+                        'persons'        => 'Kişiler',
+                        'products'       => 'Ürünler',
+                        'quotes'         => 'Teklifler',
+                        'sent'           => 'Gönderildi',
+                        'settings'       => 'Ayarlar',
+                        'title'          => 'Menü Öğesi Yapılandırmaları',
+                        'trash'          => 'Çöp Kutusu',
+                    ],
+
+                    'menu-color' => [
+                        'active-background-color' => 'Aktif Arka Plan Rengi',
+                        'active-text-color'       => 'Aktif Metin Rengi',
+                        'info'                    => 'Menü öğelerinin renklerini burada değiştirebiliriz.',
+                        'text-color'              => 'Metin Rengi',
+                        'title'                   => 'Menü Öğesi Renk Yapılandırmaları',
                     ],
                 ],
             ],

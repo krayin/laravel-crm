@@ -32,6 +32,7 @@ class ItemField
         public ?bool $locale_based,
         public array|string $options,
         public bool $is_visible = true,
+        public bool $tinymce = false,
     ) {
         $this->options = $this->getOptions();
     }
@@ -58,6 +59,14 @@ class ItemField
     public function getTitle(): ?string
     {
         return $this->title ?? '';
+    }
+
+    /**
+     * Determine if the field should use TinyMCE.
+     */
+    public function getTinymce(): bool
+    {
+        return $this->tinymce;
     }
 
     /**
@@ -184,6 +193,7 @@ class ItemField
             'locale_based'  => $this->getLocaleBased(),
             'options'       => $this->getOptions(),
             'item_key'      => $this->getItemKey(),
+            'tinymce'       => $this->getTinymce(),
         ];
     }
 
