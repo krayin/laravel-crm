@@ -1948,12 +1948,13 @@ return [
             ],
 
             'upload' => [
-                'create-lead' => 'AI Kullanarak Lead Oluştur',
-                'file'        => 'Dosya Yükle',
-                'file-info'   => 'Sadece PDF formatındaki dosyalar kabul edilir.',
-                'save-btn'    => 'Kaydet',
-                'sample-pdf'  => 'Örnek PDF',
-                'upload-pdf'  => 'PDF Yükle',
+                'create-lead'   => 'AI Kullanarak Lead Oluştur',
+                'file'          => 'Dosya Yükle',
+                'file-info'     => 'Sadece PDF formatındaki dosyalar kabul edilir.',
+                'file-required' => 'Devam etmek için lütfen en az bir geçerli dosya seçin.',
+                'sample-pdf'    => 'Örnek PDF',
+                'save-btn'      => 'Kaydet',
+                'upload-pdf'    => 'PDF Yükle',
             ],
         ],
 

@@ -22,6 +22,9 @@ class Lead
      */
     const PERSON_ENTITY = 'persons';
 
+    /**
+     * Const Variable for OPEN_AI_MODEL_URL.
+     */
     const OPEN_AI_MODEL_URL = 'https://api.openai.com/v1/chat/completions';
 
     /**
@@ -95,6 +98,9 @@ class Lead
         return $data;
     }
 
+    /**
+     * Prepares the lead prompt data.
+     */
     private static function prepareLeadData($finalData)
     {
         return [

@@ -1947,12 +1947,13 @@ return [
             ],
 
             'upload' => [
-                'create-lead' => 'Crear Lead Usando IA',
-                'file'        => 'Subir Archivo',
-                'file-info'   => 'Solo se aceptan archivos en formato PDF.',
-                'save-btn'    => 'Guardar',
-                'sample-pdf'  => 'PDF de Muestra',
-                'upload-pdf'  => 'Subir PDF',
+                'create-lead'   => 'Crear Lead Usando IA',
+                'file'          => 'Subir Archivo',
+                'file-info'     => 'Solo se aceptan archivos en formato PDF.',
+                'file-required' => 'Por favor, selecciona al menos un archivo válido para continuar.',
+                'sample-pdf'    => 'PDF de Muestra',
+                'save-btn'      => 'Guardar',
+                'upload-pdf'    => 'Subir PDF',
             ],
         ],
 

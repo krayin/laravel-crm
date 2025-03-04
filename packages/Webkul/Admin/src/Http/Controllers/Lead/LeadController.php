@@ -669,7 +669,7 @@ class LeadController extends Controller
             ], 400);
         }
 
-        return self::leadCreateMultiple($leadData);
+        return self::createLeads($leadData);
     }
 
     /**
@@ -694,7 +694,7 @@ class LeadController extends Controller
     /**
      * Create multiple leads.
      */
-    private function leadCreateMultiple($data)
+    private function createLeads($data)
     {
         $leads = [];
 

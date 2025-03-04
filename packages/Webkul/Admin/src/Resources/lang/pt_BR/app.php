@@ -1762,12 +1762,13 @@ return [
             ],
 
             'upload' => [
-                'create-lead' => 'Criar Lead Usando AI',
-                'file'        => 'Upload de Arquivo',
-                'file-info'   => 'Apenas arquivos em formato PDF são aceitos.',
-                'save-btn'    => 'Salvar',
-                'sample-pdf'  => 'PDF de Exemplo',
-                'upload-pdf'  => 'Carregar PDF',
+                'create-lead'   => 'Criar Lead Usando AI',
+                'file'          => 'Upload de Arquivo',
+                'file-info'     => 'Apenas arquivos em formato PDF são aceitos.',
+                'file-required' => 'Por favor, selecione pelo menos um arquivo válido para prosseguir.',
+                'sample-pdf'    => 'PDF de Exemplo',
+                'save-btn'      => 'Salvar',
+                'upload-pdf'    => 'Carregar PDF',
             ],
         ],
 
