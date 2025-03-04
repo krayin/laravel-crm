@@ -10,7 +10,7 @@
             <div class="flex flex-col gap-2">
                 {!! view_render_event('admin.settings.groups.index.breadcrumbs.before') !!}
 
-                <!-- Bredcrumbs -->
+                <!-- Breadcrumbs -->
                 <x-admin::breadcrumbs name="settings.groups" />
 
                 {!! view_render_event('admin.settings.groups.index.breadcrumbs.after') !!}
@@ -20,7 +20,7 @@
                 </div>
             </div>
 
-            <div class="flex items-center gap-x-2.5">                
+            <div class="flex items-center gap-x-2.5">
                 <!-- Create button for Group -->
                 <div class="flex items-center gap-x-2.5">
                     {!! view_render_event('admin.settings.groups.index.breadcrumbs.after') !!}
@@ -39,7 +39,7 @@
                 </div>
             </div>
         </div>
-        
+
         <v-group-settings ref="groupSettings">
             <!-- DataGrid Shimmer -->
             <x-admin::shimmer.datagrid />
@@ -52,7 +52,7 @@
             id="group-settings-template"
         >
             {!! view_render_event('admin.settings.groups.index.datagrid.before') !!}
-        
+
             <!-- DataGrid -->
             <x-admin::datagrid
                 :src="route('admin.settings.groups.index')"
@@ -69,7 +69,7 @@
                     <template v-if="isLoading">
                         <x-admin::shimmer.datagrid.table.body />
                     </template>
-        
+
                     <template v-else>
                         <div
                             v-for="record in available.records"
@@ -78,13 +78,13 @@
                         >
                             <!-- Group ID -->
                             <p>@{{ record.id }}</p>
-        
+
                             <!-- Group Name -->
                             <p>@{{ record.name }}</p>
-        
+
                             <!-- Group Description -->
                             <p>@{{ record.description }}</p>
-        
+
                             <!-- Actions -->
                             <div class="flex justify-end">
                                 <a @click="selectedGroup=true; editModal(record.actions.find(action => action.index === 'edit')?.url)">
@@ -94,7 +94,7 @@
                                     >
                                     </span>
                                 </a>
-    
+
                                 <a @click="performAction(record.actions.find(action => action.index === 'delete'))">
                                     <span
                                         :class="record.actions.find(action => action.index === 'delete')?.icon"
@@ -126,9 +126,9 @@
                         <!-- Modal Header -->
                         <x-slot:header>
                             <p class="text-lg font-bold text-gray-800 dark:text-white">
-                                @{{ 
+                                @{{
                                     selectedGroup
-                                    ? "@lang('admin::app.settings.groups.index.edit.title')" 
+                                    ? "@lang('admin::app.settings.groups.index.edit.title')"
                                     : "@lang('admin::app.settings.groups.index.create.title')"
                                 }}
                             </p>
@@ -215,7 +215,7 @@
         <script type="module">
             app.component('v-group-settings', {
                 template: '#group-settings-template',
-        
+
                 data() {
                     return {
                         isProcessing: false,
@@ -223,7 +223,7 @@
                         selectedGroup: false,
                     };
                 },
-        
+
                 computed: {
                     gridsCount() {
                         let count = this.$refs.datagrid.available.columns.length;
@@ -243,10 +243,10 @@
                 methods: {
                     openModal() {
                         this.selectedGroup=false;
-                        
+
                         this.$refs.groupUpdateAndCreateModal.toggle();
                     },
-                    
+
                     updateOrCreate(params, {resetForm, setErrors}) {
                         this.isProcessing = true;
 
@@ -280,7 +280,7 @@
                         this.$axios.get(url)
                             .then(response => {
                                 this.$refs.modalForm.setValues(response.data.data);
-                                
+
                                 this.$refs.groupUpdateAndCreateModal.toggle();
                             })
                             .catch(error => {});
