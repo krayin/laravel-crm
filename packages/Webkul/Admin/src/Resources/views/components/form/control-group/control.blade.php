@@ -233,7 +233,7 @@
         @break
 
     @case('radio')
-        <v-fields
+        <v-field
             type="radio"
             class="hidden"
             v-slot="{ field }"
