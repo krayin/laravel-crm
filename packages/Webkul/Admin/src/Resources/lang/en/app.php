@@ -1946,12 +1946,13 @@ return [
             ],
 
             'upload' => [
-                'create-lead' => 'Create Lead Using AI',
-                'file'        => 'File Upload',
-                'file-info'   => 'Only PDF format files are accepted.',
-                'save-btn'    => 'Save',
-                'sample-pdf'  => 'Sample PDF',
-                'upload-pdf'  => 'Upload PDF',
+                'create-lead'   => 'Create Lead Using AI',
+                'file'          => 'File Upload',
+                'file-info'     => 'Only PDF format files are accepted.',
+                'file-required' => 'Please select at least one valid file to proceed.',
+                'sample-pdf'    => 'Sample PDF',
+                'save-btn'      => 'Save',
+                'upload-pdf'    => 'Upload PDF',
             ],
         ],
 

@@ -643,16 +643,23 @@ class LeadController extends Controller
 
         $leadData = [];
 
+        $errorMessages = [];
+
         foreach (request()->file('files') as $file) {
-            $this->validate(request(), [
-                'file' => 'required_in|extensions:'.$supportedFormats.'|mimes:'.$supportedFormats,
-            ]);
+            $lead = $this->processFile($file, $supportedFormats);
 
-            $extractedData = LeadService::extractDataFromPdf($file->getPathName());
+            if ($lead['status'] === 'error') {
+                $errorMessages[] = $lead['message'];
+            } else {
+                $leadData[] = $lead;
+            }
+        }
 
-            $lead = Lead::mapAIDataToLead($extractedData);
-
-            $leadData[] = $lead;
+        if (empty($leadData) && ! empty($errorMessages)) {
+            return response()->json([
+                'status'  => 'error',
+                'message' => implode(', ', $errorMessages),
+            ], 400);
         }
 
         if (empty($leadData)) {
@@ -663,6 +670,25 @@ class LeadController extends Controller
         }
 
         return self::leadCreateMultiple($leadData);
+    }
+
+    /**
+     * Summary of processFile method.
+     *
+     * @param  mixed  $file
+     * @param  mixed  $supportedFormats
+     */
+    private function processFile($file, $supportedFormats)
+    {
+        $this->validate(request(), [
+            'file' => 'required_in|extensions:'.$supportedFormats.'|mimes:'.$supportedFormats,
+        ]);
+
+        $extractedData = LeadService::extractDataFromPdf($file->getPathName());
+
+        $lead = Lead::mapAIDataToLead($extractedData);
+
+        return $lead;
     }
 
     /**

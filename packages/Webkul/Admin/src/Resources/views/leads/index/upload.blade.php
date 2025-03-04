@@ -46,27 +46,16 @@
                                     @lang('admin::app.leads.index.upload.file')
                                 </x-admin::form.control-group.label>
 
-                                <v-field
-                                    v-slot="{ field, errors }"
-                                    id="files"
+                                <x-admin::form.control-group.control
+                                    type="file"
+                                    id="file"
                                     name="files"
-                                    class="mb-4"
-                                    label="@lang('admin::app.leads.index.upload.file')"
-                                    rules="required|pdf|mimes:pdf"
-                                    @change="handleFileUpload"
-                                >
-                                    <input
-                                        type="file"
-                                        v-bind="{ name: field.name }"
-                                        id="files"
-                                        name="files"
-                                        :class="[errors.length ? 'border !border-red-600 hover:border-red-600' : '']"
-                                        class="w-full rounded border border-gray-200 px-2.5 py-2 text-sm font-normal text-gray-800 transition-all hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:file:bg-gray-800 dark:file:dark:text-white dark:hover:border-gray-400 dark:focus:border-gray-400"
-                                        accept=".pdf"
-                                        ::disabled="isLoading"
-                                        multiple
-                                    />
-                                </v-field>
+                                    rules="required|mimes:pdf"
+                                    :label="trans('admin::app.leads.index.upload.file')"
+                                    ::disabled="isLoading"
+                                    ref="file"
+                                    multiple
+                                />
 
                                 <p class="mt-1 text-xs text-gray-600 dark:text-gray-300">
                                     @lang('admin::app.leads.index.upload.file-info')
@@ -110,19 +99,16 @@
             data() {
                 return {
                     isLoading: false,
-
-                    selectedFiles: [],
                 };
             },
 
             methods: {
-                handleFileUpload(event) {
-                    this.selectedFiles = Array.from(event.target.files);
-                },
-
                 create(params, { resetForm, setErrors }) {
-                    if (this.selectedFiles.length === 0) {
-                        this.$emitter.emit('add-flash', { type: 'error', message: "Please select at least one file." });
+                    const selectedFiles = this.$refs.file?.files;  
+
+                    if (selectedFiles.length === 0) {
+                        this.$emitter.emit('add-flash', { type: 'error', message: "@lang('admin::app.leads.index.upload.file-required')" });
+
                         return;
                     }
 
@@ -130,7 +116,7 @@
 
                     const formData = new FormData();
 
-                    this.selectedFiles.forEach((file, index) => {
+                    selectedFiles.forEach((file, index) => {
                         formData.append(`files[${index}]`, file);
                     });
 
@@ -146,18 +132,15 @@
                         }
                     })
                     .then(response => {
-                        this.isLoading = false;
-
                         this.$emitter.emit('add-flash', { type: 'success', message: response.data.message });
-
-                        this.$refs.userUpdateAndCreateModal.close();
 
                         this.$parent.$refs.leadsKanban.boot()
                     })
                     .catch(error => {
-                        this.isLoading = false;
-
                         this.$emitter.emit('add-flash', { type: 'error', message: error.response.data.message });
+                    })
+                    .finally(() => {
+                        this.isLoading = false;
 
                         this.$refs.userUpdateAndCreateModal.close();
                     });
