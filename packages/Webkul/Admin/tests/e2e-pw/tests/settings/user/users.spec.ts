@@ -14,7 +14,6 @@ test.describe("user management", () => {
          */
         await adminPage.getByRole("button", { name: "Create User" }).click();
 
-
         /**
          * Filling the form with user details.
          */
