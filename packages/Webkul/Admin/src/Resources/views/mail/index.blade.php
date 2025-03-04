@@ -74,7 +74,7 @@
                     </template>
 
                     <template v-else>
-                        <div class="row grid grid-cols-[2fr_7fr_.0.3fr] grid-rows-1 items-center border-b px-8 py-4 dark:border-gray-800">
+                        <div class="row grid grid-cols-[2fr_7fr_.0.3fr] grid-rows-1 items-center border-b px-8 py-4 dark:border-gray-800 max-lg:hidden">
                             <div
                                 class="flex items-center gap-6"
                                 v-for="(columnGroup, index) in [['name'], ['attachments', 'tags', 'subject', 'reply'], ['created_at']]"
@@ -130,6 +130,71 @@
                                 </p>
                             </div>
                         </div>
+                        
+                        <!-- Mobile Sort/Filter Header -->
+                        <div class="hidden border-b bg-gray-50 px-4 py-3 text-black dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 max-lg:block">
+                            <div class="flex items-center justify-between">
+                                <!-- Mass Actions for Mobile -->
+                                <div v-if="available.massActions.length">
+                                    <label for="mass_action_select_all_records_mobile">
+                                        <input
+                                            type="checkbox"
+                                            name="mass_action_select_all_records_mobile"
+                                            id="mass_action_select_all_records_mobile"
+                                            class="peer hidden"
+                                            :checked="['all', 'partial'].includes(applied.massActions.meta.mode)"
+                                            @change="selectAll"
+                                        >
+
+                                        <span
+                                            class="icon-checkbox-outline cursor-pointer rounded-md text-2xl text-gray-500 peer-checked:text-brandColor"
+                                            :class="[
+                                                applied.massActions.meta.mode === 'all' ? 'peer-checked:icon-checkbox-select peer-checked:text-brandColor ' : (
+                                                    applied.massActions.meta.mode === 'partial' ? 'peer-checked:icon-checkbox-multiple peer-checked:brandColor' : ''
+                                                ),
+                                            ]"
+                                        >
+                                        </span>
+                                    </label>
+                                </div>
+                                
+                                <!-- Mobile Sort Dropdown -->
+                                <div v-if="available.columns.some(column => column.sortable)">
+                                    <x-admin::dropdown>
+                                        <x-slot:toggle>
+                                            <div class="flex items-center gap-1">
+                                                <button
+                                                    type="button"
+                                                    class="inline-flex w-full max-w-max cursor-pointer appearance-none items-center justify-between gap-x-2 rounded-md border bg-white px-2.5 py-1.5 text-center leading-6 text-gray-600 transition-all marker:shadow hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 dark:focus:border-gray-400"
+                                                >
+                                                    <span>
+                                                        Sort
+                                                    </span>
+                    
+                                                    <span class="icon-down-arrow text-2xl"></span>
+                                                </button>
+                                            </div>
+                                        </x-slot>
+                
+                                        <x-slot:menu>
+                                            <x-admin::dropdown.menu.item
+                                                v-for="column in available.columns.filter(column => column.sortable && column.visibility)"
+                                                @click="sort(column)"
+                                            >
+                                                <div class="flex items-center gap-2">
+                                                    <span v-html="column.label"></span>
+                                                    <i
+                                                        class="align-text-bottom text-base text-gray-600 dark:text-gray-300"
+                                                        :class="[applied.sort.order === 'asc' ? 'icon-stats-down': 'icon-stats-up']"
+                                                        v-if="column.index == applied.sort.column"
+                                                    ></i>
+                                                </div>
+                                            </x-admin::dropdown.menu.item>
+                                        </x-slot>
+                                    </x-admin::dropdown>
+                                </div>
+                            </div>
+                        </div>
                     </template>
                 </template>
 
@@ -147,13 +212,10 @@
                     </template>
 
                     <template v-else>
+                        <!-- Desktop Table View -->
                         <div
                             v-for="record in available.records"
-                            class="flex cursor-pointer items-center justify-between border-b px-8 py-4 text-gray-600 hover:bg-gray-50 dark:border-gray-800 dark:text-gray-300 dark:hover:bg-gray-950"
-                            :class="{
-                                'font-medium': record.is_read,
-                                'font-semibold': ! record.is_read
-                            }"
+                            class="flex cursor-pointer items-center justify-between border-b px-8 py-4 text-gray-600 hover:bg-gray-50 dark:border-gray-800 dark:text-gray-300 dark:hover:bg-gray-950 max-lg:hidden"
                             @click.stop="selectedMail=true; editModal(record.actions.find(action => action.index === 'edit'))"
                         >
                             <!-- Select Box -->
@@ -234,6 +296,63 @@
                                         <p class="leading-none">@{{ record.created_at }}</p>
                                     </div>
                                 </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Mobile Card View -->
+                        <div
+                            class="hidden border-b px-4 py-4 text-black dark:border-gray-800 dark:text-gray-300 max-lg:block"
+                            v-for="record in available.records"
+                            @click.stop="selectedMail=true; editModal(record.actions.find(action => action.index === 'edit'))"
+                        >
+                            <div class="mb-2 flex items-center justify-between">
+                                <!-- Mass Actions for Mobile Cards -->
+                                <div class="flex w-full items-center justify-between gap-2">
+                                    <p v-if="available.massActions.length">
+                                        <input
+                                            type="checkbox"
+                                            :name="`mass_action_select_record_${record.id}`"
+                                            :id="`mass_action_select_record_${record.id}`"
+                                            :value="record.id"
+                                            class="peer hidden"
+                                            v-model="applied.massActions.indices"
+                                            @click.stop
+                                        >
+
+                                        <label
+                                            class="icon-checkbox-outline peer-checked:icon-checkbox-select cursor-pointer rounded-md text-2xl !text-gray-500 peer-checked:!text-brandColor dark:!text-gray-300"
+                                            :for="`mass_action_select_record_${record.id}`"
+                                            @click.stop
+                                        ></label>
+                                    </p>
+
+                                    <!-- Dot Indicator -->
+                                    <span
+                                        class="h-1.5 w-1.5 rounded-full bg-sky-600 dark:bg-white"
+                                        v-if="! record.is_read"
+                                    ></span>
+                                </div>
+                            </div>
+
+                            <!-- Card Content -->
+                            <div class="grid gap-2">
+                                <template v-for="column in available.columns">
+                                    <div class="flex flex-wrap items-baseline gap-x-2">
+                                        <span 
+                                            :class="{'font-semibold': ! record.is_read}"
+                                            class="text-slate-600 dark:text-gray-300" 
+                                            v-html="column.label + ':'"
+                                        ></span>
+                                        <span                         
+                                            :class="{
+                                                'font-medium': record.is_read,
+                                                'font-semibold': ! record.is_read
+                                            }"
+                                            class="break-words text-slate-900 dark:text-white" 
+                                            v-html="record[column.index]"
+                                        ></span>
+                                    </div>
+                                </template>
                             </div>
                         </div>
                     </template>

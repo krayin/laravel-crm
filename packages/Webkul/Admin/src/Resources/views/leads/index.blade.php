@@ -54,7 +54,7 @@
     {!! view_render_event('admin.leads.index.content.before') !!}
 
     <!-- Content -->
-    <div class="mt-3.5">
+    <div class="[&>*>*>*.toolbarRight]:max-lg:w-full [&>*>*>*.toolbarRight]:max-lg:justify-between [&>*>*>*.toolbarRight]:max-md:gap-y-2 [&>*>*>*.toolbarRight]:max-md:flex-wrap mt-3.5 [&>*>*:nth-child(1)]:max-lg:!flex-wrap">
         @if ((request()->view_type ?? "kanban") == "table")
             @include('admin::leads.index.table')
         @else

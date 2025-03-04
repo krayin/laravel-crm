@@ -102,7 +102,7 @@
                                                     <div class="flex items-center gap-1">
                                                         <span>:</span>
 
-                                                        <span class="max-md:break-all">
+                                                        <span class="break-all">
                                                             @{{ (activity.additional.old.label ? String(activity.additional.old.label).replaceAll('<br>', ' ') : "@lang('admin::app.components.activities.index.empty')") }}
                                                         </span>
 
