@@ -33,11 +33,6 @@ use Webkul\User\Repositories\UserRepository;
 class LeadController extends Controller
 {
     /**
-     * Supported formats.
-     */
-    protected array $supportedFormats = ['pdf'];
-
-    /**
      * Create a new controller instance.
      *
      * @return void
@@ -639,14 +634,12 @@ class LeadController extends Controller
      */
     public function createByAI()
     {
-        $supportedFormats = implode(',', $this->supportedFormats);
-
         $leadData = [];
 
         $errorMessages = [];
 
         foreach (request()->file('files') as $file) {
-            $lead = $this->processFile($file, $supportedFormats);
+            $lead = $this->processFile($file, core()->getConfigData('general.magic_ai.pdf_generation.accepted_types'));
 
             if ($lead['status'] === 'error') {
                 $errorMessages[] = $lead['message'];

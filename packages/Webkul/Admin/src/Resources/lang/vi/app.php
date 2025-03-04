@@ -1770,9 +1770,11 @@ return [
         'destroy-failed'    => 'Không thể xóa khách hàng tiềm năng.',
 
         'file' => [
+            'empty-content'    => 'Nội dung PDF trống hoặc không thể trích xuất.',
             'invalid-format'   => 'Định dạng JSON không hợp lệ.',
             'invalid-response' => 'Định dạng phản hồi AI không hợp lệ.',
-            'not-found'        => 'Không tìm thấy tệp.',
+            'missing-api-key'  => 'Thiếu khóa API hoặc cấu hình mô hình.',
+            'not-found'        => 'Không tìm thấy tệp.'
         ],
 
         'index' => [
@@ -2016,6 +2018,8 @@ return [
                 'info'  => 'Cấu hình Magic AI cho ứng dụng.',
 
                 'settings' => [
+                    'accepted-types'      => 'Các loại tệp được chấp nhận',
+                    'accepted-types-info' => 'Danh sách các loại tệp được chấp nhận cho việc tạo PDF, cách nhau bằng dấu phẩy.',
                     'api-domain'          => 'Tên miền API LLM',
                     'api-domain-info'     => 'Dành cho Olama và Grow, Ví dụ: http://localhost:11434',
                     'api-key'             => 'Khóa API',

@@ -32,6 +32,13 @@ class Lead
      */
     public static function mapAIDataToLead($aiData)
     {
+        if (! empty($aiData['error'])) {
+            return [
+                'status'  => 'error',
+                'message' => $aiData['error'],
+            ];
+        }
+
         $isGeminiModel = str_contains(core()->getConfigData('general.magic_ai.settings.model'), self::GEMINI_MODEL);
 
         $content = $isGeminiModel ? $aiData['candidates'][0]['content']['parts'][0]['text'] : $aiData['choices'][0]['message']['content'];

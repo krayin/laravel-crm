@@ -1873,9 +1873,11 @@ return [
         'destroy-failed'    => 'لا يمكن حذف العميل المحتمل.',
 
         'file' => [
+            'empty-content'    => 'محتوى PDF فارغ أو لم يتمكن من الاستخراج.',
             'invalid-format'   => 'تنسيق JSON غير صالح.',
             'invalid-response' => 'تنسيق استجابة الذكاء الاصطناعي غير صالح.',
-            'not-found'        => 'الملف غير موجود.',
+            'missing-api-key'  => 'مفتاح API أو تكوين النموذج مفقود.',
+            'not-found'        => 'الملف غير موجود.'
         ],
 
         'index' => [
@@ -2120,6 +2122,8 @@ return [
                 'info'  => 'تكوين الذكاء الاصطناعي السحري للتطبيق.',
 
                 'settings' => [
+                    'accepted-types'      => 'الأنواع المقبولة',
+                    'accepted-types-info' => 'قائمة بأنواع الملفات المقبولة لتوليد PDF، مفصولة بفواصل.',
                     'api-domain'          => 'نطاق API لـ LLM',
                     'api-domain-info'     => 'لـ Olama و Grow فقط، مثال: http://localhost:11434',
                     'api-key'             => 'مفتاح API',

@@ -1877,9 +1877,11 @@ return [
         'destroy-failed'    => 'سرنخ قابل حذف نیست.',
 
         'file' => [
+            'empty-content'    => 'محتوای PDF خالی است یا نمی‌توان آن را استخراج کرد.',
             'invalid-format'   => 'فرمت JSON نامعتبر است.',
             'invalid-response' => 'فرمت پاسخ AI نامعتبر است.',
-            'not-found'        => 'فایل یافت نشد.',
+            'missing-api-key'  => 'کلید API یا پیکربندی مدل گم شده است.',
+            'not-found'        => 'فایل یافت نشد.'
         ],
 
         'index' => [
@@ -2163,6 +2165,8 @@ return [
                 'info'  => 'پیکربندی هوش مصنوعی جادویی برای برنامه.',
 
                 'settings' => [
+                    'accepted-types'      => 'انواع پذیرفته شده',
+                    'accepted-types-info' => 'لیست انواع فایل‌های پذیرفته شده برای تولید PDF به صورت جدا شده با کاما.',
                     'api-domain'          => 'دامنه API LLM',
                     'api-domain-info'     => 'فقط برای Olama و Grow، مثال: http://localhost:11434',
                     'api-key'             => 'کلید API',

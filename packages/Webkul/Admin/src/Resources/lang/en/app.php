@@ -1875,9 +1875,11 @@ return [
         'destroy-failed'    => 'Lead can not be deleted.',
 
         'file' => [
+            'empty-content'    => 'PDF content is empty or could not be extracted.',
             'invalid-format'   => 'Invalid JSON format.',
             'invalid-response' => 'Invalid AI response format.',
-            'not-found'        => 'File not found.',
+            'missing-api-key'  => 'Missing API key or model configuration.',
+            'not-found'        => 'File not found.'
         ],
 
         'index' => [
@@ -2159,8 +2161,10 @@ return [
                 'info'  => 'Magic AI configuration for the application.',
 
                 'settings' => [
+                    'accepted-types'      => 'Accepted types',
+                    'accepted-types-info' => 'Comma separated list of file types that are accepted for PDF generation.',
                     'api-domain'          => 'LLM API Domain',
-                    'api-domain-info'     => ' For Olama And Grow only, Exp:- http://localhost:11434',
+                    'api-domain-info'     => 'For Olama And Grow only, Exp:- http://localhost:11434',
                     'api-key'             => 'API Key',
                     'api-key-info'        => 'Please ensure that you use a unique API key for each model type to maintain optimal performance and security.',
                     'enable'              => 'Enable',

@@ -7,6 +7,26 @@ use Exception;
 class GeminiService
 {
     /**
+     * Const variable temperature.
+     */
+    private const TEMPERATURE = 0.2;
+
+    /**
+     * Const variable topK.
+     */
+    private const TOP_K = 30;
+
+    /**
+     * Const variable topP.
+     */
+    private const TOP_P = 0.8;
+
+    /**
+     * Const variable maxOutputTokens.
+     */
+    private const MAX_OUTPUT_TOKENS = 512;
+
+    /**
      * Send Request to Gemini AI.
      */
     public static function ask($prompt, $model, $apiKey)
@@ -78,10 +98,10 @@ class GeminiService
                 ],
             ],
             'generationConfig' => [
-                'temperature'     => 0.2,
-                'topK'            => 30,
-                'topP'            => 0.8,
-                'maxOutputTokens' => 512,
+                'temperature'     => self::TEMPERATURE,
+                'topK'            => self::TOP_K,
+                'topP'            => self::TOP_P,
+                'maxOutputTokens' => self::MAX_OUTPUT_TOKENS,
             ],
         ];
     }

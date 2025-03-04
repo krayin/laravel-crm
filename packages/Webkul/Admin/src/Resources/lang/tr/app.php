@@ -1877,9 +1877,11 @@ return [
         'destroy-failed'    => 'Lead silinemedi.',
 
         'file' => [
+            'empty-content'    => 'PDF içeriği boş veya çıkarılamadı.',
             'invalid-format'   => 'Geçersiz JSON formatı.',
             'invalid-response' => 'Geçersiz AI yanıt formatı.',
-            'not-found'        => 'Dosya bulunamadı.',
+            'missing-api-key'  => 'API anahtarı veya model yapılandırması eksik.',
+            'not-found'        => 'Dosya bulunamadı.'
         ],
 
         'index' => [
@@ -2163,6 +2165,8 @@ return [
                 'info'  => 'Uygulama için Sihirli AI yapılandırması.',
 
                 'settings' => [
+                    'accepted-types'      => 'Kabul edilen türler',
+                    'accepted-types-info' => 'PDF oluşturma için kabul edilen dosya türlerinin virgülle ayrılmış listesi.',
                     'api-domain'          => 'LLM API Alanı',
                     'api-domain-info'     => 'Sadece Olama ve Grow için, Ör: http://localhost:11434',
                     'api-key'             => 'API Anahtarı',
