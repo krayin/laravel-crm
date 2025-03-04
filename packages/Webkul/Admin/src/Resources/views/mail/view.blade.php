@@ -250,20 +250,43 @@
 
                     {!! view_render_event('admin.mail.view.attach.before', ['email' => $email]) !!}
 
-                    <div
+                    <div                         
                         class="flex flex-wrap gap-2"
                         v-if="email.attachments.length"
                     >
-                        <a
-                            :href="'{{ route('admin.mail.attachment_download') }}/' + attachment.id"
-                            class="flex cursor-pointer items-center gap-1 rounded-md p-1.5"
+                        <div
+                            class="group relative flex items-center gap-2 rounded-md border border-gray-300 bg-gray-100 px-2 py-1.5 dark:border-gray-800 dark:bg-gray-900"
                             target="_blank"
                             v-for="attachment in email.attachments"
                         >
-                            <span class="icon-attached-file text-xl"></span>
+                            <!-- Thumbnail or Icon -->
+                            <div class="flex items-center gap-2">
+                                <template v-if="isImage(attachment.path)">
+                                    <span class="icon-image text-2xl"></span>
+                                </template>
+                                
+                                <template v-else-if="isVideo(attachment.path)">
+                                    <span class="icon-video text-2xl"></span>
+                                </template>
+                                
+                                <template v-else-if="isDocument(attachment.path)">
+                                    <span class="icon-file text-2xl"></span>
+                                </template>
 
-                            <span class="font-medium text-brandColor">@{{ attachment.name }}</span>
-                        </a>
+                                <template v-else>
+                                    <span class="icon-attachment text-2xl"></span>
+                                </template>
+                            </div>
+                    
+                            <span class="max-w-[400px] truncate dark:text-white">
+                                @{{ attachment.name || attachment.path }} 
+                            </span>
+
+                            <a 
+                                class="icon-download absolute right-0 rounded-md bg-gradient-to-r from-transparent via-gray-50 to-gray-100 p-2 pl-8 text-xl opacity-0 transition-all group-hover:opacity-100 dark:via-gray-900 dark:to-gray-900"
+                                :href="'{{ route('admin.mail.attachment_download') }}/' + attachment.id"
+                            ></a>
+                        </div>
                     </div>
 
                     {!! view_render_event('admin.mail.view.attach.after', ['email' => $email]) !!}
@@ -1257,6 +1280,18 @@
                 emits: ['on-discard', 'on-email-action'],
 
                 methods: {
+                    isImage(path) {
+                        return /\.(jpg|jpeg|png|gif|webp)$/i.test(path);
+                    },
+                    
+                    isVideo(path) {
+                        return /\.(mp4|avi|mov|wmv|mkv)$/i.test(path);
+                    },
+        
+                    isDocument(path) {
+                        return /\.(pdf|docx?|xlsx?|pptx?)$/i.test(path);
+                    },
+                    
                     emailAction(type) {
                         if (type != 'delete') {
                             this.$emit('on-email-action', {type, email: this.email});

@@ -28,6 +28,10 @@
   }
 
 @layer components {
+    .icon-image:before {
+        content: "\e956";
+    }
+      
     .icon-bookmark:before {
         content: "\e92c";
     }
