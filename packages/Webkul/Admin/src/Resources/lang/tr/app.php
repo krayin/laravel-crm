@@ -1122,6 +1122,7 @@ return [
                         'name'        => 'Ad',
                         'date'        => 'Tarih',
                         'description' => 'Açıklama',
+                        'save-btn'    => 'Etkinliği Kaydet',
                     ],
 
                     'edit' => [
