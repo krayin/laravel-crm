@@ -1121,6 +1121,7 @@ return [
                         'name'        => 'Nombre',
                         'date'        => 'Fecha',
                         'description' => 'Descripción',
+                        'save-btn'    => 'Guardar Evento',
                     ],
 
                     'edit' => [
@@ -1875,6 +1876,14 @@ return [
         'destroy-success'   => 'Lead eliminado exitosamente.',
         'destroy-failed'    => 'No se puede eliminar el lead.',
 
+        'file' => [
+            'empty-content'    => 'El contenido del PDF está vacío o no se pudo extraer.',
+            'invalid-format'   => 'Formato JSON inválido.',
+            'invalid-response' => 'Formato de respuesta de IA inválido.',
+            'missing-api-key'  => 'Falta la clave API o la configuración del modelo.',
+            'not-found'        => 'Archivo no encontrado.',
+        ],
+
         'index' => [
             'title'      => 'Leads',
             'create-btn' => 'Crear Lead',
@@ -1938,6 +1947,16 @@ return [
             'view-switcher' => [
                 'all-pipelines'       => 'Todos los Canales',
                 'create-new-pipeline' => 'Crear Nuevo Canal',
+            ],
+
+            'upload' => [
+                'create-lead'   => 'Crear Lead Usando IA',
+                'file'          => 'Subir Archivo',
+                'file-info'     => 'Solo se aceptan archivos en formato PDF.',
+                'file-required' => 'Por favor, selecciona al menos un archivo válido para continuar.',
+                'sample-pdf'    => 'PDF de Muestra',
+                'save-btn'      => 'Guardar',
+                'upload-pdf'    => 'Subir PDF',
             ],
         ],
 
@@ -2051,11 +2070,14 @@ return [
 
     'configuration' => [
         'index' => [
-            'back'         => 'Volver',
-            'save-btn'     => 'Guardar Configuración',
-            'save-success' => 'Configuración Guardada Exitosamente.',
-            'search'       => 'Buscar',
-            'title'        => 'Configuración',
+            'back'           => 'Regresar',
+            'delete'         => 'Eliminar',
+            'save-btn'       => 'Guardar Configuración',
+            'save-success'   => 'Configuración Guardada Exitosamente.',
+            'search'         => 'Buscar',
+            'select-country' => 'Seleccionar País',
+            'select-state'   => 'Seleccionar Estado',
+            'title'          => 'Configuración',
 
             'general'  => [
                 'title'   => 'General',
@@ -2063,31 +2085,106 @@ return [
 
                 'general' => [
                     'title'           => 'General',
-                    'info'            => 'Actualiza tus ajustes generales aquí.',
+                    'info'            => 'Actualiza tus configuraciones generales aquí.',
                     'locale-settings' => [
-                        'title'       => 'Configuración Regional',
-                        'title-info'  => 'Define el idioma utilizado en la interfaz de usuario, como árabe (ar), inglés (en), español (es), persa (fa) y turco (tr).',
+                        'title'       => 'Configuraciones de Idioma',
+                        'title-info'  => 'Define el idioma utilizado en la interfaz de usuario, como Árabe (ar), Inglés (en), Español (es), Persa (fa) y Turco (tr).',
+                    ],
+
+                    'admin-logo' => [
+                        'logo-image' => 'Imagen del Logo',
+                        'title'      => 'Logo del Administrador',
+                        'title-info' => 'Configura la imagen del logo para tu panel de administración.',
+                    ],
+                ],
+
+                'settings' => [
+                    'title' => 'Configuraciones',
+                    'info'  => 'Actualiza tus configuraciones aquí.',
+
+                    'footer' => [
+                        'info'       => 'Podemos configurar la sección de powered by aquí.',
+                        'powered-by' => 'Editor de texto impulsado por',
+                        'title'      => 'Configuraciones de la Sección Powered by',
+                    ],
+
+                    'menu' => [
+                        'activities'     => 'Actividades',
+                        'configuration'  => 'Configuración',
+                        'contacts'       => 'Contactos',
+                        'dashboard'      => 'Tablero',
+                        'draft'          => 'Borrador',
+                        'inbox'          => 'Bandeja de Entrada',
+                        'info'           => 'Podemos configurar los nombres de los elementos del menú aquí.',
+                        'leads'          => 'Leads',
+                        'mail'           => 'Correo',
+                        'organizations'  => 'Organizaciones',
+                        'outbox'         => 'Bandeja de Salida',
+                        'persons'        => 'Personas',
+                        'products'       => 'Productos',
+                        'quotes'         => 'Cotizaciones',
+                        'sent'           => 'Enviados',
+                        'settings'       => 'Configuraciones',
+                        'title'          => 'Configuraciones de Elementos del Menú',
+                        'trash'          => 'Papelera',
+                    ],
+
+                    'menu-color' => [
+                        'active-background-color' => 'Color de Fondo Activo',
+                        'active-text-color'       => 'Color de Texto Activo',
+                        'info'                    => 'Podemos cambiar los colores de los elementos del menú aquí.',
+                        'text-color'              => 'Color de Texto',
+                        'title'                   => 'Configuraciones de Color de Elementos del Menú',
                     ],
                 ],
             ],
 
             'email' => [
-                'title' => 'Email Settings',
-                'info'  => 'Email configuration for the application.',
+                'title' => 'Configuración de Correo Electrónico',
+                'info'  => 'Configuración de correo electrónico para la aplicación.',
 
                 'imap' => [
-                    'title' => 'IMAP Settings',
-                    'info'  => 'IMAP email configuration for receiving emails.',
+                    'title' => 'Configuración IMAP',
+                    'info'  => 'Configuración de correo electrónico IMAP para recibir correos electrónicos.',
 
                     'account' => [
-                        'title'         => 'IMAP Account',
-                        'title-info'    => 'Configure your IMAP account settings here.',
+                        'title'         => 'Cuenta IMAP',
+                        'title-info'    => 'Configura los ajustes de tu cuenta IMAP aquí.',
                         'host'          => 'Host',
-                        'port'          => 'Port',
-                        'encryption'    => 'Encryption Type',
-                        'validate-cert' => 'Validate SSL Certificate',
-                        'username'      => 'IMAP Username',
-                        'password'      => 'IMAP Password',
+                        'port'          => 'Puerto',
+                        'encryption'    => 'Tipo de Cifrado',
+                        'validate-cert' => 'Validar Certificado SSL',
+                        'username'      => 'Nombre de Usuario IMAP',
+                        'password'      => 'Contraseña IMAP',
+                    ],
+                ],
+            ],
+
+            'magic-ai' => [
+                'title' => 'Magic AI',
+                'info'  => 'Configuración de Magic AI para la aplicación.',
+
+                'settings' => [
+                    'accepted-types'      => 'Tipos aceptados',
+                    'accepted-types-info' => 'Lista separada por comas de tipos de archivos que se aceptan para la generación de PDF.',
+                    'api-domain'          => 'Dominio de la API de LLM',
+                    'api-domain-info'     => 'Solo para Olama y Grow, Ejemplo: http://localhost:11434',
+                    'api-key'             => 'Clave API',
+                    'api-key-info'        => 'Asegúrese de usar una clave API única para cada tipo de modelo para mantener un rendimiento y seguridad óptimos.',
+                    'enable'              => 'Habilitar',
+                    'info'                => 'Mejore su experiencia con la función Magic AI ingresando su clave API exclusiva e indicando la integración sin esfuerzo. Tome el control de sus credenciales de OpenAI y personalice la configuración según sus necesidades específicas.',
+                    'pdf-generation'      => 'Generación de PDF',
+                    'pdf-generation-info' => 'Habilite la función de Generación de PDF para extraer automáticamente datos de archivos PDF y convertirlos en formato de texto. Mejore su productividad y eficiencia habilitando esta función para optimizar su flujo de trabajo.',
+                    'title'               => 'Configuraciones Generales',
+
+                    'models'     => [
+                        'deepseek-r1'  => 'DeepSeek-R1 8db',
+                        'gemini-flash' => 'Gemini-1.5 Flash',
+                        'gpt-4o'       => 'GPT-4.0',
+                        'gpt-4o-mini'  => 'GPT-4.0 mini',
+                        'llama'        => 'Llama 3.3 (Groq)',
+                        'ollama'       => 'Ollama (llama3.2:latest)',
+                        'title'        => 'Modelos',
                     ],
                 ],
             ],

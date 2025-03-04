@@ -21,11 +21,11 @@
         <!-- Total Sales Section -->
         <template v-else>
             <div class="box-shadow rounded-lg border border-gray-200 bg-white p-4 dark:border-gray-800 dark:bg-gray-900">
-                <div class="flex gap-4">
+                <div class="flex gap-4 max-md:flex-wrap">
                     <!-- Total Revenue -->
-                    <div class="flex flex-col gap-2">
+                    <div class="flex gap-2 max-md:flex-wrap md:flex-col">
                         <!-- Won Revenue Card -->
-                        <div class="flex flex-col gap-2 rounded-lg border border-gray-200 px-4 py-5 dark:border-gray-800">
+                        <div class="flex flex-col gap-2 rounded-lg border border-gray-200 px-4 py-5 dark:border-gray-800 max-sm:w-full">
                             <p class="text-xs font-medium text-gray-600 dark:text-gray-300">
                                 @lang('admin::app.dashboard.index.revenue.won-revenue')
                             </p>
@@ -51,8 +51,8 @@
                             </div>
                         </div>
 
-                        <!-- Lost Reveneue Card -->
-                        <div class="flex flex-col gap-2 rounded-lg border border-gray-200 px-4 py-5 dark:border-gray-800">
+                        <!-- Lost Revenue Card -->
+                        <div class="flex flex-col gap-2 rounded-lg border border-gray-200 px-4 py-5 dark:border-gray-800 max-sm:w-full">
                             <p class="text-xs font-medium text-gray-600 dark:text-gray-300">
                                 @lang('admin::app.dashboard.index.revenue.lost-revenue')
                             </p>

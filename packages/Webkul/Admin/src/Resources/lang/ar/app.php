@@ -1118,6 +1118,7 @@ return [
                         'name'        => 'الاسم',
                         'date'        => 'التاريخ',
                         'description' => 'الوصف',
+                        'save-btn'    => 'حفظ الحدث',
                     ],
 
                     'edit' => [
@@ -1872,6 +1873,14 @@ return [
         'destroy-success'   => 'تم حذف العميل المحتمل بنجاح.',
         'destroy-failed'    => 'لا يمكن حذف العميل المحتمل.',
 
+        'file' => [
+            'empty-content'    => 'محتوى PDF فارغ أو لم يتمكن من الاستخراج.',
+            'invalid-format'   => 'تنسيق JSON غير صالح.',
+            'invalid-response' => 'تنسيق استجابة الذكاء الاصطناعي غير صالح.',
+            'missing-api-key'  => 'مفتاح API أو تكوين النموذج مفقود.',
+            'not-found'        => 'الملف غير موجود.',
+        ],
+
         'index' => [
             'title'      => 'العملاء المحتملون',
             'create-btn' => 'إنشاء عميل محتمل',
@@ -1935,6 +1944,16 @@ return [
             'view-switcher' => [
                 'all-pipelines'       => 'كل المسارات',
                 'create-new-pipeline' => 'إنشاء مسار جديد',
+            ],
+
+            'upload' => [
+                'create-lead'   => 'إنشاء عميل محتمل باستخدام الذكاء الاصطناعي',
+                'file'          => 'تحميل ملف',
+                'file-info'     => 'يتم قبول ملفات بصيغة PDF فقط.',
+                'file-required' => 'يرجى اختيار ملف صالح واحد على الأقل للمتابعة.',
+                'sample-pdf'    => 'نموذج PDF',
+                'save-btn'      => 'حفظ',
+                'upload-pdf'    => 'تحميل PDF',
             ],
         ],
 
@@ -2048,44 +2067,123 @@ return [
 
     'configuration' => [
         'index' => [
-            'back'         => 'رجوع',
-            'save-btn'     => 'حفظ الإعدادات',
-            'save-success' => 'تم حفظ الإعدادات بنجاح.',
-            'search'       => 'بحث',
-            'title'        => 'الإعدادات',
+            'back'           => 'رجوع',
+            'delete'         => 'حذف',
+            'save-btn'       => 'حفظ التكوين',
+            'save-success'   => 'تم حفظ التكوين بنجاح.',
+            'search'         => 'بحث',
+            'select-country' => 'اختر الدولة',
+            'select-state'   => 'اختر الولاية',
+            'title'          => 'التكوين',
 
             'general'  => [
                 'title'   => 'عام',
-                'info'    => 'الإعدادات العامة',
+                'info'    => 'تكوين عام',
 
                 'general' => [
                     'title'           => 'عام',
                     'info'            => 'قم بتحديث إعداداتك العامة هنا.',
+
                     'locale-settings' => [
                         'title'       => 'إعدادات اللغة',
-                        'title-info'  => 'يحدد اللغة المستخدمة في واجهة المستخدم، مثل العربية (ar)، الإنجليزية (en)، الإسبانية (es)، الفارسية (fa) والتركية (tr).',
+                        'title-info'  => 'تعريف اللغة المستخدمة في واجهة المستخدم، مثل العربية (ar)، الإنجليزية (en)، الإسبانية (es)، الفارسية (fa) والتركية (tr).',
+                    ],
+
+                    'admin-logo' => [
+                        'logo-image' => 'صورة الشعار',
+                        'title'      => 'شعار الإدارة',
+                        'title-info' => 'تكوين صورة الشعار للوحة الإدارة الخاصة بك.',
                     ],
                 ],
             ],
 
             'email' => [
-                'title' => 'Email Settings',
-                'info'  => 'Email configuration for the application.',
+                'title' => 'إعدادات البريد الإلكتروني',
+                'info'  => 'تكوين البريد الإلكتروني للتطبيق.',
 
                 'imap' => [
-                    'title' => 'IMAP Settings',
-                    'info'  => 'IMAP email configuration for receiving emails.',
+                    'title' => 'إعدادات IMAP',
+                    'info'  => 'تكوين البريد الإلكتروني IMAP لتلقي الرسائل.',
 
                     'account' => [
-                        'title'         => 'IMAP Account',
-                        'title-info'    => 'Configure your IMAP account settings here.',
-                        'host'          => 'Host',
-                        'port'          => 'Port',
-                        'encryption'    => 'Encryption Type',
-                        'validate-cert' => 'Validate SSL Certificate',
-                        'username'      => 'IMAP Username',
-                        'password'      => 'IMAP Password',
+                        'title'         => 'حساب IMAP',
+                        'title-info'    => 'قم بتكوين إعدادات حساب IMAP هنا.',
+                        'host'          => 'المضيف',
+                        'port'          => 'المنفذ',
+                        'encryption'    => 'نوع التشفير',
+                        'validate-cert' => 'التحقق من شهادة SSL',
+                        'username'      => 'اسم مستخدم IMAP',
+                        'password'      => 'كلمة مرور IMAP',
                     ],
+                ],
+            ],
+
+            'magic-ai' => [
+                'title' => 'الذكاء الاصطناعي السحري',
+                'info'  => 'تكوين الذكاء الاصطناعي السحري للتطبيق.',
+
+                'settings' => [
+                    'accepted-types'      => 'الأنواع المقبولة',
+                    'accepted-types-info' => 'قائمة بأنواع الملفات المقبولة لتوليد PDF، مفصولة بفواصل.',
+                    'api-domain'          => 'نطاق API لـ LLM',
+                    'api-domain-info'     => 'لـ Olama و Grow فقط، مثال: http://localhost:11434',
+                    'api-key'             => 'مفتاح API',
+                    'api-key-info'        => 'يرجى التأكد من استخدام مفتاح API فريد لكل نوع نموذج للحفاظ على الأداء الأمثل والأمان.',
+                    'enable'              => 'تمكين',
+                    'info'                => 'عزز تجربتك مع ميزة الذكاء الاصطناعي السحري عن طريق إدخال مفتاح API الحصري الخاص بك وتوضيح التكامل السهل. استحوذ على التحكم في بيانات اعتماد OpenAI الخاصة بك وقم بتخصيص الإعدادات وفقًا لاحتياجاتك الخاصة.',
+                    'pdf-generation'      => 'توليد PDF',
+                    'pdf-generation-info' => 'قم بتمكين ميزة توليد PDF لاستخراج البيانات تلقائيًا من ملفات PDF وتحويلها إلى تنسيق نصي. عزز إنتاجيتك وكفاءتك بتمكين هذه الميزة لتبسيط سير العمل الخاص بك.',
+                    'title'               => 'الإعدادات العامة',
+
+                    'models' => [
+                        'deepseek-r1'  => 'DeepSeek-R1 8db',
+                        'gemini-flash' => 'Gemini-1.5 Flash',
+                        'gpt-4o'       => 'GPT-4.0',
+                        'gpt-4o-mini'  => 'GPT-4.0 mini',
+                        'llama'        => 'Llama 3.3 (Groq)',
+                        'ollama'       => 'Ollama (llama3.2:latest)',
+                        'title'        => 'النماذج',
+                    ],
+                ],
+            ],
+
+            'settings' => [
+                'title' => 'الإعدادات',
+                'info'  => 'قم بتحديث إعداداتك هنا.',
+
+                'footer' => [
+                    'info'       => 'يمكننا تكوين قسم "مشغل بواسطة" هنا.',
+                    'powered-by' => 'مشغل بواسطة',
+                    'title'      => 'تكوينات قسم "مشغل بواسطة"',
+                ],
+
+                'menu' => [
+                    'activities'     => 'الأنشطة',
+                    'configuration'  => 'التكوين',
+                    'contacts'       => 'جهات الاتصال',
+                    'dashboard'      => 'لوحة القيادة',
+                    'draft'          => 'مسودة',
+                    'inbox'          => 'الوارد',
+                    'info'           => 'يمكننا تكوين أسماء عناصر القائمة هنا.',
+                    'leads'          => 'العملاء المحتملين',
+                    'mail'           => 'البريد',
+                    'organizations'  => 'المنظمات',
+                    'outbox'         => 'الصادر',
+                    'persons'        => 'الأشخاص',
+                    'products'       => 'المنتجات',
+                    'quotes'         => 'عروض الأسعار',
+                    'sent'           => 'المرسل',
+                    'settings'       => 'الإعدادات',
+                    'title'          => 'تكوينات عناصر القائمة',
+                    'trash'          => 'المهملات',
+                ],
+
+                'menu-color' => [
+                    'active-background-color' => 'لون الخلفية النشطة',
+                    'active-text-color'       => 'لون النص النشط',
+                    'info'                    => 'يمكننا تغيير ألوان عناصر القائمة هنا.',
+                    'text-color'              => 'لون النص',
+                    'title'                   => 'تكوينات ألوان عناصر القائمة',
                 ],
             ],
         ],

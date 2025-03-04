@@ -15,6 +15,7 @@ Homestead.yaml
 /node_modules
 npm-debug.log
 package-lock.json
+/playwright-report
 /public/css
 /public/js
 /public/hot
@@ -26,3 +27,9 @@ package-lock.json
 /vendor
 yarn.lock
 yarn-error.log
+
+# Playwright
+node_modules/
+/test-results/
+/blob-report/
+/playwright/.cache/

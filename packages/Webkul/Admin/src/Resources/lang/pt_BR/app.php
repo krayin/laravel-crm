@@ -1090,6 +1090,78 @@ return [
             ],
         ],
 
+        'marketing' => [
+            'events' => [
+                'index' => [
+                    'create-btn'          => 'Criar Evento',
+                    'title'               => 'Eventos',
+                    'create-success'      => 'Evento criado com sucesso.',
+                    'update-success'      => 'Evento atualizado com sucesso.',
+                    'delete-success'      => 'Evento excluído com sucesso.',
+                    'delete-failed'       => 'Não é possível excluir o evento.',
+                    'mass-delete-success' => 'Eventos excluídos com sucesso',
+
+                    'datagrid'   => [
+                        'delete'       => 'Excluir',
+                        'edit'         => 'Editar',
+                        'id'           => 'ID',
+                        'name'         => 'Nome',
+                        'description'  => 'Descrição',
+                        'date'         => 'Data',
+                    ],
+
+                    'create'     => [
+                        'title'       => 'Criar Evento',
+                        'name'        => 'Nome',
+                        'date'        => 'Data',
+                        'description' => 'Descrição',
+                        'save-btn'    => 'Salvar Evento',
+                    ],
+
+                    'edit' => [
+                        'title' => 'Editar Evento',
+                    ],
+                ],
+            ],
+
+            'campaigns' => [
+                'index' => [
+                    'create-btn'          => 'Criar Campanha',
+                    'title'               => 'Campanhas',
+                    'create-success'      => 'Campanha criada com sucesso.',
+                    'update-success'      => 'Campanha atualizada com sucesso.',
+                    'delete-success'      => 'Campanha excluída com sucesso.',
+                    'delete-failed'       => 'Não é possível excluir a campanha.',
+                    'mass-delete-success' => 'Campanhas excluídas com sucesso',
+
+                    'datagrid'   => [
+                        'id'       => 'ID',
+                        'name'     => 'Nome',
+                        'subject'  => 'Assunto',
+                        'status'   => 'Status',
+                        'active'   => 'Ativo',
+                        'inactive' => 'Inativo',
+                        'edit'     => 'Editar',
+                        'delete'   => 'Excluir',
+                    ],
+
+                    'create'     => [
+                        'title'          => 'Criar Campanha',
+                        'name'           => 'Nome',
+                        'type'           => 'Tipo',
+                        'subject'        => 'Assunto',
+                        'event'          => 'Evento',
+                        'email-template' => 'Modelo de Email',
+                        'status'         => 'Status',
+                    ],
+
+                    'edit' => [
+                        'title' => 'Editar Campanha',
+                    ],
+                ],
+            ],
+        ],
+
         'tags' => [
             'index' => [
                 'create-btn'     => 'Criar Tag',
@@ -1690,6 +1762,14 @@ return [
         'destroy-success'   => 'Lead excluído com sucesso.',
         'destroy-failed'    => 'Lead não pode ser excluído.',
 
+        'file' => [
+            'empty-content'    => 'O conteúdo do PDF está vazio ou não pôde ser extraído.',
+            'invalid-format'   => 'Formato JSON inválido.',
+            'invalid-response' => 'Formato de resposta AI inválido.',
+            'missing-api-key'  => 'Chave API ou configuração do modelo ausente.',
+            'not-found'        => 'Arquivo não encontrado.',
+        ],
+
         'index' => [
             'title'      => 'Leads',
             'create-btn' => 'Criar Lead',
@@ -1753,6 +1833,16 @@ return [
             'view-switcher' => [
                 'all-pipelines'       => 'Todos os Pipelines',
                 'create-new-pipeline' => 'Criar Novo Pipeline',
+            ],
+
+            'upload' => [
+                'create-lead'   => 'Criar Lead Usando AI',
+                'file'          => 'Upload de Arquivo',
+                'file-info'     => 'Apenas arquivos em formato PDF são aceitos.',
+                'file-required' => 'Por favor, selecione pelo menos um arquivo válido para prosseguir.',
+                'sample-pdf'    => 'PDF de Exemplo',
+                'save-btn'      => 'Salvar',
+                'upload-pdf'    => 'Carregar PDF',
             ],
         ],
 
@@ -1866,11 +1956,14 @@ return [
 
     'configuration' => [
         'index' => [
-            'back'         => 'Voltar',
-            'save-btn'     => 'Salvar Configuração',
-            'save-success' => 'Configuração salva com sucesso.',
-            'search'       => 'Buscar',
-            'title'        => 'Configuração',
+            'back'           => 'Voltar',
+            'delete'         => 'Excluir',
+            'save-btn'       => 'Salvar Configuração',
+            'save-success'   => 'Configuração Salva com Sucesso.',
+            'search'         => 'Pesquisar',
+            'select-country' => 'Selecionar País',
+            'select-state'   => 'Selecionar Estado',
+            'title'          => 'Configuração',
 
             'general'  => [
                 'title'   => 'Geral',
@@ -1879,10 +1972,107 @@ return [
                 'general' => [
                     'title'           => 'Geral',
                     'info'            => 'Atualize suas configurações gerais aqui.',
+
                     'locale-settings' => [
-                        'title'       => 'Configurações de Localização',
-                        'title-info'  => 'Define o idioma usado na interface do usuário, como Inglês (en), Francês (fr) ou Japonês (ja).',
+                        'title'       => 'Configurações de Localidade',
+                        'title-info'  => 'Define o idioma usado na interface do usuário, como Árabe (ar), Inglês (en), Espanhol (es), Persa (fa) e Turco (tr).',
                     ],
+
+                    'admin-logo' => [
+                        'logo-image' => 'Imagem do Logo',
+                        'title'      => 'Logo do Admin',
+                        'title-info' => 'Configure a imagem do logo para o seu painel de administração.',
+                    ],
+                ],
+            ],
+
+            'email' => [
+                'title' => 'Configurações de Email',
+                'info'  => 'Configuração de email para a aplicação.',
+
+                'imap' => [
+                    'title' => 'Configurações IMAP',
+                    'info'  => 'Configuração de email IMAP para receber emails.',
+
+                    'account' => [
+                        'title'         => 'Conta IMAP',
+                        'title-info'    => 'Configure as configurações da sua conta IMAP aqui.',
+                        'host'          => 'Host',
+                        'port'          => 'Porta',
+                        'encryption'    => 'Tipo de Criptografia',
+                        'validate-cert' => 'Validar Certificado SSL',
+                        'username'      => 'Nome de Usuário IMAP',
+                        'password'      => 'Senha IMAP',
+                    ],
+                ],
+            ],
+
+            'magic-ai' => [
+                'title' => 'Magic AI',
+                'info'  => 'Configuração do Magic AI para a aplicação.',
+
+                'settings' => [
+                    'accepted-types'      => 'Tipos aceitos',
+                    'accepted-types-info' => 'Lista separada por vírgulas de tipos de arquivos aceitos para geração de PDF.',
+                    'api-domain'          => 'Domínio da API LLM',
+                    'api-domain-info'     => 'Para Olama e Grow apenas, Ex: http://localhost:11434',
+                    'api-key'             => 'Chave API',
+                    'api-key-info'        => 'Certifique-se de usar uma chave API exclusiva para cada tipo de modelo para manter o desempenho e a segurança ideais.',
+                    'enable'              => 'Habilitar',
+                    'info'                => 'Melhore sua experiência com o recurso Magic AI inserindo sua Chave API exclusiva e indicando a integração sem esforço. Assuma o controle sobre suas credenciais OpenAI e personalize as configurações de acordo com suas necessidades específicas.',
+                    'pdf-generation'      => 'Geração de PDF',
+                    'pdf-generation-info' => 'Habilite o recurso de Geração de PDF para extrair automaticamente dados de arquivos PDF e convertê-los em formato de texto. Aumente sua produtividade e eficiência habilitando este recurso para simplificar seu fluxo de trabalho.',
+                    'title'               => 'Configurações Gerais',
+
+                    'models'     => [
+                        'deepseek-r1'  => 'DeepSeek-R1 8db',
+                        'gemini-flash' => 'Gemini-1.5 Flash',
+                        'gpt-4o'       => 'GPT-4.0',
+                        'gpt-4o-mini'  => 'GPT-4.0 mini',
+                        'llama'        => 'Llama 3.3 (Groq)',
+                        'ollama'       => 'Ollama (llama3.2:latest)',
+                        'title'        => 'Modelos',
+                    ],
+                ],
+            ],
+
+            'settings' => [
+                'title' => 'Configurações',
+                'info'  => 'Atualize suas configurações aqui.',
+
+                'footer' => [
+                    'info'       => 'Podemos configurar a seção powered by aqui.',
+                    'powered-by' => 'Editor de texto "Powered by"',
+                    'title'      => 'Configurações da Seção Powered by',
+                ],
+
+                'menu' => [
+                    'activities'     => 'Atividades',
+                    'configuration'  => 'Configuração',
+                    'contacts'       => 'Contatos',
+                    'dashboard'      => 'Painel de Controle',
+                    'draft'          => 'Rascunho',
+                    'inbox'          => 'Caixa de Entrada',
+                    'info'           => 'Podemos configurar o nome dos itens do menu aqui.',
+                    'leads'          => 'Leads',
+                    'mail'           => 'Correio',
+                    'organizations'  => 'Organizações',
+                    'outbox'         => 'Caixa de Saída',
+                    'persons'        => 'Pessoas',
+                    'products'       => 'Produtos',
+                    'quotes'         => 'Cotações',
+                    'sent'           => 'Enviado',
+                    'settings'       => 'Configurações',
+                    'title'          => 'Configurações de Itens do Menu',
+                    'trash'          => 'Lixeira',
+                ],
+
+                'menu-color' => [
+                    'active-background-color' => 'Cor de Fundo Ativa',
+                    'active-text-color'       => 'Cor do Texto Ativo',
+                    'info'                    => 'Podemos alterar as cores dos itens do menu aqui.',
+                    'text-color'              => 'Cor do Texto',
+                    'title'                   => 'Configurações de Cor dos Itens do Menu',
                 ],
             ],
         ],
@@ -2006,7 +2196,6 @@ return [
         'back'                 => 'Voltar',
         'name'                 => 'Nome',
         'configuration'        => 'Configuração',
-        'activities'           => 'Atividades',
         'howdy'                => 'Olá!',
         'warehouses'           => 'Armazéns',
         'warehouse'            => 'Armazém',

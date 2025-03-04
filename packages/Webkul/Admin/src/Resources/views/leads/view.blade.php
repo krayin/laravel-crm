@@ -4,11 +4,11 @@
     </x-slot>
 
     <!-- Content -->
-    <div class="relative flex gap-4">
+    <div class="relative flex gap-4 max-lg:flex-wrap">
         <!-- Left Panel -->
         {!! view_render_event('admin.leads.view.left.before', ['lead' => $lead]) !!}
 
-        <div class="[&>div:last-child]:border-b-0 sticky top-[73px] flex min-w-[394px] max-w-[394px] flex-col self-start rounded-lg border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900">
+        <div class="max-lg:max-w-full max-lg:w-full [&>div:last-child]:border-b-0 lg:sticky md:top-[73px] flex min-w-[394px] max-w-[394px] flex-col self-start rounded-lg border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900">
             <!-- Lead Information -->
             <div class="flex w-full flex-col gap-2 border-b border-gray-200 p-4 dark:border-gray-800">
                 <!-- Breadcrumb's -->

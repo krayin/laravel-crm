@@ -8,14 +8,12 @@
         <div class="flex flex-col gap-4">
             <div class="flex items-center justify-between rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
                 <div class="flex flex-col gap-2">
-                    <div class="flex cursor-pointer items-center">
-                        {!! view_render_event('admin.settings.webform.create.breadcrumbs.before') !!}
+                    {!! view_render_event('admin.settings.webform.create.breadcrumbs.before') !!}
 
-                        <!-- Breadcrumbs -->
-                        <x-admin::breadcrumbs name="settings.web_forms.create" />
+                    <!-- Breadcrumbs -->
+                    <x-admin::breadcrumbs name="settings.web_forms.create" />
 
-                        {!! view_render_event('admin.settings.webform.create.breadcrumbs.after') !!}
-                    </div>
+                    {!! view_render_event('admin.settings.webform.create.breadcrumbs.after') !!}
 
                     <div class="text-xl font-bold dark:text-white">
                         @lang('admin::app.settings.webforms.create.title')
@@ -107,25 +105,30 @@
 
                         <!-- Create Leads -->
                         <x-admin::form.control-group>
-                            <x-admin::form.control-group.label class="required">
+                            <x-admin::form.control-group.label
+                                class="required"
+                                for="create_lead"
+                            >
                                 @lang('admin::app.settings.webforms.create.create-lead')
                             </x-admin::form.control-group.label>
 
-                            <label class="relative inline-flex cursor-pointer items-center">
-                                <input
-                                    type="checkbox"
-                                    name="create_lead"
-                                    :value="1"
-                                    id="create_lead"
-                                    class="peer sr-only"
-                                    v-model="createLead"
-                                >
+                            <input
+                                type="hidden"
+                                name="create_lead"
+                                :value="0"
+                            />
 
-                                <div class="peer h-5 w-9 cursor-pointer rounded-full bg-gray-200 after:absolute after:top-0.5 after:h-4 after:w-4 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-blue-600 peer-checked:after:border-white peer-focus:outline-none peer-focus:ring-blue-300 dark:bg-gray-800 dark:after:border-white dark:after:bg-white dark:peer-checked:bg-gray-950 after:ltr:left-0.5 peer-checked:after:ltr:translate-x-full after:rtl:right-0.5 peer-checked:after:rtl:-translate-x-full"></div>
-                            </label>
+                            <x-admin::form.control-group.control
+                                type="switch"
+                                name="create_lead"
+                                value="1"
+                                :label="trans('admin::app.settings.webforms.create.create-lead')"
+                                v-model="createLead"
+                            />
+
                         </x-admin::form.control-group>
 
-                        <!-- Customize Webform -->
+                        <!-- Customize Web-form -->
                         <div class="mb-4 flex items-center justify-between gap-4">
                             <div class="flex flex-col gap-1">
                                 <p class="text-base font-semibold text-gray-800 dark:text-white">

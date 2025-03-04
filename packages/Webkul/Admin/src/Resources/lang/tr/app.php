@@ -1122,6 +1122,7 @@ return [
                         'name'        => 'Ad',
                         'date'        => 'Tarih',
                         'description' => 'Açıklama',
+                        'save-btn'    => 'Etkinliği Kaydet',
                     ],
 
                     'edit' => [
@@ -1876,6 +1877,14 @@ return [
         'destroy-success'   => 'Lead başarıyla silindi.',
         'destroy-failed'    => 'Lead silinemedi.',
 
+        'file' => [
+            'empty-content'    => 'PDF içeriği boş veya çıkarılamadı.',
+            'invalid-format'   => 'Geçersiz JSON formatı.',
+            'invalid-response' => 'Geçersiz AI yanıt formatı.',
+            'missing-api-key'  => 'API anahtarı veya model yapılandırması eksik.',
+            'not-found'        => 'Dosya bulunamadı.',
+        ],
+
         'index' => [
             'title'      => 'Leads',
             'create-btn' => 'Lead Oluştur',
@@ -1939,6 +1948,16 @@ return [
             'view-switcher' => [
                 'all-pipelines'       => 'Tüm Boru Hatları',
                 'create-new-pipeline' => 'Yeni Boru Hattı Oluştur',
+            ],
+
+            'upload' => [
+                'create-lead'   => 'AI Kullanarak Lead Oluştur',
+                'file'          => 'Dosya Yükle',
+                'file-info'     => 'Sadece PDF formatındaki dosyalar kabul edilir.',
+                'file-required' => 'Devam etmek için lütfen en az bir geçerli dosya seçin.',
+                'sample-pdf'    => 'Örnek PDF',
+                'save-btn'      => 'Kaydet',
+                'upload-pdf'    => 'PDF Yükle',
             ],
         ],
 
@@ -2052,11 +2071,14 @@ return [
 
     'configuration' => [
         'index' => [
-            'back'         => 'Geri',
-            'save-btn'     => 'Yapılandırmayı Kaydet',
-            'save-success' => 'Yapılandırma Başarıyla Kaydedildi.',
-            'search'       => 'Ara',
-            'title'        => 'Yapılandırma',
+            'back'           => 'Geri',
+            'delete'         => 'Sil',
+            'save-btn'       => 'Yapılandırmayı Kaydet',
+            'save-success'   => 'Yapılandırma Başarıyla Kaydedildi.',
+            'search'         => 'Ara',
+            'select-country' => 'Ülke Seç',
+            'select-state'   => 'Eyalet Seç',
+            'title'          => 'Yapılandırma',
 
             'general'  => [
                 'title'   => 'Genel',
@@ -2064,10 +2086,56 @@ return [
 
                 'general' => [
                     'title'           => 'Genel',
-                    'info'            => 'Genel ayarlarınızı buradan güncelleyebilirsiniz.',
+                    'info'            => 'Genel ayarlarınızı burada güncelleyin.',
                     'locale-settings' => [
                         'title'       => 'Yerel Ayarlar',
                         'title-info'  => 'Kullanıcı arayüzünde kullanılan dili tanımlar, örneğin Arapça (ar), İngilizce (en), İspanyolca (es), Farsça (fa) ve Türkçe (tr).',
+                    ],
+
+                    'admin-logo' => [
+                        'logo-image' => 'Logo Resmi',
+                        'title'      => 'Yönetici Logosu',
+                        'title-info' => 'Yönetici paneliniz için logo resmini yapılandırın.',
+                    ],
+                ],
+
+                'settings' => [
+                    'title' => 'Ayarlar',
+                    'info'  => 'Ayarlarınızı burada güncelleyin.',
+
+                    'footer' => [
+                        'info'       => 'Powered by bölümünü burada yapılandırabiliriz.',
+                        'powered-by' => 'Powered by metin düzenleyici',
+                        'title'      => 'Powered by Bölüm Yapılandırmaları',
+                    ],
+
+                    'menu' => [
+                        'activities'     => 'Aktiviteler',
+                        'configuration'  => 'Yapılandırma',
+                        'contacts'       => 'İletişim',
+                        'dashboard'      => 'Gösterge Paneli',
+                        'draft'          => 'Taslak',
+                        'inbox'          => 'Gelen Kutusu',
+                        'info'           => 'Menü öğelerinin adlarını burada yapılandırabiliriz.',
+                        'leads'          => 'Leadler',
+                        'mail'           => 'Mail',
+                        'organizations'  => 'Organizasyonlar',
+                        'outbox'         => 'Gönderilenler',
+                        'persons'        => 'Kişiler',
+                        'products'       => 'Ürünler',
+                        'quotes'         => 'Teklifler',
+                        'sent'           => 'Gönderildi',
+                        'settings'       => 'Ayarlar',
+                        'title'          => 'Menü Öğesi Yapılandırmaları',
+                        'trash'          => 'Çöp Kutusu',
+                    ],
+
+                    'menu-color' => [
+                        'active-background-color' => 'Aktif Arka Plan Rengi',
+                        'active-text-color'       => 'Aktif Metin Rengi',
+                        'info'                    => 'Menü öğelerinin renklerini burada değiştirebiliriz.',
+                        'text-color'              => 'Metin Rengi',
+                        'title'                   => 'Menü Öğesi Renk Yapılandırmaları',
                     ],
                 ],
             ],
@@ -2089,6 +2157,35 @@ return [
                         'validate-cert' => 'Validate SSL Certificate',
                         'username'      => 'IMAP Username',
                         'password'      => 'IMAP Password',
+                    ],
+                ],
+            ],
+
+            'magic-ai' => [
+                'title' => 'Sihirli AI',
+                'info'  => 'Uygulama için Sihirli AI yapılandırması.',
+
+                'settings' => [
+                    'accepted-types'      => 'Kabul edilen türler',
+                    'accepted-types-info' => 'PDF oluşturma için kabul edilen dosya türlerinin virgülle ayrılmış listesi.',
+                    'api-domain'          => 'LLM API Alanı',
+                    'api-domain-info'     => 'Sadece Olama ve Grow için, Ör: http://localhost:11434',
+                    'api-key'             => 'API Anahtarı',
+                    'api-key-info'        => 'Optimum performans ve güvenliği sağlamak için her model türü için benzersiz bir API anahtarı kullanmayı unutmayın.',
+                    'enable'              => 'Etkinleştir',
+                    'info'                => 'Benzersiz API Anahtarınızı girerek ve sorunsuz entegrasyonu belirterek Sihirli AI özelliği ile deneyiminizi geliştirin. OpenAI kimlik bilgilerinizi kontrol altına alın ve özel ihtiyaçlarınıza göre ayarları özelleştirin.',
+                    'pdf-generation'      => 'PDF Oluşturma',
+                    'pdf-generation-info' => 'PDF dosyalarından otomatik olarak veri çıkarmak ve bunları metin formatına dönüştürmek için PDF Oluşturma özelliğini etkinleştirin. Bu özelliği etkinleştirerek iş akışınızı basitleştirin ve verimliliğinizi artırın.',
+                    'title'               => 'Genel Ayarlar',
+
+                    'models'     => [
+                        'deepseek-r1'  => 'DeepSeek-R1 8db',
+                        'gemini-flash' => 'Gemini-1.5 Flash',
+                        'gpt-4o'       => 'GPT-4.0',
+                        'gpt-4o-mini'  => 'GPT-4.0 mini',
+                        'llama'        => 'Llama 3.3 (Groq)',
+                        'ollama'       => 'Ollama (llama3.2:latest)',
+                        'title'        => 'Modeller',
                     ],
                 ],
             ],

@@ -12,17 +12,15 @@
         <div class="flex flex-col gap-4">
             <div class="flex items-center justify-between rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
                 <div class="flex flex-col gap-2">
-                    <div class="flex cursor-pointer items-center">
-                        {!! view_render_event('admin.settings.workflows.edit.breadcrumbs.before', ['workflow' => $workflow]) !!}
+                    {!! view_render_event('admin.settings.workflows.edit.breadcrumbs.before', ['workflow' => $workflow]) !!}
 
-                        <x-admin::breadcrumbs
-                            name="settings.workflows.edit"
-                            :entity="$workflow"
-                        />
+                    <x-admin::breadcrumbs
+                        name="settings.workflows.edit"
+                        :entity="$workflow"
+                    />
 
-                        {!! view_render_event('admin.settings.workflows.edit.breadcrumbs.after', ['workflow' => $workflow]) !!}
-                    </div>
-
+                    {!! view_render_event('admin.settings.workflows.edit.breadcrumbs.after', ['workflow' => $workflow]) !!}
+                    
                     <div class="text-xl font-bold dark:text-white">
                         @lang('admin::app.settings.workflows.edit.title')
                     </div>
@@ -61,7 +59,7 @@
                 {!! view_render_event('admin.settings.workflows.edit.form_controls.before') !!}
                 
                 <!-- Tab Switcher -->
-                <div class="flex gap-2 border-b border-gray-200 dark:border-gray-800">
+                <div class="flex w-full gap-2 border-b border-gray-200 dark:border-gray-800">
                     <!-- Tabs -->
                     <template 
                         v-for="tab in tabs"
@@ -99,7 +97,7 @@
                             </p>
                         </div>
 
-                        <div class="w-1/2">
+                        <div class="w-1/2 max-md:w-full">
                             <x-admin::form.control-group>
                                 <x-admin::form.control-group.label class="required">
                                     @lang('admin::app.settings.workflows.edit.name')
@@ -289,7 +287,7 @@
                             </p>
                         </div>
 
-                        <x-admin::table class="!w-1/2">
+                        <x-admin::table>
                             <!-- Table Head -->
                             <x-admin::table.thead>
                                 <x-admin::table.thead.tr>

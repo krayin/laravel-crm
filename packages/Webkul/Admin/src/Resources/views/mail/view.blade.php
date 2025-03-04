@@ -14,19 +14,17 @@
     <div class="flex flex-col gap-4">
         <div class="flex items-center justify-between rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
             <div class="flex flex-col gap-2">
-                <div class="flex cursor-pointer items-center">
-                    {!! view_render_event('admin.mail.view.form.before', ['email' => $email]) !!}
+                {!! view_render_event('admin.mail.view.form.before', ['email' => $email]) !!}
 
-                    <!-- Bredcrumbs -->
-                    <x-admin::breadcrumbs
-                        name="mail.route.view"
-                        :entity="$email"
-                        :route="request('route')"
-                    />
+                <!-- Bredcrumbs -->
+                <x-admin::breadcrumbs
+                    name="mail.route.view"
+                    :entity="$email"
+                    :route="request('route')"
+                />
 
-                    {!! view_render_event('admin.mail.view.form.after', ['email' => $email]) !!}
-                </div>
-
+                {!! view_render_event('admin.mail.view.form.after', ['email' => $email]) !!}
+                
                 <!-- Title -->
                 <div class="flex items-center gap-2">
                     <div class="text-xl font-bold dark:text-gray-300">

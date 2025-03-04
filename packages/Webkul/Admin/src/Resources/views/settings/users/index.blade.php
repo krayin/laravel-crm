@@ -6,10 +6,8 @@
     <div class="flex flex-col gap-4">
         <div class="flex items-center justify-between rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
             <div class="flex flex-col gap-2">
-                <div class="flex cursor-pointer items-center">
-                    <!-- Breadcrumbs -->
-                    <x-admin::breadcrumbs name="settings.users" />
-                </div>
+                <!-- Breadcrumbs -->
+                <x-admin::breadcrumbs name="settings.users" />
 
                 <div class="text-xl font-bold dark:text-white">
                     @lang('admin::app.settings.users.index.title')
@@ -370,7 +368,7 @@
 
                             <!-- Status -->
                             <x-admin::form.control-group>
-                                <x-admin::form.control-group.label>
+                                <x-admin::form.control-group.label for="status">
                                     @lang('admin::app.settings.users.index.create.status')
                                 </x-admin::form.control-group.label>
 
@@ -379,19 +377,14 @@
                                     name="status"
                                     :value="0"
                                 />
-                        
-                                <label class="relative inline-flex cursor-pointer items-center">
-                                    <input  
-                                        type="checkbox"
-                                        name="status"
-                                        :value="1"
-                                        id="status"
-                                        class="peer sr-only"
-                                        :checked="parseInt(user.status || 0)"
-                                    >
 
-                                    <div class="peer h-5 w-9 cursor-pointer rounded-full bg-gray-200 after:absolute after:top-0.5 after:h-4 after:w-4 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-blue-600 peer-checked:after:border-white peer-focus:outline-none peer-focus:ring-blue-300 dark:bg-gray-800 dark:after:border-white dark:after:bg-white dark:peer-checked:bg-gray-950 after:ltr:left-0.5 peer-checked:after:ltr:translate-x-full after:rtl:right-0.5 peer-checked:after:rtl:-translate-x-full"></div>
-                                </label>
+                                <x-admin::form.control-group.control
+                                    type="switch"
+                                    name="status"
+                                    value="1"
+                                    :label="trans('admin::app.settings.users.index.create.status')"
+                                    ::checked="parseInt(user.status || 0)"
+                                />
                             </x-admin::form.control-group>
                                 
                             {!! view_render_event('admin.settings.users.index.form.status.after') !!}

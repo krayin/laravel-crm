@@ -15,14 +15,12 @@
         <!-- Page Header -->
         <div class="flex items-center justify-between rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
             <div class="flex flex-col gap-2">
-                <div class="flex cursor-pointer items-center">
-                    {!! view_render_event('admin.settings.data_transfers.create.breadcrumbs.before') !!}
+                {!! view_render_event('admin.settings.data_transfers.create.breadcrumbs.before') !!}
 
-                    <!-- Breadcrumbs -->
-                    <x-admin::breadcrumbs name="settings.data_transfers.create" />
+                <!-- Breadcrumbs -->
+                <x-admin::breadcrumbs name="settings.data_transfers.create" />
 
-                    {!! view_render_event('admin.settings.data_transfers.create.breadcrumbs.after') !!}
-                </div>
+                {!! view_render_event('admin.settings.data_transfers.create.breadcrumbs.after') !!}
 
                 <div class="text-xl font-bold dark:text-white">
                     @lang('admin::app.settings.data-transfer.imports.create.title')

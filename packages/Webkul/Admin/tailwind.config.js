@@ -7,7 +7,7 @@ module.exports = {
             center: true,
 
             screens: {
-                "2xl": "1920px",
+                "4xl": "1920px",
             },
 
             padding: {
@@ -20,12 +20,14 @@ module.exports = {
             md: "768px",
             lg: "1024px",
             xl: "1240px",
-            "2xl": "1920px",
+            "2xl": "1440px",
+            "3xl": "1680px",
+            "4xl": "1920px",
         },
 
         extend: {
             colors: {
-                brandColor: '#0E90D9',
+                brandColor: "var(--brand-color)",
             },
 
             fontFamily: {
