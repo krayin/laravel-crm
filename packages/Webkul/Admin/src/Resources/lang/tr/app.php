@@ -1881,7 +1881,7 @@ return [
             'invalid-format'   => 'Geçersiz JSON formatı.',
             'invalid-response' => 'Geçersiz AI yanıt formatı.',
             'missing-api-key'  => 'API anahtarı veya model yapılandırması eksik.',
-            'not-found'        => 'Dosya bulunamadı.'
+            'not-found'        => 'Dosya bulunamadı.',
         ],
 
         'index' => [

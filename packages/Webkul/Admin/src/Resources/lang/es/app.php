@@ -1880,7 +1880,7 @@ return [
             'invalid-format'   => 'Formato JSON inválido.',
             'invalid-response' => 'Formato de respuesta de IA inválido.',
             'missing-api-key'  => 'Falta la clave API o la configuración del modelo.',
-            'not-found'        => 'Archivo no encontrado.'
+            'not-found'        => 'Archivo no encontrado.',
         ],
 
         'index' => [

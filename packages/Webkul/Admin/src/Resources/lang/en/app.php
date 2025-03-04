@@ -1879,7 +1879,7 @@ return [
             'invalid-format'   => 'Invalid JSON format.',
             'invalid-response' => 'Invalid AI response format.',
             'missing-api-key'  => 'Missing API key or model configuration.',
-            'not-found'        => 'File not found.'
+            'not-found'        => 'File not found.',
         ],
 
         'index' => [

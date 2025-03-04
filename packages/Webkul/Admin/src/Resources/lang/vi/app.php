@@ -1774,7 +1774,7 @@ return [
             'invalid-format'   => 'Định dạng JSON không hợp lệ.',
             'invalid-response' => 'Định dạng phản hồi AI không hợp lệ.',
             'missing-api-key'  => 'Thiếu khóa API hoặc cấu hình mô hình.',
-            'not-found'        => 'Không tìm thấy tệp.'
+            'not-found'        => 'Không tìm thấy tệp.',
         ],
 
         'index' => [

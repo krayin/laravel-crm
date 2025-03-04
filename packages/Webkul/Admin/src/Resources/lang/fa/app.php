@@ -1881,7 +1881,7 @@ return [
             'invalid-format'   => 'فرمت JSON نامعتبر است.',
             'invalid-response' => 'فرمت پاسخ AI نامعتبر است.',
             'missing-api-key'  => 'کلید API یا پیکربندی مدل گم شده است.',
-            'not-found'        => 'فایل یافت نشد.'
+            'not-found'        => 'فایل یافت نشد.',
         ],
 
         'index' => [

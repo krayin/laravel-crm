@@ -1695,7 +1695,7 @@ return [
             'invalid-format'   => 'Formato JSON inválido.',
             'invalid-response' => 'Formato de resposta AI inválido.',
             'missing-api-key'  => 'Chave API ou configuração do modelo ausente.',
-            'not-found'        => 'Arquivo não encontrado.'
+            'not-found'        => 'Arquivo não encontrado.',
         ],
 
         'index' => [

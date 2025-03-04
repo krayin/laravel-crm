@@ -1877,7 +1877,7 @@ return [
             'invalid-format'   => 'تنسيق JSON غير صالح.',
             'invalid-response' => 'تنسيق استجابة الذكاء الاصطناعي غير صالح.',
             'missing-api-key'  => 'مفتاح API أو تكوين النموذج مفقود.',
-            'not-found'        => 'الملف غير موجود.'
+            'not-found'        => 'الملف غير موجود.',
         ],
 
         'index' => [
