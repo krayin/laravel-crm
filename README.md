@@ -70,7 +70,7 @@ Take advantage of two of the hottest frameworks used in this project -- Laravel 
 ##### Execute these commands below, in order
 
 ```
-composer create-project krayin/laravel-crm
+composer create-project
 ```
 
 -   Find **.env** file in root directory and change the **APP_URL** param to your **domain**.
