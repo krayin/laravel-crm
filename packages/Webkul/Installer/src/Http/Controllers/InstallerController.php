@@ -79,12 +79,29 @@ class InstallerController extends Controller
      */
     public function runSeeder()
     {
+        $selectedParameters = request()->selectedParameters;
         $allParameters = request()->allParameters;
+
+        $allowedLocales = array_unique(
+            array_merge(
+                [($appLocale ?? 'en')],
+                $selectedParameters['allowed_locales']
+            )
+        );
+
+        $allowedCurrencies = array_unique(
+            array_merge(
+                [($appCurrency ?? 'USD')],
+                $selectedParameters['allowed_currencies']
+            )
+        );
 
         $parameter = [
             'parameter' => [
                 'default_locales'    => $allParameters['app_locale'] ?? null,
                 'default_currency'   => $allParameters['app_currency'] ?? null,
+                'allowed_locales'    => $allowedLocales,
+                'allowed_currencies' => $allowedCurrencies,
             ],
         ];
 

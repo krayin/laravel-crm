@@ -116,6 +116,14 @@
 		content: "\e920";
 	}
 
+	.icon-checkbox-normal:before {
+		content: "\e909";
+	}
+
+	.icon-checkbox-active:before {
+		content: "\e908";
+	}
+
 	/* -------------------------------- new css end -------------------------------- */
 
 	p {

@@ -1,40 +1,41 @@
 {
   "src/Resources/assets/css/app.css": {
-    "file": "assets/app-e0866a20.css",
-    "isEntry": true,
-    "src": "src/Resources/assets/css/app.css"
+    "file": "assets/app-D8PsUiwL.css",
+    "src": "src/Resources/assets/css/app.css",
+    "isEntry": true
   },
   "src/Resources/assets/fonts/icomoon.eot": {
-    "file": "assets/icomoon-1bcfcf1d.eot",
+    "file": "assets/icomoon-BFKbaEOo.eot",
     "src": "src/Resources/assets/fonts/icomoon.eot"
   },
   "src/Resources/assets/fonts/icomoon.svg": {
-    "file": "assets/icomoon-c96ab384.svg",
+    "file": "assets/icomoon-r7Xq6sz-.svg",
     "src": "src/Resources/assets/fonts/icomoon.svg"
   },
   "src/Resources/assets/fonts/icomoon.ttf": {
-    "file": "assets/icomoon-c6be70b2.ttf",
+    "file": "assets/icomoon-BgFe9HIr.ttf",
     "src": "src/Resources/assets/fonts/icomoon.ttf"
   },
   "src/Resources/assets/fonts/icomoon.woff": {
-    "file": "assets/icomoon-81aea726.woff",
+    "file": "assets/icomoon-B5aogpno.woff",
     "src": "src/Resources/assets/fonts/icomoon.woff"
   },
   "src/Resources/assets/images/favicon.ico": {
-    "file": "assets/favicon-a99d4e55.ico",
+    "file": "assets/favicon-BtbgZBji.ico",
     "src": "src/Resources/assets/images/favicon.ico"
   },
   "src/Resources/assets/images/krayin-logo.svg": {
-    "file": "assets/krayin-logo-4636add7.svg",
+    "file": "assets/krayin-logo-D5SO44Ys.svg",
     "src": "src/Resources/assets/images/krayin-logo.svg"
   },
   "src/Resources/assets/images/spinner.svg": {
-    "file": "assets/spinner-51c5cf50.svg",
+    "file": "assets/spinner-CWS6ej98.svg",
     "src": "src/Resources/assets/images/spinner.svg"
   },
   "src/Resources/assets/js/app.js": {
-    "file": "assets/app-b0695bcc.js",
-    "isEntry": true,
-    "src": "src/Resources/assets/js/app.js"
+    "file": "assets/app-DfSE9vf4.js",
+    "name": "app",
+    "src": "src/Resources/assets/js/app.js",
+    "isEntry": true
   }
 }
