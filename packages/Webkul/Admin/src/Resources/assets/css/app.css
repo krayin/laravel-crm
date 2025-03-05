@@ -248,6 +248,10 @@
         content: "\e903";
     }
 
+    .icon-menu:before {
+        content: "\e955";
+    }
+
     .icon-calendar:before {
         content: "\e904";
     }
