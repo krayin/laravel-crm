@@ -40,7 +40,7 @@
     </head>
 
     @php
-        $locales = config('app.available_locales');
+        $locales = array_map('strtolower', config('app.available_locales'));
 
         $currencies = [
             'AED' => 'united-arab-emirates-dirham',
