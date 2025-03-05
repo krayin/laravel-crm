@@ -74,13 +74,9 @@ class PersonRepository extends Repository
      */
     public function update(array $data, $id, $attributes = [])
     {
-        $data['user_id'] = $data['user_id'] ?? null;
+        $data['user_id'] = empty($data['user_id']) ? null : $data['user_id'];
 
-        $person = $this->find($id);
-
-        $data['organization_id'] = $data['organization_id'] ?? $person->organization_id;
-
-        $person->update($data);
+        $person = parent::update($data, $id);
 
         /**
          * If attributes are provided then only save the provided attributes and return.
