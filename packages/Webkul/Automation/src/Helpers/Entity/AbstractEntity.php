@@ -10,7 +10,7 @@ use Webkul\Automation\Services\WebhookService;
 abstract class AbstractEntity
 {
     /**
-     * Create a new repository instance
+     * Attribute repository instance.
      */
     protected AttributeRepository $attributeRepository;
 
@@ -23,22 +23,22 @@ abstract class AbstractEntity
     ) {}
 
     /**
-     * Listing of the entities
+     * Listing of the entities.
      */
     abstract public function getEntity(mixed $entity);
 
     /**
-     * Returns workflow actions
+     * Returns workflow actions.
      */
     abstract public function getActions();
 
     /**
-     * Execute workflow actions
+     * Execute workflow actions.
      */
     abstract public function executeActions(mixed $workflow, mixed $entity): void;
 
     /**
-     * Returns attributes for workflow conditions
+     * Returns attributes for workflow conditions.
      */
     public function getConditions(): array
     {
@@ -76,7 +76,7 @@ abstract class AbstractEntity
     }
 
     /**
-     * Returns placeholders for email templates
+     * Returns placeholders for email templates.
      */
     public function getEmailTemplatePlaceholders(array $entity): array
     {
@@ -96,7 +96,7 @@ abstract class AbstractEntity
     }
 
     /**
-     * Replace placeholders with values
+     * Replace placeholders with values.
      */
     public function replacePlaceholders(mixed $entity, string $content): string
     {
@@ -175,11 +175,9 @@ abstract class AbstractEntity
 
                 case 'date':
                     if ($entity->{$attribute['id']}) {
-                        if (! is_object($entity->{$attribute['id']})) {
-                            $entity->{$attribute['id']} = Carbon::parse($entity->{$attribute['id']});
-                        }
-
-                        $value = $entity->{$attribute['id']}->format('D M d, Y');
+                        $value = ! is_object($entity->{$attribute['id']})
+                            ? Carbon::parse($entity->{$attribute['id']})
+                            : $entity->{$attribute['id']}->format('D M d, Y');
                     } else {
                         $value = 'N/A';
                     }
@@ -188,11 +186,9 @@ abstract class AbstractEntity
 
                 case 'datetime':
                     if ($entity->{$attribute['id']}) {
-                        if (! is_object($entity->{$attribute['id']})) {
-                            $entity->{$attribute['id']} = Carbon::parse($entity->{$attribute['id']});
-                        }
-
-                        $value = $entity->{$attribute['id']}->format('D M d, Y H:i A');
+                        $value = ! is_object($entity->{$attribute['id']})
+                            ? Carbon::parse($entity->{$attribute['id']})
+                            : $entity->{$attribute['id']}->format('D M d, Y H:i A');
                     } else {
                         $value = 'N/A';
                     }
