@@ -9,7 +9,10 @@
         type="text/x-template" 
         id="v-control-tags-template"
     >
-        <div class="flex min-h-[38px] w-full items-center rounded border border-gray-200 px-2.5 py-1.5 text-sm font-normal text-gray-800 transition-all hover:border-gray-400 dark:border-gray-800 dark:text-white dark:hover:border-gray-400">
+        <div 
+            class="flex min-h-[38px] w-full items-center rounded border border-gray-200 px-2.5 py-1.5 text-sm font-normal text-gray-800 transition-all hover:border-gray-400 dark:border-gray-800 dark:text-white dark:hover:border-gray-400"
+            :class="[errors[`temp-${name}`] ? 'border !border-red-600 hover:border-red-600' : '']"
+        >
             <ul
                 class="flex flex-wrap items-center gap-1"
                 v-bind="$attrs"
