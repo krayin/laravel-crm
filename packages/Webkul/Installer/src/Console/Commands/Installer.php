@@ -2,17 +2,21 @@
 
 namespace Webkul\Installer\Console\Commands;
 
+use DateTimeZone;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Str;
 use Webkul\Core\Providers\CoreServiceProvider;
 use Webkul\Installer\Database\Seeders\DatabaseSeeder as KrayinDatabaseSeeder;
 use Webkul\Installer\Events\ComposerEvents;
 
-use function Laravel\Prompts\password;
-use function Laravel\Prompts\select;
 use function Laravel\Prompts\text;
+use function Laravel\Prompts\select;
+use function Laravel\Prompts\suggest;
+use function Laravel\Prompts\password;
+use function Laravel\Prompts\multiselect;
 
 class Installer extends Command
 {
@@ -31,6 +35,33 @@ class Installer extends Command
      * @var string
      */
     protected $description = 'krayin installer.';
+
+    /**
+     * Environment details.
+     *
+     * @var array
+     */
+    protected $envDetails = [];
+
+      /**
+     * Fillable environment variables.
+     *
+     * @var array
+     */
+    protected $fillableEnvVariables = [
+        'APP_NAME',
+        'APP_URL',
+        'APP_TIMEZONE',
+        'APP_LOCALE',
+        'APP_CURRENCY',
+        'DB_CONNECTION',
+        'DB_HOST',
+        'DB_PORT',
+        'DB_DATABASE',
+        'DB_PREFIX',
+        'DB_USERNAME',
+        'DB_PASSWORD',
+    ];
 
     /**
      * Locales list.
@@ -123,11 +154,31 @@ class Installer extends Command
      */
     public function handle()
     {
-        $applicationDetails = ! $this->option('skip-env-check')
-            ? $this->checkForEnvFile()
-            : [];
+        $hasExistingEnv = file_exists(base_path('.env'));
 
-        $this->loadEnvConfigAtRuntime();
+        if (! $hasExistingEnv) {
+            $this->components->info('Creating the environment configuration file.');
+
+            File::copy('.env.example', '.env');
+        } else {
+            $this->components->info('Great! your environment configuration file already exists.');
+        }
+
+        ! $this->option('skip-env-check')
+            ? $this->askDetailsAndUpdateEnv()
+            : $this->components->warn('Skipping environment check. This will assume that the `.env` file is already configured. If not, please create it manually.');
+
+        if (! $hasExistingEnv) {
+            $this->updateEnvVariables();
+
+            $this->reconnectDatabase();
+
+            $this->loadEnvConfigs();
+        } else {
+            $this->updateEnvVariables();
+
+            $this->loadEnvConfigs();
+        }
 
         $this->warn('Step: Generating key...');
         $this->call('key:generate');
@@ -136,10 +187,8 @@ class Installer extends Command
         $this->call('migrate:fresh');
 
         $this->warn('Step: Seeding basic data for Krayin kickstart...');
-        $this->info(app(KrayinDatabaseSeeder::class)->run([
-            'locale'   => $applicationDetails['locale'] ?? 'en',
-            'currency' => $applicationDetails['currency'] ?? 'USD',
-        ]));
+        app(KrayinDatabaseSeeder::class)->run($this->getSeederConfiguration());
+        $this->components->info('Basic data seeded successfully.');
 
         $this->warn('Step: Publishing assets and configurations...');
         $result = $this->call('vendor:publish', ['--provider' => CoreServiceProvider::class, '--force' => true]);
@@ -148,52 +197,29 @@ class Installer extends Command
         $this->warn('Step: Linking storage directory...');
         $this->call('storage:link');
 
-        $this->warn('Step: Clearing cached bootstrap files...');
-        $this->call('optimize:clear');
-
         if (! $this->option('skip-admin-creation')) {
             $this->warn('Step: Create admin credentials...');
-
-            $this->createAdminCredentials();
+            $this->askForAdminDetails();
         }
+
+        $this->warn('Step: Clearing cached bootstrap files...');
+        $this->call('optimize:clear');
 
         ComposerEvents::postCreateProject();
     }
 
     /**
-     *  Checking .env file and if not found then create .env file.
-     *
-     * @return ?array
+     * Request environment configuration details and set them in the `.env`
+     * file to facilitate the migration to our database.
      */
-    protected function checkForEnvFile()
-    {
-        if (! file_exists(base_path('.env'))) {
-            $this->info('Creating the environment configuration file.');
-
-            File::copy('.env.example', '.env');
-        } else {
-            $this->info('Great! your environment configuration file already exists.');
-        }
-
-        return $this->createEnvFile();
-    }
-
-    /**
-     * Create a new .env file. Afterwards, request environment configuration details and set them
-     * in the .env file to facilitate the migration to our database.
-     *
-     * @return ?array
-     */
-    protected function createEnvFile()
+    protected function askDetailsAndUpdateEnv(): void
     {
         try {
-            $applicationDetails = $this->askForApplicationDetails();
+            $this->askForApplicationDetails();
 
             $this->askForDatabaseDetails();
-
-            return $applicationDetails;
         } catch (\Exception $e) {
-            $this->error('Error in creating .env file, please create it manually and then run `php artisan migrate` again.');
+            $this->error('Error in updating `.env` file, please create it manually and then run `php artisan migrate` again.');
         }
     }
 
@@ -204,41 +230,50 @@ class Installer extends Command
      */
     protected function askForApplicationDetails()
     {
-        $this->updateEnvVariable(
+        $this->updateTextTypeEnv(
             'APP_NAME',
             'Please enter the application name',
             env('APP_NAME', 'Krayin CRM')
         );
 
-        $this->updateEnvVariable(
+        $this->updateTextTypeEnv(
             'APP_URL',
             'Please enter the application URL',
             env('APP_URL', 'http://localhost:8000')
         );
 
-        $this->envUpdate(
+        $this->updateChoiceTypeEnv(
             'APP_TIMEZONE',
-            date_default_timezone_get()
+            'Please select the application timezone',
+            $this->getTimezones(),
+            true
         );
 
-        $this->info('Your Default Timezone is '.date_default_timezone_get());
-
-        $locale = $this->updateEnvChoice(
+        $this->updateChoiceTypeEnv(
             'APP_LOCALE',
             'Please select the default application locale',
             $this->locales
         );
 
-        $currency = $this->updateEnvChoice(
+        $this->updateChoiceTypeEnv(
             'APP_CURRENCY',
             'Please select the default currency',
             $this->currencies
         );
 
-        return [
-            'locale'   => $locale,
-            'currency' => $currency,
-        ];
+        $this->updateMultiSelectTypeEnv(
+            'APP_ALLOWED_LOCALES',
+            'Please choose the allowed locales for your channels',
+            $this->locales,
+            $this->envDetails['APP_LOCALE']
+        );
+
+        $this->updateMultiSelectTypeEnv(
+            'APP_ALLOWED_CURRENCIES',
+            'Please choose the allowed currencies for your channels',
+            $this->currencies,
+            $this->envDetails['APP_CURRENCY']
+        );
     }
 
     /**
@@ -291,14 +326,13 @@ class Installer extends Command
         if (
             ! $databaseDetails['DB_DATABASE']
             || ! $databaseDetails['DB_USERNAME']
-            || ! $databaseDetails['DB_PASSWORD']
         ) {
             return $this->error('Please enter the database credentials.');
         }
 
         foreach ($databaseDetails as $key => $value) {
             if ($value) {
-                $this->envUpdate($key, $value);
+                $this->envDetails[$key] = $value;
             }
         }
     }
@@ -308,7 +342,7 @@ class Installer extends Command
      *
      * @return mixed
      */
-    protected function createAdminCredentials()
+    protected function askForAdminDetails()
     {
         $adminName = text(
             label: 'Enter the name of the admin user',
@@ -328,7 +362,12 @@ class Installer extends Command
         $adminPassword = text(
             label: 'Configure the password for the admin user',
             default: 'admin123',
-            required: true
+            required: true,
+            validate : function (string $value) {
+                if (strlen($value) < 6) {
+                    return 'The password must be at least 6 characters.';
+                }
+            }
         );
 
         $password = password_hash($adminPassword, PASSWORD_BCRYPT, ['cost' => 10]);
@@ -364,52 +403,9 @@ class Installer extends Command
     }
 
     /**
-     * Loaded Env variables for config files.
-     */
-    protected function loadEnvConfigAtRuntime(): void
-    {
-        $this->warn('Loading configs...');
-
-        /**
-         * Setting application environment.
-         */
-        app()['env'] = $this->getEnvAtRuntime('APP_ENV');
-
-        /**
-         * Setting application configuration.
-         */
-        config([
-            'app.env'      => $this->getEnvAtRuntime('APP_ENV'),
-            'app.name'     => $this->getEnvAtRuntime('APP_NAME'),
-            'app.url'      => $this->getEnvAtRuntime('APP_URL'),
-            'app.timezone' => $this->getEnvAtRuntime('APP_TIMEZONE'),
-            'app.locale'   => $this->getEnvAtRuntime('APP_LOCALE'),
-            'app.currency' => $this->getEnvAtRuntime('APP_CURRENCY'),
-        ]);
-
-        /**
-         * Setting database configurations.
-         */
-        $databaseConnection = $this->getEnvAtRuntime('DB_CONNECTION');
-
-        config([
-            "database.connections.{$databaseConnection}.host"     => $this->getEnvAtRuntime('DB_HOST'),
-            "database.connections.{$databaseConnection}.port"     => $this->getEnvAtRuntime('DB_PORT'),
-            "database.connections.{$databaseConnection}.database" => $this->getEnvAtRuntime('DB_DATABASE'),
-            "database.connections.{$databaseConnection}.username" => $this->getEnvAtRuntime('DB_USERNAME'),
-            "database.connections.{$databaseConnection}.password" => $this->getEnvAtRuntime('DB_PASSWORD'),
-            "database.connections.{$databaseConnection}.prefix"   => $this->getEnvAtRuntime('DB_PREFIX'),
-        ]);
-
-        DB::purge($databaseConnection);
-
-        $this->info('Configuration loaded...');
-    }
-
-    /**
      * Method for asking the details of .env files
      */
-    protected function updateEnvVariable(string $key, string $question, string $defaultValue): void
+    protected function updateTextTypeEnv(string $key, string $question, string $defaultValue): void
     {
         $input = text(
             label: $question,
@@ -417,7 +413,7 @@ class Installer extends Command
             required: true
         );
 
-        $this->envUpdate($key, $input ?: $defaultValue);
+        $this->envDetails[$key] = $input ?: $defaultValue;
     }
 
     /**
@@ -425,28 +421,84 @@ class Installer extends Command
      *
      * @return string
      */
-    protected function updateEnvChoice(string $key, string $question, array $choices)
+    protected function updateChoiceTypeEnv(string $key, string $question, array $choices, bool $useSuggest = false): void
     {
-        $choice = select(
+        if ($useSuggest) {
+            $choice = suggest(
+                label: $question,
+                options: $choices,
+                default: $this->getEnvVariable($key, '')
+            );
+        } else {
+            $choice = select(
+                label: $question,
+                options: $choices,
+                default: $this->getEnvVariable($key, '')
+            );
+        }
+
+        $this->envDetails[$key] = $choice;
+    }
+
+    /**
+     * Method for getting allowed choices based on the list of options.
+     */
+    protected function updateMultiSelectTypeEnv(string $key, string $question, array $choices, string $defaultChoice)
+    {
+        $choices = array_merge(['all' => 'All'], $choices);
+
+        $selectedValues = multiselect(
             label: $question,
-            options: $choices,
-            default: env($key)
+            options: array_values($choices),
         );
 
-        $this->envUpdate($key, $choice);
+        $selectedChoices = [];
 
-        return $choice;
+        foreach ($selectedValues as $selectedValue) {
+            foreach ($choices as $choiceKey => $value) {
+                if ($selectedValue === $value) {
+                    $selectedChoices[$choiceKey] = $value;
+                    break;
+                }
+            }
+        }
+
+        $selectedChoices = array_key_exists('all', $selectedChoices)
+            ? array_values(array_unique(array_merge(
+                [$defaultChoice],
+                array_diff(array_keys($choices), [$defaultChoice, 'all'])
+            )))
+            : array_values(array_unique(array_merge(
+                [$defaultChoice],
+                array_diff(array_keys($selectedChoices), [$defaultChoice])
+            )));
+
+        $this->envDetails[$key] = $selectedChoices;
+    }
+
+    /**
+     * Update the `.env` file with the provided details.
+     */
+    protected function updateEnvVariables(): void
+    {
+        foreach ($this->envDetails as $key => $value) {
+            if (! in_array($key, $this->fillableEnvVariables)) {
+                continue;
+            }
+
+            $this->updateEnvVariable($key, $value, Str::startsWith($key, 'DB_'));
+        }
     }
 
     /**
      * Update the .env values.
      */
-    protected function envUpdate(string $key, string $value): void
+     protected function updateEnvVariable(string $key, string $value, bool $addQuotes = false): void
     {
         $data = file_get_contents(base_path('.env'));
 
-        // Check if $value contains spaces, and if so, add double quotes
-        if (preg_match('/\s/', $value)) {
+        // Check if $value contains spaces, and if so, add double quotes, or if $addQuotes is true.
+        if ($addQuotes || preg_match('/\s/', $value)) {
             $value = '"'.$value.'"';
         }
 
@@ -456,9 +508,52 @@ class Installer extends Command
     }
 
     /**
+     * Loaded `.env` configs.
+     */
+    protected function loadEnvConfigs(): void
+    {
+        $this->warn('Step: Loading configurations...');
+
+        /**
+         * Setting application environment.
+         */
+        app()['env'] = $this->getEnvVariable('APP_ENV');
+
+        /**
+         * Setting application configuration.
+         */
+        config([
+            'app.env'      => $this->getEnvVariable('APP_ENV'),
+            'app.name'     => $this->getEnvVariable('APP_NAME'),
+            'app.url'      => $this->getEnvVariable('APP_URL'),
+            'app.timezone' => $this->getEnvVariable('APP_TIMEZONE'),
+            'app.locale'   => $this->getEnvVariable('APP_LOCALE'),
+            'app.currency' => $this->getEnvVariable('APP_CURRENCY'),
+        ]);
+
+        /**
+         * Setting database configurations.
+         */
+        $databaseConnection = $this->getEnvVariable('DB_CONNECTION');
+
+        config([
+            "database.connections.{$databaseConnection}.host"     => $this->getEnvVariable('DB_HOST'),
+            "database.connections.{$databaseConnection}.port"     => $this->getEnvVariable('DB_PORT'),
+            "database.connections.{$databaseConnection}.database" => $this->getEnvVariable('DB_DATABASE'),
+            "database.connections.{$databaseConnection}.username" => $this->getEnvVariable('DB_USERNAME'),
+            "database.connections.{$databaseConnection}.password" => $this->getEnvVariable('DB_PASSWORD'),
+            "database.connections.{$databaseConnection}.prefix"   => $this->getEnvVariable('DB_PREFIX'),
+        ]);
+
+        DB::purge($databaseConnection);
+
+        $this->components->info('Configuration loaded successfully.');
+    }
+
+    /**
      * Check key in `.env` file because it will help to find values at runtime.
      */
-    protected static function getEnvAtRuntime(string $key): string|bool
+    protected function getEnvVariable(string $key, $default = null): string|bool
     {
         if ($data = file(base_path('.env'))) {
             foreach ($data as $line) {
@@ -474,6 +569,71 @@ class Installer extends Command
             }
         }
 
-        return false;
+        return $default;
+    }
+
+    /**
+     * Reconnect to the database with new credentials.
+     */
+    protected function reconnectDatabase(): void
+    {
+        $connection = $this->envDetails['DB_CONNECTION'] ?? 'mysql';
+
+        config([
+            "database.connections.{$connection}.host"     => $this->envDetails['DB_HOST'] ?? '',
+            "database.connections.{$connection}.port"     => $this->envDetails['DB_PORT'] ?? '',
+            "database.connections.{$connection}.database" => $this->envDetails['DB_DATABASE'] ?? '',
+            "database.connections.{$connection}.username" => $this->envDetails['DB_USERNAME'] ?? '',
+            "database.connections.{$connection}.password" => $this->envDetails['DB_PASSWORD'] ?? '',
+            "database.connections.{$connection}.prefix"   => $this->envDetails['DB_PREFIX'] ?? '',
+        ]);
+
+        DB::purge($connection);
+        DB::reconnect($connection);
+
+        try {
+            DB::connection()->getPdo();
+
+            $this->components->info('Database connection established successfully.');
+        } catch (\Exception $e) {
+            $this->error('Database connection failed. Please check your credentials.');
+
+            abort(400);
+        }
+    }
+
+    /**
+     * Get sorted list of timezone abbreviations.
+     */
+    protected function getTimezones(): array
+    {
+        $timezoneAbbreviations = DateTimeZone::listAbbreviations();
+
+        $timezones = [];
+
+        foreach ($timezoneAbbreviations as $zones) {
+            foreach ($zones as $zone) {
+                if (! empty($zone['timezone_id'])) {
+                    $timezones[$zone['timezone_id']] = $zone['timezone_id'];
+                }
+            }
+        }
+
+        asort($timezones);
+
+        return $timezones;
+    }
+
+    /**
+     * Get the seeder configuration.
+     */
+    protected function getSeederConfiguration(): array
+    {
+        return [
+            'default_locale'     => $this->envDetails['APP_LOCALE'] ?? $this->getEnvVariable('APP_LOCALE', 'en'),
+            'allowed_locales'    => $this->envDetails['APP_ALLOWED_LOCALES'] ?? [$this->getEnvVariable('APP_LOCALE', 'en')],
+            'default_currency'   => $this->envDetails['APP_CURRENCY'] ?? $this->getEnvVariable('APP_CURRENCY', 'USD'),
+            'allowed_currencies' => $this->envDetails['APP_ALLOWED_CURRENCIES'] ?? [$this->getEnvVariable('APP_CURRENCY', 'USD')],
+        ];
     }
 }

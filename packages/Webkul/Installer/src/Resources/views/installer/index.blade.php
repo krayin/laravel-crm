@@ -4,7 +4,9 @@
     dir="{{ in_array(app()->getLocale(), ['ar', 'fa', 'he']) ? 'rtl' : 'ltr' }}"
 >
     <head>
-        <title>@lang('installer::app.installer.index.title')</title>
+        <title>
+            @lang('installer::app.installer.index.title')
+        </title>
 
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -354,7 +356,7 @@
                     </x-installer::form>
                 </div>
 
-                <!-- Systme Requirements -->
+                <!-- System Requirements -->
                 <div
                     class="w-full max-w-[568px] rounded-lg border border-gray-300 bg-white"
                     v-if="currentStep == 'systemRequirements'"
@@ -857,6 +859,86 @@
                                         <x-installer::form.control-group.error control-name="app_currency" />
                                     </x-installer::form.control-group>
                                 </div>
+
+                                <div class="grid grid-cols-2 gap-2.5">
+                                    <!-- Allowed Locales -->
+                                    <x-installer::form.control-group class="w-full">
+                                        <x-installer::form.control-group.label class="required">
+                                            @lang('installer::app.installer.index.environment-configuration.allowed-locales')
+                                        </x-installer::form.control-group.label>
+
+                                        @foreach ($locales as $key => $locale)
+                                            <x-installer::form.control-group class="!mb-0 flex w-max cursor-pointer select-none items-center gap-1">
+                                                @php
+                                                    $selectedOption = ($key == config('app.locale'));
+                                                @endphp
+
+                                                <x-installer::form.control-group.control
+                                                    type="hidden"
+                                                    :name="$key"
+                                                    :value="(bool) $selectedOption"
+                                                />
+
+                                                <x-installer::form.control-group.control
+                                                    type="checkbox"
+                                                    :id="'allowed_locale[' . $key . ']'"
+                                                    :name="$key"
+                                                    :for="'allowed_locale[' . $key . ']'"
+                                                    value="1"
+                                                    :checked="(bool) $selectedOption"
+                                                    :disabled="(bool) $selectedOption"
+                                                    @change="pushAllowedLocales"
+                                                />
+
+                                                <x-installer::form.control-group.label
+                                                    for="allowed_locale[{{ $key }}]"
+                                                    class="cursor-pointer !text-sm !font-semibold"
+                                                >
+                                                    @lang("installer::app.installer.index.$locale")
+                                                </x-installer::form.control-group.label>
+                                            </x-installer::form.control-group>
+                                        @endforeach
+                                    </x-installer::form.control-group>
+
+                                    <!-- Allowed Currencies -->
+                                    <x-installer::form.control-group class="w-full">
+                                        <x-installer::form.control-group.label class="required">
+                                            @lang('installer::app.installer.index.environment-configuration.allowed-currencies')
+                                        </x-installer::form.control-group.label>
+
+                                        @foreach ($currencies as $key => $currency)
+                                            <x-installer::form.control-group class="!mb-0 flex w-max cursor-pointer select-none items-center gap-1">
+                                                @php
+                                                    $selectedOption = $key == config('app.currency');
+                                                @endphp
+
+                                                <x-installer::form.control-group.control
+                                                    type="hidden"
+                                                    :name="$key"
+                                                    :value="$selectedOption"
+                                                />
+
+                                                <x-installer::form.control-group.control
+                                                    type="checkbox"
+                                                    :id="'currency[' . $key . ']'"
+                                                    :name="$key"
+                                                    value="1"
+                                                    :for="'currency[' . $key . ']'"
+                                                    :checked="$selectedOption"
+                                                    :disabled="$selectedOption"
+                                                    @change="pushAllowedCurrency"
+                                                />
+
+                                                <x-installer::form.control-group.label
+                                                    for="currency[{{ $key }}]"
+                                                    class="cursor-pointer !text-sm !font-semibold"
+                                                >
+                                                    @lang("installer::app.installer.index.environment-configuration.$currency")
+                                                </x-installer::form.control-group.label>
+                                            </x-installer::form.control-group>
+                                        @endforeach
+                                    </x-installer::form.control-group>
+                                </div>
                             </div>
 
                             <div class="flex items-center justify-end px-4 py-2.5">
@@ -1048,6 +1130,14 @@
 
                             envData: {},
 
+                            locales: {
+                                allowed: [],
+                            },
+
+                            currencies: {
+                                allowed: [],
+                            },
+
                             stepStates: {
                                 start: 'active',
                                 systemRequirements: 'pending',
@@ -1135,6 +1225,11 @@
                                 envConfiguration: () => {
                                     this.envData = { ...params };
 
+                                    let data = {
+                                        allowed_locales: this.locales.allowed,
+                                        allowed_currencies: this.currencies.allowed,
+                                    };
+
                                     this.startSeeding(this.envData);
                                 },
 
@@ -1144,6 +1239,34 @@
 
                             if (stepActions[index]) {
                                 stepActions[index]();
+                            }
+                        },
+
+                        pushAllowedCurrency() {
+                            const currencyName = event.target.name;
+
+                            const index = this.currencies.allowed.indexOf(currencyName);
+
+                            if (index === -1) {
+                                this.currencies.allowed.push(currencyName);
+                            } else {
+                                this.currencies.allowed.splice(index, 1);
+                            }
+                        },
+
+                        pushAllowedLocales() {
+                            const localeName = event.target.name;
+
+                            if (! Array.isArray(this.locales.allowed)) {
+                            this.locales.allowed = [];
+                            }
+
+                            const index = this.locales.allowed.indexOf(localeName);
+
+                            if (index === -1) {
+                                this.locales.allowed.push(localeName);
+                            } else {
+                                this.locales.allowed.splice(index, 1);
                             }
                         },
 

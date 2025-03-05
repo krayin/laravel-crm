@@ -11,10 +11,15 @@ use Webkul\Installer\Http\Middleware\Locale;
 
 class InstallerServiceProvider extends ServiceProvider
 {
-    /**
-     * Indicates if loading of the provider is deferred.
+     /**
+     * Register the service provider.
+     *
+     * @return void
      */
-    protected bool $defer = false;
+    public function register()
+    {
+        $this->registerCommands();
+    }
 
     /**
      * Bootstrap the application events.
@@ -23,21 +28,17 @@ class InstallerServiceProvider extends ServiceProvider
     {
         $router->middlewareGroup('install', [CanInstall::class]);
 
-        $this->loadTranslationsFrom(__DIR__.'/../Resources/lang', 'installer');
+        $router->aliasMiddleware('installer_locale', Locale::class);
 
         $this->loadRoutesFrom(__DIR__.'/../Routes/web.php');
 
         $this->loadMigrationsFrom(__DIR__.'/../Database/Migrations');
-
-        $this->loadTranslationsFrom(__DIR__.'/../Resources/lang', 'installer');
-
+        
         $this->loadViewsFrom(__DIR__.'/../Resources/views', 'installer');
 
-        $router->aliasMiddleware('installer_locale', Locale::class);
+        $this->loadTranslationsFrom(__DIR__.'/../Resources/lang', 'installer');
 
         Event::listen('krayin.installed', 'Webkul\Installer\Listeners\Installer@installed');
-
-        $this->loadTranslationsFrom(__DIR__.'/../Resources/lang', 'installer');
 
         /**
          * Route to access template applied image file
@@ -49,14 +50,14 @@ class InstallerServiceProvider extends ServiceProvider
     }
 
     /**
-     * Register the service provider.
+     * Register the Installer Commands of this package.
      */
-    public function register(): void
+    protected function registerCommands(): void
     {
-        if (! $this->app->runningInConsole()) {
-            return;
+        if ($this->app->runningInConsole()) {
+            $this->commands([
+                InstallerCommand::class,
+            ]);
         }
-
-        $this->commands([InstallerCommand::class]);
     }
 }

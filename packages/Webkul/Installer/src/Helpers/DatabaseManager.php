@@ -55,11 +55,6 @@ class DatabaseManager
     {
         try {
             Artisan::call('migrate:fresh');
-
-            return response()->json([
-                'success' => true,
-                'message' => 'Tables is migrated successfully.',
-            ]);
         } catch (Exception $e) {
             return response()->json([
                 'error' => $e->getMessage(),
@@ -74,11 +69,15 @@ class DatabaseManager
      */
     public function seeder($data)
     {
+        $data['parameter'] = [
+            'default_locale'     => $data['parameter']['default_locales'],
+            'allowed_locales'    => $data['parameter']['allowed_locales'],
+            'default_currency'   => $data['parameter']['default_currency'],
+            'allowed_currencies' => $data['parameter']['allowed_currencies'],
+        ];
+
         try {
-            app(KrayinDatabaseSeeder::class)->run([
-                'default_locale'     => $data['parameter']['default_locales'],
-                'default_currency'   => $data['parameter']['default_currency'],
-            ]);
+            app(KrayinDatabaseSeeder::class)->run($data['parameter']);
 
             $this->storageLink();
         } catch (Exception $e) {
