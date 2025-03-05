@@ -117,7 +117,7 @@
                                 </div>
                                 
                                 <!-- Mobile Sort Dropdown -->
-                                <div v-if="available.columns.some(column => column.sortable)">
+                                <div class="flex w-full justify-end" v-if="available.columns.some(column => column.sortable)">
                                     <x-admin::dropdown position="bottom-{{ in_array(app()->getLocale(), ['fa', 'ar']) ? 'left' : 'right' }}">
                                         <x-slot:toggle>
                                             <div class="flex items-center gap-1">
