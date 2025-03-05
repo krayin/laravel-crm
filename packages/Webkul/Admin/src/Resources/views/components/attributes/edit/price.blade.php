@@ -33,7 +33,7 @@
                     return {
                         decimal: true,
                         min_value: 0,
-                        ...(this.validations === 'required' ? { required: true } : {}),
+                        ...((this.validations === 'required' || this.validations === 'required|decimal') ? { required: true } : {}),
                     };
                 },
             },
