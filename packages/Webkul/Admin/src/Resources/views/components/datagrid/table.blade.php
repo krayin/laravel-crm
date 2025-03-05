@@ -94,16 +94,16 @@
                             <div class="flex items-center justify-between">
                                 <!-- Mass Actions for Mobile -->
                                 <div v-if="available.massActions.length">
-                                    <label for="mass_action_select_all_records_mobile">
+                                    <label for="mass_action_select_all_records">
                                         <input
                                             type="checkbox"
-                                            name="mass_action_select_all_records_mobile"
-                                            id="mass_action_select_all_records_mobile"
+                                            name="mass_action_select_all_records"
+                                            id="mass_action_select_all_records"
                                             class="peer hidden"
                                             :checked="['all', 'partial'].includes(applied.massActions.meta.mode)"
                                             @change="selectAll"
                                         >
-
+    
                                         <span
                                             class="icon-checkbox-outline cursor-pointer rounded-md text-2xl text-gray-500 peer-checked:text-brandColor"
                                             :class="[
@@ -118,7 +118,7 @@
                                 
                                 <!-- Mobile Sort Dropdown -->
                                 <div v-if="available.columns.some(column => column.sortable)">
-                                    <x-admin::dropdown>
+                                    <x-admin::dropdown position="bottom-{{ in_array(app()->getLocale(), ['fa', 'ar']) ? 'left' : 'right' }}">
                                         <x-slot:toggle>
                                             <div class="flex items-center gap-1">
                                                 <button
