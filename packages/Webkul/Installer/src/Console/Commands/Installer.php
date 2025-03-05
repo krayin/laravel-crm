@@ -12,11 +12,11 @@ use Webkul\Core\Providers\CoreServiceProvider;
 use Webkul\Installer\Database\Seeders\DatabaseSeeder as KrayinDatabaseSeeder;
 use Webkul\Installer\Events\ComposerEvents;
 
-use function Laravel\Prompts\text;
+use function Laravel\Prompts\multiselect;
+use function Laravel\Prompts\password;
 use function Laravel\Prompts\select;
 use function Laravel\Prompts\suggest;
-use function Laravel\Prompts\password;
-use function Laravel\Prompts\multiselect;
+use function Laravel\Prompts\text;
 
 class Installer extends Command
 {
@@ -43,7 +43,7 @@ class Installer extends Command
      */
     protected $envDetails = [];
 
-      /**
+    /**
      * Fillable environment variables.
      *
      * @var array
@@ -493,7 +493,7 @@ class Installer extends Command
     /**
      * Update the .env values.
      */
-     protected function updateEnvVariable(string $key, string $value, bool $addQuotes = false): void
+    protected function updateEnvVariable(string $key, string $value, bool $addQuotes = false): void
     {
         $data = file_get_contents(base_path('.env'));
 

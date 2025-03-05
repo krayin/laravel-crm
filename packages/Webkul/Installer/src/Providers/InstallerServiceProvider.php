@@ -11,7 +11,7 @@ use Webkul\Installer\Http\Middleware\Locale;
 
 class InstallerServiceProvider extends ServiceProvider
 {
-     /**
+    /**
      * Register the service provider.
      *
      * @return void
@@ -33,7 +33,7 @@ class InstallerServiceProvider extends ServiceProvider
         $this->loadRoutesFrom(__DIR__.'/../Routes/web.php');
 
         $this->loadMigrationsFrom(__DIR__.'/../Database/Migrations');
-        
+
         $this->loadViewsFrom(__DIR__.'/../Resources/views', 'installer');
 
         $this->loadTranslationsFrom(__DIR__.'/../Resources/lang', 'installer');
