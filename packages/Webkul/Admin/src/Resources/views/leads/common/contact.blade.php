@@ -87,7 +87,6 @@
             <v-lookup-component
                 :attribute='@json($organizationAttribute)'
                 :value="person.organization"
-                :can-add-new="true"
             ></v-lookup-component>
         </x-admin::form.control-group>
     </script>
