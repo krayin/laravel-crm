@@ -159,9 +159,9 @@
                 },
 
                 finalPositionClass() {
-                        return this.isMobile 
-                            ? 'items-center justify-center' 
-                            : this.positionClass;
+                    return this.isMobile 
+                        ? 'items-center justify-center' 
+                        : this.positionClass;
                 },
 
                 sizeClass() {
