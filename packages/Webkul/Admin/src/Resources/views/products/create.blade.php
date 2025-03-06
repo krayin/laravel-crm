@@ -60,8 +60,7 @@
                         <x-admin::attributes
                             :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
                                 'entity_type' => 'products',
-                                ['code', 'NOTIN', ['price']],
-                                ['code' , '!=', 'quantity']
+                                ['code', 'NOTIN', ['price', 'quantity']],
                             ])"
                         />
 
@@ -92,8 +91,7 @@
                             <x-admin::attributes
                                 :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
                                     'entity_type' => 'products',
-                                    ['code', 'IN', ['price']],
-                                    ['code' , '!=', 'quantity']
+                                    ['code', 'IN', ['price', 'quantity']],
                                 ])"
                             />
 
