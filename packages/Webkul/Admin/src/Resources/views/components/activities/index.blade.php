@@ -40,7 +40,7 @@
             {!! view_render_event('admin.components.activities.content.before') !!}
 
             <div class="w-full rounded-md border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900">
-                <div class="flex gap-2 overflow-y-hidden border-b border-gray-200 dark:border-gray-800">
+                <div class="flex gap-2 overflow-x-auto border-b border-gray-200 dark:border-gray-800">
                     {!! view_render_event('admin.components.activities.content.types.before') !!}
 
                     <div

@@ -61,7 +61,7 @@
             type="text/x-template"
             id="v-lead-create-template"
         >
-            <div class="box-shadow flex flex-col gap-4 rounded-lg border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900 max-xl:flex-wrap">
+            <div class="box-shadow flex flex-col gap-4 rounded-lg border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900">
                 {!! view_render_event('admin.leads.edit.form_controls.before') !!}
                 
                 <div class="flex w-full gap-2 border-b border-gray-200 dark:border-gray-800">
@@ -179,7 +179,7 @@
                             </p>
                         </div>
 
-                        <div class="w-1/2">
+                        <div class="w-1/2 max-md:w-full">
                             <!-- Contact Person Component -->
                             @include('admin::leads.common.contact')
                         </div>

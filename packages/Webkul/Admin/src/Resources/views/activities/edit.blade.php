@@ -52,7 +52,7 @@
 
                         <!-- Schedule Date -->
                         <x-admin::form.control-group>
-                            <div class="flex gap-2"> 
+                            <div class="flex gap-2 max-sm:flex-wrap"> 
                                 <div class="w-full">
                                     <x-admin::form.control-group.label class="required">
                                         @lang('admin::app.activities.edit.schedule_from')
