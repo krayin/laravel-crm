@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html
     lang="{{ app()->getLocale() }}"
     dir="{{ in_array(app()->getLocale(), ['ar', 'fa', 'he']) ? 'rtl' : 'ltr' }}"
@@ -110,10 +111,10 @@
         ];
     @endphp
 
-    <body class="h-full font-inter dark:bg-gray-950">
+    <body>
         <div
             id="app"
-            class="fixed w-full"
+            class="container-fluid fixed w-full"
         >
             <div class="flex [&amp;>*]:w-[50%] gap-12 justify-center items-center">
                 <!-- Vue Component -->
@@ -151,7 +152,7 @@
                                     <template v-if="stepStates.start !== 'complete'">
                                         <span
                                             class="text-xl"
-                                            :class="stepStates.start === 'pending' ? 'icon-checkbox-outline' : 'icon-right-arrow'"
+                                            :class="stepStates.start === 'pending' ? 'icon-checkbox-normal' : 'icon-right-arrow'"
                                         >
                                         </span>
                                     </template>
@@ -171,7 +172,7 @@
                                     <template v-if="stepStates.systemRequirements !== 'complete'">
                                         <span
                                             class="text-xl"
-                                            :class="stepStates.systemRequirements === 'pending' ? 'icon-checkbox-outline' : 'icon-right-arrow'"
+                                            :class="stepStates.systemRequirements === 'pending' ? 'icon-checkbox-normal' : 'icon-right-arrow'"
                                         >
                                         </span>
                                     </template>
@@ -188,7 +189,7 @@
                                     <template v-if="stepStates.envDatabase !== 'complete'">
                                         <span
                                             class="text-xl"
-                                            :class="stepStates.envDatabase === 'pending' ? 'icon-checkbox-outline' : 'icon-right-arrow'"
+                                            :class="stepStates.envDatabase === 'pending' ? 'icon-checkbox-normal' : 'icon-right-arrow'"
                                         >
                                         </span>
                                     </template>
@@ -207,7 +208,7 @@
                                     <template v-if="stepStates.readyForInstallation !== 'complete'">
                                         <span
                                             class="text-xl"
-                                            :class="stepStates.readyForInstallation === 'pending' ? 'icon-checkbox-outline' : 'icon-right-arrow'"
+                                            :class="stepStates.readyForInstallation === 'pending' ? 'icon-checkbox-normal' : 'icon-right-arrow'"
                                         >
                                         </span>
                                     </template>
@@ -224,7 +225,7 @@
                                     <template v-if="stepStates.createAdmin !== 'complete'">
                                         <span
                                             class="text-xl"
-                                            :class="stepStates.createAdmin === 'pending' ? 'icon-checkbox-outline' : 'icon-right-arrow'"
+                                            :class="stepStates.createAdmin === 'pending' ? 'icon-checkbox-normal' : 'icon-right-arrow'"
                                         >
                                         </span>
                                     </template>
@@ -241,7 +242,7 @@
                                     <template v-if="stepStates.installationCompleted !== 'complete'">
                                         <span
                                             class="text-xl"
-                                            :class="stepStates.installationCompleted === 'pending' ? 'icon-checkbox-outline' : 'icon-right-arrow'"
+                                            :class="stepStates.installationCompleted === 'pending' ? 'icon-checkbox-normal' : 'icon-right-arrow'"
                                         >
                                         </span>
                                     </template>
@@ -264,7 +265,9 @@
                                 @lang('installer::app.installer.index.krayin')
                             </a>
 
-                            <span>@lang('installer::app.installer.index.krayin-info')</span>
+                            <span>
+                                @lang('installer::app.installer.index.krayin-info')
+                            </span>
 
                             <a
                                 class="bg-white text-brandColor underline"
@@ -766,7 +769,7 @@
                                     @php
                                         date_default_timezone_set('UTC');
 
-                                        $tzlist = DateTimeZone::listIdentifiers(DateTimeZone::ALL);
+                                        $timeZoneList = DateTimeZone::listIdentifiers(DateTimeZone::ALL);
 
                                         $current = date_default_timezone_get();
                                     @endphp
@@ -786,7 +789,7 @@
                                             @lang('installer::app.installer.index.environment-configuration.select-timezone')
                                         </option>
 
-                                        @foreach($tzlist as $key => $value)
+                                        @foreach($timeZoneList as $key => $value)
                                             <option
                                                 value="{{ $value }}"
                                                 {{ $value === $current ? 'selected' : '' }}
@@ -847,7 +850,12 @@
                                             rules="required"
                                             :label="trans('installer::app.installer.index.environment-configuration.default-currency')"
                                         >
-                                            <option value="" disabled>Select Currencies</option>
+                                            <option
+                                                value=""
+                                                disabled
+                                            >
+                                                @lang('Select Currencies')
+                                            </option>
 
                                             @foreach ($currencies as $value => $label)
                                                 <option value="{{ $value }}" @if($value == 'USD') selected @endif>
@@ -881,9 +889,9 @@
 
                                                 <x-installer::form.control-group.control
                                                     type="checkbox"
-                                                    :id="'allowed_locale[' . $key . ']'"
+                                                    :id="'allowed_locale['.$key.']'"
                                                     :name="$key"
-                                                    :for="'allowed_locale[' . $key . ']'"
+                                                    :for="'allowed_locale['.$key.']'"
                                                     value="1"
                                                     :checked="(bool) $selectedOption"
                                                     :disabled="(bool) $selectedOption"
@@ -920,10 +928,10 @@
 
                                                 <x-installer::form.control-group.control
                                                     type="checkbox"
-                                                    :id="'currency[' . $key . ']'"
+                                                    :id="'currency['.$key.']'"
                                                     :name="$key"
                                                     value="1"
-                                                    :for="'currency[' . $key . ']'"
+                                                    :for="'currency['.$key.']'"
                                                     :checked="$selectedOption"
                                                     :disabled="$selectedOption"
                                                     @change="pushAllowedCurrency"
@@ -1056,7 +1064,6 @@
                                     @lang('installer::app.installer.index.continue')
                                 </button>
                             </div>
-
                         </form>
                     </x-installer::form>
                 </div>
@@ -1087,7 +1094,7 @@
                                     @lang('installer::app.installer.index.installation-completed.title-info')
                                 </p>
 
-                                <!-- Admin & Shop both buttons -->
+                                <!-- Admin buttons-->
                                 <div class="flex items-center gap-4">
                                     <a
                                         href="{{ URL('/admin/login')}}"
@@ -1230,9 +1237,8 @@
                                         allowed_currencies: this.currencies.allowed,
                                     };
 
-                                    this.startSeeding(this.envData);
+                                    this.startSeeding(data, this.envData);
                                 },
-
                             };
 
                             const index = this.steps.find(step => step === this.currentStep);
@@ -1258,7 +1264,7 @@
                             const localeName = event.target.name;
 
                             if (! Array.isArray(this.locales.allowed)) {
-                            this.locales.allowed = [];
+                                this.locales.allowed = [];
                             }
 
                             const index = this.locales.allowed.indexOf(localeName);
@@ -1304,21 +1310,28 @@
                                 });
                         },
 
-                        startSeeding(allParameters) {
+                        startSeeding(selectedParams, allParameters) {
+                            this.isLoading = true;
+
                             this.$axios.post("{{ route('installer.run_seeder') }}", {
                                 'allParameters': allParameters,
+                                'selectedParameters': selectedParams
                             })
-                                .then((response) => {
-                                    this.completeStep('readyForInstallation', 'createAdmin', 'active', 'complete');
+                            .then((response) => {
+                                this.isLoading = false;
 
-                                    this.currentStep = 'createAdmin';
+                                this.completeStep('readyForInstallation', 'createAdmin', 'active', 'complete');
+
+                                this.currentStep = 'createAdmin';
                             })
-                                .catch(error => {
-                                    setErrors(error.response.data.errors);
-                                });
+                            .catch(error => {
+                                setErrors(error.response.data.errors);
+                            });
                         },
 
                         saveAdmin(params, setErrors) {
+                            this.isLoading = true;
+
                             this.$axios.post("{{ route('installer.admin_config_setup') }}", params)
                                 .then((response) => {
                                     this.isLoading = false;
