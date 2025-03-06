@@ -2185,7 +2185,6 @@ return [
                         'gpt-4o-mini'           => 'GPT-4.0 mini',
                         'grok-2-1212'           => 'Grok 2.12',
                         'llama-3-2-3b-instruct' => 'Llama 3.2 3b Instruct',
-                        'other'                 => 'دیگر',
                         'title'                 => 'مدل‌ها',
                     ],
                 ],
