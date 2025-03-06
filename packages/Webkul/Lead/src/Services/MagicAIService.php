@@ -36,7 +36,7 @@ class MagicAIService
     private static function processPromptWithAI($prompt)
     {
         $otherModel = core()->getConfigData('general.magic_ai.settings.other_model');
-        
+
         $model = $otherModel ? $otherModel : core()->getConfigData('general.magic_ai.settings.model');
 
         $apiKey = core()->getConfigData('general.magic_ai.settings.api_key');
