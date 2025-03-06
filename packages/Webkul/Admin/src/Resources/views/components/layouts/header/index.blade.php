@@ -168,7 +168,7 @@
                         </a>
 
 
-                        @if ($menuItem->haveChildren())
+                        @if ($menuItem->haveChildren() && ! in_array($menuItem->getKey(), ['settings', 'configuration']))
                             <div class="{{ $menuItem->isActive() ? ' !grid bg-gray-100 dark:bg-gray-950' : '' }} hidden min-w-[180px] ltr:pl-10 rtl:pr-10 pb-2 rounded-b-lg z-[100]">
                                 @foreach ($menuItem->getChildren() as $subMenuItem)
                                     <a
