@@ -143,6 +143,12 @@
                 searchTerm(newVal, oldVal) {
                     this.search();
                 },
+
+                value(newVal, oldVal) {
+                    if (newVal) {
+                        this.getLookUpEntity();
+                    }
+                },
             },
 
             mounted() {
