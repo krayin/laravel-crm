@@ -60,7 +60,7 @@
             type="text/x-template"
             id="v-quote-template"
         >
-            <div class="box-shadow flex flex-col gap-4 rounded-lg border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900 max-xl:flex-wrap">
+            <div class="box-shadow flex flex-col gap-4 rounded-lg border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900">
                 <div class="flex w-full gap-2 border-b border-gray-200 dark:border-gray-800">                       
                     {!! view_render_event('admin.contacts.quotes.create.tabs.before') !!}
 
@@ -222,7 +222,7 @@
                             <p class="text-sm text-gray-600 dark:text-white">@lang('admin::app.quotes.create.address-info-info')</p>
                         </div>
 
-                        <div class="w-1/2">
+                        <div class="w-1/2 max-md:w-full">
                             {!! view_render_event('admin.contacts.quotes.create.address_information.attributes.before') !!}
 
                             <x-admin::attributes
@@ -277,147 +277,145 @@
             type="text/x-template"
             id="v-quote-item-list-template"
         >
-            <div>
-                {!! view_render_event('admin.contacts.quotes.create.table.after') !!}
+            <div class="flex flex-col gap-4">
+                <div class="block w-full overflow-x-auto">
+                    {!! view_render_event('admin.contacts.quotes.create.table.after') !!}
 
-                <!-- Table -->
-                <x-admin::table>
-                    <!-- Table Head -->
-                    <x-admin::table.thead>
-                        <x-admin::table.thead.tr>
-                            <x-admin::table.th >
-                                @lang('admin::app.quotes.create.product-name')
-                            </x-admin::table.th>
-                
-                            <x-admin::table.th class="text-center">
-                                @lang('admin::app.quotes.create.quantity')
-                            </x-admin::table.th>
-                
-                            <x-admin::table.th class="text-center">
-                                @lang('admin::app.quotes.create.price')
-                            </x-admin::table.th>
-                
-                            <x-admin::table.th class="text-center">
-                                @lang('admin::app.quotes.create.amount')
-                            </x-admin::table.th>
-                
-                            <x-admin::table.th class="text-center">
-                                @lang('admin::app.quotes.create.discount')
-                            </x-admin::table.th>
-                
-                            <x-admin::table.th class="text-center">
-                                @lang('admin::app.quotes.create.tax')
-                            </x-admin::table.th>
-                
-                            <x-admin::table.th class="text-center">
-                                @lang('admin::app.quotes.create.total')
-                            </x-admin::table.th>
+                    <!-- Table -->
+                    <x-admin::table>
+                        <!-- Table Head -->
+                        <x-admin::table.thead>
+                            <x-admin::table.thead.tr>
+                                <x-admin::table.th >
+                                    @lang('admin::app.quotes.create.product-name')
+                                </x-admin::table.th>
+                    
+                                <x-admin::table.th class="text-center">
+                                    @lang('admin::app.quotes.create.quantity')
+                                </x-admin::table.th>
+                    
+                                <x-admin::table.th class="text-center">
+                                    @lang('admin::app.quotes.create.price')
+                                </x-admin::table.th>
+                    
+                                <x-admin::table.th class="text-center">
+                                    @lang('admin::app.quotes.create.amount')
+                                </x-admin::table.th>
+                    
+                                <x-admin::table.th class="text-center">
+                                    @lang('admin::app.quotes.create.discount')
+                                </x-admin::table.th>
+                    
+                                <x-admin::table.th class="text-center">
+                                    @lang('admin::app.quotes.create.tax')
+                                </x-admin::table.th>
+                    
+                                <x-admin::table.th class="text-center">
+                                    @lang('admin::app.quotes.create.total')
+                                </x-admin::table.th>
 
-                            <x-admin::table.th 
-                                v-if="products.length > 1"
-                                class="!px-2 ltr:text-right rtl:text-left"
+                                <x-admin::table.th 
+                                    v-if="products.length > 1"
+                                    class="!px-2 ltr:text-right rtl:text-left"
+                                >
+                                    @lang('admin::app.quotes.create.action')
+                                </x-admin::table.th>
+                            </x-admin::table.thead.tr>
+                        </x-admin::table.thead>
+
+                        <!-- Table Body -->
+                        <x-admin::table.tbody>
+                            <!-- Quote Item Vue component -->
+                            <template
+                                v-for='(product, index) in products'
+                                :key="index"
                             >
-                                @lang('admin::app.quotes.create.action')
-                            </x-admin::table.th>
-                        </x-admin::table.thead.tr>
-                    </x-admin::table.thead>
+                                <v-quote-item
+                                    :product="product"
+                                    :index="index"
+                                    :errors="errors"
+                                    @onRemoveProduct="removeProduct($event)"
+                                ></v-quote-item>
+                            </template>
+                        </x-admin::table.tbody>
+                    </x-admin::table>
 
-                    <!-- Table Body -->
-                    <x-admin::table.tbody>
-                        <!-- Quote Item Vue component -->
-                        <template
-                            v-for='(product, index) in products'
-                            :key="index"
-                        >
-                            <v-quote-item
-                                :product="product"
-                                :index="index"
-                                :errors="errors"
-                                @onRemoveProduct="removeProduct($event)"
-                            ></v-quote-item>
-                        </template>
-                    </x-admin::table.tbody>
-                </x-admin::table>
+                    {!! view_render_event('admin.contacts.quotes.create.table.before') !!}
+                </div>
 
-                {!! view_render_event('admin.contacts.quotes.create.table.before') !!}
-            </div>
+                <!-- Add New Quote Item -->
+                <span
+                    class="text-md flex max-w-max cursor-pointer items-center gap-2 text-brandColor"
+                    @click="addProduct"
+                >
+                    @lang('admin::app.quotes.create.add-item')
+                </span>
 
-            <!-- Add New Qoute Item -->
-            <span
-                class="text-md cursor-pointer self-start font-semibold text-brandColor hover:underline dark:text-brandColor"
-                @click="addProduct"
-            >
-                @lang('admin::app.quotes.create.add-item')
-            </span>
+                <div class="flex justify-end">
+                    <div class="grid w-[348px] gap-4 rounded-lg bg-gray-100 p-4 text-sm dark:bg-gray-950 dark:text-white">
+                        <div class="flex w-full justify-between gap-x-5">
+                            @lang('admin::app.quotes.create.sub-total', ['symbol' => core()->currencySymbol(config('app.currency'))])
 
-            <div class="flex items-start gap-10 max-lg:gap-5">
-                <div class="flex-auto">
-                    <div class="flex justify-end">
-                        <div class="grid w-[348px] gap-4 rounded-lg bg-gray-100 p-4 text-sm dark:bg-gray-950 dark:text-white">
-                            <div class="flex w-full justify-between gap-x-5">
-                                @lang('admin::app.quotes.create.sub-total', ['symbol' => core()->currencySymbol(config('app.currency'))])
+                            <input
+                                type="hidden"
+                                name="sub_total"
+                                class="control"
+                                :value="subTotal"
+                                readonly
+                            >
 
-                                <input
-                                    type="hidden"
-                                    name="sub_total"
-                                    class="control"
-                                    :value="subTotal"
-                                    readonly
-                                >
+                            <p>@{{ subTotal }}</p>
+                        </div>
 
-                                <p>@{{ subTotal }}</p>
-                            </div>
+                        <div class="flex w-full justify-between gap-x-5">
+                            @lang('admin::app.quotes.create.total-discount', ['symbol' => core()->currencySymbol(config('app.currency'))])
 
-                            <div class="flex w-full justify-between gap-x-5">
-                                @lang('admin::app.quotes.create.total-discount', ['symbol' => core()->currencySymbol(config('app.currency'))])
+                            <input
+                                type="hidden"
+                                name="discount_amount"
+                                :value="discountAmount"
+                            >
 
-                                <input
-                                    type="hidden"
-                                    name="discount_amount"
-                                    :value="discountAmount"
-                                >
+                            <p>@{{ discountAmount }}</p>
+                        </div>
 
-                                <p>@{{ discountAmount }}</p>
-                            </div>
+                        <div class="flex w-full justify-between gap-x-5">
+                            @lang('admin::app.quotes.create.total-tax', ['symbol' => core()->currencySymbol(config('app.currency'))])
 
-                            <div class="flex w-full justify-between gap-x-5">
-                                @lang('admin::app.quotes.create.total-tax', ['symbol' => core()->currencySymbol(config('app.currency'))])
+                            <input
+                                type="hidden"
+                                name="tax_amount"
+                                :value="taxAmount"
+                            >
 
-                                <input
-                                    type="hidden"
-                                    name="tax_amount"
-                                    :value="taxAmount"
-                                >
+                            <p>@{{ taxAmount }}</p>
+                        </div>
 
-                                <p>@{{ taxAmount }}</p>
-                            </div>
+                        <div class="flex w-full justify-between gap-x-5">
+                            @lang('admin::app.quotes.create.total-adjustment', ['symbol' => core()->currencySymbol(config('app.currency'))])
 
-                            <div class="flex w-full justify-between gap-x-5">
-                                @lang('admin::app.quotes.create.total-adjustment', ['symbol' => core()->currencySymbol(config('app.currency'))])
+                            <x-admin::form.control-group.control
+                                type="inline"
+                                ::name="`adjustment_amount`"
+                                ::value="adjustmentAmount"
+                                rules="required|decimal:4"
+                                ::errors="errors"
+                                :label="trans('admin::app.quotes.create.adjustment-amount')"
+                                :placeholder="trans('admin::app.quotes.create.adjustment-amount')"
+                                @on-change="(event) => adjustmentAmount = event.value"
+                            />
+                        </div>
 
-                                <x-admin::form.control-group.control
-                                    type="inline"
-                                    ::name="`adjustment_amount`"
-                                    ::value="adjustmentAmount"
-                                    rules="required|decimal:4"
-                                    ::errors="errors"
-                                    :label="trans('admin::app.quotes.create.adjustment-amount')"
-                                    :placeholder="trans('admin::app.quotes.create.adjustment-amount')"
-                                    @on-change="(event) => adjustmentAmount = event.value"
-                                />
-                            </div>
+                        <div class="flex w-full justify-between gap-x-5">
+                            @lang('admin::app.quotes.create.grand-total', ['symbol' => core()->currencySymbol(config('app.currency'))])
 
-                            <div class="flex w-full justify-between gap-x-5">
-                                @lang('admin::app.quotes.create.grand-total', ['symbol' => core()->currencySymbol(config('app.currency'))])
+                            <input
+                                type="hidden"
+                                name="grand_total"
+                                :value="grandTotal"
+                            >
 
-                                <input
-                                    type="hidden"
-                                    name="grand_total"
-                                    :value="grandTotal"
-                                >
-
-                                <p>@{{ grandTotal }}</p>
-                            </div>
+                            <p>@{{ grandTotal }}</p>
                         </div>
                     </div>
                 </div>
