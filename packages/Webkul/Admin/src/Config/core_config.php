@@ -221,9 +221,6 @@ return [
                     ], [
                         'title' => 'admin::app.configuration.index.magic-ai.settings.models.grok-2-1212',
                         'value' => 'x-ai/grok-2-1212',
-                    ], [
-                        'title' => 'admin::app.configuration.index.magic-ai.settings.models.other',
-                        'value' => 'other',
                     ],
                 ],
             ], [
@@ -239,7 +236,7 @@ return [
                 'type'          => 'text',
                 'info'          => 'admin::app.configuration.index.magic-ai.settings.other-model',
                 'default'       => null,
-                'depends'       => 'enable:1,model:other',
+                'depends'       => 'enable:1',
             ],
         ],
     ], [
