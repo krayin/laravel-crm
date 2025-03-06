@@ -8,11 +8,6 @@ use Webkul\Admin\Http\Requests\LeadForm;
 class MagicAI
 {
     /**
-     * Const Variable of GEMINI_MODEL.
-     */
-    const GEMINI_MODEL = 'gemini-1.5-flash';
-
-    /**
      * Const Variable of LEAD_ENTITY.
      */
     const LEAD_ENTITY = 'leads';
@@ -21,11 +16,6 @@ class MagicAI
      * Const Variable of PERSON_ENTITY.
      */
     const PERSON_ENTITY = 'persons';
-
-    /**
-     * Const Variable for OPEN_AI_MODEL_URL.
-     */
-    const OPEN_AI_MODEL_URL = 'https://api.openai.com/v1/chat/completions';
 
     /**
      * Mapped the receive Extracted AI data.

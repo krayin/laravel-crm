@@ -641,7 +641,7 @@ class LeadController extends Controller
         foreach (request()->file('files') as $file) {
             $lead = $this->processFile($file, core()->getConfigData('general.magic_ai.pdf_generation.accepted_types'));
 
-            if ($lead['status'] === 'error') {
+            if (isset($lead['status']) && $lead['status'] === 'error') {
                 $errorMessages[] = $lead['message'];
             } else {
                 $leadData[] = $lead;
@@ -655,7 +655,7 @@ class LeadController extends Controller
             ]);
         }
 
-        if ((empty($leadData) && ! empty($errorMessages))) {
+        if (empty($leadData) && ! empty($errorMessages)) {
             return response()->json([
                 'status'  => 'error',
                 'message' => implode(', ', $errorMessages),
