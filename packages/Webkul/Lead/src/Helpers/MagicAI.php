@@ -5,13 +5,8 @@ namespace Webkul\Lead\Helpers;
 use Illuminate\Support\Facades\Validator;
 use Webkul\Admin\Http\Requests\LeadForm;
 
-class Lead
+class MagicAI
 {
-    /**
-     * Const Variable of GEMINI_MODEL.
-     */
-    const GEMINI_MODEL = 'gemini-1.5-flash';
-
     /**
      * Const Variable of LEAD_ENTITY.
      */
@@ -21,11 +16,6 @@ class Lead
      * Const Variable of PERSON_ENTITY.
      */
     const PERSON_ENTITY = 'persons';
-
-    /**
-     * Const Variable for OPEN_AI_MODEL_URL.
-     */
-    const OPEN_AI_MODEL_URL = 'https://api.openai.com/v1/chat/completions';
 
     /**
      * Mapped the receive Extracted AI data.
@@ -39,11 +29,7 @@ class Lead
             ];
         }
 
-        $isGeminiModel = str_contains(core()->getConfigData('general.magic_ai.settings.model'), self::GEMINI_MODEL);
-
-        $content = $isGeminiModel ? $aiData['candidates'][0]['content']['parts'][0]['text'] : $aiData['choices'][0]['message']['content'];
-
-        $content = strip_tags($content);
+        $content = strip_tags($aiData['choices'][0]['message']['content']);
 
         preg_match('/\{.*\}/s', $content, $matches);
 
