@@ -6,14 +6,15 @@
             $validations = [];
 
             if ($attribute->is_required) {
-                array_push($validations, 'required');
+                $validations[] = 'required';
             }
 
-            if ($attribute->type == 'price') {
-                array_push($validations, 'decimal');
+            if (
+                ! empty($attribute->validation)
+                && ! in_array($attribute->validation, $validations)
+            ) {
+                $validations[] = $attribute->validation;
             }
-
-            array_push($validations, $attribute->validation);
 
             $validations = implode('|', array_filter($validations));
         }

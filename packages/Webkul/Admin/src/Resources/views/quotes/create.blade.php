@@ -344,7 +344,7 @@
                 {!! view_render_event('admin.contacts.quotes.create.table.before') !!}
             </div>
 
-            <!-- Add New Qoute Item -->
+            <!-- Add New Quote Item -->
             <span
                 class="text-md cursor-pointer self-start font-semibold text-brandColor hover:underline dark:text-brandColor"
                 @click="addProduct"
