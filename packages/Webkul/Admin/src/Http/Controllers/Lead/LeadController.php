@@ -26,7 +26,7 @@ use Webkul\Lead\Repositories\ProductRepository;
 use Webkul\Lead\Repositories\SourceRepository;
 use Webkul\Lead\Repositories\StageRepository;
 use Webkul\Lead\Repositories\TypeRepository;
-use Webkul\Lead\Services\MagicAIService as MagicAiService;
+use Webkul\Lead\Services\MagicAIService;
 use Webkul\Tag\Repositories\TagRepository;
 use Webkul\User\Repositories\UserRepository;
 
