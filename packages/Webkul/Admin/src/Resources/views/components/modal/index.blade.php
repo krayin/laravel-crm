@@ -91,7 +91,7 @@
                     <div class="flex min-h-full items-end justify-center p-4 sm:items-center sm:p-0">
                         <div
                             class="box-shadow absolute z-[999] w-full max-w-[568px] overflow-hidden rounded-lg bg-white dark:bg-gray-900"
-                            :class="[positionClass, sizeClass]"
+                            :class="[finalPositionClass, sizeClass]"
                         >
                             <!-- Header Slot -->
                             <slot
@@ -132,7 +132,17 @@
             data() {
                 return {
                     isOpen: this.isActive,
+
+                    isMobile: window.innerWidth < 640,
                 };
+            },
+
+            created() {
+                window.addEventListener('resize', this.checkScreenSize);
+            },
+
+            beforeUnmount() {
+                window.removeEventListener('resize', this.checkScreenSize);
             },
 
             computed: {
@@ -148,6 +158,12 @@
                     }[this.position];
                 },
 
+                finalPositionClass() {
+                        return this.isMobile 
+                            ? 'items-center justify-center' 
+                            : this.positionClass;
+                },
+
                 sizeClass() {
                     return {
                         'normal': 'max-w-[568px]',
@@ -157,6 +173,8 @@
                 },
 
                 enterFromLeaveToClasses() {
+                    const effectivePosition = this.isMobile ? 'center' : this.position;
+                    
                     return {
                         'center': '-translate-y-4 opacity-0',
                         'top-center': '-translate-y-4 opacity-0',
@@ -165,11 +183,15 @@
                         'bottom-left': 'translate-y-4 opacity-0',
                         'top-right': '-translate-y-4 opacity-0',
                         'top-left': '-translate-y-4 opacity-0',
-                    }[this.position];
+                    }[effectivePosition];
                 }
             },
 
             methods: {
+                checkScreenSize() {
+                    this.isMobile = window.innerWidth < 640;
+                },
+                
                 toggle() {
                     this.isOpen = ! this.isOpen;
 
