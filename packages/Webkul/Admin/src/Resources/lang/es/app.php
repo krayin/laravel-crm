@@ -2167,16 +2167,14 @@ return [
                 'settings' => [
                     'accepted-types'      => 'Tipos aceptados',
                     'accepted-types-info' => 'Lista separada por comas de tipos de archivos que se aceptan para la generación de PDF.',
-                    'api-domain'          => 'Dominio de la API de LLM',
-                    'api-domain-info'     => 'Solo para Olama y Grow, Ejemplo: http://localhost:11434',
                     'api-key'             => 'Clave API',
-                    'api-key-info'        => 'Asegúrese de usar una clave API única para cada tipo de modelo para mantener un rendimiento y seguridad óptimos.',
+                    'api-key-info'        => 'Recuerda usar una clave API de OpenRouter para cada modelo. Es un paso simple para mejorar la seguridad y el rendimiento.',
                     'enable'              => 'Habilitar',
-                    'info'                => 'Mejore su experiencia con la función Magic AI ingresando su clave API exclusiva e indicando la integración sin esfuerzo. Tome el control de sus credenciales de OpenAI y personalice la configuración según sus necesidades específicas.',
+                    'info'                => 'Mejora tu experiencia con Magic AI con tu clave API de OpenRouter. ¡Intégrala ahora para una aventura de IA personalizada y sin problemas, hecha a tu medida! Personaliza la configuración sin esfuerzo y toma el control de tu viaje de IA.',
                     'other'               => 'Otro Modelo',
-                    'other-model'         => 'Para otros modelos, puede usar el siguiente ID de Modelo.',
+                    'other-model'         => 'Para otros modelos, usa el ID del Modelo de OpenRouter.',
                     'pdf-generation'      => 'Generación de PDF',
-                    'pdf-generation-info' => 'Habilite la función de Generación de PDF para extraer automáticamente datos de archivos PDF y convertirlos en formato de texto. Mejore su productividad y eficiencia habilitando esta función para optimizar su flujo de trabajo.',
+                    'pdf-generation-info' => 'Habilita la función de Generación de PDF para extraer automáticamente datos de archivos PDF y convertirlos en formato de texto. Mejora tu productividad y eficiencia habilitando esta función para optimizar tu flujo de trabajo.',
                     'title'               => 'Configuraciones Generales',
 
                     'models'     => [
@@ -2186,7 +2184,6 @@ return [
                         'gpt-4o-mini'           => 'GPT-4.0 mini',
                         'grok-2-1212'           => 'Grok 2.12',
                         'llama-3-2-3b-instruct' => 'Llama 3.2 3b Instruct',
-                        'other'                 => 'Otro',
                         'title'                 => 'Modelos',
                     ],
                 ],

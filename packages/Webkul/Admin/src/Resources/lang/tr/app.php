@@ -2166,18 +2166,16 @@ return [
                 'info'  => 'Uygulama için Sihirli AI yapılandırması.',
 
                 'settings' => [
-                    'accepted-types'      => 'Kabul edilen türler',
+                    'accepted-types'      => 'Kabul Edilen Türler',
                     'accepted-types-info' => 'PDF oluşturma için kabul edilen dosya türlerinin virgülle ayrılmış listesi.',
-                    'api-domain'          => 'LLM API Alanı',
-                    'api-domain-info'     => 'Sadece Olama ve Grow için, Ör: http://localhost:11434',
                     'api-key'             => 'API Anahtarı',
-                    'api-key-info'        => 'Optimum performans ve güvenliği sağlamak için her model türü için benzersiz bir API anahtarı kullanmayı unutmayın.',
+                    'api-key-info'        => 'Her model için bir OpenRouter API anahtarı kullanmayı unutmayın. Bu, güvenliği ve performansı artırmak için basit bir adımdır.',
                     'enable'              => 'Etkinleştir',
-                    'info'                => 'Benzersiz API Anahtarınızı girerek ve sorunsuz entegrasyonu belirterek Sihirli AI özelliği ile deneyiminizi geliştirin. OpenAI kimlik bilgilerinizi kontrol altına alın ve özel ihtiyaçlarınıza göre ayarları özelleştirin.',
+                    'info'                => 'OpenRouter API Anahtarınız ile Magic AI deneyiminizi geliştirin. Şimdi entegre edin ve size özel, sorunsuz bir AI macerası yaşayın! Ayarları kolayca özelleştirin ve AI yolculuğunuzun kontrolünü elinize alın.',
                     'other'               => 'Diğer Model',
-                    'other-model'         => 'Diğer model için aşağıdaki Model ID\'sini kullanabilirsiniz.',
+                    'other-model'         => 'Diğer modeller için OpenRouter\'dan Model ID kullanın.',
                     'pdf-generation'      => 'PDF Oluşturma',
-                    'pdf-generation-info' => 'PDF dosyalarından otomatik olarak veri çıkarmak ve bunları metin formatına dönüştürmek için PDF Oluşturma özelliğini etkinleştirin. Bu özelliği etkinleştirerek iş akışınızı basitleştirin ve verimliliğinizi artırın.',
+                    'pdf-generation-info' => 'PDF dosyalarından otomatik olarak veri çıkarmak ve bunları metin formatına dönüştürmek için PDF Oluşturma özelliğini etkinleştirin. Bu özelliği etkinleştirerek iş akışınızı kolaylaştırın ve verimliliğinizi artırın.',
                     'title'               => 'Genel Ayarlar',
 
                     'models'     => [
@@ -2187,7 +2185,6 @@ return [
                         'gpt-4o-mini'           => 'GPT-4.0 mini',
                         'grok-2-1212'           => 'Grok 2.12',
                         'llama-3-2-3b-instruct' => 'Llama 3.2 3b Instruct',
-                        'other'                 => 'Diğer',
                         'title'                 => 'Modeller',
                     ],
                 ],
