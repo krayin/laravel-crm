@@ -19,14 +19,14 @@ use Webkul\Admin\Http\Resources\StageResource;
 use Webkul\Attribute\Repositories\AttributeRepository;
 use Webkul\Contact\Repositories\PersonRepository;
 use Webkul\DataGrid\Enums\DateRangeOptionEnum;
-use Webkul\Lead\Helpers\Lead;
+use Webkul\Lead\Helpers\MagicAI;
 use Webkul\Lead\Repositories\LeadRepository;
 use Webkul\Lead\Repositories\PipelineRepository;
 use Webkul\Lead\Repositories\ProductRepository;
 use Webkul\Lead\Repositories\SourceRepository;
 use Webkul\Lead\Repositories\StageRepository;
 use Webkul\Lead\Repositories\TypeRepository;
-use Webkul\Lead\Services\LeadService;
+use Webkul\Lead\Services\MagicAIService as MagicAiService;
 use Webkul\Tag\Repositories\TagRepository;
 use Webkul\User\Repositories\UserRepository;
 
@@ -648,7 +648,14 @@ class LeadController extends Controller
             }
         }
 
-        if (empty($leadData) && ! empty($errorMessages)) {
+        if (isset($errorMessages[0]['code'])) {
+            return response()->json([
+                'status' => 'error',
+                'message' => $errorMessages[0]['message'],
+            ]);
+        }
+
+        if ((empty($leadData) && ! empty($errorMessages))) {
             return response()->json([
                 'status'  => 'error',
                 'message' => implode(', ', $errorMessages),
@@ -677,9 +684,9 @@ class LeadController extends Controller
             'file' => 'required_in|extensions:'.$supportedFormats.'|mimes:'.$supportedFormats,
         ]);
 
-        $extractedData = LeadService::extractDataFromPdf($file->getPathName());
+        $extractedData = MagicAiService::extractDataFromPdf($file->getPathName());
 
-        $lead = Lead::mapAIDataToLead($extractedData);
+        $lead = MagicAI::mapAIDataToLead($extractedData);
 
         return $lead;
     }

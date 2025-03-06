@@ -205,22 +205,25 @@ return [
                 'options'       => [
                     [
                         'title' => 'admin::app.configuration.index.magic-ai.settings.models.gpt-4o',
-                        'value' => 'gpt-4o',
+                        'value' => 'openai/chatgpt-4o-latest',
                     ], [
-                        'title' => 'admin::app.configuration.index.magic-ai.settings.models.gpt-4o-mini',
-                        'value' => 'gpt-4o-mini',
+                        'title' => 'gpt-4o-mini',
+                        'value' => 'openai/gpt-4o-mini',
                     ], [
-                        'title' => 'admin::app.configuration.index.magic-ai.settings.models.gemini-flash',
-                        'value' => 'gemini-1.5-flash',
+                        'title' => 'gemini-2.0-flash-001',
+                        'value' => 'google/gemini-2.0-flash-001',
                     ], [
-                        'title' => 'admin::app.configuration.index.magic-ai.settings.models.deepseek-r1',
-                        'value' => 'deepseek-r1:8b',
+                        'title' => 'deepseek-r1-distill-llama-8b',
+                        'value' => 'deepseek/deepseek-r1-distill-llama-8b',
                     ], [
-                        'title' => 'admin::app.configuration.index.magic-ai.settings.models.ollama',
-                        'value' => 'llama3.2:latest',
+                        'title' => 'llama-3.2-3b-instruct',
+                        'value' => 'meta-llama/llama-3.2-3b-instruct',
                     ], [
-                        'title' => 'admin::app.configuration.index.magic-ai.settings.models.llama',
-                        'value' => 'llama-3.3-70b-versatile',
+                        'title' => 'x-ai/grok-2-1212',
+                        'value' => 'x-ai/grok-2-1212',
+                    ], [
+                        'title' => 'admin::app.configuration.index.magic-ai.settings.models.other',
+                        'value' => true,
                     ],
                 ],
             ], [
@@ -231,11 +234,11 @@ return [
                 'validation'    => 'required_if:enable,1',
                 'info'          => 'admin::app.configuration.index.magic-ai.settings.api-key-info',
             ], [
-                'name'          => 'api_domain',
-                'title'         => 'admin::app.configuration.index.magic-ai.settings.api-domain',
+                'name'          => 'other_model',
+                'title'         => 'admin::app.configuration.index.magic-ai.settings.other',
                 'type'          => 'text',
-                'info'          => 'admin::app.configuration.index.magic-ai.settings.api-domain-info',
-                'depends'       => 'enable:1',
+                'info'          => 'admin::app.configuration.index.magic-ai.settings.other-model',
+                'depends'       => 'model:1',
             ],
         ],
     ], [
