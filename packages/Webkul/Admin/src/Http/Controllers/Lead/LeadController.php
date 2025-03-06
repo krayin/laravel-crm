@@ -650,7 +650,7 @@ class LeadController extends Controller
 
         if (isset($errorMessages[0]['code'])) {
             return response()->json([
-                'status' => 'error',
+                'status'  => 'error',
                 'message' => $errorMessages[0]['message'],
             ]);
         }
