@@ -238,6 +238,7 @@ return [
                 'title'         => 'admin::app.configuration.index.magic-ai.settings.other',
                 'type'          => 'text',
                 'info'          => 'admin::app.configuration.index.magic-ai.settings.other-model',
+                'default'       => null,
                 'depends'       => 'enable:1,model:other',
             ],
         ],
