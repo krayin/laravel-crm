@@ -54,10 +54,10 @@ class MagicAIService
             'Content-Type'  => 'application/json',
             'Authorization' => 'Bearer '.$apiKey,
         ])->post(self::OPEN_ROUTER_URL, [
-            'model' => $model,
+            'model'    => $model,
             'messages' => [
                 [
-                    'role' => 'system',
+                    'role'    => 'system',
                     'content' => 'You are an AI assistant. You have to extract the data from the PDF file. 
                     Example Output:
                     {
@@ -78,7 +78,7 @@ class MagicAIService
                     }',
                 ],
                 [
-                    'role' => 'user',
+                    'role'    => 'user',
                     'content' => $prompt,
                 ],
             ],
