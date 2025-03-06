@@ -20,7 +20,7 @@
             <!-- Dropdown Content -->
             <x-slot:content class="mt-2 !p-0">
                 <div class="relative px-2 py-4">
-                    <div class="grid grid-cols-3 gap-2 text-center">
+                    <div class="grid grid-cols-3 gap-2 text-center max-sm:grid-cols-2">
                         <!-- Link to create new Lead -->
                         @if (bouncer()->hasPermission('leads.create'))
                             <div class="rounded-lg bg-white p-2 hover:bg-gray-100 dark:bg-gray-800 dark:hover:bg-gray-950">
