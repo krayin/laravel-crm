@@ -3,33 +3,33 @@
 return [
     'importers' => [
         'persons' => [
-            'title' => 'Persons',
+            'title' => 'Pessoas',
 
             'validation' => [
                 'errors' => [
-                    'duplicate-email' => 'Email : \'%s\' is found more than once in the import file.',
-                    'duplicate-phone' => 'Phone : \'%s\' is found more than once in the import file.',
-                    'email-not-found' => 'Email : \'%s\' not found in the system.',
+                    'duplicate-email' => 'E-mail : \'%s\' é encontrado mais de uma vez no arquivo de importação.',
+                    'duplicate-phone' => 'Telefone : \'%s\' é encontrado mais de uma vez no arquivo de importação.',
+                    'email-not-found' => 'E-mail : \'%s\' não foi encontrado no sistema.',
                 ],
             ],
         ],
 
         'products' => [
-            'title' => 'Products',
+            'title' => 'Produtos',
 
             'validation' => [
                 'errors' => [
-                    'sku-not-found' => 'Product with specified SKU not found',
+                    'sku-not-found' => 'Produto com este código não foi encontrado',
                 ],
             ],
         ],
 
         'leads' => [
-            'title' => 'Leads',
+            'title' => 'Oportunidades',
 
             'validation' => [
                 'errors' => [
-                    'id-not-found' => 'ID : \'%s\' not found in the system.',
+                    'id-not-found' => 'ID : \'%s\' não foi encontrado no sistema.',
                 ],
             ],
         ],
@@ -37,14 +37,14 @@ return [
 
     'validation' => [
         'errors' => [
-            'column-empty-headers' => 'Columns number "%s" have empty headers.',
-            'column-name-invalid'  => 'Invalid column names: "%s".',
-            'column-not-found'     => 'Required columns not found: %s.',
-            'column-numbers'       => 'Number of columns does not correspond to the number of rows in the header.',
-            'invalid-attribute'    => 'Header contains invalid attribute(s): "%s".',
-            'system'               => 'An unexpected system error occurred.',
-            'wrong-quotes'         => 'Curly quotes used instead of straight quotes.',
-            'already-exists'       => 'The :attribute already exists.',
+            'column-empty-headers' => 'As colunas de número "%s" têm cabeçalhos vazios.',
+            'column-name-invalid'  => 'Nomes de colunas inválidos: "%s".',
+            'column-not-found'     => 'Colunas obrigatórias não encontradas: %s.',
+            'column-numbers'       => 'O número de colunas não corresponde ao número de linhas no cabeçalho.',
+            'invalid-attribute'    => 'O cabeçalho contém atributo(s) inválido(s): "%s".',
+            'system'               => 'Ocorreu um erro inesperado no sistema.',
+            'wrong-quotes'         => 'Aspas curvas usadas em vez de aspas retas.',
+            'already-exists'       => 'O :attribute já existe.',
         ],
     ],
 ];
