@@ -2,10 +2,10 @@
 
 return [
     'acl' => [
-        'leads'           => 'Leads',
-        'lead'            => 'Lead',
+        'leads'           => 'Oportunidades',
+        'lead'            => 'Oportunidade',
         'quotes'          => 'Cotações',
-        'mail'            => 'Correio',
+        'mail'            => 'E-mail',
         'inbox'           => 'Caixa de Entrada',
         'draft'           => 'Rascunho',
         'outbox'          => 'Caixa de Saída',
@@ -15,7 +15,7 @@ return [
         'webhook'         => 'Webhook',
         'contacts'        => 'Contatos',
         'persons'         => 'Pessoas',
-        'organizations'   => 'Organizações',
+        'organizations'   => 'Empresas',
         'products'        => 'Produtos',
         'settings'        => 'Configurações',
         'groups'          => 'Grupos',
@@ -24,15 +24,15 @@ return [
         'user'            => 'Usuário',
         'automation'      => 'Automação',
         'attributes'      => 'Atributos',
-        'pipelines'       => 'Pipelines',
-        'sources'         => 'Fontes',
+        'pipelines'       => 'Funil',
+        'sources'         => 'Origem',
         'types'           => 'Tipos',
-        'email-templates' => 'Modelos de Email',
+        'email-templates' => 'Modelos de E-mail',
         'workflows'       => 'Fluxos de Trabalho',
         'other-settings'  => 'Outras Configurações',
         'tags'            => 'Tags',
         'configuration'   => 'Configuração',
-        'create'          => 'Criar',
+        'create'          => 'Adicionar',
         'edit'            => 'Editar',
         'view'            => 'Visualizar',
         'print'           => 'Imprimir',
@@ -46,29 +46,29 @@ return [
         'login-error'      => 'As credenciais não correspondem aos nossos registros.',
 
         'login' => [
-            'email'                => 'Endereço de Email',
+            'email'                => 'Endereço de E-mail',
             'forget-password-link' => 'Esqueceu a Senha?',
             'password'             => 'Senha',
-            'submit-btn'           => 'Entrar',
-            'title'                => 'Entrar',
+            'submit-btn'           => 'Acessar',
+            'title'                => 'Acessar',
         ],
 
         'forget-password' => [
             'create' => [
-                'email'           => 'Email Registrado',
-                'email-not-exist' => 'Email Não Existe',
+                'email'           => 'E-mail Registrado',
+                'email-not-exist' => 'E-mail Não Existe',
                 'page-title'      => 'Esqueceu a Senha',
-                'reset-link-sent' => 'Link para redefinir a senha enviado',
-                'sign-in-link'    => 'Voltar para Entrar?',
+                'reset-link-sent' => 'Link para redefinir a senha foi enviado',
+                'sign-in-link'    => 'Voltar para tela de acesso?',
                 'submit-btn'      => 'Redefinir',
                 'title'           => 'Recuperar Senha',
             ],
         ],
 
         'reset-password' => [
-            'back-link-title'  => 'Voltar para Entrar?',
+            'back-link-title'  => 'Voltar para tela de acesso?',
             'confirm-password' => 'Confirmar Senha',
-            'email'            => 'Email Registrado',
+            'email'            => 'E-mail Registrado',
             'password'         => 'Senha',
             'submit-btn'       => 'Redefinir Senha',
             'title'            => 'Redefinir Senha',
@@ -99,11 +99,11 @@ return [
             'actions' => [
                 'mail' => [
                     'btn'          => 'E-mail',
-                    'title'        => 'Redigir E-mail',
+                    'title'        => 'Escrever e-mail',
                     'to'           => 'Para',
                     'enter-emails' => 'Pressione Enter para adicionar e-mails',
-                    'cc'           => 'CC',
-                    'bcc'          => 'BCC',
+                    'cc'           => 'Cópia',
+                    'bcc'          => 'Cópia oculta',
                     'subject'      => 'Assunto',
                     'send-btn'     => 'Enviar',
                     'message'      => 'Mensagem',
@@ -141,7 +141,7 @@ return [
 
                     'participants' => [
                         'title'       => 'Participantes',
-                        'placeholder' => 'Digite para buscar participantes',
+                        'placeholder' => 'Digite para pesquisar participantes',
                         'users'       => 'Usuários',
                         'persons'     => 'Pessoas',
                         'no-results'  => 'Nenhum resultado encontrado...',
@@ -151,10 +151,10 @@ return [
 
             'index' => [
                 'all'          => 'Todos',
-                'bcc'          => 'BCC',
-                'by-user'      => 'Por :user',
+                'bcc'          => 'Cópia oculta',
+                'by-user'      => 'Por usuário',
                 'calls'        => 'Chamadas',
-                'cc'           => 'CC',
+                'cc'           => 'Cópia',
                 'change-log'   => 'Logs de Alterações',
                 'delete'       => 'Excluir',
                 'edit'         => 'Editar',
@@ -178,48 +178,48 @@ return [
 
                 'empty-placeholders' => [
                     'all' => [
-                        'title'       => 'Nenhuma Atividade Encontrada',
-                        'description' => 'Nenhuma atividade encontrada para isso. Você pode adicionar atividades clicando no botão no painel à esquerda.',
+                        'title'       => 'Nenhuma Atividade foi encontrada',
+                        'description' => 'Nenhuma atividade foi encontrada para isso. Você pode adicionar atividades clicando no botão no painel à esquerda.',
                     ],
 
                     'planned' => [
-                        'title'       => 'Nenhuma Atividade Planejada Encontrada',
-                        'description' => 'Nenhuma atividade planejada encontrada para isso. Você pode adicionar atividades planejadas clicando no botão no painel à esquerda.',
+                        'title'       => 'Nenhuma Atividade Planejada foi encontrada',
+                        'description' => 'Nenhuma atividade planejada foi encontrada para isso. Você pode adicionar atividades planejadas clicando no botão no painel à esquerda.',
                     ],
 
                     'notes' => [
-                        'title'       => 'Nenhuma Nota Encontrada',
+                        'title'       => 'Nenhuma Nota foi encontrada',
                         'description' => 'Nenhuma nota encontrada para isso. Você pode adicionar notas clicando no botão no painel à esquerda.',
                     ],
 
                     'calls' => [
-                        'title'       => 'Nenhuma Chamada Encontrada',
-                        'description' => 'Nenhuma chamada encontrada para isso. Você pode adicionar chamadas clicando no botão no painel à esquerda.',
+                        'title'       => 'Nenhuma Chamada foi encontrada',
+                        'description' => 'Nenhuma chamada foi encontrada para isso. Você pode adicionar chamadas clicando no botão no painel à esquerda.',
                     ],
 
                     'meetings' => [
-                        'title'       => 'Nenhuma Reunião Encontrada',
-                        'description' => 'Nenhuma reunião encontrada para isso. Você pode adicionar reuniões clicando no botão no painel à esquerda.',
+                        'title'       => 'Nenhuma Reunião foi encontrada',
+                        'description' => 'Nenhuma reunião foi encontrada para isso. Você pode adicionar reuniões clicando no botão no painel à esquerda.',
                     ],
 
                     'lunches' => [
-                        'title'       => 'Nenhum Almoço Encontrado',
-                        'description' => 'Nenhum almoço encontrado para isso. Você pode adicionar almoços clicando no botão no painel à esquerda.',
+                        'title'       => 'Nenhum Almoço foi encontrado',
+                        'description' => 'Nenhum almoço foi encontrado para isso. Você pode adicionar almoços clicando no botão no painel à esquerda.',
                     ],
 
                     'files' => [
-                        'title'       => 'Nenhum Arquivo Encontrado',
-                        'description' => 'Nenhum arquivo encontrado para isso. Você pode adicionar arquivos clicando no botão no painel à esquerda.',
+                        'title'       => 'Nenhum Arquivo foi encontrado',
+                        'description' => 'Nenhum arquivo foi encontrado para isso. Você pode adicionar arquivos clicando no botão no painel à esquerda.',
                     ],
 
                     'emails' => [
-                        'title'       => 'Nenhum E-mail Encontrado',
-                        'description' => 'Nenhum e-mail encontrado para isso. Você pode adicionar e-mails clicando no botão no painel à esquerda.',
+                        'title'       => 'Nenhum E-mail foi encontrado',
+                        'description' => 'Nenhum e-mail foi encontrado para isso. Você pode adicionar e-mails clicando no botão no painel à esquerda.',
                     ],
 
                     'system' => [
-                        'title'       => 'Nenhum Log de Alteração Encontrado',
-                        'description' => 'Nenhum log de alteração encontrado para isso.',
+                        'title'       => 'Nenhum Log de Alteração foi encontrado',
+                        'description' => 'Nenhum log de alteração foi encontrado para isso.',
                     ],
                 ],
             ],
@@ -256,12 +256,12 @@ return [
             ],
 
             'toolbar' => [
-                'length-of' => ':length de',
+                'length-of' => 'tamanho de',
                 'of'        => 'de',
                 'per-page'  => 'Por Página',
-                'results'   => ':total Resultados',
+                'results'   => 'Resultados',
                 'delete'    => 'Excluir',
-                'selected'  => ':total Itens Selecionados',
+                'selected'  => 'Itens Selecionados',
 
                 'mass-actions' => [
                     'submit'        => 'Enviar',
@@ -272,7 +272,7 @@ return [
                 'filter' => [
                     'apply-filters-btn' => 'Aplicar Filtros',
                     'back-btn'          => 'Voltar',
-                    'create-new-filter' => 'Criar Novo Filtro',
+                    'create-new-filter' => 'Adicionar novo Filtro',
                     'custom-filters'    => 'Filtros Personalizados',
                     'delete-error'      => 'Algo deu errado ao excluir o filtro, por favor tente novamente.',
                     'delete-success'    => 'Filtro excluído com sucesso.',
@@ -349,12 +349,12 @@ return [
                 'added-tags'     => 'Tags Adicionadas',
                 'save-btn'       => 'Salvar Tag',
                 'placeholder'    => 'Digite para procurar tags',
-                'add-tag'        => 'Adicionar \":term\"...',
-                'aquarelle-red'  => 'Vermelho Aquarelle',
-                'crushed-cashew' => 'Caju Triturado',
-                'beeswax'        => 'Cera de Abelha',
-                'lemon-chiffon'  => 'Chiffon de Limão',
-                'snow-flurry'    => 'Neve Flurry',
+                'add-tag'        => 'Adicionar Tag',
+                'aquarelle-red'  => 'Vermelho',
+                'crushed-cashew' => 'Castanho',
+                'beeswax'        => 'Amarelado',
+                'lemon-chiffon'  => 'Limão',
+                'snow-flurry'    => 'Neve',
                 'honeydew'       => 'Melão',
             ],
         ],
@@ -366,21 +366,21 @@ return [
 
             'header' => [
                 'mega-search' => [
-                    'title'   => 'Mega Pesquisa',
+                    'title'   => 'Busca rápida',
 
                     'tabs' => [
-                        'leads'    => 'Leads',
+                        'leads'    => 'Oportunidades',
                         'quotes'   => 'Cotações',
                         'persons'  => 'Pessoas',
                         'products' => 'Produtos',
                     ],
 
                     'explore-all-products'          => 'Explorar todos os Produtos',
-                    'explore-all-leads'             => 'Explorar todos os Leads',
+                    'explore-all-leads'             => 'Explorar todos as Oportunidades',
                     'explore-all-contacts'          => 'Explorar todos os Contatos',
                     'explore-all-quotes'            => 'Explorar todas as Cotações',
                     'explore-all-matching-products' => 'Explorar todos os produtos correspondentes a ":query" (:count)',
-                    'explore-all-matching-leads'    => 'Explorar todos os leads correspondentes a ":query" (:count)',
+                    'explore-all-matching-leads'    => 'Explorar todos as oportunidades correspondentes a ":query" (:count)',
                     'explore-all-matching-contacts' => 'Explorar todos os contatos correspondentes a ":query" (:count)',
                     'explore-all-matching-quotes'   => 'Explorar todas as cotações correspondentes a ":query" (:count)',
                 ],
@@ -418,8 +418,8 @@ return [
     'quotes' => [
         'index' => [
             'title'          => 'Cotações',
-            'create-btn'     => 'Criar Cotação',
-            'create-success' => 'Cotação criada com sucesso.',
+            'create-btn'     => 'Adicionar Cotação',
+            'create-success' => 'Cotação adicionada com sucesso.',
             'update-success' => 'Cotação atualizada com sucesso.',
             'delete-success' => 'Cotação excluída com sucesso.',
             'delete-failed'  => 'Não é possível excluir a cotação.',
@@ -456,7 +456,7 @@ return [
                 'quote-id'         => 'ID da Cotação',
                 'sales-person'     => 'Vendedor',
                 'shipping-address' => 'Endereço de Envio',
-                'sku'              => 'SKU',
+                'sku'              => 'Código',
                 'sub-total'        => 'Subtotal',
                 'subject'          => 'Assunto',
                 'tax'              => 'Imposto',
@@ -465,7 +465,7 @@ return [
         ],
 
         'create' => [
-            'title'             => 'Criar Cotação',
+            'title'             => 'Adicionar Cotação',
             'save-btn'          => 'Salvar Cotação',
             'quote-info'        => 'Informações da Cotação',
             'quote-info-info'   => 'Informe as informações básicas da cotação.',
@@ -473,7 +473,7 @@ return [
             'address-info-info' => 'Informações sobre o endereço relacionado à cotação.',
             'quote-items'       => 'Itens da Cotação',
             'search-products'   => 'Pesquisar Produtos',
-            'link-to-lead'      => 'Vincular ao lead',
+            'link-to-lead'      => 'Vincular a uma oportunidade',
             'quote-item-info'   => 'Adicionar solicitação de produto para esta cotação.',
             'quote-name'        => 'Nome da Cotação',
             'quantity'          => 'Quantidade',
@@ -503,7 +503,7 @@ return [
             'address-info'      => 'Informações de Endereço',
             'address-info-info' => 'Informações sobre o endereço relacionado à cotação.',
             'quote-items'       => 'Itens da Cotação',
-            'link-to-lead'      => 'Vincular ao lead',
+            'link-to-lead'      => 'Vincular a uma oportunidade',
             'quote-item-info'   => 'Adicionar solicitação de produto para esta cotação.',
             'quote-name'        => 'Nome da Cotação',
             'quantity'          => 'Quantidade',
@@ -531,8 +531,8 @@ return [
         'persons' => [
             'index' => [
                 'title'          => 'Pessoas',
-                'create-btn'     => 'Criar Pessoa',
-                'create-success' => 'Pessoa criada com sucesso.',
+                'create-btn'     => 'Adicionar Pessoa',
+                'create-success' => 'Pessoa adicionada com sucesso.',
                 'update-success' => 'Pessoa atualizada com sucesso.',
                 'delete-success' => 'Pessoa excluída com sucesso.',
                 'delete-failed'  => 'Não foi possível excluir a pessoa.',
@@ -545,14 +545,14 @@ return [
                     'id'                => 'ID',
                     'view'              => 'Visualizar',
                     'name'              => 'Nome',
-                    'organization-name' => 'Nome da Organização',
+                    'organization-name' => 'Nome da Empresa',
                 ],
             ],
 
             'view' => [
                 'title'              => ':name',
                 'about-person'       => 'Sobre a Pessoa',
-                'about-organization' => 'Sobre a Organização',
+                'about-organization' => 'Sobre a Empresa',
 
                 'activities' => [
                     'index' => [
@@ -564,7 +564,7 @@ return [
                         'quotes'       => 'Cotações',
                         'notes'        => 'Notas',
                         'emails'       => 'E-mails',
-                        'by-user'      => 'Por :user',
+                        'by-user'      => 'Por usuário',
                         'scheduled-on' => 'Agendado em',
                         'location'     => 'Localização',
                         'participants' => 'Participantes',
@@ -576,10 +576,10 @@ return [
                     'actions' => [
                         'mail' => [
                             'btn'      => 'E-mail',
-                            'title'    => 'Compor E-mail',
+                            'title'    => 'Escrever e-mail',
                             'to'       => 'Para',
-                            'cc'       => 'CC',
-                            'bcc'      => 'BCC',
+                            'cc'       => 'Cópia',
+                            'bcc'      => 'Cópia oculta',
                             'subject'  => 'Assunto',
                             'send-btn' => 'Enviar',
                             'message'  => 'Mensagem',
@@ -620,7 +620,7 @@ return [
             ],
 
             'create' => [
-                'title'    => 'Criar Pessoa',
+                'title'    => 'Adicionar Pessoa',
                 'save-btn' => 'Salvar Pessoa',
             ],
 
@@ -632,12 +632,12 @@ return [
 
         'organizations' => [
             'index' => [
-                'title'          => 'Organizações',
-                'create-btn'     => 'Criar Organização',
-                'create-success' => 'Organização criada com sucesso.',
-                'update-success' => 'Organização atualizada com sucesso.',
-                'delete-success' => 'Organização excluída com sucesso.',
-                'delete-failed'  => 'Não foi possível excluir a organização.',
+                'title'          => 'Empresas',
+                'create-btn'     => 'Adicionar Empresa',
+                'create-success' => 'Empresa adicionada com sucesso.',
+                'update-success' => 'Empresa atualizada com sucesso.',
+                'delete-success' => 'Empresa excluída com sucesso.',
+                'delete-failed'  => 'Não foi possível excluir a empresa.',
 
                 'datagrid' => [
                     'delete'        => 'Excluir',
@@ -649,13 +649,13 @@ return [
             ],
 
             'create' => [
-                'title'    => 'Criar Organização',
-                'save-btn' => 'Salvar Organização',
+                'title'    => 'Adicionar Empresa',
+                'save-btn' => 'Salvar Empresa',
             ],
 
             'edit' => [
-                'title'    => 'Editar Organização',
-                'save-btn' => 'Salvar Organização',
+                'title'    => 'Editar Empresa',
+                'save-btn' => 'Salvar Empresa',
             ],
         ],
     ],
@@ -663,8 +663,8 @@ return [
     'products' => [
         'index' => [
             'title'          => 'Produtos',
-            'create-btn'     => 'Criar Produto',
-            'create-success' => 'Produto criado com sucesso.',
+            'create-btn'     => 'Adicionar Produto',
+            'create-success' => 'Produto adicionado com sucesso.',
             'update-success' => 'Produto atualizado com sucesso.',
             'delete-success' => 'Produto excluído com sucesso.',
             'delete-failed'  => 'Não foi possível excluir o produto.',
@@ -676,16 +676,16 @@ return [
                 'id'        => 'ID',
                 'in-stock'  => 'Em Estoque',
                 'name'      => 'Nome',
-                'on-hand'   => 'Em Mãos',
+                'on-hand'   => 'Disponível',
                 'price'     => 'Preço',
-                'sku'       => 'SKU',
+                'sku'       => 'Código',
                 'view'      => 'Visualizar',
             ],
         ],
 
         'create' => [
             'save-btn'  => 'Salvar Produtos',
-            'title'     => 'Criar Produtos',
+            'title'     => 'Adicionar Produtos',
             'general'   => 'Geral',
             'price'     => 'Preço',
         ],
@@ -698,7 +698,7 @@ return [
         ],
 
         'view' => [
-            'sku'         => 'SKU',
+            'sku'         => 'Código',
             'all'         => 'Todos',
             'notes'       => 'Notas',
             'files'       => 'Arquivos',
@@ -710,13 +710,13 @@ return [
             ],
 
             'inventory' => [
-                'source'     => 'Fonte',
+                'source'     => 'Origem',
                 'in-stock'   => 'Em Estoque',
                 'allocated'  => 'Alocado',
-                'on-hand'    => 'Em Mãos',
+                'on-hand'    => 'Disponível',
                 'actions'    => 'Ações',
                 'assign'     => 'Atribuir',
-                'add-source' => 'Adicionar Fonte',
+                'add-source' => 'Adicionar Origem',
                 'location'   => 'Localização',
                 'add-more'   => 'Adicionar Mais',
                 'save'       => 'Salvar',
@@ -729,9 +729,9 @@ return [
 
         'groups' => [
             'index' => [
-                'create-btn'        => 'Criar Grupo',
+                'create-btn'        => 'Adicionar Grupo',
                 'title'             => 'Grupos',
-                'create-success'    => 'Grupo criado com sucesso.',
+                'create-success'    => 'Grupo adicionado com sucesso.',
                 'update-success'    => 'Grupo atualizado com sucesso.',
                 'destroy-success'   => 'Grupo excluído com sucesso.',
                 'delete-failed'     => 'Não foi possível excluir o grupo.',
@@ -750,7 +750,7 @@ return [
 
                 'create' => [
                     'name'        => 'Nome',
-                    'title'       => 'Criar Grupo',
+                    'title'       => 'Adicionar Grupo',
                     'description' => 'Descrição',
                     'save-btn'    => 'Salvar Grupo',
                 ],
@@ -760,8 +760,8 @@ return [
         'roles' => [
             'index' => [
                 'being-used'                => 'Não é possível excluir o cargo, pois está sendo usado por um usuário administrador.',
-                'create-btn'                => 'Criar Cargos',
-                'create-success'            => 'Cargo criado com sucesso.',
+                'create-btn'                => 'Adicionar Cargos',
+                'create-success'            => 'Cargo adicionado com sucesso.',
                 'current-role-delete-error' => 'Não é possível excluir o cargo atribuído ao usuário atual.',
                 'delete-failed'             => 'Não foi possível excluir o cargo.',
                 'delete-success'            => 'Cargo excluído com sucesso.',
@@ -793,7 +793,7 @@ return [
                 'name'           => 'Nome',
                 'permissions'    => 'Permissões',
                 'save-btn'       => 'Salvar Cargo',
-                'title'          => 'Criar Cargo',
+                'title'          => 'Adicionar Cargo',
             ],
 
             'edit' => [
@@ -812,8 +812,8 @@ return [
 
         'types' => [
             'index' => [
-                'create-btn'     => 'Criar Tipo',
-                'create-success' => 'Tipo criado com sucesso.',
+                'create-btn'     => 'Adicionar Tipo',
+                'create-success' => 'Tipo adicionado com sucesso.',
                 'delete-failed'  => 'Não é possível excluir o tipo.',
                 'delete-success' => 'Tipo excluído com sucesso.',
                 'title'          => 'Tipos',
@@ -830,7 +830,7 @@ return [
                 'create' => [
                     'name'     => 'Nome',
                     'save-btn' => 'Salvar Tipo',
-                    'title'    => 'Criar Tipo',
+                    'title'    => 'Adicionar Tipo',
                 ],
 
                 'edit' => [
@@ -841,12 +841,12 @@ return [
 
         'sources' => [
             'index' => [
-                'create-btn'     => 'Criar Fonte',
-                'create-success' => 'Fonte criada com sucesso.',
-                'delete-failed'  => 'Não é possível excluir a fonte.',
-                'delete-success' => 'Fonte excluída com sucesso.',
-                'title'          => 'Fontes',
-                'update-success' => 'Fonte atualizada com sucesso.',
+                'create-btn'     => 'Adicionar Origem',
+                'create-success' => 'Origem adicionada com sucesso.',
+                'delete-failed'  => 'Não é possível excluir a origem.',
+                'delete-success' => 'Origem excluída com sucesso.',
+                'title'          => 'Origens',
+                'update-success' => 'Origem atualizada com sucesso.',
 
                 'datagrid' => [
                     'delete' => 'Excluir',
@@ -857,12 +857,12 @@ return [
 
                 'create' => [
                     'name'     => 'Nome',
-                    'save-btn' => 'Salvar Fonte',
-                    'title'    => 'Criar Fonte',
+                    'save-btn' => 'Salvar Origem',
+                    'title'    => 'Adicionar Origem',
                 ],
 
                 'edit' => [
-                    'title' => 'Editar Fonte',
+                    'title' => 'Editar Origem',
                 ],
             ],
         ],
@@ -870,8 +870,8 @@ return [
         'workflows' => [
             'index' => [
                 'title'          => 'Workflows',
-                'create-btn'     => 'Criar Workflow',
-                'create-success' => 'Workflow criado com sucesso.',
+                'create-btn'     => 'Adicionar Workflow',
+                'create-success' => 'Workflow adicionado com sucesso.',
                 'update-success' => 'Workflow atualizado com sucesso.',
                 'delete-success' => 'Workflow excluído com sucesso.',
                 'delete-failed'  => 'Não é possível excluir o Workflow.',
@@ -889,7 +889,7 @@ return [
                 'send-email-to-sales-owner'  => 'Enviar e-mail para o proprietário de vendas',
                 'send-email-to-participants' => 'Enviar e-mail para os participantes',
                 'add-webhook'                => 'Adicionar Webhook',
-                'update-lead'                => 'Atualizar Lead',
+                'update-lead'                => 'Atualizar Oportunidade',
                 'update-person'              => 'Atualizar Pessoa',
                 'send-email-to-person'       => 'Enviar e-mail para a pessoa',
                 'add-tag'                    => 'Adicionar Tag',
@@ -897,7 +897,7 @@ return [
             ],
 
             'create' => [
-                'title'                  => 'Criar Workflow',
+                'title'                  => 'Adicionar Workflow',
                 'event'                  => 'Evento',
                 'back-btn'               => 'Voltar',
                 'save-btn'               => 'Salvar Workflow',
@@ -970,8 +970,8 @@ return [
         'webforms' => [
             'index' => [
                 'title'          => 'Webforms',
-                'create-btn'     => 'Criar Webform',
-                'create-success' => 'Webform criado com sucesso.',
+                'create-btn'     => 'Adicionar Webform',
+                'create-success' => 'Webform adicionado com sucesso.',
                 'update-success' => 'Webform atualizado com sucesso.',
                 'delete-success' => 'Webform excluído com sucesso.',
                 'delete-failed'  => 'Não é possível excluir o Webform.',
@@ -985,13 +985,13 @@ return [
             ],
 
             'create' => [
-                'title'                    => 'Criar Webform',
+                'title'                    => 'Adicionar Webform',
                 'add-attribute-btn'        => 'Adicionar Botão de Atributo',
                 'attribute-label-color'    => 'Cor do Rótulo do Atributo',
                 'attributes'               => 'Atributos',
                 'attributes-info'          => 'Adicione atributos personalizados ao formulário.',
                 'background-color'         => 'Cor de Fundo',
-                'create-lead'              => 'Criar Lead',
+                'create-lead'              => 'Adicionar Oportunidade',
                 'customize-webform'        => 'Personalizar Webform',
                 'customize-webform-info'   => 'Personalize seu formulário com as cores dos elementos de sua escolha.',
                 'description'              => 'Descrição',
@@ -1001,7 +1001,7 @@ return [
                 'form-submit-button-color' => 'Cor do Botão de Envio do Formulário',
                 'form-title-color'         => 'Cor do Título do Formulário',
                 'general'                  => 'Geral',
-                'leads'                    => 'Leads',
+                'leads'                    => 'Oportunidades',
                 'person'                   => 'Pessoa',
                 'save-btn'                 => 'Salvar Webform',
                 'submit-button-label'      => 'Rótulo do Botão de Envio',
@@ -1023,7 +1023,7 @@ return [
                 'code-snippet'              => 'Trecho de Código',
                 'copied'                    => 'Copiado',
                 'copy'                      => 'Copiar',
-                'create-lead'               => 'Criar Lead',
+                'create-lead'               => 'Adicionar Oportunidade',
                 'customize-webform'         => 'Personalizar Webform',
                 'customize-webform-info'    => 'Personalize seu formulário com as cores dos elementos de sua escolha.',
                 'description'               => 'Descrição',
@@ -1034,7 +1034,7 @@ return [
                 'form-submit-button-color'  => 'Cor do Botão de Envio do Formulário',
                 'form-title-color'          => 'Cor do Título do Formulário',
                 'general'                   => 'Geral',
-                'leads'                     => 'Leads',
+                'leads'                     => 'Oportunidades',
                 'preview'                   => 'Visualizar',
                 'person'                    => 'Pessoa',
                 'public-url'                => 'URL Pública',
@@ -1051,9 +1051,9 @@ return [
 
         'email-template' => [
             'index' => [
-                'create-btn'     => 'Criar Modelo de E-mail',
+                'create-btn'     => 'Adicionar Modelo de E-mail',
                 'title'          => 'Modelos de E-mail',
-                'create-success' => 'Modelo de E-mail criado com sucesso.',
+                'create-success' => 'Modelo de E-mail adicionado com sucesso.',
                 'update-success' => 'Modelo de E-mail atualizado com sucesso.',
                 'delete-success' => 'Modelo de E-mail excluído com sucesso.',
                 'delete-failed'  => 'Não é possível excluir o Modelo de E-mail.',
@@ -1068,12 +1068,12 @@ return [
             ],
 
             'create'     => [
-                'title'                => 'Criar Modelo de E-mail',
+                'title'                => 'Adicionar Modelo de E-mail',
                 'save-btn'             => 'Salvar Modelo de E-mail',
                 'email-template'       => 'Modelo de E-mail',
                 'subject'              => 'Assunto',
                 'content'              => 'Conteúdo',
-                'subject-placeholders' => 'Placeholders de Assunto',
+                'subject-placeholders' => 'Descrição do Assunto',
                 'general'              => 'Geral',
                 'name'                 => 'Nome',
             ],
@@ -1084,7 +1084,7 @@ return [
                 'email-template'       => 'Modelo de E-mail',
                 'subject'              => 'Assunto',
                 'content'              => 'Conteúdo',
-                'subject-placeholders' => 'Placeholders de Assunto',
+                'subject-placeholders' => 'Descrição do Assunto',
                 'general'              => 'Geral',
                 'name'                 => 'Nome',
             ],
@@ -1093,9 +1093,9 @@ return [
         'marketing' => [
             'events' => [
                 'index' => [
-                    'create-btn'          => 'Criar Evento',
+                    'create-btn'          => 'Adicionar Evento',
                     'title'               => 'Eventos',
-                    'create-success'      => 'Evento criado com sucesso.',
+                    'create-success'      => 'Evento adicionado com sucesso.',
                     'update-success'      => 'Evento atualizado com sucesso.',
                     'delete-success'      => 'Evento excluído com sucesso.',
                     'delete-failed'       => 'Não é possível excluir o evento.',
@@ -1111,7 +1111,7 @@ return [
                     ],
 
                     'create'     => [
-                        'title'       => 'Criar Evento',
+                        'title'       => 'Adicionar Evento',
                         'name'        => 'Nome',
                         'date'        => 'Data',
                         'description' => 'Descrição',
@@ -1126,9 +1126,9 @@ return [
 
             'campaigns' => [
                 'index' => [
-                    'create-btn'          => 'Criar Campanha',
+                    'create-btn'          => 'Adcionar Campanha',
                     'title'               => 'Campanhas',
-                    'create-success'      => 'Campanha criada com sucesso.',
+                    'create-success'      => 'Campanha adicionada com sucesso.',
                     'update-success'      => 'Campanha atualizada com sucesso.',
                     'delete-success'      => 'Campanha excluída com sucesso.',
                     'delete-failed'       => 'Não é possível excluir a campanha.',
@@ -1146,12 +1146,12 @@ return [
                     ],
 
                     'create'     => [
-                        'title'          => 'Criar Campanha',
+                        'title'          => 'Adicionar Campanha',
                         'name'           => 'Nome',
                         'type'           => 'Tipo',
                         'subject'        => 'Assunto',
                         'event'          => 'Evento',
-                        'email-template' => 'Modelo de Email',
+                        'email-template' => 'Modelo de E-mail',
                         'status'         => 'Status',
                     ],
 
@@ -1164,9 +1164,9 @@ return [
 
         'tags' => [
             'index' => [
-                'create-btn'     => 'Criar Tag',
+                'create-btn'     => 'Adicionar Tag',
                 'title'          => 'Tags',
-                'create-success' => 'Tag criada com sucesso.',
+                'create-success' => 'Tag adicionada com sucesso.',
                 'update-success' => 'Tag atualizada com sucesso.',
                 'delete-success' => 'Tag excluída com sucesso.',
                 'delete-failed'  => 'Não é possível excluir a Tag.',
@@ -1183,7 +1183,7 @@ return [
                 'create' => [
                     'name'     => 'Nome',
                     'save-btn' => 'Salvar Tag',
-                    'title'    => 'Criar Tag',
+                    'title'    => 'Adicionar Tag',
                     'color'    => 'Cor',
                 ],
 
@@ -1195,8 +1195,8 @@ return [
 
         'users' => [
             'index' => [
-                'create-btn'          => 'Criar Usuário',
-                'create-success'      => 'Usuário criado com sucesso.',
+                'create-btn'          => 'Adicionar Usuário',
+                'create-success'      => 'Usuário adicionado com sucesso.',
                 'delete-failed'       => 'Não foi possível excluir o usuário.',
                 'delete-success'      => 'Usuário excluído com sucesso.',
                 'last-delete-error'   => 'É necessário pelo menos um usuário.',
@@ -1237,7 +1237,7 @@ return [
                     'role'             => 'Função',
                     'save-btn'         => 'Salvar Usuário',
                     'status'           => 'Status',
-                    'title'            => 'Criar Usuário',
+                    'title'            => 'Adicionar Usuário',
                     'view-permission'  => 'Visualizar Permissão',
                 ],
 
@@ -1249,13 +1249,13 @@ return [
 
         'pipelines' => [
             'index' => [
-                'title'                => 'Pipelines',
-                'create-btn'           => 'Criar Pipeline',
-                'create-success'       => 'Pipeline criado com sucesso.',
-                'update-success'       => 'Pipeline atualizado com sucesso.',
-                'delete-success'       => 'Pipeline excluído com sucesso.',
-                'delete-failed'        => 'Não foi possível excluir o pipeline.',
-                'default-delete-error' => 'Não é possível excluir o pipeline padrão.',
+                'title'                => 'Funis',
+                'create-btn'           => 'Adicionar Funil',
+                'create-success'       => 'Funil adicionado com sucesso.',
+                'update-success'       => 'Funil atualizado com sucesso.',
+                'delete-success'       => 'Funil excluído com sucesso.',
+                'delete-failed'        => 'Não foi possível excluir o funil.',
+                'default-delete-error' => 'Não é possível excluir o funil padrão.',
 
                 'datagrid' => [
                     'delete'      => 'Excluir',
@@ -1264,16 +1264,16 @@ return [
                     'is-default'  => 'É Padrão',
                     'name'        => 'Nome',
                     'no'          => 'Não',
-                    'rotten-days' => 'Dias de Degradação',
+                    'rotten-days' => 'Dias parado nesta etapa',
                     'yes'         => 'Sim',
                 ],
             ],
 
             'create' => [
-                'title'                => 'Criar Pipeline',
-                'save-btn'             => 'Salvar Pipeline',
+                'title'                => 'Adicionar Funil',
+                'save-btn'             => 'Salvar Funil',
                 'name'                 => 'Nome',
-                'rotten-days'          => 'Dias de Degradação',
+                'rotten-days'          => 'Dias parado nesta etapa',
                 'mark-as-default'      => 'Marcar como Padrão',
                 'general'              => 'Geral',
                 'probability'          => 'Probabilidade (%)',
@@ -1285,16 +1285,16 @@ return [
                 'duplicate-name'       => 'O campo "Nome" não pode ser duplicado',
                 'delete-stage'         => 'Excluir Estágio',
                 'add-new-stages'       => 'Adicionar Novos Estágios',
-                'add-stage-info'       => 'Adicionar novo estágio para o seu Pipeline',
+                'add-stage-info'       => 'Adicionar novo estágio para o seu Funil',
                 'newly-added'          => 'Adicionado Recentemente',
                 'stage-delete-success' => 'Estágio excluído com sucesso',
             ],
 
             'edit'  => [
-                'title'                => 'Editar Pipeline',
-                'save-btn'             => 'Salvar Pipeline',
+                'title'                => 'Editar Funil',
+                'save-btn'             => 'Salvar Funil',
                 'name'                 => 'Nome',
-                'rotten-days'          => 'Dias de Degradação',
+                'rotten-days'          => 'Dias parado nesta etapa',
                 'mark-as-default'      => 'Marcar como Padrão',
                 'general'              => 'Geral',
                 'probability'          => 'Probabilidade (%)',
@@ -1306,7 +1306,7 @@ return [
                 'duplicate-name'       => 'O campo "Nome" não pode ser duplicado',
                 'delete-stage'         => 'Excluir Estágio',
                 'add-new-stages'       => 'Adicionar Novos Estágios',
-                'add-stage-info'       => 'Adicionar novo estágio para o seu Pipeline',
+                'add-stage-info'       => 'Adicionar novo estágio para o seu Funil',
                 'stage-delete-success' => 'Estágio excluído com sucesso',
             ],
         ],
@@ -1314,8 +1314,8 @@ return [
         'webhooks' => [
             'index' => [
                 'title'          => 'Webhooks',
-                'create-btn'     => 'Criar Webhook',
-                'create-success' => 'Webhook criado com sucesso.',
+                'create-btn'     => 'Adicionar Webhook',
+                'create-success' => 'Webhook adicionado com sucesso.',
                 'update-success' => 'Webhook atualizado com sucesso.',
                 'delete-success' => 'Webhook deletado com sucesso.',
                 'delete-failed'  => 'Webhook não pode ser deletado.',
@@ -1331,7 +1331,7 @@ return [
             ],
 
             'create' => [
-                'title'                 => 'Criar Webhook',
+                'title'                 => 'Adcionar Webhook',
                 'save-btn'              => 'Salvar Webhook',
                 'info'                  => 'Digite os detalhes dos webhooks',
                 'url-and-parameters'    => 'URL e Parâmetros',
@@ -1392,13 +1392,13 @@ return [
 
         'warehouses' => [
             'index' => [
-                'title'          => 'Armazéns',
-                'create-btn'     => 'Criar Armazém',
-                'create-success' => 'Armazém criado com sucesso.',
-                'name-exists'    => 'Nome do armazém já existe.',
-                'update-success' => 'Armazém atualizado com sucesso.',
-                'delete-success' => 'Armazém deletado com sucesso.',
-                'delete-failed'  => 'Armazém não pode ser deletado.',
+                'title'          => 'Depósitos',
+                'create-btn'     => 'Adicionar Depósito',
+                'create-success' => 'Depósito adicionado com sucesso.',
+                'name-exists'    => 'Nome do depósito já existe.',
+                'update-success' => 'Depósito atualizado com sucesso.',
+                'delete-success' => 'Depósito deletado com sucesso.',
+                'delete-failed'  => 'Depósito não pode ser deletado.',
 
                 'datagrid' => [
                     'id'              => 'ID',
@@ -1415,14 +1415,14 @@ return [
             ],
 
             'create' => [
-                'title'         => 'Criar Armazém',
-                'save-btn'      => 'Salvar Armazém',
+                'title'         => 'Adicionar Depósito',
+                'save-btn'      => 'Salvar Depósito',
                 'contact-info'  => 'Informações de Contato',
             ],
 
             'edit' => [
-                'title'         => 'Editar Armazém',
-                'save-btn'      => 'Salvar Armazém',
+                'title'         => 'Editar Depósito',
+                'save-btn'      => 'Salvar Depósito',
                 'contact-info'  => 'Informações de Contato',
             ],
 
@@ -1436,7 +1436,7 @@ return [
                 'locations' => [
                     'action'         => 'Ação',
                     'add-location'   => 'Adicionar Localização',
-                    'create-success' => 'Localização criada com sucesso.',
+                    'create-success' => 'Localização adicionada com sucesso.',
                     'delete'         => 'Deletar',
                     'delete-failed'  => 'Localização não pode ser deletada.',
                     'delete-success' => 'Localização deletada com sucesso.',
@@ -1457,7 +1457,7 @@ return [
         'attributes' => [
             'index' => [
                 'title'              => 'Atributos',
-                'create-btn'         => 'Criar Atributo',
+                'create-btn'         => 'Adicionar Atributo',
                 'create-success'     => 'Atributo criados com sucesso.',
                 'update-success'     => 'Atributo atualizados com sucesso.',
                 'delete-success'     => 'Atributo deletados com sucesso.',
@@ -1478,12 +1478,12 @@ return [
                     'delete'      => 'Deletar',
 
                     'entity-types' => [
-                        'leads'         => 'Leads',
-                        'organizations' => 'Organizações',
+                        'leads'         => 'Oportunidades',
+                        'organizations' => 'Empresas',
                         'persons'       => 'Pessoas',
                         'products'      => 'Produtos',
                         'quotes'        => 'Cotações',
-                        'warehouses'    => 'Armazéns',
+                        'warehouses'    => 'Depósitos',
                     ],
 
                     'types'       => [
@@ -1505,7 +1505,7 @@ return [
                 'add-attribute-options' => 'Adicionar Opções de Atributo',
                 'add-option'            => 'Adicionar Opção',
                 'address'               => 'Endereço',
-                'boolean'               => 'Booleano',
+                'boolean'               => 'Verdadeiro ou falso',
                 'checkbox'              => 'Caixa de Seleção',
                 'code'                  => 'Código',
                 'date'                  => 'Data',
@@ -1539,7 +1539,7 @@ return [
                 'select'                => 'Seleção',
                 'text'                  => 'Texto',
                 'textarea'              => 'Área de Texto',
-                'title'                 => 'Criar Atributo',
+                'title'                 => 'Adicionar Atributo',
                 'type'                  => 'Tipo',
                 'url'                   => 'URL',
                 'validations'           => 'Validações',
@@ -1571,7 +1571,7 @@ return [
                 'text'                  => 'Texto',
                 'textarea'              => 'Área de Texto',
                 'price'                 => 'Preço',
-                'boolean'               => 'Booleano',
+                'boolean'               => 'Verdadeiro ou falso',
                 'select'                => 'Seleção',
                 'multiselect'           => 'Multiseleção',
                 'email'                 => 'E-mail',
@@ -1603,7 +1603,7 @@ return [
                 'id'            => 'ID',
                 'done'          => 'Concluído',
                 'not-done'      => 'Não Concluído',
-                'lead'          => 'Lead',
+                'lead'          => 'Oportunidade',
                 'mass-delete'   => 'Excluir em Massa',
                 'mass-update'   => 'Atualizar em Massa',
                 'schedule-from' => 'Agendado de',
@@ -1632,7 +1632,7 @@ return [
             'schedule_from'   => 'Agendado de',
             'location'        => 'Localização',
             'comment'         => 'Comentário',
-            'lead'            => 'Lead',
+            'lead'            => 'Oportunidade',
             'participants'    => 'Participantes',
             'general'         => 'Geral',
             'persons'         => 'Pessoas',
@@ -1640,10 +1640,10 @@ return [
             'users'           => 'Usuários',
         ],
 
-        'updated'              => ':attribute Atualizado',
+        'updated'              => 'Atualizado',
         'created'              => 'Criado',
         'duration-overlapping' => 'Os participantes têm outra reunião neste horário. Deseja continuar?',
-        'create-success'       => 'Atividade criada com sucesso.',
+        'create-success'       => 'Atividade adicionada com sucesso.',
         'update-success'       => 'Atividade atualizada com sucesso.',
         'overlapping-error'    => 'Os participantes têm outra reunião neste horário.',
         'mass-update-success'  => 'Atividades atualizadas com sucesso.',
@@ -1653,20 +1653,20 @@ return [
 
     'mail' => [
         'index' => [
-            'compose'           => 'Compor',
+            'compose'           => 'Escrever',
             'draft'             => 'Rascunho',
             'inbox'             => 'Caixa de Entrada',
             'outbox'            => 'Caixa de Saída',
             'sent'              => 'Enviado',
             'trash'             => 'Lixeira',
-            'compose-mail-btn'  => 'Compor E-mail',
+            'compose-mail-btn'  => 'Escrever E-mail',
             'btn'               => 'E-mail',
             'mail'              => [
-                'title'         => 'Compor E-mail',
+                'title'         => 'Escrever E-mail',
                 'to'            => 'Para',
                 'enter-emails'  => 'Pressione Enter para adicionar e-mails',
-                'cc'            => 'CC',
-                'bcc'           => 'CCO',
+                'cc'            => 'Cópia',
+                'bcc'           => 'Cópia oculta',
                 'subject'       => 'Assunto',
                 'send-btn'      => 'Enviar',
                 'message'       => 'Mensagem',
@@ -1698,16 +1698,16 @@ return [
             'subject'                    => ':subject',
             'link-mail'                  => 'Link do E-mail',
             'to'                         => 'Para',
-            'cc'                         => 'CC',
-            'bcc'                        => 'CCO',
+            'cc'                         => 'Cópia',
+            'bcc'                        => 'Cópia oculta',
             'reply'                      => 'Responder',
             'reply-all'                  => 'Responder a Todos',
             'forward'                    => 'Encaminhar',
             'delete'                     => 'Excluir',
             'enter-mails'                => 'Digite o id do e-mail',
-            'rotten-days'                => 'O lead está vencido há :days dias',
-            'search-an-existing-lead'    => 'Buscar um lead existente',
-            'search-an-existing-contact' => 'Buscar um contato existente',
+            'rotten-days'                => 'A oportunidade está vencido há :days dias',
+            'search-an-existing-lead'    => 'Pesquisar uma oportunidade existente',
+            'search-an-existing-contact' => 'Pesquisar um contato existente',
             'message'                    => 'Mensagem',
             'add-attachments'            => 'Adicionar Anexos',
             'discard'                    => 'Descartar',
@@ -1715,21 +1715,21 @@ return [
             'no-result-found'            => 'Nenhum resultado encontrado',
             'add-new-contact'            => 'Adicionar Novo Contato',
             'description'                => 'Descrição',
-            'search'                     => 'Buscar...',
-            'add-new-lead'               => 'Adicionar Novo Lead',
-            'create-new-contact'         => 'Criar Novo Contato',
+            'search'                     => 'Pesquisar...',
+            'add-new-lead'               => 'Adicionar Nova Oportunidade',
+            'create-new-contact'         => 'Adicionar Novo Contato',
             'save-contact'               => 'Salvar Contato',
-            'create-lead'                => 'Criar Lead',
+            'create-lead'                => 'Adicionar Oportunidade',
             'linked-contact'             => 'Contato Vinculado',
             'link-to-contact'            => 'Vincular ao Contato',
-            'link-to-lead'               => 'Vincular ao Lead',
-            'linked-lead'                => 'Lead Vinculado',
-            'lead-details'               => 'Detalhes do Lead',
+            'link-to-lead'               => 'Vincular a uma Oportunidade',
+            'linked-lead'                => 'Oportunidade Vinculado',
+            'lead-details'               => 'Detalhes da Oportunidade',
             'contact-person'             => 'Pessoa de Contato',
             'product'                    => 'Produto',
 
             'tags' => [
-                'create-success'  => 'Tag criada com sucesso.',
+                'create-success'  => 'Tag adicionada com sucesso.',
                 'destroy-success' => 'Tag excluída com sucesso.',
             ],
         ],
@@ -1742,7 +1742,7 @@ return [
             'city'                 => 'Cidade',
             'contact'              => 'Números de Contato',
             'country'              => 'País',
-            'email'                => 'Email',
+            'email'                => 'E-mail',
             'home'                 => 'Casa',
             'postcode'             => 'CEP',
             'save'                 => 'Salvar',
@@ -1751,16 +1751,16 @@ return [
             'select-state'         => 'Selecionar Estado',
             'state'                => 'Estado',
             'update-contact-title' => 'Atualizar Números de Contato',
-            'update-emails-title'  => 'Atualizar Emails de Contato',
+            'update-emails-title'  => 'Atualizar E-mails de Contato',
             'work'                 => 'Trabalho',
         ],
     ],
 
     'leads' => [
-        'create-success'    => 'Lead criado com sucesso.',
-        'update-success'    => 'Lead atualizado com sucesso.',
-        'destroy-success'   => 'Lead excluído com sucesso.',
-        'destroy-failed'    => 'Lead não pode ser excluído.',
+        'create-success'    => 'Oportunidade adicionada com sucesso.',
+        'update-success'    => 'Oportunidade atualizada com sucesso.',
+        'destroy-success'   => 'Oportunidade excluída com sucesso.',
+        'destroy-failed'    => 'Oportunidade não pode ser excluído.',
 
         'file' => [
             'empty-content'    => 'O conteúdo do PDF está vazio ou não pôde ser extraído.',
@@ -1771,20 +1771,20 @@ return [
         ],
 
         'index' => [
-            'title'      => 'Leads',
-            'create-btn' => 'Criar Lead',
+            'title'      => 'Oportunidades',
+            'create-btn' => 'Adicionar Oportunidade',
 
             'datagrid' => [
                 'id'                  => 'ID',
                 'sales-person'        => 'Pessoa de Vendas',
                 'subject'             => 'Assunto',
-                'source'              => 'Fonte',
-                'lead-value'          => 'Valor do Lead',
-                'lead-type'           => 'Tipo de Lead',
+                'source'              => 'Origem',
+                'lead-value'          => 'Valor da Oportunidade',
+                'lead-type'           => 'Tipo da Oportunidade',
                 'tag-name'            => 'Nome da Tag',
                 'contact-person'      => 'Pessoa de Contato',
                 'stage'               => 'Etapa',
-                'rotten-lead'         => 'Lead Podre',
+                'rotten-lead'         => 'Oportunidade estagnada',
                 'date-to'             => 'Data Até',
                 'created-at'          => 'Criado Em',
                 'no'                  => 'Não',
@@ -1795,18 +1795,18 @@ return [
             ],
 
             'kanban' => [
-                'rotten-days'            => 'Lead podre por :days dias',
-                'empty-list'             => 'Sua lista de Leads está vazia',
-                'empty-list-description' => 'Crie um lead para organizar seus objetivos.',
-                'create-lead-btn'        => 'Criar Lead',
+                'rotten-days'            => 'Oportunidade estagnada por :days dias',
+                'empty-list'             => 'Sua lista de Oportunidades está vazia',
+                'empty-list-description' => 'Adicione uma oportunidade para organizar seus objetivos.',
+                'create-lead-btn'        => 'Adicionar Oportunidade',
 
                 'columns' => [
                     'contact-person'      => 'Pessoa de Contato',
                     'id'                  => 'ID',
-                    'lead-type'           => 'Tipo de Lead',
-                    'lead-value'          => 'Valor do Lead',
+                    'lead-type'           => 'Tipo de Oportunidade',
+                    'lead-value'          => 'Valor da Oportunidade',
                     'sales-person'        => 'Pessoa de Vendas',
-                    'source'              => 'Fonte',
+                    'source'              => 'Origem',
                     'title'               => 'Título',
                     'tags'                => 'Tags',
                     'expected-close-date' => 'Data Esperada de Fechamento',
@@ -1831,12 +1831,12 @@ return [
             ],
 
             'view-switcher' => [
-                'all-pipelines'       => 'Todos os Pipelines',
-                'create-new-pipeline' => 'Criar Novo Pipeline',
+                'all-pipelines'       => 'Todos os Funis',
+                'create-new-pipeline' => 'Adicionar Novo Funil',
             ],
 
             'upload' => [
-                'create-lead'   => 'Criar Lead Usando AI',
+                'create-lead'   => 'Adicionar Oportunidade Usando AI',
                 'file'          => 'Upload de Arquivo',
                 'file-info'     => 'Apenas arquivos em formato PDF são aceitos.',
                 'file-required' => 'Por favor, selecione pelo menos um arquivo válido para prosseguir.',
@@ -1847,10 +1847,10 @@ return [
         ],
 
         'create' => [
-            'title'          => 'Criar Lead',
+            'title'          => 'Adicionar Oportunidade',
             'save-btn'       => 'Salvar',
             'details'        => 'Detalhes',
-            'details-info'   => 'Coloque as informações básicas do Lead',
+            'details-info'   => 'Coloque as informações básicas da Oportunidade',
             'contact-person' => 'Pessoa de Contato',
             'contact-info'   => 'Informações sobre a Pessoa de Contato',
             'products'       => 'Produtos',
@@ -1858,10 +1858,10 @@ return [
         ],
 
         'edit' => [
-            'title'          => 'Editar Lead',
+            'title'          => 'Editar Oportunidade',
             'save-btn'       => 'Salvar',
             'details'        => 'Detalhes',
-            'details-info'   => 'Coloque as informações básicas do Lead',
+            'details-info'   => 'Coloque as informações básicas da Oportunidade',
             'contact-person' => 'Pessoa de Contato',
             'contact-info'   => 'Informações sobre a Pessoa de Contato',
             'products'       => 'Produtos',
@@ -1871,9 +1871,9 @@ return [
         'common' => [
             'contact' => [
                 'name'           => 'Nome',
-                'email'          => 'Email',
+                'email'          => 'E-mail',
                 'contact-number' => 'Número de Contato',
-                'organization'   => 'Organização',
+                'organization'   => 'Empresa',
             ],
 
             'products' => [
@@ -1888,7 +1888,7 @@ return [
         ],
 
         'view' => [
-            'title'       => 'Lead: :title',
+            'title'       => 'Oportunidade: :title',
             'rotten-days' => ':days Dias',
 
             'tabs'        => [
@@ -1898,7 +1898,7 @@ return [
             ],
 
             'attributes' => [
-                'title' => 'Sobre o Lead',
+                'title' => 'Sobre a Oportunidade',
             ],
 
             'quotes'=> [
@@ -1914,7 +1914,7 @@ return [
                 'download'        => 'Baixar',
                 'destroy-success' => 'Cotação excluída com sucesso.',
                 'empty-title'     => 'Nenhuma Cotação Encontrada',
-                'empty-info'      => 'Nenhuma Cotação Encontrada para este Lead',
+                'empty-info'      => 'Nenhuma Cotação Encontrada para esta Oportunidade',
                 'add-btn'         => 'Adicionar Cotação',
             ],
 
@@ -1927,7 +1927,7 @@ return [
                 'add-more'     => 'Adicionar Mais',
                 'total'        => 'Total',
                 'empty-title'  => 'Nenhum Produto Encontrado',
-                'empty-info'   => 'Nenhum Produto Encontrado para este Lead',
+                'empty-info'   => 'Nenhum Produto Encontrado para esta Oportunidade',
                 'add-product'  => 'Adicionar Produto',
             ],
 
@@ -1948,7 +1948,7 @@ return [
             ],
 
             'tags' => [
-                'create-success'  => 'Tag criada com sucesso.',
+                'create-success'  => 'Tag adicionada com sucesso.',
                 'destroy-success' => 'Tag excluída com sucesso.',
             ],
         ],
@@ -1987,12 +1987,12 @@ return [
             ],
 
             'email' => [
-                'title' => 'Configurações de Email',
-                'info'  => 'Configuração de email para a aplicação.',
+                'title' => 'Configurações de E-mail',
+                'info'  => 'Configuração de e-mail para a aplicação.',
 
                 'imap' => [
                     'title' => 'Configurações IMAP',
-                    'info'  => 'Configuração de email IMAP para receber emails.',
+                    'info'  => 'Configuração de e-mail IMAP para receber emails.',
 
                     'account' => [
                         'title'         => 'Conta IMAP',
@@ -2054,9 +2054,9 @@ return [
                     'draft'          => 'Rascunho',
                     'inbox'          => 'Caixa de Entrada',
                     'info'           => 'Podemos configurar o nome dos itens do menu aqui.',
-                    'leads'          => 'Leads',
+                    'leads'          => 'Oportunidades',
                     'mail'           => 'Correio',
-                    'organizations'  => 'Organizações',
+                    'organizations'  => 'Empresas',
                     'outbox'         => 'Caixa de Saída',
                     'persons'        => 'Pessoas',
                     'products'       => 'Produtos',
@@ -2083,34 +2083,34 @@ return [
             'title' => 'Painel de Controle',
 
             'revenue' => [
-                'lost-revenue' => 'Receita Perdida',
-                'won-revenue'  => 'Receita Ganha',
+                'lost-revenue' => 'Faturamento Perdido',
+                'won-revenue'  => 'Faturamento Ganho',
             ],
 
             'over-all' => [
-                'average-lead-value'    => 'Valor Médio do Lead',
-                'total-leads'           => 'Total de Leads',
-                'average-leads-per-day' => 'Leads Médios por Dia',
+                'average-lead-value'    => 'Valor Médio da Oportunidade',
+                'total-leads'           => 'Total de Oportunidades',
+                'average-leads-per-day' => 'Oportunidades médias por Dia',
                 'total-quotations'      => 'Total de Cotações',
                 'total-persons'         => 'Total de Pessoas',
-                'total-organizations'   => 'Total de Organizações',
+                'total-organizations'   => 'Total de Empresas',
             ],
 
             'total-leads' => [
-                'title' => 'Leads',
-                'total' => 'Total de Leads',
-                'won'   => 'Leads Ganhados',
-                'lost'  => 'Leads Perdidos',
+                'title' => 'Oportunidades',
+                'total' => 'Total de Oportunidades',
+                'won'   => 'Oportunidades Ganhas',
+                'lost'  => 'Oportunidades Perdidas',
             ],
 
             'revenue-by-sources' => [
-                'title'       => 'Receita por Fontes',
+                'title'       => 'Faturamento por Origens',
                 'empty-title' => 'Nenhum Dado Disponível',
                 'empty-info'  => 'Nenhum dado disponível para o intervalo selecionado',
             ],
 
             'revenue-by-types' => [
-                'title'       => 'Receita por Tipos',
+                'title'       => 'Faturamento por Tipos',
                 'empty-title' => 'Nenhum Dado Disponível',
                 'empty-info'  => 'Nenhum dado disponível para o intervalo selecionado',
             ],
@@ -2128,7 +2128,7 @@ return [
             ],
 
             'open-leads-by-states' => [
-                'title'       => 'Leads Abertos por Estágios',
+                'title'       => 'Oportunidades Abertas por Estágios',
                 'empty-title' => 'Nenhum Dado Disponível',
                 'empty-info'  => 'Nenhum dado disponível para o intervalo selecionado',
             ],
@@ -2138,7 +2138,7 @@ return [
     'layouts' => [
         'app-version'          => 'Versão : :version',
         'dashboard'            => 'Painel de Controle',
-        'leads'                => 'Leads',
+        'leads'                => 'Oportunidades',
         'quotes'               => 'Cotações',
         'quote'                => 'Cotação',
         'mail'                 => [
@@ -2155,8 +2155,8 @@ return [
         'contacts'             => 'Contatos',
         'persons'              => 'Pessoas',
         'person'               => 'Pessoa',
-        'organizations'        => 'Organizações',
-        'organization'         => 'Organização',
+        'organizations'        => 'Empresas',
+        'organization'         => 'Empresa',
         'products'             => 'Produtos',
         'product'              => 'Produto',
         'settings'             => 'Configurações',
@@ -2169,12 +2169,12 @@ return [
         'roles-info'           => 'Adicionar, editar ou excluir funções do CRM',
         'users'                => 'Usuários',
         'users-info'           => 'Adicionar, editar ou excluir usuários do CRM',
-        'lead'                 => 'Lead',
-        'lead-info'            => 'Gerencie todas as configurações relacionadas a leads no CRM',
-        'pipelines'            => 'Pipelines',
-        'pipelines-info'       => 'Adicionar, editar ou excluir pipelines do CRM',
-        'sources'              => 'Fontes',
-        'sources-info'         => 'Adicionar, editar ou excluir fontes do CRM',
+        'lead'                 => 'Oportunidade',
+        'lead-info'            => 'Gerencie todas as configurações relacionadas as Oportunidade no CRM',
+        'pipelines'            => 'Funis',
+        'pipelines-info'       => 'Adicionar, editar ou excluir funis do CRM',
+        'sources'              => 'Origens',
+        'sources-info'         => 'Adicionar, editar ou excluir origems do CRM',
         'types'                => 'Tipos',
         'types-info'           => 'Adicionar, editar ou excluir tipos do CRM',
         'automation'           => 'Automação',
@@ -2182,9 +2182,9 @@ return [
         'attributes'           => 'Atributos',
         'attribute'            => 'Atributo',
         'attributes-info'      => 'Adicionar, editar ou excluir atributos do CRM',
-        'email-templates'      => 'Modelos de Email',
-        'email'                => 'Email',
-        'email-templates-info' => 'Adicionar, editar ou excluir modelos de email do CRM',
+        'email-templates'      => 'Modelos de E-mail',
+        'email'                => 'E-mail',
+        'email-templates-info' => 'Adicionar, editar ou excluir modelos de e-mail do CRM',
         'workflows'            => 'Fluxos de Trabalho',
         'workflows-info'       => 'Adicionar, editar ou excluir fluxos de trabalho do CRM',
         'other-settings'       => 'Outras Configurações',
@@ -2197,15 +2197,15 @@ return [
         'name'                 => 'Nome',
         'configuration'        => 'Configuração',
         'howdy'                => 'Olá!',
-        'warehouses'           => 'Armazéns',
-        'warehouse'            => 'Armazém',
-        'warehouses-info'      => 'Adicionar, editar ou excluir armazéns do CRM',
+        'warehouses'           => 'Depósitos',
+        'warehouse'            => 'Depósito',
+        'warehouses-info'      => 'Adicionar, editar ou excluir depósitos do CRM',
     ],
 
     'user' => [
         'account' => [
             'name'                  => 'Nome',
-            'email'                 => 'Email',
+            'email'                 => 'E-mail',
             'password'              => 'Senha',
             'my_account'            => 'Minha conta',
             'update_details'        => 'Atualizar Detalhes',
