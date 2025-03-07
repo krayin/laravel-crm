@@ -53,11 +53,11 @@
         >
             <div class="box-shadow flex flex-col gap-4 rounded-lg border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900">
                 {!! view_render_event('admin.settings.workflows.create.form_controls.before') !!}
-                
+
                 <!-- Tab Switcher -->
                 <div class="flex w-full gap-2 border-b border-gray-200 dark:border-gray-800">
                     <!-- Tabs -->
-                    <template 
+                    <template
                         v-for="tab in tabs"
                         :key="tab.id"
                     >
@@ -79,8 +79,8 @@
                     {!! view_render_event('admin.settings.workflows.create.basic_details.before') !!}
 
                     <!-- Basic Details -->
-                    <div 
-                        class="flex flex-col gap-4" 
+                    <div
+                        class="flex flex-col gap-4"
                         id="basic-details"
                     >
                         <div class="flex flex-col gap-1">
@@ -136,7 +136,7 @@
                     {!! view_render_event('admin.settings.workflows.create.event.before') !!}
 
                     <!-- Event -->
-                    <div 
+                    <div
                         class="flex flex-col gap-4"
                         id="event"
                     >
@@ -196,7 +196,7 @@
                     {!! view_render_event('admin.settings.workflows.create.condition.before') !!}
 
                     <!-- Conditions -->
-                    <div 
+                    <div
                         class="flex flex-col gap-4"
                         id="conditions"
                     >
@@ -241,7 +241,7 @@
 
                             <!-- Workflow Condition Vue Component. -->
                             <template
-                                v-for='(condition, index) in conditions' 
+                                v-for='(condition, index) in conditions'
                                 :key="index"
                             >
                                 <v-workflow-condition-item
@@ -269,7 +269,7 @@
                     {!! view_render_event('admin.settings.workflows.create.action.before') !!}
 
                     <!-- Actions -->
-                    <div 
+                    <div
                         class="flex flex-col gap-4"
                         id="actions"
                     >
@@ -291,7 +291,7 @@
                                         <x-admin::table.th class="text-center">
                                             @lang('admin::app.settings.workflows.create.type')
                                         </x-admin::table.th>
-                            
+
                                         <x-admin::table.th class="text-center">
                                             @lang('admin::app.settings.workflows.create.name')
                                         </x-admin::table.th>
@@ -380,7 +380,7 @@
 
                         <template
                             v-if="
-                                matchedAttribute.type == 'text' 
+                                matchedAttribute.type == 'text'
                                 || matchedAttribute.type == 'price'
                                 || matchedAttribute.type == 'decimal'
                                 || matchedAttribute.type == 'integer'
@@ -493,6 +493,7 @@
                                         :attribute="{'code': 'conditions[' + index + '][value]', 'name': 'Email', 'lookup_type': matchedAttribute.lookup_type}"
                                         validations="required|email"
                                         :data="condition.value"
+                                        can-add-new="true"
                                     ></v-lookup-component>
                                 </div>
                             </template>
@@ -516,7 +517,7 @@
                                 ></option>
                             </select>
                         </template>
-                                                    
+
                         <!-- Textarea -->
                         <template v-if="matchedAttribute.type == 'textarea'">
                             <textarea
@@ -540,7 +541,7 @@
         <script
             type="text/x-template"
             id="v-workflow-action-item-template"
-        >   
+        >
             <!-- Table Body -->
             <x-admin::table.thead.tr>
                 <x-admin::table.td>
@@ -585,7 +586,7 @@
                                 <!-- Text, Price, Decimal and Integer -->
                                 <template
                                     v-if="
-                                        matchedAttribute.type == 'text' 
+                                        matchedAttribute.type == 'text'
                                         || matchedAttribute.type == 'price'
                                         || matchedAttribute.type == 'decimal'
                                         || matchedAttribute.type == 'integer'
@@ -633,7 +634,7 @@
                                     />
 
                                     <input
-                                        type="email" 
+                                        type="email"
                                         :name="`actions[${index}][value][0][value]`"
                                         :id="`actions[${index}][value][0][value]`"
                                         class="flex h-10 w-full rounded-md border px-3 py-2.5 text-sm text-gray-600 transition-all hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 dark:focus:border-gray-400"
@@ -728,6 +729,7 @@
                                                 :attribute="{'code': 'actions[' + index + '][value]', 'name': 'Email', 'lookup_type': matchedAttribute.lookup_type}"
                                                 validations="required|email"
                                                 :data="action.value"
+                                                can-add-new="true"
                                             ></v-lookup-component>
                                         </div>
                                     </template>
@@ -768,7 +770,7 @@
 
                         <template
                             v-if="
-                                matchedAction 
+                                matchedAction
                                 && ! matchedAction.attributes
                                 && ! matchedAction.options
                                 && ! matchedAction.request_methods
@@ -837,7 +839,7 @@
                 computed: {
                     /**
                      * Get the entity type.
-                     * 
+                     *
                      * @return {String}
                      */
                      entityType: function () {
@@ -862,7 +864,7 @@
                 watch: {
                     /**
                      * Watch the entity Type.
-                     * 
+                     *
                      * @return {void}
                      */
                     entityType(newValue, oldValue) {
@@ -875,7 +877,7 @@
                 methods: {
                     /**
                      * Add the condition.
-                     * 
+                     *
                      * @returns {void}
                      */
                     addCondition() {
@@ -888,7 +890,7 @@
 
                     /**
                      * Remove the condition.
-                     * 
+                     *
                      * @param {Object} condition
                      * @returns {void}
                      */
@@ -900,7 +902,7 @@
 
                     /**
                      * Add the action.
-                     * 
+                     *
                      * @returns {void}
                      */
                     addAction() {
@@ -913,7 +915,7 @@
 
                     /**
                      * Remove the action.
-                     * 
+                     *
                      * @param {Object} action
                      * @returns {void}
                      */
@@ -925,9 +927,9 @@
 
                     /**
                      * Scroll to the section.
-                     * 
+                     *
                      * @param {String} tabId
-                     * 
+                     *
                      * @returns {void}
                      */
                      scrollToSection(tabId) {
@@ -948,7 +950,7 @@
                 props: ['index', 'entityType', 'condition'],
 
                 emits: ['onRemoveCondition'],
-                
+
                 data() {
                     return {
                         conditions: @json(app('\Webkul\Automation\Helpers\Entity')->getConditions()),
@@ -1125,7 +1127,7 @@
                 computed: {
                     /**
                      * Get the matched attribute.
-                     * 
+                     *
                      * @returns {Object}
                      */
                     matchedAttribute: function () {
@@ -1154,7 +1156,7 @@
                 methods: {
                     /**
                      * Remove the condition.
-                     * 
+                     *
                      * @returns {void}
                      */
                     removeCondition() {
@@ -1179,7 +1181,7 @@
                 computed: {
                     /**
                      * Get the matched action.
-                     * 
+                     *
                      * @returns {Object}
                      */
                     matchedAction () {
@@ -1192,7 +1194,7 @@
 
                     /**
                      * Get the matched attribute.
-                     * 
+                     *
                      * @return {void}
                      */
                     matchedAttribute() {
@@ -1231,7 +1233,7 @@
                 methods: {
                     /**
                      * Remove the action.
-                     * 
+                     *
                      * @returns {void}
                      */
                     removeAction() {
@@ -1248,5 +1250,5 @@
                 scroll-behavior: smooth;
             }
         </style>
-    @endPushOnce    
+    @endPushOnce
 </x-admin::layouts>

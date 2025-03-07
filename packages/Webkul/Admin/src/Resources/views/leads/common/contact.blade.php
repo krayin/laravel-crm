@@ -19,9 +19,10 @@
                 ::src="src"
                 name="person[id]"
                 ::params="params"
-                @on-selected="addPerson"
-                :placeholder="trans('admin::app.leads.common.contact.name')"
+                rules="required"
                 ::value="{id: person.id, name: person.name}"
+                :placeholder="trans('admin::app.leads.common.contact.name')"
+                @on-selected="addPerson"
                 :can-add-new="true"
             />
         
@@ -86,6 +87,7 @@
             <v-lookup-component
                 :attribute='@json($organizationAttribute)'
                 :value="person.organization"
+                can-add-new="true"
             ></v-lookup-component>
         </x-admin::form.control-group>
     </script>
