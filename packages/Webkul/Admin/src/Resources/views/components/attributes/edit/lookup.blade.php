@@ -7,6 +7,7 @@
         :attribute="{{ json_encode($attribute) }}"
         :validations="'{{ $validations }}'"
         :value="{{ json_encode($lookUpEntityData)}}"
+        can-add-new="{{ $canAddNew }}
     >
         <div class="relative inline-block w-full">
             <!-- Input Container -->
@@ -28,7 +29,10 @@
         type="text/x-template"
         id="v-lookup-component-template"
     >
-        <div class="relative">
+        <div
+            class="relative"
+            ref="lookup"
+        >
             <div
                 class="relative inline-block w-full"
                 @click="toggle"
@@ -36,13 +40,17 @@
                 <!-- Input Container -->
                 <div class="relative flex items-center justify-between rounded border border-gray-200 p-2 hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:text-gray-300">
                     <!-- Selected Item or Placeholder Text -->
-                    @{{ selectedItem ? selectedItem : "@lang('admin::app.components.attributes.lookup.click-to-add')" }}
-                    
+                    <span 
+                        class="overflow-hidden text-ellipsis"
+                        :title="selectedItem?.name"
+                    >
+                        @{{ selectedItem?.name !== "" ? selectedItem?.name : "@lang('admin::app.components.attributes.lookup.click-to-add')" }}
+                    </span>
                     <!-- Icons Container -->
                     <div class="flex items-center gap-2">
                         <!-- Close Icon -->
                         <i 
-                            v-if="entityId && ! isSearching"
+                            v-if="(selectedItem?.name) && ! isSearching"
                             class="icon-cross-large cursor-pointer text-2xl text-gray-600"
                             @click="remove"
                         ></i>
@@ -60,9 +68,10 @@
             <input
                 type="hidden"
                 :name="attribute['code']"
-                v-model="entityId"
+                v-model="selectedItem.id"
             />
-            
+
+            <!-- Popup Box -->
             <div 
                 v-if="showPopup" 
                 class="absolute top-full z-10 mt-1 flex w-full origin-top transform flex-col gap-2 rounded-lg border border-gray-200 bg-white p-2 shadow-lg transition-transform dark:border-gray-900 dark:bg-gray-800"
@@ -94,22 +103,31 @@
 
                 <!-- Results List -->
                 <ul class="max-h-40 divide-y divide-gray-100 overflow-y-auto">
-                    <template v-for="result in searchedResults"> 
-                        <li
-                            class="flex cursor-pointer gap-2 p-2 transition-colors hover:bg-blue-100 dark:text-gray-300 dark:hover:bg-gray-900"
-                            @click="handleResult(result)"
-                        >
-                            <!-- Entity Name -->
-                            <span>@{{ result.name }}</span>
-                        </li>                       
-                    </template>
-                
-                    <li 
-                        v-if="searchedResults.length === 0"
-                        class="px-4 py-2 text-center text-gray-500"
+                    <li
+                        v-for="item in filteredResults"
+                        :key="item.id"
+                        class="flex cursor-pointer gap-2 p-2 transition-colors hover:bg-blue-100 dark:text-gray-300 dark:hover:bg-gray-900"
+                        @click="handleResult(result)"
                     >
-                        @lang('admin::app.components.attributes.lookup.no-result-found')
-                    </li>
+                        <!-- Entity Name -->
+                        <span>@{{ item.name }}</span>
+                    </li>                       
+
+                    <template v-if="filteredResults.length === 0">
+                        <li class="px-4 py-2 text-center text-gray-500">
+                            @lang('admin::app.components.attributes.lookup.no-result-found')
+                        </li>
+
+                        <li
+                            v-if="searchTerm.length > 2 && canAddNew"
+                            @click="handleResult({ id: '', name: searchTerm })"
+                            class="cursor-pointer border-t border-gray-800 px-4 py-2 text-gray-500 hover:bg-brandColor hover:text-white dark:border-gray-300 dark:text-gray-400 dark:hover:bg-gray-900 dark:hover:text-white"
+                        >
+                            <i class="icon-add text-md"></i>
+
+                            @lang('admin::app.components.lookup.add-as-new')
+                        </li>
+                    </template>
                 </ul>
             </div>
         </div>
@@ -119,7 +137,7 @@
         app.component('v-lookup-component', {
             template: '#v-lookup-component-template',
 
-            props: ['validations', 'attribute', 'value'],
+            props: ['validations', 'attribute', 'value', 'canAddNew'],
 
             data() {
                 return {
@@ -129,9 +147,10 @@
 
                     searchedResults: [],
 
-                    selectedItem: null,
-
-                    entityId: null,
+                    selectedItem: {
+                        id: '',
+                        name: ''
+                    },
 
                     searchRoute: `{{ route('admin.settings.attributes.lookup') }}/${this.attribute.lookup_type}`,
 
@@ -139,10 +158,18 @@
                 };
             },
 
-            mounted() {
-                this.initializeValue();
-
+            mounted() {                
+                if (this.value) {
+                    this.getLookUpEntity();
+                }
+            },
+            
+            created() {
                 window.addEventListener('click', this.handleFocusOut);
+            },
+
+            beforeDestroy() {
+                window.removeEventListener('click', this.handleFocusOut);
             },
 
             watch: {
@@ -157,10 +184,25 @@
                 searchTerm(newVal, oldVal) {
                     this.search();
                 },
+
+                value(newVal, oldVal) {
+                    if (newVal) {
+                        this.getLookUpEntity();
+                    }
+                },
             },
 
-            beforeDestroy() {
-                window.removeEventListener('click', this.handleFocusOut);
+            computed: {
+                /**
+                 * Filter the searchedResults based on the search query.
+                 * 
+                 * @return {Array}
+                 */
+                filteredResults() {
+                    return this.searchedResults.filter(item => 
+                        item.name.toLowerCase().includes(this.searchTerm.toLowerCase())
+                    );
+                }
             },
 
             methods: {
@@ -187,6 +229,8 @@
                 search() {
                     if (this.searchTerm.length <= 2) {
                         this.searchedResults = [];
+
+                        this.isSearching = false;
 
                         return;
                     }
@@ -218,33 +262,31 @@
                 },
 
                 handleResult(result) {
-                    this.showPopup = ! this.showPopup;
+                    this.showPopup = false;
                     
-                    this.entityId = result.id;
+                    this.selectedItem = result;
 
-                    this.selectedItem = result.name;
-
-                    this.searchTerm = "";
-
-                    this.searchedResults = [];
+                    this.searchTerm = '';
 
                     this.$emit('lookup-added', result);
                 },
 
                 handleFocusOut(e) {
-                    if (! this.$el.contains(e.target)) {
+                    const lookup = this.$refs.lookup;
+
+                    if (
+                        lookup && 
+                        ! lookup.contains(event.target)
+                    ) {
                         this.showPopup = false;
                     }
                 },
 
                 remove() {
-                    this.entityId = null;
-
-                    this.selectedItem = null;
-
-                    this.searchTerm = '';
-
-                    this.searchedResults = [];
+                    this.selectedItem = {
+                        id: '',
+                        name: ''
+                    };
 
                     this.$emit('lookup-removed');
                 },
