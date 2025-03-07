@@ -18,7 +18,7 @@
                 </div>
 
                 <div class="flex gap-2">
-                    <i class="icon-kanban cursor-pointer rounded p-2 text-2xl"></i>
+                    <i class="icon-list cursor-pointer rounded p-2 text-2xl"></i>
         
                     <i class="icon-calendar cursor-pointe rounded p-2 text-2xl"></i>
                 </div>
@@ -55,7 +55,7 @@
 
                     <div class="flex">
                         <i
-                            class="icon-kanban cursor-pointer rounded-md p-2 text-2xl"
+                            class="icon-list cursor-pointer rounded-md p-2 text-2xl"
                             :class="{'bg-gray-200 dark:bg-gray-800 text-gray-800 dark:text-white': viewType == 'table'}"
                             @click="toggleView('table')"
                         ></i>

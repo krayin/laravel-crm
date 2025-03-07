@@ -95,23 +95,23 @@
                                             class="flex flex-col gap-1"
                                             v-if="activity.title"
                                         >
-                                            <p class="flex items-center gap-1 font-medium dark:text-white">
+                                            <p class="flex flex-wrap items-center gap-1 font-medium dark:text-white">
                                                 @{{ activity.title }}
 
                                                 <template v-if="activity.type == 'system' && activity.additional">
-                                                    <div class="flex items-center gap-1">
+                                                    <p class="flex items-center gap-1">
                                                         <span>:</span>
 
-                                                        <span class="break-all">
-                                                            @{{ (activity.additional.old.label ? String(activity.additional.old.label).replaceAll('<br>', ' ') : "@lang('admin::app.components.activities.index.empty')") }}
+                                                        <span class="break-words">
+                                                            @{{ (activity.additional.old.label ? String(activity.additional.old.label).replacewords('<br>', ' ') : "@lang('admin::app.components.activities.index.empty')") }}
                                                         </span>
 
                                                         <span class="icon-stats-up rotate-90 text-xl"></span>
 
-                                                        <span class="break-all">
+                                                        <span class="break-words">
                                                             @{{ (activity.additional.new.label ? String(activity.additional.new.label).replaceAll('<br>', ' ') : "@lang('admin::app.components.activities.index.empty')") }}
                                                         </span>
-                                                    </div>
+                                                    </p>
                                                 </template>
                                             </p>
 
@@ -157,7 +157,7 @@
 
                                                     @{{ $admin.formatDate(activity.schedule_from, 'd MMM yyyy, h:mm A') + ' - ' + $admin.formatDate(activity.schedule_from, 'd MMM yyyy, h:mm A') }}
                                                 </p>
-
+                                                flex gap-2.5 max-xl:flex-wrap
                                                 <!-- Activity Participants -->
                                                 <p
                                                     v-if="activity.participants?.length"

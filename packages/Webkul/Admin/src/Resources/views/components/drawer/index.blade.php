@@ -21,7 +21,7 @@
             <div {{ $header->attributes->merge(['class' => 'flex justify-between items-center gap-y-2.5 border-b p-3 dark:border-gray-800 max-sm:px-4']) }}>
                 {{ $header }}
 
-                <div class="w-full flex-1 text-right ltr:right-3 rtl:left-3">
+                <div class="w-full flex-1 ltr:right-3 ltr:text-right rtl:left-3 rtl:text-left">
                     <span
                         class="icon-cross-large cursor-pointer text-3xl hover:rounded-md hover:bg-gray-100 dark:hover:bg-gray-950"
                         @click="close"

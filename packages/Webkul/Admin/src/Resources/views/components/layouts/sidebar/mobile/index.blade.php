@@ -3,65 +3,84 @@
 </v-sidebar-drawer>
 
 @pushOnce('scripts')
-    <script
-        type="text/x-template"
+    <script 
+        type="text/x-template" 
         id="v-sidebar-drawer-template"
     >
-        <!-- Menu Sidebar Drawer -->
-        <x-admin::drawer
-            position="left"
+        <x-admin::drawer 
+            position="left" 
             width="280px"
-            ref="sidebarMenuDrawer"
+            class="[&>:nth-child(3)]:!m-0 [&>:nth-child(3)]:!rounded-l-none [&>:nth-child(3)]:max-sm:!w-[80%]"
         >
-            <!-- Drawer Toggler -->
             <x-slot:toggle>
                 <i class="icon-menu hidden cursor-pointer rounded-md p-1.5 text-2xl hover:bg-gray-100 dark:hover:bg-gray-950 max-lg:block"></i>
             </x-slot>
-                    
-            <!-- Drawer Header -->
+
             <x-slot:header>
                 @if ($logo = core()->getConfigData('general.design.admin_logo.logo_image'))
-                    <img
-                        class="h-10"
-                        src="{{ Storage::url($logo) }}"
-                        alt="{{ config('app.name') }}"
+                    <img 
+                        class="h-10" 
+                        src="{{ Storage::url($logo) }}" 
+                        alt="{{ config('app.name') }}" 
                     />
                 @else
-                    <img
+                    <img 
                         class="h-10"
                         src="{{ request()->cookie('dark_mode') ? vite()->asset('images/dark-logo.svg') : vite()->asset('images/logo.svg') }}"
-                        id="logo-image"
-                        alt="{{ config('app.name') }}"
+                        id="logo-image" 
+                        alt="{{ config('app.name') }}" 
                     />
                 @endif
             </x-slot>
 
-            <!-- Drawer Content -->
             <x-slot:content class="p-4">
                 <div class="journal-scroll h-[calc(100vh-100px)] overflow-auto">
                     <nav class="grid w-full gap-2">
-                        <!-- Navigation Menu -->
                         @foreach (menu()->getItems('admin') as $menuItem)
-                            <div class="group/item relative">
-                                <a
-                                    href="{{ $menuItem->getUrl() }}"
-                                    class="flex gap-2.5 p-1.5 items-center cursor-pointer hover:rounded-lg {{ $menuItem->isActive() == 'active' ? 'bg-brandColor rounded-lg' : ' hover:bg-gray-100 hover:dark:bg-gray-950' }} peer"
+                            @php
+                                $hasActiveChild = $menuItem->haveChildren() && collect($menuItem->getChildren())->contains(fn($child) => $child->isActive());
+
+                                $isMenuActive = $menuItem->isActive() == 'active' || $hasActiveChild;
+                                
+                                $menuKey = $menuItem->getKey();
+                            @endphp
+
+                            <div 
+                                class="menu-item relative" 
+                                data-menu-key="{{ $menuKey }}"
+                            >
+                                <a 
+                                    href="{{ ! in_array($menuItem->getKey(), ['settings', 'configuration']) && $menuItem->haveChildren() ? 'javascript:void(0)' : $menuItem->getUrl() }}"
+                                    class="menu-link flex items-center justify-between rounded-lg p-2 transition-colors duration-200"
+                                    @if ($menuItem->haveChildren() && !in_array($menuKey, ['settings', 'configuration'])) 
+                                        @click.prevent="toggleMenu('{{ $menuKey }}')" 
+                                    @endif
+                                    :class="{ 'bg-brandColor text-white': activeMenu === '{{ $menuKey }}' || {{ $isMenuActive ? 'true' : 'false' }}, 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-950': !(activeMenu === '{{ $menuKey }}' || {{ $isMenuActive ? 'true' : 'false' }}) }"
                                 >
-                                    <span class="{{ $menuItem->getIcon() }} text-2xl {{ $menuItem->isActive() ? 'text-white' : ''}}"></span>
-                                    
-                                    <p class="text-gray-600 dark:text-gray-300 font-semibold whitespace-nowrap group-[.sidebar-collapsed]/container:hidden {{ $menuItem->isActive() ? 'text-white' : ''}}">
-                                        {{ $menuItem->getName() }}
-                                    </p>
+                                    <div class="flex items-center gap-3">
+                                        <span class="{{ $menuItem->getIcon() }} text-2xl"></span>
+
+                                        <p class="whitespace-nowrap font-semibold">{{ $menuItem->getName() }}</p>
+                                    </div>
+
+                                    @if ($menuItem->haveChildren())
+                                        <span 
+                                            class="transform text-lg transition-transform duration-300"
+                                            :class="{ 'icon-arrow-up': activeMenu === '{{ $menuKey }}', 'icon-arrow-down': activeMenu !== '{{ $menuKey }}' }"
+                                        ></span>
+                                    @endif
                                 </a>
 
-
-                                @if ($menuItem->haveChildren() && ! in_array($menuItem->getKey(), ['settings', 'configuration']))
-                                    <div class="{{ $menuItem->isActive() ? ' !grid bg-gray-100 dark:bg-gray-950' : '' }} hidden min-w-[180px] ltr:pl-10 rtl:pr-10 pb-2 rounded-b-lg z-[100]">
+                                @if ($menuItem->haveChildren() && !in_array($menuKey, ['settings', 'configuration']))
+                                    <div 
+                                        class="submenu ml-1 mt-1 overflow-hidden rounded-b-lg border-l-2 transition-all duration-300 dark:border-gray-700"
+                                        :class="{ 'max-h-[500px] py-2 border-l-brandColor bg-gray-50 dark:bg-gray-900': activeMenu === '{{ $menuKey }}' || {{ $hasActiveChild ? 'true' : 'false' }}, 'max-h-0 py-0 border-transparent bg-transparent': activeMenu !== '{{ $menuKey }}' && !{{ $hasActiveChild ? 'true' : 'false' }} }"
+                                    >
                                         @foreach ($menuItem->getChildren() as $subMenuItem)
-                                            <a
+                                            <a 
                                                 href="{{ $subMenuItem->getUrl() }}"
-                                                class="text-sm text-{{ $subMenuItem->isActive() ? 'blue':'gray' }}-600 dark:text-{{ $subMenuItem->isActive() ? 'blue':'gray' }}-300 whitespace-nowrap py-1 group-[.sidebar-collapsed]/container:px-5 group-[.sidebar-collapsed]/container:py-2.5 group-[.inactive]/item:px-5 group-[.inactive]/item:py-2.5 hover:text-bg-brandColor dark:hover:bg-gray-950"
-                                            >
+                                                class="submenu-link block whitespace-nowrap p-2 pl-10 text-sm transition-colors duration-200"
+                                                :class="{ 'text-brandColor font-medium bg-gray-100 dark:bg-gray-800': '{{ $subMenuItem->isActive() }}' === '1', 'text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800': '{{ $subMenuItem->isActive() }}' !== '1' }">
                                                 {{ $subMenuItem->getName() }}
                                             </a>
                                         @endforeach
@@ -78,6 +97,24 @@
     <script type="module">
         app.component('v-sidebar-drawer', {
             template: '#v-sidebar-drawer-template',
+
+            data() {
+                return { activeMenu: null };
+            },
+
+            mounted() {
+                const activeElement = document.querySelector('.menu-item .menu-link.bg-brandColor');
+                
+                if (activeElement) {
+                    this.activeMenu = activeElement.closest('.menu-item').getAttribute('data-menu-key');
+                }
+            },
+
+            methods: {
+                toggleMenu(menuKey) {
+                    this.activeMenu = this.activeMenu === menuKey ? null : menuKey;
+                }
+            },
         });
     </script>
 @endPushOnce

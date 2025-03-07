@@ -44,118 +44,116 @@
             </div>
 
             <!-- Form Content -->
-            <div class="flex gap-2.5 max-xl:flex-wrap">
+            <div class="flex gap-2.5 max-xl:flex-wrap-reverse">
                 <!-- Left sub-component -->
-                <div class="flex flex-1 flex-col gap-2 max-xl:flex-auto">
-                    <div class="box-shadow rounded-lg border border-gray-200 bg-white p-4 dark:border-gray-800 dark:bg-gray-900">
-                        {!! view_render_event('admin.activities.edit.form_controls.before') !!}
+                <div class="box-shadow flex-1 gap-2 rounded-lg border border-gray-200 bg-white p-4 dark:border-gray-800 dark:bg-gray-900 max-xl:flex-auto">
+                    {!! view_render_event('admin.activities.edit.form_controls.before') !!}
 
-                        <!-- Schedule Date -->
-                        <x-admin::form.control-group>
-                            <div class="flex gap-2 max-sm:flex-wrap"> 
-                                <div class="w-full">
-                                    <x-admin::form.control-group.label class="required">
-                                        @lang('admin::app.activities.edit.schedule_from')
-                                    </x-admin::form.control-group.label>
+                    <!-- Schedule Date -->
+                    <x-admin::form.control-group>
+                        <div class="flex gap-2 max-sm:flex-wrap"> 
+                            <div class="w-full">
+                                <x-admin::form.control-group.label class="required">
+                                    @lang('admin::app.activities.edit.schedule_from')
+                                </x-admin::form.control-group.label>
 
-                                    <x-admin::flat-picker.datetime class="!w-full" ::allow-input="true">
-                                        <input
-                                            name="schedule_from"
-                                            value="{{ old('schedule_from') ?? $activity->schedule_from }}"
-                                            class="flex w-full rounded-md border px-3 py-2 text-sm text-gray-600 transition-all hover:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400"
-                                            placeholder="@lang('admin::app.activities.edit.schedule_from')"
-                                        />
-                                    </x-admin::flat-picker.datetime>
-                                </div>
-
-                                <div class="w-full">
-                                    <x-admin::form.control-group.label class="required">
-                                        @lang('admin::app.activities.edit.schedule_to')
-                                    </x-admin::form.control-group.label>
-
-                                    <x-admin::flat-picker.datetime class="!w-full" ::allow-input="true">
-                                        <input
-                                            name="schedule_to"
-                                            value="{{ old('schedule_to') ?? $activity->schedule_to }}"
-                                            class="flex w-full rounded-md border px-3 py-2 text-sm text-gray-600 transition-all hover:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400"
-                                            placeholder="@lang('admin::app.activities.edit.schedule_to')"
-                                        />
-                                    </x-admin::flat-picker.datetime>
-                                </div>
+                                <x-admin::flat-picker.datetime class="!w-full" ::allow-input="true">
+                                    <input
+                                        name="schedule_from"
+                                        value="{{ old('schedule_from') ?? $activity->schedule_from }}"
+                                        class="flex w-full rounded-md border px-3 py-2 text-sm text-gray-600 transition-all hover:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400"
+                                        placeholder="@lang('admin::app.activities.edit.schedule_from')"
+                                    />
+                                </x-admin::flat-picker.datetime>
                             </div>
-                        </x-admin::form.control-group>
 
-                        <!-- Comment -->
-                        <x-admin::form.control-group>
-                            <x-admin::form.control-group.label>
-                                @lang('admin::app.activities.edit.comment')
-                            </x-admin::form.control-group.label>
+                            <div class="w-full">
+                                <x-admin::form.control-group.label class="required">
+                                    @lang('admin::app.activities.edit.schedule_to')
+                                </x-admin::form.control-group.label>
 
-                            <x-admin::form.control-group.control
-                                type="textarea"
-                                name="comment"
-                                id="comment"
-                                :value="old('comment') ?? $activity->comment"
-                                :label="trans('admin::app.activities.edit.comment')"
-                                :placeholder="trans('admin::app.activities.edit.comment')"
-                            />
-                            
-                            <x-admin::form.control-group.error control-name="comment" />
-                        </x-admin::form.control-group>
+                                <x-admin::flat-picker.datetime class="!w-full" ::allow-input="true">
+                                    <input
+                                        name="schedule_to"
+                                        value="{{ old('schedule_to') ?? $activity->schedule_to }}"
+                                        class="flex w-full rounded-md border px-3 py-2 text-sm text-gray-600 transition-all hover:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400"
+                                        placeholder="@lang('admin::app.activities.edit.schedule_to')"
+                                    />
+                                </x-admin::flat-picker.datetime>
+                            </div>
+                        </div>
+                    </x-admin::form.control-group>
 
-                        <!-- Participants -->
-                        <x-admin::form.control-group>
-                            <x-admin::form.control-group.label>
-                                @lang('admin::app.activities.edit.participants')
-                            </x-admin::form.control-group.label>
+                    <!-- Comment -->
+                    <x-admin::form.control-group>
+                        <x-admin::form.control-group.label>
+                            @lang('admin::app.activities.edit.comment')
+                        </x-admin::form.control-group.label>
 
-                            <!-- Participants Multi lookup Vue Component -->
-                            <v-multi-lookup-component>
-                                <div 
-                                    class="relative rounded border border-gray-200 px-2 py-1 hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:hover:border-gray-400 dark:focus:border-gray-400" 
-                                    role="button"
-                                >
-                                    <ul class="flex flex-wrap items-center gap-1">
-                                        <li>
-                                            <input
-                                                type="text"
-                                                class="w-full px-1 py-1 dark:bg-gray-900 dark:text-gray-300"
-                                                placeholder="@lang('admin::app.activities.edit.participants')"
-                                            />
-                                        </li>
-                                    </ul>
+                        <x-admin::form.control-group.control
+                            type="textarea"
+                            name="comment"
+                            id="comment"
+                            :value="old('comment') ?? $activity->comment"
+                            :label="trans('admin::app.activities.edit.comment')"
+                            :placeholder="trans('admin::app.activities.edit.comment')"
+                        />
+                        
+                        <x-admin::form.control-group.error control-name="comment" />
+                    </x-admin::form.control-group>
 
-                                    <span class="icon-down-arrow absolute top-1.5 text-2xl ltr:right-1.5 rtl:left-1.5"></span>
-                                </div>
-                            </v-multi-lookup-component>
-                        </x-admin::form.control-group>
+                    <!-- Participants -->
+                    <x-admin::form.control-group>
+                        <x-admin::form.control-group.label>
+                            @lang('admin::app.activities.edit.participants')
+                        </x-admin::form.control-group.label>
 
-                        <!-- Lead -->
-                        <x-admin::form.control-group class="!mb-0">
-                            <x-admin::form.control-group.label>
-                                @lang('admin::app.activities.edit.lead')
-                            </x-admin::form.control-group.label>
-
-                            <x-admin::attributes.edit.lookup/>
-
-                            <!-- Lead Lookup Vue Component -->
-                            <v-lookup-component
-                                :attribute="{'code': 'lead_id', 'name': 'Lead', 'lookup_type': 'leads'}"
-                                :value='@json($lookUpEntityData)'
+                        <!-- Participants Multi lookup Vue Component -->
+                        <v-multi-lookup-component>
+                            <div 
+                                class="relative rounded border border-gray-200 px-2 py-1 hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:hover:border-gray-400 dark:focus:border-gray-400" 
+                                role="button"
                             >
-                                <x-admin::form.control-group.control
-                                    type="text"
-                                    placeholder="@lang('admin::app.common.start-typing')"
-                                />
-                            </v-lookup-component>
-                        </x-admin::form.control-group>
+                                <ul class="flex flex-wrap items-center gap-1">
+                                    <li>
+                                        <input
+                                            type="text"
+                                            class="w-full px-1 py-1 dark:bg-gray-900 dark:text-gray-300"
+                                            placeholder="@lang('admin::app.activities.edit.participants')"
+                                        />
+                                    </li>
+                                </ul>
 
-                        {!! view_render_event('admin.activities.edit.form_controls.after') !!}
-                    </div>
+                                <span class="icon-down-arrow absolute top-1.5 text-2xl ltr:right-1.5 rtl:left-1.5"></span>
+                            </div>
+                        </v-multi-lookup-component>
+                    </x-admin::form.control-group>
+
+                    <!-- Lead -->
+                    <x-admin::form.control-group class="!mb-0">
+                        <x-admin::form.control-group.label>
+                            @lang('admin::app.activities.edit.lead')
+                        </x-admin::form.control-group.label>
+
+                        <x-admin::attributes.edit.lookup/>
+
+                        <!-- Lead Lookup Vue Component -->
+                        <v-lookup-component
+                            :attribute="{'code': 'lead_id', 'name': 'Lead', 'lookup_type': 'leads'}"
+                            :value='@json($lookUpEntityData)'
+                        >
+                            <x-admin::form.control-group.control
+                                type="text"
+                                placeholder="@lang('admin::app.common.start-typing')"
+                            />
+                        </v-lookup-component>
+                    </x-admin::form.control-group>
+
+                    {!! view_render_event('admin.activities.edit.form_controls.after') !!}
                 </div>
 
                 <!-- Right sub-component -->
-                <div class="flex w-[360px] max-w-full flex-col gap-2 max-sm:w-full">
+                <div class="w-[360px] max-w-full gap-2 max-xl:w-full">
                     {!! view_render_event('admin.activities.edit.accordion.general.before') !!}
 
                     <x-admin::accordion>
