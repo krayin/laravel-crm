@@ -105,10 +105,7 @@
 
                         <!-- Create Leads -->
                         <x-admin::form.control-group>
-                            <x-admin::form.control-group.label
-                                class="required"
-                                for="create_lead"
-                            >
+                            <x-admin::form.control-group.label for="create_lead">
                                 @lang('admin::app.settings.webforms.create.create-lead')
                             </x-admin::form.control-group.label>
 
