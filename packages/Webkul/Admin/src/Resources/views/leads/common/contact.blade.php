@@ -19,9 +19,10 @@
                 ::src="src"
                 name="person[id]"
                 ::params="params"
-                @on-selected="addPerson"
-                :placeholder="trans('admin::app.leads.common.contact.name')"
+                rules="required"
                 ::value="{id: person.id, name: person.name}"
+                :placeholder="trans('admin::app.leads.common.contact.name')"
+                @on-selected="addPerson"
                 :can-add-new="true"
             />
         
