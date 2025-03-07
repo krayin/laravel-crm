@@ -139,24 +139,24 @@
                 };
             },
 
-            mounted() {
-                this.initializeValue();
-
-                window.addEventListener('click', this.handleFocusOut);
-            },
-
             watch: {
-                value: {
-                    deep: true,
-
-                    handler() {
-                        this.initializeValue();
-                    },
-                },
-
                 searchTerm(newVal, oldVal) {
                     this.search();
                 },
+
+                value(newVal, oldVal) {
+                    if (newVal) {
+                        this.getLookUpEntity();
+                    }
+                },
+            },
+
+            mounted() {
+                if (this.value) {
+                    this.getLookUpEntity();
+                }
+
+                window.addEventListener('click', this.handleFocusOut);
             },
 
             beforeDestroy() {
@@ -164,18 +164,6 @@
             },
 
             methods: {
-                initializeValue() {
-                    if (this.value) {
-                        if (this.value.id && this.value.name) {
-                            this.entityId = this.value.id;
-
-                            this.selectedItem = this.value.name;
-                        } else if (this.value.id) {
-                            this.getLookUpEntity(this.value.id);
-                        }
-                    }
-                },
-
                 toggle() {
                     this.showPopup = ! this.showPopup;
 
