@@ -492,6 +492,7 @@
                                         :attribute="{'code': 'conditions[' + index + '][value]', 'name': 'Email', 'lookup_type': matchedAttribute.lookup_type}"
                                         validations="required|email"
                                         :data="condition.value"
+                                        can-add-new="true"
                                     ></v-lookup-component>
                                 </div>
                             </template>
@@ -728,6 +729,7 @@
                                                     :attribute="{'code': 'actions[' + index + '][value]', 'name': 'Email', 'lookup_type': matchedAttribute.lookup_type}"
                                                     validations="required|email"
                                                     :data="action.value"
+                                                    can-add-new="true"
                                                 ></v-lookup-component>
                                             </div>
                                         </template>

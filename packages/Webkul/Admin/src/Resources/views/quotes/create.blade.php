@@ -183,6 +183,7 @@
                                     <v-lookup-component
                                         :attribute="{'code': 'lead_id', 'name': 'Lead', 'lookup_type': 'leads'}"
                                         :value='@json($lookUpEntityData)'
+                                        can-add-new="true"
                                     ></v-lookup-component>
                                 </x-admin::form.control-group>
                             </div>
