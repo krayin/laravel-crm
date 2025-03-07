@@ -1,23 +1,18 @@
 @foreach ($customAttributes as $attribute)
     @php
-        if (isset($customValidations[$attribute->code])) {
-            $validations = implode('|', $customValidations[$attribute->code]);
-        } else {
-            $validations = [];
+        $validations = [];
 
-            if ($attribute->is_required) {
-                $validations[] = 'required';
-            }
-
-            if (
-                ! empty($attribute->validation)
-                && ! in_array($attribute->validation, $validations)
-            ) {
-                $validations[] = $attribute->validation;
-            }
-
-            $validations = implode('|', array_filter($validations));
+        if ($attribute->is_required) {
+            $validations[] = 'required';
         }
+
+        if ($attribute->type == 'price') {
+            $validations[] = 'decimal';
+        }
+
+        $validations[] = $attribute->validation;
+
+        $validations = implode('|', array_filter($validations));
     @endphp
 
     <x-admin::form.control-group class="mb-2.5 w-full">
