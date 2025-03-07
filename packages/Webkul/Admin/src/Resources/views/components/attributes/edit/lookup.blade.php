@@ -7,7 +7,7 @@
         :attribute="{{ json_encode($attribute) }}"
         :validations="'{{ $validations }}'"
         :value="{{ json_encode($lookUpEntityData)}}"
-        can-add-new="{{ $canAddNew }}
+        can-add-new="{{ $canAddNew ?? false }}"
     >
         <div class="relative inline-block w-full">
             <!-- Input Container -->
