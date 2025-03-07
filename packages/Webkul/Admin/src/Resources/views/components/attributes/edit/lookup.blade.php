@@ -107,7 +107,7 @@
                         v-for="item in filteredResults"
                         :key="item.id"
                         class="flex cursor-pointer gap-2 p-2 transition-colors hover:bg-blue-100 dark:text-gray-300 dark:hover:bg-gray-900"
-                        @click="handleResult(result)"
+                        @click="handleResult(item)"
                     >
                         <!-- Entity Name -->
                         <span>@{{ item.name }}</span>
