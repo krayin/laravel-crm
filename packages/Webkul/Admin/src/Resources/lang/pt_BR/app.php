@@ -1254,8 +1254,8 @@ return [
                 'create-success'       => 'Funil adicionado com sucesso.',
                 'update-success'       => 'Funil atualizado com sucesso.',
                 'delete-success'       => 'Funil excluído com sucesso.',
-                'delete-failed'        => 'Não foi possível excluir o pipeline.',
-                'default-delete-error' => 'Não é possível excluir o pipeline padrão.',
+                'delete-failed'        => 'Não foi possível excluir o funil.',
+                'default-delete-error' => 'Não é possível excluir o funil padrão.',
 
                 'datagrid' => [
                     'delete'      => 'Excluir',
@@ -2172,7 +2172,7 @@ return [
         'lead'                 => 'Oportunidade',
         'lead-info'            => 'Gerencie todas as configurações relacionadas as Oportunidade no CRM',
         'pipelines'            => 'Funis',
-        'pipelines-info'       => 'Adicionar, editar ou excluir pipelines do CRM',
+        'pipelines-info'       => 'Adicionar, editar ou excluir funis do CRM',
         'sources'              => 'Origens',
         'sources-info'         => 'Adicionar, editar ou excluir origems do CRM',
         'types'                => 'Tipos',
