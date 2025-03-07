@@ -114,7 +114,7 @@
             ref="appLayout"
         >
             <!-- Page Sidebar Blade Component -->
-            <x-admin::layouts.sidebar />
+            <x-admin::layouts.sidebar.desktop />
 
             <div class="flex min-h-[calc(100vh-62px)] max-w-full flex-1 flex-col bg-gray-100 pt-3 transition-all duration-300 dark:bg-gray-950">
                 <!-- Page Content Blade Component -->
