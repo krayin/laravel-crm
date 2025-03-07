@@ -207,7 +207,7 @@
 
                         <!-- Process In Queue -->
                         <x-admin::form.control-group class="!mb-0">
-                            <x-admin::form.control-group.label class="required">
+                            <x-admin::form.control-group.label>
                                 @lang('admin::app.settings.data-transfer.imports.create.process-in-queue')
                             </x-admin::form.control-group.label>
 
