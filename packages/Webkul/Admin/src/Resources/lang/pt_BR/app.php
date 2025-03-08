@@ -2105,31 +2105,31 @@ return [
 
             'revenue-by-sources' => [
                 'title'       => 'Faturamento por Origens',
-                'empty-title' => 'Nenhum Dado Disponível',
+                'empty-title' => 'Ainda não há dados',
                 'empty-info'  => 'Nenhum dado disponível para o intervalo selecionado',
             ],
 
             'revenue-by-types' => [
                 'title'       => 'Faturamento por Tipos',
-                'empty-title' => 'Nenhum Dado Disponível',
+                'empty-title' => 'Ainda não há dados',
                 'empty-info'  => 'Nenhum dado disponível para o intervalo selecionado',
             ],
 
             'top-selling-products' => [
                 'title'       => 'Produtos Mais Vendidos',
-                'empty-title' => 'Nenhum Produto Encontrado',
+                'empty-title' => 'Ainda não há dados',
                 'empty-info'  => 'Nenhum produto disponível para o intervalo selecionado',
             ],
 
             'top-persons' => [
                 'title'       => 'Principais Pessoas',
-                'empty-title' => 'Nenhuma Pessoa Encontrada',
+                'empty-title' => 'Ainda não há dados',
                 'empty-info'  => 'Nenhuma pessoa disponível para o intervalo selecionado',
             ],
 
             'open-leads-by-states' => [
-                'title'       => 'Oportunidades Abertas por Estágios',
-                'empty-title' => 'Nenhum Dado Disponível',
+                'title'       => 'Oportunidades abertas por estágios',
+                'empty-title' => 'Ainda não há dados',
                 'empty-info'  => 'Nenhum dado disponível para o intervalo selecionado',
             ],
         ],
