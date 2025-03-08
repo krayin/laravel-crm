@@ -2098,9 +2098,9 @@ return [
 
             'total-leads' => [
                 'title' => 'Oportunidades',
-                'total' => 'Total de Oportunidades',
-                'won'   => 'Oportunidades Ganhas',
-                'lost'  => 'Oportunidades Perdidas',
+                'total' => 'Total de oportunidades',
+                'won'   => 'Oportunidades ganhas',
+                'lost'  => 'Oportunidades perdidas',
             ],
 
             'revenue-by-sources' => [
