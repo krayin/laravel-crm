@@ -2128,7 +2128,7 @@ return [
             ],
 
             'open-leads-by-states' => [
-                'title'       => 'Oportunidades por estágios',
+                'title'       => 'Negócios por estágios',
                 'empty-title' => 'Ainda não há dados',
                 'empty-info'  => 'Nenhum dado disponível para o intervalo selecionado',
             ],
