@@ -380,7 +380,7 @@ return [
                     'explore-all-contacts'          => 'Explorar todos os Contatos',
                     'explore-all-quotes'            => 'Explorar todas as Cotações',
                     'explore-all-matching-products' => 'Explorar todos os produtos correspondentes a ":query" (:count)',
-                    'explore-all-matching-leads'    => 'Explorar todos as oportunidades correspondentes a ":query" (:count)',
+                    'explore-all-matching-leads'    => 'Explorar todos os negócios correspondentes a ":query" (:count)',
                     'explore-all-matching-contacts' => 'Explorar todos os contatos correspondentes a ":query" (:count)',
                     'explore-all-matching-quotes'   => 'Explorar todas as cotações correspondentes a ":query" (:count)',
                 ],
@@ -473,7 +473,7 @@ return [
             'address-info-info' => 'Informações sobre o endereço relacionado à cotação.',
             'quote-items'       => 'Itens da Cotação',
             'search-products'   => 'Pesquisar Produtos',
-            'link-to-lead'      => 'Vincular a uma oportunidade',
+            'link-to-lead'      => 'Vincular a um negócio',
             'quote-item-info'   => 'Adicionar solicitação de produto para esta cotação.',
             'quote-name'        => 'Nome da Cotação',
             'quantity'          => 'Quantidade',
@@ -503,7 +503,7 @@ return [
             'address-info'      => 'Informações de Endereço',
             'address-info-info' => 'Informações sobre o endereço relacionado à cotação.',
             'quote-items'       => 'Itens da Cotação',
-            'link-to-lead'      => 'Vincular a uma oportunidade',
+            'link-to-lead'      => 'Vincular a um negócio',
             'quote-item-info'   => 'Adicionar solicitação de produto para esta cotação.',
             'quote-name'        => 'Nome da Cotação',
             'quantity'          => 'Quantidade',
@@ -1705,8 +1705,8 @@ return [
             'forward'                    => 'Encaminhar',
             'delete'                     => 'Excluir',
             'enter-mails'                => 'Digite o id do e-mail',
-            'rotten-days'                => 'A oportunidade está vencido há :days dias',
-            'search-an-existing-lead'    => 'Pesquisar uma oportunidade existente',
+            'rotten-days'                => 'O negócio está sem movimentação há :days dias',
+            'search-an-existing-lead'    => 'Pesquisar um negócio existente',
             'search-an-existing-contact' => 'Pesquisar um contato existente',
             'message'                    => 'Mensagem',
             'add-attachments'            => 'Adicionar Anexos',
@@ -1757,10 +1757,10 @@ return [
     ],
 
     'leads' => [
-        'create-success'    => 'Oportunidade adicionada com sucesso.',
-        'update-success'    => 'Oportunidade atualizada com sucesso.',
-        'destroy-success'   => 'Oportunidade excluída com sucesso.',
-        'destroy-failed'    => 'Oportunidade não pode ser excluído.',
+        'create-success'    => 'Negócio adicionado com sucesso.',
+        'update-success'    => 'Negócio atualizado com sucesso.',
+        'destroy-success'   => 'Negócio excluído com sucesso.',
+        'destroy-failed'    => 'Este negócio não pode ser excluído.',
 
         'file' => [
             'empty-content'    => 'O conteúdo do PDF está vazio ou não pôde ser extraído.',
@@ -1772,21 +1772,21 @@ return [
 
         'index' => [
             'title'      => 'Oportunidades',
-            'create-btn' => 'Adicionar Oportunidade',
+            'create-btn' => 'Adicionar Negócio',
 
             'datagrid' => [
                 'id'                  => 'ID',
-                'sales-person'        => 'Pessoa de Vendas',
+                'sales-person'        => 'Vendedor',
                 'subject'             => 'Assunto',
                 'source'              => 'Origem',
-                'lead-value'          => 'Valor da Oportunidade',
-                'lead-type'           => 'Tipo da Oportunidade',
+                'lead-value'          => 'Valor do Negócio',
+                'lead-type'           => 'Tipo de Negócio',
                 'tag-name'            => 'Nome da Tag',
                 'contact-person'      => 'Pessoa de Contato',
                 'stage'               => 'Etapa',
-                'rotten-lead'         => 'Oportunidade estagnada',
-                'date-to'             => 'Data Até',
-                'created-at'          => 'Criado Em',
+                'rotten-lead'         => 'Negócio estagnado',
+                'date-to'             => 'Data fechamento',
+                'created-at'          => 'Criado em',
                 'no'                  => 'Não',
                 'yes'                 => 'Sim',
                 'delete'              => 'Excluir',
@@ -1795,22 +1795,22 @@ return [
             ],
 
             'kanban' => [
-                'rotten-days'            => 'Oportunidade estagnada por :days dias',
-                'empty-list'             => 'Sua lista de Oportunidades está vazia',
-                'empty-list-description' => 'Adicione uma oportunidade para organizar seus objetivos.',
-                'create-lead-btn'        => 'Adicionar Oportunidade',
+                'rotten-days'            => 'Negócio estagnado por :days dias',
+                'empty-list'             => 'Sua lista de Negócios está vazia',
+                'empty-list-description' => 'Adicione um negócio para organizar seus objetivos.',
+                'create-lead-btn'        => 'Adicionar Negócio',
 
                 'columns' => [
                     'contact-person'      => 'Pessoa de Contato',
                     'id'                  => 'ID',
-                    'lead-type'           => 'Tipo de Oportunidade',
-                    'lead-value'          => 'Valor da Oportunidade',
-                    'sales-person'        => 'Pessoa de Vendas',
+                    'lead-type'           => 'Tipo de Negócio',
+                    'lead-value'          => 'Valor do negócio',
+                    'sales-person'        => 'Vendedor',
                     'source'              => 'Origem',
                     'title'               => 'Título',
                     'tags'                => 'Tags',
                     'expected-close-date' => 'Data Esperada de Fechamento',
-                    'created-at'          => 'Criado Em',
+                    'created-at'          => 'Criado em',
                 ],
 
                 'toolbar' => [
@@ -1836,7 +1836,7 @@ return [
             ],
 
             'upload' => [
-                'create-lead'   => 'Adicionar Oportunidade Usando AI',
+                'create-lead'   => 'Adicionar Negócio Usando AI',
                 'file'          => 'Upload de Arquivo',
                 'file-info'     => 'Apenas arquivos em formato PDF são aceitos.',
                 'file-required' => 'Por favor, selecione pelo menos um arquivo válido para prosseguir.',
@@ -1847,10 +1847,10 @@ return [
         ],
 
         'create' => [
-            'title'          => 'Adicionar Oportunidade',
+            'title'          => 'Adicionar Negócio',
             'save-btn'       => 'Salvar',
             'details'        => 'Detalhes',
-            'details-info'   => 'Coloque as informações básicas da Oportunidade',
+            'details-info'   => 'Coloque as informações básicas do Negócio',
             'contact-person' => 'Pessoa de Contato',
             'contact-info'   => 'Informações sobre a Pessoa de Contato',
             'products'       => 'Produtos',
@@ -1858,10 +1858,10 @@ return [
         ],
 
         'edit' => [
-            'title'          => 'Editar Oportunidade',
+            'title'          => 'Editar Negócio',
             'save-btn'       => 'Salvar',
             'details'        => 'Detalhes',
-            'details-info'   => 'Coloque as informações básicas da Oportunidade',
+            'details-info'   => 'Coloque as informações básicas do Negócio',
             'contact-person' => 'Pessoa de Contato',
             'contact-info'   => 'Informações sobre a Pessoa de Contato',
             'products'       => 'Produtos',
@@ -1888,7 +1888,7 @@ return [
         ],
 
         'view' => [
-            'title'       => 'Oportunidade: :title',
+            'title'       => 'Negócio: :title',
             'rotten-days' => ':days Dias',
 
             'tabs'        => [
@@ -1898,7 +1898,7 @@ return [
             ],
 
             'attributes' => [
-                'title' => 'Sobre a Oportunidade',
+                'title' => 'Sobre o Negócio',
             ],
 
             'quotes'=> [
@@ -1914,7 +1914,7 @@ return [
                 'download'        => 'Baixar',
                 'destroy-success' => 'Cotação excluída com sucesso.',
                 'empty-title'     => 'Nenhuma Cotação Encontrada',
-                'empty-info'      => 'Nenhuma Cotação Encontrada para esta Oportunidade',
+                'empty-info'      => 'Nenhuma Cotação Encontrada para este Negócio',
                 'add-btn'         => 'Adicionar Cotação',
             ],
 
@@ -1927,7 +1927,7 @@ return [
                 'add-more'     => 'Adicionar Mais',
                 'total'        => 'Total',
                 'empty-title'  => 'Nenhum Produto Encontrado',
-                'empty-info'   => 'Nenhum Produto Encontrado para esta Oportunidade',
+                'empty-info'   => 'Nenhum Produto Encontrado para este Negócio',
                 'add-product'  => 'Adicionar Produto',
             ],
 
@@ -1974,8 +1974,8 @@ return [
                     'info'            => 'Atualize suas configurações gerais aqui.',
 
                     'locale-settings' => [
-                        'title'       => 'Configurações de Localidade',
-                        'title-info'  => 'Define o idioma usado na interface do usuário, como Árabe (ar), Inglês (en), Espanhol (es), Persa (fa) e Turco (tr).',
+                        'title'       => 'Configurações de Idioma',
+                        'title-info'  => 'Define o idioma usado na interface do usuário.',
                     ],
 
                     'admin-logo' => [
@@ -2097,10 +2097,10 @@ return [
             ],
 
             'total-leads' => [
-                'title' => 'Oportunidades',
-                'total' => 'Total de oportunidades',
-                'won'   => 'Oportunidades ganhas',
-                'lost'  => 'Oportunidades perdidas',
+                'title' => 'Negócios',
+                'total' => 'Total de negócios',
+                'won'   => 'Negócios ganhos',
+                'lost'  => 'Negócios perdidos',
             ],
 
             'revenue-by-sources' => [
@@ -2169,8 +2169,8 @@ return [
         'roles-info'           => 'Adicionar, editar ou excluir funções do CRM',
         'users'                => 'Usuários',
         'users-info'           => 'Adicionar, editar ou excluir usuários do CRM',
-        'lead'                 => 'Oportunidade',
-        'lead-info'            => 'Gerencie todas as configurações relacionadas as Oportunidade no CRM',
+        'lead'                 => 'Negócio',
+        'lead-info'            => 'Gerencie todas as configurações relacionadas aos Negócios no CRM',
         'pipelines'            => 'Funis',
         'pipelines-info'       => 'Adicionar, editar ou excluir funis do CRM',
         'sources'              => 'Origens',
@@ -2191,7 +2191,7 @@ return [
         'other-settings-info'  => 'Gerencie todas as configurações extras no CRM',
         'tags'                 => 'Tags',
         'tags-info'            => 'Adicionar, editar ou excluir tags do CRM',
-        'my-account'           => 'Minha Conta',
+        'my-account'           => 'Minha conta',
         'sign-out'             => 'Sair',
         'back'                 => 'Voltar',
         'name'                 => 'Nome',
