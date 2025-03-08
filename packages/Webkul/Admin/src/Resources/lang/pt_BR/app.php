@@ -2104,31 +2104,31 @@ return [
             ],
 
             'revenue-by-sources' => [
-                'title'       => 'Faturamento por Origens',
+                'title'       => 'Faturamento por origens',
                 'empty-title' => 'Ainda não há dados',
                 'empty-info'  => 'Nenhum dado disponível para o intervalo selecionado',
             ],
 
             'revenue-by-types' => [
-                'title'       => 'Faturamento por Tipos',
+                'title'       => 'Faturamento por tipos',
                 'empty-title' => 'Ainda não há dados',
                 'empty-info'  => 'Nenhum dado disponível para o intervalo selecionado',
             ],
 
             'top-selling-products' => [
-                'title'       => 'Produtos Mais Vendidos',
+                'title'       => 'Produtos mais vendidos',
                 'empty-title' => 'Ainda não há dados',
                 'empty-info'  => 'Nenhum produto disponível para o intervalo selecionado',
             ],
 
             'top-persons' => [
-                'title'       => 'Principais Pessoas',
+                'title'       => 'Principais pessoas',
                 'empty-title' => 'Ainda não há dados',
                 'empty-info'  => 'Nenhuma pessoa disponível para o intervalo selecionado',
             ],
 
             'open-leads-by-states' => [
-                'title'       => 'Oportunidades abertas por estágios',
+                'title'       => 'Oportunidades por estágios',
                 'empty-title' => 'Ainda não há dados',
                 'empty-info'  => 'Nenhum dado disponível para o intervalo selecionado',
             ],
@@ -2136,13 +2136,13 @@ return [
     ],
 
     'layouts' => [
-        'app-version'          => 'Versão : :version',
+        'app-version'          => 'Versão: :version',
         'dashboard'            => 'Painel de Controle',
         'leads'                => 'Oportunidades',
         'quotes'               => 'Cotações',
         'quote'                => 'Cotação',
         'mail'                 => [
-            'title'   => 'Correio',
+            'title'   => 'E-mail',
             'compose' => 'Escrever',
             'inbox'   => 'Caixa de Entrada',
             'draft'   => 'Rascunho',
