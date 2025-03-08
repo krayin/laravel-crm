@@ -2050,7 +2050,7 @@ return [
                     'activities'     => 'Atividades',
                     'configuration'  => 'Configuração',
                     'contacts'       => 'Contatos',
-                    'dashboard'      => 'Painel de Controle',
+                    'dashboard'      => 'Início',
                     'draft'          => 'Rascunho',
                     'inbox'          => 'Caixa de Entrada',
                     'info'           => 'Podemos configurar o nome dos itens do menu aqui.',
@@ -2080,7 +2080,7 @@ return [
 
     'dashboard' => [
         'index' => [
-            'title' => 'Painel de Controle',
+            'title' => 'Início',
 
             'revenue' => [
                 'lost-revenue' => 'Negócios Perdidos',
@@ -2137,7 +2137,7 @@ return [
 
     'layouts' => [
         'app-version'          => 'Versão: :version',
-        'dashboard'            => 'Painel de Controle',
+        'dashboard'            => 'Início',
         'leads'                => 'Oportunidades',
         'quotes'               => 'Cotações',
         'quote'                => 'Cotação',
