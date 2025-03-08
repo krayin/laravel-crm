@@ -2088,12 +2088,12 @@ return [
             ],
 
             'over-all' => [
-                'average-lead-value'    => 'Valor Médio da Oportunidade',
-                'total-leads'           => 'Total de Oportunidades',
-                'average-leads-per-day' => 'Oportunidades médias por Dia',
-                'total-quotations'      => 'Total de Cotações',
-                'total-persons'         => 'Total de Pessoas',
-                'total-organizations'   => 'Total de Empresas',
+                'average-lead-value'    => 'Ticket médio',
+                'total-leads'           => 'Total de negócios',
+                'average-leads-per-day' => 'Média de negócios por dia',
+                'total-quotations'      => 'Total de cotações',
+                'total-persons'         => 'Total de pessoas',
+                'total-organizations'   => 'Total de empresas',
             ],
 
             'total-leads' => [
