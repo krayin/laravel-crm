@@ -2083,8 +2083,8 @@ return [
             'title' => 'Painel de Controle',
 
             'revenue' => [
-                'lost-revenue' => 'Faturamento Perdido',
-                'won-revenue'  => 'Faturamento Ganho',
+                'lost-revenue' => 'Negócios Perdidos',
+                'won-revenue'  => 'Negócios Ganhos',
             ],
 
             'over-all' => [
