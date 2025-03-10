@@ -124,7 +124,7 @@ password:admin123
 
 ### License
 
-Krayin CRM is a truly opensource CRM framework which will always be free under the [OSL-3.0 License](https://github.com/krayin/laravel-crm/blob/master/LICENSE.txt).
+Krayin CRM is a truly opensource CRM framework which will always be free under the [OSL-3.0 License](https://github.com/krayin/laravel-crm/blob/master/LICENSE).
 
 ### Security Vulnerabilities
 
