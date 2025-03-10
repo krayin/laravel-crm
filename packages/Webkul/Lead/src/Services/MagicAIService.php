@@ -112,7 +112,7 @@ class MagicAIService
 
             $end = mb_substr($prompt, -self::MAX_TOKENS * 0.4);
 
-            return $start . "\n...\n" . $end;
+            return $start."\n...\n".$end;
         }
 
         return $prompt;
@@ -126,7 +126,7 @@ class MagicAIService
         try {
             $response = \Http::withHeaders([
                 'Content-Type'  => 'application/json',
-                'Authorization' => 'Bearer ' . $apiKey,
+                'Authorization' => 'Bearer '.$apiKey,
             ])->post(self::OPEN_ROUTER_URL, [
                 'model'    => $model,
                 'messages' => [
@@ -164,7 +164,7 @@ class MagicAIService
      */
     private static function getSystemPrompt()
     {
-        return <<<PROMPT
+        return <<<'PROMPT'
             You are an AI assistant. The user will provide text extracted from a file. 
             Extract the following data:
 
@@ -194,7 +194,7 @@ class MagicAIService
     private static function extractTextFromPdf($filePath)
     {
         try {
-            $parser = new Parser();
+            $parser = new Parser;
 
             return $parser->parseFile($filePath)->getText();
         } catch (Exception $e) {

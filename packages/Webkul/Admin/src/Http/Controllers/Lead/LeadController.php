@@ -7,8 +7,8 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Support\Facades\Event;
-use Illuminate\View\View;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\View\View;
 use Prettus\Repository\Criteria\RequestCriteria;
 use Webkul\Admin\DataGrids\Lead\LeadDataGrid;
 use Webkul\Admin\Http\Controllers\Controller;
@@ -688,8 +688,8 @@ class LeadController extends Controller
     {
         $supportedFormats = core()->getConfigData('general.magic_ai.pdf_generation.accepted_types');
 
-        $extensions = implode(',', array_map(fn($ext) => ltrim($ext, '.'), explode(',', $supportedFormats)));
-        
+        $extensions = implode(',', array_map(fn ($ext) => ltrim($ext, '.'), explode(',', $supportedFormats)));
+
         $validator = Validator::make(
             ['file' => $file],
             ['file' => "required|extensions:{$extensions}"]
