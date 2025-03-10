@@ -1874,11 +1874,15 @@ return [
         'destroy-failed'    => 'لا يمكن حذف العميل المحتمل.',
 
         'file' => [
-            'empty-content'    => 'محتوى PDF فارغ أو لم يتمكن من الاستخراج.',
-            'invalid-format'   => 'تنسيق JSON غير صالح.',
-            'invalid-response' => 'تنسيق استجابة الذكاء الاصطناعي غير صالح.',
-            'missing-api-key'  => 'مفتاح API أو تكوين النموذج مفقود.',
-            'not-found'        => 'الملف غير موجود.',
+            'empty-content'          => 'محتوى PDF فارغ أو لم يتم استخراجه.',
+            'invalid-base64'         => 'تنسيق base64 غير صالح.',
+            'invalid-format'         => 'تنسيق JSON غير صالح.',
+            'invalid-response'       => 'تنسيق استجابة الذكاء الاصطناعي غير صالح.',
+            'missing-api-key'        => 'مفتاح API أو تكوين النموذج مفقود.',
+            'not-found'              => 'الملف غير موجود.',
+            'failed-extract'         => 'فشل في استخراج النص من الملف.',
+            'recursive-call'         => 'تم الكشف عن استدعاء متكرر.',
+            'text-generation-failed' => 'فشل استخراج النص. قد يكون الملف فارغًا أو غير قابل للقراءة.',
         ],
 
         'index' => [
@@ -1948,12 +1952,12 @@ return [
 
             'upload' => [
                 'create-lead'   => 'إنشاء عميل محتمل باستخدام الذكاء الاصطناعي',
-                'file'          => 'تحميل ملف',
+                'file'          => 'رفع ملف',
                 'file-info'     => 'يتم قبول ملفات بصيغة PDF فقط.',
                 'file-required' => 'يرجى اختيار ملف صالح واحد على الأقل للمتابعة.',
-                'sample-pdf'    => 'نموذج PDF',
+                'sample-pdf'    => 'نموذج File',
                 'save-btn'      => 'حفظ',
-                'upload-pdf'    => 'تحميل PDF',
+                'upload-file'   => 'رفع الملف',
             ],
         ],
 

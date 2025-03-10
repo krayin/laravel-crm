@@ -28,7 +28,7 @@ class MagicAIService
     public static function extractDataFromFile($base64File)
     {
         if (self::$isExtracting) {
-            throw new Exception('Re-entry detected! Aborting to prevent infinite loop.');
+            throw new Exception('admin::app.leads.file.recursive-call');
         }
 
         self::$isExtracting = true;
@@ -37,7 +37,7 @@ class MagicAIService
             $text = self::extractTextFromBase64File($base64File);
 
             if (empty($text)) {
-                throw new Exception('Failed to extract text from file.');
+                throw new Exception('admin::app.leads.file.failed-extract');
             }
 
             return self::processPromptWithAI($text);
@@ -53,8 +53,11 @@ class MagicAIService
      */
     private static function extractTextFromBase64File($base64File)
     {
-        if (empty($base64File) || !base64_decode($base64File, true)) {
-            throw new Exception('Invalid base64 data.');
+        if (
+            empty($base64File)
+            || ! base64_decode($base64File, true)
+        ) {
+            throw new Exception('admin::app.leads.file.invalid-base64');
         }
 
         $tempFile = tempnam(sys_get_temp_dir(), 'file_');
@@ -65,17 +68,17 @@ class MagicAIService
 
         try {
             $text = match ($mimeType) {
-                'application/pdf' => self::extractTextFromPdf($tempFile), // PDF → Extract text
-                default => self::extractTextFromImage($base64File), // Image → Send to AI directly
+                'application/pdf' => self::extractTextFromPdf($tempFile),
+                default => self::extractTextFromImage($base64File),
             };
 
             if (empty($text)) {
-                throw new Exception('Text extraction failed. The file might be empty or unreadable.');
+                throw new Exception('admin::app.leads.file.text-generation-failed');
             }
 
             return $text;
         } catch (Exception $e) {
-            throw new Exception('Failed to extract text: ' . $e->getMessage());
+            throw new Exception($e->getMessage());
         } finally {
             @unlink($tempFile);
         }
@@ -139,18 +142,18 @@ class MagicAIService
             ]);
 
             if ($response->failed()) {
-                throw new Exception('AI request failed: ' . $response->body());
+                throw new Exception($response->body());
             }
 
             $data = $response->json();
 
             if (isset($data['error'])) {
-                throw new Exception('AI error: ' . $data['error']['message']);
+                throw new Exception($data['error']['message']);
             }
 
             return $data;
         } catch (Exception $e) {
-            return ['error' => 'Failed to process AI request: ' . $e->getMessage()];
+            return ['error' => $e->getMessage()];
         }
     }
 
@@ -193,11 +196,9 @@ class MagicAIService
         try {
             $parser = new Parser();
 
-            $pdf = $parser->parseFile($filePath);
-
-            return $pdf->getText();
+            return $parser->parseFile($filePath)->getText();
         } catch (Exception $e) {
-            throw new Exception('PDF extraction error: ' . $e->getMessage());
+            throw new Exception($e->getMessage());
         }
     }
 

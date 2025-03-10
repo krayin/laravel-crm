@@ -1878,11 +1878,15 @@ return [
         'destroy-failed'    => 'Lead silinemedi.',
 
         'file' => [
-            'empty-content'    => 'PDF içeriği boş veya çıkarılamadı.',
-            'invalid-format'   => 'Geçersiz JSON formatı.',
-            'invalid-response' => 'Geçersiz AI yanıt formatı.',
-            'missing-api-key'  => 'API anahtarı veya model yapılandırması eksik.',
-            'not-found'        => 'Dosya bulunamadı.',
+            'empty-content'          => 'PDF içeriği boş veya çıkarılamadı.',
+            'invalid-base64'         => 'Geçersiz base64 formatı.',
+            'invalid-format'         => 'Geçersiz JSON formatı.',
+            'invalid-response'       => 'Geçersiz AI yanıt formatı.',
+            'missing-api-key'        => 'API anahtarı veya model yapılandırması eksik.',
+            'not-found'              => 'Dosya bulunamadı.',
+            'failed-extract'         => 'Dosyadan metin çıkarılamadı.',
+            'recursive-call'         => 'Özyinelemeli çağrı tespit edildi.',
+            'text-generation-failed' => 'Metin çıkarma başarısız oldu. Dosya boş veya okunamaz olabilir.',
         ],
 
         'index' => [
@@ -1952,12 +1956,12 @@ return [
 
             'upload' => [
                 'create-lead'   => 'AI Kullanarak Lead Oluştur',
-                'file'          => 'Dosya Yükle',
+                'file'          => 'Dosya yükleme',
                 'file-info'     => 'Sadece PDF formatındaki dosyalar kabul edilir.',
                 'file-required' => 'Devam etmek için lütfen en az bir geçerli dosya seçin.',
                 'sample-pdf'    => 'Örnek PDF',
                 'save-btn'      => 'Kaydet',
-                'upload-pdf'    => 'PDF Yükle',
+                'upload-file'   => 'Dosya yükle',
             ],
         ],
 

@@ -1763,11 +1763,15 @@ return [
         'destroy-failed'    => 'Oportunidade não pode ser excluído.',
 
         'file' => [
-            'empty-content'    => 'O conteúdo do PDF está vazio ou não pôde ser extraído.',
-            'invalid-format'   => 'Formato JSON inválido.',
-            'invalid-response' => 'Formato de resposta AI inválido.',
-            'missing-api-key'  => 'Chave API ou configuração do modelo ausente.',
-            'not-found'        => 'Arquivo não encontrado.',
+            'empty-content'          => 'O conteúdo do PDF está vazio ou não pôde ser extraído.',
+            'invalid-base64'         => 'Formato base64 inválido.',
+            'invalid-format'         => 'Formato JSON inválido.',
+            'invalid-response'       => 'Formato de resposta de IA inválido.',
+            'missing-api-key'        => 'Chave API ou configuração do modelo ausente.',
+            'not-found'              => 'Arquivo não encontrado.',
+            'failed-extract'         => 'Falha ao extrair texto do arquivo.',
+            'recursive-call'         => 'Chamada recursiva detectada.',
+            'text-generation-failed' => 'Falha na extração de texto. O arquivo pode estar vazio ou ilegível.',
         ],
 
         'index' => [
@@ -1837,12 +1841,12 @@ return [
 
             'upload' => [
                 'create-lead'   => 'Adicionar Oportunidade Usando AI',
-                'file'          => 'Upload de Arquivo',
+                'file'          => 'Upload de arquivo',
                 'file-info'     => 'Apenas arquivos em formato PDF são aceitos.',
                 'file-required' => 'Por favor, selecione pelo menos um arquivo válido para prosseguir.',
                 'sample-pdf'    => 'PDF de Exemplo',
                 'save-btn'      => 'Salvar',
-                'upload-pdf'    => 'Carregar PDF',
+                'upload-file'   => 'Enviar arquivo',
             ],
         ],
 

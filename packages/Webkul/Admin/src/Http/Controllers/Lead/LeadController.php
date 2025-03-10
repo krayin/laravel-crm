@@ -696,7 +696,10 @@ class LeadController extends Controller
         );
 
         if ($validator->fails()) {
-            return ['status' => 'error', 'message' => $validator->errors()->first()];
+            return [
+                'status' => 'error',
+                'message' => $validator->errors()->first()
+            ];
         }
 
         $base64Pdf = base64_encode(file_get_contents($file->getRealPath()));
@@ -704,7 +707,10 @@ class LeadController extends Controller
         $extractedData = MagicAIService::extractDataFromFile($base64Pdf);
 
         if (isset($extractedData['error'])) {
-            return ['status' => 'error', 'message' => $extractedData['error']];
+            return [
+                'status' => 'error',
+                'message' => $extractedData['error']
+            ];
         }
 
         $lead = MagicAI::mapAIDataToLead($extractedData);

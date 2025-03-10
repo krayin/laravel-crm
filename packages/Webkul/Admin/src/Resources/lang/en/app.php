@@ -1876,11 +1876,15 @@ return [
         'destroy-failed'    => 'Lead can not be deleted.',
 
         'file' => [
-            'empty-content'    => 'PDF content is empty or could not be extracted.',
-            'invalid-format'   => 'Invalid JSON format.',
-            'invalid-response' => 'Invalid AI response format.',
-            'missing-api-key'  => 'Missing API key or model configuration.',
-            'not-found'        => 'File not found.',
+            'empty-content'          => 'PDF content is empty or could not be extracted.',
+            'invalid-base64'         => 'Invalid base64 format.',
+            'invalid-format'         => 'Invalid JSON format.',
+            'invalid-response'       => 'Invalid AI response format.',
+            'missing-api-key'        => 'Missing API key or model configuration.',
+            'not-found'              => 'File not found.',
+            'failed-extract'         => 'Failed to extract text from file.',
+            'recursive-call'         => 'Recursive call detected.',
+            'text-generation-failed' => 'Text extraction failed. The file might be empty or unreadable.',
         ],
 
         'index' => [
@@ -1951,11 +1955,11 @@ return [
             'upload' => [
                 'create-lead'   => 'Create Lead Using AI',
                 'file'          => 'File Upload',
-                'file-info'     => 'Only PDF format files are accepted.',
+                'file-info'     => 'Only :format format files are accepted.',
                 'file-required' => 'Please select at least one valid file to proceed.',
                 'sample-pdf'    => 'Sample PDF',
                 'save-btn'      => 'Save',
-                'upload-pdf'    => 'Upload PDF',
+                'upload-file'   => 'Upload File',
             ],
         ],
 

@@ -3,7 +3,7 @@
         type="button"
         class="secondary-button"
     >
-        @lang('admin::app.leads.index.upload.upload-pdf')
+        @lang('admin::app.leads.index.upload.upload-file')
     </button>
 </v-upload>
 
@@ -18,7 +18,7 @@
                 class="secondary-button"
                 @click="$refs.userUpdateAndCreateModal.open()"
             >
-                @lang('admin::app.leads.index.upload.upload-pdf')
+                @lang('admin::app.leads.index.upload.upload-file')
             </button>
 
             <x-admin::form
@@ -63,7 +63,7 @@
                                 />
 
                                 <p class="mt-1 text-xs text-gray-600 dark:text-gray-300">
-                                    @lang('admin::app.leads.index.upload.file-info')
+                                    @lang('admin::app.leads.index.upload.file-info',['format' => $acceptedTypes])
                                 </p>
 
                                 <x-admin::form.control-group.error control-name="files" />

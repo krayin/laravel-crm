@@ -1771,11 +1771,15 @@ return [
         'destroy-failed'    => 'Không thể xóa khách hàng tiềm năng.',
 
         'file' => [
-            'empty-content'    => 'Nội dung PDF trống hoặc không thể trích xuất.',
-            'invalid-format'   => 'Định dạng JSON không hợp lệ.',
-            'invalid-response' => 'Định dạng phản hồi AI không hợp lệ.',
-            'missing-api-key'  => 'Thiếu khóa API hoặc cấu hình mô hình.',
-            'not-found'        => 'Không tìm thấy tệp.',
+            'empty-content'          => 'Nội dung PDF trống hoặc không thể trích xuất.',
+            'invalid-base64'         => 'Định dạng base64 không hợp lệ.',
+            'invalid-format'         => 'Định dạng JSON không hợp lệ.',
+            'invalid-response'       => 'Định dạng phản hồi AI không hợp lệ.',
+            'missing-api-key'        => 'Thiếu khóa API hoặc cấu hình mô hình.',
+            'not-found'              => 'Không tìm thấy tệp.',
+            'failed-extract'         => 'Không thể trích xuất văn bản từ tệp.',
+            'recursive-call'         => 'Phát hiện cuộc gọi đệ quy.',
+            'text-generation-failed' => 'Trích xuất văn bản thất bại. Tệp có thể trống hoặc không đọc được.',
         ],
 
         'index' => [
@@ -1845,12 +1849,12 @@ return [
 
             'upload' => [
                 'create-lead'   => 'Tạo Khách Hàng Tiềm Năng Bằng AI',
-                'file'          => 'Tải Lên Tệp',
+                'file'          => 'Tải tệp lên',
                 'file-info'     => 'Chỉ chấp nhận các tệp định dạng PDF.',
                 'file-required' => 'Vui lòng chọn ít nhất một tệp hợp lệ để tiếp tục.',
                 'sample-pdf'    => 'PDF Mẫu',
                 'save-btn'      => 'Lưu',
-                'upload-pdf'    => 'Tải Lên PDF',
+                'upload-file'   => 'Tải lên tệp',
             ],
         ],
 
