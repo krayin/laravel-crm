@@ -255,7 +255,6 @@ return [
                 'title'         => 'admin::app.configuration.index.magic-ai.settings.accepted-types',
                 'info'          => 'admin::app.configuration.index.magic-ai.settings.accepted-types-info',
                 'validation'    => 'required_if:enabled,1',
-                'default'       => 'pdf',
                 'depends'       => 'enabled:1',
             ],
         ],

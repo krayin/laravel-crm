@@ -8,36 +8,85 @@ use Smalot\PdfParser\Parser;
 class MagicAIService
 {
     /**
-     * Const variable
+     * API endpoint for OpenRouter AI service.
      */
     const OPEN_ROUTER_URL = 'https://openrouter.ai/api/v1/chat/completions';
 
     /**
-     * Extract data from a PDF and process it via LLM API.
+     * Maximum token limit for AI prompt.
      */
-    public static function extractDataFromPdf($pdfPath)
-    {
-        try {
-            $parser = new Parser;
+    const MAX_TOKENS = 100000;
 
-            if (empty($pdfText = trim($parser->parseFile($pdfPath)->getText()))) {
-                throw new Exception(trans('admin::app.leads.file.empty-content'));
+    /**
+     * Flag to prevent re-entrant calls.
+     */
+    private static $isExtracting = false;
+
+    /**
+     * Extract data from base64-encoded file.
+     */
+    public static function extractDataFromFile($base64File)
+    {
+        if (self::$isExtracting) {
+            throw new Exception('Re-entry detected! Aborting to prevent infinite loop.');
+        }
+
+        self::$isExtracting = true;
+
+        try {
+            $text = self::extractTextFromBase64File($base64File);
+
+            if (empty($text)) {
+                throw new Exception('Failed to extract text from file.');
             }
 
-            return self::processPromptWithAI($pdfText);
+            return self::processPromptWithAI($text);
         } catch (Exception $e) {
             return ['error' => $e->getMessage()];
+        } finally {
+            self::$isExtracting = false;
         }
     }
 
     /**
-     * Send a request to the LLM API.
+     * Extract text from base64-encoded file.
+     */
+    private static function extractTextFromBase64File($base64File)
+    {
+        if (empty($base64File) || !base64_decode($base64File, true)) {
+            throw new Exception('Invalid base64 data.');
+        }
+
+        $tempFile = tempnam(sys_get_temp_dir(), 'file_');
+
+        file_put_contents($tempFile, base64_decode($base64File));
+
+        $mimeType = mime_content_type($tempFile);
+
+        try {
+            $text = match ($mimeType) {
+                'application/pdf' => self::extractTextFromPdf($tempFile), // PDF → Extract text
+                default => self::extractTextFromImage($base64File), // Image → Send to AI directly
+            };
+
+            if (empty($text)) {
+                throw new Exception('Text extraction failed. The file might be empty or unreadable.');
+            }
+
+            return $text;
+        } catch (Exception $e) {
+            throw new Exception('Failed to extract text: ' . $e->getMessage());
+        } finally {
+            @unlink($tempFile);
+        }
+    }
+
+    /**
+     * Send extracted data to AI for processing.
      */
     private static function processPromptWithAI($prompt)
     {
-        $otherModel = core()->getConfigData('general.magic_ai.settings.other_model');
-
-        $model = ! empty($otherModel) ? $otherModel : core()->getConfigData('general.magic_ai.settings.model');
+        $model = core()->getConfigData('general.magic_ai.settings.other_model') ?: core()->getConfigData('general.magic_ai.settings.model');
 
         $apiKey = core()->getConfigData('general.magic_ai.settings.api_key');
 
@@ -45,48 +94,118 @@ class MagicAIService
             return ['error' => trans('admin::app.leads.file.missing-api-key')];
         }
 
+        $prompt = self::truncatePrompt($prompt);
+
         return self::ask($prompt, $model, $apiKey);
     }
 
     /**
-     * Send a request to the Open Router API.
+     * Truncate prompt to fit within token limit.
      */
-    private static function ask($prompt, $model, $apiKey)
+    private static function truncatePrompt($prompt)
     {
-        $response = \Http::withHeaders([
-            'Content-Type'  => 'application/json',
-            'Authorization' => 'Bearer '.$apiKey,
-        ])->post(self::OPEN_ROUTER_URL, [
-            'model'    => $model,
-            'messages' => [
-                [
-                    'role'    => 'system',
-                    'content' => 'You are an AI assistant. You have to extract the data from the PDF file. 
-                    Example Output:
-                    {
-                        "status": 1,
-                        "title": "Untitled Lead",
-                        "lead_value": 0,
-                        "person": {
-                            "name": "Unknown",
-                            "emails": {
-                                "value": null,
-                                "label": null
-                            },
-                            "contact_numbers": {
-                                "value": null,
-                                "label": null
-                            }
-                        }
-                    }',
-                ],
-                [
-                    'role'    => 'user',
-                    'content' => $prompt,
-                ],
-            ],
-        ]);
+        if (strlen($prompt) > self::MAX_TOKENS) {
+            $start = mb_substr($prompt, 0, self::MAX_TOKENS * 0.4);
 
-        return $response->json();
+            $end = mb_substr($prompt, -self::MAX_TOKENS * 0.4);
+
+            return $start . "\n...\n" . $end;
+        }
+
+        return $prompt;
+    }
+
+    /**
+     * Send request to AI for processing.
+     */
+    private static function ask($extractedText, $model, $apiKey)
+    {
+        try {
+            $response = \Http::withHeaders([
+                'Content-Type'  => 'application/json',
+                'Authorization' => 'Bearer ' . $apiKey,
+            ])->post(self::OPEN_ROUTER_URL, [
+                'model'    => $model,
+                'messages' => [
+                    [
+                        'role'    => 'system',
+                        'content' => self::getSystemPrompt(),
+                    ],
+                    [
+                        'role'    => 'user',
+                        'content' => $extractedText,
+                    ],
+                ],
+            ]);
+
+            if ($response->failed()) {
+                throw new Exception('AI request failed: ' . $response->body());
+            }
+
+            $data = $response->json();
+
+            if (isset($data['error'])) {
+                throw new Exception('AI error: ' . $data['error']['message']);
+            }
+
+            return $data;
+        } catch (Exception $e) {
+            return ['error' => 'Failed to process AI request: ' . $e->getMessage()];
+        }
+    }
+
+    /**
+     * Define system prompt for AI processing.
+     *
+     * @return string System prompt for AI model.
+     */
+    private static function getSystemPrompt()
+    {
+        return <<<PROMPT
+            You are an AI assistant. The user will provide text extracted from a file. 
+            Extract the following data:
+
+            Example Output:
+            {
+                "status": 1,
+                "title": "Untitled Lead",
+                "lead_value": 0,
+                "person": {
+                    "name": "Unknown",
+                    "emails": {
+                        "value": null,
+                        "label": null
+                    },
+                    "contact_numbers": {
+                        "value": null,
+                        "label": null
+                    }
+                }
+            }
+            PROMPT;
+    }
+
+    /**
+     * Extract text from a PDF using Smalot PDF Parser.
+     */
+    private static function extractTextFromPdf($filePath)
+    {
+        try {
+            $parser = new Parser();
+
+            $pdf = $parser->parseFile($filePath);
+
+            return $pdf->getText();
+        } catch (Exception $e) {
+            throw new Exception('PDF extraction error: ' . $e->getMessage());
+        }
+    }
+
+    /**
+     * Extract text from an image by sending base64 data to AI.
+     */
+    private static function extractTextFromImage($base64File)
+    {
+        return base64_encode(base64_decode($base64File));
     }
 }

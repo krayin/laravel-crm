@@ -8,6 +8,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Support\Facades\Event;
 use Illuminate\View\View;
+use Illuminate\Support\Facades\Validator;
 use Prettus\Repository\Criteria\RequestCriteria;
 use Webkul\Admin\DataGrids\Lead\LeadDataGrid;
 use Webkul\Admin\Http\Controllers\Controller;
@@ -637,9 +638,8 @@ class LeadController extends Controller
         $leadData = [];
 
         $errorMessages = [];
-
         foreach (request()->file('files') as $file) {
-            $lead = $this->processFile($file, core()->getConfigData('general.magic_ai.pdf_generation.accepted_types'));
+            $lead = $this->processFile($file);
 
             if (
                 isset($lead['status'])
@@ -684,13 +684,28 @@ class LeadController extends Controller
      * @param  mixed  $file
      * @param  mixed  $supportedFormats
      */
-    private function processFile($file, $supportedFormats)
+    private function processFile($file)
     {
-        $this->validate(request(), [
-            'file' => 'required_in|extensions:'.$supportedFormats.'|mimes:'.$supportedFormats,
-        ]);
+        $supportedFormats = core()->getConfigData('general.magic_ai.pdf_generation.accepted_types');
 
-        $extractedData = MagicAiService::extractDataFromPdf($file->getPathName());
+        $extensions = implode(',', array_map(fn($ext) => ltrim($ext, '.'), explode(',', $supportedFormats)));
+        
+        $validator = Validator::make(
+            ['file' => $file],
+            ['file' => "required|extensions:{$extensions}"]
+        );
+
+        if ($validator->fails()) {
+            return ['status' => 'error', 'message' => $validator->errors()->first()];
+        }
+
+        $base64Pdf = base64_encode(file_get_contents($file->getRealPath()));
+
+        $extractedData = MagicAIService::extractDataFromFile($base64Pdf);
+
+        if (isset($extractedData['error'])) {
+            return ['status' => 'error', 'message' => $extractedData['error']];
+        }
 
         $lead = MagicAI::mapAIDataToLead($extractedData);
 
