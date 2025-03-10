@@ -53,7 +53,7 @@ class MagicAIService
      */
     private static function extractTextFromBase64File($base64File)
     {
-        if (empty($base64File) || !base64_decode($base64File, true)) {
+        if (empty($base64File) || ! base64_decode($base64File, true)) {
             throw new Exception('Invalid base64 data.');
         }
 
@@ -66,7 +66,7 @@ class MagicAIService
         try {
             $text = match ($mimeType) {
                 'application/pdf' => self::extractTextFromPdf($tempFile), // PDF → Extract text
-                default => self::extractTextFromImage($base64File), // Image → Send to AI directly
+                default           => self::extractTextFromImage($base64File), // Image → Send to AI directly
             };
 
             if (empty($text)) {
@@ -75,7 +75,7 @@ class MagicAIService
 
             return $text;
         } catch (Exception $e) {
-            throw new Exception('Failed to extract text: ' . $e->getMessage());
+            throw new Exception('Failed to extract text: '.$e->getMessage());
         } finally {
             @unlink($tempFile);
         }
@@ -109,7 +109,7 @@ class MagicAIService
 
             $end = mb_substr($prompt, -self::MAX_TOKENS * 0.4);
 
-            return $start . "\n...\n" . $end;
+            return $start."\n...\n".$end;
         }
 
         return $prompt;
@@ -123,7 +123,7 @@ class MagicAIService
         try {
             $response = \Http::withHeaders([
                 'Content-Type'  => 'application/json',
-                'Authorization' => 'Bearer ' . $apiKey,
+                'Authorization' => 'Bearer '.$apiKey,
             ])->post(self::OPEN_ROUTER_URL, [
                 'model'    => $model,
                 'messages' => [
@@ -139,18 +139,18 @@ class MagicAIService
             ]);
 
             if ($response->failed()) {
-                throw new Exception('AI request failed: ' . $response->body());
+                throw new Exception('AI request failed: '.$response->body());
             }
 
             $data = $response->json();
 
             if (isset($data['error'])) {
-                throw new Exception('AI error: ' . $data['error']['message']);
+                throw new Exception('AI error: '.$data['error']['message']);
             }
 
             return $data;
         } catch (Exception $e) {
-            return ['error' => 'Failed to process AI request: ' . $e->getMessage()];
+            return ['error' => 'Failed to process AI request: '.$e->getMessage()];
         }
     }
 
@@ -161,7 +161,7 @@ class MagicAIService
      */
     private static function getSystemPrompt()
     {
-        return <<<PROMPT
+        return <<<'PROMPT'
             You are an AI assistant. The user will provide text extracted from a file. 
             Extract the following data:
 
@@ -191,13 +191,13 @@ class MagicAIService
     private static function extractTextFromPdf($filePath)
     {
         try {
-            $parser = new Parser();
+            $parser = new Parser;
 
             $pdf = $parser->parseFile($filePath);
 
             return $pdf->getText();
         } catch (Exception $e) {
-            throw new Exception('PDF extraction error: ' . $e->getMessage());
+            throw new Exception('PDF extraction error: '.$e->getMessage());
         }
     }
 
