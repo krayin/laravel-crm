@@ -69,7 +69,7 @@ class MagicAIService
         try {
             $text = match ($mimeType) {
                 'application/pdf' => self::extractTextFromPdf($tempFile),
-                default => self::extractTextFromImage($base64File),
+                default           => self::extractTextFromImage($base64File),
             };
 
             if (empty($text)) {

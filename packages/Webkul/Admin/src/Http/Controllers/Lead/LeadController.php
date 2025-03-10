@@ -697,8 +697,8 @@ class LeadController extends Controller
 
         if ($validator->fails()) {
             return [
-                'status' => 'error',
-                'message' => $validator->errors()->first()
+                'status'  => 'error',
+                'message' => $validator->errors()->first(),
             ];
         }
 
@@ -708,8 +708,8 @@ class LeadController extends Controller
 
         if (isset($extractedData['error'])) {
             return [
-                'status' => 'error',
-                'message' => $extractedData['error']
+                'status'  => 'error',
+                'message' => $extractedData['error'],
             ];
         }
 
