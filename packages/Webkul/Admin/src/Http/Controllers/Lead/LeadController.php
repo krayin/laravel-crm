@@ -34,6 +34,10 @@ use Webkul\User\Repositories\UserRepository;
 class LeadController extends Controller
 {
     /**
+     * Const variable for supported types.
+     */
+    const SUPPORTED_TYPES = 'pdf,bmp,jpeg,jpg,png,webp';
+    /**
      * Create a new controller instance.
      *
      * @return void
@@ -686,13 +690,9 @@ class LeadController extends Controller
      */
     private function processFile($file)
     {
-        $supportedFormats = core()->getConfigData('general.magic_ai.pdf_generation.accepted_types');
-
-        $extensions = implode(',', array_map(fn ($ext) => ltrim($ext, '.'), explode(',', $supportedFormats)));
-
         $validator = Validator::make(
             ['file' => $file],
-            ['file' => "required|extensions:{$extensions}"]
+            ['file' => 'required|extensions:'.str_replace(' ', '', self::SUPPORTED_TYPES)]
         );
 
         if ($validator->fails()) {

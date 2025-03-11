@@ -1957,7 +1957,7 @@ return [
             'upload' => [
                 'create-lead'   => 'AI Kullanarak Lead Oluştur',
                 'file'          => 'Dosya yükleme',
-                'file-info'     => 'Sadece PDF formatındaki dosyalar kabul edilir.',
+                'file-info'     => 'Yalnızca pdf, bmp, jpg, jpeg, png formatındaki dosyalar kabul edilir.',
                 'file-required' => 'Devam etmek için lütfen en az bir geçerli dosya seçin.',
                 'sample-pdf'    => 'Örnek PDF',
                 'save-btn'      => 'Kaydet',
@@ -2170,8 +2170,6 @@ return [
                 'info'  => 'Uygulama için Sihirli AI yapılandırması.',
 
                 'settings' => [
-                    'accepted-types'      => 'Kabul Edilen Türler',
-                    'accepted-types-info' => 'PDF oluşturma için kabul edilen dosya türlerinin virgülle ayrılmış listesi.',
                     'api-key'             => 'API Anahtarı',
                     'api-key-info'        => 'Her model için bir OpenRouter API anahtarı kullanmayı unutmayın. Bu, güvenliği ve performansı artırmak için basit bir adımdır.',
                     'enable'              => 'Etkinleştir',

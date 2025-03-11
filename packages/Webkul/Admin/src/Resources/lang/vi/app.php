@@ -1850,7 +1850,7 @@ return [
             'upload' => [
                 'create-lead'   => 'Tạo Khách Hàng Tiềm Năng Bằng AI',
                 'file'          => 'Tải tệp lên',
-                'file-info'     => 'Chỉ chấp nhận các tệp định dạng PDF.',
+                'file-info'     => 'Chỉ chấp nhận các tệp định dạng pdf, bmp, jpg, jpeg, png.',
                 'file-required' => 'Vui lòng chọn ít nhất một tệp hợp lệ để tiếp tục.',
                 'sample-pdf'    => 'PDF Mẫu',
                 'save-btn'      => 'Lưu',
@@ -2023,8 +2023,6 @@ return [
                 'info'  => 'Cấu hình Magic AI cho ứng dụng.',
 
                 'settings' => [
-                    'accepted-types'      => 'Các loại tệp được chấp nhận',
-                    'accepted-types-info' => 'Danh sách các loại tệp được chấp nhận cho việc tạo PDF, phân tách bằng dấu phẩy.',
                     'api-key'             => 'Khóa API',
                     'api-key-info'        => 'Nhớ sử dụng khóa API OpenRouter cho mỗi mô hình. Đây là một bước đơn giản để tăng cường bảo mật và hiệu suất.',
                     'enable'              => 'Kích hoạt',

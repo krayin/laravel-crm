@@ -249,13 +249,6 @@ return [
                 'name'          => 'enabled',
                 'title'         => 'admin::app.configuration.index.magic-ai.settings.enable',
                 'type'          => 'boolean',
-            ], [
-                'name'          => 'accepted_types',
-                'type'          => 'text',
-                'title'         => 'admin::app.configuration.index.magic-ai.settings.accepted-types',
-                'info'          => 'admin::app.configuration.index.magic-ai.settings.accepted-types-info',
-                'validation'    => 'required_if:enabled,1',
-                'depends'       => 'enabled:1',
             ],
         ],
     ],

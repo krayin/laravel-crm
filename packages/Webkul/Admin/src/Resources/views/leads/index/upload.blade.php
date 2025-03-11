@@ -46,24 +46,20 @@
                                     @lang('admin::app.leads.index.upload.file')
                                 </x-admin::form.control-group.label>
 
-                                @php
-                                    $acceptedTypes = core()->getConfigData('general.magic_ai.pdf_generation.accepted_types');
-                                @endphp
-
                                 <x-admin::form.control-group.control
                                     type="file"
                                     id="files"
                                     name="files"
-                                    rules="required|mimes:{{ $acceptedTypes }}"
+                                    rules="required|mimes:pdf,bmp,jpeg,jpg,png,webp"
                                     :label="trans('admin::app.leads.index.upload.file')"
                                     ::disabled="isLoading"
                                     ref="file"
-                                    accept="{{ $acceptedTypes }}"
+                                    accept="application/pdf,image/*"
                                     multiple
                                 />
 
                                 <p class="mt-1 text-xs text-gray-600 dark:text-gray-300">
-                                    @lang('admin::app.leads.index.upload.file-info',['format' => $acceptedTypes])
+                                    @lang('admin::app.leads.index.upload.file-info')
                                 </p>
 
                                 <x-admin::form.control-group.error control-name="files" />

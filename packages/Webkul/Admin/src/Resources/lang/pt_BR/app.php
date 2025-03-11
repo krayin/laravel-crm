@@ -1842,7 +1842,7 @@ return [
             'upload' => [
                 'create-lead'   => 'Adicionar Negócio Usando AI',
                 'file'          => 'Upload de arquivo',
-                'file-info'     => 'Apenas arquivos em formato PDF são aceitos.',
+                'file-info'     => 'Apenas arquivos nos formatos pdf, bmp, jpg, jpeg, png são aceitos.',
                 'file-required' => 'Por favor, selecione pelo menos um arquivo válido para prosseguir.',
                 'sample-pdf'    => 'PDF de Exemplo',
                 'save-btn'      => 'Salvar',
@@ -2016,8 +2016,6 @@ return [
                 'info'  => 'Configuração do Magic AI para a aplicação.',
 
                 'settings' => [
-                    'accepted-types'      => 'Tipos aceitos',
-                    'accepted-types-info' => 'Lista separada por vírgulas dos tipos de arquivos aceitos para geração de PDF.',
                     'api-key'             => 'Chave API',
                     'api-key-info'        => 'Lembre-se de usar uma chave API do OpenRouter para cada modelo. É um passo simples para melhorar a segurança e o desempenho.',
                     'enable'              => 'Habilitar',

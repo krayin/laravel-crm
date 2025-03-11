@@ -1955,7 +1955,7 @@ return [
             'upload' => [
                 'create-lead'   => 'Create Lead Using AI',
                 'file'          => 'File Upload',
-                'file-info'     => 'Only :format format files are accepted.',
+                'file-info'     => 'Only pdf,bmp,jpg,jpeg,png format files are accepted.',
                 'file-required' => 'Please select at least one valid file to proceed.',
                 'sample-pdf'    => 'Sample PDF',
                 'save-btn'      => 'Save',
@@ -2166,8 +2166,6 @@ return [
                 'info'  => 'Magic AI configuration for the application.',
 
                 'settings' => [
-                    'accepted-types'      => 'Accepted types',
-                    'accepted-types-info' => 'Comma separated list of file types that are accepted for PDF generation.',
                     'api-key'             => 'API Key',
                     'api-key-info'        => 'Remember to use a OpenRouter API key for each model. It\'s a simple step to enhance security and performance.',
                     'enable'              => 'Enable',
