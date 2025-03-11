@@ -37,6 +37,7 @@ class LeadController extends Controller
      * Const variable for supported types.
      */
     const SUPPORTED_TYPES = 'pdf,bmp,jpeg,jpg,png,webp';
+
     /**
      * Create a new controller instance.
      *
