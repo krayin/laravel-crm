@@ -105,16 +105,17 @@ class MagicAIService
     private static function processPromptWithAI($prompt)
     {
         $model = core()->getConfigData('general.magic_ai.settings.other_model') ?: core()->getConfigData('general.magic_ai.settings.model');
-
         $apiKey = core()->getConfigData('general.magic_ai.settings.api_key');
 
         if (! $apiKey || ! $model) {
             return ['error' => trans('admin::app.leads.file.missing-api-key')];
         }
 
-        $prompt['text'] = self::truncatePrompt($prompt['text']);
+        $prompt['text'] = self::truncatePrompt($prompt['text'] ?? '');
 
-        return self::ask($prompt['text'], $prompt['image'], $model, $apiKey);
+        $prompt = array_merge((array) ($prompt['text'] ?? ''), (array) ($prompt['image'] ?? ''));
+
+        return self::ask($prompt, $model, $apiKey);
     }
 
     /**
@@ -136,28 +137,29 @@ class MagicAIService
     /**
      * Send request to AI for processing.
      */
-    private static function ask($extractedText, $base64Image, $model, $apiKey)
+    private static function ask($extractedText, $model, $apiKey)
     {
         try {
             $payload = [
-                'model'    => $model,
+                'model' => $model,
                 'messages' => [
                     [
-                        'role'    => 'system',
+                        'role' => 'system',
                         'content' => self::getSystemPrompt(),
-                    ],
-                    [
-                        'role'    => 'user',
+                    ], [
+                        'role' => 'user',
                         'content' => [
-                            ['type' => 'text', 'text' => $extractedText],
-                            ['type' => 'image', 'image' => $base64Image],
+                            [
+                                'type' => 'text',
+                                'text' => $extractedText
+                            ],
                         ],
                     ],
                 ],
             ];
 
             $response = \Http::withHeaders([
-                'Content-Type'  => 'application/json',
+                'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer '.$apiKey,
             ])->post(self::OPEN_ROUTER_URL, $payload);
 
