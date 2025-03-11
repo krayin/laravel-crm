@@ -18,8 +18,9 @@
                 v-bind="$attrs"
             >
                 <li
-                    class="flex items-center gap-1 rounded-md bg-gray-100 dark:bg-gray-950 ltr:pl-2 rtl:pr-2"
                     v-for="(tag, index) in tags"
+                    :key="index"
+                    class="flex items-center gap-1 rounded-md bg-gray-100 dark:bg-gray-950 ltr:pl-2 rtl:pr-2"
                 >
                     <x-admin::form.control-group.control
                         type="hidden"
@@ -40,7 +41,7 @@
                         v-slot="{ field, errors }"
                         :name="'temp-' + name"
                         v-model="input"
-                        :rules="inputRules"
+                        :rules="tags.length ? inputRules : [inputRules, rules].filter(Boolean).join('|')"
                         :label="label"
                     >
                         <input
@@ -61,7 +62,7 @@
                             v-slot="{ field, errors }"
                             :name="name + '[' + 0 +']'"
                             :value="input"
-                            :rules="rules"
+                            :rules="inputRules"
                             :label="label"
                         >
                             <input
@@ -133,7 +134,7 @@
                 },
             },
 
-            data: function () {
+            data() {
                 return {
                     tags: this.data ? this.data : [],
 
@@ -142,7 +143,7 @@
             },
 
             methods: {
-                addTag: function() {
+                addTag() {
                     if (this.errors['temp-' + this.name]) {
                         return;
                     }
