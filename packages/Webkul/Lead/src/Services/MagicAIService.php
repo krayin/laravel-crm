@@ -140,8 +140,8 @@ class MagicAIService
      */
     private static function ask($prompt, $model, $apiKey)
     {
-        $prompt = array_values(array_filter($prompt, function($value) {
-            return !empty($value);
+        $prompt = array_values(array_filter($prompt, function ($value) {
+            return ! empty($value);
         }));
 
         try {
