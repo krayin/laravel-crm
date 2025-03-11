@@ -68,7 +68,7 @@ class MagicAIService
 
         try {
             if ($mimeType === 'application/pdf') {
-                $pdf = new Parser();
+                $pdf = new Parser;
                 $pdfData = $pdf->parseFile($tempFile);
                 $data['text'] = $pdfData->getText();
 
@@ -158,7 +158,7 @@ class MagicAIService
 
             $response = \Http::withHeaders([
                 'Content-Type'  => 'application/json',
-                'Authorization' => 'Bearer ' . $apiKey,
+                'Authorization' => 'Bearer '.$apiKey,
             ])->post(self::OPEN_ROUTER_URL, $payload);
 
             if ($response->failed()) {

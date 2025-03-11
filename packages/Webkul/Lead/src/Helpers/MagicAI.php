@@ -31,7 +31,6 @@ class MagicAI
 
         $content = strip_tags($aiData['choices'][0]['message']['content']);
 
-
         if ($content === '') {
             return [
                 'status'  => 'error',
