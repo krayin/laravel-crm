@@ -14,18 +14,18 @@
             <x-admin::form.control-group.label class="required">
                 @lang('admin::app.leads.common.contact.name')
             </x-admin::form.control-group.label>
-            
+
             <x-admin::lookup
                 ::src="src"
                 name="person[id]"
                 ::params="params"
-                rules="required"
+                ::rules="nameValidationRule"
                 ::value="{id: person.id, name: person.name}"
                 :placeholder="trans('admin::app.leads.common.contact.name')"
                 @on-selected="addPerson"
                 :can-add-new="true"
             />
-        
+
             <x-admin::form.control-group.control
                 type="hidden"
                 name="person[name]"
@@ -33,7 +33,7 @@
                 v-if="person.name"
                 rules="required"
             />
-        
+
             <x-admin::form.control-group.error control-name="person[id]" />
         </x-admin::form.control-group>
 
@@ -44,7 +44,7 @@
             </x-admin::form.control-group.label>
 
             <x-admin::attributes.edit.email />
-            
+
             <v-email-component
                 :attribute="{'code': 'person[emails]', 'name': 'Email'}"
                 validations="required"
@@ -121,6 +121,10 @@
                             query: this.person['name']
                         }
                     }
+                },
+
+                nameValidationRule() {
+                    return this.person.name ? '' : 'required';
                 }
             },
 
