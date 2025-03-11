@@ -377,8 +377,8 @@
                                         <div class="relative">
                                             <x-admin::form.control-group.controls.tags
                                                 name="reply_to"
-                                                rules="required"
                                                 input-rules="email"
+                                                rules="required"
                                                 ::data="reply_to"
                                                 :label="trans('admin::app.mail.view.to')"
                                                 :placeholder="trans('admin::app.mail.view.enter-mails')"
