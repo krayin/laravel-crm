@@ -41,7 +41,7 @@
                         v-slot="{ field, errors }"
                         :name="'temp-' + name"
                         v-model="input"
-                        :rules="inputRules"
+                        :rules="tags.length ? inputRules : [inputRules, rules].filter(Boolean).join('|')"
                         :label="label"
                     >
                         <input
@@ -62,7 +62,7 @@
                             v-slot="{ field, errors }"
                             :name="name + '[' + 0 +']'"
                             :value="input"
-                            :rules="rules"
+                            :rules="inputRules"
                             :label="label"
                         >
                             <input
