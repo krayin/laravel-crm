@@ -66,29 +66,29 @@ class MagicAIService
 
         $mimeType = mime_content_type($tempFile);
 
+        $data = [];
+
         try {
             if ($mimeType === 'application/pdf') {
-                $pdf = new Parser;
-                $pdfData = $pdf->parseFile($tempFile);
-                $data['text'] = $pdfData->getText();
+                $pdfParser = (new Parser)->parseFile($tempFile);
 
-                $images = $pdfData->getObjectsByType('XObject', 'Image');
+                $data['text'] = $pdfParser->getText();
+
+                $data['images'][] = '';
+
+                $images = $pdfParser->getObjectsByType('XObject', 'Image');
 
                 foreach ($images as $image) {
                     $data['images'][] = base64_encode($image->getContent());
                 }
-
-                $data['image'] = self::extractTextFromImage($base64File);
             } else {
-                $data['image'] = self::extractTextFromImage($base64File);
+                $data['text'] = '';
+
+                $data['images'][] = self::extractTextFromImage($base64File);
             }
 
             if (empty($data)) {
                 throw new Exception('admin::app.leads.file.data-extraction-failed');
-            }
-
-            if (! isset($data['text'])) {
-                $data['text'] = '';
             }
 
             return $data;
@@ -105,6 +105,7 @@ class MagicAIService
     private static function processPromptWithAI($prompt)
     {
         $model = core()->getConfigData('general.magic_ai.settings.other_model') ?: core()->getConfigData('general.magic_ai.settings.model');
+
         $apiKey = core()->getConfigData('general.magic_ai.settings.api_key');
 
         if (! $apiKey || ! $model) {
@@ -113,7 +114,7 @@ class MagicAIService
 
         $prompt['text'] = self::truncatePrompt($prompt['text'] ?? '');
 
-        $prompt = array_merge((array) ($prompt['text'] ?? ''), (array) ($prompt['image'] ?? ''));
+        $prompt = array_merge((array) ($prompt['text'] ?? ''), $prompt['images'] ?? '');
 
         return self::ask($prompt, $model, $apiKey);
     }
@@ -137,10 +138,17 @@ class MagicAIService
     /**
      * Send request to AI for processing.
      */
-    private static function ask($extractedText, $model, $apiKey)
+    private static function ask($prompt, $model, $apiKey)
     {
+        $prompt = array_values(array_filter($prompt, function($value) {
+            return !empty($value);
+        }));
+
         try {
-            $payload = [
+            $response = \Http::withHeaders([
+                'Content-Type'  => 'application/json',
+                'Authorization' => 'Bearer '.$apiKey,
+            ])->post(self::OPEN_ROUTER_URL, [
                 'model'    => $model,
                 'messages' => [
                     [
@@ -151,17 +159,12 @@ class MagicAIService
                         'content' => [
                             [
                                 'type' => 'text',
-                                'text' => $extractedText,
+                                'text' => $prompt[0],
                             ],
                         ],
                     ],
                 ],
-            ];
-
-            $response = \Http::withHeaders([
-                'Content-Type'  => 'application/json',
-                'Authorization' => 'Bearer '.$apiKey,
-            ])->post(self::OPEN_ROUTER_URL, $payload);
+            ]);
 
             if ($response->failed()) {
                 throw new Exception($response->body());

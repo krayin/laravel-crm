@@ -707,13 +707,6 @@ class LeadController extends Controller
 
         $extractedData = MagicAIService::extractDataFromFile($base64Pdf);
 
-        if (isset($extractedData['error'])) {
-            return [
-                'status'  => 'error',
-                'message' => $extractedData['error'],
-            ];
-        }
-
         $lead = MagicAI::mapAIDataToLead($extractedData);
 
         return $lead;
