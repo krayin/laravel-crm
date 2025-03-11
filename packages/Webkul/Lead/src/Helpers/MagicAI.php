@@ -31,9 +31,19 @@ class MagicAI
 
         $content = strip_tags($aiData['choices'][0]['message']['content']);
 
+
+        if ($content === '') {
+            return [
+                'status'  => 'error',
+                'message' => trans('Data Not Found.'),
+            ];
+        }
+
         preg_match('/\{.*\}/s', $content, $matches);
 
-        if (! $jsonString = $matches[0] ?? null) {
+        if (isset($matches[0])) {
+            $jsonString = $matches[0];
+        } else {
             return [
                 'status'  => 'error',
                 'message' => trans('admin::app.leads.file.invalid-response'),

@@ -67,16 +67,31 @@ class MagicAIService
         $mimeType = mime_content_type($tempFile);
 
         try {
-            $text = match ($mimeType) {
-                'application/pdf' => self::extractTextFromPdf($tempFile),
-                default           => self::extractTextFromImage($base64File),
-            };
+            if ($mimeType === 'application/pdf') {
+                $pdf = new Parser();
+                $pdfData = $pdf->parseFile($tempFile);
+                $data['text'] = $pdfData->getText();
 
-            if (empty($text)) {
-                throw new Exception('admin::app.leads.file.text-generation-failed');
+                $images = $pdfData->getObjectsByType('XObject', 'Image');
+
+                foreach ($images as $image) {
+                    $data['images'][] = base64_encode($image->getContent());
+                }
+
+                $data['image'] = self::extractTextFromImage($base64File);
+            } else {
+                $data['image'] = self::extractTextFromImage($base64File);
             }
 
-            return $text;
+            if (empty($data)) {
+                throw new Exception('admin::app.leads.file.data-extraction-failed');
+            }
+
+            if (! isset($data['text'])) {
+                $data['text'] = '';
+            }
+
+            return $data;
         } catch (Exception $e) {
             throw new Exception($e->getMessage());
         } finally {
@@ -97,9 +112,9 @@ class MagicAIService
             return ['error' => trans('admin::app.leads.file.missing-api-key')];
         }
 
-        $prompt = self::truncatePrompt($prompt);
+        $prompt['text'] = self::truncatePrompt($prompt['text']);
 
-        return self::ask($prompt, $model, $apiKey);
+        return self::ask($prompt['text'], $prompt['image'], $model, $apiKey);
     }
 
     /**
@@ -121,13 +136,10 @@ class MagicAIService
     /**
      * Send request to AI for processing.
      */
-    private static function ask($extractedText, $model, $apiKey)
+    private static function ask($extractedText, $base64Image, $model, $apiKey)
     {
         try {
-            $response = \Http::withHeaders([
-                'Content-Type'  => 'application/json',
-                'Authorization' => 'Bearer '.$apiKey,
-            ])->post(self::OPEN_ROUTER_URL, [
+            $payload = [
                 'model'    => $model,
                 'messages' => [
                     [
@@ -136,10 +148,18 @@ class MagicAIService
                     ],
                     [
                         'role'    => 'user',
-                        'content' => $extractedText,
+                        'content' => [
+                            ['type' => 'text', 'text' => $extractedText],
+                            ['type' => 'image', 'image' => $base64Image],
+                        ],
                     ],
                 ],
-            ]);
+            ];
+
+            $response = \Http::withHeaders([
+                'Content-Type'  => 'application/json',
+                'Authorization' => 'Bearer ' . $apiKey,
+            ])->post(self::OPEN_ROUTER_URL, $payload);
 
             if ($response->failed()) {
                 throw new Exception($response->body());
