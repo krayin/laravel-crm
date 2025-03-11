@@ -279,7 +279,7 @@
                                     <x-admin::form.control-group.controls.tags
                                         name="reply_to"
                                         class="w-[calc(100%-62px)]"
-                                        input-rules="email|required"
+                                        input-rules="email"
                                         ::data="draft.reply_to"
                                         :label="trans('admin::app.mail.index.mail.to')"
                                         :placeholder="trans('admin::app.mail.index.mail.enter-emails')"
