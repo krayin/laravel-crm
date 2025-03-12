@@ -1780,7 +1780,7 @@ return [
             'missing-api-key'        => 'Thiếu khóa API hoặc cấu hình mô hình.',
             'not-found'              => 'Không tìm thấy tệp.',
             'recursive-call'         => 'Phát hiện cuộc gọi đệ quy.',
-            'text-generation-failed' => 'Trích xuất văn bản thất bại. Tệp có thể trống hoặc không đọc được.'
+            'text-generation-failed' => 'Trích xuất văn bản thất bại. Tệp có thể trống hoặc không đọc được.',
         ],
 
         'index' => [

@@ -1772,7 +1772,7 @@ return [
             'missing-api-key'        => 'Chave API ou configuração do modelo ausente.',
             'not-found'              => 'Arquivo não encontrado.',
             'recursive-call'         => 'Chamada recursiva detectada.',
-            'text-generation-failed' => 'Falha na extração de texto. O arquivo pode estar vazio ou ilegível.'
+            'text-generation-failed' => 'Falha na extração de texto. O arquivo pode estar vazio ou ilegível.',
         ],
 
         'index' => [

@@ -1887,7 +1887,7 @@ return [
             'missing-api-key'        => 'API anahtarı veya model yapılandırması eksik.',
             'not-found'              => 'Dosya bulunamadı.',
             'recursive-call'         => 'Özyinelemeli çağrı tespit edildi.',
-            'text-generation-failed' => 'Metin çıkarma başarısız oldu. Dosya boş veya okunamaz olabilir.'
+            'text-generation-failed' => 'Metin çıkarma başarısız oldu. Dosya boş veya okunamaz olabilir.',
         ],
 
         'index' => [

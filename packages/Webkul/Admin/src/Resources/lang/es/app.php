@@ -1886,7 +1886,7 @@ return [
             'missing-api-key'        => 'Falta la clave API o la configuración del modelo.',
             'not-found'              => 'Archivo no encontrado.',
             'recursive-call'         => 'Se detectó una llamada recursiva.',
-            'text-generation-failed' => 'La extracción de texto falló. El archivo podría estar vacío o ilegible.'
+            'text-generation-failed' => 'La extracción de texto falló. El archivo podría estar vacío o ilegible.',
         ],
 
         'index' => [
