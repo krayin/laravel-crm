@@ -62,7 +62,7 @@ class MagicAIService
 
         $tempFile = tempnam(sys_get_temp_dir(), 'file_');
 
-        file_put_contents($tempFile, self::decodeBase64($base64File));
+        file_put_contents($tempFile, self::handleBase64($base64File, 'decode'));
 
         $mimeType = mime_content_type($tempFile);
 
@@ -79,12 +79,12 @@ class MagicAIService
                 $images = $pdfParser->getObjectsByType('XObject', 'Image');
 
                 foreach ($images as $image) {
-                    $data['images'][] = self::encodeBase64($image->getContent());
+                    $data['images'][] = self::handleBase64($image->getContent());
                 }
             } else {
                 $data['text'] = '';
 
-                $data['images'][] = self::encodeBase64(self::decodeBase64($base64File));
+                $data['images'][] = self::handleBase64(self::handleBase64($base64File, 'decode'));
             }
 
             if (empty($data)) {
@@ -225,18 +225,14 @@ class MagicAIService
     }
 
     /**
-     * process for encoding base64 data.
+     * process for encoding and decoding base64 data.
      */
-    private static function encodeBase64($base64File)
+    private static function handleBase64($base64, string $type = 'encode')
     {
-        return base64_encode($base64File);
-    }
+        if ($type === 'encode') {
+            return base64_encode($base64);
+        }
 
-    /**
-     * Process for decoding base64 data.
-     */
-    private static function decodeBase64($base64File)
-    {
-        return base64_decode($base64File);
+        return base64_decode($base64);
     }
 }
