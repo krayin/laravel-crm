@@ -657,27 +657,18 @@ class LeadController extends Controller
         }
 
         if (isset($errorMessages[0]['code'])) {
-            return response()->json([
-                'status'  => 'error',
-                'message' => $errorMessages[0]['message'],
-            ]);
+            return response()->json(MagicAI::errorHandler($errorMessages[0]['message']));
         }
 
         if (
             empty($leadData)
             && ! empty($errorMessages)
         ) {
-            return response()->json([
-                'status'  => 'error',
-                'message' => implode(', ', $errorMessages),
-            ], 400);
+            return response()->json(MagicAI::errorHandler(implode(', ', $errorMessages)), 400);
         }
 
         if (empty($leadData)) {
-            return response()->json([
-                'status'  => 'error',
-                'message' => trans('admin::app.leads.no-valid-files'),
-            ], 400);
+            return response()->json(MagicAI::errorHandler(trans('admin::app.leads.no-valid-files')), 400);
         }
 
         return self::createLeads($leadData);
@@ -697,10 +688,7 @@ class LeadController extends Controller
         );
 
         if ($validator->fails()) {
-            return [
-                'status'  => 'error',
-                'message' => $validator->errors()->first(),
-            ];
+            return  MagicAI::errorHandler($validator->errors()->first());
         }
 
         $base64Pdf = base64_encode(file_get_contents($file->getRealPath()));
