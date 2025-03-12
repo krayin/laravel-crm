@@ -1877,6 +1877,7 @@ return [
         'destroy-failed'    => 'No se puede eliminar el lead.',
 
         'file' => [
+            'data-not-found'         => 'Datos no encontrados.',
             'empty-content'          => 'El contenido del PDF está vacío o no se pudo extraer.',
             'failed-extract'         => 'No se pudo extraer el texto del archivo.',
             'insufficient-info'      => 'Debido a datos insuficientes, no podemos procesar su solicitud en este momento.',

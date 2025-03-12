@@ -1771,6 +1771,7 @@ return [
         'destroy-failed'    => 'Không thể xóa khách hàng tiềm năng.',
 
         'file' => [
+            'data-not-found'         => 'Không tìm thấy dữ liệu.',
             'empty-content'          => 'Nội dung PDF trống hoặc không thể trích xuất.',
             'failed-extract'         => 'Không thể trích xuất văn bản từ tệp.',
             'insufficient-info'      => 'Do dữ liệu không đủ, chúng tôi không thể xử lý yêu cầu của bạn vào lúc này.',

@@ -1876,6 +1876,7 @@ return [
         'destroy-failed'    => 'Lead can not be deleted.',
 
         'file' => [
+            'data-not-found'         => 'Data not found.',
             'empty-content'          => 'PDF content is empty or could not be extracted.',
             'failed-extract'         => 'Failed to extract text from file.',
             'insufficient-info'      => 'Due to insufficient data, we are unable to process your request at the moment.',

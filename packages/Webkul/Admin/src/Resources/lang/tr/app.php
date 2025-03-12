@@ -1878,6 +1878,7 @@ return [
         'destroy-failed'    => 'Lead silinemedi.',
 
         'file' => [
+            'data-not-found'         => 'Veri bulunamadı.',
             'empty-content'          => 'PDF içeriği boş veya çıkarılamadı.',
             'failed-extract'         => 'Dosyadan metin çıkarılamadı.',
             'insufficient-info'      => 'Yetersiz veri nedeniyle, şu anda isteğinizi işleyemiyoruz.',

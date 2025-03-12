@@ -1763,6 +1763,7 @@ return [
         'destroy-failed'    => 'Este negócio não pode ser excluído.',
 
         'file' => [
+            'data-not-found'         => 'Dados não encontrados.',
             'empty-content'          => 'O conteúdo do PDF está vazio ou não pôde ser extraído.',
             'failed-extract'         => 'Falha ao extrair texto do arquivo.',
             'insufficient-info'      => 'Devido a dados insuficientes, não podemos processar sua solicitação no momento.',
