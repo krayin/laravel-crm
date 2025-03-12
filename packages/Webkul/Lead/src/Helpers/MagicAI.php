@@ -2,8 +2,6 @@
 
 namespace Webkul\Lead\Helpers;
 
-use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Validator;
 use Webkul\Admin\Http\Requests\LeadForm;
 
