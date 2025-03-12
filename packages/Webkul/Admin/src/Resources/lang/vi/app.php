@@ -1772,14 +1772,15 @@ return [
 
         'file' => [
             'empty-content'          => 'Nội dung PDF trống hoặc không thể trích xuất.',
+            'failed-extract'         => 'Không thể trích xuất văn bản từ tệp.',
+            'insufficient-info'      => 'Do dữ liệu không đủ, chúng tôi không thể xử lý yêu cầu của bạn vào lúc này.',
             'invalid-base64'         => 'Định dạng base64 không hợp lệ.',
             'invalid-format'         => 'Định dạng JSON không hợp lệ.',
             'invalid-response'       => 'Định dạng phản hồi AI không hợp lệ.',
             'missing-api-key'        => 'Thiếu khóa API hoặc cấu hình mô hình.',
             'not-found'              => 'Không tìm thấy tệp.',
-            'failed-extract'         => 'Không thể trích xuất văn bản từ tệp.',
             'recursive-call'         => 'Phát hiện cuộc gọi đệ quy.',
-            'text-generation-failed' => 'Trích xuất văn bản thất bại. Tệp có thể trống hoặc không đọc được.',
+            'text-generation-failed' => 'Trích xuất văn bản thất bại. Tệp có thể trống hoặc không đọc được.'
         ],
 
         'index' => [

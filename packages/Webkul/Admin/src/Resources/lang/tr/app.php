@@ -1879,14 +1879,15 @@ return [
 
         'file' => [
             'empty-content'          => 'PDF içeriği boş veya çıkarılamadı.',
+            'failed-extract'         => 'Dosyadan metin çıkarılamadı.',
+            'insufficient-info'      => 'Yetersiz veri nedeniyle, şu anda isteğinizi işleyemiyoruz.',
             'invalid-base64'         => 'Geçersiz base64 formatı.',
             'invalid-format'         => 'Geçersiz JSON formatı.',
             'invalid-response'       => 'Geçersiz AI yanıt formatı.',
             'missing-api-key'        => 'API anahtarı veya model yapılandırması eksik.',
             'not-found'              => 'Dosya bulunamadı.',
-            'failed-extract'         => 'Dosyadan metin çıkarılamadı.',
             'recursive-call'         => 'Özyinelemeli çağrı tespit edildi.',
-            'text-generation-failed' => 'Metin çıkarma başarısız oldu. Dosya boş veya okunamaz olabilir.',
+            'text-generation-failed' => 'Metin çıkarma başarısız oldu. Dosya boş veya okunamaz olabilir.'
         ],
 
         'index' => [

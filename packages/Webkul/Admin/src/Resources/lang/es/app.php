@@ -1878,14 +1878,15 @@ return [
 
         'file' => [
             'empty-content'          => 'El contenido del PDF está vacío o no se pudo extraer.',
+            'failed-extract'         => 'No se pudo extraer el texto del archivo.',
+            'insufficient-info'      => 'Debido a datos insuficientes, no podemos procesar su solicitud en este momento.',
             'invalid-base64'         => 'Formato base64 inválido.',
             'invalid-format'         => 'Formato JSON inválido.',
             'invalid-response'       => 'Formato de respuesta de IA inválido.',
             'missing-api-key'        => 'Falta la clave API o la configuración del modelo.',
             'not-found'              => 'Archivo no encontrado.',
-            'failed-extract'         => 'No se pudo extraer el texto del archivo.',
             'recursive-call'         => 'Se detectó una llamada recursiva.',
-            'text-generation-failed' => 'La extracción de texto falló. El archivo podría estar vacío o ilegible.',
+            'text-generation-failed' => 'La extracción de texto falló. El archivo podría estar vacío o ilegible.'
         ],
 
         'index' => [
