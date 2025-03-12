@@ -28,7 +28,7 @@ class MagicAIService
     public static function extractDataFromFile($base64File)
     {
         if (self::$isExtracting) {
-            throw new Exception('admin::app.leads.file.recursive-call');
+            throw new Exception(trans('admin::app.leads.file.recursive-call'));
         }
 
         self::$isExtracting = true;
@@ -37,7 +37,7 @@ class MagicAIService
             $text = self::extractTextFromBase64File($base64File);
 
             if (empty($text)) {
-                throw new Exception('admin::app.leads.file.failed-extract');
+                throw new Exception(trans('admin::app.leads.file.failed-extract'));
             }
 
             return self::processPromptWithAI($text);
@@ -57,7 +57,7 @@ class MagicAIService
             empty($base64File)
             || ! base64_decode($base64File, true)
         ) {
-            throw new Exception('admin::app.leads.file.invalid-base64');
+            throw new Exception(trans('admin::app.leads.file.invalid-base64'));
         }
 
         $tempFile = tempnam(sys_get_temp_dir(), 'file_');
@@ -88,7 +88,7 @@ class MagicAIService
             }
 
             if (empty($data)) {
-                throw new Exception('admin::app.leads.file.data-extraction-failed');
+                throw new Exception(trans('admin::app.leads.file.data-extraction-failed'));
             }
 
             return $data;
