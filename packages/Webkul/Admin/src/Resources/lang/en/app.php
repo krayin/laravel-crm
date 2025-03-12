@@ -1885,7 +1885,7 @@ return [
             'missing-api-key'        => 'Missing API key or model configuration.',
             'not-found'              => 'File not found.',
             'recursive-call'         => 'Recursive call detected.',
-            'text-generation-failed' => 'Text extraction failed. The file might be empty or unreadable.'
+            'text-generation-failed' => 'Text extraction failed. The file might be empty or unreadable.',
         ],
 
         'index' => [
