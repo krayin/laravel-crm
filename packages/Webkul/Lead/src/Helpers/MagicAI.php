@@ -120,7 +120,7 @@ class MagicAI
     public static function errorHandler($message)
     {
         return [
-            'status' => 'error',
+            'status'  => 'error',
             'message' => $message,
         ];
     }
