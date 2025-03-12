@@ -688,7 +688,7 @@ class LeadController extends Controller
         );
 
         if ($validator->fails()) {
-            return  MagicAI::errorHandler($validator->errors()->first());
+            return MagicAI::errorHandler($validator->errors()->first());
         }
 
         $base64Pdf = base64_encode(file_get_contents($file->getRealPath()));
