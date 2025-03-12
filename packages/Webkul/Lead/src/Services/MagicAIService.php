@@ -178,7 +178,7 @@ class MagicAIService
 
             return $data;
         } catch (Exception $e) {
-            return ['error' => 'Due to insufficient data, we are unable to process your request at the moment.'];
+            return ['error' => trans('admin::app.leads.file.insufficient-info')];
         }
     }
 

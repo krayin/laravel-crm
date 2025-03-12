@@ -92,7 +92,7 @@ class MagicAI
                 $validator,
                 response()->json([
                     'status'  => 'error',
-                    'message' => trans('Due to insufficient data, we are unable to create Lead.'),
+                    'message' => $validator->errors()->getMessages(),
                 ], 400)
             );
         }

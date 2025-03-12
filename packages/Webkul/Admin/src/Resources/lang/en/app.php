@@ -1877,14 +1877,15 @@ return [
 
         'file' => [
             'empty-content'          => 'PDF content is empty or could not be extracted.',
+            'failed-extract'         => 'Failed to extract text from file.',
+            'insufficient-info'      => 'Due to insufficient data, we are unable to process your request at the moment.',
             'invalid-base64'         => 'Invalid base64 format.',
             'invalid-format'         => 'Invalid JSON format.',
             'invalid-response'       => 'Invalid AI response format.',
             'missing-api-key'        => 'Missing API key or model configuration.',
             'not-found'              => 'File not found.',
-            'failed-extract'         => 'Failed to extract text from file.',
             'recursive-call'         => 'Recursive call detected.',
-            'text-generation-failed' => 'Text extraction failed. The file might be empty or unreadable.',
+            'text-generation-failed' => 'Text extraction failed. The file might be empty or unreadable.'
         ],
 
         'index' => [
