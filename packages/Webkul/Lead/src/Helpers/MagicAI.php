@@ -2,6 +2,8 @@
 
 namespace Webkul\Lead\Helpers;
 
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Validator;
 use Webkul\Admin\Http\Requests\LeadForm;
 
@@ -92,7 +94,7 @@ class MagicAI
                 $validator,
                 response()->json([
                     'status'  => 'error',
-                    'message' => $validator->errors()->getMessages(),
+                    'message' => trans('Due to insufficient data, we are unable to create Lead.'),
                 ], 400)
             );
         }

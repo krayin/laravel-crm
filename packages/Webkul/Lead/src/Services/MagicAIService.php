@@ -62,7 +62,7 @@ class MagicAIService
 
         $tempFile = tempnam(sys_get_temp_dir(), 'file_');
 
-        file_put_contents($tempFile, base64_decode($base64File));
+        file_put_contents($tempFile, self::decodeBase64($base64File));
 
         $mimeType = mime_content_type($tempFile);
 
@@ -79,12 +79,12 @@ class MagicAIService
                 $images = $pdfParser->getObjectsByType('XObject', 'Image');
 
                 foreach ($images as $image) {
-                    $data['images'][] = base64_encode($image->getContent());
+                    $data['images'][] = self::encodeBase64($image->getContent());
                 }
             } else {
                 $data['text'] = '';
 
-                $data['images'][] = self::extractTextFromImage($base64File);
+                $data['images'][] = self::encodeBase64(self::decodeBase64($base64File));
             }
 
             if (empty($data)) {
@@ -112,11 +112,15 @@ class MagicAIService
             return ['error' => trans('admin::app.leads.file.missing-api-key')];
         }
 
-        $prompt['text'] = self::truncatePrompt($prompt['text'] ?? '');
+        $promptText = self::truncatePrompt($prompt['text'] ?? '');
 
-        $prompt = array_merge((array) ($prompt['text'] ?? ''), $prompt['images'] ?? '');
+        $promptImages = $prompt['images'] ?? [];
 
-        return self::ask($prompt, $model, $apiKey);
+        $prompt = array_filter(array_merge([$promptText], $promptImages), function ($value) {
+            return ! empty($value);
+        });
+
+        return self::ask(array_values($prompt), $model, $apiKey);
     }
 
     /**
@@ -136,14 +140,10 @@ class MagicAIService
     }
 
     /**
-     * Send request to AI for processing.
+     * Send prompt request to AI for processing.
      */
     private static function ask($prompt, $model, $apiKey)
     {
-        $prompt = array_values(array_filter($prompt, function ($value) {
-            return ! empty($value);
-        }));
-
         try {
             $response = \Http::withHeaders([
                 'Content-Type'  => 'application/json',
@@ -178,7 +178,7 @@ class MagicAIService
 
             return $data;
         } catch (Exception $e) {
-            return ['error' => $e->getMessage()];
+            return ['error' => 'Due to insufficient data, we are unable to process your request at the moment.'];
         }
     }
 
@@ -190,10 +190,12 @@ class MagicAIService
     private static function getSystemPrompt()
     {
         return <<<'PROMPT'
-            You are an AI assistant. The user will provide text extracted from a file. 
-            Extract the following data:
+            You are an AI assistant specialized in extracting structured data from text.  
+            The user will provide text extracted from a file (in Base64 or plain text).  
+            Your task is to accurately extract the following fields. If the value is not available, use the default values provided:  
 
-            Example Output:
+            ### **Output Format:** 
+            ```json
             {
                 "status": 1,
                 "title": "Untitled Lead",
@@ -210,28 +212,31 @@ class MagicAIService
                     }
                 }
             }
-            PROMPT;
+            ```
+            ### **Fields to Extract:**
+            - **Title:** Title of the lead. Default: "Untitled Lead"
+            - **Lead Value:** Value of the lead. Default: 0
+            - **Person Name:** Name of the person. Default: "Unknown"
+            - **Person Email:** Email of the person. Default: null
+            - **Person Email Label:** Label for the email. Default: null
+            - **Person Contact Number:** Contact number of the person. Default: null
+            - **Person Contact Number Label:** Label for the contact number. Default: null
+        PROMPT;
     }
 
     /**
-     * Extract text from a PDF using Smalot PDF Parser.
+     * process for encoding base64 data.
      */
-    private static function extractTextFromPdf($filePath)
+    private static function encodeBase64($base64File)
     {
-        try {
-            $parser = new Parser;
-
-            return $parser->parseFile($filePath)->getText();
-        } catch (Exception $e) {
-            throw new Exception($e->getMessage());
-        }
+        return base64_encode($base64File);
     }
 
     /**
-     * Extract text from an image by sending base64 data to AI.
+     * Process for decoding base64 data.
      */
-    private static function extractTextFromImage($base64File)
+    private static function decodeBase64($base64File)
     {
-        return base64_encode(base64_decode($base64File));
+        return base64_decode($base64File);
     }
 }
