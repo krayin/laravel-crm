@@ -50,7 +50,7 @@
             </div>
         </div>
         
-        <!-- Full Pannel -->
+        <!-- Full Panel -->
         <div class="mt-3.5 flex gap-2.5 max-xl:flex-wrap">
             {!! view_render_event('admin.user.account.left.before', ['user' => $user]) !!}
 

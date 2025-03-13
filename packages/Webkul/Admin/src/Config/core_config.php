@@ -197,6 +197,13 @@ return [
                 'type'          => 'boolean',
                 'channel_based' => true,
             ], [
+                'name'          => 'api_key',
+                'title'         => 'admin::app.configuration.index.magic-ai.settings.api-key',
+                'type'          => 'password',
+                'depends'       => 'enable:1',
+                'validation'    => 'required_if:enable,1',
+                'info'          => 'admin::app.configuration.index.magic-ai.settings.api-key-info',
+            ], [
                 'name'          => 'model',
                 'title'         => 'admin::app.configuration.index.magic-ai.settings.models.title',
                 'type'          => 'select',
@@ -224,13 +231,6 @@ return [
                     ],
                 ],
             ], [
-                'name'          => 'api_key',
-                'title'         => 'admin::app.configuration.index.magic-ai.settings.api-key',
-                'type'          => 'password',
-                'depends'       => 'enable:1',
-                'validation'    => 'required_if:enable,1',
-                'info'          => 'admin::app.configuration.index.magic-ai.settings.api-key-info',
-            ], [
                 'name'          => 'other_model',
                 'title'         => 'admin::app.configuration.index.magic-ai.settings.other',
                 'type'          => 'text',
@@ -249,14 +249,6 @@ return [
                 'name'          => 'enabled',
                 'title'         => 'admin::app.configuration.index.magic-ai.settings.enable',
                 'type'          => 'boolean',
-            ], [
-                'name'          => 'accepted_types',
-                'type'          => 'text',
-                'title'         => 'admin::app.configuration.index.magic-ai.settings.accepted-types',
-                'info'          => 'admin::app.configuration.index.magic-ai.settings.accepted-types-info',
-                'validation'    => 'required_if:enabled,1',
-                'default'       => 'pdf',
-                'depends'       => 'enabled:1',
             ],
         ],
     ],

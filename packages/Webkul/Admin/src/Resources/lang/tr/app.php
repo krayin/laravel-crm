@@ -1878,11 +1878,17 @@ return [
         'destroy-failed'    => 'Lead silinemedi.',
 
         'file' => [
-            'empty-content'    => 'PDF içeriği boş veya çıkarılamadı.',
-            'invalid-format'   => 'Geçersiz JSON formatı.',
-            'invalid-response' => 'Geçersiz AI yanıt formatı.',
-            'missing-api-key'  => 'API anahtarı veya model yapılandırması eksik.',
-            'not-found'        => 'Dosya bulunamadı.',
+            'data-not-found'         => 'Veri bulunamadı.',
+            'empty-content'          => 'PDF içeriği boş veya çıkarılamadı.',
+            'failed-extract'         => 'Dosyadan metin çıkarılamadı.',
+            'insufficient-info'      => 'Yetersiz veri nedeniyle, şu anda isteğinizi işleyemiyoruz.',
+            'invalid-base64'         => 'Geçersiz base64 formatı.',
+            'invalid-format'         => 'Geçersiz JSON formatı.',
+            'invalid-response'       => 'Geçersiz AI yanıt formatı.',
+            'missing-api-key'        => 'API anahtarı veya model yapılandırması eksik.',
+            'not-found'              => 'Dosya bulunamadı.',
+            'recursive-call'         => 'Özyinelemeli çağrı tespit edildi.',
+            'text-generation-failed' => 'Metin çıkarma başarısız oldu. Dosya boş veya okunamaz olabilir.',
         ],
 
         'index' => [
@@ -1952,12 +1958,12 @@ return [
 
             'upload' => [
                 'create-lead'   => 'AI Kullanarak Lead Oluştur',
-                'file'          => 'Dosya Yükle',
-                'file-info'     => 'Sadece PDF formatındaki dosyalar kabul edilir.',
+                'file'          => 'Dosya yükleme',
+                'file-info'     => 'Yalnızca pdf, bmp, jpg, jpeg, png formatındaki dosyalar kabul edilir.',
                 'file-required' => 'Devam etmek için lütfen en az bir geçerli dosya seçin.',
                 'sample-pdf'    => 'Örnek PDF',
                 'save-btn'      => 'Kaydet',
-                'upload-pdf'    => 'PDF Yükle',
+                'upload-file'   => 'Dosya yükle',
             ],
         ],
 
@@ -2166,8 +2172,6 @@ return [
                 'info'  => 'Uygulama için Sihirli AI yapılandırması.',
 
                 'settings' => [
-                    'accepted-types'      => 'Kabul Edilen Türler',
-                    'accepted-types-info' => 'PDF oluşturma için kabul edilen dosya türlerinin virgülle ayrılmış listesi.',
                     'api-key'             => 'API Anahtarı',
                     'api-key-info'        => 'Her model için bir OpenRouter API anahtarı kullanmayı unutmayın. Bu, güvenliği ve performansı artırmak için basit bir adımdır.',
                     'enable'              => 'Etkinleştir',

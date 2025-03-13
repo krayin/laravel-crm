@@ -7,6 +7,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\View\View;
 use Prettus\Repository\Criteria\RequestCriteria;
 use Webkul\Admin\DataGrids\Lead\LeadDataGrid;
@@ -32,6 +33,11 @@ use Webkul\User\Repositories\UserRepository;
 
 class LeadController extends Controller
 {
+    /**
+     * Const variable for supported types.
+     */
+    const SUPPORTED_TYPES = 'pdf,bmp,jpeg,jpg,png,webp';
+
     /**
      * Create a new controller instance.
      *
@@ -637,9 +643,8 @@ class LeadController extends Controller
         $leadData = [];
 
         $errorMessages = [];
-
         foreach (request()->file('files') as $file) {
-            $lead = $this->processFile($file, core()->getConfigData('general.magic_ai.pdf_generation.accepted_types'));
+            $lead = $this->processFile($file);
 
             if (
                 isset($lead['status'])
@@ -652,27 +657,18 @@ class LeadController extends Controller
         }
 
         if (isset($errorMessages[0]['code'])) {
-            return response()->json([
-                'status'  => 'error',
-                'message' => $errorMessages[0]['message'],
-            ]);
+            return response()->json(MagicAI::errorHandler($errorMessages[0]['message']));
         }
 
         if (
             empty($leadData)
             && ! empty($errorMessages)
         ) {
-            return response()->json([
-                'status'  => 'error',
-                'message' => implode(', ', $errorMessages),
-            ], 400);
+            return response()->json(MagicAI::errorHandler(implode(', ', $errorMessages)), 400);
         }
 
         if (empty($leadData)) {
-            return response()->json([
-                'status'  => 'error',
-                'message' => trans('admin::app.leads.no-valid-files'),
-            ], 400);
+            return response()->json(MagicAI::errorHandler(trans('admin::app.leads.no-valid-files')), 400);
         }
 
         return self::createLeads($leadData);
@@ -684,13 +680,20 @@ class LeadController extends Controller
      * @param  mixed  $file
      * @param  mixed  $supportedFormats
      */
-    private function processFile($file, $supportedFormats)
+    private function processFile($file)
     {
-        $this->validate(request(), [
-            'file' => 'required_in|extensions:'.$supportedFormats.'|mimes:'.$supportedFormats,
-        ]);
+        $validator = Validator::make(
+            ['file' => $file],
+            ['file' => 'required|extensions:'.str_replace(' ', '', self::SUPPORTED_TYPES)]
+        );
 
-        $extractedData = MagicAiService::extractDataFromPdf($file->getPathName());
+        if ($validator->fails()) {
+            return MagicAI::errorHandler($validator->errors()->first());
+        }
+
+        $base64Pdf = base64_encode(file_get_contents($file->getRealPath()));
+
+        $extractedData = MagicAIService::extractDataFromFile($base64Pdf);
 
         $lead = MagicAI::mapAIDataToLead($extractedData);
 

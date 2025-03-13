@@ -1763,11 +1763,17 @@ return [
         'destroy-failed'    => 'Este negócio não pode ser excluído.',
 
         'file' => [
-            'empty-content'    => 'O conteúdo do PDF está vazio ou não pôde ser extraído.',
-            'invalid-format'   => 'Formato JSON inválido.',
-            'invalid-response' => 'Formato de resposta AI inválido.',
-            'missing-api-key'  => 'Chave API ou configuração do modelo ausente.',
-            'not-found'        => 'Arquivo não encontrado.',
+            'data-not-found'         => 'Dados não encontrados.',
+            'empty-content'          => 'O conteúdo do PDF está vazio ou não pôde ser extraído.',
+            'failed-extract'         => 'Falha ao extrair texto do arquivo.',
+            'insufficient-info'      => 'Devido a dados insuficientes, não podemos processar sua solicitação no momento.',
+            'invalid-base64'         => 'Formato base64 inválido.',
+            'invalid-format'         => 'Formato JSON inválido.',
+            'invalid-response'       => 'Formato de resposta de IA inválido.',
+            'missing-api-key'        => 'Chave API ou configuração do modelo ausente.',
+            'not-found'              => 'Arquivo não encontrado.',
+            'recursive-call'         => 'Chamada recursiva detectada.',
+            'text-generation-failed' => 'Falha na extração de texto. O arquivo pode estar vazio ou ilegível.',
         ],
 
         'index' => [
@@ -1837,12 +1843,12 @@ return [
 
             'upload' => [
                 'create-lead'   => 'Adicionar Negócio Usando AI',
-                'file'          => 'Upload de Arquivo',
-                'file-info'     => 'Apenas arquivos em formato PDF são aceitos.',
+                'file'          => 'Upload de arquivo',
+                'file-info'     => 'Apenas arquivos nos formatos pdf, bmp, jpg, jpeg, png são aceitos.',
                 'file-required' => 'Por favor, selecione pelo menos um arquivo válido para prosseguir.',
                 'sample-pdf'    => 'PDF de Exemplo',
                 'save-btn'      => 'Salvar',
-                'upload-pdf'    => 'Carregar PDF',
+                'upload-file'   => 'Enviar arquivo',
             ],
         ],
 
@@ -2012,8 +2018,6 @@ return [
                 'info'  => 'Configuração do Magic AI para a aplicação.',
 
                 'settings' => [
-                    'accepted-types'      => 'Tipos aceitos',
-                    'accepted-types-info' => 'Lista separada por vírgulas dos tipos de arquivos aceitos para geração de PDF.',
                     'api-key'             => 'Chave API',
                     'api-key-info'        => 'Lembre-se de usar uma chave API do OpenRouter para cada modelo. É um passo simples para melhorar a segurança e o desempenho.',
                     'enable'              => 'Habilitar',

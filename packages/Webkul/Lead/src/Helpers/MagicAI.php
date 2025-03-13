@@ -23,30 +23,27 @@ class MagicAI
     public static function mapAIDataToLead($aiData)
     {
         if (! empty($aiData['error'])) {
-            return [
-                'status'  => 'error',
-                'message' => $aiData['error'],
-            ];
+            return self::errorHandler($aiData['error']);
         }
 
         $content = strip_tags($aiData['choices'][0]['message']['content']);
 
+        if (empty($content)) {
+            return self::errorHandler(trans('admin::app.leads.file.data-not-found'));
+        }
+
         preg_match('/\{.*\}/s', $content, $matches);
 
-        if (! $jsonString = $matches[0] ?? null) {
-            return [
-                'status'  => 'error',
-                'message' => trans('admin::app.leads.file.invalid-response'),
-            ];
+        if (isset($matches[0])) {
+            $jsonString = $matches[0];
+        } else {
+            return self::errorHandler(trans('admin::app.leads.file.invalid-response'));
         }
 
         $finalData = json_decode($jsonString);
 
         if (json_last_error() !== JSON_ERROR_NONE) {
-            return [
-                'status'  => 'error',
-                'message' => trans('admin::app.leads.file.invalid-format'),
-            ];
+            return self::errorHandler(trans('admin::app.leads.file.invalid-format'));
         }
 
         try {
@@ -56,10 +53,7 @@ class MagicAI
 
             return array_merge($validatedData, self::prepareLeadData($finalData));
         } catch (\Exception $e) {
-            return [
-                'status'  => 'error',
-                'message' => $e->getMessage(),
-            ];
+            return self::errorHandler($e->getMessage());
         }
     }
 
@@ -81,10 +75,7 @@ class MagicAI
         if ($validator->fails()) {
             throw new \Illuminate\Validation\ValidationException(
                 $validator,
-                response()->json([
-                    'status'  => 'error',
-                    'message' => $validator->errors()->getMessages(),
-                ], 400)
+                response()->json(self::errorHandler($validator->errors()->getMessages()), 400)
             );
         }
 
@@ -120,6 +111,17 @@ class MagicAI
                 'entity_type'     => self::PERSON_ENTITY,
             ],
             'entity_type'         => self::LEAD_ENTITY,
+        ];
+    }
+
+    /**
+     * Prepares method for error handler.
+     */
+    public static function errorHandler($message)
+    {
+        return [
+            'status'  => 'error',
+            'message' => $message,
         ];
     }
 }

@@ -1876,11 +1876,17 @@ return [
         'destroy-failed'    => 'Lead can not be deleted.',
 
         'file' => [
-            'empty-content'    => 'PDF content is empty or could not be extracted.',
-            'invalid-format'   => 'Invalid JSON format.',
-            'invalid-response' => 'Invalid AI response format.',
-            'missing-api-key'  => 'Missing API key or model configuration.',
-            'not-found'        => 'File not found.',
+            'data-not-found'         => 'Data not found.',
+            'empty-content'          => 'PDF content is empty or could not be extracted.',
+            'failed-extract'         => 'Failed to extract text from file.',
+            'insufficient-info'      => 'Due to insufficient data, we are unable to process your request at the moment.',
+            'invalid-base64'         => 'Invalid base64 format.',
+            'invalid-format'         => 'Invalid JSON format.',
+            'invalid-response'       => 'Invalid AI response format.',
+            'missing-api-key'        => 'Missing API key or model configuration.',
+            'not-found'              => 'File not found.',
+            'recursive-call'         => 'Recursive call detected.',
+            'text-generation-failed' => 'Text extraction failed. The file might be empty or unreadable.',
         ],
 
         'index' => [
@@ -1951,11 +1957,11 @@ return [
             'upload' => [
                 'create-lead'   => 'Create Lead Using AI',
                 'file'          => 'File Upload',
-                'file-info'     => 'Only PDF format files are accepted.',
+                'file-info'     => 'Only pdf,bmp,jpg,jpeg,png format files are accepted.',
                 'file-required' => 'Please select at least one valid file to proceed.',
                 'sample-pdf'    => 'Sample PDF',
                 'save-btn'      => 'Save',
-                'upload-pdf'    => 'Upload PDF',
+                'upload-file'   => 'Upload File',
             ],
         ],
 
@@ -2162,8 +2168,6 @@ return [
                 'info'  => 'Magic AI configuration for the application.',
 
                 'settings' => [
-                    'accepted-types'      => 'Accepted types',
-                    'accepted-types-info' => 'Comma separated list of file types that are accepted for PDF generation.',
                     'api-key'             => 'API Key',
                     'api-key-info'        => 'Remember to use a OpenRouter API key for each model. It\'s a simple step to enhance security and performance.',
                     'enable'              => 'Enable',
