@@ -197,6 +197,13 @@ return [
                 'type'          => 'boolean',
                 'channel_based' => true,
             ], [
+                'name'          => 'api_key',
+                'title'         => 'admin::app.configuration.index.magic-ai.settings.api-key',
+                'type'          => 'password',
+                'depends'       => 'enable:1',
+                'validation'    => 'required_if:enable,1',
+                'info'          => 'admin::app.configuration.index.magic-ai.settings.api-key-info',
+            ], [
                 'name'          => 'model',
                 'title'         => 'admin::app.configuration.index.magic-ai.settings.models.title',
                 'type'          => 'select',
@@ -223,13 +230,6 @@ return [
                         'value' => 'x-ai/grok-2-1212',
                     ],
                 ],
-            ], [
-                'name'          => 'api_key',
-                'title'         => 'admin::app.configuration.index.magic-ai.settings.api-key',
-                'type'          => 'password',
-                'depends'       => 'enable:1',
-                'validation'    => 'required_if:enable,1',
-                'info'          => 'admin::app.configuration.index.magic-ai.settings.api-key-info',
             ], [
                 'name'          => 'other_model',
                 'title'         => 'admin::app.configuration.index.magic-ai.settings.other',
