@@ -103,7 +103,7 @@
                                                         <span>:</span>
 
                                                         <span class="break-words">
-                                                            @{{ (activity.additional.old.label ? String(activity.additional.old.label).replacewords('<br>', ' ') : "@lang('admin::app.components.activities.index.empty')") }}
+                                                            @{{ (activity.additional.old.label ? String(activity.additional.old.label).replaceAll('<br>', ' ') : "@lang('admin::app.components.activities.index.empty')") }}
                                                         </span>
 
                                                         <span class="icon-stats-up rotate-90 text-xl"></span>
