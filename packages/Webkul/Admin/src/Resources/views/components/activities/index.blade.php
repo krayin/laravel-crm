@@ -157,7 +157,7 @@
 
                                                     @{{ $admin.formatDate(activity.schedule_from, 'd MMM yyyy, h:mm A') + ' - ' + $admin.formatDate(activity.schedule_from, 'd MMM yyyy, h:mm A') }}
                                                 </p>
-                                                flex gap-2.5 max-xl:flex-wrap
+                                                
                                                 <!-- Activity Participants -->
                                                 <p
                                                     v-if="activity.participants?.length"
