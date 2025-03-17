@@ -190,11 +190,11 @@ class PersonRepository extends Repository
             'name'        => $data['organization_name'],
             'entity_type' => 'organization',
             'address'     => [
-                "address"  => "",
-                "country"  => "",
-                "state"    => "",
-                "city"     => "",
-                "postcode" => ""
+                'address'  => '',
+                'country'  => '',
+                'state'    => '',
+                'city'     => '',
+                'postcode' => '',
             ],
             'user_id'     => 1,
         ]);
