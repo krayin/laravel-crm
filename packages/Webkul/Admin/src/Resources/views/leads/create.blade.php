@@ -66,7 +66,10 @@
                 
                 <div class="flex w-full gap-2 border-b border-gray-200 dark:border-gray-800">
                     <!-- Tabs -->
-                    <template v-for="tab in tabs" :key="tab.id">
+                    <template
+                        v-for="tab in tabs"
+                        :key="tab.id"
+                    >
                         {!! view_render_event('admin.leads.create.tabs.before') !!}
 
                         <a
@@ -79,7 +82,8 @@
                             ]"
                             @click="scrollToSection(tab.id)"
                             :text="tab.label"
-                        ></a>
+                        >
+                        </a>
 
                         {!! view_render_event('admin.leads.create.tabs.after') !!}
                     </template>

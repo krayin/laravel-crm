@@ -5,6 +5,7 @@ namespace Webkul\Contact\Repositories;
 use Illuminate\Container\Container;
 use Webkul\Attribute\Repositories\AttributeRepository;
 use Webkul\Attribute\Repositories\AttributeValueRepository;
+use Webkul\Contact\Repositories\OrganizationRepository;
 use Webkul\Contact\Contracts\Person;
 use Webkul\Core\Eloquent\Repository;
 
@@ -32,6 +33,7 @@ class PersonRepository extends Repository
     public function __construct(
         protected AttributeRepository $attributeRepository,
         protected AttributeValueRepository $attributeValueRepository,
+        protected OrganizationRepository $organizationRepository,
         Container $container
     ) {
         parent::__construct($container);
@@ -54,6 +56,14 @@ class PersonRepository extends Repository
      */
     public function create(array $data)
     {
+        if (isset($data['organization_name'])) {
+            $organization = self::createOrganization($data);
+
+            $data['organization_id'] = $organization->id;
+
+            unset($data['organization_name']);
+        }
+
         if (isset($data['user_id'])) {
             $data['user_id'] = $data['user_id'] ?: null;
         }
@@ -75,6 +85,14 @@ class PersonRepository extends Repository
     public function update(array $data, $id, $attributes = [])
     {
         $data['user_id'] = empty($data['user_id']) ? null : $data['user_id'];
+
+        if (isset($data['organization_name'])) {
+            $organization = self::createOrganization($data);
+
+            $data['organization_id'] = $organization->id;
+
+            unset($data['organization_name']);
+        }
 
         $person = parent::update($data, $id);
 
@@ -117,5 +135,22 @@ class PersonRepository extends Repository
             ->whereBetween('created_at', [$startDate, $endDate])
             ->get()
             ->count();
+    }
+
+    /**
+     * Create a organization.
+     */
+    public function createOrganization(array $data)
+    {
+        $userId = empty($data['user_id']) ? null : $data['user_id'];
+
+        return $this->organizationRepository->create(
+            array_merge($data, [
+                'name'        => $data['organization_name'],
+                'entity_type' => 'organization',
+                'address'     => [],
+                'user_id'     => $userId,
+            ])
+        );
     }
 }
