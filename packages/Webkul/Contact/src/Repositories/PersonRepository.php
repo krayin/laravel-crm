@@ -5,7 +5,6 @@ namespace Webkul\Contact\Repositories;
 use Illuminate\Container\Container;
 use Webkul\Attribute\Repositories\AttributeRepository;
 use Webkul\Attribute\Repositories\AttributeValueRepository;
-use Webkul\Contact\Repositories\OrganizationRepository;
 use Webkul\Contact\Contracts\Person;
 use Webkul\Core\Eloquent\Repository;
 
