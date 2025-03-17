@@ -122,6 +122,10 @@ class LeadRepository extends Repository
             ]));
         }
 
+        $data['person']['id'] = $person->id;
+
+        $data['person']['organization_id'] = $person->organization_id;
+
         $lead = parent::create(array_merge([
             'person_id'              => $person->id,
             'lead_pipeline_id'       => 1,

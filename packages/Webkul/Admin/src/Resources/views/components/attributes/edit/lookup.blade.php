@@ -65,11 +65,21 @@
             </div>
 
             <!-- Hidden Input Entity Value -->
-            <input
-                type="hidden"
-                :name="attribute['code']"
-                v-model="selectedItem.id"
-            />
+            <template v-if="attribute['code'].includes('organization_id') && ! selectedItem.id">
+                <input
+                    type="hidden"
+                    :name="attribute['code'].replace('organization_id', 'organization_name')"
+                    v-model="selectedItem.name"
+                />
+            </template>
+
+            <template v-else>
+                <input
+                    type="hidden"
+                    :name="attribute['code']"
+                    v-model="selectedItem.id"
+                />
+            </template>
 
             <!-- Popup Box -->
             <div 

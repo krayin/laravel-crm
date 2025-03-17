@@ -32,6 +32,7 @@ class PersonRepository extends Repository
     public function __construct(
         protected AttributeRepository $attributeRepository,
         protected AttributeValueRepository $attributeValueRepository,
+        protected OrganizationRepository $organizationRepository,
         Container $container
     ) {
         parent::__construct($container);
@@ -54,6 +55,21 @@ class PersonRepository extends Repository
      */
     public function create(array $data)
     {
+        $data = $this->sanitizeRequestedPersonData($data);
+
+        if (
+            isset($data['organization_name'])
+            && ! empty($data['organization_name'])
+        ) {
+            $organization = self::createOrganization($data);
+
+            $data['organization_id'] = $organization->id;
+
+            $data['user_id'] = $organization->user_id;
+
+            unset($data['organization_name']);
+        }
+
         if (isset($data['user_id'])) {
             $data['user_id'] = $data['user_id'] ?: null;
         }
@@ -74,7 +90,20 @@ class PersonRepository extends Repository
      */
     public function update(array $data, $id, $attributes = [])
     {
+        $data = $this->sanitizeRequestedPersonData($data);
+
         $data['user_id'] = empty($data['user_id']) ? null : $data['user_id'];
+
+        if (
+            isset($data['organization_name'])
+            && ! empty($data['organization_name'])
+        ) {
+            $organization = self::createOrganization($data);
+
+            $data['organization_id'] = $organization->id;
+
+            unset($data['organization_name']);
+        }
 
         $person = parent::update($data, $id);
 
@@ -117,5 +146,57 @@ class PersonRepository extends Repository
             ->whereBetween('created_at', [$startDate, $endDate])
             ->get()
             ->count();
+    }
+
+    /**
+     * Sanitize requested person data and return the clean array.
+     */
+    private function sanitizeRequestedPersonData(array $data): array
+    {
+        if (
+            array_key_exists('organization_id', $data)
+            && empty($data['organization_id'])
+        ) {
+            $data['organization_id'] = null;
+        }
+
+        $uniqueIdParts = array_filter([
+            $data['user_id'] ?? null,
+            $data['organization_id'] ?? null,
+            $data['emails'][0]['value'] ?? null,
+        ]);
+
+        $data['unique_id'] = implode('|', $uniqueIdParts);
+
+        if (isset($data['contact_numbers'])) {
+            $data['contact_numbers'] = collect($data['contact_numbers'])->filter(fn ($number) => ! is_null($number['value']))->toArray();
+
+            $data['unique_id'] .= '|'.$data['contact_numbers'][0]['value'];
+        }
+
+        return $data;
+    }
+
+    /**
+     * Create a organization.
+     */
+    public function createOrganization(array $data)
+    {
+        $organization = $this->organizationRepository->findOneWhere([
+            'name' => $data['organization_name'],
+        ]);
+
+        return $organization ?: $this->organizationRepository->create([
+            'name'        => $data['organization_name'],
+            'entity_type' => 'organization',
+            'address'     => [
+                'address'  => '',
+                'country'  => '',
+                'state'    => '',
+                'city'     => '',
+                'postcode' => '',
+            ],
+            'user_id'     => 1,
+        ]);
     }
 }

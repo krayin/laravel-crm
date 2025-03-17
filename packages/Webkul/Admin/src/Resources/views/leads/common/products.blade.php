@@ -144,7 +144,7 @@
                 </x-admin::form.control-group>
             </x-admin::table.td>
         
-            <!-- Total -->
+            <!-- Amount -->
             <x-admin::table.td class="text-right">
                 <x-admin::form.control-group>
                     <x-admin::form.control-group.control
@@ -154,7 +154,8 @@
                         rules="required|decimal:4"
                         :label="trans('admin::app.leads.common.products.total')"
                         :placeholder="trans('admin::app.leads.common.products.total')"
-                        ::allowEdit="false"
+                        ::value-label="$admin.formatPrice(product.price * product.quantity)"
+                        :allowEdit="'false'"
                         position="center"
                     />
                 </x-admin::form.control-group>
