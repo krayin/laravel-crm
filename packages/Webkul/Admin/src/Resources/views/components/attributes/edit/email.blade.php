@@ -133,21 +133,39 @@
                 },
 
                 extendValidations() {
-                    defineRule('unique_email', (value, emails) => {
-                        if (
-                            ! value
-                            || ! value.length
-                        ) {
+                    defineRule('unique_email', async (value, emails) => {
+                        if (! value || ! value.length) {
                             return true;
                         }
 
-                        const emailOccurrences = emails.filter(email => email.value === value).length;
+                        const foundEmails = emails.filter(email => email.value === value).length;
 
-                        if (emailOccurrences > 1) {
-                            return 'This email is already used';
+                        if (foundEmails > 1) {
+                            return 'This email is already in use.';
                         }
 
-                        return true;
+                        /**
+                         * Check if the email is unique. This support is only for person emails only.
+                         */
+                        if (this.attribute.code === 'person[emails]') {
+                            try {
+                                const { data } = await this.$axios.get('{{ route('admin.settings.attributes.check_unique_email') }}', {
+                                    params: { id: this.attribute.id, email: value }
+                                });
+
+                                if (! data.validated) {
+                                    return 'This email is already in use.';
+                                }
+
+                                return true;
+                            } catch (error) {
+                                console.error('Error checking email: ', error);
+
+                                return 'Error validating email. Please try again.';
+                            }
+                        } else {
+                            return true;
+                        }
                     });
                 },
             },

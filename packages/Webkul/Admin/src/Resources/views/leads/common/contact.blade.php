@@ -20,6 +20,7 @@
                 name="person[id]"
                 ::params="params"
                 ::rules="nameValidationRule"
+                :label="trans('admin::app.leads.common.contact.name')"
                 ::value="{id: person.id, name: person.name}"
                 :placeholder="trans('admin::app.leads.common.contact.name')"
                 @on-selected="addPerson"
@@ -46,7 +47,7 @@
             <x-admin::attributes.edit.email />
 
             <v-email-component
-                :attribute="{'code': 'person[emails]', 'name': 'Email'}"
+                :attribute="{'id': person?.id, 'code': 'person[emails]', 'name': 'Email'}"
                 validations="required"
                 :value="person.emails"
                 :is-disabled="person?.id ? true : false"

@@ -193,6 +193,13 @@
                 },
 
                 value(newVal, oldVal) {
+                    if (newVal === undefined) {
+                        this.selectedItem = {
+                            id: '',
+                            name: ''
+                        };
+                    }
+
                     if (newVal) {
                         this.getLookUpEntity();
                     }

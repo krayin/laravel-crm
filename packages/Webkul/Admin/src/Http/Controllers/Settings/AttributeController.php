@@ -11,6 +11,7 @@ use Webkul\Admin\DataGrids\Settings\AttributeDataGrid;
 use Webkul\Admin\Http\Controllers\Controller;
 use Webkul\Admin\Http\Requests\MassDestroyRequest;
 use Webkul\Attribute\Repositories\AttributeRepository;
+use Webkul\Attribute\Repositories\AttributeValueRepository;
 use Webkul\Core\Contracts\Validations\Code;
 
 class AttributeController extends Controller
@@ -20,7 +21,10 @@ class AttributeController extends Controller
      *
      * @return void
      */
-    public function __construct(protected AttributeRepository $attributeRepository) {}
+    public function __construct(
+        protected AttributeRepository $attributeRepository,
+        protected AttributeValueRepository $attributeValueRepository
+    ) {}
 
     /**
      * Display a listing of the resource.
@@ -127,6 +131,27 @@ class AttributeController extends Controller
                 'message' => trans('admin::app.settings.attributes.index.delete-failed'),
             ], 400);
         }
+    }
+
+    /**
+     * Check unique email.
+     *
+     * @return void
+     */
+    public function checkUniqueEmail()
+    {
+        $emailAttribute = $this->attributeRepository->findOneWhere([
+            'code' => 'emails',
+        ]);
+
+        return response()->json([
+            'validated' => $this->attributeValueRepository->isValueUnique(
+                request('id'),
+                'persons',
+                $emailAttribute,
+                request('email'),
+            ),
+        ]);
     }
 
     /**
