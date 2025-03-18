@@ -56,10 +56,14 @@
                     <div class="flex items-center gap-2">
                         <!-- Close Icon -->
                         <i
-                            v-if="(selectedItem?.name) && ! isSearching"
+                            v-if="
+                                ! isDisabled
+                                && (
+                                    selectedItem?.name
+                                    && ! isSearching
+                                )"
                             class="icon-cross-large cursor-pointer text-2xl text-gray-600"
                             @click="remove"
-                            v-if="! isDisabled"
                         ></i>
 
                         <!-- Arrow Icon -->
