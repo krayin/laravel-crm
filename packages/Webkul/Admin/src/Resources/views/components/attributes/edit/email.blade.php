@@ -149,8 +149,13 @@
                          */
                         if (this.attribute.code === 'person[emails]') {
                             try {
-                                const { data } = await this.$axios.get('{{ route('admin.settings.attributes.check_unique_email') }}', {
-                                    params: { id: this.attribute.id, email: value }
+                                const { data } = await this.$axios.get('{{ route('admin.settings.attributes.check_unique_validation') }}', {
+                                    params: {
+                                        entity_id: this.attribute.id,
+                                        entity_type: 'persons',
+                                        attribute_code: 'emails',
+                                        attribute_value: value
+                                    }
                                 });
 
                                 if (! data.validated) {

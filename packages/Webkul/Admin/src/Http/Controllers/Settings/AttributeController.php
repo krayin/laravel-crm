@@ -134,22 +134,22 @@ class AttributeController extends Controller
     }
 
     /**
-     * Check unique email.
+     * Check unique validation.
      *
      * @return void
      */
-    public function checkUniqueEmail()
+    public function checkUniqueValidation()
     {
-        $emailAttribute = $this->attributeRepository->findOneWhere([
-            'code' => 'emails',
+        $attribute = $this->attributeRepository->findOneWhere([
+            'code' => request('attribute_code'),
         ]);
 
         return response()->json([
             'validated' => $this->attributeValueRepository->isValueUnique(
-                request('id'),
-                'persons',
-                $emailAttribute,
-                request('email'),
+                request('entity_id'),
+                request('entity_type'),
+                $attribute,
+                request('attribute_value'),
             ),
         ]);
     }

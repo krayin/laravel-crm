@@ -137,7 +137,7 @@
                 },
 
                 extendValidations() {
-                    defineRule('unique_contact_number', (value, contactNumbers) => {
+                    defineRule('unique_contact_number', async (value, contactNumbers) => {
                         if (
                             ! value
                             || ! value.length
@@ -148,10 +148,36 @@
                         const phoneOccurrences = contactNumbers.filter(contactNumber => contactNumber.value === value).length;
 
                         if (phoneOccurrences > 1) {
-                            return 'This phone number is already used';
+                            return 'This phone number is already in use.';
                         }
 
-                        return true;
+                        /**
+                         * Check if the phone number is unique. This support is only for person phone numbers only.
+                         */
+                         if (this.attribute.code === 'person[contact_numbers]') {
+                            try {
+                                const { data } = await this.$axios.get('{{ route('admin.settings.attributes.check_unique_validation') }}', {
+                                    params: {
+                                        entity_id: this.attribute.id,
+                                        entity_type: 'persons',
+                                        attribute_code: 'contact_numbers',
+                                        attribute_value: value
+                                    }
+                                });
+
+                                if (! data.validated) {
+                                    return 'This phone number is already in use.';
+                                }
+
+                                return true;
+                            } catch (error) {
+                                console.error('Error checking email: ', error);
+
+                                return 'Error validating email. Please try again.';
+                            }
+                        } else {
+                            return true;
+                        }
                     });
                 },
             },

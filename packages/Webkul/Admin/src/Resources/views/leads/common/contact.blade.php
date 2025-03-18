@@ -63,7 +63,7 @@
             <x-admin::attributes.edit.phone />
 
             <v-phone-component
-                :attribute="{'code': 'person[contact_numbers]', 'name': 'Contact Numbers'}"
+                :attribute="{'id': person?.id, 'code': 'person[contact_numbers]', 'name': 'Contact Numbers'}"
                 :value="person.contact_numbers"
                 :is-disabled="person?.id ? true : false"
             ></v-phone-component>
