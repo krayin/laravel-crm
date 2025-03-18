@@ -162,7 +162,7 @@ class LeadController extends Controller
 
         $data['status'] = 1;
 
-        if (request()->input('lead_pipeline_stage_id')) {
+        if (isset($data['lead_pipeline_stage_id'])) {
             $stage = $this->stageRepository->findOrFail($data['lead_pipeline_stage_id']);
 
             $data['lead_pipeline_id'] = $stage->lead_pipeline_id;
@@ -179,8 +179,6 @@ class LeadController extends Controller
         if (in_array($stage->code, ['won', 'lost'])) {
             $data['closed_at'] = Carbon::now();
         }
-
-        $data['person']['organization_id'] = empty($data['person']['organization_id']) ? null : $data['person']['organization_id'];
 
         $lead = $this->leadRepository->create($data);
 
@@ -204,12 +202,14 @@ class LeadController extends Controller
     /**
      * Display a resource.
      */
-    public function view(int $id): View
+    public function view(int $id)
     {
         $lead = $this->leadRepository->findOrFail($id);
 
+        $userIds = bouncer()->getAuthorizedUserIds();
+
         if (
-            $userIds = bouncer()->getAuthorizedUserIds()
+            $userIds
             && ! in_array($lead->user_id, $userIds)
         ) {
             return redirect()->route('admin.leads.index');
@@ -240,8 +240,6 @@ class LeadController extends Controller
 
             $data['lead_pipeline_stage_id'] = $stage->id;
         }
-
-        $data['person']['organization_id'] = empty($data['person']['organization_id']) ? null : $data['person']['organization_id'];
 
         $lead = $this->leadRepository->update($data, $id);
 
@@ -352,7 +350,7 @@ class LeadController extends Controller
 
             return response()->json([
                 'message' => trans('admin::app.leads.destroy-success'),
-            ], 200);
+            ]);
         } catch (\Exception $exception) {
             return response()->json([
                 'message' => trans('admin::app.leads.destroy-failed'),
@@ -361,7 +359,7 @@ class LeadController extends Controller
     }
 
     /**
-     * Mass Update the specified resources.
+     * Mass update the specified resources.
      */
     public function massUpdate(MassUpdateRequest $massUpdateRequest): JsonResponse
     {
@@ -389,7 +387,7 @@ class LeadController extends Controller
     }
 
     /**
-     * Mass Delete the specified resources.
+     * Mass delete the specified resources.
      */
     public function massDestroy(MassDestroyRequest $massDestroyRequest): JsonResponse
     {
@@ -636,7 +634,7 @@ class LeadController extends Controller
     }
 
     /**
-     * Create Lead with specified AI.
+     * Create lead with specified AI.
      */
     public function createByAI()
     {
@@ -734,6 +732,6 @@ class LeadController extends Controller
         return response()->json([
             'message' => trans('admin::app.leads.create-success'),
             'leads'   => $leads,
-        ], 200);
+        ]);
     }
 }

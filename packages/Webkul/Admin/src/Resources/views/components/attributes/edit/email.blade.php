@@ -41,6 +41,7 @@
                     ::rules="getValidation"
                     ::label="attribute.name"
                     v-model="email['value']"
+                    ::disabled="isDisabled"
                 />
 
                 <div class="relative">
@@ -52,6 +53,7 @@
                         rules="required"
                         ::label="attribute.name"
                         v-model="email['label']"
+                        ::disabled="isDisabled"
                     >
                         <option value="work">@lang('admin::app.common.custom-attributes.work')</option>
                         <option value="home">@lang('admin::app.common.custom-attributes.home')</option>
@@ -73,6 +75,7 @@
         <span
             class="flex cursor-pointer items-center gap-2 text-brandColor"
             @click="add"
+            v-if="! isDisabled"
         >
             <i class="icon-add text-md !text-brandColor"></i>
 
@@ -84,7 +87,7 @@
         app.component('v-email-component', {
             template: '#v-email-component-template',
 
-            props: ['validations', 'attribute', 'value'],
+            props: ['validations', 'isDisabled', 'attribute', 'value'],
 
             data() {
                 return {
@@ -92,7 +95,7 @@
                 };
             },
 
-            watch: { 
+            watch: {
                 value(newValue, oldValue) {
                     if (
                         JSON.stringify(newValue)

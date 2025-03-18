@@ -113,18 +113,16 @@ class LeadRepository extends Repository
     public function create(array $data)
     {
         if (! empty($data['person']['id'])) {
-            $person = $this->personRepository->update(array_merge($data['person'], [
-                'entity_type' => 'persons',
-            ]), $data['person']['id']);
+            $person = $this->personRepository->findOrFail($data['person']['id']);
         } else {
             $person = $this->personRepository->create(array_merge($data['person'], [
                 'entity_type' => 'persons',
             ]));
         }
 
-        $data['person']['id'] = $person->id;
-
-        $data['person']['organization_id'] = $person->organization_id;
+        if (empty($data['expected_close_date'])) {
+            $data['expected_close_date'] = null;
+        }
 
         $lead = parent::create(array_merge([
             'person_id'              => $person->id,
@@ -157,20 +155,12 @@ class LeadRepository extends Repository
      */
     public function update(array $data, $id, $attributes = [])
     {
-        if (isset($data['person'])) {
-            if (isset($data['person']['id'])) {
-                $person = $this->personRepository->update(array_merge($data['person'], [
-                    'entity_type' => 'persons',
-                ]), $data['person']['id']);
-            } else {
-                $person = $this->personRepository->create(array_merge($data['person'], [
-                    'entity_type' => 'persons',
-                ]));
-            }
-
-            $data = array_merge([
-                'person_id' => $person->id,
-            ], $data);
+        if (! empty($data['person']['id'])) {
+            $person = $this->personRepository->findOrFail($data['person']['id']);
+        } else {
+            $person = $this->personRepository->create(array_merge($data['person'], [
+                'entity_type' => 'persons',
+            ]));
         }
 
         if (isset($data['lead_pipeline_stage_id'])) {
@@ -183,7 +173,13 @@ class LeadRepository extends Repository
             }
         }
 
-        $lead = parent::update($data, $id);
+        if (empty($data['expected_close_date'])) {
+            $data['expected_close_date'] = null;
+        }
+
+        $lead = parent::update(array_merge([
+            'person_id' => $person->id,
+        ], $data), $id);
 
         /**
          * If attributes are provided, only save the provided attributes and return.

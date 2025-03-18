@@ -5,11 +5,11 @@
 {!! view_render_event('admin.leads.create.contact_person.form_controls.after') !!}
 
 @pushOnce('scripts')
-    <script 
-        type="text/x-template" 
+    <script
+        type="text/x-template"
         id="v-contact-component-template"
     >
-        <!-- Person Search lookup -->
+        <!-- Person Search Lookup -->
         <x-admin::form.control-group>
             <x-admin::form.control-group.label class="required">
                 @lang('admin::app.leads.common.contact.name')
@@ -49,10 +49,10 @@
                 :attribute="{'code': 'person[emails]', 'name': 'Email'}"
                 validations="required"
                 :value="person.emails"
+                :is-disabled="person?.id ? true : false"
             ></v-email-component>
-
         </x-admin::form.control-group>
-            
+
         <!-- Person Contact Numbers -->
         <x-admin::form.control-group>
             <x-admin::form.control-group.label>
@@ -64,15 +64,16 @@
             <v-phone-component
                 :attribute="{'code': 'person[contact_numbers]', 'name': 'Contact Numbers'}"
                 :value="person.contact_numbers"
+                :is-disabled="person?.id ? true : false"
             ></v-phone-component>
         </x-admin::form.control-group>
-        
+
         <!-- Person Organization -->
         <x-admin::form.control-group>
             <x-admin::form.control-group.label>
                 @lang('admin::app.leads.common.contact.organization')
             </x-admin::form.control-group.label>
-            
+
             @php
                 $organizationAttribute = app('Webkul\Attribute\Repositories\AttributeRepository')->findOneWhere([
                     'entity_type' => 'persons',
@@ -87,6 +88,7 @@
             <v-lookup-component
                 :attribute='@json($organizationAttribute)'
                 :value="person.organization"
+                :is-disabled="person?.id ? true : false"
                 can-add-new="true"
             ></v-lookup-component>
         </x-admin::form.control-group>
@@ -95,7 +97,7 @@
     <script type="module">
         app.component('v-contact-component', {
             template: '#v-contact-component-template',
-            
+
             props: ['data'],
 
             data () {
