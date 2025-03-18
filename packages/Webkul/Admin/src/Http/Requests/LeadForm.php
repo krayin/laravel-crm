@@ -119,7 +119,7 @@ class LeadForm extends FormRequest
                             request($field)
                         )
                         ) {
-                            $fail('The value has already been taken.');
+                            \Illuminate\Support\Facades\Validator::make([], [])->errors()->add($field, 'The value has already been taken.');
                         }
                     });
                 }

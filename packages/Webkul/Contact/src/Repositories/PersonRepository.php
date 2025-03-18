@@ -74,6 +74,12 @@ class PersonRepository extends Repository
             $data['user_id'] = $data['user_id'] ?: null;
         }
 
+        $existingPerson = parent::whereRaw("JSON_EXTRACT(emails, '$[0].value') = ?", [$data['emails'][0]['value']])->first();
+
+        if ($existingPerson) {
+            return $existingPerson;
+        }
+
         $person = parent::create($data);
 
         $this->attributeValueRepository->save(array_merge($data, [

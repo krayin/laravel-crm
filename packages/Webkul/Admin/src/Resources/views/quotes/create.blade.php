@@ -190,7 +190,7 @@
                             <x-admin::attributes
                                 :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
                                     'entity_type' => 'quotes',
-                                    ['code', 'NOTIN', ['subject', 'description', 'expired_at', 'user_id', 'person_id','billing_address', 'shipping_address']],
+                                    'is_user_defined' => 1,
                                 ])->sortBy('sort_order')"
                                 :custom-validations="[
                                     'expired_at' => [
