@@ -55,7 +55,7 @@
                             {{ __('admin::app.leads.view.stages.won-lost') }}
                         </span>
 
-                        <span 
+                        <span
                             class="text-2xl dark:text-gray-900"
                             :class="{'icon-up-arrow': stageToggler, 'icon-down-arrow': ! stageToggler}"
                         ></span>
@@ -204,7 +204,7 @@
                     if (this.currentStage.code == stage.code) {
                         return;
                     }
-                    
+
                     this.nextStage = stage;
 
                     this.$refs.stageUpdateModal.open();

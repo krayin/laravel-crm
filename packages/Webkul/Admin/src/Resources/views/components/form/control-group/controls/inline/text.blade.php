@@ -4,7 +4,7 @@
 
 <v-inline-text-edit
     {{ $attributes }}
-    :allow-edit="{{ $allowEdit ? 'true' : 'false' }}"
+    :allow-edit="{{ $allowEdit }}"
 >
     <div class="group w-full max-w-full hover:rounded-sm">
         <div class="rounded-xs flex h-[34px] items-center pl-2.5 text-left">
@@ -37,11 +37,9 @@
                     :style="{ 'text-align': position }"
                 >
                     <span class="cursor-pointer truncate rounded">
-                        @{{ 
-                            (transformedLabel || inputValue || '').length > 20 
-                                ? (transformedLabel || inputValue).substring(0, 20) + '...' 
-                                : (transformedLabel || inputValue) 
-                        }}
+                        @{{ (valueLabel || inputValue || '').length > 20
+                                ? (valueLabel || inputValue).substring(0, 20) + '...'
+                                : (valueLabel || inputValue) }}
                     </span>
                     
                     <!-- Tooltip -->
@@ -175,8 +173,6 @@
                     isEditing: false,
 
                     isRTL: document.documentElement.dir === 'rtl',
-
-                    transformedLabel: this.valueLabel,
                 };
             },
 
@@ -217,8 +213,6 @@
 
                     if (this.url) {
                         let formData = new FormData();
-
-                        this.transformedLabel = this.inputValue;
                         
                         formData.append(this.name, this.inputValue);
 
@@ -233,8 +227,6 @@
                             })
                             .catch((error) => {
                                 this.inputValue = this.value;
-
-                                this.transformedLabel = this.inputValue;
 
                                 this.$emitter.emit('add-flash', { type: 'error', message: error.response.data.message });
                             });                        

@@ -54,7 +54,7 @@ class PersonController extends Controller
     {
         Event::dispatch('contacts.person.create.before');
 
-        $person = $this->personRepository->create($this->sanitizeRequestedPersonData($request->all()));
+        $person = $this->personRepository->create($request->all());
 
         Event::dispatch('contacts.person.create.after', $person);
 
@@ -97,7 +97,7 @@ class PersonController extends Controller
     {
         Event::dispatch('contacts.person.update.before', $id);
 
-        $person = $this->personRepository->update($this->sanitizeRequestedPersonData($request->all()), $id);
+        $person = $this->personRepository->update($request->all(), $id);
 
         Event::dispatch('contacts.person.update.after', $person);
 
@@ -173,24 +173,5 @@ class PersonController extends Controller
         return response()->json([
             'message' => trans('admin::app.contacts.persons.index.delete-success'),
         ]);
-    }
-
-    /**
-     * Sanitize requested person data and return the clean array.
-     */
-    private function sanitizeRequestedPersonData(array $data): array
-    {
-        if (
-            array_key_exists('organization_id', $data)
-            && empty($data['organization_id'])
-        ) {
-            $data['organization_id'] = null;
-        }
-
-        if (isset($data['contact_numbers'])) {
-            $data['contact_numbers'] = collect($data['contact_numbers'])->filter(fn ($number) => ! is_null($number['value']))->toArray();
-        }
-
-        return $data;
     }
 }

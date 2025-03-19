@@ -203,10 +203,14 @@ class Activity extends AbstractEntity
                         ->pluck('id');
 
                     foreach ($leadIds as $leadId) {
-                        $this->leadRepository->update([
-                            'entity_type'        => 'leads',
-                            $action['attribute'] => $action['value'],
-                        ], $leadId);
+                        $this->leadRepository->update(
+                            [
+                                'entity_type'        => 'leads',
+                                $action['attribute'] => $action['value'],
+                            ],
+                            $leadId,
+                            [$action['attribute']]
+                        );
                     }
 
                     break;

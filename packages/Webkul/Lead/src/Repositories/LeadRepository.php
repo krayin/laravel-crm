@@ -112,18 +112,26 @@ class LeadRepository extends Repository
      */
     public function create(array $data)
     {
-        if (! empty($data['person']['id'])) {
-            $person = $this->personRepository->update(array_merge($data['person'], [
-                'entity_type' => 'persons',
-            ]), $data['person']['id']);
-        } else {
-            $person = $this->personRepository->create(array_merge($data['person'], [
-                'entity_type' => 'persons',
-            ]));
+        /**
+         * If a person is provided, create or update the person and set the `person_id`.
+         */
+        if (isset($data['person'])) {
+            if (! empty($data['person']['id'])) {
+                $person = $this->personRepository->findOrFail($data['person']['id']);
+            } else {
+                $person = $this->personRepository->create(array_merge($data['person'], [
+                    'entity_type' => 'persons',
+                ]));
+            }
+
+            $data['person_id'] = $person->id;
+        }
+
+        if (empty($data['expected_close_date'])) {
+            $data['expected_close_date'] = null;
         }
 
         $lead = parent::create(array_merge([
-            'person_id'              => $person->id,
             'lead_pipeline_id'       => 1,
             'lead_pipeline_stage_id' => 1,
         ], $data));
@@ -153,20 +161,21 @@ class LeadRepository extends Repository
      */
     public function update(array $data, $id, $attributes = [])
     {
+        /**
+         * If a person is provided, create or update the person and set the `person_id`.
+         * Be cautious, as a lead can be updated without providing person data.
+         * For example, in the lead Kanban section, when switching stages, only the stage will be updated.
+         */
         if (isset($data['person'])) {
-            if (isset($data['person']['id'])) {
-                $person = $this->personRepository->update(array_merge($data['person'], [
-                    'entity_type' => 'persons',
-                ]), $data['person']['id']);
+            if (! empty($data['person']['id'])) {
+                $person = $this->personRepository->findOrFail($data['person']['id']);
             } else {
                 $person = $this->personRepository->create(array_merge($data['person'], [
                     'entity_type' => 'persons',
                 ]));
             }
 
-            $data = array_merge([
-                'person_id' => $person->id,
-            ], $data);
+            $data['person_id'] = $person->id;
         }
 
         if (isset($data['lead_pipeline_stage_id'])) {
@@ -177,6 +186,10 @@ class LeadRepository extends Repository
             } else {
                 $data['closed_at'] = null;
             }
+        }
+
+        if (empty($data['expected_close_date'])) {
+            $data['expected_close_date'] = null;
         }
 
         $lead = parent::update($data, $id);
