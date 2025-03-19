@@ -19,7 +19,6 @@ use Webkul\Admin\Http\Resources\LeadResource;
 use Webkul\Admin\Http\Resources\StageResource;
 use Webkul\Attribute\Repositories\AttributeRepository;
 use Webkul\Contact\Repositories\PersonRepository;
-use Webkul\DataGrid\Enums\DateRangeOptionEnum;
 use Webkul\Lead\Helpers\MagicAI;
 use Webkul\Lead\Repositories\LeadRepository;
 use Webkul\Lead\Repositories\PipelineRepository;
@@ -162,7 +161,7 @@ class LeadController extends Controller
 
         $data['status'] = 1;
 
-        if (request()->input('lead_pipeline_stage_id')) {
+        if (isset($data['lead_pipeline_stage_id'])) {
             $stage = $this->stageRepository->findOrFail($data['lead_pipeline_stage_id']);
 
             $data['lead_pipeline_id'] = $stage->lead_pipeline_id;
@@ -179,8 +178,6 @@ class LeadController extends Controller
         if (in_array($stage->code, ['won', 'lost'])) {
             $data['closed_at'] = Carbon::now();
         }
-
-        $data['person']['organization_id'] = empty($data['person']['organization_id']) ? null : $data['person']['organization_id'];
 
         $lead = $this->leadRepository->create($data);
 
@@ -204,12 +201,14 @@ class LeadController extends Controller
     /**
      * Display a resource.
      */
-    public function view(int $id): View
+    public function view(int $id)
     {
         $lead = $this->leadRepository->findOrFail($id);
 
+        $userIds = bouncer()->getAuthorizedUserIds();
+
         if (
-            $userIds = bouncer()->getAuthorizedUserIds()
+            $userIds
             && ! in_array($lead->user_id, $userIds)
         ) {
             return redirect()->route('admin.leads.index');
@@ -240,8 +239,6 @@ class LeadController extends Controller
 
             $data['lead_pipeline_stage_id'] = $stage->id;
         }
-
-        $data['person']['organization_id'] = empty($data['person']['organization_id']) ? null : $data['person']['organization_id'];
 
         $lead = $this->leadRepository->update($data, $id);
 
@@ -352,7 +349,7 @@ class LeadController extends Controller
 
             return response()->json([
                 'message' => trans('admin::app.leads.destroy-success'),
-            ], 200);
+            ]);
         } catch (\Exception $exception) {
             return response()->json([
                 'message' => trans('admin::app.leads.destroy-failed'),
@@ -361,7 +358,7 @@ class LeadController extends Controller
     }
 
     /**
-     * Mass Update the specified resources.
+     * Mass update the specified resources.
      */
     public function massUpdate(MassUpdateRequest $massUpdateRequest): JsonResponse
     {
@@ -389,7 +386,7 @@ class LeadController extends Controller
     }
 
     /**
-     * Mass Delete the specified resources.
+     * Mass delete the specified resources.
      */
     public function massDestroy(MassDestroyRequest $massDestroyRequest): JsonResponse
     {
@@ -587,7 +584,6 @@ class LeadController extends Controller
                 'sortable'              => true,
                 'visibility'            => true,
             ],
-
             [
                 'index'                 => 'tags.name',
                 'label'                 => trans('admin::app.leads.index.kanban.columns.tags'),
@@ -608,41 +604,18 @@ class LeadController extends Controller
                     ],
                 ],
             ],
-
-            [
-                'index'              => 'expected_close_date',
-                'label'              => trans('admin::app.leads.index.kanban.columns.expected-close-date'),
-                'type'               => 'date',
-                'searchable'         => false,
-                'searchable'         => false,
-                'sortable'           => true,
-                'filterable'         => true,
-                'filterable_type'    => 'date_range',
-                'filterable_options' => DateRangeOptionEnum::options(),
-            ],
-
-            [
-                'index'              => 'created_at',
-                'label'              => trans('admin::app.leads.index.kanban.columns.created-at'),
-                'type'               => 'date',
-                'searchable'         => false,
-                'searchable'         => false,
-                'sortable'           => true,
-                'filterable'         => true,
-                'filterable_type'    => 'date_range',
-                'filterable_options' => DateRangeOptionEnum::options(),
-            ],
         ];
     }
 
     /**
-     * Create Lead with specified AI.
+     * Create lead with specified AI.
      */
     public function createByAI()
     {
         $leadData = [];
 
         $errorMessages = [];
+
         foreach (request()->file('files') as $file) {
             $lead = $this->processFile($file);
 
@@ -671,14 +644,16 @@ class LeadController extends Controller
             return response()->json(MagicAI::errorHandler(trans('admin::app.leads.no-valid-files')), 400);
         }
 
-        return self::createLeads($leadData);
+        return response()->json([
+            'message' => trans('admin::app.leads.create-success'),
+            'leads'   => $this->createLeads($leadData),
+        ]);
     }
 
     /**
-     * Summary of processFile method.
+     * Process file.
      *
      * @param  mixed  $file
-     * @param  mixed  $supportedFormats
      */
     private function processFile($file)
     {
@@ -703,37 +678,39 @@ class LeadController extends Controller
     /**
      * Create multiple leads.
      */
-    private function createLeads($data)
+    private function createLeads($rawLeads): array
     {
         $leads = [];
 
-        foreach ($data as $lead) {
-            $person = $this->personRepository->create($lead['person']);
+        foreach ($rawLeads as $rawLead) {
+            Event::dispatch('lead.create.before');
+
+            foreach ($rawLead['person']['emails'] as $email) {
+                $person = $this->personRepository
+                    ->whereJsonContains('emails', [['value' => $email['value']]])
+                    ->first();
+
+                if ($person) {
+                    $rawLead['person']['id'] = $person->id;
+
+                    break;
+                }
+            }
 
             $pipeline = $this->pipelineRepository->getDefaultPipeline();
 
             $stage = $pipeline->stages()->first();
 
-            $leadData = array_merge($lead, [
+            $lead = $this->leadRepository->create(array_merge($rawLead, [
                 'lead_pipeline_id'       => $pipeline->id,
                 'lead_pipeline_stage_id' => $stage->id,
-                'expected_close_date'    => Carbon::now()->addDays(7),
-                'person'                 => [
-                    'id'              => $person->id,
-                    'organization_id' => $lead['person']['organization_id'] ?? null,
-                ],
-            ]);
-
-            $lead = $this->leadRepository->create($leadData);
+            ]));
 
             Event::dispatch('lead.create.after', $lead);
 
             $leads[] = $lead;
         }
 
-        return response()->json([
-            'message' => trans('admin::app.leads.create-success'),
-            'leads'   => $leads,
-        ], 200);
+        return $leads;
     }
 }
