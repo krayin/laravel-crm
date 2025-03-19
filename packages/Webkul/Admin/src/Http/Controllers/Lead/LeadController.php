@@ -641,6 +641,7 @@ class LeadController extends Controller
         $leadData = [];
 
         $errorMessages = [];
+
         foreach (request()->file('files') as $file) {
             $lead = $this->processFile($file);
 
@@ -669,14 +670,16 @@ class LeadController extends Controller
             return response()->json(MagicAI::errorHandler(trans('admin::app.leads.no-valid-files')), 400);
         }
 
-        return self::createLeads($leadData);
+        return response()->json([
+            'message' => trans('admin::app.leads.create-success'),
+            'leads'   => $this->createLeads($leadData),
+        ]);
     }
 
     /**
-     * Summary of processFile method.
+     * Process file.
      *
      * @param  mixed  $file
-     * @param  mixed  $supportedFormats
      */
     private function processFile($file)
     {
@@ -701,37 +704,39 @@ class LeadController extends Controller
     /**
      * Create multiple leads.
      */
-    private function createLeads($data)
+    private function createLeads($rawLeads): array
     {
         $leads = [];
 
-        foreach ($data as $lead) {
-            $person = $this->personRepository->create($lead['person']);
+        foreach ($rawLeads as $rawLead) {
+            Event::dispatch('lead.create.before');
+
+            foreach ($rawLead['person']['emails'] as $email) {
+                $person = $this->personRepository
+                    ->whereJsonContains('emails', [['value' => $email['value']]])
+                    ->first();
+
+                if ($person) {
+                    $rawLead['person']['id'] = $person->id;
+
+                    break;
+                }
+            }
 
             $pipeline = $this->pipelineRepository->getDefaultPipeline();
 
             $stage = $pipeline->stages()->first();
 
-            $leadData = array_merge($lead, [
+            $lead = $this->leadRepository->create(array_merge($rawLead, [
                 'lead_pipeline_id'       => $pipeline->id,
                 'lead_pipeline_stage_id' => $stage->id,
-                'expected_close_date'    => Carbon::now()->addDays(7),
-                'person'                 => [
-                    'id'              => $person->id,
-                    'organization_id' => $lead['person']['organization_id'] ?? null,
-                ],
-            ]);
-
-            $lead = $this->leadRepository->create($leadData);
+            ]));
 
             Event::dispatch('lead.create.after', $lead);
 
             $leads[] = $lead;
         }
 
-        return response()->json([
-            'message' => trans('admin::app.leads.create-success'),
-            'leads'   => $leads,
-        ]);
+        return $leads;
     }
 }
