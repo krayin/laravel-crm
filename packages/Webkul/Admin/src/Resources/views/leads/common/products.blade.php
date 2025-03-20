@@ -5,8 +5,8 @@
 {!! view_render_event('admin.leads.create.products.form_controls.after') !!}
 
 @pushOnce('scripts')
-    <script 
-        type="text/x-template" 
+    <script
+        type="text/x-template"
         id="v-product-list-template"
     >
         <div class="flex flex-col gap-4">
@@ -22,15 +22,15 @@
                         <x-admin::table.th>
                             @lang('admin::app.leads.common.products.product-name')
                         </x-admin::table.th>
-            
+
                         <x-admin::table.th class="text-center">
                             @lang('admin::app.leads.common.products.quantity')
                         </x-admin::table.th>
-            
+
                         <x-admin::table.th class="text-center">
                             @lang('admin::app.leads.common.products.price')
                         </x-admin::table.th>
-            
+
                         <x-admin::table.th class="text-center">
                             @lang('admin::app.leads.common.products.amount')
                         </x-admin::table.th>
@@ -79,15 +79,15 @@
         </div>
     </script>
 
-    <script 
-        type="text/x-template" 
+    <script
+        type="text/x-template"
         id="v-product-item-template"
     >
         <x-admin::table.thead.tr>
             <!-- Product Name -->
             <x-admin::table.td>
                 <x-admin::form.control-group class="!mb-0">
-                    <x-admin::lookup 
+                    <x-admin::lookup
                         ::src="src"
                         ::name="`${inputName}[name]`"
                         ::params="params"
@@ -104,11 +104,11 @@
                         :label="trans('admin::app.leads.common.products.product-name')"
                         :placeholder="trans('admin::app.leads.common.products.product-name')"
                     />
-            
+
                     <x-admin::form.control-group.error ::name="`${inputName}[product_id]`" />
                 </x-admin::form.control-group>
             </x-admin::table.td>
-            
+
             <!-- Product Quantity -->
             <x-admin::table.td class="text-right">
                 <x-admin::form.control-group>
@@ -124,7 +124,7 @@
                     />
                 </x-admin::form.control-group>
             </x-admin::table.td>
-        
+
             <!-- Price -->
             <x-admin::table.td class="text-right">
                 <x-admin::form.control-group>
@@ -141,7 +141,7 @@
                     />
                 </x-admin::form.control-group>
             </x-admin::table.td>
-        
+
             <!-- Amount -->
             <x-admin::table.td class="text-right">
                 <x-admin::form.control-group>
@@ -153,7 +153,7 @@
                         :label="trans('admin::app.leads.common.products.total')"
                         :placeholder="trans('admin::app.leads.common.products.total')"
                         ::value-label="$admin.formatPrice(product.price * product.quantity)"
-                        :allowEdit="'false'"
+                        :allowEdit="false"
                         position="center"
                     />
                 </x-admin::form.control-group>
@@ -162,7 +162,7 @@
             <!-- Action -->
             <x-admin::table.td class="text-right">
                 <x-admin::form.control-group >
-                    <i  
+                    <i
                         @click="removeProduct"
                         class="icon-delete cursor-pointer text-2xl"
                     ></i>
@@ -194,7 +194,7 @@
                         amount: null,
                     })
                 },
-                
+
                 removeProduct (product) {
                     const index = this.products.indexOf(product);
                     this.products.splice(index, 1);
@@ -238,24 +238,24 @@
             methods: {
                 /**
                  * Add the product.
-                 * 
+                 *
                  * @param {Object} result
-                 * 
+                 *
                  * @return {void}
                  */
                 addProduct(result) {
                     this.product.product_id = result.id;
 
                     this.product.name = result.name;
-                    
+
                     this.product.price = result.price;
-                    
+
                     this.product.quantity = result.quantity ?? 1;
                 },
-                  
+
                 /**
                  * Remove the product.
-                 * 
+                 *
                  * @return {void}
                  */
                 removeProduct () {
