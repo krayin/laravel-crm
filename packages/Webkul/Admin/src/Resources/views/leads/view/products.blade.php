@@ -113,9 +113,10 @@
         <x-admin::table.tbody.tr class="border-b border-gray-200 align-top dark:border-gray-800">
             <!-- Product Name -->
             <x-admin::table.td class="!px-4">
-                <v-form v-slot="{ errors }">
+                <v-form v-slot="{ errors }" @keydown.enter.prevent>
                     <x-admin::form.control-group class="!mb-0">
-                        <x-admin::lookup 
+                        <x-admin::lookup
+                            ::key="product.product_id"
                             ::src="src"
                             name="name"
                             ::params="params"
@@ -133,7 +134,7 @@
                             :placeholder="trans('admin::app.leads.view.products.product-name')"
                             ::url="url(product)"
                         />
-                
+
                         <x-admin::form.control-group.error ::name="`${inputName}[product_id]`" />
                     </x-admin::form.control-group>
                 </v-form>
@@ -141,7 +142,7 @@
 
             <!-- Product Quantity -->
             <x-admin::table.td class="!px-4 ltr:text-right rtl:text-left">
-                <v-form v-slot="{ errors }">
+                <v-form v-slot="{ errors }" @keydown.enter.prevent>
                     <x-admin::form.control-group class="!mb-0">
                         <x-admin::form.control-group.control
                             type="inline"
@@ -162,7 +163,7 @@
 
             <!-- Price -->
             <x-admin::table.td class="!px-4 ltr:text-right rtl:text-left">
-                <v-form v-slot="{ errors }">
+                <v-form v-slot="{ errors }" @keydown.enter.prevent>
                     <x-admin::form.control-group class="!mb-0">
                         <x-admin::form.control-group.control
                             type="inline"
@@ -184,7 +185,7 @@
 
             <!-- Total -->
             <x-admin::table.td class="!px-4 ltr:text-right rtl:text-left">
-                <v-form v-slot="{ errors }">
+                <v-form v-slot="{ errors }" @keydown.enter.prevent>
                     <x-admin::form.control-group class="!mb-0">
                         <x-admin::form.control-group.control
                             type="inline"
@@ -193,7 +194,7 @@
                             rules="required|decimal:4"
                             :label="trans('admin::app.leads.view.products.total')"
                             :placeholder="trans('admin::app.leads.view.products.total')"
-                            ::allowEdit="false"
+                            :allowEdit="false"
                             ::url="url(product)"
                             position="left"
                             ::value-label="$admin.formatPrice(product.price * product.quantity)"
