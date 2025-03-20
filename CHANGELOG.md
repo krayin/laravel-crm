@@ -1,3 +1,47 @@
+## **v2.0.6 (20th of March 2025)** - *Release*
+
+* Leads refinement.
+
+* Qoutes refinement.
+
+* #2065[fixed] Uncaught Error is appearing in Tags Section of Settings.
+
+* #2064[fixed] Validations are not working on different sections.
+
+* #2063[fixed] Uncaught Error in appearing in console in Leads section.
+
+* #2061[fixed] Update Readme.
+
+* #2060[fixed] Getting Exceptional error while editing Person and Saving it.
+
+* #2022[fixed] Link to License in README.md is a dead link
+
+* #2011[fixed] Integrity constraint violation: Update Persons
+
+* #2000[fixed] Fix in #1961 not working
+
+* #1985[fixed] Draft Mail Content from IMAP Account Not Appearing Properly as it is showing coded format.
+
+* #1983[fixed] Unwanted Console Error When Clicking "Reply" or "Reply All" in Mail.
+
+* #1982[fixed] Unwanted Console Error When Forwarding Mail with CC and BCC
+
+* #1981[fixed] Prevent Duplicate Email Addresses in the Address Bar While Composing Mail
+
+* #1977[fixed] Password Encryption Needed in IMAP Password Configuration.
+
+* #1976[fixed] Console Errors in Mails Sent Mail Section.
+
+* #1972[fixed] Emails Can Be Sent from Draft Without an Email Address.
+
+* #1971[fixed] "From" Entry Missing in Sent Mails When Sending Emails from Krayin CRM .
+
+* #1970[fixed] Save Draft button visibility issue in dark theme.
+
+* #1969[fixed] Console Errors in Mails Draft Section.
+
+* #1968[fixed] Inbox Filters: ID Filter Appears Without Corresponding Column in Datagrid.
+
 ## **v2.0.5 (17th of January 2025)** - *Release*
 
 * #1953[fixed] Users get dead unauthorized page without dashboard permissions.
@@ -169,8 +213,6 @@
 * #1961[fixed] Changing activity schedule from / to date not saving
 
 * #1954[fixed] Decimal values must be saved in product Price.
-
-
 
 ## **v2.0.4 (19th of December 2024)** - *Release*
 
