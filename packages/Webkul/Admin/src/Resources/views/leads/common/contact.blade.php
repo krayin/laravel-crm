@@ -32,7 +32,6 @@
                 name="person[name]"
                 v-model="person.name"
                 v-if="person.name"
-                rules="required"
             />
 
             <x-admin::form.control-group.error control-name="person[id]" />
@@ -87,6 +86,7 @@
             <x-admin::attributes.edit.lookup />
 
             <v-lookup-component
+                :key="person.organization?.id"
                 :attribute='@json($organizationAttribute)'
                 :value="person.organization"
                 :is-disabled="person?.id ? true : false"

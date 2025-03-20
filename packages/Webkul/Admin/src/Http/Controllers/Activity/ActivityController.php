@@ -142,7 +142,15 @@ class ActivityController extends Controller
     {
         Event::dispatch('activity.update.before', $id);
 
-        $activity = $this->activityRepository->update(request()->all(), $id);
+        $data = request()->all();
+
+        $activity = $this->activityRepository->update($data, $id);
+
+        $activity->leads()->sync(
+            ! empty($data['lead_id'])
+                ? [$data['lead_id']]
+                : []
+        );
 
         Event::dispatch('activity.update.after', $activity);
 
