@@ -146,11 +146,18 @@ class ActivityController extends Controller
 
         $activity = $this->activityRepository->update($data, $id);
 
-        $activity->leads()->sync(
-            ! empty($data['lead_id'])
-                ? [$data['lead_id']]
-                : []
-        );
+        /**
+         * We will not use `empty` directly here because `lead_id` can be a blank string
+         * from the activity form. However, on the activity view page, we are only updating the
+         * `is_done` field, so `lead_id` will not be present in that case.
+         */
+        if (isset($data['lead_id'])) {
+            $activity->leads()->sync(
+                ! empty($data['lead_id'])
+                    ? [$data['lead_id']]
+                    : []
+            );
+        }
 
         Event::dispatch('activity.update.after', $activity);
 
