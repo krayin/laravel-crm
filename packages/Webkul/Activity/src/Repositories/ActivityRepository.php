@@ -80,12 +80,30 @@ class ActivityRepository extends Repository
             $activity->participants()->delete();
 
             foreach ($data['participants']['users'] ?? [] as $userId) {
+                /**
+                 * In some cases, the component exists in an HTML form, and traditional HTML does not send an empty array.
+                 * Therefore, we need to check for an empty string.
+                 * This scenario occurs only when all participants are removed.
+                 */
+                if (empty($userId)) {
+                    break;
+                }
+
                 $activity->participants()->create([
                     'user_id' => $userId,
                 ]);
             }
 
             foreach ($data['participants']['persons'] ?? [] as $personId) {
+                /**
+                 * In some cases, the component exists in an HTML form, and traditional HTML does not send an empty array.
+                 * Therefore, we need to check for an empty string.
+                 * This scenario occurs only when all participants are removed.
+                 */
+                if (empty($personId)) {
+                    break;
+                }
+
                 $activity->participants()->create([
                     'person_id' => $personId,
                 ]);

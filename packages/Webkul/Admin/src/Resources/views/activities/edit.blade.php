@@ -37,7 +37,7 @@
                         >
                             @lang('admin::app.activities.edit.save-btn')
                         </button>
-        
+
                         {!! view_render_event('admin.activities.edit.save_button.after') !!}
                     </div>
                 </div>
@@ -51,7 +51,7 @@
 
                     <!-- Schedule Date -->
                     <x-admin::form.control-group>
-                        <div class="flex gap-2 max-sm:flex-wrap"> 
+                        <div class="flex gap-2 max-sm:flex-wrap">
                             <div class="w-full">
                                 <x-admin::form.control-group.label class="required">
                                     @lang('admin::app.activities.edit.schedule_from')
@@ -98,7 +98,7 @@
                             :label="trans('admin::app.activities.edit.comment')"
                             :placeholder="trans('admin::app.activities.edit.comment')"
                         />
-                        
+
                         <x-admin::form.control-group.error control-name="comment" />
                     </x-admin::form.control-group>
 
@@ -110,8 +110,8 @@
 
                         <!-- Participants Multi lookup Vue Component -->
                         <v-multi-lookup-component>
-                            <div 
-                                class="relative rounded border border-gray-200 px-2 py-1 hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:hover:border-gray-400 dark:focus:border-gray-400" 
+                            <div
+                                class="relative rounded border border-gray-200 px-2 py-1 hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:hover:border-gray-400 dark:focus:border-gray-400"
                                 role="button"
                             >
                                 <ul class="flex flex-wrap items-center gap-1">
@@ -146,7 +146,7 @@
                                 type="text"
                                 placeholder="@lang('admin::app.common.start-typing')"
                             />
-                            
+
                             <x-admin::form.control-group.error control-name="comment" />
                         </x-admin::form.control-group>
 
@@ -158,8 +158,8 @@
 
                             <!-- Participants Multi lookup Vue Component -->
                             <v-multi-lookup-component>
-                                <div 
-                                    class="relative rounded border border-gray-200 px-2 py-1 hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:hover:border-gray-400 dark:focus:border-gray-400" 
+                                <div
+                                    class="relative rounded border border-gray-200 px-2 py-1 hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:hover:border-gray-400 dark:focus:border-gray-400"
                                     role="button"
                                 >
                                     <ul class="flex flex-wrap items-center gap-1">
@@ -220,7 +220,7 @@
                                 <x-admin::form.control-group.label class="required">
                                     @lang('admin::app.activities.edit.title')
                                 </x-admin::form.control-group.label>
-        
+
                                 <x-admin::form.control-group.control
                                     type="text"
                                     name="title"
@@ -233,13 +233,13 @@
 
                                 <x-admin::form.control-group.error control-name="title" />
                             </x-admin::form.control-group>
-        
+
                             <!-- Edit Type -->
                             <x-admin::form.control-group>
                                 <x-admin::form.control-group.label class="required">
                                     @lang('admin::app.activities.edit.type')
                                 </x-admin::form.control-group.label>
-        
+
                                 <x-admin::form.control-group.control
                                     type="select"
                                     name="type"
@@ -252,16 +252,16 @@
                                     <option value="call">
                                         @lang('admin::app.activities.edit.call')
                                     </option>
-        
+
                                     <option value="meeting">
                                         @lang('admin::app.activities.edit.meeting')
                                     </option>
-        
+
                                     <option value="lunch">
                                         @lang('admin::app.activities.edit.lunch')
                                     </option>
                                 </x-admin::form.control-group.control>
-        
+
                                 <x-admin::form.control-group.error control-name="type" />
                             </x-admin::form.control-group>
 
@@ -294,7 +294,7 @@
     {!! view_render_event('admin.activities.edit.form.after') !!}
 
     @pushOnce('scripts')
-        <script 
+        <script
             type="text/x-template"
             id="v-multi-lookup-component-template"
         >
@@ -304,6 +304,14 @@
                     <ul class="flex flex-wrap items-center gap-1">
                         <!-- Added Participants -->
                         <template v-for="userType in ['users', 'persons']">
+                            <template v-if="! addedParticipants[userType].length">
+                                <input
+                                    type="hidden"
+                                    :name="`participants[${userType}][]`"
+                                    value=""
+                                />
+                            </template>
+
                             <li
                                 class="flex items-center gap-1 rounded-md bg-slate-100 pl-2 dark:bg-slate-950 dark:text-gray-300"
                                 v-for="(user, index) in addedParticipants[userType]"
@@ -404,7 +412,7 @@
                     return {
                         isSearching: {
                             users: false,
-                            
+
                             persons: false,
                         },
 
@@ -412,19 +420,19 @@
 
                         addedParticipants: {
                             users: [],
-                            
+
                             persons: [],
                         },
 
                         searchedParticipants: {
                             users: [],
-                            
+
                             persons: [],
                         },
 
                         searchEnpoints: {
                             users: "{{ route('admin.settings.users.search') }}",
-                            
+
                             persons: "{{ route('admin.contacts.persons.search') }}",
                         },
                     };
@@ -433,7 +441,7 @@
                 watch: {
                     searchTerm(newVal, oldVal) {
                         this.search('users');
-                        
+
                         this.search('persons');
                     },
                 },
@@ -467,7 +475,7 @@
                                 }
                             })
                             .then ((response) => {
-                                this.addedParticipants[userType].forEach(addedParticipant => 
+                                this.addedParticipants[userType].forEach(addedParticipant =>
                                     response.data.data = response.data.data.filter(participant => participant.id !== addedParticipant.id)
                                 );
 
@@ -487,13 +495,13 @@
 
                         this.searchedParticipants = {
                             users: [],
-                            
+
                             persons: [],
                         };
                     },
 
                     remove(userType, participant) {
-                        this.addedParticipants[userType] = this.addedParticipants[userType].filter(addedParticipant => 
+                        this.addedParticipants[userType] = this.addedParticipants[userType].filter(addedParticipant =>
                             addedParticipant.id !== participant.id
                         );
                     },

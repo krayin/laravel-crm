@@ -76,21 +76,13 @@
             </div>
 
             <!-- Hidden Input Entity Value -->
-            <template v-if="attribute['code'].includes('organization_id') && ! selectedItem.id">
-                <input
-                    type="hidden"
-                    :name="attribute['code'].replace('organization_id', 'organization_name')"
-                    v-model="selectedItem.name"
-                />
-            </template>
-
-            <template v-else>
-                <input
-                    type="hidden"
-                    :name="attribute['code']"
-                    v-model="selectedItem.id"
-                />
-            </template>
+            <x-admin::form.control-group.control
+                type="hidden"
+                ::name="attribute['code']"
+                v-model="selectedItem.id"
+                ::rules="validations"
+                ::label="attribute['name']"
+            />
 
             <!-- Popup Box -->
             <div
@@ -175,6 +167,8 @@
 
                     searchRoute: `{{ route('admin.settings.attributes.lookup') }}/${this.attribute.lookup_type}`,
 
+                    lookupEntityRoute: `{{ route('admin.settings.attributes.lookup_entity') }}/${this.attribute.lookup_type}`,
+
                     isSearching: false,
                 };
             },
@@ -190,19 +184,6 @@
             watch: {
                 searchTerm(newVal, oldVal) {
                     this.search();
-                },
-
-                value(newVal, oldVal) {
-                    if (newVal === undefined) {
-                        this.selectedItem = {
-                            id: '',
-                            name: ''
-                        };
-                    }
-
-                    if (newVal) {
-                        this.getLookUpEntity();
-                    }
                 },
             },
 
@@ -256,13 +237,16 @@
                 },
 
                 getLookUpEntity() {
-                    this.$axios.get(this.searchRoute, {
-                            params: { query: this.value?.name ?? ""}
+                    this.$axios.get(this.lookupEntityRoute, {
+                            params: { query: this.value?.id ?? ""}
                         })
                         .then (response => {
-                            const [result] = response.data;
-
-                            this.selectedItem = result;
+                            this.selectedItem = Object.keys(response.data).length
+                                ? response.data
+                                : {
+                                    id: '',
+                                    name: ''
+                                };
                         })
                         .catch (error => {});
                 },
@@ -274,7 +258,7 @@
 
                     this.searchTerm = '';
 
-                    this.$emit('lookup-added', result);
+                    this.$emit('lookup-added', this.selectedItem);
                 },
 
                 handleFocusOut(e) {
@@ -294,7 +278,7 @@
                         name: ''
                     };
 
-                    this.$emit('lookup-removed');
+                    this.$emit('lookup-removed', this.selectedItem);
                 },
             },
         });

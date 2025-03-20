@@ -108,7 +108,6 @@
                                 :entity="$quote"
                             />
 
-
                             <x-admin::attributes
                                 :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
                                         'entity_type' => 'quotes',
@@ -171,9 +170,11 @@
                                     </x-admin::form.control-group.label>
 
                                     <v-lookup-component
+                                        :key="leadEntity.id"
                                         :attribute="{'code': 'lead_id', 'name': 'Lead', 'lookup_type': 'leads'}"
-                                        :value='@json($lookUpEntityData)'
+                                        :value="leadEntity"
                                         can-add-new="true"
+                                        @lookup-removed="setLeadEntity"
                                     ></v-lookup-component>
                                 </x-admin::form.control-group>
                             </div>
@@ -562,6 +563,8 @@
                             { id: 'address-info', label: '@lang('admin::app.quotes.create.address-info')' },
                             { id: 'quote-items', label: '@lang('admin::app.quotes.create.quote-items')' }
                         ],
+
+                        leadEntity: @json($lookUpEntityData ?? []),
                     };
                 },
 
@@ -579,6 +582,10 @@
                         if (section) {
                             section.scrollIntoView({ behavior: 'smooth' });
                         }
+                    },
+
+                    setLeadEntity($event) {
+                        this.leadEntity = $event;
                     },
                 },
             });

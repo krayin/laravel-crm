@@ -263,7 +263,7 @@
                                                 <template v-if="activity.type != 'email'">
                                                     @if (bouncer()->hasPermission('activities.edit'))
                                                         <x-admin::dropdown.menu.item
-                                                            v-if="! activity.is_done"
+                                                            v-if="! activity.is_done && ['call', 'meeting', 'lunch'].includes(activity.type)"
                                                             @click="markAsDone(activity)"
                                                         >
                                                             <div class="flex items-center gap-2">
@@ -273,7 +273,7 @@
                                                             </div>
                                                         </x-admin::dropdown.menu.item>
 
-                                                        <x-admin::dropdown.menu.item>
+                                                        <x-admin::dropdown.menu.item v-if="['call', 'meeting', 'lunch'].includes(activity.type)">
                                                             <a
                                                                 class="flex items-center gap-2"
                                                                 :href="'{{ route('admin.activities.edit', 'replaceId') }}'.replace('replaceId', activity.id)"
