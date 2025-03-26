@@ -5,29 +5,29 @@ return [
         'attributes' => [
             'leads' => [
                 'description'         => 'Descrição',
-                'expected-close-date' => 'Data de Fechamento Esperada',
-                'lead-value'          => 'Valor do Lead',
-                'sales-owner'         => 'Responsável pela Venda',
-                'source'              => 'Fonte',
+                'expected-close-date' => 'Fechamento',
+                'lead-value'          => 'Valor',
+                'sales-owner'         => 'Vendedor',
+                'source'              => 'Origem',
                 'title'               => 'Título',
                 'type'                => 'Tipo',
-                'pipeline'            => 'Pipeline',
-                'stage'               => 'Estágio',
+                'pipeline'            => 'Funil',
+                'stage'               => 'Etapa',
             ],
 
             'persons' => [
-                'contact-numbers' => 'Números de Contato',
-                'emails'          => 'Emails',
+                'contact-numbers' => 'Telefone',
+                'emails'          => 'E-mails',
                 'job-title'       => 'Cargo',
                 'name'            => 'Nome',
-                'organization'    => 'Organização',
-                'sales-owner'     => 'Responsável pela Venda',
+                'organization'    => 'Empresa',
+                'sales-owner'     => 'Vendedor',
             ],
 
             'organizations' => [
                 'address'     => 'Endereço',
                 'name'        => 'Nome',
-                'sales-owner' => 'Responsável pela Venda',
+                'sales-owner' => 'Vendedor',
             ],
 
             'products' => [
@@ -35,37 +35,37 @@ return [
                 'name'        => 'Nome',
                 'price'       => 'Preço',
                 'quantity'    => 'Quantidade',
-                'sku'         => 'SKU',
+                'sku'         => 'Código',
             ],
 
             'quotes' => [
-                'adjustment-amount' => 'Valor de Ajuste',
-                'billing-address'   => 'Endereço de Cobrança',
+                'adjustment-amount' => 'Ajuste',
+                'billing-address'   => 'Cobrança',
                 'description'       => 'Descrição',
-                'discount-amount'   => 'Valor do Desconto',
-                'discount-percent'  => 'Percentual de Desconto',
+                'discount-amount'   => 'Desconto',
+                'discount-percent'  => 'Desconto (%)',
                 'expired-at'        => 'Expira em',
-                'grand-total'       => 'Total Geral',
+                'grand-total'       => 'Total geral',
                 'person'            => 'Pessoa',
-                'sales-owner'       => 'Responsável pela Venda',
-                'shipping-address'  => 'Endereço de Entrega',
+                'sales-owner'       => 'Vendedor',
+                'shipping-address'  => 'Entrega',
                 'sub-total'         => 'Subtotal',
                 'subject'           => 'Assunto',
-                'tax-amount'        => 'Valor do Imposto',
+                'tax-amount'        => 'Imposto',
             ],
 
             'warehouses' => [
-                'contact-address' => 'Endereço de Contato',
-                'contact-emails'  => 'Emails de Contato',
-                'contact-name'    => 'Nome do Contato',
-                'contact-numbers' => 'Números de Contato',
+                'contact-address' => 'Contato',
+                'contact-emails'  => 'E-mails de contato',
+                'contact-name'    => 'Nome do contato',
+                'contact-numbers' => 'Telefone',
                 'description'     => 'Descrição',
                 'name'            => 'Nome',
             ],
         ],
 
         'email' => [
-            'activity-created'      => 'Atividade criada',
+            'activity-created'      => 'Atividade adicionada',
             'activity-modified'     => 'Atividade modificada',
             'date'                  => 'Data',
             'new-activity'          => 'Você tem uma nova atividade, veja os detalhes abaixo',
@@ -77,42 +77,42 @@ return [
 
         'lead' => [
             'pipeline' => [
-                'default' => 'Pipeline Padrão',
+                'default' => 'Funil padrão',
 
                 'pipeline-stages' => [
-                    'follow-up'   => 'Acompanhamento',
+                    'follow-up'   => 'Qualificação',
                     'lost'        => 'Perdido',
                     'negotiation' => 'Negociação',
-                    'new'         => 'Novo',
-                    'prospect'    => 'Prospecto',
+                    'new'         => 'Novo negócio',
+                    'prospect'    => 'Proposta',
                     'won'         => 'Ganho',
                 ],
             ],
 
             'source' => [
                 'direct'   => 'Direto',
-                'email'    => 'Email',
+                'email'    => 'E-mail',
                 'phone'    => 'Telefone',
                 'web'      => 'Web',
-                'web-form' => 'Formulário Web',
+                'web-form' => 'Formulário web',
             ],
 
             'type' => [
-                'existing-business' => 'Negócio Existente',
-                'new-business'      => 'Novo Negócio',
+                'existing-business' => 'Base atual',
+                'new-business'      => 'Novo negócio',
             ],
         ],
 
         'user' => [
             'role' => [
-                'administrator-role' => 'Função de Administrador',
+                'administrator-role' => 'Função de administrador',
                 'administrator'      => 'Administrador',
             ],
         ],
 
         'workflow' => [
-            'email-to-participants-after-activity-updation' => 'Emails para participantes após atualização de atividade',
-            'email-to-participants-after-activity-creation' => 'Emails para participantes após criação de atividade',
+            'email-to-participants-after-activity-updation' => 'E-mails para participantes após atualização de atividade',
+            'email-to-participants-after-activity-creation' => 'E-mails para participantes após criação de atividade',
         ],
     ],
 
@@ -121,11 +121,11 @@ return [
             'create-administrator' => [
                 'admin'            => 'Administrador',
                 'krayin'           => 'Krayin',
-                'confirm-password' => 'Confirmar Senha',
+                'confirm-password' => 'Confirmar senha',
                 'email'            => 'E-mail',
                 'email-address'    => 'admin@example.com',
                 'password'         => 'Senha',
-                'title'            => 'Criar Administrador',
+                'title'            => 'Criar administrador',
             ],
 
             'environment-configuration' => [
@@ -147,39 +147,39 @@ return [
                 'colombian-peso'              => 'Peso Colombiano (COP)',
                 'czech-koruna'                => 'Coroa Checa (CZK)',
                 'danish-krone'                => 'Coroa Dinamarquesa (DKK)',
-                'database-connection'         => 'Conexão com Banco de Dados',
-                'database-hostname'           => 'Nome do Host do Banco de Dados',
-                'database-name'               => 'Nome do Banco de Dados',
-                'database-password'           => 'Senha do Banco de Dados',
-                'database-port'               => 'Porta do Banco de Dados',
-                'database-prefix'             => 'Prefixo do Banco de Dados',
-                'database-username'           => 'Usuário do Banco de Dados',
-                'default-currency'            => 'Moeda Padrão',
-                'default-locale'              => 'Idioma Padrão',
-                'default-timezone'            => 'Fuso Horário Padrão',
+                'database-connection'         => 'Conexão com banco de dados',
+                'database-hostname'           => 'Nome do host do banco de dados',
+                'database-name'               => 'Nome do banco de dados',
+                'database-password'           => 'Senha do banco de dados',
+                'database-port'               => 'Porta do banco de dados',
+                'database-prefix'             => 'Prefixo do banco de bados',
+                'database-username'           => 'Usuário do banco de dados',
+                'default-currency'            => 'Moeda (BRL)',
+                'default-locale'              => 'Idioma',
+                'default-timezone'            => 'Fuso horário',
                 'default-url'                 => 'URL Padrão',
                 'default-url-link'            => 'https://localhost',
                 'euro'                        => 'Euro (EUR)',
                 'mysql'                       => 'MySQL',
                 'pgsql'                       => 'pgSQL',
-                'select-timezone'             => 'Selecionar Fuso Horário',
+                'select-timezone'             => 'Selecione o fuso horário',
                 'warning-message'             => 'Atenção! As configurações de idioma e moeda padrão não podem ser alteradas após definidas.',
                 'united-states-dollar'        => 'Dólar Americano (USD)',
             ],
 
             'installation-processing' => [
                 'krayin'       => 'Instalação do Krayin',
-                'krayin-info'  => 'Criando as tabelas do banco de dados, isso pode levar alguns momentos',
+                'krayin-info'  => 'Criando as tabelas do banco de dados, isso pode levar alguns minutos',
                 'title'        => 'Instalação',
             ],
 
             'installation-completed' => [
-                'admin-panel'                => 'Painel de Administração',
+                'admin-panel'                => 'Painel de administração',
                 'krayin-forums'              => 'Fórum Krayin',
                 'customer-panel'             => 'Painel do Cliente',
                 'explore-krayin-extensions'  => 'Explorar Extensões Krayin',
                 'title'                      => 'Instalação Concluída',
-                'title-info'                 => 'Krayin foi instalado com sucesso no seu sistema.',
+                'title-info'                 => 'Krayin foi instalado com sucesso.',
             ],
 
             'ready-for-installation' => [
@@ -204,7 +204,7 @@ return [
 
             'back'                     => 'Voltar',
             'krayin'                   => 'Krayin',
-            'krayin-info'              => 'um projeto comunitário de',
+            'krayin-info'              => 'um projeto de código aberto de',
             'krayin-logo'              => 'Logotipo Krayin',
             'continue'                 => 'Continuar',
             'installation-description' => 'A instalação do Krayin geralmente envolve várias etapas. Aqui está uma visão geral do processo de instalação do Krayin',
