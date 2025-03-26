@@ -4,7 +4,7 @@
 
 <v-inline-text-edit
     {{ $attributes }}
-    :allow-edit="{{ $allowEdit }}"
+    :allow-edit="{{ $allowEdit ? 'true' : 'false' }}"
 >
     <div class="group w-full max-w-full hover:rounded-sm">
         <div class="rounded-xs flex h-[34px] items-center pl-2.5 text-left">
@@ -37,11 +37,23 @@
                     :style="{ 'text-align': position }"
                 >
                     <span class="cursor-pointer truncate rounded">
-                        @{{ (valueLabel || inputValue || '').length > 20
-                                ? (valueLabel || inputValue).substring(0, 20) + '...'
-                                : (valueLabel || inputValue) }}
+                        <template v-if="isDirty">
+                            @{{
+                                inputValue.length > 20
+                                    ? inputValue.substring(0, 20) + '...'
+                                    : inputValue
+                            }}
+                        </template>
+
+                        <template v-else>
+                            @{{
+                                (valueLabel || inputValue || '').length > 20
+                                    ? (valueLabel || inputValue).substring(0, 20) + '...'
+                                    : (valueLabel || inputValue)
+                            }}
+                        </template>
                     </span>
-                    
+
                     <!-- Tooltip -->
                     <div
                         class="absolute bottom-0 mb-5 hidden flex-col group-hover:flex"
@@ -62,7 +74,7 @@
                     ></i>
                 </template>
             </div>
-        
+
             <!-- Editing view -->
             <div
                 class="relative w-full"
@@ -79,7 +91,7 @@
                     v-model="inputValue"
                     ref="input"
                 />
-                    
+
                 <!-- Action Buttons -->
                 <div class="absolute top-[6px] flex gap-0.5 ltr:right-2 rtl:left-2">
                     <button
@@ -89,7 +101,7 @@
                     >
                         <i class="icon-tick text-md cursor-pointer font-bold text-green-600 dark:!text-green-600" />
                     </button>
-                
+
                     <button
                         type="button"
                         class="flex items-center justify-center bg-red-100 p-1 hover:bg-red-200 ltr:rounded-r-md rtl:rounded-l-md"
@@ -172,6 +184,8 @@
 
                     isEditing: false,
 
+                    isDirty: false,
+
                     isRTL: document.documentElement.dir === 'rtl',
                 };
             },
@@ -179,8 +193,8 @@
             watch: {
                 /**
                  * Watch the value prop.
-                 * 
-                 * @param {String} newValue 
+                 *
+                 * @param {String} newValue
                  */
                 value(newValue) {
                     this.inputValue = newValue;
@@ -190,7 +204,7 @@
             methods: {
                 /**
                  * Toggle the input.
-                 * 
+                 *
                  * @return {void}
                  */
                 toggle() {
@@ -201,7 +215,7 @@
 
                 /**
                  * Save the input value.
-                 * 
+                 *
                  * @return {void}
                  */
                 save() {
@@ -213,10 +227,12 @@
 
                     if (this.url) {
                         let formData = new FormData();
-                        
+
                         formData.append(this.name, this.inputValue);
 
                         formData.append('_method', 'PUT');
+
+                        this.isDirty = true;
 
                         this.$axios.post(this.url, {
                             ...this.params,
@@ -226,10 +242,12 @@
                                 this.$emitter.emit('add-flash', { type: 'success', message: response.data.message });
                             })
                             .catch((error) => {
+                                this.isDirty = false;
+
                                 this.inputValue = this.value;
 
                                 this.$emitter.emit('add-flash', { type: 'error', message: error.response.data.message });
-                            });                        
+                            });
                     }
 
                     this.$emit('on-change', {
@@ -240,7 +258,7 @@
 
                 /**
                  * Cancel the input value.
-                 * 
+                 *
                  * @return {void}
                  */
                 cancel() {
