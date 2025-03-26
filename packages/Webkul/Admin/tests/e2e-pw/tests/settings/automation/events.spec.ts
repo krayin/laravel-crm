@@ -26,11 +26,12 @@ test.describe("event management", () => {
         await adminPage
             .locator('input[name="date"]')
             .fill(generateDate());
+        await adminPage.getByRole('textbox', { name: 'Date *' }).press('Enter');
 
         /**
          * Save event and close the modal.
          */
-        await adminPage.getByRole("button", { name: "Save Activity" }).click();
+         await adminPage.getByRole('button', { name: 'Save Event' }).click();
 
         await expect(
             adminPage.getByText("Event created successfully.")
@@ -46,11 +47,7 @@ test.describe("event management", () => {
         /**
          * Clicking on the edit button for the first event opens the modal.
          */
-        await adminPage.waitForSelector("span.cursor-pointer.icon-edit", {
-            state: "visible",
-        });
-        const iconEdit = await adminPage.$$("span.cursor-pointer.icon-edit");
-        await iconEdit[0].click();
+        await adminPage.locator('.row > div:nth-child(6) > a').first().click();
 
         /**
          * Fill the form with the event details.
@@ -68,8 +65,7 @@ test.describe("event management", () => {
         /**
          * Saving event and closing the modal.
          */
-        await adminPage.getByRole("button", { name: "Save Activity" }).click();
-
+        await adminPage.getByRole('button', { name: 'Save Event' }).click();
         await expect(
             adminPage.getByText("Event updated successfully.")
         ).toBeVisible();
@@ -84,16 +80,12 @@ test.describe("event management", () => {
         /**
          * Delete the first event.
          */
-        await adminPage.waitForSelector("span.cursor-pointer.icon-delete");
-        const iconDelete = await adminPage.$$(
-            "span.cursor-pointer.icon-delete"
-        );
-        await iconDelete[0].click();
+        await adminPage.locator('div:nth-child(6) > a:nth-child(2)').first().click();
 
         /**
          * Delete confirmation modal.
          */
-        await confirmModal("Are you sure", adminPage);
+        await adminPage.getByRole('button', { name: 'Agree', exact: true }).click();
 
         await expect(
             adminPage.getByText("Event deleted successfully.")

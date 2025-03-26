@@ -15,34 +15,18 @@ const usedSlugs = new Set();
  */
 function generateName() {
     const adjectives = [
-        "Cool",
-        "Smart",
-        "Fast",
-        "Sleek",
-        "Innovative",
-        "Shiny",
-        "Bold",
-        "Elegant",
-        "Epic",
-        "Mystic",
-        "Brilliant",
-        "Luminous",
-    ];
-
-    const nouns = [
-        "Star",
-        "Vision",
-        "Echo",
-        "Spark",
-        "Horizon",
-        "Nova",
-        "Shadow",
-        "Wave",
-        "Pulse",
-        "Vortex",
-        "Zenith",
-        "Element",
-    ];
+        "Cool", "Smart", "Fast", "Sleek", "Innovative", "Shiny", "Bold", 
+        "Elegant", "Epic", "Mystic", "Brilliant", "Luminous", "Radiant", 
+        "Majestic", "Vivid", "Glowing", "Dynamic", "Fearless", "Silent", 
+        "Electric", "Golden", "Blazing", "Timeless", "Noble", "Eternal"
+      ];
+      
+      const nouns = [
+        "Star", "Vision", "Echo", "Spark", "Horizon", "Nova", "Shadow", 
+        "Wave", "Pulse", "Vortex", "Zenith", "Element", "Flare", "Comet", 
+        "Galaxy", "Ember", "Crystal", "Sky", "Stone", "Blaze", "Eclipse", 
+        "Storm", "Orbit", "Phantom", "Mirage"
+      ];
 
     let name = "";
 
@@ -352,6 +336,119 @@ function generateDate(): string {
     return randomDate.toISOString().split('T')[0];
 }
 
+/**
+ * Function to generate a random company name
+ */
+function generateCompanyName() {
+    const prefixes = [
+        "Tech", "Software", "Innovate", "NextGen", "Cloud", "AI", "Cyber", "Digital",
+        "Technical", "Product", "Organization", "Vendor", "Rock-on", "Super", "Quantum",
+        "Neural", "Hyper", "Ultra", "Smart", "Future", "Mega", "Omni", "Virtual", "Dynamic",
+        "Secure", "Data", "Meta", "Nano", "Robo", "Infinity", "Vision", "Intelli", "Strato",
+        "Blue", "Green", "Red", "White", "Black", "Deep", "Elite", "Prime", "Titan", "Nova",
+        "Storm", "Lightning", "Vertex", "Pioneer", "Omnis", "Synergy", "Core", "Nexus"
+    ];
+    const suffixes = [
+        "Solutions", "Systems", "Pvt Ltd", "Technologies", "Enterprises", "Labs", "Networks",
+        "Corporation", "Group", "Ventures", "Holdings", "Consulting", "Industries", "Analytics",
+        "Innovations", "Services", "Softwares", "Developers", "AI", "Cloud", "Security", "Dynamics",
+        "Technica", "Data", "Infotech", "Research", "Automation", "Synergy", "Strategies", "Platform",
+        "Operations", "Logistics", "Infrastructure", "Management", "Digital", "Interactive",
+        "Vision", "Connect", "Smart", "Solutions Inc", "Partners", "Tech Ltd", "Info Systems",
+        "Growth", "Intelligence", "RoboCorp", "Edge", "Enterprise", "Global", "Power", "NextGen",
+        "Creative"
+    ];
+    return `${prefixes[Math.floor(Math.random() * prefixes.length)]} ${suffixes[Math.floor(Math.random() * suffixes.length)]}`;
+}
+
+/**
+ * Function to automate organization creation
+ */
+async function createOrganization(page) {
+    const companyName = generateCompanyName();
+
+    /**
+     * Click on "Create Organization" button
+     */
+    await page.goto('admin/contacts/organizations');
+    await page.getByRole('link', { name: 'Create Organization' }).click();
+
+    /**
+     * Fill in organization details
+     */
+    await page.getByRole('textbox', { name: 'Name *' }).fill(companyName);
+    await page.locator('textarea[name="address\\[address\\]"]').fill('ARV Park');
+    await page.getByRole('combobox').selectOption('IN');
+    await page.locator('select[name="address\\[state\\]"]').selectOption('DL');
+    await page.getByRole('textbox', { name: 'City' }).fill('Delhi');
+    await page.getByRole('textbox', { name: 'Postcode' }).fill('123456');
+
+    /** 
+     * Click to add extra details
+     */
+    await page.locator('div').filter({ hasText: /^Click to add$/ }).nth(2).click();
+    await page.getByRole('textbox', { name: 'Search...' }).fill('exampl');
+    await page.getByRole('listitem').filter({ hasText: 'Example' }).click();
+
+    /** 
+     * Click on "Save Organization"
+     */
+    await page.getByRole('button', { name: 'Save Organization' }).click();
+    // await expect(page.getByText(companyName)).toBeVisible();
+    return companyName;
+}
+
+function generateJobProfile() {
+    const jobProfiles = [
+        "Playwright Automation Tester",
+        "Software Engineer",
+        "Data Analyst",
+        "Project Manager",
+        "DevOps Engineer",
+        "QA Engineer",
+        "UI/UX Designer",
+        "Product Manager",
+        "Cybersecurity Analyst",
+        "Cloud Architect"
+    ];
+    const randomIndex = Math.floor(Math.random() * jobProfiles.length);
+    return jobProfiles[randomIndex];
+}
+
+async function createPerson(page) {
+    const Name = generateFullName();
+    const email = generateEmail();
+    const phone = generatePhoneNumber();
+    const Job = generateJobProfile();
+
+    await page.getByRole('link', { name: 'Create Person' }).click();
+
+    await page.getByRole('textbox', { name: 'Name *' }).fill(Name);
+    await page.getByRole('textbox', { name: 'Emails *' }).fill(email);
+    await page.getByRole('textbox', { name: 'Contact Numbers' }).fill(phone);
+    await page.getByRole('textbox', { name: 'Job Title' }).fill(Job);
+
+    // Select an organization
+    await page.locator('.relative > div > .relative').first().click();
+    await page.getByRole('textbox', { name: 'Search...' }).fill('examp');
+    await page.getByRole('listitem').filter({ hasText: 'Example' }).click();
+
+    // Save person
+    await page.getByRole('button', { name: 'Save Person' }).click();
+
+    return { Name, email, phone };
+}
+function getRandomDateTime() {
+    const year = Math.floor(Math.random() * (2030 - 2020 + 1)) + 2020;
+    const month = String(Math.floor(Math.random() * 12) + 1).padStart(2, '0');
+    const day = String(Math.floor(Math.random() * 28) + 1).padStart(2, '0');
+    const hours = String(Math.floor(Math.random() * 24)).padStart(2, '0');
+    const minutes = String(Math.floor(Math.random() * 60)).padStart(2, '0');
+    const seconds = String(Math.floor(Math.random() * 60)).padStart(2, '0');
+  
+    return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+  }
+
 export {
     generateName,
     generateFirstName,
@@ -366,5 +463,9 @@ export {
     generateHostname,
     randomElement,
     getImageFile,
-    generateDate
+    generateDate,
+    createOrganization,
+    generateCompanyName,
+    createPerson,
+    getRandomDateTime
 };

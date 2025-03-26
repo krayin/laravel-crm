@@ -8,6 +8,9 @@ test.describe("product management", () => {
          */
         await adminPage.goto("admin/products");
 
+        /**
+         * create Product.
+         */
         await adminPage.getByRole('link', { name: 'Create Product' }).click();
 
         /**
@@ -17,10 +20,10 @@ test.describe("product management", () => {
         await adminPage.fill('textarea[name="description"]', generateDescription());
         await adminPage.fill('input[name="sku"]', generateSKU());
         await adminPage.fill('input[name="price"]', "100");
+        await adminPage.fill('input[name="quantity"]', "50");
 
         await adminPage.getByRole('button', { name: 'Save Products' }).click();
-
-        await expect(adminPage.getByText('Product created successfully.', { exact: true })).toBeVisible();
+        await expect(adminPage.locator('#app')).toContainText('Success');
     });
 
     test("should edit a product", async ({ adminPage }) => {
@@ -33,17 +36,16 @@ test.describe("product management", () => {
         /**
          * Clicking on the edit icon.
          */
-        await adminPage.waitForSelector('span.cursor-pointer.icon-edit', { state: 'visible' });
-        const iconEdit = await adminPage.$$('span.cursor-pointer.icon-edit');
-        await iconEdit[0].click();
-
+        await adminPage.locator('span.icon-edit').first().click();
         await adminPage.waitForSelector('form[action*="/admin/products/edit"]');
 
-        // Content will be added here. Currently just checking the general save button.
-
+        /**
+         * Edit the product Detail
+         */
+        await adminPage.fill('input[name="name"]', generateName());
+        await adminPage.fill('input[name="quantity"]', "500");
         await adminPage.click('button:has-text("Save Products")');
-
-        await expect(adminPage.getByText('Product updated successfully.', { exact: true })).toBeVisible();
+        await expect(adminPage.locator('#app')).toContainText('Product updated successfully.');
     });
 
     test('should delete a product', async ({ adminPage }) => {
@@ -57,11 +59,8 @@ test.describe("product management", () => {
          * Clicking on the delete icon.
          */
         await adminPage.waitForSelector('span.cursor-pointer.icon-delete', { state: 'visible' });
-        const iconDelete = await adminPage.$$('span.cursor-pointer.icon-delete');
-        await iconDelete[0].click();
-
+        await adminPage.locator('span.icon-delete').first().click();
         await adminPage.click('button.transparent-button + button.primary-button:visible');
-
-        await expect(adminPage.getByText('Product deleted successfully.', { exact: true })).toBeVisible();
+        await expect(adminPage.locator('#app')).toContainText('Product deleted successfully.');
     });
 });

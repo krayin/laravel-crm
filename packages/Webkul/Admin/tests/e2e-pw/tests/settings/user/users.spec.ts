@@ -84,8 +84,8 @@ test.describe("user management", () => {
         await expect(
             adminPage.getByText("User updated successfully.")
         ).toBeVisible();
-        await expect(adminPage.getByText(updatedName)).toBeVisible();
-        await expect(adminPage.getByText(updatedEmail)).toBeVisible();
+        await expect(adminPage.locator('#app')).toContainText(updatedName);
+        await expect(adminPage.getByRole('paragraph').filter({ hasText: updatedEmail })).toBeVisible();
     });
 
     test("should delete a user", async ({ adminPage }) => {
