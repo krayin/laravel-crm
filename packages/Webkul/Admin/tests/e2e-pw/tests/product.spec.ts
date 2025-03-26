@@ -18,9 +18,9 @@ test.describe("product management", () => {
          */
         const name = generateName();
         const description = generateDescription();
-        await adminPage.waitForSelector('input[name="name"]', { state: 'visible' });
-        await adminPage.locator('input[name="name"]').clear();
-        await adminPage.locator('input[name="name"]').type(name, { delay: 150 });
+        await adminPage.waitForSelector('#name', { state: 'visible' });
+        await adminPage.locator('#name').clear();
+        await adminPage.locator('#name').type(name);
         await adminPage.locator('textarea[name="description"]').clear();
         await adminPage
             .locator('textarea[name="description"]')
