@@ -16,13 +16,11 @@ test.describe("product management", () => {
         /**
          * Fill the product form.
          */
-        await adminPage.waitForSelector('input[name="name"]', {
-            state: "visible",
-        });
         const name = generateName();
         const description = generateDescription();
+        await adminPage.waitForSelector('input[name="name"]', { state: 'visible' });
         await adminPage.locator('input[name="name"]').clear();
-        await adminPage.locator('input[name="name"]').type(name);
+        await adminPage.locator('input[name="name"]').type(name, { delay: 150 });
         await adminPage.locator('textarea[name="description"]').clear();
         await adminPage
             .locator('textarea[name="description"]')
