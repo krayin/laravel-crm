@@ -2,30 +2,65 @@ import { test, expect } from "../setup";
 import { generateName, generateSKU, generateDescription } from '../utils/faker';
 
 test.describe("product management", () => {
+    // test("should create a product", async ({ adminPage }) => {
+    //     /**
+    //      * Go to the product listing page.
+    //      */
+    //     await adminPage.goto("admin/products");
+
+    //     /**
+    //      * create Product.
+    //      */
+    //     await adminPage.getByRole('link', { name: 'Create Product' }).click();
+
+    //     /**
+    //      * Fill the product form.
+    //      */
+    //     await adminPage.fill('input[name="name"]', generateName());
+    //     await adminPage.fill('textarea[name="description"]', generateDescription());
+    //     await adminPage.fill('input[name="sku"]', generateSKU());
+    //     await adminPage.fill('input[name="price"]', "100");
+    //     await adminPage.fill('input[name="quantity"]', "50");
+
+    //     await adminPage.getByRole('button', { name: 'Save Products' }).click();
+    //     await expect(adminPage.locator('#app')).toContainText("Product created successfully.");
+    // });
+
+
     test("should create a product", async ({ adminPage }) => {
         /**
          * Go to the product listing page.
          */
         await adminPage.goto("admin/products");
-
+      
         /**
-         * create Product.
+         * Create Product.
          */
         await adminPage.getByRole('link', { name: 'Create Product' }).click();
-
+      
         /**
          * Fill the product form.
          */
+        await adminPage.waitForSelector('input[name="name"]', { state: 'visible' });
         await adminPage.fill('input[name="name"]', generateName());
         await adminPage.fill('textarea[name="description"]', generateDescription());
         await adminPage.fill('input[name="sku"]', generateSKU());
+        await adminPage.waitForSelector('input[name="price"]', { state: 'visible' });
         await adminPage.fill('input[name="price"]', "100");
+        await adminPage.waitForSelector('input[name="quantity"]', { state: 'visible' });
         await adminPage.fill('input[name="quantity"]', "50");
-
+      
+        /**
+         * Save Product.
+         */
         await adminPage.getByRole('button', { name: 'Save Products' }).click();
-        await expect(adminPage.locator('#app')).toContainText('Success');
-    });
-
+      
+        /**
+         * sucess message appear.
+         */
+        await expect(adminPage.locator('#app')).toContainText("Product created successfully.");
+      });      
+      
     test("should edit a product", async ({ adminPage }) => {
         /**
          * Go to the product listing page.
@@ -43,6 +78,7 @@ test.describe("product management", () => {
          * Edit the product Detail
          */
         await adminPage.fill('input[name="name"]', generateName());
+        await adminPage.fill('input[name="price"]', "1000");
         await adminPage.fill('input[name="quantity"]', "500");
         await adminPage.click('button:has-text("Save Products")');
         await expect(adminPage.locator('#app')).toContainText('Product updated successfully.');
