@@ -1,3 +1,15 @@
+## **v2.1.0 (26th of March 2025)** - *Release*
+
+* Mobile responsive pages.
+
+* Ability to create lead via pdf or images.
+
+* IMAP integration.
+
+* Playwright support.
+
+* Marketing feature for creating events and campaign.
+
 ## **v2.0.6 (20th of March 2025)** - *Release*
 
 * Leads refinement.
