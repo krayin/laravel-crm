@@ -29,7 +29,7 @@ test("should be able to logout", async ({ page }) => {
     await page.getByPlaceholder("Password").click();
     await page.getByPlaceholder("Password").fill(adminCredentials.password);
     await page.getByLabel("Sign In").click();
-    await page.getByRole('button', { name: "E" }).click();
+   await page.locator('//button[@class="flex h-9 w-9 cursor-pointer overflow-hidden rounded-full hover:opacity-80 focus:opacity-80"]').click();
     await page.getByRole('link', { name: 'Sign Out' }).click(); 
 
     await expect(page.getByPlaceholder("Password").first()).toBeVisible();
