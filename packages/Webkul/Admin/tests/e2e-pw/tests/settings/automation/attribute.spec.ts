@@ -1,4 +1,4 @@
-import { test } from "../../../setup";
+import { expect, test } from "../../../setup";
 import { generateFirstName, generateFullName, generateSKU } from "../../../utils/faker";
 
 test.describe("attribute management", async () => {
@@ -32,7 +32,10 @@ test.describe("attribute management", async () => {
          * Save attribute and close the modal.
          */
         await adminPage.getByRole('button', { name: 'Save Attribute' }).click();
-
+           /**
+         * Checking if the attribute is save successfully.
+         */
+           await expect(adminPage.getByText('Success', { exact: true })).toBeVisible();
 
     })
     test("should edit an attribute", async ({ adminPage }) => {
@@ -60,6 +63,11 @@ test.describe("attribute management", async () => {
          * Save attribute and close the modal.
          */
         await adminPage.getByRole('button', { name: 'Save Attribute' }).click();
+        /**
+         * Checking if the attribute is updated successfully.
+         */
+        await expect(adminPage.getByText('Success', { exact: true })).toBeVisible();
+
 
     })
     test("should delete an attribute", async ({ adminPage }) => {
@@ -83,7 +91,7 @@ test.describe("attribute management", async () => {
          * Checking if the attribute is deleted successfully.
          */
 
-        await adminPage.getByText('Attribute deleted successfully.').isVisible();
+        await expect(adminPage.getByText('Attribute deleted successfully.')).toBeVisible();
 
     })
 
