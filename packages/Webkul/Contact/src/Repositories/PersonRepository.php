@@ -11,7 +11,7 @@ use Webkul\Core\Eloquent\Repository;
 class PersonRepository extends Repository
 {
     /**
-     * Searchable fields
+     * Searchable fields.
      */
     protected $fieldSearchable = [
         'name',
@@ -32,6 +32,7 @@ class PersonRepository extends Repository
     public function __construct(
         protected AttributeRepository $attributeRepository,
         protected AttributeValueRepository $attributeValueRepository,
+        protected OrganizationRepository $organizationRepository,
         Container $container
     ) {
         parent::__construct($container);
@@ -54,6 +55,14 @@ class PersonRepository extends Repository
      */
     public function create(array $data)
     {
+        $data = $this->sanitizeRequestedPersonData($data);
+
+        if (! empty($data['organization_name'])) {
+            $organization = $this->fetchOrCreateOrganizationByName($data['organization_name']);
+
+            $data['organization_id'] = $organization->id;
+        }
+
         if (isset($data['user_id'])) {
             $data['user_id'] = $data['user_id'] ?: null;
         }
@@ -68,13 +77,23 @@ class PersonRepository extends Repository
     }
 
     /**
-     * @param  int  $id
-     * @param  array  $attribute
+     * Update.
+     *
      * @return \Webkul\Contact\Contracts\Person
      */
     public function update(array $data, $id, $attributes = [])
     {
+        $data = $this->sanitizeRequestedPersonData($data);
+
         $data['user_id'] = empty($data['user_id']) ? null : $data['user_id'];
+
+        if (! empty($data['organization_name'])) {
+            $organization = $this->fetchOrCreateOrganizationByName($data['organization_name']);
+
+            $data['organization_id'] = $organization->id;
+
+            unset($data['organization_name']);
+        }
 
         $person = parent::update($data, $id);
 
@@ -109,7 +128,7 @@ class PersonRepository extends Repository
     /**
      * Retrieves customers count based on date.
      *
-     * @return number
+     * @return int
      */
     public function getCustomerCount($startDate, $endDate)
     {
@@ -117,5 +136,49 @@ class PersonRepository extends Repository
             ->whereBetween('created_at', [$startDate, $endDate])
             ->get()
             ->count();
+    }
+
+    /**
+     * Fetch or create an organization.
+     */
+    public function fetchOrCreateOrganizationByName(string $organizationName)
+    {
+        $organization = $this->organizationRepository->findOneWhere([
+            'name' => $organizationName,
+        ]);
+
+        return $organization ?: $this->organizationRepository->create([
+            'entity_type' => 'organizations',
+            'name'        => $organizationName,
+        ]);
+    }
+
+    /**
+     * Sanitize requested person data and return the clean array.
+     */
+    private function sanitizeRequestedPersonData(array $data): array
+    {
+        if (
+            array_key_exists('organization_id', $data)
+            && empty($data['organization_id'])
+        ) {
+            $data['organization_id'] = null;
+        }
+
+        $uniqueIdParts = array_filter([
+            $data['user_id'] ?? null,
+            $data['organization_id'] ?? null,
+            $data['emails'][0]['value'] ?? null,
+        ]);
+
+        $data['unique_id'] = implode('|', $uniqueIdParts);
+
+        if (isset($data['contact_numbers'])) {
+            $data['contact_numbers'] = collect($data['contact_numbers'])->filter(fn ($number) => ! is_null($number['value']))->toArray();
+
+            $data['unique_id'] .= '|'.$data['contact_numbers'][0]['value'];
+        }
+
+        return $data;
     }
 }

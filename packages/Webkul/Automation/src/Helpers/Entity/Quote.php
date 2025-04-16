@@ -110,10 +110,14 @@ class Quote extends AbstractEntity
 
                 case 'update_related_leads':
                     foreach ($quote->leads as $lead) {
-                        $this->leadRepository->update([
-                            'entity_type'        => 'leads',
-                            $action['attribute'] => $action['value'],
-                        ], $lead->id);
+                        $this->leadRepository->update(
+                            [
+                                'entity_type'        => 'leads',
+                                $action['attribute'] => $action['value'],
+                            ],
+                            $lead->id,
+                            [$action['attribute']]
+                        );
                     }
 
                     break;

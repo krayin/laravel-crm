@@ -17,7 +17,7 @@
             ::id="attribute.code"
             ::value="value"
             ::name="attribute.code"
-            ::rules="getValidation"
+            ::rules="validations"
             ::label="attribute.name"
         />
     </script>
@@ -27,16 +27,6 @@
             template: '#v-price-component-template',
 
             props: ['validations', 'attribute', 'value'],
-
-            computed: {
-                getValidation() {
-                    return {
-                        decimal: true,
-                        min_value: 0,
-                        ...(this.validations === 'required' ? { required: true } : {}),
-                    };
-                },
-            },
         });
     </script>
 @endPushOnce

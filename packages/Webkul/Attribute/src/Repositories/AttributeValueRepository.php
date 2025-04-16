@@ -127,8 +127,11 @@ class AttributeValueRepository extends Repository
             ->where('entity_type', $entityType)
             ->where('entity_id', '!=', $entityId);
 
+        /**
+         * If the attribute type is email or phone, check the JSON value.
+         */
         if (in_array($attribute->type, ['email', 'phone'])) {
-            $query->where($this->model::$attributeTypeFields[$attribute->type], 'like', "%{$value}%");
+            $query->whereJsonContains($this->model::$attributeTypeFields[$attribute->type], [['value' => $value]]);
         } else {
             $query->where($this->model::$attributeTypeFields[$attribute->type], $value);
         }

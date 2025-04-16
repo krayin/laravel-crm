@@ -37,6 +37,7 @@
             :attribute="$attribute"
             :value="$value"
             :validations="$validations"
+            can-add-new="true"
         />
 
         @break

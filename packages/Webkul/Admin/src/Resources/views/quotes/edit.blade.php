@@ -13,9 +13,9 @@
             <div class="flex items-center justify-between rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
                 <div class="flex flex-col gap-2">
                     <div class="flex cursor-pointer items-center">
-                        <x-admin::breadcrumbs 
+                        <x-admin::breadcrumbs
                             name="quotes.edit"
-                            :entity="$quote" 
+                            :entity="$quote"
                         />
                     </div>
 
@@ -27,7 +27,7 @@
                 <div class="flex items-center gap-x-2.5">
                     <div class="flex items-center gap-x-2.5">
                         {!! view_render_event('admin.contacts.quotes.edit.save_button.before', ['quote' => $quote]) !!}
-                        
+
                         <!-- Save button for person -->
                         <button
                             type="submit"
@@ -50,12 +50,12 @@
     {!! view_render_event('admin.contacts.quotes.edit.form_controls.after', ['quote' => $quote]) !!}
 
     @pushOnce('scripts')
-        <script 
+        <script
             type="text/x-template"
             id="v-quote-template"
         >
             <div class="box-shadow flex flex-col gap-4 rounded-lg border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900 max-xl:flex-wrap">
-                <div class="flex gap-2 border-b border-gray-200 dark:border-gray-800">                    
+                <div class="flex gap-2 border-b border-gray-200 dark:border-gray-800">
                     {!! view_render_event('admin.contacts.quotes.edit.tags.before', ['quote' => $quote]) !!}
 
                     <template
@@ -82,9 +82,9 @@
                     {!! view_render_event('admin.contacts.quotes.edit.quote_information.before', ['quote' => $quote]) !!}
 
                     <!-- Quote information -->
-                    <div 
+                    <div
                         id="quote-info"
-                        class="flex flex-col gap-4" 
+                        class="flex flex-col gap-4"
                     >
                         <div class="flex flex-col gap-1">
                             <p class="text-base font-semibold text-gray-800 dark:text-white">
@@ -109,7 +109,6 @@
                                 ]"
                                 :entity="$quote"
                             />
-                        
 
                             <x-admin::attributes
                                 :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
@@ -171,19 +170,22 @@
                                     <x-admin::form.control-group.label>
                                         @lang('admin::app.quotes.create.link-to-lead')
                                     </x-admin::form.control-group.label>
-            
+
                                     <v-lookup-component
+                                        :key="leadEntity.id"
                                         :attribute="{'code': 'lead_id', 'name': 'Lead', 'lookup_type': 'leads'}"
-                                        :value='@json($lookUpEntityData)'
+                                        :value="leadEntity"
+                                        can-add-new="true"
+                                        @lookup-removed="setLeadEntity"
                                     ></v-lookup-component>
                                 </x-admin::form.control-group>
                             </div>
 
-                            <!-- Custom Attributes -->   
+                            <!-- Custom Attributes -->
                             <x-admin::attributes
                                 :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
-                                    'entity_type' => 'quotes',
-                                    ['code', 'NOTIN', ['subject', 'description', 'expired_at', 'user_id', 'person_id','billing_address', 'shipping_address']],
+                                    'entity_type'     => 'quotes',
+                                    'is_user_defined' => 1,
                                 ])->sortBy('sort_order')"
                                 :custom-validations="[
                                     'expired_at' => [
@@ -202,9 +204,9 @@
                     {!! view_render_event('admin.contacts.quotes.edit.address_information.before', ['quote' => $quote]) !!}
 
                     <!-- Address information -->
-                    <div 
+                    <div
                         id="address-info"
-                        class="flex flex-col gap-4" 
+                        class="flex flex-col gap-4"
                     >
                         <div class="flex flex-col gap-1">
                             <p class="text-base font-semibold text-gray-800 dark:text-white">
@@ -242,7 +244,7 @@
                     <!-- Quote Item Information -->
                     <div
                         id="quote-items"
-                        class="flex flex-col gap-4" 
+                        class="flex flex-col gap-4"
                     >
                         <div class="flex flex-col gap-1">
                             <p class="text-base font-semibold text-gray-800 dark:text-white">
@@ -260,7 +262,7 @@
 
                     {!! view_render_event('admin.contacts.quotes.edit.quote_information.after', ['quote' => $quote]) !!}
                 </div>
-                
+
                 {!! view_render_event('admin.contacts.quotes.edit.form_controls.after', ['quote' => $quote]) !!}
             </div>
         </script>
@@ -278,32 +280,32 @@
                             <x-admin::table.th>
                                 @lang('admin::app.quotes.create.product-name')
                             </x-admin::table.th>
-                
+
                             <x-admin::table.th class="text-center">
                                 @lang('admin::app.quotes.create.quantity')
                             </x-admin::table.th>
-                
+
                             <x-admin::table.th class="text-center">
                                 @lang('admin::app.quotes.create.price') ({{ core()->currencySymbol(config('app.currency')) }})
                             </x-admin::table.th>
-                
+
                             <x-admin::table.th class="text-center">
                                 @lang('admin::app.quotes.create.amount') ({{ core()->currencySymbol(config('app.currency')) }})
                             </x-admin::table.th>
-                
+
                             <x-admin::table.th class="text-center">
                                 @lang('admin::app.quotes.create.discount') ({{ core()->currencySymbol(config('app.currency')) }})
                             </x-admin::table.th>
-                
+
                             <x-admin::table.th class="text-center">
                                 @lang('admin::app.quotes.create.tax') ({{ core()->currencySymbol(config('app.currency')) }})
                             </x-admin::table.th>
-                
+
                             <x-admin::table.th class="text-center">
                                 @lang('admin::app.quotes.create.total') ({{ core()->currencySymbol(config('app.currency')) }})
                             </x-admin::table.th>
 
-                            <x-admin::table.th 
+                            <x-admin::table.th
                                 v-if="products.length > 1"
                                 class="!px-2 ltr:text-right rtl:text-left"
                             >
@@ -420,7 +422,7 @@
                 <!-- Quote Product Name -->
                 <x-admin::table.td>
                     <x-admin::form.control-group class="!mb-0">
-                        <x-admin::lookup 
+                        <x-admin::lookup
                             ::src="src"
                             ::name="`${inputName}[product_id]`"
                             ::params="params"
@@ -430,7 +432,7 @@
                         />
                     </x-admin::form.control-group>
                 </x-admin::table.td>
-            
+
                 <!-- Quantity -->
                 <x-admin::table.td class="!px-2 ltr:text-right rtl:text-left">
                     <x-admin::form.control-group class="!mb-0">
@@ -447,7 +449,7 @@
                         />
                     </x-admin::form.control-group>
                 </x-admin::table.td>
-            
+
                 <!-- Price -->
                 <x-admin::table.td class="!px-2 ltr:text-right rtl:text-left">
                     <x-admin::form.control-group class="!mb-0">
@@ -465,7 +467,7 @@
                         />
                     </x-admin::form.control-group>
                 </x-admin::table.td>
-            
+
                 <!-- Total -->
                 <x-admin::table.td class="!px-2 ltr:text-right rtl:text-left">
                     <x-admin::form.control-group class="!mb-0">
@@ -483,7 +485,7 @@
                         />
                     </x-admin::form.control-group>
                 </x-admin::table.td>
-            
+
                 <!-- Discount Amount -->
                 <x-admin::table.td class="!px-2 ltr:text-right rtl:text-left">
                     <x-admin::form.control-group class="!mb-0">
@@ -501,7 +503,7 @@
                         />
                     </x-admin::form.control-group>
                 </x-admin::table.td>
-            
+
                 <!-- Tax Amount -->
                 <x-admin::table.td class="!px-2 ltr:text-right rtl:text-left">
                     <x-admin::form.control-group class="!mb-0">
@@ -519,7 +521,7 @@
                         />
                     </x-admin::form.control-group>
                 </x-admin::table.td>
-            
+
                 <!-- Total with Discount -->
                 <x-admin::table.td class="!px-2 ltr:text-right rtl:text-left">
                     <x-admin::form.control-group class="!mb-0">
@@ -541,7 +543,7 @@
                     class="!p-2 !px-2 ltr:text-right rtl:text-left"
                 >
                     <x-admin::form.control-group class="!mb-0">
-                        <i  
+                        <i
                             @click="removeProduct"
                             class="icon-delete cursor-pointer text-2xl"
                         ></i>
@@ -565,15 +567,17 @@
                             { id: 'address-info', label: '@lang('admin::app.quotes.create.address-info')' },
                             { id: 'quote-items', label: '@lang('admin::app.quotes.create.quote-items')' }
                         ],
+
+                        leadEntity: @json($lookUpEntityData ?? []),
                     };
                 },
 
                 methods: {
                     /**
                      * Scroll to the section.
-                     * 
+                     *
                      * @param {String} tabId
-                     * 
+                     *
                      * @returns {void}
                      */
                     scrollToSection(tabId) {
@@ -582,6 +586,10 @@
                         if (section) {
                             section.scrollIntoView({ behavior: 'smooth' });
                         }
+                    },
+
+                    setLeadEntity($event) {
+                        this.leadEntity = $event;
                     },
                 },
             });
@@ -602,7 +610,7 @@
                 computed: {
                     /**
                      * Calculate the sub total of the products.
-                     * 
+                     *
                      * @returns {Number}
                      */
                     subTotal() {
@@ -617,7 +625,7 @@
 
                     /**
                      * Calculate the total discount amount of the products.
-                     * 
+                     *
                      * @returns {Number}
                      */
                     discountAmount() {
@@ -630,7 +638,7 @@
 
                     /**
                      * Calculate the total tax amount of the products.
-                     * 
+                     *
                      * @returns {Number}
                      */
                     taxAmount() {
@@ -643,7 +651,7 @@
 
                     /**
                      * Calculate the grand total of the products.
-                     * 
+                     *
                      * @returns {Number}
                      */
                     grandTotal() {
@@ -660,7 +668,7 @@
                 methods: {
                     /**
                      * Add a new product.
-                     * 
+                     *
                      * @returns {void}
                      */
                     addProduct() {
@@ -678,7 +686,7 @@
 
                     /**
                      * Remove the product.
-                     * 
+                     *
                      * @param {Object} product
                      */
                     removeProduct(product) {
@@ -724,7 +732,7 @@
                 computed: {
                     /**
                      * Get the input name.
-                     * 
+                     *
                      * @returns {String}
                      */
                     inputName() {
@@ -737,7 +745,7 @@
 
                     /**
                      * Get the source URL.
-                     * 
+                     *
                      * @returns {String}
                      */
                     src() {
@@ -756,9 +764,9 @@
                 methods: {
                     /**
                      * Add the product.
-                     * 
+                     *
                      * @param {Object} result
-                     * 
+                     *
                      * @return {void}
                      */
                     addProduct(result) {
@@ -772,7 +780,7 @@
 
                     /**
                      * Remove the product.
-                     * 
+                     *
                      * @return {void}
                      */
                     removeProduct() {
@@ -789,5 +797,5 @@
                 scroll-behavior: smooth;
             }
         </style>
-    @endPushOnce    
+    @endPushOnce
 </x-admin::layouts>

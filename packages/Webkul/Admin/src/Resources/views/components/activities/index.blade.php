@@ -155,7 +155,7 @@
                                                 >
                                                     @lang('admin::app.components.activities.index.scheduled-on'):
 
-                                                    @{{ $admin.formatDate(activity.schedule_from, 'd MMM yyyy, h:mm A') + ' - ' + $admin.formatDate(activity.schedule_from, 'd MMM yyyy, h:mm A') }}
+                                                    @{{ $admin.formatDate(activity.schedule_from, 'd MMM yyyy, h:mm A', timezone) + ' - ' + $admin.formatDate(activity.schedule_to, 'd MMM yyyy, h:mm A', timezone) }}
                                                 </p>
 
                                                 <!-- Activity Participants -->
@@ -226,7 +226,7 @@
 
                                         <!-- Activity Time and User -->
                                         <div class="text-gray-500 dark:text-gray-300">
-                                            @{{ $admin.formatDate(activity.created_at, 'd MMM yyyy, h:mm A') }},
+                                            @{{ $admin.formatDate(activity.created_at, 'd MMM yyyy, h:mm A', timezone) }},
 
                                             @{{ "@lang('admin::app.components.activities.index.by-user', ['user' => 'replace'])".replace('replace', activity.user?.name ?? '@lang('admin::app.components.activities.index.system')') }}
                                         </div>
@@ -263,7 +263,7 @@
                                                 <template v-if="activity.type != 'email'">
                                                     @if (bouncer()->hasPermission('activities.edit'))
                                                         <x-admin::dropdown.menu.item
-                                                            v-if="! activity.is_done"
+                                                            v-if="! activity.is_done && ['call', 'meeting', 'lunch'].includes(activity.type)"
                                                             @click="markAsDone(activity)"
                                                         >
                                                             <div class="flex items-center gap-2">
@@ -273,7 +273,7 @@
                                                             </div>
                                                         </x-admin::dropdown.menu.item>
 
-                                                        <x-admin::dropdown.menu.item>
+                                                        <x-admin::dropdown.menu.item v-if="['call', 'meeting', 'lunch'].includes(activity.type)">
                                                             <a
                                                                 class="flex items-center gap-2"
                                                                 :href="'{{ route('admin.activities.edit', 'replaceId') }}'.replace('replaceId', activity.id)"
@@ -515,6 +515,8 @@
                             description: "{{ trans('admin::app.components.activities.index.empty-placeholders.system.description') }}",
                         }
                     },
+
+                    timezone: "{{ config('app.timezone') }}",
                 }
             },
 

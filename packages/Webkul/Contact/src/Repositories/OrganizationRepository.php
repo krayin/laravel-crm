@@ -108,8 +108,6 @@ class OrganizationRepository extends Repository
         $organization = $this->findOrFail($id);
 
         DB::transaction(function () use ($organization, $id) {
-            $organization->persons()->delete();
-
             $this->attributeValueRepository->deleteWhere([
                 'entity_id'   => $id,
                 'entity_type' => 'organizations',

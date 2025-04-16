@@ -107,7 +107,7 @@
 
                         <!-- Create Leads -->
                         <x-admin::form.control-group>
-                            <x-admin::form.control-group.label class="required">
+                            <x-admin::form.control-group.label>
                                 @lang('admin::app.settings.webforms.create.create-lead')
                             </x-admin::form.control-group.label>
 
@@ -125,7 +125,7 @@
                             </label>
                         </x-admin::form.control-group>
 
-                        <!-- Customize Webform -->
+                        <!-- Customize Web-form -->
                         <div class="mb-4 flex items-center justify-between gap-4">
                             <div class="flex flex-col gap-1">
                                 <p class="text-base font-semibold text-gray-800 dark:text-white">
