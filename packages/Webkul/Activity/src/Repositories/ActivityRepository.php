@@ -14,8 +14,9 @@ class ActivityRepository extends Repository
      */
     public function __construct(
         protected FileRepository $fileRepository,
-        Container $container
-    ) {
+        Container                $container
+    )
+    {
         parent::__construct($container);
     }
 
@@ -40,13 +41,15 @@ class ActivityRepository extends Repository
 
         if (isset($data['file'])) {
             $this->fileRepository->create([
-                'name'        => $data['name'] ?? $data['file']->getClientOriginalName(),
-                'path'        => $data['file']->store('activities/'.$activity->id),
+                'issue_date' => $data['issue_date'] ?? null,
+                'expiry_date' => $data['expiry_date'] ?? null,
+                'name' => $data['name'] ?? $data['file']->getClientOriginalName(),
+                'path' => $data['file']->store('activities/' . $activity->id),
                 'activity_id' => $activity->id,
             ]);
         }
 
-        if (! isset($data['participants'])) {
+        if (!isset($data['participants'])) {
             return $activity;
         }
 
@@ -68,8 +71,8 @@ class ActivityRepository extends Repository
     /**
      * Update pipeline.
      *
-     * @param  int  $id
-     * @param  string  $attribute
+     * @param int $id
+     * @param string $attribute
      * @return \Webkul\Activity\Contracts\Activity
      */
     public function update(array $data, $id, $attribute = 'id')
@@ -114,7 +117,7 @@ class ActivityRepository extends Repository
     }
 
     /**
-     * @param  string  $dateRange
+     * @param string $dateRange
      * @return mixed
      */
     public function getActivities($dateRange)
@@ -143,10 +146,10 @@ class ActivityRepository extends Repository
     }
 
     /**
-     * @param  string  $startFrom
-     * @param  string  $endFrom
-     * @param  array  $participants
-     * @param  int  $id
+     * @param string $startFrom
+     * @param string $endFrom
+     * @param array $participants
+     * @param int $id
      * @return bool
      */
     public function isDurationOverlapping($startFrom, $endFrom, $participants, $id)
@@ -176,7 +179,7 @@ class ActivityRepository extends Repository
             })
             ->groupBy('activities.id');
 
-        if (! is_null($id)) {
+        if (!is_null($id)) {
             $queryBuilder->where('activities.id', '!=', $id);
         }
 

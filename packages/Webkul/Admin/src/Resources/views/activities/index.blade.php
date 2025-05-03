@@ -11,7 +11,7 @@
             <div class="flex items-center justify-between rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
                 <div class="flex flex-col gap-2">
                     <x-admin::breadcrumbs name="activities" />
-        
+
                     <div class="text-xl font-bold dark:text-white">
                         @lang('admin::app.activities.index.title')
                     </div>
@@ -19,7 +19,7 @@
 
                 <div class="flex gap-2">
                     <i class="icon-list cursor-pointer rounded p-2 text-2xl"></i>
-        
+
                     <i class="icon-calendar cursor-pointe rounded p-2 text-2xl"></i>
                 </div>
             </div>
@@ -37,7 +37,7 @@
     {!! view_render_event('admin.activities.index.activities.after') !!}
 
     @pushOnce('scripts')
-        <script 
+        <script
             type="text/x-template"
             id="v-activities-template"
         >
@@ -45,7 +45,7 @@
                 <div class="flex items-center justify-between rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
                     <div class="flex flex-col gap-2">
                         <x-admin::breadcrumbs name="activities" />
-            
+
                         <div class="text-xl font-bold dark:text-white">
                             @lang('admin::app.activities.index.title')
                         </div>
@@ -59,7 +59,7 @@
                             :class="{'bg-gray-200 dark:bg-gray-800 text-gray-800 dark:text-white': viewType == 'table'}"
                             @click="toggleView('table')"
                         ></i>
-            
+
                         <i
                             class="icon-calendar cursor-pointer rounded-md p-2 text-2xl"
                             :class="{'bg-gray-200 dark:bg-gray-800 text-gray-800 dark:text-white': viewType == 'calendar'}"
@@ -91,7 +91,7 @@
                                 <template v-if="isLoading">
                                     <x-admin::shimmer.datagrid.table.head :isMultiRow="true" />
                                 </template>
-                    
+
                                 <template v-else>
                                     <div class="row grid grid-cols-[.3fr_.1fr_.3fr_.5fr] grid-rows-1 items-center gap-x-2.5 border-b px-4 py-2.5 dark:border-gray-800 max-lg:hidden">
                                         <div
@@ -122,7 +122,7 @@
                                                 >
                                                 </span>
                                             </label>
-                    
+
                                             <p class="text-gray-600 dark:text-gray-300">
                                                 <span class="[&>*]:after:content-['_/_']">
                                                     <template v-for="column in columnGroup">
@@ -140,7 +140,7 @@
                                                         </span>
                                                     </template>
                                                 </span>
-                    
+
                                                 <i
                                                     class="align-text-bottom text-base text-gray-800 dark:text-white ltr:ml-1.5 rtl:mr-1.5"
                                                     :class="[applied.sort.order === 'asc' ? 'icon-stats-down': 'icon-stats-up']"
@@ -179,7 +179,7 @@
                                                     </span>
                                                 </label>
                                             </div>
-                                            
+
                                             <!-- Mobile Sort Dropdown -->
                                             <div v-if="available.columns.some(column => column.sortable)">
                                                 <x-admin::dropdown position="bottom-{{ in_array(app()->getLocale(), ['fa', 'ar']) ? 'left' : 'right' }}">
@@ -192,12 +192,12 @@
                                                                 <span>
                                                                     Sort
                                                                 </span>
-                                
+
                                                                 <span class="icon-down-arrow text-2xl"></span>
                                                             </button>
                                                         </div>
                                                     </x-slot>
-                            
+
                                                     <x-slot:menu>
                                                         <x-admin::dropdown.menu.item
                                                             v-for="column in available.columns.filter(column => column.sortable && column.visibility)"
@@ -231,7 +231,7 @@
                                 <template v-if="isLoading">
                                     <x-admin::shimmer.datagrid.table.body :isMultiRow="true" />
                                 </template>
-                    
+
                                 <template v-else>
                                     <div
                                         class="row grid grid-cols-[.3fr_.1fr_.3fr_.5fr] grid-rows-1 gap-x-2.5 border-b px-4 py-2.5 transition-all hover:bg-gray-50 dark:border-gray-800 dark:hover:bg-gray-950 max-lg:hidden"
@@ -247,12 +247,12 @@
                                                 class="peer hidden"
                                                 v-model="applied.massActions.indices"
                                             >
-                
+
                                             <label
                                                 class="icon-checkbox-outline peer-checked:icon-checkbox-select cursor-pointer rounded-md text-2xl text-gray-600 peer-checked:text-brandColor dark:text-gray-300"
                                                 :for="`mass_action_select_record_${record.id}`"
                                             ></label>
-                    
+
                                             <div class="flex flex-col gap-1.5">
                                                 <p class="text-gray-600 dark:text-gray-300">
                                                     @{{ record.id }}
@@ -261,7 +261,7 @@
                                                 <p class="text-gray-600 dark:text-gray-300">
                                                     @{{ record.title }}
                                                 </p>
-                    
+
                                                 <p
                                                     class="text-gray-600 dark:text-gray-300"
                                                     v-html="record.created_by_id"
@@ -269,7 +269,7 @@
                                                 </p>
                                             </div>
                                         </div>
-                    
+
                                         <!-- Is Done -->
                                         <div class="flex gap-1.5">
                                             <div class="flex flex-col gap-1.5">
@@ -296,13 +296,13 @@
                                                 </p>
                                             </div>
                                         </div>
-                                        
+
                                         <div class="flex items-start justify-between gap-x-4">
                                             <div class="flex flex-col gap-1.5">
                                                 <p class="text-gray-600 dark:text-gray-300">
                                                     @{{ record.schedule_from ?? 'N/A' }}
                                                 </p>
-                    
+
                                                 <p class="text-gray-600 dark:text-gray-300">
                                                     @{{ record.schedule_to }}
                                                 </p>
@@ -326,7 +326,7 @@
                                                     ></span>
                                                 </p>
                                             </div>
-                                        </div> 
+                                        </div>
                                     </div>
 
                                     <!-- Mobile Card View -->
@@ -347,7 +347,7 @@
                                                             class="peer hidden"
                                                             v-model="applied.massActions.indices"
                                                         >
-                
+
                                                         <span class="icon-checkbox-outline peer-checked:icon-checkbox-select cursor-pointer rounded-md text-2xl text-gray-500 peer-checked:text-brandColor">
                                                         </span>
                                                     </label>
@@ -391,7 +391,7 @@
                         {!! view_render_event('admin.activities.index.vue_calender.before') !!}
 
                         <v-calendar></v-calendar>
-                        
+
                         {!! view_render_event('admin.activities.index.vue_calender.after') !!}
                     </template>
                 </div>
@@ -430,7 +430,7 @@
                 methods: {
                     /**
                      * Toggle view type.
-                     * 
+                     *
                      * @param {String} type
                      * @return {void}
                      */
@@ -462,7 +462,7 @@
                 mounted() {
                     /**
                      * Listen for the theme change event.
-                     * 
+                     *
                      * @return {void}
                      */
                     this.$emitter.on('change-theme', (theme) => this.theme = theme);
@@ -471,10 +471,10 @@
                 methods: {
                     /**
                      * Get the activities for the calendar.
-                     * 
+                     *
                      * @param {Object} {startDate}
                      * @param {Object} {endDate}
-                     * @return {void} 
+                     * @return {void}
                      */
                     getActivities({startDate, endDate}) {
                         this.$root.pageLoaded = false;
@@ -488,7 +488,7 @@
 
                     /**
                      * Redirect to the activity edit page.
-                     * 
+                     *
                      * @param {Object} event
                      * @return {void}
                      */
@@ -504,7 +504,7 @@
         <script>
             /**
              * Update status for `is_done`.
-             * 
+             *
              * @param {Event} {target}
              * @return {void}
              */

@@ -66,7 +66,7 @@
                                 name="type"
                                 value="file"
                             />
-                            
+
                             <!-- Id -->
                             <x-admin::form.control-group.control
                                 type="hidden"
@@ -79,7 +79,7 @@
                                 <x-admin::form.control-group.label>
                                     @lang('admin::app.components.activities.actions.file.title-control')
                                 </x-admin::form.control-group.label>
-                                
+
                                 <x-admin::form.control-group.control
                                     type="text"
                                     name="title"
@@ -91,13 +91,13 @@
                                 <x-admin::form.control-group.label>
                                     @lang('admin::app.components.activities.actions.file.description')
                                 </x-admin::form.control-group.label>
-                                
+
                                 <x-admin::form.control-group.control
                                     type="textarea"
                                     name="comment"
                                 />
                             </x-admin::form.control-group>
-                            
+
                             <!-- File Name -->
                             <x-admin::form.control-group>
                                 <x-admin::form.control-group.label>
@@ -115,7 +115,7 @@
                                 <x-admin::form.control-group.label class="required">
                                     @lang('admin::app.components.activities.actions.file.file')
                                 </x-admin::form.control-group.label>
-                                
+
                                 <x-admin::form.control-group.control
                                     type="file"
                                     id="file"
@@ -125,6 +125,30 @@
                                 />
 
                                 <x-admin::form.control-group.error control-name="file" />
+                            </x-admin::form.control-group>
+
+                            <!-- Issue Date -->
+                            <x-admin::form.control-group>
+                                <x-admin::form.control-group.label>
+                                    @lang('admin::app.components.activities.actions.file.issue-date')
+                                </x-admin::form.control-group.label>
+
+                                <x-admin::form.control-group.control
+                                    type="date"
+                                    name="issue_date"
+                                />
+                            </x-admin::form.control-group>
+
+                            <!-- Expiry Date -->
+                            <x-admin::form.control-group>
+                                <x-admin::form.control-group.label>
+                                    @lang('admin::app.components.activities.actions.file.expiry-date')
+                                </x-admin::form.control-group.label>
+
+                                <x-admin::form.control-group.control
+                                    type="date"
+                                    name="expiry_date"
+                                />
                             </x-admin::form.control-group>
 
                             {!! view_render_event('admin.components.activities.actions.file.form_controls.modal.content.controls.after') !!}
