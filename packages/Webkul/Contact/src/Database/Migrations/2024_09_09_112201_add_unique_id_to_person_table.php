@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('unique_id')->nullable()->unique();
         });
 
-        $tableName = DB::getTablePrefix() . 'persons';
+        $tableName = DB::getTablePrefix().'persons';
 
         DB::statement("
             UPDATE {$tableName}
