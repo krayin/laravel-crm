@@ -436,7 +436,13 @@
                             ::name="`${inputName}[product_id]`"
                             :placeholder="trans('admin::app.quotes.create.search-products')"
                             @on-selected="(product) => addProduct(product)"
+                            rules="required"
+                            label="Product Name"
+                            ::class="errors[`${inputName}[product_id]`] ? 'border !border-red-600 hover:border-red-600' : ''"
                         />
+
+                        <x-admin::form.control-group.error name="items.item_0.product_id"/>
+                        <x-admin::form.control-group.error name="items[item_0][product_id]"/>
                     </x-admin::form.control-group>
                 </x-admin::table.td>
 
@@ -447,13 +453,15 @@
                             type="inline"
                             ::name="`${inputName}[quantity]`"
                             ::value="product.quantity"
-                            rules="required|decimal:4"
+                            rules="required|numeric|min:1"
                             ::errors="errors"
                             :label="trans('admin::app.quotes.create.quantity')"
                             :placeholder="trans('admin::app.quotes.create.quantity')"
                             @on-change="(event) => product.quantity = event.value"
                             position="center"
                         />
+
+                        <x-admin::form.control-group.error name="items.item_0.quantity"/>
                     </x-admin::form.control-group>
                 </x-admin::table.td>
 
@@ -472,6 +480,8 @@
                             position="center"
                             ::value-label="$admin.formatPrice(product.price)"
                         />
+
+                        <x-admin::form.control-group.error name="items.item_0.price"/>
                     </x-admin::form.control-group>
                 </x-admin::table.td>
 
@@ -490,6 +500,8 @@
                             position="center"
                             ::value-label="$admin.formatPrice(product.price * product.quantity)"
                         />
+
+                        <x-admin::form.control-group.error name="items.item_0.total"/>
                     </x-admin::form.control-group>
                 </x-admin::table.td>
 
@@ -508,6 +520,8 @@
                             position="center"
                             ::value-label="$admin.formatPrice(product.discount_amount)"
                         />
+
+                        <x-admin::form.control-group.error name="items.item_0.discount_amount"/>
                     </x-admin::form.control-group>
                 </x-admin::table.td>
 
@@ -526,6 +540,8 @@
                             position="center"
                             ::value-label="$admin.formatPrice(product.tax_amount)"
                         />
+
+                        <x-admin::form.control-group.error name="items.item_0.tax_amount"/>
                     </x-admin::form.control-group>
                 </x-admin::table.td>
 
@@ -541,6 +557,8 @@
                             position="center"
                             ::value-label="$admin.formatPrice(parseFloat(product.price * product.quantity) + parseFloat(product.tax_amount) - parseFloat(product.discount_amount))"
                         />
+
+                        <x-admin::form.control-group.error name="items.item_0.final_total"/>
                     </x-admin::form.control-group>
                 </x-admin::table.td>
 
