@@ -15,16 +15,16 @@ const usedSlugs = new Set();
  */
 function generateName() {
     const adjectives = [
-        "Cool", "Smart", "Fast", "Sleek", "Innovative", "Shiny", "Bold", 
-        "Elegant", "Epic", "Mystic", "Brilliant", "Luminous", "Radiant", 
-        "Majestic", "Vivid", "Glowing", "Dynamic", "Fearless", "Silent", 
+        "Cool", "Smart", "Fast", "Sleek", "Innovative", "Shiny", "Bold",
+        "Elegant", "Epic", "Mystic", "Brilliant", "Luminous", "Radiant",
+        "Majestic", "Vivid", "Glowing", "Dynamic", "Fearless", "Silent",
         "Electric", "Golden", "Blazing", "Timeless", "Noble", "Eternal"
       ];
-      
+
       const nouns = [
-        "Star", "Vision", "Echo", "Spark", "Horizon", "Nova", "Shadow", 
-        "Wave", "Pulse", "Vortex", "Zenith", "Element", "Flare", "Comet", 
-        "Galaxy", "Ember", "Crystal", "Sky", "Stone", "Blaze", "Eclipse", 
+        "Star", "Vision", "Echo", "Spark", "Horizon", "Nova", "Shadow",
+        "Wave", "Pulse", "Vortex", "Zenith", "Element", "Flare", "Comet",
+        "Galaxy", "Ember", "Crystal", "Sky", "Stone", "Blaze", "Eclipse",
         "Storm", "Orbit", "Phantom", "Mirage"
       ];
 
@@ -361,6 +361,24 @@ function generateCompanyName() {
     return `${prefixes[Math.floor(Math.random() * prefixes.length)]} ${suffixes[Math.floor(Math.random() * suffixes.length)]}`;
 }
 
+function generateProductName() {
+    const adjectives = ['Awesome', 'Portable', 'Eco', 'Smart', 'Compact'];
+    const items = ['Phone', 'Laptop', 'Bottle', 'Bag', 'Watch'];
+    return (
+        adjectives[Math.floor(Math.random() * adjectives.length)] +
+        ' ' +
+        items[Math.floor(Math.random() * items.length)]
+    );
+}
+
+function generatePrice() {
+    return (Math.random() * (999 - 10) + 10).toFixed(2);
+}
+
+function generateQuantity() {
+    return Math.floor(Math.random() * 100 + 1).toString();
+}
+
 /**
  * Function to automate organization creation
  */
@@ -383,14 +401,14 @@ async function createOrganization(page) {
     await page.getByRole('textbox', { name: 'City' }).fill('Delhi');
     await page.getByRole('textbox', { name: 'Postcode' }).fill('123456');
 
-    /** 
+    /**
      * Click to add extra details
      */
     await page.locator('div').filter({ hasText: /^Click to add$/ }).nth(2).click();
     await page.getByRole('textbox', { name: 'Search...' }).fill('exampl');
     await page.getByRole('listitem').filter({ hasText: 'Example' }).click();
 
-    /** 
+    /**
      * Click on "Save Organization"
      */
     await page.getByRole('button', { name: 'Save Organization' }).click();
@@ -438,6 +456,27 @@ async function createPerson(page) {
 
     return { Name, email, phone };
 }
+
+async function createProduct(page) {
+    const name = generateProductName();
+    const description = generateDescription();
+    const sku = generateSKU();
+    const price = generatePrice();
+    const quantity = generateQuantity();
+
+    await page.getByRole('link', { name: 'Create Product' }).click();
+
+    await page.getByRole('textbox', { name: 'Name *' }).fill(name);
+    await page.getByRole('textbox', { name: 'Description' }).fill(description);
+    await page.getByRole('textbox', { name: 'SKU *' }).fill(sku);
+    await page.getByRole('textbox', { name: 'Price *' }).fill(price);
+    await page.getByRole('textbox', { name: 'Quantity *' }).fill(quantity);
+
+    await page.getByRole('button', { name: 'Save Products' }).click();
+
+    return { name };
+}
+
 function getRandomDateTime() {
     const year = Math.floor(Math.random() * (2030 - 2020 + 1)) + 2020;
     const month = String(Math.floor(Math.random() * 12) + 1).padStart(2, '0');
@@ -445,7 +484,7 @@ function getRandomDateTime() {
     const hours = String(Math.floor(Math.random() * 24)).padStart(2, '0');
     const minutes = String(Math.floor(Math.random() * 60)).padStart(2, '0');
     const seconds = String(Math.floor(Math.random() * 60)).padStart(2, '0');
-  
+
     return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
   }
 
@@ -467,5 +506,6 @@ export {
     createOrganization,
     generateCompanyName,
     createPerson,
-    getRandomDateTime
+    getRandomDateTime,
+    createProduct
 };

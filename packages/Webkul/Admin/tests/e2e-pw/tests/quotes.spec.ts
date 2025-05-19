@@ -4,6 +4,7 @@ import {
     createPerson,
     generateDate,
     generateName,
+    createProduct,
 } from "../utils/faker";
 
 test.describe("quotes management", () => {
@@ -12,7 +13,10 @@ test.describe("quotes management", () => {
          * Create person.
          */
         await adminPage.goto("admin/contacts/persons");
-        const Person = await createPerson(adminPage);
+        const person = await createPerson(adminPage);
+
+        await adminPage.goto("admin/products");
+        const product = await createProduct(adminPage);
 
         /**
          * Create quote.
@@ -36,10 +40,10 @@ test.describe("quotes management", () => {
         await adminPage.getByRole("textbox", { name: "Search..." }).click();
         await adminPage
             .getByRole("textbox", { name: "Search..." })
-            .fill(Person.Name);
+            .fill(person.Name);
         await adminPage
             .getByRole("listitem")
-            .filter({ hasText: Person.Name })
+            .filter({ hasText: person.Name })
             .click();
 
         /**
@@ -97,6 +101,14 @@ test.describe("quotes management", () => {
         await adminPage
             .locator('input[name="shipping_address\\[postcode\\]"]')
             .fill("201301");
+
+        await adminPage.locator('.relative.flex.cursor-pointer.items-center.justify-between.rounded.border.p-2').first().click();
+
+        await adminPage.getByRole("textbox", { name: "Search..." }).click();
+        await adminPage.getByRole("textbox", { name: "Search..." }).fill(product.name);
+
+        await adminPage.getByRole("listitem").filter({ hasText: product.name }).click();
+
         await adminPage.getByRole("button", { name: "Save Quote" }).click();
         await expect(adminPage.locator("#app")).toContainText("Success");
     });
