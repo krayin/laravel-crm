@@ -428,7 +428,7 @@
                             @on-selected="(product) => addProduct(product)"
                             :placeholder="trans('admin::app.quotes.edit.search-products')"
                             rules="required"
-                            label="Product Name"
+                            :label="trans('admin::app.quotes.edit.product-name')"
                             ::class="errors[`${inputName}[product_id]`] ? 'border !border-red-600 hover:border-red-600' : ''"
                         />
 

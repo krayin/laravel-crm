@@ -437,7 +437,7 @@
                             :placeholder="trans('admin::app.quotes.create.search-products')"
                             @on-selected="(product) => addProduct(product)"
                             rules="required"
-                            label="Product Name"
+                            :label="trans('admin::app.quotes.create.product-name')"
                             ::class="errors[`${inputName}[product_id]`] ? 'border !border-red-600 hover:border-red-600' : ''"
                         />
 
