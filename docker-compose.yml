@@ -1,0 +1,55 @@
+version: "3.1"
+
+services:
+  krayin-php-apache:
+    build:
+      args:
+        container_project_path: /var/www/html/
+        uid: 1519
+        user: $USER
+      context: .
+      dockerfile: ./Dockerfile
+    image: krayin-php-apache
+    ports:
+      - 80:80
+    volumes:
+      - ./workspace/:/var/www/html/
+
+  krayin-mysql:
+    image: mysql:8.0
+    command: --default-authentication-plugin=mysql_native_password
+    environment:
+      MYSQL_ROOT_HOST: "%"
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - 3306:3306
+    volumes:
+      - ./.configs/mysql-data:/var/lib/mysql/
+
+  krayin-redis:
+    image: redis:6.2-alpine
+    ports:
+      - 6379:6379
+    command: redis-server --save 20 1 --loglevel warning
+    volumes:
+      - ./.configs/redis-data:/data
+
+  krayin-phpmyadmin:
+    image: phpmyadmin:latest
+    environment:
+      PMA_HOST: krayin-mysql
+      PMA_USER: root
+      PMA_PASSWORD: root
+      UPLOAD_LIMIT: 512M
+    ports:
+      - 8080:80
+
+  krayin-mailhog:
+      image: mailhog/mailhog
+      logging:
+          # Disable saving logs.
+          driver: 'none'
+      ports:
+          # SMTP server.
+          - 1025:1025
+          - 8025:8025
