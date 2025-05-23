@@ -1,0 +1,26 @@
+{
+    "name": "krayin/rest-api",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Devansh Bawari",
+            "email": "devansh.bawari419@webkul.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Webkul\\RestApi\\": "src/"
+        }
+    },
+    "require": {
+        "darkaonline/l5-swagger": "^8.6"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Webkul\\RestApi\\Providers\\RestApiServiceProvider"
+            ]
+        }
+    },
+    "minimum-stability": "dev"
+}

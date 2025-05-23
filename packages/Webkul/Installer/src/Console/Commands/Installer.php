@@ -223,17 +223,19 @@ class Installer extends Command
 
         $this->info('Your Default Timezone is '.date_default_timezone_get());
 
-        $locale = $this->updateEnvChoice(
-            'APP_LOCALE',
-            'Please select the default application locale',
-            $this->locales
-        );
+        // $locale = $this->updateEnvChoice(
+        //     'APP_LOCALE',
+        //     'Please select the default application locale',
+        //     $this->locales
+        // );
+        $locale = 'Portuguese';
 
-        $currency = $this->updateEnvChoice(
-            'APP_CURRENCY',
-            'Please select the default currency',
-            $this->currencies
-        );
+        // $currency = $this->updateEnvChoice(
+        //     'APP_CURRENCY',
+        //     'Please select the default currency',
+        //     $this->currencies
+        // );
+        $currency = 'Brazilian Real';
 
         return [
             'locale'   => $locale,
@@ -246,46 +248,56 @@ class Installer extends Command
      */
     protected function askForDatabaseDetails()
     {
+        // $databaseDetails = [
+        //     'DB_CONNECTION' => select(
+        //         'Please select the database connection',
+        //         ['mysql', 'pgsql', 'sqlsrv']
+        //     ),
+
+        //     'DB_HOST'       => text(
+        //         label: 'Please enter the database host',
+        //         default: env('DB_HOST', '127.0.0.1'),
+        //         required: true
+        //     ),
+
+        //     'DB_PORT'       => text(
+        //         label: 'Please enter the database port',
+        //         default: env('DB_PORT', '3306'),
+        //         required: true
+        //     ),
+
+        //     'DB_DATABASE' => text(
+        //         label: 'Please enter the database name',
+        //         default: env('DB_DATABASE', ''),
+        //         required: true
+        //     ),
+
+        //     'DB_PREFIX' => text(
+        //         label: 'Please enter the database prefix',
+        //         default: env('DB_PREFIX', ''),
+        //         hint: 'or press enter to continue'
+        //     ),
+
+        //     'DB_USERNAME' => text(
+        //         label: 'Please enter your database username',
+        //         default: env('DB_USERNAME', ''),
+        //         required: true
+        //     ),
+
+        //     'DB_PASSWORD' => password(
+        //         label: 'Please enter your database password',
+        //         required: true
+        //     ),
+        // ];
+
         $databaseDetails = [
-            'DB_CONNECTION' => select(
-                'Please select the database connection',
-                ['mysql', 'pgsql', 'sqlsrv']
-            ),
-
-            'DB_HOST'       => text(
-                label: 'Please enter the database host',
-                default: env('DB_HOST', '127.0.0.1'),
-                required: true
-            ),
-
-            'DB_PORT'       => text(
-                label: 'Please enter the database port',
-                default: env('DB_PORT', '3306'),
-                required: true
-            ),
-
-            'DB_DATABASE' => text(
-                label: 'Please enter the database name',
-                default: env('DB_DATABASE', ''),
-                required: true
-            ),
-
-            'DB_PREFIX' => text(
-                label: 'Please enter the database prefix',
-                default: env('DB_PREFIX', ''),
-                hint: 'or press enter to continue'
-            ),
-
-            'DB_USERNAME' => text(
-                label: 'Please enter your database username',
-                default: env('DB_USERNAME', ''),
-                required: true
-            ),
-
-            'DB_PASSWORD' => password(
-                label: 'Please enter your database password',
-                required: true
-            ),
+            'DB_CONNECTION' => 'mysql',
+            'DB_HOST'       => '127.0.0.1',
+            'DB_PORT'       => '3306',
+            'DB_DATABASE'   => 'laravel-crm',
+            'DB_PREFIX'     => '',
+            'DB_USERNAME'   => 'root',
+            'DB_PASSWORD'   => 'Flip123@'
         ];
 
         if (
@@ -310,26 +322,27 @@ class Installer extends Command
      */
     protected function createAdminCredentials()
     {
-        $adminName = text(
-            label: 'Enter the name of the admin user',
-            default: 'Example',
-            required: true
-        );
-
-        $adminEmail = text(
-            label: 'Enter the email address of the admin user',
-            default: 'admin@example.com',
-            validate: fn (string $value) => match (true) {
-                ! filter_var($value, FILTER_VALIDATE_EMAIL) => 'The email address you entered is not valid please try again.',
-                default                                     => null
-            }
-        );
-
-        $adminPassword = text(
-            label: 'Configure the password for the admin user',
-            default: 'admin123',
-            required: true
-        );
+         $adminName = 'admin';
+        // $adminName = text(
+        //     label: 'Enter the name of the admin user',
+        //     default: 'Example',
+        //     required: true
+        // );
+        $adminEmail = 'flip@example.com';
+        // $adminEmail = text(
+        //     label: 'Enter the email address of the admin user',
+        //     default: 'admin@example.com',
+        //     validate: fn (string $value) => match (true) {
+        //         ! filter_var($value, FILTER_VALIDATE_EMAIL) => 'The email address you entered is not valid please try again.',
+        //         default                                     => null
+        //     }
+        // );
+        $adminPassword = 'Flip123@';
+        // $adminPassword = text(
+        //     label: 'Configure the password for the admin user',
+        //     default: 'admin123',
+        //     required: true
+        // );
 
         $password = password_hash($adminPassword, PASSWORD_BCRYPT, ['cost' => 10]);
 
@@ -411,13 +424,15 @@ class Installer extends Command
      */
     protected function updateEnvVariable(string $key, string $question, string $defaultValue): void
     {
-        $input = text(
-            label: $question,
-            default: $defaultValue,
-            required: true
-        );
+        // $input = text(
+        //     label: $question,
+        //     default: $defaultValue,
+        //     required: true
+        // );
 
-        $this->envUpdate($key, $input ?: $defaultValue);
+        // $this->envUpdate($key, $input ?: $defaultValue);
+
+        $this->envUpdate($key, $defaultValue);
     }
 
     /**
