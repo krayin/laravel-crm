@@ -1,0 +1,41 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: krayin_app
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/var/www/html
+    depends_on:
+      - mysql
+    networks:
+      krayin_network:
+        ipv4_address: 172.30.0.3  
+
+  mysql:
+    image: mysql:5.7.23
+    container_name: krayin_mysql
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_DATABASE: laravel-crm
+      MYSQL_ROOT_PASSWORD: Flip123@
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      krayin_network:
+        ipv4_address: 172.30.0.2 
+
+volumes:
+  mysql_data:
+
+networks:
+  krayin_network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.30.0.0/24

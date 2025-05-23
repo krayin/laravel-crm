@@ -292,7 +292,7 @@ class Installer extends Command
 
         $databaseDetails = [
             'DB_CONNECTION' => 'mysql',
-            'DB_HOST'       => '127.0.0.1',
+            'DB_HOST'       => '172.30.0.2',
             'DB_PORT'       => '3306',
             'DB_DATABASE'   => 'laravel-crm',
             'DB_PREFIX'     => '',
