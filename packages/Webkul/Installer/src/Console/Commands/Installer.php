@@ -297,7 +297,7 @@ class Installer extends Command
             'DB_DATABASE'   => 'laravel-crm',
             'DB_PREFIX'     => '',
             'DB_USERNAME'   => 'root',
-            'DB_PASSWORD'   => 'Flip123@'
+            'DB_PASSWORD'   => 'Flip123@',
         ];
 
         if (
@@ -322,7 +322,7 @@ class Installer extends Command
      */
     protected function createAdminCredentials()
     {
-         $adminName = 'admin';
+        $adminName = 'admin';
         // $adminName = text(
         //     label: 'Enter the name of the admin user',
         //     default: 'Example',

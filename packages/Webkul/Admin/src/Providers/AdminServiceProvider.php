@@ -9,11 +9,11 @@ use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
+use Stancl\Tenancy\Middleware\InitializeTenancyByDomain;
+use Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains as PreventCentralDomainAccess;
 use Webkul\Admin\Exceptions\Handler;
 use Webkul\Admin\Http\Middleware\Bouncer as BouncerMiddleware;
 use Webkul\Admin\Http\Middleware\Locale;
-use Stancl\Tenancy\Middleware\InitializeTenancyByDomain as InitializeTenancyByDomain;
-use Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains as PreventCentralDomainAccess;
 
 class AdminServiceProvider extends ServiceProvider
 {
@@ -25,8 +25,8 @@ class AdminServiceProvider extends ServiceProvider
         $router->aliasMiddleware('user', BouncerMiddleware::class);
 
         $router->aliasMiddleware('admin_locale', Locale::class);
-        
-        $router->aliasMiddleware('tenancy_domain', InitializeTenancyByDomain::class); 
+
+        $router->aliasMiddleware('tenancy_domain', InitializeTenancyByDomain::class);
 
         $router->aliasMiddleware('prevent_central', PreventCentralDomainAccess::class);
 

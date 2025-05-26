@@ -6,12 +6,12 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Storage;
 use Laravel\Sanctum\HasApiTokens;
-use Webkul\User\Contracts\User as UserContract;
 use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
+use Webkul\User\Contracts\User as UserContract;
 
 class User extends Authenticatable implements UserContract
 {
-    use HasApiTokens, Notifiable, BelongsToTenant;
+    use BelongsToTenant, HasApiTokens, Notifiable;
 
     /**
      * The attributes that are mass assignable.
