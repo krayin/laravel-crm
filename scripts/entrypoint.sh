@@ -25,9 +25,6 @@ else
 
   echo "\033[1;35m Krayin ainda não instalado. Executando instalação...\033[0m"
 
-  # echo "\033[1;33m-> composer require stancl/tenancy\033[0m"
-  # composer require stancl/tenancy
-
   echo "\033[1;34m->composer install\033[0m"
   composer install
 
@@ -37,6 +34,9 @@ else
   echo "\033[1;34m-> php artisan krayin-crm:install\033[0m"
   php artisan krayin-crm:install
 
+  echo "\033[1;33m-> composer require stancl/tenancy\033[0m"
+  composer require stancl/tenancy
+  
   #CONFIGURAÇÕES API 
 
   # echo "nameserver 8.8.8.8" > /etc/resolv.conf
@@ -56,8 +56,8 @@ else
 
   #CONFIGURAÇÕES MULTI TENANT
 
-  # echo "\033[1;33m-> php artisan db:seed\033[0m"
-  # php artisan db:seed
+  echo "\033[1;33m-> php artisan db:seed\033[0m"
+  php artisan db:seed
 
 fi
 

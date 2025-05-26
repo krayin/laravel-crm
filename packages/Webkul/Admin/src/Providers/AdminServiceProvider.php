@@ -12,6 +12,8 @@ use Illuminate\Support\ServiceProvider;
 use Webkul\Admin\Exceptions\Handler;
 use Webkul\Admin\Http\Middleware\Bouncer as BouncerMiddleware;
 use Webkul\Admin\Http\Middleware\Locale;
+use Stancl\Tenancy\Middleware\InitializeTenancyByDomain as InitializeTenancyByDomain;
+use Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains as PreventCentralDomainAccess;
 
 class AdminServiceProvider extends ServiceProvider
 {
@@ -23,10 +25,14 @@ class AdminServiceProvider extends ServiceProvider
         $router->aliasMiddleware('user', BouncerMiddleware::class);
 
         $router->aliasMiddleware('admin_locale', Locale::class);
+        
+        $router->aliasMiddleware('tenancy_domain', InitializeTenancyByDomain::class); 
+
+        $router->aliasMiddleware('prevent_central', PreventCentralDomainAccess::class);
 
         include __DIR__.'/../Http/helpers.php';
 
-        Route::middleware(['web', 'admin_locale', 'user'])
+        Route::middleware(['web', 'admin_locale', 'user', 'tenancy_domain', 'prevent_central'])
             ->prefix(config('app.admin_path'))
             ->group(__DIR__.'/../Routes/Admin/web.php');
 

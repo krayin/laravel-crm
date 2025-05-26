@@ -16,7 +16,7 @@
         "guzzlehttp/guzzle": "^7.0.1",
         "khaled.alshamaa/ar-php": "^6.3",
         "konekt/concord": "^1.10",
-        "krayin/rest-api":"2.1.x-dev",
+        "krayin/rest-api": "2.1.x-dev",
         "laravel/framework": "^10.0",
         "laravel/sanctum": "^3.2",
         "laravel/tinker": "^2.5",
@@ -25,6 +25,7 @@
         "mpdf/mpdf": "^8.2",
         "prettus/l5-repository": "^2.7.9",
         "smalot/pdfparser": "^2.11",
+        "stancl/tenancy": "^3.9",
         "webklex/laravel-imap": "^5.3"
     },
     "require-dev": {
