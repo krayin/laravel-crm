@@ -9,10 +9,10 @@
         <div class="flex max-w-[745px] items-center gap-5">
             <div class="flex w-full flex-col gap-6">
                 <img
-                    src="{{ 
-                        request()->cookie('dark_mode') 
-                        ? vite()->asset('images/dark-logo.svg') 
-                        : vite()->asset('images/logo.svg') 
+                    src="{{
+                        request()->cookie('dark_mode')
+                        ? vite()->asset('images/dark-logo.svg')
+                        : vite()->asset('images/logo.svg')
                     }}"
                     class="w-40 ltr:pr-16 rtl:pl-16"
                 >
@@ -39,18 +39,18 @@
                         </svg>
                     </span>
 
-                    <a
-                        href="{{ route('admin.dashboard.index') }}"
-                        class="hover:underlsine text-sm font-semibold text-blue-600 transition-all"
-                    >
-                        @lang('admin::app.errors.dashboard')
-                    </a>
+{{--                    <a--}}
+{{--                        href="{{ route('admin.dashboard.index') }}"--}}
+{{--                        class="hover:underlsine text-sm font-semibold text-blue-600 transition-all"--}}
+{{--                    >--}}
+{{--                        @lang('admin::app.errors.dashboard')--}}
+{{--                    </a>--}}
                 </div>
 
                 <p class="text-sm text-gray-800 dark:text-white">
                     @lang('admin::app.errors.support', [
-                        'link'  => 'mailto:support@example.com',
-                        'email' => 'support@example.com',
+                        'link'  => 'mailto:alireza2756@gmail.com',
+                        'email' => 'alireza2756@gmail.com',
                         'class' => 'font-semibold text-blue-600 transition-all hover:underline',
                     ])
                 </p>
