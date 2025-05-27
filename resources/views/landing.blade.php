@@ -50,11 +50,18 @@
             height: 100%;
             width: 100%;
             display: flex;
-            align-items: center;
             justify-content: center;
-            text-align: center;
+            align-items: center; /* Center vertically */
             color: white;
-            padding: 20px;
+            padding-top: 0; /* Default */
+            text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            .overlay {
+                align-items: flex-start;   /* Push content up on mobile */
+                padding-top: 15vh;         /* Adjust this value as needed */
+            }
         }
 
         .heading {
