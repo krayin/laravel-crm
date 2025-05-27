@@ -65,11 +65,11 @@ class UserController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(): JsonResource
-    {   
+    {
         $this->validate(request(), [
             'email'            => 'required|email|unique:users,email',
             'name'             => 'required',
-            'tenant_id'        => 'required', 
+            'tenant_id'        => 'required',
             'password'         => 'nullable',
             'confirm_password' => 'nullable|required_with:password|same:password',
             'role_id'          => 'required',
