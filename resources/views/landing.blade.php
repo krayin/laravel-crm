@@ -98,9 +98,8 @@
             </p>
 
             <div class="social-icons">
-                <a href="#"><i class="fab fa-facebook-f"></i></a>
-                <a href="#"><i class="fab fa-instagram"></i></a>
-                <a href="#"><i class="fab fa-whatsapp"></i></a>
+                <a href="https://www.instagram.com/aghaydubai?igsh=MTV5NW94NWYwMGJscA%3D%3D&utm_source=qr"><i class="fab fa-instagram"></i></a>
+                <a href="wa.me/971552554688"><i class="fab fa-whatsapp"></i></a>
             </div>
 
         </div>
