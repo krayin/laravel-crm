@@ -28,9 +28,18 @@
 
         body, html {
             height: 100%;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
+            overflow-x: hidden;
 
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+        .content {
+            max-width: 100%;
+            overflow: hidden;
+        }
         .hero {
             height: 100vh;
             position: relative;
@@ -48,14 +57,8 @@
             padding: 20px;
         }
 
-        .content {
-            max-width: 500px;
-            min-width: 350px;
-        }
-
         .heading {
             font-size: 1.5rem;
-            margin-bottom: 30px;
         }
 
         .social-icons {
@@ -63,7 +66,6 @@
             justify-content: center;
             gap: 30px;
             font-size: 2rem;
-            margin-bottom: 30px;
         }
 
         .social-icons a {
@@ -76,10 +78,6 @@
             transform: scale(1.2);
         }
 
-        .credit {
-            font-size: 0.9rem;
-            color: #ccc;
-        }
 
         .credit a {
             color: white;
@@ -92,7 +90,6 @@
 <div class="hero">
     <div class="overlay">
         <div class="content">
-
             <p class="heading">
                 <img alt="Ofoghe talaei" src="{{vite()->asset('images/landing-logo.svg')}}">
             </p>
