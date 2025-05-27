@@ -32,4 +32,11 @@ class Attribute extends Model implements AttributeContract
     {
         return $this->hasMany(AttributeOptionProxy::modelClass());
     }
+
+    protected static function booted()
+    {
+        static::addGlobalScope('orderBySortOrder', function ($query) {
+            $query->orderBy('sort_order');
+        });
+    }
 }

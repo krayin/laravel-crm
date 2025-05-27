@@ -1,9 +1,9 @@
-<header class="sticky top-0 z-[10001] flex items-center justify-between gap-1 border-b border-gray-200 bg-white px-4 py-2.5 transition-all dark:border-gray-800 dark:bg-gray-900">  
+<header class="sticky top-0 z-[10001] flex items-center justify-between gap-1 border-b border-gray-200 bg-white px-4 py-2.5 transition-all dark:border-gray-800 dark:bg-gray-900">
     <!-- logo -->
     <div class="flex items-center gap-1.5">
         <!-- Sidebar Menu -->
         <x-admin::layouts.sidebar.mobile />
-        
+
         <a href="{{ route('admin.dashboard.index') }}">
             @if ($logo = core()->getConfigData('general.general.admin_logo.logo_image'))
                 <img
@@ -42,7 +42,7 @@
             <!-- Mega Search Bar -->
             @include('admin::components.layouts.header.mobile.mega-search')
         </div>
-        
+
         <!-- Dark mode -->
         <v-dark>
             <div class="flex">
@@ -56,7 +56,7 @@
             <!-- Quick Creation Bar -->
             @include('admin::components.layouts.header.quick-creation')
         </div>
-        
+
         <!-- Admin profile -->
         <x-admin::dropdown position="bottom-{{ in_array(app()->getLocale(), ['fa', 'ar']) ? 'left' : 'right' }}">
             <x-slot:toggle>
@@ -80,7 +80,7 @@
             <x-slot:content class="mt-2 border-t-0 !p-0">
                 <div class="flex items-center gap-1.5 border border-x-0 border-b-gray-300 px-5 py-2.5 dark:border-gray-800">
                     <img
-                        src="{{ url('cache/logo.png') }}"
+                        src="{{ vite()->asset('images/logo.svg') }}"
                         width="24"
                         height="24"
                     />

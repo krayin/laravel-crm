@@ -28,6 +28,7 @@ class AttributeDataGrid extends DataGrid
         $this->addFilter('id', 'attributes.id');
         $this->addFilter('type', 'attributes.type');
         $this->addFilter('attribute_type', 'attributes.is_user_defined');
+        $queryBuilder->orderBy('attributes.sort_order', 'asc');
 
         return $queryBuilder;
     }

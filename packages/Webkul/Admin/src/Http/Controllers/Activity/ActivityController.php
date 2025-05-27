@@ -202,6 +202,12 @@ class ActivityController extends Controller
     {
         try {
             $file = $this->fileRepository->findOrFail($id);
+            $extension = pathinfo($file->path, PATHINFO_EXTENSION);
+
+            if (!empty($file->name)) {
+                $customName = $file->name . '_' . $file->activity->title . '.' . $extension;
+                return Storage::download($file->path, $customName);
+            }
 
             return Storage::download($file->path);
         } catch (\Exception $exception) {

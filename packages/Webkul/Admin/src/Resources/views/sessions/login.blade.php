@@ -9,13 +9,13 @@
             <!-- Logo -->
             @if ($logo = core()->getConfigData('general.design.admin_logo.logo_image'))
                 <img
-                    class="h-10 w-[110px]"
+                    class="h-50 w-[150px]"
                     src="{{ Storage::url($logo) }}"
                     alt="{{ config('app.name') }}"
                 />
             @else
                 <img
-                    class="w-max"
+                    class="h-50 w-[150px]"
                     src="{{ vite()->asset('images/logo.svg') }}"
                     alt="{{ config('app.name') }}"
                 />
@@ -103,12 +103,12 @@
         </div>
 
         <!-- Powered By -->
-        <div class="text-sm font-normal">
-            @lang('admin::app.components.layouts.powered-by.description', [
-                'krayin' => '<a class="text-brandColor hover:underline " href="https://krayincrm.com/">Krayin</a>',
-                'webkul' => '<a class="text-brandColor hover:underline " href="https://webkul.com/">Webkul</a>',
-            ]) 
-        </div>
+{{--        <div class="text-sm font-normal">--}}
+{{--            @lang('admin::app.components.layouts.powered-by.description', [--}}
+{{--                'krayin' => '<a class="text-brandColor hover:underline " href="https://krayincrm.com/">Krayin</a>',--}}
+{{--                'webkul' => '<a class="text-brandColor hover:underline " href="https://webkul.com/">Webkul</a>',--}}
+{{--            ])--}}
+{{--        </div>--}}
     </div>
 
     @push('scripts')
