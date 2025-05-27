@@ -14,7 +14,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $this->call(KrayinDatabaseSeeder::class);
         $this->call(TenantSeeder::class);
+        $this->call(KrayinDatabaseSeeder::class);
     }
 }
