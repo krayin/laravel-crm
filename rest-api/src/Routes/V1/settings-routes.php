@@ -116,6 +116,8 @@ Route::group([
     Route::controller(TenantController::class)->prefix('tenants')->group(function () {
         Route::get('', 'index');
 
+        Route::get('{id}', 'show')->where('id', '[0-9]+');
+
     });
 
     /**
