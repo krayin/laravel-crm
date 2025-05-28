@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Tenant;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class TenantSeeder extends Seeder
 {
@@ -12,6 +13,10 @@ class TenantSeeder extends Seeder
      */
     public function run(): void
     {
+        DB::table('tenants')->delete();
+
+        DB::table('domains')->delete();
+
         $tenant1 = Tenant::create(['id' => 1, 'name' => 'Tenant1']);
         $tenant1->domains()->create(['domain' => 'tenant1.localhost']);
         $tenant2 = Tenant::create(['id' => 2, 'name' => 'Tenant2']);

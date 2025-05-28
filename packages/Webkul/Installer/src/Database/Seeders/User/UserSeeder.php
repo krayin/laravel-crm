@@ -32,8 +32,8 @@ class UserSeeder extends Seeder
             'tenant_id'       => '1',
         ]);
         DB::table('users')->insert([
-            'id'              => 1,
-            'name'            => 'Example Admin',
+            'id'              => 2,
+            'name'            => 'Example Admin 2',
             'email'           => 'flip2@example.com',
             'password'        => bcrypt('Flip123@'),
             // 'api_token'       => Str::random(80),
