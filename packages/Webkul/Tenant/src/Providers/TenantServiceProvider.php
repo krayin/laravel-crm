@@ -4,7 +4,6 @@ namespace Webkul\Tenant\Providers;
 
 use Illuminate\Routing\Router;
 use Illuminate\Support\ServiceProvider;
-use Webkul\Tenant\Repositories\TenantRepository;
 
 class TenantServiceProvider extends ServiceProvider
 {
@@ -24,20 +23,20 @@ class TenantServiceProvider extends ServiceProvider
      *
      * @return void
      */
-   public function register()
-{
-    $this->app->bind(
-        \Webkul\Tenant\Contracts\Tenant::class,
-        \Webkul\Tenant\Models\Tenant::class
-    );
+    public function register()
+    {
+        $this->app->bind(
+            \Webkul\Tenant\Contracts\Tenant::class,
+            \Webkul\Tenant\Models\Tenant::class
+        );
 
-    $this->app->singleton(
-        \Webkul\Tenant\Repositories\TenantRepository::class,
-        function ($app) {
-            return new \Webkul\Tenant\Repositories\TenantRepository(
-                $app->make(\Webkul\Tenant\Contracts\Tenant::class)
-            );
-        }
-    );
-}
+        $this->app->singleton(
+            \Webkul\Tenant\Repositories\TenantRepository::class,
+            function ($app) {
+                return new \Webkul\Tenant\Repositories\TenantRepository(
+                    $app->make(\Webkul\Tenant\Contracts\Tenant::class)
+                );
+            }
+        );
+    }
 }

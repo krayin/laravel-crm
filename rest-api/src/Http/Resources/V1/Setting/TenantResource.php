@@ -20,7 +20,6 @@ class TenantResource extends JsonResource
             'updated_at'           => $this->updated_at,
             'data'                 => $this->data,
 
-            
         ];
     }
 }

@@ -7,8 +7,8 @@ use Webkul\Tenant\Contracts\Tenant as TenantContract;
 
 class Tenant extends Model implements TenantContract
 {
-    protected $table = 'tenants'; 
-    
+    protected $table = 'tenants';
+
     protected $fillable = [
         'id',
         'created_at',

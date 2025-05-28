@@ -3,8 +3,6 @@
 namespace Webkul\RestApi\Http\Controllers\V1\Setting;
 
 use Illuminate\Http\Resources\Json\JsonResource;
-use Illuminate\Support\Facades\Event;
-use Illuminate\Support\Facades\Validator;
 use Webkul\RestApi\Http\Controllers\V1\Controller;
 use Webkul\RestApi\Http\Resources\V1\Setting\TenantResource;
 use Webkul\Tenant\Repositories\TenantRepository;
@@ -12,9 +10,7 @@ use Webkul\Tenant\Repositories\TenantRepository;
 class TenantController extends Controller
 {
     public function __construct(
-        protected TenantRepository $tenantRepository)
-    {
-    }
+        protected TenantRepository $tenantRepository) {}
 
     public function index(): JsonResource
     {
@@ -22,5 +18,4 @@ class TenantController extends Controller
 
         return TenantResource::collection($tenants);
     }
-
 }

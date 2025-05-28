@@ -1,6 +1,7 @@
 <?php
 
 namespace Webkul\Tenant\Repositories;
+
 use Webkul\Core\Eloquent\Repository;
 use Webkul\Tenant\Contracts\Tenant;
 
@@ -12,8 +13,8 @@ class TenantRepository extends Repository
     {
         $this->model = $model;
     }
-    
-     /**
+
+    /**
      * Searchable fields
      */
     protected $fieldSearchable = [
