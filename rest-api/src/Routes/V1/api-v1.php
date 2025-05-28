@@ -47,4 +47,9 @@ Route::group(['prefix' => 'v1'], function () {
      * Configuration routes.
      */
     require 'configuration-routes.php';
+
+    /**
+     * Tenants routes.
+    */
+    require 'tenant-routes.php';
 });

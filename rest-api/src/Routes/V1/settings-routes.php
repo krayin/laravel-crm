@@ -14,6 +14,7 @@ use Webkul\RestApi\Http\Controllers\V1\Setting\SourceController;
 use Webkul\RestApi\Http\Controllers\V1\Setting\TagController;
 use Webkul\RestApi\Http\Controllers\V1\Setting\TypeController;
 use Webkul\RestApi\Http\Controllers\V1\Setting\UserController;
+use Webkul\RestApi\Http\Controllers\V1\Setting\TenantController;
 use Webkul\RestApi\Http\Controllers\V1\Setting\Warehouses\ActivityController;
 use Webkul\RestApi\Http\Controllers\V1\Setting\Warehouses\TagController as WarehouseTagController;
 use Webkul\RestApi\Http\Controllers\V1\Setting\Warehouses\WarehouseController;
@@ -107,6 +108,14 @@ Route::group([
         Route::post('mass-update', 'massUpdate');
 
         Route::post('mass-destroy', 'massDestroy');
+    });
+
+    /**
+     * Tenant routes.
+     */
+    Route::controller(TenantController::class)->prefix('tenants')->group(function () {
+        Route::get('', 'index');
+
     });
 
     /**

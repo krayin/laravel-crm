@@ -75,6 +75,7 @@
             "Webkul\\Quote\\": "packages/Webkul/Quote/src",
             "Webkul\\Tag\\": "packages/Webkul/Tag/src",
             "Webkul\\User\\": "packages/Webkul/User/src",
+            "Webkul\\Tenant\\": "packages/Webkul/Tenant/src",
             "Webkul\\Warehouse\\": "packages/Webkul/Warehouse/src",
             "Webkul\\WebForm\\": "packages/Webkul/WebForm/src",
             "Webkul\\Automation\\": "packages/Webkul/Automation/src"
@@ -99,6 +100,10 @@
         "options": {
             "symlink": true
         }
+    },
+     {
+        "type": "path",
+        "url": "packages/krayin/laravel-tenant"
     }
     ],
     "minimum-stability": "stable",
