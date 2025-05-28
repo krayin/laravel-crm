@@ -33,9 +33,7 @@ class TenantServiceProvider extends ServiceProvider
         $this->app->singleton(
             \Webkul\Tenant\Repositories\TenantRepository::class,
             function ($app) {
-                return new \Webkul\Tenant\Repositories\TenantRepository(
-                    $app->make(\Webkul\Tenant\Contracts\Tenant::class)
-                );
+                return new \Webkul\Tenant\Repositories\TenantRepository($app);
             }
         );
     }

@@ -118,6 +118,9 @@ Route::group([
 
         Route::get('{id}', 'show')->where('id', '[0-9]+');
 
+        Route::post('', 'store');
+
+        Route::delete('{id}', 'destroy');
     });
 
     /**
