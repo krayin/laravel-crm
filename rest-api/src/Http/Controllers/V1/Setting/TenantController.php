@@ -22,7 +22,7 @@ class TenantController extends Controller
     public function show(int $id): TenantResource
     {
         $tenants = $this->allResources($this->tenantRepository);
-        
+
         $resource = $tenants->where('id', $id)->first();
 
         return new TenantResource($resource);
