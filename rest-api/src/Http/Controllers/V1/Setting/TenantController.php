@@ -3,7 +3,6 @@
 namespace Webkul\RestApi\Http\Controllers\V1\Setting;
 
 use Illuminate\Http\Resources\Json\JsonResource;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Webkul\RestApi\Http\Controllers\V1\Controller;
 use Webkul\RestApi\Http\Resources\V1\Setting\TenantResource;
 use Webkul\Tenant\Repositories\TenantRepository;
@@ -25,21 +24,20 @@ class TenantController extends Controller
         try {
 
             return new TenantResource($this->tenantRepository->findOrFail($id));
-        
+
         } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
-        
+
             abort(404, 'Tenant não encontrado');
-        
+
         }
     }
 
     public function store(): JsonResource
     {
         $this->validate(request(), [
-            'id'            => 'required',
+            'id'               => 'required',
             'data'             => 'required',
         ]);
-
 
         $data = request()->all();
 
@@ -54,9 +52,9 @@ class TenantController extends Controller
         ]);
     }
 
-     public function destroy(int $id): JsonResource
+    public function destroy(int $id): JsonResource
     {
-       if ($this->tenantRepository->count() == 1) {
+        if ($this->tenantRepository->count() == 1) {
             return new JsonResource([
                 'message' => trans('rest-api::app.settings.users.last-delete-error'),
             ], 400);
@@ -64,7 +62,6 @@ class TenantController extends Controller
 
             try {
                 $this->tenantRepository->delete($id);
-
 
                 return new JsonResource([
                     'message' => trans('rest-api::app.settings.users.delete-success'),
