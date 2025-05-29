@@ -5,9 +5,11 @@ namespace Webkul\DataTransfer\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Webkul\DataTransfer\Contracts\Import as ImportContract;
+use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
 
 class Import extends Model implements ImportContract
 {
+    use BelongsToTenant;
     /**
      * The attributes that are mass assignable.
      *

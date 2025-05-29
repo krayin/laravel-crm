@@ -5,10 +5,11 @@ namespace Webkul\DataGrid\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Webkul\DataGrid\Contracts\SavedFilter as SavedFilterContract;
+use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
 
 class SavedFilter extends Model implements SavedFilterContract
 {
-    use HasFactory;
+    use HasFactory, BelongsToTenant;
 
     /**
      * Deinfine model table name.

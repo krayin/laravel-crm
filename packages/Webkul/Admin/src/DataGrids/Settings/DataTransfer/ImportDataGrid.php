@@ -23,7 +23,8 @@ class ImportDataGrid extends DataGrid
                 'completed_at',
                 'type',
                 'summary',
-            );
+            )
+            ->where(fn($q) => $q->where('imports.tenant_id', tenant('id'))->orWhereNull('imports.tenant_id'));
     }
 
     /**

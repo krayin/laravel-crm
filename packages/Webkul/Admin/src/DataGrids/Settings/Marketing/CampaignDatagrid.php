@@ -19,7 +19,7 @@ class CampaignDatagrid extends DataGrid
                 'marketing_campaigns.subject',
                 'marketing_campaigns.status',
             )
-            ->where(fn($q) => $q->where('tenant_id', tenant('id'))->orWhereNull('tenant_id'));
+            ->where(fn($q) => $q->where('marketing_campaigns.tenant_id', tenant('id'))->orWhereNull('marketing_campaigns.tenant_id'));
 
         $this->addFilter('id', 'marketing_campaigns.id')
         ;

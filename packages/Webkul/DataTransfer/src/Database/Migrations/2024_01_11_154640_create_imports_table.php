@@ -32,6 +32,9 @@ return new class extends Migration
             $table->datetime('completed_at')->nullable();
 
             $table->timestamps();
+            
+            $table->unsignedInteger('tenant_id')->nullable();
+            $table->foreign('tenant_id')->references('id')->on('tenants')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 

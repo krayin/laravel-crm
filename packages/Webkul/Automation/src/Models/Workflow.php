@@ -4,9 +4,11 @@ namespace Webkul\Automation\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Webkul\Automation\Contracts\Workflow as WorkflowContract;
+use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
 
 class Workflow extends Model implements WorkflowContract
 {
+    use BelongsToTenant;
     protected $casts = [
         'conditions' => 'array',
         'actions'    => 'array',

@@ -8,7 +8,7 @@ use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
 
 class Attribute extends Model implements AttributeContract
 {
-    // use BelongsToTenant;
+    use BelongsToTenant;
     /**
      * The attributes that are mass assignable.
      *
