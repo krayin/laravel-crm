@@ -5,6 +5,7 @@ namespace Webkul\WebForm\Models;
 use Illuminate\Database\Eloquent\Model;
 use Webkul\Attribute\Models\AttributeProxy;
 use Webkul\WebForm\Contracts\WebFormAttribute as WebFormAttributeContract;
+use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
 
 class WebFormAttribute extends Model implements WebFormAttributeContract
 {
@@ -13,6 +14,7 @@ class WebFormAttribute extends Model implements WebFormAttributeContract
      *
      * @var string
      */
+    use BelongsToTenant;
     public $timestamps = false;
 
     /**

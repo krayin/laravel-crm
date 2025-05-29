@@ -4,9 +4,11 @@ namespace Webkul\Attribute\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Webkul\Attribute\Contracts\AttributeOption as AttributeOptionContract;
+use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
 
 class AttributeOption extends Model implements AttributeOptionContract
 {
+    use BelongsToTenant;
     public $timestamps = false;
 
     /**

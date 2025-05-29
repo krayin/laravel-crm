@@ -26,6 +26,9 @@ return new class extends Migration
 
             $table->integer('web_form_id')->unsigned();
             $table->foreign('web_form_id')->references('id')->on('web_forms')->onDelete('cascade');
+
+            $table->unsignedInteger('tenant_id')->nullable();
+            $table->foreign('tenant_id')->references('id')->on('tenants')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 
