@@ -121,7 +121,7 @@ Route::group([
         Route::post('', 'store');
 
         Route::delete('{id}', 'destroy');
-        
+
         Route::put('{id}', 'update');
 
     });
