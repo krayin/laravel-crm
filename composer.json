@@ -95,12 +95,12 @@
             }
         },
         {
-        "type": "path",
-        "url": "./rest-api",
-        "options": {
-            "symlink": true
-        }
-    },
+            "type": "path",
+            "url": "packages/Webkul/rest-api",
+            "options": {
+                "symlink": true
+            }
+        },
      {
         "type": "path",
         "url": "packages/krayin/laravel-tenant"
