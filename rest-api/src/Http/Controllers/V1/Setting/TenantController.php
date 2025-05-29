@@ -48,7 +48,29 @@ class TenantController extends Controller
 
         return new JsonResource([
             'data'    => new TenantResource($admin),
-            'message' => trans('rest-api::app.settings.users.create-success'),
+            'message' => trans('rest-api::app.settings.tenants.create-success'),
+        ]);
+    }
+
+    public function update($id)
+    {
+        $this->validate(request(), [
+            // 'id'            => 'required',
+            'data'             => 'required',
+        ]);
+
+        $data = request()->all();
+
+        $data['data'] = json_encode($data['data']);
+
+        $admin = $this->tenantRepository->update($data, $id);
+
+        $admin->save();
+
+
+        return new JsonResource([
+            'data'    => new TenantResource($admin),
+            'message' => trans('rest-api::app.settings.tenants.updated-success'),
         ]);
     }
 
@@ -56,7 +78,7 @@ class TenantController extends Controller
     {
         if ($this->tenantRepository->count() == 1) {
             return new JsonResource([
-                'message' => trans('rest-api::app.settings.users.last-delete-error'),
+                'message' => trans('rest-api::app.settings.tenants.last-delete-error'),
             ], 400);
         } else {
 
@@ -64,7 +86,7 @@ class TenantController extends Controller
                 $this->tenantRepository->delete($id);
 
                 return new JsonResource([
-                    'message' => trans('rest-api::app.settings.users.delete-success'),
+                    'message' => trans('rest-api::app.settings.tenants.delete-success'),
                 ]);
             } catch (\Exception $exception) {
                 return new JsonResource([

@@ -161,6 +161,13 @@ return [
             'mass-update-failed'  => 'Selected users update failed.',
         ],
 
+        'tenants' => [
+            'create-success'      => 'Tenant created successfully.',
+            'updated-success'     => 'Tenant updated successfully.',
+            'delete-success'      => 'Tenant deleted successfully.',
+            'delete-failed'       => 'Tenant delete failed.',
+        ],
+
         'pipelines' => [
             'create-success'       => 'Pipeline created successfully.',
             'updated-success'      => 'Pipeline updated successfully.',
