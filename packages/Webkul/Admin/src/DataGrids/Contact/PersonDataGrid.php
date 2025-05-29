@@ -30,7 +30,8 @@ class PersonDataGrid extends DataGrid
                 'organizations.name as organization',
                 'organizations.id as organization_id'
             )
-            ->leftJoin('organizations', 'persons.organization_id', '=', 'organizations.id');
+            ->leftJoin('organizations', 'persons.organization_id', '=', 'organizations.id')
+            ->where(fn($q) => $q->where('persons.tenant_id', tenant('id'))->orWhereNull('persons.tenant_id'));
 
         if ($userIds = bouncer()->getAuthorizedUserIds()) {
             $queryBuilder->whereIn('persons.user_id', $userIds);

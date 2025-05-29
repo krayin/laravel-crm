@@ -11,10 +11,11 @@ use Webkul\Contact\Contracts\Person as PersonContract;
 use Webkul\Contact\Database\Factories\PersonFactory;
 use Webkul\Tag\Models\TagProxy;
 use Webkul\User\Models\UserProxy;
+use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
 
 class Person extends Model implements PersonContract
 {
-    use CustomAttribute, HasFactory, LogsActivity;
+    use CustomAttribute, HasFactory, LogsActivity, BelongsToTenant;
 
     /**
      * Table name.
