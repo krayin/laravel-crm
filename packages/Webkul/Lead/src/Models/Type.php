@@ -4,9 +4,11 @@ namespace Webkul\Lead\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Webkul\Lead\Contracts\Type as TypeContract;
+use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
 
 class Type extends Model implements TypeContract
 {
+    use BelongsToTenant;
     protected $table = 'lead_types';
 
     /**

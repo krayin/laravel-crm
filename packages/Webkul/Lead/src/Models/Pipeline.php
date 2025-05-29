@@ -4,9 +4,12 @@ namespace Webkul\Lead\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Webkul\Lead\Contracts\Pipeline as PipelineContract;
+use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
 
 class Pipeline extends Model implements PipelineContract
 {
+    use BelongsToTenant;
+    
     protected $table = 'lead_pipelines';
 
     /**

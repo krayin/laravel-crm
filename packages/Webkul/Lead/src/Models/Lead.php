@@ -13,10 +13,11 @@ use Webkul\Lead\Contracts\Lead as LeadContract;
 use Webkul\Quote\Models\QuoteProxy;
 use Webkul\Tag\Models\TagProxy;
 use Webkul\User\Models\UserProxy;
+use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
 
 class Lead extends Model implements LeadContract
 {
-    use CustomAttribute, LogsActivity;
+    use CustomAttribute, LogsActivity, BelongsToTenant;
 
     protected $casts = [
         'closed_at'           => 'datetime',
