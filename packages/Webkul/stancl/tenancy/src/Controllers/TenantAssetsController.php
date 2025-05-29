@@ -34,7 +34,7 @@ class TenantAssetsController extends Controller
      *
      * @throws \Symfony\Component\HttpKernel\Exception\HttpException
      */
-    protected function validatePath(string|null $path): void
+    protected function validatePath(?string $path): void
     {
         $this->abortIf($path === null, 'Empty path');
 

@@ -17,7 +17,7 @@ if (! function_exists('tenant')) {
     /**
      * Get a key from the current tenant's storage.
      *
-     * @param string|null $key
+     * @param  string|null  $key
      * @return Tenant|null|mixed
      */
     function tenant($key = null)

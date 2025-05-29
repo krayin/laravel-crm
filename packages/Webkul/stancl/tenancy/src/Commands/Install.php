@@ -32,14 +32,14 @@ class Install extends Command
         $this->comment('Installing stancl/tenancy...');
         $this->callSilent('vendor:publish', [
             '--provider' => 'Stancl\Tenancy\TenancyServiceProvider',
-            '--tag' => 'config',
+            '--tag'      => 'config',
         ]);
         $this->info('✔️  Created config/tenancy.php');
 
         if (! file_exists(base_path('routes/tenant.php'))) {
             $this->callSilent('vendor:publish', [
                 '--provider' => 'Stancl\Tenancy\TenancyServiceProvider',
-                '--tag' => 'routes',
+                '--tag'      => 'routes',
             ]);
             $this->info('✔️  Created routes/tenant.php');
         } else {
@@ -48,13 +48,13 @@ class Install extends Command
 
         $this->callSilent('vendor:publish', [
             '--provider' => 'Stancl\Tenancy\TenancyServiceProvider',
-            '--tag' => 'providers',
+            '--tag'      => 'providers',
         ]);
         $this->info('✔️  Created TenancyServiceProvider.php');
 
         $this->callSilent('vendor:publish', [
             '--provider' => 'Stancl\Tenancy\TenancyServiceProvider',
-            '--tag' => 'migrations',
+            '--tag'      => 'migrations',
         ]);
         $this->info('✔️  Created migrations. Remember to run [php artisan migrate]!');
 

@@ -11,17 +11,17 @@ class CacheManager extends BaseCacheManager
     /**
      * Add tags and forward the call to the inner cache store.
      *
-     * @param string $method
-     * @param array $parameters
+     * @param  string  $method
+     * @param  array  $parameters
      * @return mixed
      */
     public function __call($method, $parameters)
     {
-        $tags = [config('tenancy.cache.tag_base') . tenant()->getTenantKey()];
+        $tags = [config('tenancy.cache.tag_base').tenant()->getTenantKey()];
 
         if ($method === 'tags') {
             $count = count($parameters);
-            
+
             if ($count !== 1) {
                 throw new \Exception("Method tags() takes exactly 1 argument. $count passed.");
             }

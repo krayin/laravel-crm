@@ -19,7 +19,7 @@ trait HasInternalKeys
      */
     public function getInternal(string $key)
     {
-        return $this->getAttribute(static::internalPrefix() . $key);
+        return $this->getAttribute(static::internalPrefix().$key);
     }
 
     /**
@@ -27,7 +27,7 @@ trait HasInternalKeys
      */
     public function setInternal(string $key, $value)
     {
-        $this->setAttribute(static::internalPrefix() . $key, $value);
+        $this->setAttribute(static::internalPrefix().$key, $value);
 
         return $this;
     }

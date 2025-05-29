@@ -4,6 +4,4 @@ declare(strict_types=1);
 
 namespace Stancl\Tenancy\Events;
 
-class TenantCreated extends Contracts\TenantEvent
-{
-}
+class TenantCreated extends Contracts\TenantEvent {}

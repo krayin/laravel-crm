@@ -4,12 +4,13 @@ namespace Webkul\Admin\DataGrids\Settings;
 
 use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Facades\DB;
-use Webkul\DataGrid\DataGrid;
 use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
+use Webkul\DataGrid\DataGrid;
 
 class TypeDataGrid extends DataGrid
 {
     use BelongsToTenant;
+
     /**
      * Prepare query builder.
      */

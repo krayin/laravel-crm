@@ -27,7 +27,7 @@ class ProductDataGrid extends DataGrid
             ->addSelect(DB::raw('SUM('.$tablePrefix.'product_inventories.allocated) as total_allocated'))
             ->addSelect(DB::raw('SUM('.$tablePrefix.'product_inventories.in_stock - '.$tablePrefix.'product_inventories.allocated) as total_on_hand'))
             ->groupBy('products.id')
-            ->where(fn($q) => $q->where('products.tenant_id', tenant('id'))->orWhereNull('products.tenant_id'));
+            ->where(fn ($q) => $q->where('products.tenant_id', tenant('id'))->orWhereNull('products.tenant_id'));
 
         if (request()->route('id')) {
             $queryBuilder->where('product_inventories.warehouse_id', request()->route('id'));

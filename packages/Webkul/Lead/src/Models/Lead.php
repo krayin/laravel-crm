@@ -4,6 +4,7 @@ namespace Webkul\Lead\Models;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
 use Webkul\Activity\Models\ActivityProxy;
 use Webkul\Activity\Traits\LogsActivity;
 use Webkul\Attribute\Traits\CustomAttribute;
@@ -13,11 +14,10 @@ use Webkul\Lead\Contracts\Lead as LeadContract;
 use Webkul\Quote\Models\QuoteProxy;
 use Webkul\Tag\Models\TagProxy;
 use Webkul\User\Models\UserProxy;
-use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
 
 class Lead extends Model implements LeadContract
 {
-    use CustomAttribute, LogsActivity, BelongsToTenant;
+    use BelongsToTenant, CustomAttribute, LogsActivity;
 
     protected $casts = [
         'closed_at'           => 'datetime',

@@ -3,16 +3,16 @@
 namespace Webkul\Quote\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
 use Webkul\Attribute\Traits\CustomAttribute;
 use Webkul\Contact\Models\PersonProxy;
 use Webkul\Lead\Models\LeadProxy;
 use Webkul\Quote\Contracts\Quote as QuoteContract;
 use Webkul\User\Models\UserProxy;
-use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
 
 class Quote extends Model implements QuoteContract
 {
-    use CustomAttribute, BelongsToTenant;
+    use BelongsToTenant, CustomAttribute;
 
     protected $table = 'quotes';
 

@@ -19,7 +19,7 @@ class GroupDataGrid extends DataGrid
                 'groups.name',
                 'groups.description'
             )
-            ->where(fn($q) => $q->where('groups.tenant_id', tenant('id'))->orWhereNull('groups.tenant_id'));
+            ->where(fn ($q) => $q->where('groups.tenant_id', tenant('id'))->orWhereNull('groups.tenant_id'));
 
         $this->addFilter('id', 'groups.id');
 

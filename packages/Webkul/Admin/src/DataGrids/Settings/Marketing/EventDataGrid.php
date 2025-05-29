@@ -19,7 +19,7 @@ class EventDataGrid extends DataGrid
                 'marketing_events.description',
                 'marketing_events.date',
             )
-            ->where(fn($q) => $q->where('marketing_events.tenant_id', tenant('id'))->orWhereNull('marketing_events.tenant_id'));
+            ->where(fn ($q) => $q->where('marketing_events.tenant_id', tenant('id'))->orWhereNull('marketing_events.tenant_id'));
 
         $this->addFilter('id', 'marketing_events.id');
 

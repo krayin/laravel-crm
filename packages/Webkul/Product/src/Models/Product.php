@@ -5,6 +5,7 @@ namespace Webkul\Product\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
 use Webkul\Activity\Models\ActivityProxy;
 use Webkul\Activity\Traits\LogsActivity;
 use Webkul\Attribute\Traits\CustomAttribute;
@@ -12,7 +13,6 @@ use Webkul\Product\Contracts\Product as ProductContract;
 use Webkul\Tag\Models\TagProxy;
 use Webkul\Warehouse\Models\LocationProxy;
 use Webkul\Warehouse\Models\WarehouseProxy;
-use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
 
 class Product extends Model implements ProductContract
 {

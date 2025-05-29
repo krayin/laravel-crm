@@ -4,6 +4,4 @@ declare(strict_types=1);
 
 namespace Stancl\Tenancy\Events;
 
-class CreatingDomain extends Contracts\DomainEvent
-{
-}
+class CreatingDomain extends Contracts\DomainEvent {}

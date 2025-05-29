@@ -25,13 +25,15 @@ class Tenant extends Model implements Contracts\Tenant
         Concerns\GeneratesIds,
         Concerns\HasDataColumn,
         Concerns\HasInternalKeys,
-        Concerns\TenantRun,
-        Concerns\InvalidatesResolverCache;
+        Concerns\InvalidatesResolverCache,
+        Concerns\TenantRun;
 
     protected static $modelsShouldPreventAccessingMissingAttributes = false;
 
     protected $table = 'tenants';
+
     protected $primaryKey = 'id';
+
     protected $guarded = [];
 
     public function getTenantKeyName(): string
@@ -50,13 +52,13 @@ class Tenant extends Model implements Contracts\Tenant
     }
 
     protected $dispatchesEvents = [
-        'saving' => Events\SavingTenant::class,
-        'saved' => Events\TenantSaved::class,
+        'saving'   => Events\SavingTenant::class,
+        'saved'    => Events\TenantSaved::class,
         'creating' => Events\CreatingTenant::class,
-        'created' => Events\TenantCreated::class,
+        'created'  => Events\TenantCreated::class,
         'updating' => Events\UpdatingTenant::class,
-        'updated' => Events\TenantUpdated::class,
+        'updated'  => Events\TenantUpdated::class,
         'deleting' => Events\DeletingTenant::class,
-        'deleted' => Events\TenantDeleted::class,
+        'deleted'  => Events\TenantDeleted::class,
     ];
 }

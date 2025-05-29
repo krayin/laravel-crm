@@ -15,7 +15,7 @@ use Stancl\Tenancy\Events\MigratingDatabase;
 
 class Migrate extends MigrateCommand
 {
-    use HasATenantsOption, DealsWithMigrations, ExtendsLaravelCommand;
+    use DealsWithMigrations, ExtendsLaravelCommand, HasATenantsOption;
 
     protected $description = 'Run migrations for tenant(s)';
 

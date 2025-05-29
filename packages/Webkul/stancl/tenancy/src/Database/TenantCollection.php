@@ -9,6 +9,7 @@ use Stancl\Tenancy\Contracts\Tenant;
 
 /**
  * @property Tenant[] $items
+ *
  * @method void __construct(Tenant[] $items = [])
  * @method Tenant[] toArray()
  * @method Tenant offsetGet($key)

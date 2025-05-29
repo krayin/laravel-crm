@@ -11,9 +11,9 @@ trait MaintenanceMode
     public function putDownForMaintenance($data = [])
     {
         $this->update(['maintenance_mode' => [
-            'time' => $data['time'] ?? Carbon::now()->getTimestamp(),
+            'time'    => $data['time'] ?? Carbon::now()->getTimestamp(),
             'message' => $data['message'] ?? null,
-            'retry' => $data['retry'] ?? null,
+            'retry'   => $data['retry'] ?? null,
             'allowed' => $data['allowed'] ?? [],
         ]]);
     }

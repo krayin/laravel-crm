@@ -4,12 +4,12 @@ namespace Webkul\Automation\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Webkul\Automation\Contracts\Webhook as ContractsWebhook;
 use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
+use Webkul\Automation\Contracts\Webhook as ContractsWebhook;
 
 class Webhook extends Model implements ContractsWebhook
 {
-    use HasFactory, BelongsToTenant;
+    use BelongsToTenant, HasFactory;
 
     /**
      * The attributes that are mass assignable.

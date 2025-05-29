@@ -14,7 +14,7 @@ use Stancl\Tenancy\Events\RollingBackDatabase;
 
 class Rollback extends RollbackCommand
 {
-    use HasATenantsOption, DealsWithMigrations, ExtendsLaravelCommand;
+    use DealsWithMigrations, ExtendsLaravelCommand, HasATenantsOption;
 
     protected static function getTenantCommandName(): string
     {

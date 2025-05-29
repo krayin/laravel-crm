@@ -21,8 +21,8 @@ class FilesystemTenancyBootstrapper implements TenancyBootstrapper
     {
         $this->app = $app;
         $this->originalPaths = [
-            'disks' => [],
-            'storage' => $this->app->storagePath(),
+            'disks'     => [],
+            'storage'   => $this->app->storagePath(),
             'asset_url' => $this->app['config']['app.asset_url'],
         ];
 
@@ -35,17 +35,17 @@ class FilesystemTenancyBootstrapper implements TenancyBootstrapper
 
     public function bootstrap(Tenant $tenant)
     {
-        $suffix = $this->app['config']['tenancy.filesystem.suffix_base'] . $tenant->getTenantKey();
+        $suffix = $this->app['config']['tenancy.filesystem.suffix_base'].$tenant->getTenantKey();
 
         // storage_path()
         if ($this->app['config']['tenancy.filesystem.suffix_storage_path'] ?? true) {
-            $this->app->useStoragePath($this->originalPaths['storage'] . "/{$suffix}");
+            $this->app->useStoragePath($this->originalPaths['storage']."/{$suffix}");
         }
 
         // asset()
         if ($this->app['config']['tenancy.filesystem.asset_helper_tenancy'] ?? true) {
             if ($this->originalPaths['asset_url']) {
-                $this->app['config']['app.asset_url'] = ($this->originalPaths['asset_url'] ?? $this->app['config']['app.url']) . "/$suffix";
+                $this->app['config']['app.asset_url'] = ($this->originalPaths['asset_url'] ?? $this->app['config']['app.url'])."/$suffix";
                 $this->app['url']->setAssetRoot($this->app['config']['app.asset_url']);
             } else {
                 $this->app['url']->setAssetRoot($this->app['url']->route('stancl.tenancy.asset', ['path' => '']));
@@ -67,7 +67,7 @@ class FilesystemTenancyBootstrapper implements TenancyBootstrapper
 
             if (! $finalPrefix) {
                 $finalPrefix = $originalRoot
-                    ? rtrim($originalRoot, '/') . '/'. $suffix
+                    ? rtrim($originalRoot, '/').'/'.$suffix
                     : $suffix;
             }
 

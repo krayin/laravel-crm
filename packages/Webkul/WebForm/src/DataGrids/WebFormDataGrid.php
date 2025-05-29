@@ -18,7 +18,7 @@ class WebFormDataGrid extends DataGrid
                 'web_forms.id',
                 'web_forms.title',
             )
-            ->where(fn($q) => $q->where('web_forms.tenant_id', tenant('id'))->orWhereNull('web_forms.tenant_id'));
+            ->where(fn ($q) => $q->where('web_forms.tenant_id', tenant('id'))->orWhereNull('web_forms.tenant_id'));
 
         $this->addFilter('id', 'web_forms.id');
 

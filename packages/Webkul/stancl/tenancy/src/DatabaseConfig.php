@@ -37,7 +37,7 @@ class DatabaseConfig
         };
 
         static::$databaseNameGenerator = static::$databaseNameGenerator ?? function (Tenant $tenant) {
-            return config('tenancy.database.prefix') . $tenant->getTenantKey() . config('tenancy.database.suffix');
+            return config('tenancy.database.prefix').$tenant->getTenantKey().config('tenancy.database.suffix');
         };
     }
 
@@ -80,8 +80,6 @@ class DatabaseConfig
 
     /**
      * Generate DB name, username & password and write them to the tenant model.
-     *
-     * @return void
      */
     public function makeCredentials(): void
     {
@@ -123,22 +121,22 @@ class DatabaseConfig
     public function tenantConfig(): array
     {
         $dbConfig = array_filter(array_keys($this->tenant->getAttributes()), function ($key) {
-            return Str::startsWith($key, $this->tenant->internalPrefix() . 'db_');
+            return Str::startsWith($key, $this->tenant->internalPrefix().'db_');
         });
 
         // Remove DB name because we set that separately
-        if (($pos = array_search($this->tenant->internalPrefix() . 'db_name', $dbConfig)) !== false) {
+        if (($pos = array_search($this->tenant->internalPrefix().'db_name', $dbConfig)) !== false) {
             unset($dbConfig[$pos]);
         }
 
         // Remove DB connection because that's not used inside the array
-        if (($pos = array_search($this->tenant->internalPrefix() . 'db_connection', $dbConfig)) !== false) {
+        if (($pos = array_search($this->tenant->internalPrefix().'db_connection', $dbConfig)) !== false) {
             unset($dbConfig[$pos]);
         }
 
         return array_reduce($dbConfig, function ($config, $key) {
             return array_merge($config, [
-                Str::substr($key, strlen($this->tenant->internalPrefix() . 'db_')) => $this->tenant->getAttribute($key),
+                Str::substr($key, strlen($this->tenant->internalPrefix().'db_')) => $this->tenant->getAttribute($key),
             ]);
         }, []);
     }

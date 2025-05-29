@@ -3,17 +3,18 @@
 namespace Webkul\Activity\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
 use Webkul\Activity\Contracts\Activity as ActivityContract;
 use Webkul\Contact\Models\PersonProxy;
 use Webkul\Lead\Models\LeadProxy;
 use Webkul\Product\Models\ProductProxy;
 use Webkul\User\Models\UserProxy;
 use Webkul\Warehouse\Models\WarehouseProxy;
-use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
 
 class Activity extends Model implements ActivityContract
 {
     use BelongsToTenant;
+
     /**
      * Define table name of property
      *

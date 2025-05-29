@@ -38,7 +38,7 @@ class Run extends Command
             $callback = function ($prefix = '') {
                 return function ($arguments, $argument) use ($prefix) {
                     [$key, $value] = explode('=', $argument, 2);
-                    $arguments[$prefix . $key] = $value;
+                    $arguments[$prefix.$key] = $value;
 
                     return $arguments;
                 };

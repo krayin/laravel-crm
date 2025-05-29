@@ -3,13 +3,14 @@
 namespace Webkul\Lead\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
 use Webkul\Lead\Contracts\Product as ProductContract;
 use Webkul\Product\Models\ProductProxy;
-use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
 
 class Product extends Model implements ProductContract
 {
     use BelongsToTenant;
+
     protected $table = 'lead_products';
 
     /**

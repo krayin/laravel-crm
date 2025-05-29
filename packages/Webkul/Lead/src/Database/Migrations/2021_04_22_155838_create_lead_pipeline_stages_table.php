@@ -23,7 +23,7 @@ return new class extends Migration
 
             $table->integer('lead_pipeline_id')->unsigned();
             $table->foreign('lead_pipeline_id')->references('id')->on('lead_pipelines')->onDelete('cascade');
-        
+
             $table->unsignedInteger('tenant_id')->nullable();
             $table->foreign('tenant_id')->references('id')->on('tenants')->onUpdate('cascade')->onDelete('cascade');
         });

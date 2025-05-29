@@ -3,15 +3,16 @@
 namespace Webkul\Email\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
 use Webkul\Contact\Models\PersonProxy;
 use Webkul\Email\Contracts\Email as EmailContract;
 use Webkul\Lead\Models\LeadProxy;
 use Webkul\Tag\Models\TagProxy;
-use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
 
 class Email extends Model implements EmailContract
 {
     use BelongsToTenant;
+
     /**
      * The table associated with the model.
      *

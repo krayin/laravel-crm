@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace Stancl\Tenancy\Middleware;
 
 use Closure;
-use Symfony\Component\HttpKernel\Exception\HttpException;
 use Illuminate\Foundation\Http\Middleware\CheckForMaintenanceMode;
 use Stancl\Tenancy\Exceptions\TenancyNotInitializedException;
 use Symfony\Component\HttpFoundation\IpUtils;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class CheckTenantForMaintenanceMode extends CheckForMaintenanceMode
 {

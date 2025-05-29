@@ -4,6 +4,7 @@ namespace Webkul\Contact\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
 use Webkul\Activity\Models\ActivityProxy;
 use Webkul\Activity\Traits\LogsActivity;
 use Webkul\Attribute\Traits\CustomAttribute;
@@ -11,11 +12,10 @@ use Webkul\Contact\Contracts\Person as PersonContract;
 use Webkul\Contact\Database\Factories\PersonFactory;
 use Webkul\Tag\Models\TagProxy;
 use Webkul\User\Models\UserProxy;
-use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
 
 class Person extends Model implements PersonContract
 {
-    use CustomAttribute, HasFactory, LogsActivity, BelongsToTenant;
+    use BelongsToTenant, CustomAttribute, HasFactory, LogsActivity;
 
     /**
      * Table name.

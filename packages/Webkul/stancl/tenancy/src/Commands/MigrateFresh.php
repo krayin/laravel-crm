@@ -11,7 +11,7 @@ use Symfony\Component\Console\Input\InputOption;
 
 final class MigrateFresh extends Command
 {
-    use HasATenantsOption, DealsWithMigrations;
+    use DealsWithMigrations, HasATenantsOption;
 
     /**
      * The console command description.
@@ -40,16 +40,16 @@ final class MigrateFresh extends Command
         tenancy()->runForMultiple($this->option('tenants'), function ($tenant) {
             $this->info('Dropping tables.');
             $this->call('db:wipe', array_filter([
-                '--database' => 'tenant',
+                '--database'   => 'tenant',
                 '--drop-views' => $this->option('drop-views'),
-                '--force' => true,
+                '--force'      => true,
             ]));
 
             $this->info('Migrating.');
             $this->callSilent('tenants:migrate', [
                 '--tenants' => [$tenant->getTenantKey()],
-                '--step' => $this->option('step'),
-                '--force' => true,
+                '--step'    => $this->option('step'),
+                '--force'   => true,
             ]);
         });
 

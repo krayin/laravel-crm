@@ -3,14 +3,14 @@
 namespace Webkul\Contact\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
 use Webkul\Attribute\Traits\CustomAttribute;
 use Webkul\Contact\Contracts\Organization as OrganizationContract;
 use Webkul\User\Models\UserProxy;
-use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
 
 class Organization extends Model implements OrganizationContract
 {
-    use CustomAttribute, BelongsToTenant;
+    use BelongsToTenant, CustomAttribute;
 
     protected $casts = [
         'address' => 'array',

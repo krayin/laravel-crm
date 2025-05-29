@@ -24,7 +24,7 @@ class ImportDataGrid extends DataGrid
                 'type',
                 'summary',
             )
-            ->where(fn($q) => $q->where('imports.tenant_id', tenant('id'))->orWhereNull('imports.tenant_id'));
+            ->where(fn ($q) => $q->where('imports.tenant_id', tenant('id'))->orWhereNull('imports.tenant_id'));
     }
 
     /**

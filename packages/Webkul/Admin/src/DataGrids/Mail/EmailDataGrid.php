@@ -41,7 +41,7 @@ class EmailDataGrid extends DataGrid
             ->groupBy('emails.id')
             ->where('folders', 'like', '%"'.request('route').'"%')
             ->whereNull('parent_id')
-            ->where(fn($q) => $q->where('emails.tenant_id', tenant('id'))->orWhereNull('emails.tenant_id'));
+            ->where(fn ($q) => $q->where('emails.tenant_id', tenant('id'))->orWhereNull('emails.tenant_id'));
 
         $this->addFilter('id', 'emails.id');
         $this->addFilter('name', 'emails.name');

@@ -12,6 +12,6 @@ abstract class TenantCannotBeCreatedException extends \Exception
 
     public function __construct()
     {
-        $this->message = 'Tenant cannot be created. Reason: ' . $this->reason();
+        $this->message = 'Tenant cannot be created. Reason: '.$this->reason();
     }
 }

@@ -196,6 +196,6 @@ trait VirtualColumn
             return $column;
         }
 
-        return static::getDataColumn() . '->' . $column;
+        return static::getDataColumn().'->'.$column;
     }
 }

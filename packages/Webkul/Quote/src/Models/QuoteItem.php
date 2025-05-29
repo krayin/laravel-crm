@@ -3,12 +3,13 @@
 namespace Webkul\Quote\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Webkul\Quote\Contracts\QuoteItem as QuoteItemContract;
 use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
+use Webkul\Quote\Contracts\QuoteItem as QuoteItemContract;
 
 class QuoteItem extends Model implements QuoteItemContract
 {
     use BelongsToTenant;
+
     protected $table = 'quote_items';
 
     /**

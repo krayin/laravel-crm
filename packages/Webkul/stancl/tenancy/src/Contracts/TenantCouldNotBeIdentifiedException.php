@@ -6,6 +6,4 @@ namespace Stancl\Tenancy\Contracts;
 
 use Exception;
 
-abstract class TenantCouldNotBeIdentifiedException extends Exception
-{
-}
+abstract class TenantCouldNotBeIdentifiedException extends Exception {}

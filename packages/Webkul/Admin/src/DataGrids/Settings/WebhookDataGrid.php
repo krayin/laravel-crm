@@ -20,7 +20,7 @@ class WebhookDataGrid extends DataGrid
                 'webhooks.entity_type',
                 'webhooks.end_point',
             )
-            ->where(fn($q) => $q->where('webhooks.tenant_id', tenant('id'))->orWhereNull('webhooks.tenant_id'));
+            ->where(fn ($q) => $q->where('webhooks.tenant_id', tenant('id'))->orWhereNull('webhooks.tenant_id'));
 
         $this->addFilter('id', 'webhooks.id');
 

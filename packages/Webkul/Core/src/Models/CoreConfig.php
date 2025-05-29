@@ -3,8 +3,8 @@
 namespace Webkul\Core\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Webkul\Core\Contracts\CoreConfig as CoreConfigContract;
 use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
+use Webkul\Core\Contracts\CoreConfig as CoreConfigContract;
 
 class CoreConfig extends Model implements CoreConfigContract
 {
