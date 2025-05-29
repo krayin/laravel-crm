@@ -8,10 +8,11 @@ use Webkul\Contact\Models\PersonProxy;
 use Webkul\Lead\Models\LeadProxy;
 use Webkul\Quote\Contracts\Quote as QuoteContract;
 use Webkul\User\Models\UserProxy;
+use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
 
 class Quote extends Model implements QuoteContract
 {
-    use CustomAttribute;
+    use CustomAttribute, BelongsToTenant;
 
     protected $table = 'quotes';
 
