@@ -1,0 +1,30 @@
+{
+    "name": "stancl/virtualcolumn",
+    "description": "Eloquent virtual column.",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Samuel Štancl",
+            "email": "samuel.stancl@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Stancl\\VirtualColumn\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Stancl\\VirtualColumn\\Tests\\": "tests/"
+        }
+    },
+    "require": {
+        "illuminate/support": ">=10.0",
+        "illuminate/database": ">=10.0"
+    },
+    "require-dev": {
+        "orchestra/testbench": ">=8.0"
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}

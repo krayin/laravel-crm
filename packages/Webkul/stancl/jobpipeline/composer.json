@@ -1,0 +1,32 @@
+{
+    "name": "stancl/jobpipeline",
+    "description": "Turn any series of jobs into Laravel listeners.",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Samuel Štancl",
+            "email": "samuel.stancl@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Stancl\\JobPipeline\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Stancl\\JobPipeline\\Tests\\": "tests/"
+        }
+    },
+    "require": {
+        "php": "^8.0",
+        "illuminate/support": "^10.0|^11.0|^12.0"
+    },
+    "require-dev": {
+        "orchestra/testbench": "^8.0|^9.0|^10.0",
+        "spatie/valuestore": "^1.2",
+        "ext-redis": "*"
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
