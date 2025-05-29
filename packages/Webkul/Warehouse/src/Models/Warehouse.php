@@ -8,10 +8,11 @@ use Webkul\Activity\Traits\LogsActivity;
 use Webkul\Attribute\Traits\CustomAttribute;
 use Webkul\Tag\Models\TagProxy;
 use Webkul\Warehouse\Contracts\Warehouse as WarehouseContract;
+use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
 
 class Warehouse extends Model implements WarehouseContract
 {
-    use CustomAttribute, LogsActivity;
+    use CustomAttribute, LogsActivity, BelongsToTenant;
 
     /**
      * The attributes that are mass assignable.

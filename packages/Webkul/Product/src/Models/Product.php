@@ -12,9 +12,11 @@ use Webkul\Product\Contracts\Product as ProductContract;
 use Webkul\Tag\Models\TagProxy;
 use Webkul\Warehouse\Models\LocationProxy;
 use Webkul\Warehouse\Models\WarehouseProxy;
+use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
 
 class Product extends Model implements ProductContract
 {
+    use BelongsToTenant;
     use CustomAttribute, LogsActivity;
 
     /**

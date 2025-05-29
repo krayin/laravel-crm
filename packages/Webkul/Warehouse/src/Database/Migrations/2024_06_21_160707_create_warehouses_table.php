@@ -20,6 +20,8 @@ return new class extends Migration
             $table->json('contact_numbers');
             $table->json('contact_address');
             $table->timestamps();
+            $table->unsignedInteger('tenant_id')->nullable();
+            $table->foreign('tenant_id')->references('id')->on('tenants')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 

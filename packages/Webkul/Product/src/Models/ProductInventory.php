@@ -8,9 +8,11 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Webkul\Product\Contracts\ProductInventory as ProductInventoryContract;
 use Webkul\Warehouse\Models\LocationProxy;
 use Webkul\Warehouse\Models\WarehouseProxy;
+use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
 
 class ProductInventory extends Model implements ProductInventoryContract
 {
+    use BelongsToTenant;
     /**
      * The attributes that are mass assignable.
      *
