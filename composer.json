@@ -78,7 +78,8 @@
             "Webkul\\Tenant\\": "packages/Webkul/Tenant/src",
             "Webkul\\Warehouse\\": "packages/Webkul/Warehouse/src",
             "Webkul\\WebForm\\": "packages/Webkul/WebForm/src",
-            "Webkul\\Automation\\": "packages/Webkul/Automation/src"
+            "Webkul\\Automation\\": "packages/Webkul/Automation/src",
+            "Webkul\\Domain\\": "packages/Webkul/Domain/src/"
         }
     },
     "autoload-dev": {

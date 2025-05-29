@@ -15,6 +15,7 @@ use Webkul\RestApi\Http\Controllers\V1\Setting\TagController;
 use Webkul\RestApi\Http\Controllers\V1\Setting\TenantController;
 use Webkul\RestApi\Http\Controllers\V1\Setting\TypeController;
 use Webkul\RestApi\Http\Controllers\V1\Setting\UserController;
+use Webkul\RestApi\Http\Controllers\V1\Setting\DomainController;
 use Webkul\RestApi\Http\Controllers\V1\Setting\Warehouses\ActivityController;
 use Webkul\RestApi\Http\Controllers\V1\Setting\Warehouses\TagController as WarehouseTagController;
 use Webkul\RestApi\Http\Controllers\V1\Setting\Warehouses\WarehouseController;
@@ -123,6 +124,14 @@ Route::group([
         Route::delete('{id}', 'destroy');
 
         Route::put('{id}', 'update');
+
+    });
+
+    /**
+     * Domains routes.
+     */
+    Route::controller(DomainController::class)->prefix('domains')->group(function () {
+        Route::get('', 'index');
 
     });
 

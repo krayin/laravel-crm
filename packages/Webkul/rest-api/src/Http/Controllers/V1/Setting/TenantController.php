@@ -47,7 +47,7 @@ class TenantController extends Controller
         $admin->save();
 
         return new JsonResource([
-            'data'    => new TenantResource($admin),
+            // 'data'    => new TenantResource($admin),
             'message' => trans('rest-api::app.settings.tenants.create-success'),
         ]);
     }
