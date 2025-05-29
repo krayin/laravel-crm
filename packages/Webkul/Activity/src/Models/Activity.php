@@ -9,9 +9,11 @@ use Webkul\Lead\Models\LeadProxy;
 use Webkul\Product\Models\ProductProxy;
 use Webkul\User\Models\UserProxy;
 use Webkul\Warehouse\Models\WarehouseProxy;
+use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
 
 class Activity extends Model implements ActivityContract
 {
+    use BelongsToTenant;
     /**
      * Define table name of property
      *
