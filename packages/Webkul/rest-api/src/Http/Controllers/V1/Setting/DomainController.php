@@ -3,9 +3,9 @@
 namespace Webkul\RestApi\Http\Controllers\V1\Setting;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use Webkul\Domain\Repositories\DomainRepository;
 use Webkul\RestApi\Http\Controllers\V1\Controller;
 use Webkul\RestApi\Http\Resources\V1\Setting\DomainResource;
-use Webkul\Domain\Repositories\DomainRepository;
 
 class DomainController extends Controller
 {
@@ -18,6 +18,4 @@ class DomainController extends Controller
 
         return DomainResource::collection($tenants);
     }
-
- 
 }
