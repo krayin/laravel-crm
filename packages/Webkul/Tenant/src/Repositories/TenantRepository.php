@@ -13,6 +13,7 @@ class TenantRepository extends Repository
     protected $fieldSearchable = [
         'id',
         'data',
+        'multiatendedor_id',
     ];
 
     /**

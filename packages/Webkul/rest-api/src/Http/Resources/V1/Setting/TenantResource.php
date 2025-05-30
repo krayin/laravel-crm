@@ -16,9 +16,10 @@ class TenantResource extends JsonResource
     {
         return [
             'id'                   => $this->id,
+            'data'                 => json_decode($this->data, true),
+            'multiatendedor_id'    => $this->multiatendedor_id,
             'created_at'           => $this->created_at,
             'updated_at'           => $this->updated_at,
-            'data'                 => json_decode($this->data, true),
 
         ];
     }

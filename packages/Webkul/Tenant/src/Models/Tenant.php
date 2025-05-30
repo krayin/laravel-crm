@@ -4,6 +4,8 @@ namespace Webkul\Tenant\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Webkul\Tenant\Contracts\Tenant as TenantContract;
+use Webkul\Tenant\Models\DomainProxy;
+
 
 class Tenant extends Model implements TenantContract
 {
@@ -14,5 +16,12 @@ class Tenant extends Model implements TenantContract
         'created_at',
         'updated_at',
         'data',
+        'multiatendedor_id',
     ];
+
+
+    public function domain()
+    {
+        return $this->belongsTo(DomainProxy::modelClass());
+    }
 }

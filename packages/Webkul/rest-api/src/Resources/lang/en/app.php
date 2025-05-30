@@ -162,10 +162,11 @@ return [
         ],
 
         'tenants' => [
-            'create-success'      => 'Tenant created successfully.',
-            'updated-success'     => 'Tenant updated successfully.',
-            'delete-success'      => 'Tenant deleted successfully.',
-            'delete-failed'       => 'Tenant delete failed.',
+            'create-success'       => 'Tenant and domain created successfully.',
+            'updated-success'      => 'Tenant updated successfully.',
+            'delete-success'       => 'Tenant deleted successfully.',
+            'delete-failed'        => 'Tenant delete failed.',
+            'failed-create-domain' => 'Failed to create domain',
         ],
 
         'pipelines' => [
