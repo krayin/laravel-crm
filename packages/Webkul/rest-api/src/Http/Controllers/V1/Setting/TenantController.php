@@ -3,11 +3,11 @@
 namespace Webkul\RestApi\Http\Controllers\V1\Setting;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use Webkul\Domain\Repositories\DomainRepository;
 use Webkul\RestApi\Http\Controllers\V1\Controller;
+use Webkul\RestApi\Http\Resources\V1\Setting\DomainResource;
 use Webkul\RestApi\Http\Resources\V1\Setting\TenantResource;
 use Webkul\Tenant\Repositories\TenantRepository;
-use Webkul\Domain\Repositories\DomainRepository;
-use Webkul\RestApi\Http\Resources\V1\Setting\DomainResource;
 
 class TenantController extends Controller
 {
@@ -15,25 +15,25 @@ class TenantController extends Controller
         protected TenantRepository $tenantRepository,
         protected DomainRepository $domainRepository
     ) {}
-    
+
     public function formatDomainName(string $name): string
     {
         $name = mb_strtolower($name, 'UTF-8');
-        
+
         $map = [
             'á|à|ã|â|ä' => 'a',
-            'é|è|ê|ë' => 'e',
-            'í|ì|î|ï' => 'i',
+            'é|è|ê|ë'   => 'e',
+            'í|ì|î|ï'   => 'i',
             'ó|ò|õ|ô|ö' => 'o',
-            'ú|ù|û|ü' => 'u',
-            'ç' => 'c',
-            'ñ' => 'n'
+            'ú|ù|û|ü'   => 'u',
+            'ç'         => 'c',
+            'ñ'         => 'n',
         ];
-        
+
         foreach ($map as $pattern => $replacement) {
             $name = preg_replace("/$pattern/u", $replacement, $name);
         }
-        
+
         return preg_replace('/[^a-z0-9]/', '', $name);
     }
 
@@ -68,30 +68,30 @@ class TenantController extends Controller
         $data = request()->all();
 
         $domainName = $this->formatDomainName($data['data']['name']);
-        
+
         $data['data'] = json_encode($data['data']);
         $admin = $this->tenantRepository->create($data);
 
         $admin->save();
 
         $tenant_id = $admin['id'];
-        
-        //Dominio referente ao local!
+
+        // Dominio referente ao local!
         $domainData = [
-            'domain'    => $domainName . '.localhost', 
-            'tenant_id' => $tenant_id,          
+            'domain'    => $domainName.'.localhost',
+            'tenant_id' => $tenant_id,
         ];
 
-        try{
+        try {
             $domain = $this->domainRepository->create($domainData);
             $domain->save();
             $createDomain = true;
-        } catch(Exception $e) {
+        } catch (Exception $e) {
             $createDomain = false;
         }
 
-        if($createDomain){
-           return new JsonResource([
+        if ($createDomain) {
+            return new JsonResource([
                 'data' => [
                     'tenant' => new TenantResource($admin),
                     'domain' => new DomainResource($domain),
@@ -105,18 +105,18 @@ class TenantController extends Controller
             'data'    => new TenantResource($admin),
             'message' => trans('rest-api::app.settings.tenants.failed-create-domain'),
         ]);
-    
+
     }
 
     public function update($id)
     {
         $this->validate(request(), [
             'multiatendedor_id' => 'required',
-            'data'             => 'required',
+            'data'              => 'required',
         ]);
 
         $data = request()->all();
-        
+
         $domainName = $this->formatDomainName($data['data']['name']);
 
         $data['data'] = json_encode($data['data']);
