@@ -21,7 +21,8 @@ class TagDataGrid extends DataGrid
                 'tags.created_at',
                 'users.name as user_name',
             )
-            ->leftJoin('users', 'tags.user_id', '=', 'users.id');
+            ->leftJoin('users', 'tags.user_id', '=', 'users.id')
+            ->where('tags.tenant_id', tenant('id'));
 
         if ($userIds = bouncer()->getAuthorizedUserIds()) {
             $queryBuilder->whereIn('tags.user_id', $userIds);

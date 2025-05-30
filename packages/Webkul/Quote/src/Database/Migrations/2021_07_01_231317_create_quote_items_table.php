@@ -34,6 +34,9 @@ return new class extends Migration
             $table->foreign('quote_id')->references('id')->on('quotes')->onDelete('cascade');
 
             $table->timestamps();
+
+            $table->unsignedInteger('tenant_id')->nullable();
+            $table->foreign('tenant_id')->references('id')->on('tenants')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 

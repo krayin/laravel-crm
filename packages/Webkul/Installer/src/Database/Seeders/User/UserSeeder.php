@@ -31,5 +31,18 @@ class UserSeeder extends Seeder
             'view_permission' => 'global',
             'tenant_id'       => '1',
         ]);
+        DB::table('users')->insert([
+            'id'              => 2,
+            'name'            => 'Example Admin 2',
+            'email'           => 'flip2@example.com',
+            'password'        => bcrypt('Flip123@'),
+            // 'api_token'       => Str::random(80),
+            'created_at'      => date('Y-m-d H:i:s'),
+            'updated_at'      => date('Y-m-d H:i:s'),
+            'status'          => 1,
+            'role_id'         => 1,
+            'view_permission' => 'global',
+            'tenant_id'       => '2',
+        ]);
     }
 }

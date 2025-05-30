@@ -17,6 +17,8 @@ return new class extends Migration
             $table->increments('id');
             $table->string('name');
             $table->timestamps();
+            $table->unsignedInteger('tenant_id')->nullable();
+            $table->foreign('tenant_id')->references('id')->on('tenants')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 

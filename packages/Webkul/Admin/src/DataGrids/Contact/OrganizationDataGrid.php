@@ -27,7 +27,8 @@ class OrganizationDataGrid extends DataGrid
                 'organizations.name',
                 'organizations.address',
                 'organizations.created_at'
-            );
+            )
+            ->where(fn ($q) => $q->where('organizations.tenant_id', tenant('id'))->orWhereNull('organizations.tenant_id'));
 
         if ($userIds = bouncer()->getAuthorizedUserIds()) {
             $queryBuilder->whereIn('organizations.user_id', $userIds);

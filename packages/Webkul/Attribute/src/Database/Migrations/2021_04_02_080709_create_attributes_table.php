@@ -28,6 +28,8 @@ return new class extends Migration
             $table->boolean('is_user_defined')->default(1);
             $table->unique(['code', 'entity_type']);
             $table->timestamps();
+            $table->unsignedInteger('tenant_id')->nullable();
+            $table->foreign('tenant_id')->references('id')->on('tenants')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 

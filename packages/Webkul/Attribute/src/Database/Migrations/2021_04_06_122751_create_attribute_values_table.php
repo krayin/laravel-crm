@@ -29,6 +29,8 @@ return new class extends Migration
 
             $table->foreign('attribute_id')->references('id')->on('attributes')->onDelete('cascade');
             $table->unique(['entity_type', 'entity_id', 'attribute_id'], 'entity_type_attribute_value_index_unique');
+            $table->unsignedInteger('tenant_id')->nullable();
+            $table->foreign('tenant_id')->references('id')->on('tenants')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 

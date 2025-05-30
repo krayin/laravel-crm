@@ -17,7 +17,8 @@ class SourceDataGrid extends DataGrid
             ->addSelect(
                 'lead_sources.id',
                 'lead_sources.name'
-            );
+            )
+            ->where(fn ($q) => $q->where('lead_sources.tenant_id', tenant('id'))->orWhereNull('lead_sources.tenant_id'));
 
         $this->addFilter('id', 'lead_sources.id');
 

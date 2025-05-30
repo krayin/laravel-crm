@@ -17,7 +17,8 @@ class EmailTemplateDataGrid extends DataGrid
                 'email_templates.id',
                 'email_templates.name',
                 'email_templates.subject',
-            );
+            )
+            ->where(fn ($q) => $q->where('email_templates.tenant_id', tenant('id'))->orWhereNull('email_templates.tenant_id'));
 
         $this->addFilter('id', 'email_templates.id');
 

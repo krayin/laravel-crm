@@ -18,6 +18,8 @@ return new class extends Migration
             $table->string('name');
             $table->boolean('is_default')->default(0);
             $table->timestamps();
+            $table->unsignedInteger('tenant_id')->nullable();
+            $table->foreign('tenant_id')->references('id')->on('tenants')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 

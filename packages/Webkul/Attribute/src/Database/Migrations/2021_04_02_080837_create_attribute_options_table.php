@@ -19,6 +19,8 @@ return new class extends Migration
             $table->integer('sort_order')->nullable();
             $table->integer('attribute_id')->unsigned();
             $table->foreign('attribute_id')->references('id')->on('attributes')->onDelete('cascade');
+            $table->unsignedInteger('tenant_id')->nullable();
+            $table->foreign('tenant_id')->references('id')->on('tenants')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 

@@ -79,7 +79,10 @@
             "Webkul\\Warehouse\\": "packages/Webkul/Warehouse/src",
             "Webkul\\WebForm\\": "packages/Webkul/WebForm/src",
             "Webkul\\Automation\\": "packages/Webkul/Automation/src",
-            "Webkul\\Domain\\": "packages/Webkul/Domain/src/"
+            "Webkul\\Domain\\": "packages/Webkul/Domain/src/",
+            "Stancl\\Tenancy\\": "stancl/tenancy/src",
+            "Stancl\\JobPipeline\\": "stancl/jobpipeline/src",
+            "Stancl\\VirtualColumn\\": "stancl/virtualcolumn/src"
         }
     },
     "autoload-dev": {
@@ -96,15 +99,11 @@
             }
         },
         {
-            "type": "path",
-            "url": "packages/Webkul/rest-api",
-            "options": {
-                "symlink": true
-            }
-        },
-     {
         "type": "path",
-        "url": "packages/krayin/laravel-tenant"
+        "url": "./rest-api",
+        "options": {
+            "symlink": true
+        }
     }
     ],
     "minimum-stability": "stable",

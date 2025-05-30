@@ -19,6 +19,9 @@ return new class extends Migration
             $table->json('address')->nullable();
 
             $table->timestamps();
+
+            $table->unsignedInteger('tenant_id')->nullable();
+            $table->foreign('tenant_id')->references('id')->on('tenants')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 

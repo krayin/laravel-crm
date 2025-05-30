@@ -19,6 +19,9 @@ return new class extends Migration
             $table->integer('import_id')->unsigned();
 
             $table->foreign('import_id')->references('id')->on('imports')->onDelete('cascade');
+
+            $table->unsignedInteger('tenant_id')->nullable();
+            $table->foreign('tenant_id')->references('id')->on('tenants')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 

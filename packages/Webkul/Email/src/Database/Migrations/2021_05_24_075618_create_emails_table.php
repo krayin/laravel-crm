@@ -38,6 +38,9 @@ return new class extends Migration
             $table->foreign('lead_id')->references('id')->on('leads')->onDelete('set null');
 
             $table->timestamps();
+
+            $table->unsignedInteger('tenant_id')->nullable();
+            $table->foreign('tenant_id')->references('id')->on('tenants')->onUpdate('cascade')->onDelete('cascade');
         });
 
         Schema::table('emails', function (Blueprint $table) {
