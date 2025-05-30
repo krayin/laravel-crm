@@ -16,7 +16,7 @@
         "guzzlehttp/guzzle": "^7.0.1",
         "khaled.alshamaa/ar-php": "^6.3",
         "konekt/concord": "^1.10",
-        "krayin/rest-api": "2.1.x-dev",
+        "krayin/rest-api": "^2.1",
         "laravel/framework": "^10.0",
         "laravel/sanctum": "^3.2",
         "laravel/tinker": "^2.5",
@@ -80,6 +80,7 @@
             "Webkul\\WebForm\\": "packages/Webkul/WebForm/src",
             "Webkul\\Automation\\": "packages/Webkul/Automation/src",
             "Webkul\\Domain\\": "packages/Webkul/Domain/src/",
+            "Webkul\\RestApi\\": "packages/Webkul/rest-api/src/",
             "Stancl\\Tenancy\\": "stancl/tenancy/src",
             "Stancl\\JobPipeline\\": "stancl/jobpipeline/src",
             "Stancl\\VirtualColumn\\": "stancl/virtualcolumn/src"
@@ -97,14 +98,7 @@
             "options": {
                 "symlink": true
             }
-        },
-        {
-        "type": "path",
-        "url": "./rest-api",
-        "options": {
-            "symlink": true
         }
-    }
     ],
     "minimum-stability": "stable",
     "prefer-stable": true,
