@@ -5,7 +5,8 @@ namespace Webkul\Domain\Repositories;
 use Webkul\Core\Eloquent\Repository;
 use Webkul\Domain\Contracts\Domain;
 
-class DomainRepository extends Repository {
+class DomainRepository extends Repository
+{
     /**
      * Searchable fields
      */
