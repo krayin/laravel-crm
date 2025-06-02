@@ -3,6 +3,7 @@
 namespace Webkul\RestApi\Http\Resources\V1\Setting;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use Webkul\RestApi\Http\Resources\V1\Setting\DomainResource;
 
 class TenantResource extends JsonResource
 {
@@ -18,9 +19,9 @@ class TenantResource extends JsonResource
             'id'                   => $this->id,
             'data'                 => json_decode($this->data, true),
             'multiatendedor_id'    => $this->multiatendedor_id,
+            'domains'              => DomainResource::collection($this->whenLoaded('domains')),
             'created_at'           => $this->created_at,
             'updated_at'           => $this->updated_at,
-
         ];
     }
 }

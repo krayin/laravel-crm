@@ -8,6 +8,9 @@ use Webkul\RestApi\Http\Resources\V1\Setting\TenantResource;
 use Webkul\Tenant\Repositories\TenantRepository;
 use Webkul\Domain\Repositories\DomainRepository;
 use Webkul\RestApi\Http\Resources\V1\Setting\DomainResource;
+use Webkul\Core\Helpers\Helper;
+use Webkul\Tenant\Models\Tenant;
+
 
 class TenantController extends Controller
 {
@@ -15,40 +18,24 @@ class TenantController extends Controller
         protected TenantRepository $tenantRepository,
         protected DomainRepository $domainRepository
     ) {}
-    
-    public function formatDomainName(string $name): string
-    {
-        $name = mb_strtolower($name, 'UTF-8');
-        
-        $map = [
-            'á|à|ã|â|ä' => 'a',
-            'é|è|ê|ë' => 'e',
-            'í|ì|î|ï' => 'i',
-            'ó|ò|õ|ô|ö' => 'o',
-            'ú|ù|û|ü' => 'u',
-            'ç' => 'c',
-            'ñ' => 'n'
-        ];
-        
-        foreach ($map as $pattern => $replacement) {
-            $name = preg_replace("/$pattern/u", $replacement, $name);
+
+    public function index(): JsonResource {
+        try {
+            $tenants = Tenant::with('domains')->get();
+
+            return TenantResource::collection($tenants);
+        } catch (\Exception $e) {
+            return new JsonResource([
+                'message' => 'Error: ' . $e->getMessage(),
+            ], 500);
         }
-        
-        return preg_replace('/[^a-z0-9]/', '', $name);
     }
 
-    public function index(): JsonResource
-    {
-        $tenants = $this->allResources($this->tenantRepository);
 
-        return TenantResource::collection($tenants);
-    }
-
-    public function show(int $id): JsonResource
-    {
+    public function show(int $id): JsonResource {
         try {
 
-            return new TenantResource($this->tenantRepository->findOrFail($id));
+            return new TenantResource(Tenant::with('domains')->findOrFail($id));
 
         } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
 
@@ -57,79 +44,126 @@ class TenantController extends Controller
         }
     }
 
-    public function store(): JsonResource
-    {
-        $this->validate(request(), [
-            'multiatendedor_id' => 'required',
-            'data'              => 'required',
-
-        ]);
-
-        $data = request()->all();
-
-        $domainName = $this->formatDomainName($data['data']['name']);
-        
-        $data['data'] = json_encode($data['data']);
-        $admin = $this->tenantRepository->create($data);
-
-        $admin->save();
-
-        $tenant_id = $admin['id'];
-        
-        //Dominio referente ao local!
-        $domainData = [
-            'domain'    => $domainName . '.localhost', 
-            'tenant_id' => $tenant_id,          
-        ];
-
-        try{
-            $domain = $this->domainRepository->create($domainData);
-            $domain->save();
-            $createDomain = true;
-        } catch(Exception $e) {
-            $createDomain = false;
-        }
-
-        if($createDomain){
-           return new JsonResource([
-                'data' => [
-                    'tenant' => new TenantResource($admin),
-                    'domain' => new DomainResource($domain),
-                ],
-                'message' => trans('rest-api::app.settings.tenants.create-success'),
+    public function store(): JsonResource {
+        try {
+            $this->validate(request(), [
+                'multiatendedor_id' => 'required',
+                'data'              => 'required',
             ]);
 
+            $data = request()->all();
+
+            $domainName = Helper::formatDomainName($data['data']['name']);
+            
+            $data['data'] = json_encode($data['data']);
+
+            $admin = $this->tenantRepository->create($data);
+            $admin->save();
+
+            $tenant_id = $admin['id'];
+            
+            // Domínio referente ao local
+            $domainData = [
+                'domain'    => $domainName . '.localhost', 
+                'tenant_id' => $tenant_id,          
+            ];
+
+            try {
+                $domain = $this->domainRepository->create($domainData);
+                $domain->save();
+                $updateDomain = true;
+            } catch (\Exception $e) {
+                logger()->error('Erro ao criar domínio: ' . $e->getMessage());
+                $updateDomain = false;
+            }
+
+            if ($updateDomain) {
+                return new JsonResource([
+                    'data' => [
+                        'tenant' => new TenantResource($admin),
+                        'domain' => new DomainResource($domain),
+                    ],
+                    'message' => trans('rest-api::app.settings.tenants.create-success'),
+                ]);
+            }
+
+            return new JsonResource([
+                'data'    => new TenantResource($admin),
+                'message' => trans('rest-api::app.settings.tenants.failed-create-domain'),
+            ]);
+
+        } catch (\Exception $e) {
+            logger()->error('Erro ao criar tenant: ' . $e->getMessage());
+
+            return new JsonResource([
+                'message' => 'Erro ao criar o tenant: ' . $e->getMessage(),
+            ], 500);
         }
-
-        return new JsonResource([
-            'data'    => new TenantResource($admin),
-            'message' => trans('rest-api::app.settings.tenants.failed-create-domain'),
-        ]);
-    
     }
 
-    public function update($id)
-    {
-        $this->validate(request(), [
-            'multiatendedor_id' => 'required',
-            'data'             => 'required',
-        ]);
 
-        $data = request()->all();
-        
-        $domainName = $this->formatDomainName($data['data']['name']);
+   public function update($id): JsonResource {
+        try {
+            $this->validate(request(), [
+                'multiatendedor_id' => 'required',
+                'data'              => 'required',
+            ]);
 
-        $data['data'] = json_encode($data['data']);
+            $data = request()->all();
 
-        $admin = $this->tenantRepository->update($data, $id);
+            $domainName = Helper::formatDomainName($data['data']['name']);
+            $data['data'] = json_encode($data['data']);
 
-        $admin->save();
+            $admin = $this->tenantRepository->update($data, $id);
+            $admin->save();
 
-        return new JsonResource([
-            'data'    => new TenantResource($admin),
-            'message' => trans('rest-api::app.settings.tenants.updated-success'),
-        ]);
+            $tenant_id = $admin['id'];
+
+            $domainData = [
+                'domain'    => $domainName . '.localhost',
+                'tenant_id' => $tenant_id,
+            ];
+
+            try {
+                $existingDomain = $admin->domains()->first();
+
+                if ($existingDomain) {
+                    $domain = $this->domainRepository->update($domainData, $existingDomain->id);
+                } else {
+                    $domain = $this->domainRepository->create($domainData);
+                }
+
+                $domain->save();
+                $updateDomain = true;
+            } catch (\Exception $e) {
+                logger()->error('Erro ao atualizar/criar domínio: ' . $e->getMessage());
+                $updateDomain = false;
+            }
+
+            if ($updateDomain) {
+                return new JsonResource([
+                    'data' => [
+                        'tenant' => new TenantResource($admin),
+                        'domain' => new DomainResource($domain),
+                    ],
+                    'message' => trans('rest-api::app.settings.tenants.updated-success'),
+                ]);
+            }
+
+            return new JsonResource([
+                'data'    => new TenantResource($admin),
+                'message' => trans('rest-api::app.settings.tenants.failed-create-domain'),
+            ]);
+
+        } catch (\Exception $e) {
+            logger()->error('Erro ao atualizar tenant: ' . $e->getMessage());
+
+            return new JsonResource([
+                'message' => 'Erro ao atualizar o tenant: ' . $e->getMessage(),
+            ], 500);
+        }
     }
+
 
     public function destroy(int $id): JsonResource
     {
