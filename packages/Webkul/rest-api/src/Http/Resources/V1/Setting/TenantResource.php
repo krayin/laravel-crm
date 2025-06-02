@@ -3,7 +3,6 @@
 namespace Webkul\RestApi\Http\Resources\V1\Setting;
 
 use Illuminate\Http\Resources\Json\JsonResource;
-use Webkul\RestApi\Http\Resources\V1\Setting\DomainResource;
 
 class TenantResource extends JsonResource
 {

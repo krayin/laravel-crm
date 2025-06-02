@@ -3,16 +3,15 @@
 namespace Webkul\RestApi\Http\Controllers\V1\Setting;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use Webkul\Core\Helpers\Helper;
+use Webkul\Domain\Repositories\DomainRepository;
 use Webkul\Domain\Repositories\DomainRepository;
 use Webkul\RestApi\Http\Controllers\V1\Controller;
 use Webkul\RestApi\Http\Resources\V1\Setting\DomainResource;
-use Webkul\RestApi\Http\Resources\V1\Setting\TenantResource;
-use Webkul\Tenant\Repositories\TenantRepository;
-use Webkul\Domain\Repositories\DomainRepository;
 use Webkul\RestApi\Http\Resources\V1\Setting\DomainResource;
-use Webkul\Core\Helpers\Helper;
+use Webkul\RestApi\Http\Resources\V1\Setting\TenantResource;
 use Webkul\Tenant\Models\Tenant;
-
+use Webkul\Tenant\Repositories\TenantRepository;
 
 class TenantController extends Controller
 {
@@ -21,20 +20,21 @@ class TenantController extends Controller
         protected DomainRepository $domainRepository
     ) {}
 
-    public function index(): JsonResource {
+    public function index(): JsonResource
+    {
         try {
             $tenants = Tenant::with('domains')->get();
 
             return TenantResource::collection($tenants);
         } catch (\Exception $e) {
             return new JsonResource([
-                'message' => 'Error: ' . $e->getMessage(),
+                'message' => 'Error: '.$e->getMessage(),
             ], 500);
         }
     }
 
-
-    public function show(int $id): JsonResource {
+    public function show(int $id): JsonResource
+    {
         try {
 
             return new TenantResource(Tenant::with('domains')->findOrFail($id));
@@ -46,7 +46,8 @@ class TenantController extends Controller
         }
     }
 
-    public function store(): JsonResource {
+    public function store(): JsonResource
+    {
         try {
             $this->validate(request(), [
                 'multiatendedor_id' => 'required',
@@ -56,18 +57,18 @@ class TenantController extends Controller
             $data = request()->all();
 
             $domainName = Helper::formatDomainName($data['data']['name']);
-            
+
             $data['data'] = json_encode($data['data']);
 
             $admin = $this->tenantRepository->create($data);
             $admin->save();
 
             $tenant_id = $admin['id'];
-            
+
             // Domínio referente ao local
             $domainData = [
-                'domain'    => $domainName . '.localhost', 
-                'tenant_id' => $tenant_id,          
+                'domain'    => $domainName.'.localhost',
+                'tenant_id' => $tenant_id,
             ];
 
             try {
@@ -75,7 +76,7 @@ class TenantController extends Controller
                 $domain->save();
                 $updateDomain = true;
             } catch (\Exception $e) {
-                logger()->error('Erro ao criar domínio: ' . $e->getMessage());
+                logger()->error('Erro ao criar domínio: '.$e->getMessage());
                 $updateDomain = false;
             }
 
@@ -95,16 +96,16 @@ class TenantController extends Controller
             ]);
 
         } catch (\Exception $e) {
-            logger()->error('Erro ao criar tenant: ' . $e->getMessage());
+            logger()->error('Erro ao criar tenant: '.$e->getMessage());
 
             return new JsonResource([
-                'message' => 'Erro ao criar o tenant: ' . $e->getMessage(),
+                'message' => 'Erro ao criar o tenant: '.$e->getMessage(),
             ], 500);
         }
     }
 
-
-   public function update($id): JsonResource {
+    public function update($id): JsonResource
+    {
         try {
             $this->validate(request(), [
                 'multiatendedor_id' => 'required',
@@ -122,7 +123,7 @@ class TenantController extends Controller
             $tenant_id = $admin['id'];
 
             $domainData = [
-                'domain'    => $domainName . '.localhost',
+                'domain'    => $domainName.'.localhost',
                 'tenant_id' => $tenant_id,
             ];
 
@@ -138,7 +139,7 @@ class TenantController extends Controller
                 $domain->save();
                 $updateDomain = true;
             } catch (\Exception $e) {
-                logger()->error('Erro ao atualizar/criar domínio: ' . $e->getMessage());
+                logger()->error('Erro ao atualizar/criar domínio: '.$e->getMessage());
                 $updateDomain = false;
             }
 
@@ -158,14 +159,13 @@ class TenantController extends Controller
             ]);
 
         } catch (\Exception $e) {
-            logger()->error('Erro ao atualizar tenant: ' . $e->getMessage());
+            logger()->error('Erro ao atualizar tenant: '.$e->getMessage());
 
             return new JsonResource([
-                'message' => 'Erro ao atualizar o tenant: ' . $e->getMessage(),
+                'message' => 'Erro ao atualizar o tenant: '.$e->getMessage(),
             ], 500);
         }
     }
-
 
     public function destroy(int $id): JsonResource
     {
