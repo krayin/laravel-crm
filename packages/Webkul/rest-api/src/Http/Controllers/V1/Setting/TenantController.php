@@ -3,7 +3,9 @@
 namespace Webkul\RestApi\Http\Controllers\V1\Setting;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use Webkul\Domain\Repositories\DomainRepository;
 use Webkul\RestApi\Http\Controllers\V1\Controller;
+use Webkul\RestApi\Http\Resources\V1\Setting\DomainResource;
 use Webkul\RestApi\Http\Resources\V1\Setting\TenantResource;
 use Webkul\Tenant\Repositories\TenantRepository;
 use Webkul\Domain\Repositories\DomainRepository;
