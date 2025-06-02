@@ -34,6 +34,7 @@ class LeadResource extends JsonResource
             'lead_pipeline_stage_id' => $this->lead_pipeline_stage_id,
             'created_at'             => $this->created_at,
             'updated_at'             => $this->updated_at,
+            'tenant_id'              => $this->tenant_id,
             'expected_close_date'    => $this->expected_close_date,
         ];
     }
