@@ -20,6 +20,9 @@ return new class extends Migration
             $table->timestamps();
 
             $table->unique(['user_id', 'name', 'src']);
+
+            $table->unsignedInteger('tenant_id')->nullable();
+            $table->foreign('tenant_id')->references('id')->on('tenants')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 

@@ -3,12 +3,15 @@
 namespace Webkul\Tag\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
 use Webkul\Tag\Contracts\Tag as TagContract;
 use Webkul\User\Models\UserProxy;
 
 class Tag extends Model implements TagContract
 {
     protected $table = 'tags';
+
+    use BelongsToTenant;
 
     /**
      * The attributes that are mass assignable.

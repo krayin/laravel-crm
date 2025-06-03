@@ -24,6 +24,8 @@ return new class extends Migration
             $table->string('raw_payload_type');
             $table->json('payload')->nullable();
             $table->timestamps();
+            $table->unsignedInteger('tenant_id')->nullable();
+            $table->foreign('tenant_id')->references('id')->on('tenants')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 

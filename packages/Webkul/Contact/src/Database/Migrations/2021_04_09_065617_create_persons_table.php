@@ -22,6 +22,12 @@ return new class extends Migration
             $table->integer('organization_id')->unsigned()->nullable();
             $table->foreign('organization_id')->references('id')->on('organizations')->onDelete('cascade');
             $table->timestamps();
+
+            $table->unsignedInteger('multiatendedor_id')->unique()->nullable();
+
+            $table->unsignedInteger('tenant_id')->nullable();
+            $table->foreign('tenant_id')->references('id')->on('tenants')->onUpdate('cascade')->onDelete('cascade');
+
         });
     }
 

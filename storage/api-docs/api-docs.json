@@ -10,7 +10,7 @@
     },
     "servers": [
         {
-            "url": "http://localhost",
+            "url": "http://localhost:8000",
             "description": "Krayin Rest API."
         }
     ],

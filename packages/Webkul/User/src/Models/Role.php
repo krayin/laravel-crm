@@ -3,10 +3,13 @@
 namespace Webkul\User\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
 use Webkul\User\Contracts\Role as RoleContract;
 
 class Role extends Model implements RoleContract
 {
+    use BelongsToTenant;
+
     /**
      * The attributes that are mass assignable.
      *

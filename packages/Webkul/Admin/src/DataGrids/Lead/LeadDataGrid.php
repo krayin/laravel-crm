@@ -78,7 +78,8 @@ class LeadDataGrid extends DataGrid
             ->leftJoin('lead_tags', 'leads.id', '=', 'lead_tags.lead_id')
             ->leftJoin('tags', 'tags.id', '=', 'lead_tags.tag_id')
             ->groupBy('leads.id')
-            ->where('leads.lead_pipeline_id', $this->pipeline->id);
+            ->where('leads.lead_pipeline_id', $this->pipeline->id)
+            ->where(fn ($q) => $q->where('leads.tenant_id', tenant('id'))->orWhereNull('leads.tenant_id'));
 
         if ($userIds = bouncer()->getAuthorizedUserIds()) {
             $queryBuilder->whereIn('leads.user_id', $userIds);

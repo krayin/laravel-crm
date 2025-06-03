@@ -3,10 +3,13 @@
 namespace Webkul\Attribute\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
 use Webkul\Attribute\Contracts\Attribute as AttributeContract;
 
 class Attribute extends Model implements AttributeContract
 {
+    use BelongsToTenant;
+
     /**
      * The attributes that are mass assignable.
      *

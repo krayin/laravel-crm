@@ -76,6 +76,11 @@ class AttributeController extends Controller
     public function edit(int $id): View
     {
         $attribute = $this->attributeRepository->findOrFail($id);
+        if (! $attribute->is_user_defined) {
+            session()->flash('error', trans('admin::app.settings.attributes.index.user-define-error'));
+
+            return view('admin::settings.attributes.index');
+        }
 
         return view('admin::settings.attributes.edit', compact('attribute'));
     }

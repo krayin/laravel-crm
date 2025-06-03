@@ -1,0 +1,7 @@
+services:
+  mysql:
+    platform: linux/amd64
+  mysql2:
+    platform: linux/amd64
+  mssql:
+    image: mcr.microsoft.com/azure-sql-edge

@@ -22,6 +22,8 @@ return new class extends Migration
 
             $table->foreign('marketing_template_id')->references('id')->on('email_templates')->onDelete('set null');
             $table->foreign('marketing_event_id')->references('id')->on('marketing_events')->onDelete('set null');
+            $table->unsignedInteger('tenant_id')->nullable();
+            $table->foreign('tenant_id')->references('id')->on('tenants')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 

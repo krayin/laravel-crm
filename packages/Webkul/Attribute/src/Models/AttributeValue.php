@@ -3,12 +3,13 @@
 namespace Webkul\Attribute\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
 use Webkul\Activity\Traits\LogsActivity;
 use Webkul\Attribute\Contracts\AttributeValue as AttributeValueContract;
 
 class AttributeValue extends Model implements AttributeValueContract
 {
-    use LogsActivity;
+    use BelongsToTenant, LogsActivity;
 
     public $timestamps = false;
 

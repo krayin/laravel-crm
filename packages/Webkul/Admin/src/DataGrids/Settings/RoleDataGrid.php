@@ -19,7 +19,8 @@ class RoleDataGrid extends DataGrid
                 'roles.name',
                 'roles.description',
                 'roles.permission_type'
-            );
+            )
+            ->where(fn ($q) => $q->where('roles.tenant_id', tenant('id'))->orWhereNull('roles.tenant_id'));
 
         $this->addFilter('id', 'roles.id');
         $this->addFilter('name', 'roles.name');

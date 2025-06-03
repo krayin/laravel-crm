@@ -3,10 +3,13 @@
 namespace Webkul\Warehouse\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
 use Webkul\Warehouse\Contracts\Location as LocationContract;
 
 class Location extends Model implements LocationContract
 {
+    use BelongsToTenant;
+
     /**
      * The table associated with the model.
      */

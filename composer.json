@@ -77,7 +77,10 @@
             "Webkul\\User\\": "packages/Webkul/User/src",
             "Webkul\\Warehouse\\": "packages/Webkul/Warehouse/src",
             "Webkul\\WebForm\\": "packages/Webkul/WebForm/src",
-            "Webkul\\Automation\\": "packages/Webkul/Automation/src"
+            "Webkul\\Automation\\": "packages/Webkul/Automation/src",
+            "Stancl\\Tenancy\\": "stancl/tenancy/src",
+            "Stancl\\JobPipeline\\": "stancl/jobpipeline/src",
+            "Stancl\\VirtualColumn\\": "stancl/virtualcolumn/src"
         }
     },
     "autoload-dev": {
@@ -94,12 +97,12 @@
             }
         },
         {
-        "type": "path",
-        "url": "./rest-api",
-        "options": {
-            "symlink": true
+            "type": "path",
+            "url": "./rest-api",
+            "options": {
+                "symlink": true
+            }
         }
-    }
     ],
     "minimum-stability": "stable",
     "prefer-stable": true,
