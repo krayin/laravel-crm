@@ -30,6 +30,7 @@ class QuoteResource extends JsonResource
             'tax_amount'        => $this->tax_amount,
             'adjustment_amount' => $this->adjustment_amount,
             'grand_total'       => $this->grand_total,
+            'tenant_id'         => $this->tenant_id,
             'updated_at'        => $this->updated_at,
             'created_at'        => $this->created_at,
         ];

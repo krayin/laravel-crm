@@ -30,6 +30,7 @@ class AttributeResource extends JsonResource
             'options'         => $this->options,
             'created_at'      => $this->created_at,
             'updated_at'      => $this->updated_at,
+            'tenant_id'       => $this->tenant_id,
         ];
     }
 }

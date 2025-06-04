@@ -14,5 +14,6 @@ class EmailTemplate extends Model implements EmailTemplateContract
         'name',
         'subject',
         'content',
+        'tenant_id',
     ];
 }

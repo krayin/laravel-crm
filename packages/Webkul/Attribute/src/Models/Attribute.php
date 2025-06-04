@@ -26,6 +26,7 @@ class Attribute extends Model implements AttributeContract
         'quick_add',
         'validation',
         'is_user_defined',
+        'tenant_id',
     ];
 
     /**

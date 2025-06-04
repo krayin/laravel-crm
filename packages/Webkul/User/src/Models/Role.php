@@ -17,6 +17,7 @@ class Role extends Model implements RoleContract
         'description',
         'permission_type',
         'permissions',
+        'tenant_id',
     ];
 
     protected $casts = [

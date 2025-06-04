@@ -19,6 +19,7 @@ class PipelineResource extends JsonResource
             'name'        => $this->name,
             'is_default'  => $this->is_default,
             'rotten_days' => $this->rotten_days,
+            'tenant_id'   => $this->tenant_id,
             'stages'      => StageResource::collection($this->stages),
             'created_at'  => $this->created_at,
             'updated_at'  => $this->updated_at,

@@ -41,6 +41,7 @@ class Quote extends Model implements QuoteContract
         'expired_at',
         'user_id',
         'person_id',
+        'tenant_id',
     ];
 
     /**

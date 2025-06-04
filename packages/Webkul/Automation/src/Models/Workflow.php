@@ -23,5 +23,6 @@ class Workflow extends Model implements WorkflowContract
         'condition_type',
         'conditions',
         'actions',
+        'tenant_id',
     ];
 }
