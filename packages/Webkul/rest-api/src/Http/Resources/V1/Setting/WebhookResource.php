@@ -26,6 +26,7 @@ class WebhookResource extends JsonResource
             'payload_type'     => $this->payload_type,
             'raw_payload_type' => $this->raw_payload_type,
             'payload'          => $this->payload,
+            'tenant_id'        => $this->tenant_id,
             'created_at'       => $this->created_at,
             'updated_at'       => $this->updated_at,
         ];

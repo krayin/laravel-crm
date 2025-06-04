@@ -22,6 +22,7 @@ class WarehouseResource extends JsonResource
             'contact_numbers' => $this->contact_numbers,
             'contact_emails'  => $this->contact_emails,
             'contact_address' => $this->contact_address,
+            'tenant_id'       => $this->tenant_id,
             'location'        => LocationResource::collection($this->locations),
             'tags'            => TagResource::collection($this->tags),
             'activities'      => ActivityResource::collection($this->activities),

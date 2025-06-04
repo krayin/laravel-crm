@@ -15,7 +15,6 @@ class TenantServiceProvider extends ServiceProvider
     public function boot(Router $router)
     {
         // $this->loadMigrationsFrom(__DIR__.'/../Database/Migrations');
-        logger('Teste caiu aqui');
     }
 
     /**
