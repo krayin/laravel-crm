@@ -25,7 +25,6 @@ class Organization extends Model implements OrganizationContract
         'name',
         'address',
         'user_id',
-        'tenant_id',
     ];
 
     /**

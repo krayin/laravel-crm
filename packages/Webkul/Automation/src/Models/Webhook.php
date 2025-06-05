@@ -27,7 +27,6 @@ class Webhook extends Model implements ContractsWebhook
         'payload_type',
         'raw_payload_type',
         'payload',
-        'tenant_id',
     ];
 
     /**

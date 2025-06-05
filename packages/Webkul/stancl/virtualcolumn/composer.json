@@ -1,6 +1,5 @@
 {
     "name": "stancl/virtualcolumn",
-    "version": "dev-main",
     "description": "Eloquent virtual column.",
     "license": "MIT",
     "authors": [

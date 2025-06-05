@@ -31,7 +31,6 @@ class LeadRepository extends Repository
         'lead_pipeline_stage_id',
         'created_at',
         'closed_at',
-        'tenant_id',
         'expected_close_date',
     ];
 

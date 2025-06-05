@@ -23,7 +23,6 @@ class WebForm extends Model implements WebFormContract
         'form_title_color',
         'form_submit_button_color',
         'attribute_label_color',
-        'tenant_id',
     ];
 
     /**

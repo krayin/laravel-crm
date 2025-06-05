@@ -1,6 +1,5 @@
 {
     "name": "stancl/jobpipeline",
-    "version": "dev-main",
     "description": "Turn any series of jobs into Laravel listeners.",
     "license": "MIT",
     "authors": [
