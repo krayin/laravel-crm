@@ -51,6 +51,7 @@ class Lead extends Model implements LeadContract
         'lead_source_id',
         'lead_type_id',
         'lead_pipeline_id',
+        'tenant_id',
         'lead_pipeline_stage_id',
     ];
 
