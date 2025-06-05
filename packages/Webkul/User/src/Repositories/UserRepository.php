@@ -14,7 +14,6 @@ class UserRepository extends Repository
         'email',
         'status',
         'view_permission',
-        'role_id',
     ];
 
     /**

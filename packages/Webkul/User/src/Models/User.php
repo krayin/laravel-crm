@@ -6,12 +6,12 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Storage;
 use Laravel\Sanctum\HasApiTokens;
-use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
 use Webkul\User\Contracts\User as UserContract;
+use Webkul\User\Models\UserTenant;
 
 class User extends Authenticatable implements UserContract
 {
-    use BelongsToTenant, HasApiTokens, Notifiable;
+    use HasApiTokens, Notifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -24,8 +24,6 @@ class User extends Authenticatable implements UserContract
         'image',
         'password',
         'api_token',
-        'role_id',
-        'status',
     ];
 
     /**
@@ -37,68 +35,147 @@ class User extends Authenticatable implements UserContract
         'password',
         'api_token',
         'remember_token',
+        'current_tenant_pivot',
     ];
 
     /**
-     * Get image url for the product image.
+     * The attributes that should be appended to the array form.
+     *
+     * @var array
+     */
+    protected $appends = [
+        'image_url',
+        'role_id',
+        'status',
+        'view_permission',
+        'role',
+        'groups',
+    ];
+
+    /**
+     * Image URL accessor.
      */
     public function image_url()
     {
         if (! $this->image) {
-            return;
+            return null;
         }
 
         return Storage::url($this->image);
     }
 
-    /**
-     * Get image url for the product image.
-     */
     public function getImageUrlAttribute()
     {
         return $this->image_url();
     }
 
-    /**
-     * @return array
-     */
     public function toArray()
     {
         $array = parent::toArray();
 
         $array['image_url'] = $this->image_url;
+        $array['groups'] = $this->groups;
 
         return $array;
     }
 
     /**
-     * Get the role that owns the user.
+     * All tenant associations of this user.
+     */
+    public function tenantPivots()
+    {
+        return $this->hasMany(UserTenant::class);
+    }
+
+    /**
+     * Current tenant pivot (based on the active tenant).
+     */
+    public function currentTenantPivot()
+    {
+        return $this->hasOne(UserTenant::class)
+                    ->where('tenant_id', tenant('id'))
+                    ->withDefault([
+                        'role_id' => null,
+                        'status' => 0,
+                        'view_permission' => 'global',
+                    ]);
+    }
+
+    /**
+     * Get the currentTenantPivot model instance safely.
+     */
+    protected function getCurrentTenantPivotObject()
+    {
+        return $this->relationLoaded('currentTenantPivot')
+            ? $this->getRelation('currentTenantPivot')
+            : $this->currentTenantPivot()->getResults();
+    }
+
+    /**
+     * Dynamically get the current tenant's role ID.
+     */
+    public function getRoleIdAttribute()
+    {
+        return $this->getCurrentTenantPivotObject()->role_id;
+    }
+
+    /**
+     * Dynamically get the current tenant's status.
+     */
+    public function getStatusAttribute()
+    {
+        return $this->getCurrentTenantPivotObject()->status;
+    }
+
+    /**
+     * Dynamically get the current tenant's view_permission.
+     */
+    public function getViewPermissionAttribute()
+    {
+        return $this->getCurrentTenantPivotObject()->view_permission;
+    }
+
+    /**
+     * Proxy role relationship from the pivot.
      */
     public function role()
     {
-        return $this->belongsTo(RoleProxy::modelClass());
+        return $this->getCurrentTenantPivotObject()->role();
+    }
+
+    public function getRoleAttribute()
+    {
+        return $this->getCurrentTenantPivotObject()->role;
     }
 
     /**
-     * The groups that belong to the user.
+     * Groups the user belongs to.
      */
     public function groups()
     {
-        return $this->belongsToMany(GroupProxy::modelClass(), 'user_groups');
+        return $this->getCurrentTenantPivotObject()->groups();
+    }
+
+    public function getGroupsAttribute()
+    {
+        return $this->getCurrentTenantPivotObject()->groups;
     }
 
     /**
-     * Checks if user has permission to perform certain action.
-     *
-     * @param  string  $permission
-     * @return bool
+     * Check permission for a given action.
      */
     public function hasPermission($permission)
     {
-        if ($this->role->permission_type == 'custom' && ! $this->role->permissions) {
+        $role = $this->getCurrentTenantPivotObject()->role;
+
+        if (! $role) {
             return false;
         }
 
-        return in_array($permission, $this->role->permissions);
+        if ($role->permission_type === 'custom' && empty($role->permissions)) {
+            return false;
+        }
+
+        return $role->permission_type === 'all' || in_array($permission, $role->permissions);
     }
 }
