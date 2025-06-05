@@ -1,5 +1,6 @@
 {
     "name": "stancl/tenancy",
+    "version": "dev-main",
     "description": "Automatic multi-tenancy for your Laravel application.",
     "keywords": ["laravel", "multi-tenancy", "multi-database", "tenancy"],
     "license": "MIT",
@@ -15,8 +16,8 @@
         "illuminate/support": "^10.0|^11.0|^12.0",
         "facade/ignition-contracts": "^1.0.2",
         "ramsey/uuid": "^4.7.3",
-        "stancl/jobpipeline": "^1.8.0",
-        "stancl/virtualcolumn": "^1.5.0"
+        "stancl/jobpipeline": "dev-main",
+        "stancl/virtualcolumn": "dev-main"
     },
     "require-dev": {
         "laravel/framework": "^10.0|^11.0|^12.0",

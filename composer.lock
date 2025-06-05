@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9c64bfa4d0a0f45d6c378965dfb4df22",
+    "content-hash": "f71815036c6f895c42d74d2644acc4eb",
     "packages": [
         {
             "name": "barryvdh/laravel-dompdf",
@@ -5717,17 +5717,11 @@
         },
         {
             "name": "stancl/jobpipeline",
-            "version": "v1.8.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/archtechx/jobpipeline.git",
-                "reference": "a987f8ff698456bb807937225b1a98fd92ce3124"
-            },
+            "version": "dev-main",
             "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/archtechx/jobpipeline/zipball/a987f8ff698456bb807937225b1a98fd92ce3124",
-                "reference": "a987f8ff698456bb807937225b1a98fd92ce3124",
-                "shasum": ""
+                "type": "path",
+                "url": "packages/Webkul/stancl/jobpipeline",
+                "reference": "363c241591ad5ee9ea4ed5d3a0f4078408613e66"
             },
             "require": {
                 "illuminate/support": "^10.0|^11.0|^12.0",
@@ -5744,7 +5738,11 @@
                     "Stancl\\JobPipeline\\": "src/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
+            "autoload-dev": {
+                "psr-4": {
+                    "Stancl\\JobPipeline\\Tests\\": "tests/"
+                }
+            },
             "license": [
                 "MIT"
             ],
@@ -5755,25 +5753,18 @@
                 }
             ],
             "description": "Turn any series of jobs into Laravel listeners.",
-            "support": {
-                "issues": "https://github.com/archtechx/jobpipeline/issues",
-                "source": "https://github.com/archtechx/jobpipeline/tree/v1.8.0"
-            },
-            "time": "2025-02-25T11:59:50+00:00"
+            "transport-options": {
+                "symlink": true,
+                "relative": true
+            }
         },
         {
             "name": "stancl/tenancy",
-            "version": "v3.9.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/archtechx/tenancy.git",
-                "reference": "d98a170fbd2e114604bfec3bc6267a3d6e02dec1"
-            },
+            "version": "dev-main",
             "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/archtechx/tenancy/zipball/d98a170fbd2e114604bfec3bc6267a3d6e02dec1",
-                "reference": "d98a170fbd2e114604bfec3bc6267a3d6e02dec1",
-                "shasum": ""
+                "type": "path",
+                "url": "packages/Webkul/stancl/tenancy",
+                "reference": "1891dd6c9c00979dbd388e9d003ff637550fd90d"
             },
             "require": {
                 "ext-json": "*",
@@ -5781,8 +5772,8 @@
                 "illuminate/support": "^10.0|^11.0|^12.0",
                 "php": "^8.0",
                 "ramsey/uuid": "^4.7.3",
-                "stancl/jobpipeline": "^1.8.0",
-                "stancl/virtualcolumn": "^1.5.0"
+                "stancl/jobpipeline": "dev-main",
+                "stancl/virtualcolumn": "dev-main"
             },
             "require-dev": {
                 "doctrine/dbal": "^3.6.0",
@@ -5794,24 +5785,28 @@
             "type": "library",
             "extra": {
                 "laravel": {
+                    "providers": [
+                        "Stancl\\Tenancy\\TenancyServiceProvider"
+                    ],
                     "aliases": {
                         "Tenancy": "Stancl\\Tenancy\\Facades\\Tenancy",
                         "GlobalCache": "Stancl\\Tenancy\\Facades\\GlobalCache"
-                    },
-                    "providers": [
-                        "Stancl\\Tenancy\\TenancyServiceProvider"
-                    ]
+                    }
                 }
             },
             "autoload": {
-                "files": [
-                    "src/helpers.php"
-                ],
                 "psr-4": {
                     "Stancl\\Tenancy\\": "src/"
+                },
+                "files": [
+                    "src/helpers.php"
+                ]
+            },
+            "autoload-dev": {
+                "psr-4": {
+                    "Stancl\\Tenancy\\Tests\\": "tests/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -5828,35 +5823,18 @@
                 "multi-tenancy",
                 "tenancy"
             ],
-            "support": {
-                "issues": "https://github.com/archtechx/tenancy/issues",
-                "source": "https://github.com/archtechx/tenancy/tree/v3.9.1"
-            },
-            "funding": [
-                {
-                    "url": "https://tenancyforlaravel.com/donate",
-                    "type": "custom"
-                },
-                {
-                    "url": "https://github.com/stancl",
-                    "type": "github"
-                }
-            ],
-            "time": "2025-03-13T16:02:11+00:00"
+            "transport-options": {
+                "symlink": true,
+                "relative": true
+            }
         },
         {
             "name": "stancl/virtualcolumn",
-            "version": "v1.5.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/archtechx/virtualcolumn.git",
-                "reference": "75718edcfeeb19abc1970f5395043f7d43cce5bc"
-            },
+            "version": "dev-main",
             "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/archtechx/virtualcolumn/zipball/75718edcfeeb19abc1970f5395043f7d43cce5bc",
-                "reference": "75718edcfeeb19abc1970f5395043f7d43cce5bc",
-                "shasum": ""
+                "type": "path",
+                "url": "packages/Webkul/stancl/virtualcolumn",
+                "reference": "fc69b394cb1300f3481afc4b3807e495d3b6b1c0"
             },
             "require": {
                 "illuminate/database": ">=10.0",
@@ -5871,7 +5849,11 @@
                     "Stancl\\VirtualColumn\\": "src/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
+            "autoload-dev": {
+                "psr-4": {
+                    "Stancl\\VirtualColumn\\Tests\\": "tests/"
+                }
+            },
             "license": [
                 "MIT"
             ],
@@ -5882,11 +5864,10 @@
                 }
             ],
             "description": "Eloquent virtual column.",
-            "support": {
-                "issues": "https://github.com/archtechx/virtualcolumn/issues",
-                "source": "https://github.com/archtechx/virtualcolumn/tree/v1.5.0"
-            },
-            "time": "2025-02-25T13:12:44+00:00"
+            "transport-options": {
+                "symlink": true,
+                "relative": true
+            }
         },
         {
             "name": "swagger-api/swagger-ui",
@@ -12094,8 +12075,11 @@
         }
     ],
     "aliases": [],
-    "minimum-stability": "stable",
+    "minimum-stability": "dev",
     "stability-flags": {
+        "stancl/tenancy": 20,
+        "stancl/jobpipeline": 20,
+        "stancl/virtualcolumn": 20,
         "krayin/krayin-package-generator": 20
     },
     "prefer-stable": true,
@@ -12103,6 +12087,6 @@
     "platform": {
         "php": "^8.2"
     },
-    "platform-dev": {},
-    "plugin-api-version": "2.6.0"
+    "platform-dev": [],
+    "plugin-api-version": "2.3.0"
 }
