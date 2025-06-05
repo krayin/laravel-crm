@@ -26,6 +26,7 @@ class Warehouse extends Model implements WarehouseContract
         'contact_emails',
         'contact_numbers',
         'contact_address',
+        'tenant_id',
     ];
 
     /**

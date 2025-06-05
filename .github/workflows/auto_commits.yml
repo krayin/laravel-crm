@@ -1,34 +1,34 @@
-name: Linting Tests
+# name: Linting Tests
 
-on: [push, pull_request]
+# on: [push, pull_request]
 
-permissions:
-  contents: write
+# permissions:
+#   contents: write
 
-jobs:
-  linting_tests:
-    runs-on: ${{ matrix.operating-systems }}
+# jobs:
+#   linting_tests:
+#     runs-on: ${{ matrix.operating-systems }}
 
-    strategy:
-      matrix:
-        operating-systems: [ubuntu-latest]
-        php-versions: ['8.3']
+#     strategy:
+#       matrix:
+#         operating-systems: [ubuntu-latest]
+#         php-versions: ['8.3']
 
-    name: PHP ${{ matrix.php-versions }} test on ${{ matrix.operating-systems }}
+#     name: PHP ${{ matrix.php-versions }} test on ${{ matrix.operating-systems }}
 
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v4
 
-      - name: Install Pint
-        run: composer global require laravel/pint
-        env:
-          COMPOSER_HOME: ${{ runner.temp }}/composer
+#       - name: Install Pint
+#         run: composer global require laravel/pint
+#         env:
+#           COMPOSER_HOME: ${{ runner.temp }}/composer
 
-      - name: Run Pint
-        run: ${{ runner.temp }}/composer/vendor/bin/pint
+#       - name: Run Pint
+#         run: ${{ runner.temp }}/composer/vendor/bin/pint
 
-      - name: Commit Linted Files
-        uses: stefanzweifel/git-auto-commit-action@v5
-        with:
-          commit_message: "chore: applied pint changes"
+#       - name: Commit Linted Files
+#         uses: stefanzweifel/git-auto-commit-action@v5
+#         with:
+#           commit_message: "chore: applied pint changes"

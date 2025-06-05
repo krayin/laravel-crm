@@ -16,16 +16,18 @@
         "guzzlehttp/guzzle": "^7.0.1",
         "khaled.alshamaa/ar-php": "^6.3",
         "konekt/concord": "^1.10",
-        "krayin/rest-api": "2.1.x-dev",
+        "krayin/rest-api": "^2.1",
         "laravel/framework": "^10.0",
         "laravel/sanctum": "^3.2",
         "laravel/tinker": "^2.5",
         "laravel/ui": "^4.5",
         "maatwebsite/excel": "^3.1",
         "mpdf/mpdf": "^8.2",
+         "stancl/tenancy": "dev-main",
+        "stancl/jobpipeline": "dev-main",
+        "stancl/virtualcolumn": "dev-main",
         "prettus/l5-repository": "^2.7.9",
         "smalot/pdfparser": "^2.11",
-        "stancl/tenancy": "^3.9",
         "webklex/laravel-imap": "^5.3"
     },
     "require-dev": {
@@ -75,12 +77,15 @@
             "Webkul\\Quote\\": "packages/Webkul/Quote/src",
             "Webkul\\Tag\\": "packages/Webkul/Tag/src",
             "Webkul\\User\\": "packages/Webkul/User/src",
+            "Webkul\\Tenant\\": "packages/Webkul/Tenant/src",
             "Webkul\\Warehouse\\": "packages/Webkul/Warehouse/src",
             "Webkul\\WebForm\\": "packages/Webkul/WebForm/src",
             "Webkul\\Automation\\": "packages/Webkul/Automation/src",
-            "Stancl\\Tenancy\\": "stancl/tenancy/src",
-            "Stancl\\JobPipeline\\": "stancl/jobpipeline/src",
-            "Stancl\\VirtualColumn\\": "stancl/virtualcolumn/src"
+            "Webkul\\Domain\\": "packages/Webkul/Domain/src/",
+            "Webkul\\RestApi\\": "packages/Webkul/rest-api/src/",
+            "Stancl\\Tenancy\\": "packages/Webkul/stancl/tenancy/src",
+            "Stancl\\JobPipeline\\": "packages/Webkul/stancl/jobpipeline/src",
+            "Stancl\\VirtualColumn\\": "packages/Webkul/stancl/virtualcolumn/src"
         }
     },
     "autoload-dev": {
@@ -95,16 +100,30 @@
             "options": {
                 "symlink": true
             }
+        }, 
+        {
+            "type": "path",
+            "url": "packages/Webkul/stancl/tenancy",
+            "options": {
+                "symlink": true
+            }
+        },
+         {
+        "type": "path",
+        "url": "packages/Webkul/stancl/jobpipeline",
+        "options": {
+            "symlink": true
+        }
         },
         {
             "type": "path",
-            "url": "./rest-api",
+            "url": "packages/Webkul/stancl/virtualcolumn",
             "options": {
                 "symlink": true
             }
         }
     ],
-    "minimum-stability": "stable",
+    "minimum-stability": "dev",
     "prefer-stable": true,
     "scripts": {
         "post-autoload-dump": [
