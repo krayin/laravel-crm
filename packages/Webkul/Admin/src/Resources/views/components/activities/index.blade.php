@@ -406,6 +406,9 @@
                             name: 'all',
                             label: "{{ trans('admin::app.components.activities.index.all') }}",
                         }, {
+                            name: 'leads',
+                            label: "{{ trans('admin::app.components.activities.index.leads') }}",
+                        }, {
                             name: 'planned',
                             label: "{{ trans('admin::app.components.activities.index.planned') }}",
                         }, {
@@ -430,6 +433,7 @@
                             name: 'system',
                             label: "{{ trans('admin::app.components.activities.index.change-log') }}",
                         }
+
                     ],
                 },
 
@@ -466,7 +470,11 @@
                             title: "{{ trans('admin::app.components.activities.index.empty-placeholders.all.title') }}",
                             description: "{{ trans('admin::app.components.activities.index.empty-placeholders.all.description') }}",
                         },
-
+                        leads: {
+                            image: "{{ vite()->asset('images/empty-placeholders/notes.svg') }}",
+                            title: "{{ trans('admin::app.components.activities.index.empty-placeholders.leads.title') }}",
+                            description: "{{ trans('admin::app.components.activities.index.empty-placeholders.leads.description') }}",
+                        },
                         planned: {
                             image: "{{ vite()->asset('images/empty-placeholders/plans.svg') }}",
                             title: "{{ trans('admin::app.components.activities.index.empty-placeholders.planned.title') }}",
