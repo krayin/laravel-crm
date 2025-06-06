@@ -44,6 +44,7 @@ class RoleController extends Controller
      */
     public function store(): RedirectResponse
     {
+
         $this->validate(request(), [
             'name'            => 'required',
             'permission_type' => 'required|in:all,custom',
@@ -89,6 +90,7 @@ class RoleController extends Controller
      */
     public function update(int $id): RedirectResponse
     {
+
         $this->validate(request(), [
             'name'            => 'required',
             'permission_type' => 'required|in:all,custom',
@@ -109,7 +111,17 @@ class RoleController extends Controller
         $role = $this->roleRepository->update($data, $id);
 
         Event::dispatch('settings.role.update.after', $role);
+        $list = [];
+        foreach (request()->keys() as $key) {
+            if (str_starts_with($key,"field_")){
+                if ( request()->get($key) === "1") {
+                    $list[]=str_replace("field_","",$key);
+                }
+            }
 
+        }
+        $role->visible_person_fields=$list;
+        $role->save();
         session()->flash('success', trans('admin::app.settings.roles.index.update-success'));
 
         return redirect()->back();

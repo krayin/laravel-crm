@@ -20,7 +20,8 @@ class Role extends Model implements RoleContract
     ];
 
     protected $casts = [
-        'permissions' => 'array',
+        'permissions'           => 'array',
+        'visible_person_fields' => 'array',
     ];
 
     /**

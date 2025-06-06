@@ -77,7 +77,21 @@ class PersonController extends Controller
     {
         $person = $this->personRepository->findOrFail($id);
 
-        return view('admin::contacts.persons.view', compact('person'));
+        $user = auth()->user();
+        $allowedFields = $user->role->visible_person_fields ?? [];
+
+        // Always include 'id' for routing/model logic
+        if (!in_array('id', $allowedFields)) {
+            $allowedFields[] = 'id';
+        }
+
+      //  $person = $this->personRepository->getModel()->select($allowedFields)->findOrFail($id);
+
+
+
+        return view('admin::contacts.persons.view', [
+            'person' => (object) $person,
+        ]);
     }
 
     /**

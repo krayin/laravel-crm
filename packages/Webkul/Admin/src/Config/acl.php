@@ -157,6 +157,11 @@ return [
         'route' => 'admin.contacts.persons.view',
         'sort'  => 5,
     ], [
+        'key'   => 'contacts.persons.export',
+        'name'  => 'admin::app.acl.export',
+        'route' => 'admin.contacts.persons.export',
+        'sort'  => 6,
+    ], [
         'key'   => 'contacts.organizations',
         'name'  => 'admin::app.acl.organizations',
         'route' => 'admin.contacts.organizations.index',
