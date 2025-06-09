@@ -178,6 +178,8 @@ return [
                 'planned'      => 'Planned',
                 'quotes'       => 'Quotes',
                 'scheduled-on' => 'Scheduled on',
+                'lead_type'    => 'Type',
+                'lead_stage'   => 'Stage',
                 'system'       => 'System',
                 'to'           => 'To',
                 'unlink'       => 'Unlink',

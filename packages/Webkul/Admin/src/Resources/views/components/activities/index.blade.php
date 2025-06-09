@@ -118,68 +118,71 @@
                                             <template v-if="activity.type == 'email'">
                                                 <p class="dark:text-white">
                                                     @lang('admin::app.components.activities.index.from'):
-
                                                     @{{ activity.additional.from }}
                                                 </p>
 
                                                 <p class="dark:text-white">
                                                     @lang('admin::app.components.activities.index.to'):
-
                                                     @{{ activity.additional.to.join(', ') }}
                                                 </p>
 
-                                                <p
-                                                    v-if="activity.additional.cc"
-                                                    class="dark:text-white"
-                                                >
+                                                <p v-if="activity.additional.cc" class="dark:text-white">
                                                     @lang('admin::app.components.activities.index.cc'):
-
                                                     @{{ activity.additional.cc.join(', ') }}
                                                 </p>
 
-                                                <p
-                                                    v-if="activity.additional.bcc"
-                                                    class="dark:text-white"
-                                                >
+                                                <p v-if="activity.additional.bcc" class="dark:text-white">
                                                     @lang('admin::app.components.activities.index.bcc'):
-
                                                     @{{ activity.additional.bcc.join(', ') }}
                                                 </p>
                                             </template>
 
+                                            <!-- Leads -->
+                                            <template v-else-if="activity.type == 'leads'">
+
+                                             <p class="dark:text-white">
+                                                    @lang('admin::app.components.activities.index.lead_stage'):
+                                                    <span
+                                                        :style="{
+                                                            color: activity.additional?.lead_stage?.toLowerCase() === 'lost' ? 'red'
+                                                                : activity.additional?.lead_stage?.toLowerCase() === 'won' ? 'green'
+                                                                : '#ADD8E6'
+                                                        }"
+                                                    >
+                                                        @{{ activity.additional?.lead_stage ?? '-' }}
+                                                    </span>
+                                                </p>
+
+                                                 <p class="dark:text-white">
+                                                    @lang('admin::app.components.activities.index.lead_type'):
+                                                    @{{ activity.additional?.lead_type ?? '-' }}
+                                                </p>    
+                                                
+                                            </template>
+
+                                            <!-- Default / Others -->
                                             <template v-else>
                                                 <!-- Activity Schedule -->
-                                                <p
-                                                    v-if="activity.schedule_from && activity.schedule_from"
-                                                    class="dark:text-white"
-                                                >
+                                                <p v-if="activity.schedule_from && activity.schedule_to" class="dark:text-white">
                                                     @lang('admin::app.components.activities.index.scheduled-on'):
-
                                                     @{{ $admin.formatDate(activity.schedule_from, 'd MMM yyyy, h:mm A', timezone) + ' - ' + $admin.formatDate(activity.schedule_to, 'd MMM yyyy, h:mm A', timezone) }}
                                                 </p>
 
                                                 <!-- Activity Participants -->
-                                                <p
-                                                    v-if="activity.participants?.length"
-                                                    class="dark:text-white"
-                                                >
+                                                <p v-if="activity.participants?.length" class="dark:text-white">
                                                     @lang('admin::app.components.activities.index.participants'):
-
                                                     <span class="after:content-[',_'] last:after:content-['']" v-for="(participant, index) in activity.participants">
                                                         @{{ participant.user?.name ?? participant.person.name }}
                                                     </span>
                                                 </p>
 
                                                 <!-- Activity Location -->
-                                                <p
-                                                    v-if="activity.location"
-                                                    class="dark:text-white"
-                                                >
+                                                <p v-if="activity.location" class="dark:text-white">
                                                     @lang('admin::app.components.activities.index.location'):
-
                                                     @{{ activity.location }}
                                                 </p>
                                             </template>
+
                                         </div>
 
                                         {!! view_render_event('admin.components.activities.content.activity.item.title.after') !!}
@@ -260,7 +263,7 @@
                                             <x-slot:menu class="!min-w-40">
                                                 {!! view_render_event('admin.components.activities.content.activity.item.more_actions.dropdown.menu_item.before') !!}
 
-                                                <template v-if="activity.type != 'email'">
+                                                <template v-if="activity.type != 'email' && activity.type != 'leads'">
                                                     @if (bouncer()->hasPermission('activities.edit'))
                                                         <x-admin::dropdown.menu.item
                                                             v-if="! activity.is_done && ['call', 'meeting', 'lunch'].includes(activity.type)"
@@ -297,7 +300,7 @@
                                                     @endif
                                                 </template>
 
-                                                <template v-else>
+                                                <template v-else-if="activity.type == 'email'">
                                                     @if (bouncer()->hasPermission('mail.view'))
                                                         <x-admin::dropdown.menu.item>
                                                             <a
@@ -319,6 +322,29 @@
                                                             @lang('admin::app.components.activities.index.unlink')
                                                         </div>
                                                     </x-admin::dropdown.menu.item>
+                                                </template>
+
+                                                 <template v-else>
+                                                    @if (bouncer()->hasPermission('leads.view'))
+                                                        <x-admin::dropdown.menu.item @click="redirectToLead(activity)">
+                                                            <div class="flex items-center gap-2">
+                                                                <span class="icon-eye text-2xl"></span>
+                                                                @lang('admin::app.components.activities.index.view')
+                                                            </div>
+                                                        </x-admin::dropdown.menu.item>
+                                                    @endif
+
+                                                     @if (bouncer()->hasPermission('leads.delete'))
+                                                        <x-admin::dropdown.menu.item @click="remove(activity)">
+                                                            <div class="flex items-center gap-2">
+                                                                <span class="icon-delete text-2xl"></span>
+
+                                                                @lang('admin::app.components.activities.index.delete')
+                                                            </div>
+                                                        </x-admin::dropdown.menu.item>
+                                                    @endif
+
+                                                
                                                 </template>
 
                                                 {!! view_render_event('admin.components.activities.content.activity.item.more_actions.dropdown.menu_item.after') !!}
@@ -455,6 +481,7 @@
 
                     typeClasses: {
                         email: 'icon-mail bg-green-200 text-green-900 dark:!text-green-900',
+                        leads: 'icon-activity bg-blue-200 text-blue-800 dark:!text-blue-800',
                         note: 'icon-note bg-orange-200 text-orange-800 dark:!text-orange-800',
                         call: 'icon-call bg-cyan-200 text-cyan-800 dark:!text-cyan-800',
                         meeting: 'icon-activity bg-blue-200 text-blue-800 dark:!text-blue-800',
@@ -548,8 +575,8 @@
                         this.types.push(type);
                     });
                 }
-
                 this.$emitter.on('on-activity-added', (activity) => this.activities.unshift(activity));
+            
             },
 
             methods: {
@@ -559,7 +586,6 @@
                     this.$axios.get(this.endpoint)
                         .then(response => {
                             this.activities = response.data.data;
-
                             this.isLoading = false;
                         })
                         .catch(error => {
@@ -641,6 +667,15 @@
                                 });
                         }
                     });
+                },
+                 redirectToLead(activity) {
+                    const id = activity.id;
+                    try{
+                        const url = `/admin/leads/view/${id}`;
+                        window.open(url, '_blank');
+                    }catch(e){
+                        console.error('Error => ', e);
+                    }
                 },
             },
         });
