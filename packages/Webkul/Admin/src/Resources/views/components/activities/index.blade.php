@@ -139,9 +139,9 @@
 
                                             <!-- Leads -->
                                             <template v-else-if="activity.type == 'leads'">
-
+                                            
                                              <p class="dark:text-white">
-                                                    @lang('admin::app.components.activities.index.lead_stage'):
+                                                    <b>@lang('admin::app.components.activities.index.lead_stage'): </b>
                                                     <span
                                                         :style="{
                                                             color: activity.additional?.lead_stage?.toLowerCase() === 'lost' ? 'red'
@@ -154,10 +154,17 @@
                                                 </p>
 
                                                  <p class="dark:text-white">
-                                                    @lang('admin::app.components.activities.index.lead_type'):
-                                                    @{{ activity.additional?.lead_type ?? '-' }}
+                                                    <b>@lang('admin::app.components.activities.index.lead_source'): </b>
+                                                    @{{ activity.additional?.source ?? '-' }}
                                                 </p>    
-                                                
+
+                                                <p class="dark:text-white">
+                                                   <b> @lang('admin::app.components.activities.index.lead_type'): </b>
+                                                    @{{ activity.additional?.lead_type ?? '-' }}
+                                                </p>   
+                                               
+                                                <hr class="my-2 border-t border-gray-300 dark:border-gray-600" />
+                                            
                                             </template>
 
                                             <!-- Default / Others -->
@@ -290,7 +297,7 @@
                                                     @endif
 
                                                     @if (bouncer()->hasPermission('activities.delete'))
-                                                        <x-admin::dropdown.menu.item @click="remove(activity)">
+                                                        <x-admin::dropdown.menu.item @click="remove(activity, 'activities')">
                                                             <div class="flex items-center gap-2">
                                                                 <span class="icon-delete text-2xl"></span>
 
@@ -335,7 +342,7 @@
                                                     @endif
 
                                                      @if (bouncer()->hasPermission('leads.delete'))
-                                                        <x-admin::dropdown.menu.item @click="remove(activity)">
+                                                        <x-admin::dropdown.menu.item @click="remove(activity, 'leads')">
                                                             <div class="flex items-center gap-2">
                                                                 <span class="icon-delete text-2xl"></span>
 
@@ -431,9 +438,6 @@
                         {
                             name: 'all',
                             label: "{{ trans('admin::app.components.activities.index.all') }}",
-                        }, {
-                            name: 'leads',
-                            label: "{{ trans('admin::app.components.activities.index.leads') }}",
                         }, {
                             name: 'planned',
                             label: "{{ trans('admin::app.components.activities.index.planned') }}",
@@ -586,6 +590,7 @@
                     this.$axios.get(this.endpoint)
                         .then(response => {
                             this.activities = response.data.data;
+                            console.log('ttytytyty ', this.activities);
                             this.isLoading = false;
                         })
                         .catch(error => {
@@ -617,12 +622,18 @@
                     });
                 },
 
-                remove(activity) {
+                remove(activity, type) {
                     this.$emitter.emit('open-confirm-modal', {
                         agree: () => {
-                            this.isUpdating[activity.id] = true;
+                            // Devido a "renderização" da rota ser em php, não consigo concatenar 
+                            // e nem passar uma variável como parâmetro no valour de route. 
+                            // Isto ocorre pois o Blade (php) processa as rotas antes do js ser executado 
 
-                            this.$axios.delete("{{ route('admin.activities.delete', 'replaceId') }}".replace('replaceId', activity.id))
+                            if (type == 'activities'){
+                                
+                                this.isUpdating[activity.id] = true;
+                                this.$axios.delete("{{ route('admin.activities.delete', 'replaceId') }}".replace('replaceId', activity.id))
+                
                                 .then((response) => {
                                     this.isUpdating[activity.id] = false;
 
@@ -635,6 +646,27 @@
 
                                     this.$emitter.emit('add-flash', { type: 'error', message: error.response.data.message });
                                 });
+
+                            } else {
+
+                                this.isUpdating[activity.id] = true;
+                                this.$axios.delete("{{ route('admin.leads.delete', 'replaceId') }}".replace('replaceId', activity.id))
+                
+                                .then((response) => {
+                                    this.isUpdating[activity.id] = false;
+
+                                    this.activities.splice(this.activities.indexOf(activity), 1);
+
+                                    this.$emitter.emit('add-flash', { type: 'success', message: response.data.message });
+                                })
+                                .catch((error) => {
+                                    this.isUpdating[activity.id] = false;
+
+                                    this.$emitter.emit('add-flash', { type: 'error', message: error.response.data.message });
+                                });
+
+                            }
+                            
                         },
                     });
                 },

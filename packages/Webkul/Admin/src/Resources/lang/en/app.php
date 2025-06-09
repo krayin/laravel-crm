@@ -180,6 +180,7 @@ return [
                 'scheduled-on' => 'Scheduled on',
                 'lead_type'    => 'Type',
                 'lead_stage'   => 'Stage',
+                'lead_source'  => 'Source',
                 'system'       => 'System',
                 'to'           => 'To',
                 'unlink'       => 'Unlink',

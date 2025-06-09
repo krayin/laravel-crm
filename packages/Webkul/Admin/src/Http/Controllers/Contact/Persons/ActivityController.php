@@ -70,7 +70,7 @@ class ActivityController extends Controller
                     'location'      => null,
                     'additional'    => [
                         'status'     => $lead->status ?? null,
-                        'source'     => $lead->source ?? null,
+                        'source'     => $lead->lead_source_name ?? null,
                         'lead_type'  => $lead->lead_type_name ?? null,
                         'lead_stage' => $lead->lead_pipeline_stage_name ?? null,
                         'lost_reason'=> $lead->lost_reason ?? null, 
