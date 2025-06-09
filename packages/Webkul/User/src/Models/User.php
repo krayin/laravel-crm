@@ -24,6 +24,7 @@ class User extends Authenticatable implements UserContract
         'image',
         'password',
         'api_token',
+        'multiatendedor_id',
     ];
 
     /**
