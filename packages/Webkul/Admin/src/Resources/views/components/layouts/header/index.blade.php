@@ -99,6 +99,15 @@
                         @lang('admin::app.layouts.my-account')
                     </a>
 
+                    <a
+                        class="cursor-pointer px-5 py-2 text-base text-gray-800 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-950"
+                        href="{{ route('superAdmin.index') }}"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        @lang('admin::app.layouts.super-admin')
+                    </a>
+
                     <!--Admin logout-->
                     <x-admin::form
                         method="DELETE"
