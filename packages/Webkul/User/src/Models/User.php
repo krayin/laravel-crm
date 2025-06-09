@@ -85,7 +85,7 @@ class User extends Authenticatable implements UserContract
      */
     public function tenantPivots()
     {
-        return $this->hasMany(UserTenant::class);
+        return $this->hasMany(UserTenant::class);    
     }
 
     /**

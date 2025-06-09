@@ -16,6 +16,7 @@ use Webkul\RestApi\Http\Controllers\V1\Setting\TagController;
 use Webkul\RestApi\Http\Controllers\V1\Setting\TenantController;
 use Webkul\RestApi\Http\Controllers\V1\Setting\TypeController;
 use Webkul\RestApi\Http\Controllers\V1\Setting\UserController;
+use Webkul\RestApi\Http\Controllers\V1\Setting\UserTenantController;
 use Webkul\RestApi\Http\Controllers\V1\Setting\Warehouses\ActivityController;
 use Webkul\RestApi\Http\Controllers\V1\Setting\Warehouses\TagController as WarehouseTagController;
 use Webkul\RestApi\Http\Controllers\V1\Setting\Warehouses\WarehouseController;
@@ -87,6 +88,19 @@ Route::group([
 
         Route::put('{id}', 'update');
 
+        Route::delete('{id}', 'destroy');
+    });
+
+    /**
+     * UserTenant routes.
+     */
+    Route::controller(UserTenantController::class)->prefix('user-tenants')->group(function () {
+        Route::post('mass-update', 'massUpdate');
+        Route::post('mass-destroy', 'massDestroy');
+        Route::get('', 'index');
+        Route::post('', 'store');
+        Route::get('{id}', 'show')->where('id', '[0-9]+');
+        Route::put('{id}', 'update');
         Route::delete('{id}', 'destroy');
     });
 
