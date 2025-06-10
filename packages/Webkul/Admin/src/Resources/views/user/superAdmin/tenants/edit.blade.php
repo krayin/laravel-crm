@@ -20,11 +20,12 @@
                 </div>
             @endif
 
-            <form action="{{ route('superAdmin.tenants.update', $tenant['id']) }}" method="POST" class="space-y-6">
+            {{-- Formulário de Edição --}}
+            <form action="{{ route('superAdmin.tenants.update', $tenant['id']) }}" method="POST" class="space-y-6" id="editForm">
                 @csrf
                 @method('PUT')
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Nome</label>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Nome <span class="text-red-500">*</span></label>
                     <input
                         type="text"
                         name="data[name]"
@@ -34,7 +35,7 @@
                     >
                 </div>
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Multiatendedor ID</label>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Multiatendedor ID <span class="text-red-500">*</span></label>
                     <input
                         type="text"
                         name="multiatendedor_id"
@@ -53,16 +54,37 @@
                     >
                 </div>
 
-                <div class="flex items-center justify-end space-x-3 pt-4 border-t border-gray-200 dark:border-gray-700">
-                    <a href="{{ route('superAdmin.tenants.index') }}" class="px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm hover:bg-gray-50 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 dark:focus:ring-offset-gray-800">
-                        Cancelar
-                    </a>
-                 <button type="submit" class="ml-4 text-sm font-medium text-gray-700 dark:text-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-offset-gray-800">
-                    Salvar Alterações
-                </button>
+                <div class="flex items-center justify-between pt-4 border-t border-gray-200 dark:border-gray-700">
+                    {{-- Botão de Exclusão (separado do formulário de edição) --}}
+                    <button type="button" onclick="confirmDelete()" class="px-4 py-2 text-sm font-medium text-white bg-red-600 rounded-md shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
+                        Excluir Tenant
+                    </button>
+                    
+                    <div class="flex space-x-3">
+                        <a href="{{ route('superAdmin.tenants.index') }}" class="px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm hover:bg-gray-50 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 dark:focus:ring-offset-gray-800">
+                            Cancelar
+                        </a>
+                        <button type="submit" form="editForm" class="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                            Salvar Alterações
+                        </button>
+                    </div>
                 </div>
+            </form>
+
+            {{-- Formulário de Exclusão (hidden) --}}
+            <form action="{{ route('superAdmin.tenants.destroy', $tenant['id']) }}" method="POST" id="deleteForm" class="hidden">
+                @csrf
+                @method('DELETE')
             </form>
         </div>
     </div>
 </div>
+
+<script>
+    function confirmDelete() {
+        if (confirm('Tem certeza que deseja excluir este tenant? Esta ação não pode ser desfeita.')) {
+            document.getElementById('deleteForm').submit();
+        }
+    }
+</script>
 @endsection

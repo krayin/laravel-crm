@@ -24,5 +24,8 @@ Route::middleware(['web'])
         // Processa o update
         Route::put('/{id}', [SuperAdminController::class, 'update'])
             ->name('update');
+            
+        // Processa a exclusão
+        Route::delete('/{id}', [SuperAdminController::class, 'destroy'])
+            ->name('destroy');
     });
-

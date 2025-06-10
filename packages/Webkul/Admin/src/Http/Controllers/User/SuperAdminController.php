@@ -32,8 +32,6 @@ class SuperAdminController extends Controller
             throw new \RuntimeException('Payload inválido da API');
         }
 
-        Log::info('SuperAdminController@edit – payload bruto', $payload);
-
         $name = $payload['data']['name'] 
             ?? $payload['name'] 
             ?? 'Nome não encontrado';
@@ -41,6 +39,7 @@ class SuperAdminController extends Controller
 
         $tenant = [
             'id' => $payload['id'] ?? $id,
+            'name' => $name,
             'multiatendedor_id' => $payload['multiatendedor_id'] ?? null,
             'domains' => $payload['domains'] ?? []
         ];
@@ -65,5 +64,22 @@ class SuperAdminController extends Controller
             ->withErrors(['error' => $payload['message']])
             ->withInput();
     }
+
+    public function destroy($id, ApiCtrl $apiController)
+    {
+        $jsonResource = $apiController->destroy($id);
+        $response = $jsonResource->toResponse(request());
+        $payload = json_decode($response->getContent(), true);
+
+        if ($response->getStatusCode() === 200) {
+            return redirect()
+                ->route('superAdmin.tenants.index')
+                ->with('success', $payload['message'] ?? 'Tenant excluído com sucesso');
+        }
+
+        return back()
+            ->withErrors(['error' => $payload['message'] ?? 'Erro ao excluir tenant']);
+    }
+
 
 }
