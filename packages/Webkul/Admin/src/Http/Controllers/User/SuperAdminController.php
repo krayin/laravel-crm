@@ -11,21 +11,59 @@ class SuperAdminController extends Controller
 {
     public function index(Request $request, ApiCtrl $apiController)
     {
-        // 1) Executa o método index() do controller da API
         $jsonResource = $apiController->index();
 
-        // 2) Transforma em resposta HTTP e obtém o JSON bruto
         $response    = $jsonResource->toResponse($request);
         $rawJson     = $response->getContent();
 
-        // 3) Log para debugar em storage/logs/laravel.log
-        Log::info('TENANTS RAW JSON: ' . $rawJson);
-
-        // 4) Decodifica e extrai só o array “data”
         $payload = json_decode($rawJson, true);
         $tenants = $payload['data'] ?? [];
 
-        // 5) Passa para a view
-        return view('admin::user.superAdmin.index', compact('tenants'));
+        return view('admin::user.superAdmin.tenants.index', compact('tenants'));
     }
+
+    public function edit(Request $request, $id, ApiCtrl $apiController)
+    {
+        $jsonResource = $apiController->show($id);
+        $response = $jsonResource->toResponse($request);
+        $payload = json_decode($response->getContent(), true);
+
+        if (!is_array($payload)) {
+            throw new \RuntimeException('Payload inválido da API');
+        }
+
+        Log::info('SuperAdminController@edit – payload bruto', $payload);
+
+        $name = $payload['data']['name'] 
+            ?? $payload['name'] 
+            ?? 'Nome não encontrado';
+
+
+        $tenant = [
+            'id' => $payload['id'] ?? $id,
+            'multiatendedor_id' => $payload['multiatendedor_id'] ?? null,
+            'domains' => $payload['domains'] ?? []
+        ];
+
+        return view('admin::user.superAdmin.tenants.edit', compact('tenant'));
+    }
+
+
+    public function update(Request $request, $id, ApiCtrl $apiController)
+    {
+        $jsonResource = $apiController->update($id);
+        $response     = $jsonResource->toResponse($request);
+        $payload      = json_decode($response->getContent(), true);
+
+        if (isset($payload['data'])) {
+            return redirect()
+                ->route('superAdmin.tenants.index')
+                ->with('success', $payload['message']);
+        }
+
+        return back()
+            ->withErrors(['error' => $payload['message']])
+            ->withInput();
+    }
+
 }

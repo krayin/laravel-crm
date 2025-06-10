@@ -10,5 +10,19 @@ use Webkul\Admin\Http\Controllers\User\SuperAdminController;
 Route::get('/', [Controller::class, 'redirectToLogin'])->name('krayin.home');
 
 Route::middleware(['web'])
-     ->get('/super-admin', [SuperAdminController::class, 'index'])
-     ->name('superAdmin.index');
+    ->prefix('super-admin/tenants')
+    ->name('superAdmin.tenants.')
+    ->group(function () {
+        // Listagem
+        Route::get('/', [SuperAdminController::class, 'index'])
+            ->name('index');
+
+        // Formulário de edição
+        Route::get('/{id}/edit', [SuperAdminController::class, 'edit'])
+            ->name('edit');
+
+        // Processa o update
+        Route::put('/{id}', [SuperAdminController::class, 'update'])
+            ->name('update');
+    });
+

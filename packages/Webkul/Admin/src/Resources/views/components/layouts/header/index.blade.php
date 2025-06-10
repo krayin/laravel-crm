@@ -101,7 +101,7 @@
 
                     <a
                         class="cursor-pointer px-5 py-2 text-base text-gray-800 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-950"
-                        href="{{ route('superAdmin.index') }}"
+                        href="{{ route('superAdmin.tenants.index') }}"
                         target="_blank"
                         rel="noopener noreferrer"
                     >
