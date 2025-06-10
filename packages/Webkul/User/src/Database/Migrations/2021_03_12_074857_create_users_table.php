@@ -18,11 +18,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->string('password')->nullable();
-            $table->string('tenant_id')->nullable();
             $table->unsignedInteger('multiatendedor_id')->unique()->nullable();
-            $table->boolean('status')->default(0);
-            $table->integer('role_id')->unsigned();
-            $table->foreign('role_id')->references('id')->on('roles')->onDelete('cascade');
             $table->rememberToken();
             $table->timestamps();
         });

@@ -17,6 +17,7 @@ use Webkul\Admin\Notifications\User\Create as UserCreatedNotification;
 use Webkul\User\Repositories\GroupRepository;
 use Webkul\User\Repositories\RoleRepository;
 use Webkul\User\Repositories\UserRepository;
+use Webkul\User\Repositories\UserTenantRepository;
 
 class UserController extends Controller
 {
@@ -28,7 +29,8 @@ class UserController extends Controller
     public function __construct(
         protected UserRepository $userRepository,
         protected GroupRepository $groupRepository,
-        protected RoleRepository $roleRepository
+        protected RoleRepository $roleRepository,
+        protected UserTenantRepository $userTenantRepository
     ) {}
 
     /**
@@ -69,12 +71,17 @@ class UserController extends Controller
         $data['status'] = $data['status'] ? 1 : 0;
 
         Event::dispatch('settings.user.create.before');
-
         $admin = $this->userRepository->create($data);
 
-        $admin->view_permission = $data['view_permission'];
-
-        $admin->save();
+        $tenantData = [
+            'user_id' => $admin->id,
+            'tenant_id' => tenant('id'),
+            'role_id' => $data['role_id'],
+            'status' => $data['status'],
+            'view_permission' => $data['view_permission']
+        ];
+    
+        $userTenant = $this->userTenantRepository->create($tenantData);
 
         $admin->groups()->sync(request('groups') ?? []);
 
@@ -87,7 +94,7 @@ class UserController extends Controller
         Event::dispatch('settings.user.create.after', $admin);
 
         return new JsonResponse([
-            'data'    => $admin,
+            'data'    => "admin",
             'message' => trans('admin::app.settings.users.index.create-success'),
         ]);
     }
@@ -132,10 +139,6 @@ class UserController extends Controller
         Event::dispatch('settings.user.update.before', $id);
 
         $admin = $this->userRepository->update($data, $id);
-
-        $admin->view_permission = $data['view_permission'];
-
-        $admin->save();
 
         $admin->groups()->sync(request()->input('groups') ?? []);
 

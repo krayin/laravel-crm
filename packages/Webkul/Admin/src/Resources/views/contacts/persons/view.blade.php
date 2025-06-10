@@ -92,7 +92,24 @@
             {!! view_render_event('admin.contact.persons.view.right.before', ['person' => $person]) !!}
 
             <!-- Stages Navigation -->
-            <x-admin::activities :endpoint="route('admin.contacts.persons.activities.index', $person->id)" />
+            <x-admin::activities
+                :endpoint="route('admin.contacts.persons.activities.index', $person->id)"
+                :types="[
+                    ['name' => 'all', 'label' => trans('admin::app.components.activities.index.all')],
+                    ['name' => 'leads', 'label' => trans('admin::app.components.activities.index.leads')],
+                    ['name' => 'planned', 'label' => trans('admin::app.components.activities.index.planned')],
+                    ['name' => 'note', 'label' => trans('admin::app.components.activities.index.notes')],
+                    ['name' => 'call', 'label' => trans('admin::app.components.activities.index.calls')],
+                    ['name' => 'meeting', 'label' => trans('admin::app.components.activities.index.meetings')],
+                    ['name' => 'lunch', 'label' => trans('admin::app.components.activities.index.lunches')],
+                    ['name' => 'file', 'label' => trans('admin::app.components.activities.index.files')],
+                    ['name' => 'email', 'label' => trans('admin::app.components.activities.index.emails')],
+                    ['name' => 'system', 'label' => trans('admin::app.components.activities.index.change-log')],
+                ]"
+                :activeType="'leads'"
+
+            />
+
 
             {!! view_render_event('admin.contact.persons.view.right.after', ['person' => $person]) !!}
         </div>

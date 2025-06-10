@@ -14,17 +14,23 @@ class UserDataGrid extends DataGrid
      */
     public function prepareQueryBuilder(): Builder
     {
+        $tenantId = tenant('id');
+
         $queryBuilder = DB::table('users')
             ->distinct()
             ->addSelect(
-                'id',
-                'name',
-                'email',
-                'image',
-                'status',
-                'created_at'
+                'users.id',
+                'users.name',
+                'users.email',
+                'users.image',
+                'user_tenants.status',
+                'users.created_at'
             )
-            ->leftJoin('user_groups', 'id', '=', 'user_groups.user_id');
+            ->join('user_tenants', function ($join) use ($tenantId) {
+                $join->on('users.id', '=', 'user_tenants.user_id')
+                    ->where('user_tenants.tenant_id', '=', $tenantId);
+            })
+            ->leftJoin('user_groups', 'user_tenants.id', '=', 'user_groups.user_tenant_id');
 
         if ($userIds = bouncer()->getAuthorizedUserIds()) {
             $queryBuilder->whereIn('id', $userIds);
@@ -61,7 +67,7 @@ class UserDataGrid extends DataGrid
         ]);
 
         $this->addColumn([
-            'index'      => 'email',
+            'index'      => 'users.email',
             'label'      => trans('admin::app.settings.users.index.datagrid.email'),
             'type'       => 'string',
             'sortable'   => true,
@@ -70,7 +76,7 @@ class UserDataGrid extends DataGrid
         ]);
 
         $this->addColumn([
-            'index'      => 'status',
+            'index'      => 'user_tenants.status',
             'label'      => trans('admin::app.settings.users.index.datagrid.status'),
             'type'       => 'boolean',
             'filterable' => true,
@@ -79,7 +85,7 @@ class UserDataGrid extends DataGrid
         ]);
 
         $this->addColumn([
-            'index'           => 'created_at',
+            'index'           => 'users.created_at',
             'label'           => trans('admin::app.settings.users.index.datagrid.created-at'),
             'type'            => 'date',
             'sortable'        => true,
