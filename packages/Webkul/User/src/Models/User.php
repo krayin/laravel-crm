@@ -24,6 +24,7 @@ class User extends Authenticatable implements UserContract
         'image',
         'password',
         'api_token',
+        'multiatendedor_id',
     ];
 
     /**
@@ -84,7 +85,7 @@ class User extends Authenticatable implements UserContract
      */
     public function tenantPivots()
     {
-        return $this->hasMany(UserTenant::class);
+        return $this->hasMany(UserTenant::class);    
     }
 
     /**

@@ -7,6 +7,7 @@ use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
 use Webkul\User\Models\User;
 use Webkul\User\Models\RoleProxy;
 use Webkul\User\Models\GroupProxy; 
+use Webkul\Tenant\Models\Tenant;
 use Webkul\User\Contracts\UserTenant as UserTenantContract;
 
 class UserTenant extends Model implements UserTenantContract
@@ -45,5 +46,10 @@ class UserTenant extends Model implements UserTenantContract
     public function groups()
     {
         return $this->belongsToMany(GroupProxy::modelClass(), 'user_groups', 'user_tenant_id', 'group_id');
+    }
+
+    public function tenant()
+    {
+        return $this->belongsTo(Tenant::class, 'tenant_id');
     }
 }

@@ -33,13 +33,23 @@ class UserRepository extends Repository
      */
     public function getCurrentUserGroupsUserIds()
     {
-        $userIds = $this->scopeQuery(function ($query) {
-            return $query->select('users.*')
-                ->leftJoin('user_groups', 'users.id', '=', 'user_groups.user_id')
-                ->leftJoin('groups', 'user_groups.group_id', 'groups.id')
-                ->whereIn('groups.id', auth()->guard('user')->user()->groups()->pluck('id'));
-        })->get()->pluck('id')->toArray();
+        $currentTenantId = tenant('id');
 
-        return $userIds;
+        $user = auth()->guard('user')->user();
+
+        
+        $currentUserTenant = $user->tenantPivots()->where('tenant_id', $currentTenantId)->first();
+    
+        if (! $currentUserTenant) {
+            return [];
+        }
+
+        $groupIds = $currentUserTenant->groups()->pluck('groups.id');
+        
+        $userTenantIds = \Webkul\User\Models\UserTenant::whereHas('groups', function ($query) use ($groupIds) {
+            $query->whereIn('groups.id', $groupIds);
+        })->pluck('user_id');
+
+        return $userTenantIds->unique()->toArray(); 
     }
 }

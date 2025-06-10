@@ -3,6 +3,7 @@
 namespace Webkul\Admin;
 
 use Webkul\User\Repositories\UserRepository;
+use Webkul\User\Models\UserTenant;
 
 class Bouncer
 {
@@ -56,5 +57,29 @@ class Bouncer
         } else {
             return [$user->id];
         }
+    }
+
+    public function getUserTenants()
+    {
+        $user = auth()->guard('user')->user();
+
+        if (! $user) {
+            return collect(); // retorna uma coleção vazia se não estiver logado
+        }
+
+        return UserTenant::withoutGlobalScopes()
+            ->where('user_id', $user->id)
+            ->with('tenant.domains')
+            ->get()
+            ->map(function ($userTenant) {
+                $tenant = $userTenant->tenant;
+                $domain = optional($tenant->domains->first())->domain;
+
+                return [
+                    'id' => $tenant->id,
+                    'domain' => $domain,
+                    'name' => json_decode($tenant->data)->name ?? null,
+                ];
+            });
     }
 }
