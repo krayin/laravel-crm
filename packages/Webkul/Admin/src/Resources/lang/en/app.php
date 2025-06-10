@@ -172,11 +172,15 @@ return [
                 'lunches'      => 'Lunches',
                 'mark-as-done' => 'Mark as Done',
                 'meetings'     => 'Meetings',
+                'leads'        => 'Leads',
                 'notes'        => 'Notes',
                 'participants' => 'Participants',
                 'planned'      => 'Planned',
                 'quotes'       => 'Quotes',
                 'scheduled-on' => 'Scheduled on',
+                'lead_type'    => 'Type',
+                'lead_stage'   => 'Stage',
+                'lead_source'  => 'Source',
                 'system'       => 'System',
                 'to'           => 'To',
                 'unlink'       => 'Unlink',
@@ -186,6 +190,11 @@ return [
                     'all' => [
                         'title'       => 'No Activities Found',
                         'description' => 'No activities found for this. You can add activities by clicking on the button on the left panel.',
+                    ],
+
+                   'leads' => [
+                        'title'       => 'No Leads Found',
+                        'description' => 'No leads have been recorded for this user. You can add leads by clicking the button on the left panel.',
                     ],
 
                     'planned' => [
@@ -571,6 +580,7 @@ return [
                         'all'          => 'All',
                         'calls'        => 'Calls',
                         'meetings'     => 'Meetings',
+                        'leads'        => 'Leads',
                         'lunches'      => 'Lunches',
                         'files'        => 'Files',
                         'quotes'       => 'Quotes',
