@@ -4,8 +4,12 @@ return [
     'common' => [
         'auth' => [
             'login' => [
-                'success' => 'Giriş başarılı.',
-                'logout'  => 'Çıkış başarılı.',
+            'success' => 'Giriş başarılı.',
+            'logout'  => 'Çıkış başarılı.',
+            ],
+            'token' => [
+                'invalid' => 'Sağlanan API belirteci geçersiz.',
+                'missing' => 'API belirteci istekten eksik.',
             ],
         ],
 
@@ -236,7 +240,13 @@ return [
             ],
         ],
     ],
-
+    'token' => [
+        'tenant_not_found' => 'Kiracı bulunamadı.',
+        'generate_error'   => 'Token oluşturulurken hata oluştu.',
+        'update_error'     => 'Token güncellenirken hata oluştu.',
+        'delete_error'     => 'Token silinirken hata oluştu.',
+        'delete_success'   => 'Token başarıyla silindi.',
+    ],
     'configuration' => [
         'save-success' => 'Yapılandırma başarıyla kaydedildi.',
     ],

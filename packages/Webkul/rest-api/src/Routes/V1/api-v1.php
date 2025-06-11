@@ -52,4 +52,9 @@ Route::group(['prefix' => 'v1'], function () {
      * Tenants routes.
      */
     require 'tenant-routes.php';
+
+    /**
+     * Token routes.
+     */
+    require 'token-routes.php';
 });
