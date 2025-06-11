@@ -28,6 +28,9 @@
             @endif
         </a>
     </div>
+    <span id="next-crm-code">
+        Next CRM CODE : Loading...
+    </span>
 
     <div class="flex items-center gap-1.5 max-md:hidden">
         <!-- Mega Search Bar -->
@@ -186,5 +189,22 @@
                 },
             },
         });
+    </script>
+    <script>
+        function fetchNextCrmCode() {
+            fetch('{{ route('admin.contacts.persons.next-crm-code') }}')
+                .then(response => response.json())
+                .then(data => {
+                    const code = data.next_crm_code;
+                    document.getElementById('next-crm-code').textContent = `Next CRM CODE : ${code}`;
+                })
+                .catch(() => {
+                    document.getElementById('next-crm-code').textContent = `Next CRM CODE : Error`;
+                });
+        }
+
+        // Initial fetch + 15-second interval
+        fetchNextCrmCode();
+        setInterval(fetchNextCrmCode, 15000);
     </script>
 @endPushOnce

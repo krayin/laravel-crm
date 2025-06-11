@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 use Webkul\Admin\Http\Controllers\Contact\OrganizationController;
 use Webkul\Admin\Http\Controllers\Contact\Persons\ActivityController;
@@ -7,6 +8,15 @@ use Webkul\Admin\Http\Controllers\Contact\Persons\PersonController;
 use Webkul\Admin\Http\Controllers\Contact\Persons\TagController;
 
 Route::prefix('contacts')->group(function () {
+
+    /**
+     * Route to get the next CRM CODE (max persons id + 1)
+     */
+    Route::get('persons/next-crm-code', function () {
+        $maxId = DB::table('persons')->max('id') ?? 0;
+        return response()->json(['next_crm_code' => $maxId + 1]);
+    })->name('admin.contacts.persons.next-crm-code');
+
     /**
      * Persons routes.
      */
