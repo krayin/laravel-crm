@@ -3,7 +3,9 @@
 namespace Webkul\Admin\Http\Controllers\User;
 
 use Webkul\Admin\Http\Controllers\Controller;                               // Controller base do Webkul
-use Webkul\RestApi\Http\Controllers\V1\Setting\TenantController as ApiCtrl; // Controller da API para Tenant
+use Webkul\RestApi\Http\Controllers\V1\Setting\TenantController as ApiTenantCtrl; // Controller da API para Tenant
+use Webkul\RestApi\Http\Controllers\V1\Setting\UserController   as ApiUserCtrl;
+
 use Illuminate\Http\Request;
 
 class SuperAdminController extends Controller
@@ -13,7 +15,7 @@ class SuperAdminController extends Controller
     /**
      * Lista todos os tenants
      */
-    public function tenantIndex(Request $request, ApiCtrl $apiController)
+    public function tenantIndex(Request $request, ApiTenantCtrl $apiController)
     {
         $jsonResource = $apiController->index();
         $response     = $jsonResource->toResponse($request);
@@ -34,7 +36,7 @@ class SuperAdminController extends Controller
     /**
      * Persiste um novo tenant
      */
-    public function tenantStore(Request $request, ApiCtrl $apiController)
+    public function tenantStore(Request $request, ApiTenantCtrl $apiController)
     {
         $jsonResource = $apiController->store();
         $response     = $jsonResource->toResponse($request);
@@ -54,7 +56,7 @@ class SuperAdminController extends Controller
     /**
      * Exibe formulário de edição de um tenant
      */
-    public function tenantEdit(Request $request, $id, ApiCtrl $apiController)
+    public function tenantEdit(Request $request, $id, ApiTenantCtrl $apiController)
     {
         $jsonResource = $apiController->show($id);
         $response     = $jsonResource->toResponse($request);
@@ -81,7 +83,7 @@ class SuperAdminController extends Controller
     /**
      * Atualiza um tenant existente
      */
-    public function tenantUpdate(Request $request, $id, ApiCtrl $apiController)
+    public function tenantUpdate(Request $request, $id, ApiTenantCtrl $apiController)
     {
         $jsonResource = $apiController->update($id);
         $response     = $jsonResource->toResponse($request);
@@ -101,7 +103,7 @@ class SuperAdminController extends Controller
     /**
      * Exclui um tenant
      */
-    public function tenantDestroy($id, ApiCtrl $apiController)
+    public function tenantDestroy($id, ApiTenantCtrl $apiController)
     {
         $jsonResource = $apiController->destroy($id);
         $response     = $jsonResource->toResponse(request());
@@ -115,5 +117,116 @@ class SuperAdminController extends Controller
 
         return back()
             ->withErrors(['error' => $payload['message'] ?? 'Erro ao excluir tenant']);
+    }
+
+
+
+    // ===== Métodos de User (prefixados com "user") =====
+
+    /**
+     * Lista todos os usuários
+     */
+    public function userIndex(Request $request, ApiUserCtrl $apiController)
+    {
+        $jsonResource = $apiController->index();
+        $response     = $jsonResource->toResponse($request);
+        $payload      = json_decode($response->getContent(), true);
+        $users        = $payload['data'] ?? [];
+
+        return view('admin::user.superAdmin.users.index', compact('users'));
+    }
+
+    /**
+     * Exibe formulário de criação de usuário
+     */
+    public function userCreate()
+    {
+        return view('admin::user.superAdmin.users.create');
+    }
+
+    /**
+     * Persiste um novo usuário
+     */
+    public function userStore(Request $request, ApiUserCtrl $apiController)
+    {
+        $jsonResource = $apiController->store();
+        $response     = $jsonResource->toResponse($request);
+        $payload      = json_decode($response->getContent(), true);
+
+        if (in_array($response->getStatusCode(), [200, 201])) {
+            return redirect()
+                ->route('superAdmin.users.index')
+                ->with('success', $payload['message'] ?? 'Usuário criado com sucesso');
+        }
+
+        return back()
+            ->withErrors(['error' => $payload['message'] ?? 'Erro ao criar usuário'])
+            ->withInput();
+    }
+
+    /**
+     * Exibe formulário de edição de um usuário
+     */
+    public function userEdit(Request $request, $id, ApiUserCtrl $apiController)
+    {
+        $jsonResource = $apiController->show($id);
+        $response     = $jsonResource->toResponse($request);
+        $payload      = json_decode($response->getContent(), true);
+
+        if (! is_array($payload) || ! isset($payload['data'])) {
+            throw new \RuntimeException('Payload inválido da API de User');
+        }
+
+        $data = $payload['data'];
+
+        $user = [
+            'id'                 => $data['id']                 ?? $id,
+            'name'               => $data['name']               ?? '',
+            'email'              => $data['email']              ?? '',
+            'status'             => $data['status']             ?? 1,
+            'multiatendedor_id'  => $data['multiatendedor_id']  ?? null,
+            'groups'             => $data['groups']             ?? [],
+        ];
+
+        return view('admin::user.superAdmin.users.edit', compact('user'));
+    }
+
+    /**
+     * Atualiza um usuário existente
+     */
+    public function userUpdate(Request $request, $id, ApiUserCtrl $apiController)
+    {
+        $jsonResource = $apiController->update($id);
+        $response     = $jsonResource->toResponse($request);
+        $payload      = json_decode($response->getContent(), true);
+
+        if (isset($payload['data'])) {
+            return redirect()
+                ->route('superAdmin.users.index')
+                ->with('success', $payload['message'] ?? 'Usuário atualizado com sucesso');
+        }
+
+        return back()
+            ->withErrors(['error' => $payload['message'] ?? 'Erro ao atualizar usuário'])
+            ->withInput();
+    }
+
+    /**
+     * Exclui um usuário
+     */
+    public function userDestroy($id, ApiUserCtrl $apiController)
+    {
+        $jsonResource = $apiController->destroy($id);
+        $response     = $jsonResource->toResponse(request());
+        $payload      = json_decode($response->getContent(), true);
+
+        if ($response->getStatusCode() === 200) {
+            return redirect()
+                ->route('superAdmin.users.index')
+                ->with('success', $payload['message'] ?? 'Usuário excluído com sucesso');
+        }
+
+        return back()
+            ->withErrors(['error' => $payload['message'] ?? 'Erro ao excluir usuário']);
     }
 }

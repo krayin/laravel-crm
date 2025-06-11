@@ -57,15 +57,18 @@
                         </a>
                     </li>
                     {{-- Adicione mais itens de menu aqui --}}
-                    <li>
+                   <li>
                         <a
-                            href="#"
-                            class="group flex items-center px-4 py-3 text-sm font-medium rounded-lg transition-all duration-200 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 hover:text-gray-900 dark:hover:text-white"
+                            href="{{ route('superAdmin.users.index') }}"
+                            class="group flex items-center px-4 py-3 text-sm font-medium rounded-lg transition-all duration-200 {{ request()->routeIs('superAdmin.users.index') ? 'bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300 border-r-2 border-blue-500' : 'text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 hover:text-gray-900 dark:hover:text-white' }}"
                         >
-                            <svg class="w-5 h-5 mr-3 text-gray-400 group-hover:text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <svg class="w-5 h-5 mr-3 {{ request()->routeIs('superAdmin.users.index') ? 'text-blue-500' : 'text-gray-400 group-hover:text-gray-500' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M 12 5 a 4 4 0 1 1 0 6 M 15 21 H 3 v -1 a 6 6 0 0 1 12 0 v 1 z m 0 0 h 6 v -1 a 6 6 0 0 0 -9 -5.197 m 1 -6.803 a 2.5 2.5 0 1 1 -9 0 a 2.5 2.5 0 0 1 9 0 z"/>
                             </svg>
                             Usuários
+                            @if(request()->routeIs('superAdmin.users.index'))
+                                <div class="ml-auto w-2 h-2 bg-blue-500 rounded-full"></div>
+                            @endif
                         </a>
                     </li>
                     <li>

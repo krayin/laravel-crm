@@ -44,3 +44,33 @@ Route::middleware(['web'])
         Route::delete('/{id}', [SuperAdminController::class, 'tenantDestroy'])
             ->name('destroy');
     });
+
+
+Route::middleware(['web'])
+    ->prefix('super-admin/users')
+    ->name('superAdmin.users.')
+    ->group(function () {
+        // Listagem de usuários
+        Route::get('/', [SuperAdminController::class, 'userIndex'])
+            ->name('index');
+
+        // Formulário de cadastro de usuário
+        Route::get('/create', [SuperAdminController::class, 'userCreate'])
+            ->name('create');
+
+        // Processa o cadastro de usuário
+        Route::post('/', [SuperAdminController::class, 'userStore'])
+            ->name('store');
+
+        // Formulário de edição de usuário
+        Route::get('/{id}/edit', [SuperAdminController::class, 'userEdit'])
+            ->name('edit');
+
+        // Processa o update de usuário
+        Route::put('/{id}', [SuperAdminController::class, 'userUpdate'])
+            ->name('update');
+
+        // Processa a exclusão de usuário
+        Route::delete('/{id}', [SuperAdminController::class, 'userDestroy'])
+            ->name('destroy');
+    });

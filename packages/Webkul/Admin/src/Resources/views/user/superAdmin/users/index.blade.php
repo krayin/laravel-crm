@@ -1,0 +1,84 @@
+@extends('admin::components.layouts.superadmin')
+
+@section('content')
+    <div class="max-w-7xl mx-auto px-6 py-8">
+
+        <div class="mb-8 flex justify-between items-center">
+            <div>
+                <h1 class="text-3xl font-bold text-gray-900 dark:text-white">Usuários</h1>
+                <p class="mt-2 text-gray-600 dark:text-gray-400">
+                    Total: <span class="font-semibold text-blue-600 dark:text-blue-400">{{ count($users) }}</span> usuários
+                </p>
+            </div>
+            <!-- Botão para criar usuário -->
+            <a href="#"
+               class="inline-flex items-center px-4 py-2 text-sm font-medium bg-blue-600 rounded-md shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-200
+                      dark:text-white dark:bg-blue-600 dark:hover:bg-blue-700">
+                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                          d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
+                </svg>
+                Criar Usuário
+            </a>
+        </div>
+
+        <!-- Tabela de usuários -->
+        <div class="bg-white dark:bg-gray-900 shadow-lg rounded-xl border border-gray-200 dark:border-gray-700">
+            <div class="overflow-auto max-h-[500px]">
+                <table class="w-full">
+                    <thead class="bg-gray-50 dark:bg-gray-800 sticky top-0 z-10 border-b border-gray-200 dark:border-gray-700">
+                        <tr>
+                            <th class="px-6 py-4 text-left text-sm font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wider">ID</th>
+                            <th class="px-6 py-4 text-left text-sm font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wider">Nome</th>
+                            <th class="px-6 py-4 text-left text-sm font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wider">E-mail</th>
+                            <th class="px-6 py-4 text-center text-sm font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wider">Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-white dark:bg-gray-900 divide-y divide-gray-200 dark:divide-gray-700">
+                        @forelse($users as $user)
+                            <tr class="hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors duration-200">
+                                <td class="px-6 py-4 text-base font-medium text-gray-900 dark:text-gray-100">
+                                    {{ $user['id'] }}
+                                </td>
+                                <td class="px-6 py-4 text-base text-gray-900 dark:text-gray-100">
+                                    {{ $user['name'] }}
+                                </td>
+                                <td class="px-6 py-4 text-base text-gray-600 dark:text-gray-300">
+                                    {{ $user['email'] }}
+                                </td>
+                                <td class="px-6 py-4 text-center">
+                                    <a href="#"
+                                       class="inline-flex items-center px-3 py-1.5 text-base font-medium text-blue-600 hover:text-blue-700 hover:bg-blue-50 dark:text-blue-400 dark:hover:text-blue-300 dark:hover:bg-gray-800/20 rounded-md transition-all duration-200 border border-transparent hover:border-blue-200 dark:hover:border-gray-700">
+                                        <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                  d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 
+                                                  112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+                                        </svg>
+                                        Editar
+                                    </a>
+                                </td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="4" class="px-6 py-12 text-center">
+                                    <div class="text-gray-500 dark:text-gray-400">
+                                        <svg class="mx-auto h-12 w-12 mb-4 text-gray-300 dark:text-gray-600" fill="none"
+                                             stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                  d="M19 21V5a2 2 0 00-2-2H7a2 2 0 
+                                                  00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 
+                                                  7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 
+                                                  011-1h2a1 1 0 011 1v5m-4 0h4"/>
+                                        </svg>
+                                        <p class="text-lg font-medium">Nenhum usuário encontrado</p>
+                                        <p class="text-base">Não há usuários cadastrados no sistema.</p>
+                                    </div>
+                                </td>
+                            </tr>
+                        @endforelse
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+@endsection
