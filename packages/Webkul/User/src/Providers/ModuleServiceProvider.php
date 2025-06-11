@@ -10,5 +10,6 @@ class ModuleServiceProvider extends BaseModuleServiceProvider
         \Webkul\User\Models\Group::class,
         \Webkul\User\Models\Role::class,
         \Webkul\User\Models\User::class,
+        \Webkul\User\Models\UserTenant::class,
     ];
 }

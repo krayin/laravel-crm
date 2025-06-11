@@ -11,46 +11,24 @@ use Webkul\RestApi\Http\Controllers\V1\Controller;
 use Webkul\RestApi\Http\Request\MassDestroyRequest;
 use Webkul\RestApi\Http\Request\MassUpdateRequest;
 use Webkul\RestApi\Http\Resources\V1\Setting\UserResource;
-use Webkul\User\Repositories\GroupRepository;
-use Webkul\User\Repositories\RoleRepository;
 use Webkul\User\Repositories\UserRepository;
 
 class UserController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct(
-        protected UserRepository $userRepository,
-        protected GroupRepository $groupRepository,
-        protected RoleRepository $roleRepository
-    ) {}
+    public function __construct(protected UserRepository $userRepository) {}
 
-    /**
-     * Display a listing of the resource.
-     */
     public function index(): JsonResource
     {
         $users = $this->allResources($this->userRepository);
-
         return UserResource::collection($users);
     }
 
-    /**
-     * Show resource.
-     */
     public function show(int $id): UserResource
     {
-        $resource = $this->userRepository->find($id);
-
-        return new UserResource($resource);
+        $user = $this->userRepository->find($id);
+        return new UserResource($user);
     }
 
-    /**
-     * Search user results.
-     */
     public function search(): JsonResource
     {
         $users = $this->userRepository
@@ -61,140 +39,98 @@ class UserController extends Controller
         return UserResource::collection($users);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(): JsonResource
     {
-        $this->validate(request(), [
+        $data = $this->validate(request(), [
             'email'            => 'required|email|unique:users,email',
             'name'             => 'required',
-            'tenant_id'        => 'required',
             'multiatendedor_id'=> 'required',
-            'password'         => 'nullable',
-            'confirm_password' => 'nullable|required_with:password|same:password',
-            'role_id'          => 'required',
+            'password'         => 'nullable|confirmed',
         ]);
 
-        $data = request()->all();
-
-        if (! empty($data['password'])) {
+        if (!empty($data['password'])) {
             $data['password'] = bcrypt($data['password']);
         }
 
-        $data['status'] = isset($data['status']) ? 1 : 0;
+        $data['status'] = $data['status'] ?? 1;
 
         Event::dispatch('settings.user.create.before');
 
-        $admin = $this->userRepository->create($data);
+        $user = $this->userRepository->create($data);
 
-        $admin->view_permission = $data['view_permission'];
-
-        $admin->save();
-
-        $admin->groups()->sync($data['groups'] ?? []);
+        Event::dispatch('settings.user.create.after', $user);
 
         try {
-            Mail::queue(new Create($admin));
+            Mail::queue(new Create($user));
         } catch (\Exception $e) {
             report($e);
         }
 
-        Event::dispatch('settings.user.create.after', $admin);
-
         return new JsonResource([
-            'data'    => new UserResource($admin),
+            'data' => new UserResource($user),
             'message' => trans('rest-api::app.settings.users.create-success'),
         ]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update($id)
+    public function update(int $id): JsonResource
     {
-        $this->validate(request(), [
-            'email'            => 'required|email|unique:users,email,'.$id,
-            'name'             => 'required',
-            'password'         => 'nullable',
-            'multiatendedor_id'=> 'required',
-            'confirm_password' => 'nullable|required_with:password|same:password',
-            'role_id'          => 'required',
-            'status'           => 'required|in:0,1',
+        $data = $this->validate(request(), [
+            'email'            => 'sometimes|required|email|unique:users,email,' . $id,
+            'name'             => 'sometimes|required',
+            'password'         => 'nullable|confirmed',
+            'multiatendedor_id'=> 'sometimes|required',
+            'status'           => 'sometimes|required|in:0,1',
+            'groups'           => 'sometimes|array',
         ]);
 
-        $data = request()->all();
-
-        if (! $data['password']) {
-            unset($data['password'], $data['confirm_password']);
-        } else {
+        if (!empty($data['password'])) {
             $data['password'] = bcrypt($data['password']);
-        }
-
-        if (auth()->guard()->user()->id != $id) {
-            $data['status'] = isset($data['status']) ? $data['status'] : 0;
+        } else {
+            unset($data['password']);
         }
 
         Event::dispatch('settings.user.update.before', $id);
 
-        $admin = $this->userRepository->update($data, $id);
+        $user = $this->userRepository->update($data, $id);
 
-        $admin->view_permission = $data['view_permission'];
+        if (isset($data['groups'])) {
+            $user->groups()->sync($data['groups']);
+        }
 
-        $admin->save();
-
-        $admin->groups()->sync($data['groups'] ?? []);
-
-        Event::dispatch('settings.user.update.after', $admin);
+        Event::dispatch('settings.user.update.after', $user);
 
         return new JsonResource([
-            'data'    => new UserResource($admin),
+            'data' => new UserResource($user),
             'message' => trans('rest-api::app.settings.users.updated-success'),
         ]);
     }
 
-    /**
-     * Destroy specified user.
-     */
     public function destroy(int $id): JsonResource
     {
         if (auth()->guard()->user()->id == $id) {
-            return new JsonResource([
-                'message' => trans('rest-api::app.settings.users.delete-failed'),
-            ], 400);
-        } elseif ($this->userRepository->count() == 1) {
-            return new JsonResource([
-                'message' => trans('rest-api::app.settings.users.last-delete-error'),
-            ], 400);
-        } else {
-            Event::dispatch('settings.user.delete.before', $id);
+            return new JsonResource(['message' => trans('rest-api::app.settings.users.delete-failed')], 400);
+        }
 
-            try {
-                $this->userRepository->delete($id);
+        if ($this->userRepository->count() == 1) {
+            return new JsonResource(['message' => trans('rest-api::app.settings.users.last-delete-error')], 400);
+        }
 
-                Event::dispatch('settings.user.delete.after', $id);
+        Event::dispatch('settings.user.delete.before', $id);
 
-                return new JsonResource([
-                    'message' => trans('rest-api::app.settings.users.delete-success'),
-                ]);
-            } catch (\Exception $exception) {
-                return new JsonResource([
-                    'message' => $exception->getMessage(),
-                ], 500);
-            }
+        try {
+            $this->userRepository->delete($id);
+
+            Event::dispatch('settings.user.delete.after', $id);
+
+            return new JsonResource(['message' => trans('rest-api::app.settings.users.delete-success')]);
+        } catch (\Exception $e) {
+            return new JsonResource(['message' => $e->getMessage()], 500);
         }
     }
 
-    /**
-     * Mass update the specified resources.
-     */
-    public function massUpdate(MassUpdateRequest $massUpdateRequest): JsonResource
+    public function massUpdate(MassUpdateRequest $request): JsonResource
     {
-        $userIds = $massUpdateRequest->input('indices');
-
+        $userIds = $request->input('indices');
         $count = 0;
 
         foreach ($userIds as $userId) {
@@ -206,31 +142,23 @@ class UserController extends Controller
 
             $user = $this->userRepository->find($userId);
 
-            $user?->update(['status' => $massUpdateRequest->input('value')]);
+            $user?->update(['status' => $request->input('value')]);
 
             Event::dispatch('settings.user.update.after', $userId);
 
             $count++;
         }
 
-        if (! $count) {
-            return new JsonResource([
-                'message' => trans('rest-api::app.settings.users.mass-update-failed'),
-            ], 500);
+        if (!$count) {
+            return new JsonResource(['message' => trans('rest-api::app.settings.users.mass-update-failed')], 500);
         }
 
-        return new JsonResource([
-            'message' => trans('rest-api::app.settings.users.mass-update-success'),
-        ]);
+        return new JsonResource(['message' => trans('rest-api::app.settings.users.mass-update-success')]);
     }
 
-    /**
-     * Mass delete the specified resources.
-     */
-    public function massDestroy(MassDestroyRequest $massDestroyRequest): JsonResource
+    public function massDestroy(MassDestroyRequest $request): JsonResource
     {
-        $userIds = $massDestroyRequest->input('indices');
-
+        $userIds = $request->input('indices');
         $count = 0;
 
         foreach ($userIds as $userId) {
@@ -249,14 +177,10 @@ class UserController extends Controller
             $count++;
         }
 
-        if (! $count) {
-            return new JsonResource([
-                'message' => trans('rest-api::app.settings.users.mass-delete-failed'),
-            ], 500);
+        if (!$count) {
+            return new JsonResource(['message' => trans('rest-api::app.settings.users.mass-delete-failed')], 500);
         }
 
-        return new JsonResource([
-            'message' => trans('rest-api::app.settings.users.mass-delete-success'),
-        ]);
+        return new JsonResource(['message' => trans('rest-api::app.settings.users.mass-delete-success')]);
     }
 }

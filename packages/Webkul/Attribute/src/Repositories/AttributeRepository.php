@@ -123,7 +123,9 @@ class AttributeRepository extends Repository
         }
 
         if (Str::contains($lookup['repository'], 'UserRepository')) {
-            $userRepository = app($lookup['repository'])->where('status', 1);
+            $userRepository = app($lookup['repository'])->whereHas('tenantPivots', function ($query) {
+                $query->where('tenant_id', tenant('id'))->where('status', 1);
+            });
 
             $currentUser = auth()->guard('user')->user();
 

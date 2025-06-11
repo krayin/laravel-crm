@@ -3,6 +3,7 @@
 namespace Webkul\Admin\Http\Controllers\User;
 
 use Webkul\Admin\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
 
 class SessionController extends Controller
 {
@@ -42,6 +43,20 @@ class SessionController extends Controller
 
         if (! auth()->guard('user')->attempt(request(['email', 'password']), request('remember'))) {
             session()->flash('error', trans('admin::app.users.login-error'));
+
+            return redirect()->back();
+        }
+
+        $hasAccessToTenant = DB::table('user_tenants')
+            ->where('user_id', auth()->guard('user')->user()->id)
+            ->where('tenant_id', tenant('id'))
+            ->exists();
+
+        if (! $hasAccessToTenant) {
+            logger("a");
+            session()->flash('error', trans('admin::app.users.login-error'));
+
+            auth()->guard('user')->logout();
 
             return redirect()->back();
         }
