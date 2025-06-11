@@ -8,7 +8,7 @@ use Webkul\RestApi\Http\Controllers\V1\Contact\Persons\TagController;
 
 Route::group([
     'prefix'     => 'contacts',
-    'middleware' => 'auth:sanctum',
+    'middleware' => 'rest-api',
 ], function () {
     /**
      * Person routes.
