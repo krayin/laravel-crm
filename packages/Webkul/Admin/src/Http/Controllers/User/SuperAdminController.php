@@ -81,5 +81,29 @@ class SuperAdminController extends Controller
             ->withErrors(['error' => $payload['message'] ?? 'Erro ao excluir tenant']);
     }
 
+    public function create()
+{
+    return view('admin::user.superAdmin.tenants.create');
+}
+
+public function store(Request $request, ApiCtrl $apiController)
+{
+    // Chama o método store do TenantController da API
+    $jsonResource = $apiController->store();
+    $response = $jsonResource->toResponse($request);
+    $payload = json_decode($response->getContent(), true);
+
+    if ($response->getStatusCode() === 200 || $response->getStatusCode() === 201) {
+        return redirect()
+            ->route('superAdmin.tenants.index')
+            ->with('success', $payload['message'] ?? 'Tenant criado com sucesso');
+    }
+
+    // Se houver erro, redireciona de volta com as mensagens de erro
+    return back()
+        ->withErrors(['error' => $payload['message'] ?? 'Erro ao criar tenant'])
+        ->withInput();
+}
+
 
 }

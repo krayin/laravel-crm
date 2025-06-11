@@ -35,4 +35,12 @@ Route::middleware(['web'])
         // Processa a exclusão
         Route::delete('/{id}', [SuperAdminController::class, 'destroy'])
             ->name('destroy');
+
+        // Formulário de cadastro
+        Route::get('/create', [SuperAdminController::class, 'create'])
+            ->name('create');
+
+        // Processa o cadastro
+            Route::post('/', [SuperAdminController::class, 'store'])
+            ->name('store');
     });

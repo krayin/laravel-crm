@@ -2,12 +2,23 @@
 
 @section('content')
     <div class="max-w-7xl mx-auto px-6 py-8">
-        <!-- Header com total de tenants -->
-        <div class="mb-8">
-            <h1 class="text-3xl font-bold text-gray-900 dark:text-white">Tenants</h1>
-            <p class="mt-2 text-gray-600 dark:text-gray-400">
-                Total: <span class="font-semibold text-blue-600 dark:text-blue-400">{{ count($tenants) }}</span> tenants
-            </p>
+
+        <div class="mb-8 flex justify-between items-center">
+            <div>
+                <h1 class="text-3xl font-bold text-gray-900 dark:text-white">Tenants</h1>
+                <p class="mt-2 text-gray-600 dark:text-gray-400">
+                    Total: <span class="font-semibold text-blue-600 dark:text-blue-400">{{ count($tenants) }}</span> tenants
+                </p>
+            </div>
+            <!-- Botão para criar tenant -->
+            <a href="{{ route('superAdmin.tenants.create') }}"
+                class="inline-flex items-center px-4 py-2 text-sm font-medium bg-blue-600 rounded-md shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-200
+                    dark:text-white dark:bg-blue-600 dark:hover:bg-blue-700">
+                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                </svg>
+                Criar Tenant
+            </a>
         </div>
 
         <!-- Tabela de tenants -->
@@ -67,4 +78,5 @@
             </div>
         </div>
     </div>
+
 @endsection

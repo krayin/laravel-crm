@@ -25,8 +25,8 @@
             {{-- Header da sidebar --}}
             <div class="px-6 py-8 border-b border-gray-200 dark:border-gray-700 mb-6">
                 <div class="flex items-center space-x-3">
-                    <div class="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
-                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <div class="w-10 h-10 bg-gradient-to-br from-blue-600 to-indigo-700 dark:from-blue-400 dark:to-indigo-500 rounded-lg flex items-center justify-center">
+                        <svg class="w-6 h-6 text-gray-900 dark:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
                         </svg>
                     </div>
@@ -93,8 +93,8 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>
                     </svg>
                     <span>Modo Escuro</span>
-                    <div class="ml-auto w-8 h-4 bg-gray-200 dark:bg-gray-600 rounded-full relative">
-                        <div id="toggle-switch" class="w-4 h-4 bg-white dark:bg-gray-300 rounded-full shadow absolute top-0 {{ request()->cookie('dark_mode') ? 'right-0' : 'left-0' }} transition-all duration-200"></div>
+                    <div class="ml-4 w-8 h-4 bg-gray-200 dark:bg-gray-600 rounded-full relative">
+                        <div id="toggle-switch" class="w-4 h-4 bg-gray-200 dark:bg-gray-700 rounded-full shadow absolute top-0 {{ request()->cookie('dark_mode') ? 'right-0' : 'left-0' }} transition-all duration-200"></div>
                     </div>
                 </button>
             </div>
