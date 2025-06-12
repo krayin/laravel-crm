@@ -8,6 +8,7 @@
     <!-- Input Form -->
     <x-admin::form
         :action="route('admin.settings.attributes.store')"
+        
         enctype="multipart/form-data"
     >
         <div class="flex flex-col gap-4">
@@ -311,7 +312,7 @@
                                     value="{{ old('code') }}"
                                     :label="trans('admin::app.settings.attributes.create.code')"
                                     :placeholder="trans('admin::app.settings.attributes.create.code')"
-                                    :readonly="request('entity_type') ? true : false"
+                                    :readonly="request('entity_type') ? false : false"
                                 />
 
 
@@ -361,6 +362,7 @@
                              @php
                                 $readonlyEntityType = request('entity_type');
                             @endphp
+                           <input type="hidden" name="readonlyEntityType" value="{{ request('entity_type') ?? '' }}" />
                             <x-admin::form.control-group>
                                 <x-admin::form.control-group.label class="required">
                                     @lang('admin::app.settings.attributes.create.entity-type')
@@ -371,7 +373,6 @@
                                     id="entity_type"
                                     name="entity_type"
                                     rules="required"
-                                    :disabled="$readonlyEntityType ? true : false"
                                     :value="$readonlyEntityType ?? old('entity_type')"
                                     :label="trans('admin::app.settings.attributes.create.entity-type')"
                                     :placeholder="trans('admin::app.settings.attributes.create.entity-type')"
@@ -668,23 +669,6 @@
                 },
             });
         </script>
-
-         @if (request('entity_type'))
-            <script>
-                window.onload = function () {
-                    const nameInput = document.getElementById('name');
-                    const codeInput = document.getElementById('code');
-
-                    if (nameInput && codeInput) {
-                        codeInput.readOnly = true;
-
-                        nameInput.addEventListener('input', function () {
-                            codeInput.value = nameInput.value;
-                        });
-                    }
-                };
-            </script>
-        @endif
 
     @endPushOnce
 </x-admin::layouts>

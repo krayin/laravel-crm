@@ -107,7 +107,7 @@
 
                            <button
                                 onclick="window.location.href='{{ route('admin.settings.attributes.create', ['entity_type' => 'leads']) }}'"
-                                style="background-color: #2563eb; color: white;"
+                                style="background-color:rgb(139, 37, 235); color: white;"
                                 class="px-4 py-2 rounded hover:bg-blue-700"
                             >
                                 @lang('admin::app.leads.create.new-field')

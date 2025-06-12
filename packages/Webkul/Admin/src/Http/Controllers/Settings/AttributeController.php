@@ -61,13 +61,20 @@ class AttributeController extends Controller
 
         request()->request->add(['quick_add' => 1]);
 
+        logger(request()->all());
+        logger('Teste ok');
         $attribute = $this->attributeRepository->create(request()->all());
 
         Event::dispatch('settings.attribute.create.after', $attribute);
 
         session()->flash('success', trans('admin::app.settings.attributes.index.create-success'));
+        $readonlyEntityType = request('readonlyEntityType');
 
-        return redirect()->route('admin.settings.attributes.index');
+        if (!is_null($readonlyEntityType) && $readonlyEntityType !== '') {
+            return redirect()->route('admin.leads.create');
+        } else {
+            return redirect()->route('admin.settings.attributes.index');
+        }
     }
 
     /**
