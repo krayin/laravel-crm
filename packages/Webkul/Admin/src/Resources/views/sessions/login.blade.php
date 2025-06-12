@@ -3,43 +3,33 @@
     <x-slot:title>
         @lang('admin::app.users.login.title')
     </x-slot>
-
-    <div class="flex h-[100vh] flex-col items-center justify-center gap-10">
-        <div class="flex flex-col items-center gap-5">
+    <div class="min-h-screen " >
+    <div class="flex h-[100vh] flex-col items-center justify-center gap-10  ">
+        <div class="flex  items-center gap-5 login-container p-4 rounded-2xl">
             <!-- Logo -->
-            @if ($logo = core()->getConfigData('general.design.admin_logo.logo_image'))
-                <img
-                    class="h-50 w-[150px]"
-                    src="{{ Storage::url($logo) }}"
-                    alt="{{ config('app.name') }}"
-                />
-            @else
-                <img
-                    class="h-50 w-[150px]"
-                    src="{{ vite()->asset('images/logo.svg') }}"
-                    alt="{{ config('app.name') }}"
-                />
-            @endif
+           
+            <img alt="Ofoghe talaei" src="{{vite()->asset('images/landing-logo.svg')}}" class="w-1/2" >
 
-            <div class="box-shadow flex min-w-[300px] flex-col rounded-md bg-white dark:bg-gray-900">
+            <div class="w-full h-full">
                 {!! view_render_event('admin.sessions.login.form_controls.before') !!}
-
+                <div class="w-full h-full min-h-[400px] b rounded-2xl p-8 shadow-lg flex min-w-[300px] flex-col  bg-white dark:bg-gray-900">
                 <!-- Login Form -->
-                <x-admin::form :action="route('admin.session.store')">
-                    <p class="p-4 text-xl font-bold text-gray-800 dark:text-white">
-                        @lang('admin::app.users.login.title')
+                <x-admin::form :action="route('admin.session.store')" class="h-full">
+                    <p class="mt-4 ml-4 p-4 text-3xl font-bold text-gray-800 dark:text-white">
+                        @lang('admin::app.users.login.title') 
                     </p>
+                    <div class="flex flex-col justify-between  gap-6">
 
-                    <div class="border-y p-4 dark:border-gray-800">
+                    <div class="  p-4 dark:border-gray-800">
                         <!-- Email -->
                         <x-admin::form.control-group>
-                            <x-admin::form.control-group.label class="required">
+                            <x-admin::form.control-group.label class="block text-sm font-medium text-gray-700 required">
                                 @lang('admin::app.users.login.email')
                             </x-admin::form.control-group.label>
 
                             <x-admin::form.control-group.control
                                 type="email"
-                                class="w-[254px] max-w-full"
+                                class="mt-1 block w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none focus:border-blue-500 placeholder-gray-400"
                                 id="email"
                                 name="email"
                                 rules="required|email"
@@ -52,13 +42,13 @@
 
                         <!-- Password -->
                         <x-admin::form.control-group class="relative w-full">
-                            <x-admin::form.control-group.label class="required">
+                            <x-admin::form.control-group.label class=" block text-sm font-medium text-gray-700 required">
                                 @lang('admin::app.users.login.password')
                             </x-admin::form.control-group.label>
 
                             <x-admin::form.control-group.control
                                 type="password"
-                                class="w-[254px] max-w-full ltr:pr-10 rtl:pl-10"
+                                class="mt-1 block w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none focus:border-blue-500 placeholder-gray-400 ltr:pr-10 rtl:pl-10"
                                 id="password"
                                 name="password"
                                 rules="required|min:6"
@@ -79,25 +69,25 @@
                         </x-admin::form.control-group>
                     </div>
 
-                    <div class="flex items-center justify-between p-4">
-                        <!-- Forgot Password Link -->
+                    <div class="flex flex-col gap-4 items-center justify-between p-4">
+                        <!-- Submit Button -->
+                        <button
+                            class="primary-button w-full py-2 rounded-md  "
+                            aria-label="{{ trans('admin::app.users.login.submit-btn')}}"
+                        >
+                            @lang('admin::app.users.login.submit-btn')
+                        </button>
+                          <!-- Forgot Password Link -->
                         <a
                             class="cursor-pointer text-xs font-semibold leading-6 text-brandColor"
                             href="{{ route('admin.forgot_password.create') }}"
                         >
                             @lang('admin::app.users.login.forget-password-link')
                         </a>
-
-                        <!-- Submit Button -->
-                        <button
-                            class="primary-button"
-                            aria-label="{{ trans('admin::app.users.login.submit-btn')}}"
-                        >
-                            @lang('admin::app.users.login.submit-btn')
-                        </button>
+                    </div>
                     </div>
                 </x-admin::form>
-
+                </div>
                 {!! view_render_event('admin.sessions.login.form_controls.after') !!}
             </div>
         </div>
@@ -110,7 +100,7 @@
 {{--            ])--}}
 {{--        </div>--}}
     </div>
-
+    </div>
     @push('scripts')
         <script>
             function switchVisibility() {
