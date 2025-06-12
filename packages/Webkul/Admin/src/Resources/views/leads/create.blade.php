@@ -93,19 +93,30 @@
                     {!! view_render_event('admin.leads.create.details.before') !!}
 
                     <!-- Details section -->
-                    <div 
-                        class="flex flex-col gap-4" 
-                        id="lead-details"
-                    >
-                        <div class="flex flex-col gap-1">
-                            <p class="text-base font-semibold dark:text-white">
-                                @lang('admin::app.leads.create.details')
-                            </p>
+                    <div class="flex flex-col gap-4" id="lead-details">
+                        <div class="flex items-center justify-between gap-4">
+                            <div>
+                                <p class="text-base font-semibold dark:text-white">
+                                    @lang('admin::app.leads.create.details')
+                                </p>
 
-                            <p class="text-gray-600 dark:text-white">
-                                @lang('admin::app.leads.create.details-info')
-                            </p>
+                                <p class="text-gray-600 dark:text-white">
+                                    @lang('admin::app.leads.create.details-info')
+                                </p>
+                            </div>
+
+                           <button
+                                onclick="window.location.href='{{ route('admin.settings.attributes.create', ['entity_type' => 'leads']) }}'"
+                                style="background-color: #2563eb; color: white;"
+                                class="px-4 py-2 rounded hover:bg-blue-700"
+                            >
+                                @lang('admin::app.leads.create.new-field')
+
+                            </button>
+
+
                         </div>
+
 
                         <div class="w-1/2 max-md:w-full">
                             {!! view_render_event('admin.leads.create.details.attributes.before') !!}

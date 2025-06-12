@@ -63,6 +63,9 @@
     {!! view_render_event('admin.settings.attributes.create.after') !!}
 
     @pushOnce('scripts')
+
+        
+
         <script
             type="text/x-template"
             id="v-create-attributes-template"
@@ -291,6 +294,8 @@
 
                         <x-slot:content>
                             {!! view_render_event('admin.settings.attributes.create.form_controls.code.before') !!}
+                            
+                           
 
                             <!-- Code -->
                             <x-admin::form.control-group>
@@ -306,7 +311,9 @@
                                     value="{{ old('code') }}"
                                     :label="trans('admin::app.settings.attributes.create.code')"
                                     :placeholder="trans('admin::app.settings.attributes.create.code')"
+                                    :readonly="request('entity_type') ? true : false"
                                 />
+
 
                                 <x-admin::form.control-group.error control-name="code" />
                             </x-admin::form.control-group>
@@ -351,6 +358,9 @@
                             {!! view_render_event('admin.settings.attributes.create.form_controls.entity_type.before') !!}
 
                             <!-- Entity Type -->
+                             @php
+                                $readonlyEntityType = request('entity_type');
+                            @endphp
                             <x-admin::form.control-group>
                                 <x-admin::form.control-group.label class="required">
                                     @lang('admin::app.settings.attributes.create.entity-type')
@@ -361,16 +371,20 @@
                                     id="entity_type"
                                     name="entity_type"
                                     rules="required"
-                                    value="{{ old('entity_type') }}"
+                                    :disabled="$readonlyEntityType ? true : false"
+                                    :value="$readonlyEntityType ?? old('entity_type')"
                                     :label="trans('admin::app.settings.attributes.create.entity-type')"
                                     :placeholder="trans('admin::app.settings.attributes.create.entity-type')"
                                 >
-
                                     @foreach (config('attribute_entity_types') as $key => $entityType)
-                                        <option value="{{ $key }}">{{ trans($entityType['name']) }}</option>
+                                        <option value="{{ $key }}"
+                                            {{ (old('entity_type') ?? request('entity_type')) == $key ? 'selected' : '' }}
+                                        >
+                                            {{ trans($entityType['name']) }}
+                                        </option>
                                     @endforeach
                                 </x-admin::form.control-group.control>
-                                    
+
                                 <x-admin::form.control-group.error control-name="entity_type" />
                             </x-admin::form.control-group>
 
@@ -654,5 +668,23 @@
                 },
             });
         </script>
+
+         @if (request('entity_type'))
+            <script>
+                window.onload = function () {
+                    const nameInput = document.getElementById('name');
+                    const codeInput = document.getElementById('code');
+
+                    if (nameInput && codeInput) {
+                        codeInput.readOnly = true;
+
+                        nameInput.addEventListener('input', function () {
+                            codeInput.value = nameInput.value;
+                        });
+                    }
+                };
+            </script>
+        @endif
+
     @endPushOnce
 </x-admin::layouts>

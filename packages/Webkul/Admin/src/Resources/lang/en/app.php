@@ -1992,6 +1992,7 @@ return [
             'save-btn'       => 'Save',
             'details'        => 'Details',
             'details-info'   => 'Put The Basic Information of the Lead',
+            'new-field'      => 'New Field',
             'contact-person' => 'Contact Person',
             'contact-info'   => 'Information About the Contact Person',
             'products'       => 'Products',
