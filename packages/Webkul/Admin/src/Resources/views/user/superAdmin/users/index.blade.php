@@ -24,7 +24,7 @@
 
         <!-- Tabela de usuários -->
         <div class="bg-white dark:bg-gray-900 shadow-lg rounded-xl border border-gray-200 dark:border-gray-700">
-            <div class="overflow-auto max-h-[500px]">
+            <div class="overflow-auto max-h">
                 <table class="w-full">
                     <thead class="bg-gray-50 dark:bg-gray-800 sticky top-0 z-10 border-b border-gray-200 dark:border-gray-700">
                         <tr>
