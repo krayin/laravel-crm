@@ -9,3 +9,17 @@
 .bg-blue-light{
     background-color: #87b2cf !important;
 }
+.container-login {
+    min-height: 100vh;
+}
+@media (max-width: 650px) {
+    .login-container {
+        width: 100%;
+        flex-direction: column;
+        border-radius: 0px;
+    }
+    .login-container img {
+        width: 100%;
+        height: auto;
+    }
+}

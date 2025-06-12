@@ -3,9 +3,8 @@
     <x-slot:title>
         @lang('admin::app.users.login.title')
     </x-slot>
-    <div class="min-h-screen " >
-    <div class="flex h-[100vh] flex-col items-center justify-center gap-10  ">
-        <div class="flex  items-center gap-5 login-container p-4 rounded-2xl">
+    <div class="flex container-login flex-col items-center justify-center gap-10  ">
+        <div class="flex   items-center gap-5 login-container p-4 rounded-2xl">
             <!-- Logo -->
            
             <img alt="Ofoghe talaei" src="{{vite()->asset('images/landing-logo.svg')}}" class="w-1/2" >
@@ -99,7 +98,6 @@
 {{--                'webkul' => '<a class="text-brandColor hover:underline " href="https://webkul.com/">Webkul</a>',--}}
 {{--            ])--}}
 {{--        </div>--}}
-    </div>
     </div>
     @push('scripts')
         <script>

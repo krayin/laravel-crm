@@ -4,7 +4,7 @@
         @lang('admin::app.users.forget-password.create.page-title')
     </x-slot>
 
-    <div class="flex h-[100vh] flex-col items-center justify-center gap-10">
+    <div class="flex container-login flex-col items-center justify-center gap-10">
         <div class="flex login-container p-4 rounded-2xl items-center gap-5">
             <!-- Logo -->
              <img alt="Ofoghe talaei" src="{{vite()->asset('images/landing-logo.svg')}}" class="w-1/2" >
