@@ -12,10 +12,13 @@ use Webkul\RestApi\Http\Request\MassDestroyRequest;
 use Webkul\RestApi\Http\Request\MassUpdateRequest;
 use Webkul\RestApi\Http\Resources\V1\Setting\UserResource;
 use Webkul\User\Repositories\UserRepository;
+use Webkul\User\Repositories\UserTenantRepository;
+use Illuminate\Support\Facades\Log; 
 
 class UserController extends Controller
 {
-    public function __construct(protected UserRepository $userRepository) {}
+    public function __construct(protected UserRepository $userRepository, 
+    protected UserTenantRepository $userTenantRepository) {}
 
     public function index(): JsonResource
     {
@@ -44,34 +47,63 @@ class UserController extends Controller
         $data = $this->validate(request(), [
             'email'            => 'required|email|unique:users,email',
             'name'             => 'required',
-            'multiatendedor_id'=> 'required',
+            'tenant_id'        => 'required|exists:tenants,id',
             'password'         => 'nullable|confirmed',
+            'role_id'          => 'required',
+            "view_permission"  => 'required',
+            'status'           => 'required|in:0,1',
         ]);
-
+    
         if (!empty($data['password'])) {
             $data['password'] = bcrypt($data['password']);
-        }
-
+        } 
+    
+        // status ativo por padrão
         $data['status'] = $data['status'] ?? 1;
-
+    
+        // antes de criar usuário
         Event::dispatch('settings.user.create.before');
-
+    
+        // cria o usuário
         $user = $this->userRepository->create($data);
-
+    
+        // vincula ao tenant passado no body
+        $tenantData = [
+            'user_id'         => $user->id,
+            'tenant_id'       => $data['tenant_id'],
+            'role_id'         => $data['role_id'],
+            'status'          => $data['status'],
+            'view_permission' => $data['view_permission'],
+        ];
+        $this->userTenantRepository->create($tenantData);
+    
+        // sincroniza grupos, se houver
+        if (!empty($data['groups'])) {
+            $user->groups()->sync($data['groups']);
+        }
+    
+        // após criar usuário
         Event::dispatch('settings.user.create.after', $user);
-
+    
+        // envio de e-mail
         try {
             Mail::queue(new Create($user));
         } catch (\Exception $e) {
+            logger()->error('Falha ao enfileirar e-mail de criação', [
+                'user_id' => $user->id,
+                'exception' => $e->getMessage(),
+            ]);
             report($e);
         }
 
+    
         return new JsonResource([
-            'data' => new UserResource($user),
+            'data'    => new UserResource($user),
             'message' => trans('rest-api::app.settings.users.create-success'),
         ]);
     }
-
+    
+     
     public function update(int $id): JsonResource
     {
         $data = $this->validate(request(), [
