@@ -20,6 +20,7 @@ class UserResource extends JsonResource
             'email'    => $this->email,
             'image'    => $this->image,
             'image_url'=> $this->image_url,
+            'is_super' => $this->is_super, 
             'tenants'  => $this->tenantPivots->map(function($pivot) {
                 return [
                     'tenant_id'   => $pivot->tenant->id ?? null,

@@ -45,21 +45,23 @@ class UserController extends Controller
             'email'            => 'required|email|unique:users,email',
             'name'             => 'required',
             'multiatendedor_id'=> 'required',
-            'password'         => 'nullable|confirmed',
+            'password'         => 'nullable',
+            'is_super'         => 'sometimes|boolean',
         ]);
-
-        if (!empty($data['password'])) {
-            $data['password'] = bcrypt($data['password']);
-        }
 
         $data['status'] = $data['status'] ?? 1;
 
+        $user = auth('sanctum')->user();
+        if (!($user && $user->is_super)) {
+            unset($data['is_super']); 
+        }
+        
         Event::dispatch('settings.user.create.before');
 
         $user = $this->userRepository->create($data);
 
         Event::dispatch('settings.user.create.after', $user);
-
+        
         try {
             Mail::queue(new Create($user));
         } catch (\Exception $e) {
@@ -77,10 +79,9 @@ class UserController extends Controller
         $data = $this->validate(request(), [
             'email'            => 'sometimes|required|email|unique:users,email,' . $id,
             'name'             => 'sometimes|required',
-            'password'         => 'nullable|confirmed',
+            'password'         => 'nullable',
             'multiatendedor_id'=> 'sometimes|required',
             'status'           => 'sometimes|required|in:0,1',
-            'groups'           => 'sometimes|array',
         ]);
 
         if (!empty($data['password'])) {
@@ -92,10 +93,6 @@ class UserController extends Controller
         Event::dispatch('settings.user.update.before', $id);
 
         $user = $this->userRepository->update($data, $id);
-
-        if (isset($data['groups'])) {
-            $user->groups()->sync($data['groups']);
-        }
 
         Event::dispatch('settings.user.update.after', $user);
 
