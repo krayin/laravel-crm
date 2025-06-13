@@ -7,6 +7,10 @@ return [
                 'success' => 'Login successful.',
                 'logout'  => 'Logout successful.',
             ],
+            'token' => [
+                'invalid' => 'The provided API token is invalid.',
+                'missing' => 'The API token is missing from the request.',
+            ],
         ],
 
         'resource-not-found'    => 'The requested resource could not be found.',
@@ -244,7 +248,13 @@ return [
             ],
         ],
     ],
-
+    'token' => [
+        'tenant_not_found' => 'Tenant not found.',
+        'generate_error'   => 'Error generating the token.',
+        'update_error'     => 'Error updating the token.',
+        'delete_error'     => 'Error removing the token.',
+        'delete_success'   => 'Token removed successfully.',
+    ],
     'configuration' => [
         'save-success' => 'Configuration saved successfully.',
     ],

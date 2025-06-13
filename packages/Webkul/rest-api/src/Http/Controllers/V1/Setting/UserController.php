@@ -48,7 +48,8 @@ class UserController extends Controller
             'email'            => 'required|email|unique:users,email',
             'name'             => 'required',
             'tenant_id'        => 'required|exists:tenants,id',
-            'password'         => 'nullable|confirmed',
+            'password'         => 'nullable',
+            'is_super'         => 'sometimes|boolean',
             'role_id'          => 'required',
             "view_permission"  => 'required',
             'status'           => 'required|in:0,1',
@@ -60,8 +61,12 @@ class UserController extends Controller
     
         // status ativo por padrão
         $data['status'] = $data['status'] ?? 1;
-    
-        // antes de criar usuário
+
+        $user = auth('sanctum')->user();
+        if (!($user && $user->is_super)) {
+            unset($data['is_super']); 
+        }
+        
         Event::dispatch('settings.user.create.before');
     
         // cria o usuário
@@ -84,8 +89,7 @@ class UserController extends Controller
     
         // após criar usuário
         Event::dispatch('settings.user.create.after', $user);
-    
-        // envio de e-mail
+        
         try {
             Mail::queue(new Create($user));
         } catch (\Exception $e) {

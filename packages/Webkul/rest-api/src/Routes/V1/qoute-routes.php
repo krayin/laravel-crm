@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use Webkul\RestApi\Http\Controllers\V1\Quote\QuoteController;
 
-Route::group(['middleware' => 'auth:sanctum', 'prefix' => 'quotes'], function () {
+Route::group(['middleware' => 'rest-api', 'prefix' => 'quotes'], function () {
     Route::controller(QuoteController::class)->group(function () {
         Route::get('', 'index');
 

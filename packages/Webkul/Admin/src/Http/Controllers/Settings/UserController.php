@@ -54,36 +54,37 @@ class UserController extends Controller
      */
     public function store(): View|JsonResponse
     {
-        $this->validate(request(), [
+        $data = $this->validate(request(), [
             'email'            => 'required|email|unique:users,email',
-            'name'             => 'required',
-            'password'         => 'nullable',
+            'name'             => 'required|string',
+            'password'         => 'nullable|string',
             'confirm_password' => 'nullable|required_with:password|same:password',
-            'role_id'          => 'required',
+            'role_id'          => 'required|integer',
+            'status'           => 'nullable|in:0,1',
+            'view_permission'  => 'nullable|string',
+            'groups'           => 'nullable|array',
         ]);
 
-        $data = request()->all();
-
-        if (isset($data['password']) && $data['password']) {
+        if (!filled($data['password'])) {
+            unset($data['password'], $data['confirm_password']);
+        } else {
             $data['password'] = bcrypt($data['password']);
         }
 
-        $data['status'] = $data['status'] ? 1 : 0;
+        $data['status'] = $data['status'] ?? 0;
 
         Event::dispatch('settings.user.create.before');
         $admin = $this->userRepository->create($data);
 
-        $tenantData = [
-            'user_id' => $admin->id,
-            'tenant_id' => tenant('id'),
-            'role_id' => $data['role_id'],
-            'status' => $data['status'],
-            'view_permission' => $data['view_permission']
-        ];
-    
-        $userTenant = $this->userTenantRepository->create($tenantData);
+        $this->userTenantRepository->create([
+            'user_id'         => $admin->id,
+            'tenant_id'       => tenant('id'),
+            'role_id'         => $data['role_id'],
+            'status'          => $data['status'],
+            'view_permission' => $data['view_permission'] ?? 'all',
+        ]);
 
-        $admin->groups()->sync(request('groups') ?? []);
+        $admin->groups()->sync($data['groups'] ?? []);
 
         try {
             Mail::queue(new UserCreatedNotification($admin));
@@ -94,7 +95,7 @@ class UserController extends Controller
         Event::dispatch('settings.user.create.after', $admin);
 
         return new JsonResponse([
-            'data'    => "admin",
+            'data'    => $admin,
             'message' => trans('admin::app.settings.users.index.create-success'),
         ]);
     }
@@ -116,31 +117,44 @@ class UserController extends Controller
      */
     public function update(int $id): JsonResponse
     {
-        $this->validate(request(), [
-            'email'            => 'required|email|unique:users,email,'.$id,
-            'name'             => 'required',
-            'password'         => 'nullable',
+        $data = $this->validate(request(), [
+            'email'            => 'required|email|unique:users,email,' . $id,
+            'name'             => 'required|string',
+            'password'         => 'nullable|string',
             'confirm_password' => 'nullable|required_with:password|same:password',
-            'role_id'          => 'required',
+            'role_id'          => 'required|integer',
+            'status'           => 'nullable|in:0,1',
+            'view_permission'  => 'nullable|string',
+            'groups'           => 'nullable|array',
         ]);
 
-        $data = request()->all();
-
-        if (! $data['password']) {
+        if (!filled($data['password'])) {
             unset($data['password'], $data['confirm_password']);
         } else {
             $data['password'] = bcrypt($data['password']);
         }
 
-        if (auth()->guard('user')->user()->id != $id) {
-            $data['status'] = $data['status'] ? 1 : 0;
+        if (auth()->guard('user')->user()->id == $id) {
+            unset($data['status']);
         }
 
         Event::dispatch('settings.user.update.before', $id);
 
         $admin = $this->userRepository->update($data, $id);
 
-        $admin->groups()->sync(request()->input('groups') ?? []);
+        $userTenant = $admin->tenantPivots()
+            ->where('tenant_id', tenant('id'))
+            ->first();
+
+        if ($userTenant) {
+            $userTenant->update([
+                'role_id'         => $data['role_id'],
+                'status'          => $data['status'] ?? $userTenant->status,
+                'view_permission' => $data['view_permission'] ?? $userTenant->view_permission,
+            ]);
+        }
+
+        $admin->groups()->sync($data['groups'] ?? []);
 
         Event::dispatch('settings.user.update.after', $admin);
 
