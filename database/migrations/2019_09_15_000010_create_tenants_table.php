@@ -16,6 +16,7 @@ class CreateTenantsTable extends Migration
         Schema::create('tenants', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('multiatendedor_id')->unique()->nullable();
+            $table->string('api_token', 64)->nullable()->unique();
             $table->timestamps();
             $table->json('data')->nullable();
         });

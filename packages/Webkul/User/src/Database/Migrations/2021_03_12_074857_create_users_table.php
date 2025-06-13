@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->string('password')->nullable();
             $table->unsignedInteger('multiatendedor_id')->unique()->nullable();
+            $table->boolean('is_super')->default(false);
             $table->rememberToken();
             $table->timestamps();
         });

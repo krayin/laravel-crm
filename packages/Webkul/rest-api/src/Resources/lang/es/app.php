@@ -4,8 +4,12 @@ return [
     'common' => [
         'auth' => [
             'login' => [
-                'success' => 'Inicio de sesión exitoso.',
-                'logout'  => 'Cierre de sesión exitoso.',
+            'success' => 'Inicio de sesión exitoso.',
+            'logout'  => 'Cierre de sesión exitoso.',
+            ],
+            'token' => [
+                'invalid' => 'El token de API proporcionado no es válido.',
+                'missing' => 'Falta el token de API en la solicitud.',
             ],
         ],
 
@@ -236,7 +240,13 @@ return [
             ],
         ],
     ],
-
+    'token' => [
+        'tenant_not_found' => 'Inquilino no encontrado.',
+        'generate_error'   => 'Error al generar el token.',
+        'update_error'     => 'Error al actualizar el token.',
+        'delete_error'     => 'Error al eliminar el token.',
+        'delete_success'   => 'Token eliminado con éxito.',
+    ],
     'configuration' => [
         'save-success' => 'Configuración guardada con éxito.',
     ],

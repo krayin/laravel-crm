@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 use Webkul\RestApi\Http\Controllers\V1\Mail\EmailController;
 use Webkul\RestApi\Http\Controllers\V1\Mail\TagController;
 
-Route::group(['middleware' => 'auth:sanctum', 'prefix' => 'mails'], function () {
+Route::group(['middleware' => 'rest-api', 'prefix' => 'mails'], function () {
 
     Route::controller(EmailController::class)->group(function () {
         Route::get('', 'index');
