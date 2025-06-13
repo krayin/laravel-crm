@@ -16,10 +16,11 @@ class UserTenantResource extends JsonResource
     {
         return [
             'id'                    => $this->id,
-            'role_id'               => $this->role_id,
             'status'                => $this->status,
             'view_permission'       => $this->view_permission,
+            'role_id'               => $this->role_id,
             'role'                  => $this->role,
-        ];
+            'groups'                => GroupResource::collection($this->groups),        
+    ];
     }
 }

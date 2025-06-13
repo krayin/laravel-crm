@@ -26,7 +26,7 @@ use Webkul\RestApi\Http\Controllers\V1\Setting\WorkflowController;
 
 Route::group([
     'prefix'     => 'settings',
-    'middleware' => 'auth:sanctum',
+    'middleware' => 'rest-api',
 ], function () {
     /**
      * Group routes.

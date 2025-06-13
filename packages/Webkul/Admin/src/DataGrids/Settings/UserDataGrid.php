@@ -33,7 +33,7 @@ class UserDataGrid extends DataGrid
             ->leftJoin('user_groups', 'user_tenants.id', '=', 'user_groups.user_tenant_id');
 
         if ($userIds = bouncer()->getAuthorizedUserIds()) {
-            $queryBuilder->whereIn('id', $userIds);
+            $queryBuilder->whereIn('users.id', $userIds);
         }
 
         return $queryBuilder;

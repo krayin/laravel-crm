@@ -10,7 +10,7 @@ Route::controller(AuthController::class)->group(function () {
     Route::post('forgot-password', 'forgotPassword');
 });
 
-Route::group(['middleware' => 'auth:sanctum'], function () {
+Route::group(['middleware' => 'rest-api'], function () {
     Route::delete('logout', [AuthController::class, 'logout']);
 
     Route::controller(AccountController::class)->group(function () {

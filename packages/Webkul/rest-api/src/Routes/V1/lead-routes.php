@@ -7,7 +7,7 @@ use Webkul\RestApi\Http\Controllers\V1\Lead\LeadController;
 use Webkul\RestApi\Http\Controllers\V1\Lead\QuoteController;
 use Webkul\RestApi\Http\Controllers\V1\Lead\TagController;
 
-Route::group(['middleware' => ['auth:sanctum'], 'prefix' => 'leads'], function () {
+Route::group(['middleware' => ['rest-api'], 'prefix' => 'leads'], function () {
     /**
      * Leads Routes.
      */

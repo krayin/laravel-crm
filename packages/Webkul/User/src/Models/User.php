@@ -25,6 +25,7 @@ class User extends Authenticatable implements UserContract
         'password',
         'api_token',
         'multiatendedor_id',
+        'is_super',
     ];
 
     /**
@@ -51,6 +52,15 @@ class User extends Authenticatable implements UserContract
         'view_permission',
         'role',
         'groups',
+    ];
+
+    /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'is_super' => 'boolean',
     ];
 
     /**

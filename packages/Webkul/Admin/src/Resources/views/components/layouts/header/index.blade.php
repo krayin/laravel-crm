@@ -69,7 +69,7 @@
                 </x-slot>
 
                 <x-slot:content class="mt-2 border-t-0 !p-0">
-                    <div class="grid gap-1 pb-2.5">
+                    <div class="grid gap-1 pb-2.5 max-h-[200px] overflow-y-auto">
                         @foreach ($otherTenants as $tenant)
                             <x-admin::form method="POST" action="{{ route('admin.tenant.switch') }}">
                                 <input type="hidden" name="tenant_id" value="{{ $tenant['id'] }}">
@@ -83,7 +83,7 @@
                             </x-admin::form>
                         @endforeach
                     </div>
-                </x-slot>
+                </x-slot:content>
             </x-admin::dropdown>
         @else
             <button

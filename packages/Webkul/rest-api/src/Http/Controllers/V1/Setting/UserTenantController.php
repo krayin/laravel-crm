@@ -34,6 +34,7 @@ class UserTenantController extends Controller
             'role_id'         => 'required|exists:roles,id',
             'status'          => 'sometimes|in:0,1',
             'view_permission' => 'sometimes|string',
+            'groups'          => 'sometimes|array',
         ]);
 
         $data['status'] = $data['status'] ?? 1;
@@ -42,6 +43,10 @@ class UserTenantController extends Controller
         Event::dispatch('settings.userTenant.create.before');
 
         $userTenant = $this->userTenantRepository->create($data);
+
+        if (isset($data['groups'])) {
+            $userTenant->groups()->sync($data['groups']);
+        }
 
         Event::dispatch('settings.userTenant.create.after', $userTenant);
 
@@ -59,11 +64,16 @@ class UserTenantController extends Controller
             'role_id'         => 'sometimes|exists:roles,id',
             'status'          => 'sometimes|in:0,1',
             'view_permission' => 'sometimes|string',
+            'groups'          => 'sometimes|array',
         ]);
 
         Event::dispatch('settings.userTenant.update.before', $id);
 
         $userTenant = $this->userTenantRepository->update($data, $id);
+
+        if (isset($data['groups'])) {
+            $userTenant->groups()->sync($data['groups']);
+        }
 
         Event::dispatch('settings.userTenant.update.after', $userTenant);
 
