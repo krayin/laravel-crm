@@ -90,15 +90,16 @@
                                 @lang('admin::app.settings.attributes.create.name')
                             </x-admin::form.control-group.label>
 
-                            <x-admin::form.control-group.control
+                           <x-admin::form.control-group.control
                                 type="text"
                                 id="name"
                                 name="name"
                                 rules="required"
-                                value="{{ old('name') }}"
                                 :label="trans('admin::app.settings.attributes.create.name')"
                                 :placeholder="trans('admin::app.settings.attributes.create.name')"
+                                v-model="name"
                             />
+
 
                             <x-admin::form.control-group.error control-name="name" />
                         </x-admin::form.control-group>
@@ -309,11 +310,12 @@
                                     id="code"
                                     name="code"
                                     rules="required"
-                                    value="{{ old('code') }}"
                                     :label="trans('admin::app.settings.attributes.create.code')"
                                     :placeholder="trans('admin::app.settings.attributes.create.code')"
-                                    :readonly="request('entity_type') ? false : false"
+                                    :readonly="true"
+                                    v-model="code"
                                 />
+
 
 
                                 <x-admin::form.control-group.error control-name="code" />
@@ -566,6 +568,10 @@
 
                 data() {
                     return {
+                        code: '{{ old('code') }}',
+                        
+                        name: '{{ old('name') }}',
+
                         optionRowCount: 1,
 
                         attributeType: '',
@@ -587,6 +593,15 @@
                         swatchValue: [],
 
                         lookupEntityTypes: @json(config('attribute_lookups')),
+                    }
+                },
+
+                watch: {
+                    name(newVal) {
+                            this.code = newVal
+                                .toLowerCase()
+                                .replace(/\s+/g, '_')
+                                .replace(/[^\w\-]+/g, '');
                     }
                 },
 
