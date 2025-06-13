@@ -94,10 +94,10 @@
                 {{-- Super Admin --}}
                 <div>
                     <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Super Admin<span class="text-red-500">*</span></label>
-                    <select name="is_super_admin" required
+                    <select name="is_super" required
                             class="w-full px-3 py-2 border rounded-md bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300">
-                        <option value="1" selected>1 (Ativo)</option>
-                        <option value="0">0 (Inativo)</option>
+                        <option value=false selected>0 (Inativo)</option>
+                        <option value=true >1 (Ativo)</option>
                     </select>
                 </div>
 
@@ -142,7 +142,8 @@
       password: pwd,
       password_confirmation: cpwd,
       role_id: this.role_id.value,
-      view_permission: this.view_permission.value
+      view_permission: this.view_permission.value,
+      is_super: this.is_super.value === 'true' 
     };
     const headers = {
       'Accept': 'application/json',
