@@ -1,0 +1,53 @@
+version: "3.8"
+services:
+  app:
+    container_name: crm
+    restart: unless-stopped
+    build:
+      context: ./
+      dockerfile: ./docker/app.dockerfile
+    volumes:
+      - ./:/var/www/app
+      - vendor_app:/var/www/app/vendor
+      - ./docker/99-upload-config.ini:/usr/local/etc/php/conf.d/99-upload-config.ini
+    # depends_on:
+    #   - db
+    networks:
+      - localNetwork
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+  # db:
+  #   container_name: crm_db
+  #   image: postgres:13.9-alpine
+  #   restart: unless-stopped
+  #   environment:
+  #     POSTGRES_DB: ${DB_DATABASE:-pds}
+  #     POSTGRES_USER: ${DB_USERNAME:-postgres}
+  #     POSTGRES_PASSWORD: ${DB_PASSWORD:-postgres}
+  #     PGDATA: /data/postgres
+  #   volumes:
+  #      - ${POSTGRES_VOLUME:-./docker/postgres}:/data/postgres
+  #   ports:
+  #     - "${FORWARD_POSTGRES_PORT:-54325}:5432"
+  #   networks:
+  #     - pds
+  nginx:
+    container_name: crm_nginx
+    image: nginx:1.19-alpine
+    restart: unless-stopped
+    ports:
+      - '${FORWARD_NGINX_PORT:-8080}:80'
+    volumes:
+      - ./docker/nginx.conf:/etc/nginx/conf.d/default.conf
+      - ./docker/nginx/logs:/var/log/nginx
+      - ./:/var/www/app
+    depends_on:
+      - app
+    networks:
+      - localNetwork
+networks:
+  localNetwork:
+    driver: bridge
+    
+volumes:
+  vendor_app:
