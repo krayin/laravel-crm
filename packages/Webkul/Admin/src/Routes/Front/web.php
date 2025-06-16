@@ -16,7 +16,7 @@ Route::get('/', [Controller::class, 'redirectToLogin'])->name('krayin.home');
 Route::get('/switch-login', [TenantSwitchController::class, 'handle_switch'])->name('admin.tenant.handle_switch_login');
 
 
-Route::middleware(['web'])
+Route::middleware(['web','super_admin'])
     ->prefix('super-admin/tenants')
     ->name('superAdmin.tenants.')
     ->group(function () {
@@ -46,7 +46,7 @@ Route::middleware(['web'])
     });
 
 
-Route::middleware(['web'])
+Route::middleware(['web','super_admin'])
     ->prefix('super-admin/users')
     ->name('superAdmin.users.')
     ->group(function () {
