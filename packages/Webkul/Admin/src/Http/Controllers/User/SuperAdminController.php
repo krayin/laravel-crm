@@ -168,28 +168,29 @@ class SuperAdminController extends Controller
      * Exibe formulário de edição de um usuário
      */
     public function userEdit(Request $request, $id, ApiUserCtrl $apiController)
-    {
-        $jsonResource = $apiController->show($id);
-        $response     = $jsonResource->toResponse($request);
-        $payload      = json_decode($response->getContent(), true);
+{
+    $jsonResource = $apiController->show($id);
 
-        if (! is_array($payload) || ! isset($payload['data'])) {
-            throw new \RuntimeException('Payload inválido da API de User');
-        }
+    $userModel = $jsonResource->resource;
 
-        $data = $payload['data'];
+    $firstPivot = $userModel->tenantPivots->first();
 
-        $user = [
-            'id'                 => $data['id']                 ?? $id,
-            'name'               => $data['name']               ?? '',
-            'email'              => $data['email']              ?? '',
-            'status'             => $data['status']             ?? 1,
-            'multiatendedor_id'  => $data['multiatendedor_id']  ?? null,
-            'groups'             => $data['groups']             ?? [],
-        ];
 
-        return view('admin::user.superAdmin.users.edit', compact('user'));
-    }
+    $user = (object) [
+        'id'                => $userModel->id,
+        'name'              => $userModel->name,
+        'email'             => $userModel->email,
+        'is_super'          => $userModel->is_super,
+        'multiatendedor_id' => $userModel->multiatendedor_id,
+        'tenant_id'         => $firstPivot->tenant_id     ?? null,
+        'role_id'           => $firstPivot->role_id       ?? null,
+        'status'            => $firstPivot->status        ?? null,
+        'view_permission'   => $firstPivot->view_permission ?? null,
+        'groups'            => [], 
+    ];
+
+    return view('admin::user.superAdmin.users.edit', compact('user'));
+}
 
     /**
      * Atualiza um usuário existente

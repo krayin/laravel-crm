@@ -14,6 +14,8 @@ use Webkul\RestApi\Http\Resources\V1\Setting\UserResource;
 use Webkul\User\Repositories\UserRepository;
 use Webkul\User\Repositories\UserTenantRepository;
 use Illuminate\Support\Facades\Log; 
+use Illuminate\Support\Arr;
+
 
 class UserController extends Controller
 {
@@ -109,37 +111,57 @@ class UserController extends Controller
     
      
     public function update(int $id): JsonResource
-    {
-        $data = $this->validate(request(), [
-            'email'            => 'sometimes|required|email|unique:users,email,' . $id,
-            'name'             => 'sometimes|required',
-            'password'         => 'nullable|confirmed',
-            'multiatendedor_id'=> 'sometimes|required',
-            'status'           => 'sometimes|required|in:0,1',
-            'groups'           => 'sometimes|array',
-        ]);
+{
+    $data = $this->validate(request(), [
+        'name'             => 'sometimes|required|string',
+        'email'            => 'sometimes|required|email|unique:users,email,' . $id,
+        'password'         => 'nullable|confirmed|min:6',
+        'multiatendedor_id'=> 'sometimes|required',
+        
+        // campos extras
+        'status'           => 'sometimes|required|in:0,1',
+        'tenant_id'        => 'sometimes|required|integer|exists:tenants,id',
+        'role_id'          => 'sometimes|required|integer|exists:roles,id',
+        'view_permission'  => 'sometimes|required|in:global,group,individual',
+        'is_super'         => 'sometimes|required|boolean',
+        
+        'groups'           => 'sometimes|array',
+    ]);
 
-        if (!empty($data['password'])) {
-            $data['password'] = bcrypt($data['password']);
-        } else {
-            unset($data['password']);
-        }
-
-        Event::dispatch('settings.user.update.before', $id);
-
-        $user = $this->userRepository->update($data, $id);
-
-        if (isset($data['groups'])) {
-            $user->groups()->sync($data['groups']);
-        }
-
-        Event::dispatch('settings.user.update.after', $user);
-
-        return new JsonResource([
-            'data' => new UserResource($user),
-            'message' => trans('rest-api::app.settings.users.updated-success'),
-        ]);
+    if (! empty($data['password'])) {
+        $data['password'] = bcrypt($data['password']);
+    } else {
+        unset($data['password']);
     }
+
+    $userFields = Arr::only($data, [
+        'name', 'email', 'password', 'multiatendedor_id', 'is_super'
+    ]);
+    $user = $this->userRepository->update($userFields, $id);
+    $userTenant = $user->tenantPivots()
+    ->where('tenant_id', $data['tenant_id'])
+    ->first();
+
+        if ($userTenant) {
+            $userTenant->update([
+                'role_id'         => $data['role_id'],
+                'status'          => $data['status'] ?? $userTenant->status,
+                'view_permission' => $data['view_permission'] ?? $userTenant->view_permission,
+            ]);
+        }
+
+    if (isset($data['groups'])) {
+        $user->groups()->sync($data['groups']);
+    }
+
+    Event::dispatch('settings.user.update.after', $user);
+
+    return new JsonResource([
+        'data'    => new UserResource($user),
+        'message' => trans('rest-api::app.settings.users.updated-success'),
+    ]);
+}
+
 
     public function destroy(int $id): JsonResource
     {
