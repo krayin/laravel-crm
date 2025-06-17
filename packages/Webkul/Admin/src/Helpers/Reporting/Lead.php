@@ -55,6 +55,15 @@ class Lead extends AbstractReporting
     {
         $this->stageIds = $this->allStageIds;
 
+        $totalMonths = $this->startDate->diffInMonths($this->endDate) + 1;
+
+        /**
+         * If the date range is more than 12 months, set period to 'month'
+         */
+        if($totalMonths > 12) {
+            $period = 'month';
+        }
+
         return $this->getOverTimeStats($this->startDate, $this->endDate, 'leads.id', 'created_at', $period);
     }
 
