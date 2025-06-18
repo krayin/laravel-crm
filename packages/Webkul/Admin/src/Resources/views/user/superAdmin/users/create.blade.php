@@ -32,23 +32,6 @@
                            class="w-full px-3 py-2 border rounded-md bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300">
                 </div>
 
-                {{-- Status --}}
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Status <span class="text-red-500">*</span></label>
-                    <select name="status" required
-                            class="w-full px-3 py-2 border rounded-md bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300">
-                        <option value="1" selected>1 (Ativo)</option>
-                        <option value="0">0 (Inativo)</option>
-                    </select>
-                </div>
-
-                {{-- Tenant ID --}}
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Tenant ID <span class="text-red-500">*</span></label>
-                    <input type="text" name="tenant_id" required
-                           class="w-full px-3 py-2 border rounded-md bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300">
-                </div>
-
                 {{-- Multiatendedor ID --}}
                 <div>
                     <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Multiatendedor ID <span class="text-red-500">*</span></label>
@@ -68,27 +51,6 @@
                     <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Confirmar Senha <span class="text-red-500">*</span></label>
                     <input type="password" name="password_confirmation" id="password_confirmation" minlength="6" required
                            class="w-full px-3 py-2 border rounded-md bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300">
-                </div>
-
-                {{-- Role ID --}}
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Role ID <span class="text-red-500">*</span></label>
-                    <select name="role_id" required
-                            class="w-full px-3 py-2 border rounded-md bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300">
-                        <option value="1" selected>1 (Padrão)</option>
-                        {{-- outras roles, se houver --}}
-                    </select>
-                </div>
-
-                {{-- View Permission --}}
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">View Permission <span class="text-red-500">*</span></label>
-                    <select name="view_permission" required
-                            class="w-full px-3 py-2 border rounded-md bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300">
-                        <option value="global" selected>global</option>
-                        <option value="group">group</option>
-                        <option value="individual">individual</option>
-                    </select>
                 </div>
 
                 {{-- Super Admin --}}
@@ -136,13 +98,9 @@
     const data = {
       name: this.name.value,
       email: this.email.value,
-      status: this.status.value,
-      tenant_id: this.tenant_id.value,
       multiatendedor_id: this.multiatendedor_id.value,
       password: pwd,
       password_confirmation: cpwd,
-      role_id: this.role_id.value,
-      view_permission: this.view_permission.value,
       is_super: this.is_super.value === 'true' 
     };
     const headers = {
