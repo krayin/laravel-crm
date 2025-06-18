@@ -2,9 +2,10 @@
 
 namespace Webkul\Admin\Http\Controllers\User;
 
-use Webkul\Admin\Http\Controllers\Controller;                               // Controller base do Webkul
-use Webkul\RestApi\Http\Controllers\V1\Setting\TenantController as ApiTenantCtrl; // Controller da API para Tenant
+use Webkul\Admin\Http\Controllers\Controller;                               
+use Webkul\RestApi\Http\Controllers\V1\Setting\TenantController as ApiTenantCtrl;
 use Webkul\RestApi\Http\Controllers\V1\Setting\UserController   as ApiUserCtrl;
+use Webkul\RestApi\Http\Controllers\V1\Setting\UserTenantController as ApiUserTenantCtrl;
 
 use Illuminate\Http\Request;
 
@@ -167,30 +168,67 @@ class SuperAdminController extends Controller
     /**
      * Exibe formulário de edição de um usuário
      */
-    public function userEdit(Request $request, $id, ApiUserCtrl $apiController)
-{
-    $jsonResource = $apiController->show($id);
-
-    $userModel = $jsonResource->resource;
-
-    $firstPivot = $userModel->tenantPivots->first();
-
-
-    $user = (object) [
-        'id'                => $userModel->id,
-        'name'              => $userModel->name,
-        'email'             => $userModel->email,
-        'is_super'          => $userModel->is_super,
-        'multiatendedor_id' => $userModel->multiatendedor_id,
-        'tenant_id'         => $firstPivot->tenant_id     ?? null,
-        'role_id'           => $firstPivot->role_id       ?? null,
-        'status'            => $firstPivot->status        ?? null,
-        'view_permission'   => $firstPivot->view_permission ?? null,
-        'groups'            => [], 
-    ];
-
-    return view('admin::user.superAdmin.users.edit', compact('user'));
-}
+    public function userEdit(Request $request, $id, ApiUserCtrl $apiController, ApiUserTenantCtrl $apiUserTenantCtrl, ApiTenantCtrl $apiTenantCtrl)
+    {
+        $jsonResource = $apiController->show($id);
+    
+        $userModel = $jsonResource->resource;
+    
+        // Garante que tenantPivots é uma coleção antes de usar first()
+        $firstPivot = $userModel->tenantPivots->first();
+    
+        $user = (object) [
+            'id'                => $userModel->id,
+            'name'              => $userModel->name,
+            'email'             => $userModel->email,
+            'is_super'          => $userModel->is_super,
+            'multiatendedor_id' => $userModel->multiatendedor_id,
+            'role_id'           => $firstPivot->role_id       ?? null,
+            'status'            => $firstPivot->status        ?? null,
+            'view_permission'   => $firstPivot->view_permission ?? null,
+            'groups'            => [],
+            'tenants'           => [], // Inicializa a propriedade 'tenants' como um array vazio
+        ];
+    
+        // Verifica se tenantPivots existe e não está vazio
+        if ($userModel->tenantPivots && $userModel->tenantPivots->isNotEmpty()) {
+            // Coleta os IDs dos pivôs (user_tenant.id) e os IDs dos tenants (tenant_id)
+            $userTenantPivotsData = $userModel->tenantPivots->mapWithKeys(function ($pivot) {
+                return [$pivot->tenant_id => $pivot->id]; // tenant_id => user_tenant_id
+            })->toArray();
+        
+            $tenantIds = array_keys($userTenantPivotsData); // Apenas os IDs dos tenants
+            
+            $tenantsData = [];
+        
+            foreach ($tenantIds as $tenantId) {
+                $tenantJsonResource = $apiTenantCtrl->show($tenantId);
+                
+                // Acessa o recurso do tenant (que é o modelo Tenant ou um array)
+                $tenantData = $tenantJsonResource->resource;
+                
+                if ($tenantData) {
+                    $tenantName = null;
+                    // Verifica se a propriedade 'data' existe e é uma string
+                    if (isset($tenantData->data) && is_string($tenantData->data)) {
+                        $decodedData = json_decode($tenantData->data);
+                        if ($decodedData && isset($decodedData->name)) {
+                            $tenantName = $decodedData->name;
+                        }
+                    }
+    
+                    $tenantsData[] = (object) [
+                        'id'            => $tenantData->id, // ID do tenant
+                        'name'          => $tenantName,     // Nome do tenant obtido da string JSON
+                        'connection_id' => $userTenantPivotsData[$tenantData->id], // ID da conexão user_tenant
+                    ];
+                }
+            }
+            $user->tenants = $tenantsData;
+        }
+    
+        return view('admin::user.superAdmin.users.edit', compact('user'));
+    }
 
     /**
      * Atualiza um usuário existente

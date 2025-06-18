@@ -56,14 +56,71 @@
                 </div>
 
                 {{-- Tenant ID --}}
-                <div>
+                <div class="mb-4">
                     <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                        Tenant ID <span class="text-red-500">*</span>
+                        Tenants Associados
                     </label>
-                    <input type="text" name="tenant_id" required
-                           value="{{ old('tenant_id', $user->tenant_id) }}"
-                           class="w-full px-3 py-2 border rounded-md bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300">
+                
+                    @if (!empty($user->tenants))
+                        <div class="overflow-x-auto relative shadow-md sm:rounded-lg">
+                            <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                                <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                                    <tr>
+                                        <th scope="col" class="py-3 px-6">
+                                            ID da Conexão
+                                        </th>
+                                        <th scope="col" class="py-3 px-6">
+                                            ID do Tenant
+                                        </th>
+                                        <th scope="col" class="py-3 px-6">
+                                            Nome do Tenant
+                                        </th>
+                                        <th scope="col" class="py-3 px-6">
+                                            Ações
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($user->tenants as $tenant)
+                                        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                                            <td class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                                {{ $tenant->connection_id }} {{-- ID da conexão user_tenant --}}
+                                            </td>
+                                            <td class="py-4 px-6">
+                                                {{ $tenant->id }} {{-- ID do tenant --}}
+                                            </td>
+                                            <td class="py-4 px-6">
+                                                {{ $tenant->name }} {{-- Nome do tenant --}}
+                                            </td>
+                                            <td class="py-4 px-6">
+                                                {{-- Formulário para o botão de apagar --}}
+                                                <form action="#" method="POST" onsubmit="return confirm('Tem certeza que deseja desvincular este tenant do usuário?');">
+                                                    @csrf
+                                                    @method('DELETE') {{-- Método HTTP DELETE --}}
+                                                    <button type="submit" class="font-medium text-red-600 dark:text-red-500 hover:underline">
+                                                        Apagar
+                                                    </button>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    @else
+                        <p class="text-gray-500 dark:text-gray-400">Nenhum tenant associado a este usuário.</p>
+                    @endif
                 </div>
+                
+                {{-- Você pode manter o input original se for para adicionar um novo tenant --}}
+                {{-- <div>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                        Adicionar Tenant (ID) <span class="text-red-500">*</span>
+                    </label>
+                    <input type="text" name="new_tenant_id"
+                           class="w-full px-3 py-2 border rounded-md bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300">
+                    <button type="button" class="mt-2 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">Adicionar</button>
+                </div> --}}
 
                 {{-- Multiatendedor ID --}}
                 <div>
