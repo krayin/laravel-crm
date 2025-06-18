@@ -47,9 +47,15 @@ class UserController extends Controller
             'email'            => 'required|email|unique:users,email',
             'name'             => 'required',
             'multiatendedor_id'=> 'required',
-            'password'         => 'nullable',
+            'password'         => 'nullable|confirmed',
             'is_super'         => 'sometimes|boolean',
         ]);
+
+        if (!empty($data['password'])) {
+            $data['password'] = bcrypt($data['password']);
+        } else {
+            unset($data['password']);
+        }
 
         $data['status'] = $data['status'] ?? 1;
 
@@ -81,7 +87,7 @@ class UserController extends Controller
         $data = $this->validate(request(), [
             'email'            => 'sometimes|required|email|unique:users,email,' . $id,
             'name'             => 'sometimes|required',
-            'password'         => 'nullable',
+            'password'         => 'nullable|confirmed',
             'multiatendedor_id'=> 'sometimes|required',
             'is_super'         => 'sometimes|required|boolean',
         ]);
