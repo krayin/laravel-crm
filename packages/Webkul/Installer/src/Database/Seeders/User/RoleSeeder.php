@@ -15,7 +15,6 @@ class RoleSeeder extends Seeder
 
         $defaultLocale = $parameters['locale'] ?? config('app.locale');
         //! Creating 3 standard roles that does not have a specified tenant and will not be able to be deleted or edited
-        // TODO: Hide the admin role on frontend and disable the option to edit/delete roles 2 and 3
         // NOTE: Role 1 is expected to be the admin role that only developers will have access to, so it should be hidden
         // NOTE: Role 2 is manager role
         // NOTE: Role 3 is agent role, it does not have delete functions and access to settings
