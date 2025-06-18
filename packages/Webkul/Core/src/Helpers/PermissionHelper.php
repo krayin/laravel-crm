@@ -4,29 +4,70 @@ namespace Webkul\Core\Helpers;
 
 class PermissionHelper
 {
+    // NOTE: This helper functions as a filter that will tell which option/checkbox will be allowed to be shown on the user interface
     public static function getBaseRolePermissions($allPermissions)
     {
         $allowed = [
             // Dashboard
             "dashboard",
-        
+
             // Leads
             "leads",
             "leads.create",
             "leads.view",
             "leads.edit",
             "leads.delete",
-        
-            // Contacts
+
+            // Quotes (Com todas as sub-permissões)
+            // "quotes",
+            // "quotes.create",
+            // "quotes.edit",
+            // "quotes.print",
+            // "quotes.delete",
+
+            // Mail (Com todas as sub-permissões)
+            // "mail",
+            // "mail.inbox",
+            // "mail.draft",
+            // "mail.outbox",
+            // "mail.sent",
+            // "mail.trash",
+            // "mail.compose",
+            // "mail.view",
+            // "mail.edit",
+            // "mail.delete",
+
+            // Activities (Com todas as sub-permissões)
+            "activities",
+            "activities.create",
+            "activities.edit",
+            "activities.delete",
+
+            // Contacts Persons
             "contacts",
             "contacts.persons",
             "contacts.persons.create",
             "contacts.persons.edit",
             "contacts.persons.delete",
             "contacts.persons.view",
-        
-            // Settings → User
+
+            // Contacts Organizations
+            // "contacts.organizations",
+            // "contacts.organizations.create",
+            // "contacts.organizations.edit",
+            // "contacts.organizations.delete",
+
+            // Products (Com todas as sub-permissões)
+            // "products",
+            // "products.create",
+            // "products.edit",
+            // "products.delete",
+            // "products.view",
+
+            // Settings
             "settings",
+
+            // Settings → User
             "settings.user",
             "settings.user.groups",
             "settings.user.groups.create",
@@ -40,23 +81,23 @@ class PermissionHelper
             "settings.user.users.create",
             "settings.user.users.edit",
             "settings.user.users.delete",
-        
-            // Settings → Leads
+
+            // Settings → Lead
             "settings.lead",
             // "settings.lead.pipelines",
             // "settings.lead.pipelines.create",
             // "settings.lead.pipelines.edit",
             // "settings.lead.pipelines.delete",
-            // "settings.lead.sources",
-            // "settings.lead.sources.create",
-            // "settings.lead.sources.edit",
-            // "settings.lead.sources.delete",
+            "settings.lead.sources",
+            "settings.lead.sources.create",
+            "settings.lead.sources.edit",
+            "settings.lead.sources.delete",
             "settings.lead.types",
             "settings.lead.types.create",
             "settings.lead.types.edit",
             "settings.lead.types.delete",
-        
-            // Settings → Automation
+
+            // Settings → Automation (Tudo aqui estará comentado, conforme o seu exemplo original)
             // "settings.automation",
             // "settings.automation.attributes",
             // "settings.automation.attributes.create",
@@ -82,7 +123,22 @@ class PermissionHelper
             // "settings.automation.email_templates.create",
             // "settings.automation.email_templates.edit",
             // "settings.automation.email_templates.delete",
-        
+
+            // Settings -> Other Settings (Incluído e não comentado, pois não estava comentado no seu exemplo)
+            "settings.other_settings",
+            "settings.other_settings.tags",
+            "settings.other_settings.tags.create",
+            "settings.other_settings.tags.edit",
+            "settings.other_settings.tags.delete",
+
+            // Settings -> Data Transfer (Incluído e não comentado, pois não estava comentado no seu exemplo)
+            "settings.data_transfer",
+            "settings.data_transfer.imports",
+            "settings.data_transfer.imports.create",
+            "settings.data_transfer.imports.edit",
+            "settings.data_transfer.imports.delete",
+            "settings.data_transfer.imports.import",
+
             // Configuration
             "configuration",
         ];

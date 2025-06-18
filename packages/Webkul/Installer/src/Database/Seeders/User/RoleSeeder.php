@@ -31,25 +31,22 @@ class RoleSeeder extends Seeder
             'description'     => trans('installer::app.seeders.user.role.manager-role', [], $defaultLocale),
             'permission_type' => 'custom',
             'permissions' => [
-                // Dashboard
                 "dashboard",
-
-                // Leads
                 "leads",
                 "leads.create",
                 "leads.view",
                 "leads.edit",
                 "leads.delete",
-
-                // Contacts
+                "activities",
+                "activities.create",
+                "activities.edit",
+                "activities.delete",
                 "contacts",
                 "contacts.persons",
                 "contacts.persons.create",
                 "contacts.persons.edit",
                 "contacts.persons.delete",
                 "contacts.persons.view",
-
-                // Settings → User
                 "settings",
                 "settings.user",
                 "settings.user.groups",
@@ -64,46 +61,52 @@ class RoleSeeder extends Seeder
                 "settings.user.users.create",
                 "settings.user.users.edit",
                 "settings.user.users.delete",
-
-                // Settings → Leads (somente types)
                 "settings.lead",
+                "settings.lead.sources",
+                "settings.lead.sources.create",
+                "settings.lead.sources.edit",
+                "settings.lead.sources.delete",
                 "settings.lead.types",
                 "settings.lead.types.create",
                 "settings.lead.types.edit",
                 "settings.lead.types.delete",
-
-                // Configuration
+                "settings.other_settings",
+                "settings.other_settings.tags",
+                "settings.other_settings.tags.create",
+                "settings.other_settings.tags.edit",
+                "settings.other_settings.tags.delete",
+                "settings.data_transfer",
+                "settings.data_transfer.imports",
+                "settings.data_transfer.imports.create",
+                "settings.data_transfer.imports.edit",
+                "settings.data_transfer.imports.delete",
+                "settings.data_transfer.imports.import",
                 "configuration",
             ],
         ]);
 
         Role::create([
-            'id'              => 3, 
+            'id'              => 3,
             'name'            => trans('installer::app.seeders.user.role.agent', [], $defaultLocale), // ou 'Agente' diretamente
             'description'     => trans('installer::app.seeders.user.role.agent-role', [], $defaultLocale), // ou 'Função base para agentes'
             'permission_type' => 'custom',
             'permissions' => [
-                // Dashboard - Agentes geralmente precisam ver o dashboard
                 "dashboard",
-        
-                // Leads - Foco principal do agente
                 "leads",
                 "leads.create",
                 "leads.view",
                 "leads.edit",
-                // Agentes geralmente não devem ter permissão para deletar leads sem supervisão
                 // "leads.delete",
-        
-                // Contacts (Pessoas) - Agentes precisam gerenciar contatos de pessoas
+                "activities",
+                "activities.create",
+                "activities.edit",
+                // "activities.delete",
                 "contacts",
                 "contacts.persons",
                 "contacts.persons.create",
                 "contacts.persons.edit",
-                "contacts.persons.view",
-                // Agentes geralmente não devem ter permissão para deletar contatos sem supervisão
                 // "contacts.persons.delete",
-        
-                // Um agente não deve ter acesso às configurações gerais ou de usuário/grupos/papéis
+                "contacts.persons.view",
                 // "settings",
                 // "settings.user",
                 // "settings.user.groups",
@@ -118,15 +121,26 @@ class RoleSeeder extends Seeder
                 // "settings.user.users.create",
                 // "settings.user.users.edit",
                 // "settings.user.users.delete",
-        
-                // Agentes não devem ter acesso para modificar configurações de leads (como tipos)
                 // "settings.lead",
+                // "settings.lead.sources",
+                // "settings.lead.sources.create",
+                // "settings.lead.sources.edit",
+                // "settings.lead.sources.delete",
                 // "settings.lead.types",
                 // "settings.lead.types.create",
                 // "settings.lead.types.edit",
                 // "settings.lead.types.delete",
-        
-                // Agentes não devem ter acesso à configuração geral do sistema
+                // "settings.other_settings",
+                // "settings.other_settings.tags",
+                // "settings.other_settings.tags.create",
+                // "settings.other_settings.tags.edit",
+                // "settings.other_settings.tags.delete",
+                // "settings.data_transfer",
+                // "settings.data_transfer.imports",
+                // "settings.data_transfer.imports.create",
+                // "settings.data_transfer.imports.edit",
+                // "settings.data_transfer.imports.delete",
+                // "settings.data_transfer.imports.import",
                 // "configuration",
             ],
         ]);
