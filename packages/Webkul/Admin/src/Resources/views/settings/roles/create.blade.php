@@ -166,14 +166,12 @@
                         :label="trans('admin::app.settings.roles.create.permissions')"
                         :placeholder="trans('admin::app.settings.roles.create.permissions')"
                         v-model="permission_type"
+                        disabled
                     >
                         <option value="custom">
                             @lang('admin::app.settings.roles.create.custom')
                         </option>
 
-                        <option value="all">
-                            @lang('admin::app.settings.roles.create.all')
-                        </option>
                     </x-admin::form.control-group.control>
 
                     <x-admin::form.control-group.error control-name="permission_type" />
@@ -186,11 +184,16 @@
 
                     {!! view_render_event('admin.settings.roles.create.form.tree-view.before') !!}
 
+                    @php
+                        $filteredPermissions = \Webkul\Core\Helpers\PermissionHelper::getBaseRolePermissions(acl()->getItems());
+                    @endphp
+
                     <x-admin::tree.view
                         input-type="checkbox"
                         value-field="key"
                         id-field="key"
-                        :items="json_encode(acl()->getItems())"
+                        :items="json_encode($filteredPermissions)"
+                        :value="json_encode($role->permissions ?? [])"
                         :fallback-locale="config('app.fallback_locale')"
                     />
 
