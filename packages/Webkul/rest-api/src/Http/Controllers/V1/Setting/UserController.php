@@ -12,15 +12,12 @@ use Webkul\RestApi\Http\Request\MassDestroyRequest;
 use Webkul\RestApi\Http\Request\MassUpdateRequest;
 use Webkul\RestApi\Http\Resources\V1\Setting\UserResource;
 use Webkul\User\Repositories\UserRepository;
-use Webkul\User\Repositories\UserTenantRepository;
-use Illuminate\Support\Facades\Log; 
 use Illuminate\Support\Arr;
 
 
 class UserController extends Controller
 {
-    public function __construct(protected UserRepository $userRepository, 
-    protected UserTenantRepository $userTenantRepository) {}
+    public function __construct(protected UserRepository $userRepository) {}
 
     public function index(): JsonResource
     {
@@ -49,19 +46,11 @@ class UserController extends Controller
         $data = $this->validate(request(), [
             'email'            => 'required|email|unique:users,email',
             'name'             => 'required',
-            'tenant_id'        => 'required|exists:tenants,id',
+            'multiatendedor_id'=> 'required',
             'password'         => 'nullable',
             'is_super'         => 'sometimes|boolean',
-            'role_id'          => 'required',
-            "view_permission"  => 'required',
-            'status'           => 'required|in:0,1',
         ]);
-    
-        if (!empty($data['password'])) {
-            $data['password'] = bcrypt($data['password']);
-        } 
-    
-        // status ativo por padrão
+
         $data['status'] = $data['status'] ?? 1;
 
         $user = auth('sanctum')->user();
@@ -70,98 +59,52 @@ class UserController extends Controller
         }
         
         Event::dispatch('settings.user.create.before');
-    
-        // cria o usuário
+
         $user = $this->userRepository->create($data);
-    
-        // vincula ao tenant passado no body
-        $tenantData = [
-            'user_id'         => $user->id,
-            'tenant_id'       => $data['tenant_id'],
-            'role_id'         => $data['role_id'],
-            'status'          => $data['status'],
-            'view_permission' => $data['view_permission'],
-        ];
-        $this->userTenantRepository->create($tenantData);
-    
-        // sincroniza grupos, se houver
-        if (!empty($data['groups'])) {
-            $user->groups()->sync($data['groups']);
-        }
-    
-        // após criar usuário
+
         Event::dispatch('settings.user.create.after', $user);
         
         try {
             Mail::queue(new Create($user));
         } catch (\Exception $e) {
-            logger()->error('Falha ao enfileirar e-mail de criação', [
-                'user_id' => $user->id,
-                'exception' => $e->getMessage(),
-            ]);
             report($e);
         }
 
-    
         return new JsonResource([
-            'data'    => new UserResource($user),
+            'data' => new UserResource($user),
             'message' => trans('rest-api::app.settings.users.create-success'),
         ]);
     }
-    
-     
+
     public function update(int $id): JsonResource
-{
-    $data = $this->validate(request(), [
-        'name'             => 'sometimes|required|string',
-        'email'            => 'sometimes|required|email|unique:users,email,' . $id,
-        'password'         => 'nullable|confirmed|min:6',
-        'multiatendedor_id'=> 'sometimes|required',
-        
-        // campos extras
-        'status'           => 'sometimes|required|in:0,1',
-        'tenant_id'        => 'sometimes|required|integer|exists:tenants,id',
-        'role_id'          => 'sometimes|required|integer|exists:roles,id',
-        'view_permission'  => 'sometimes|required|in:global,group,individual',
-        'is_super'         => 'sometimes|required|boolean',
-        
-        'groups'           => 'sometimes|array',
-    ]);
+    {
+        $data = $this->validate(request(), [
+            'email'            => 'sometimes|required|email|unique:users,email,' . $id,
+            'name'             => 'sometimes|required',
+            'password'         => 'nullable',
+            'multiatendedor_id'=> 'sometimes|required',
+            'is_super'         => 'sometimes|required|boolean',
+        ]);
 
-    if (! empty($data['password'])) {
-        $data['password'] = bcrypt($data['password']);
-    } else {
-        unset($data['password']);
-    }
-
-    $userFields = Arr::only($data, [
-        'name', 'email', 'password', 'multiatendedor_id', 'is_super'
-    ]);
-    $user = $this->userRepository->update($userFields, $id);
-    $userTenant = $user->tenantPivots()
-    ->where('tenant_id', $data['tenant_id'])
-    ->first();
-
-        if ($userTenant) {
-            $userTenant->update([
-                'role_id'         => $data['role_id'],
-                'status'          => $data['status'] ?? $userTenant->status,
-                'view_permission' => $data['view_permission'] ?? $userTenant->view_permission,
-            ]);
+        if (!empty($data['password'])) {
+            $data['password'] = bcrypt($data['password']);
+        } else {
+            unset($data['password']);
         }
 
-    if (isset($data['groups'])) {
-        $user->groups()->sync($data['groups']);
+        $userFields = Arr::only($data, [
+            'name', 'email', 'password', 'multiatendedor_id', 'is_super'
+        ]);
+        $user = $this->userRepository->update($userFields, $id);
+
+
+        Event::dispatch('settings.user.update.after', $user);
+
+        return new JsonResource([
+            'data' => new UserResource($user),
+            'message' => trans('rest-api::app.settings.users.updated-success'),
+        ]);
     }
-
-    Event::dispatch('settings.user.update.after', $user);
-
-    return new JsonResource([
-        'data'    => new UserResource($user),
-        'message' => trans('rest-api::app.settings.users.updated-success'),
-    ]);
-}
-
 
     public function destroy(int $id): JsonResource
     {
