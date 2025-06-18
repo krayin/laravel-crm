@@ -172,7 +172,6 @@
                         v-model="permission_type"
                         :label="trans('admin::app.settings.roles.edit.permissions')"
                         :placeholder="trans('admin::app.settings.roles.edit.permissions')"
-                        disabled
                     >
                         <option value="custom">
                             @lang('admin::app.settings.roles.edit.custom')

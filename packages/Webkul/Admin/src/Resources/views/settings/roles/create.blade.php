@@ -166,7 +166,6 @@
                         :label="trans('admin::app.settings.roles.create.permissions')"
                         :placeholder="trans('admin::app.settings.roles.create.permissions')"
                         v-model="permission_type"
-                        disabled
                     >
                         <option value="custom">
                             @lang('admin::app.settings.roles.create.custom')
