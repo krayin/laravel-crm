@@ -9,6 +9,9 @@
 
     $requestPath =  str_replace("/",".",$requestPath);
 
+    if (!is_array($user->role->permissions)){
+        $user->role->permissions=[];
+    }
     if (in_array($requestPath.'.export',$user->role->permissions)){
         $can_export = true;
     }

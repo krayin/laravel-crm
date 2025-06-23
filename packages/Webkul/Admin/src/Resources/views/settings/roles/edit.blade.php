@@ -169,6 +169,10 @@
                     'entity_type' => 'persons'
                     ]);
 
+                    if(!is_array($role->visible_person_fields)){
+                        $role->visible_person_fields=[];
+                    }
+
 
                     @endphp
 
