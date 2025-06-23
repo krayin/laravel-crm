@@ -26,7 +26,7 @@
                 as="div"
                 ref="modalForm"
             >
-                <form 
+                <form
                     @submit="handleSubmit($event, create)"
                     enctype="multipart/form-data"
                     ref="userForm"

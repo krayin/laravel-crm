@@ -17,8 +17,8 @@
                 <div class="flex flex-col gap-2">
                     {!! view_render_event('admin.persons.edit.breadcrumbs.before') !!}
 
-                    <x-admin::breadcrumbs 
-                        name="contacts.persons.edit" 
+                    <x-admin::breadcrumbs
+                        name="contacts.persons.edit"
                         :entity="$person"
                     />
 
@@ -49,10 +49,50 @@
             <div class="box-shadow rounded-lg border border-gray-200 bg-white p-4 dark:border-gray-800 dark:bg-gray-900">
                 {!! view_render_event('admin.contacts.persons.edit.form_controls.before') !!}
 
+                @php
+    $attributes = app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
+    'entity_type' => 'persons',
+]);
+
+ $should_remove_fields=[];
+
+foreach ($attributes as $attribute){
+    if($attribute->code==='person_type'){
+
+           $attributeValues = app('Webkul\Attribute\Repositories\AttributeValueRepository')->findWhere([
+                    'entity_type' => 'persons',
+                    'attribute_id'=>$attribute->id
+                ])->first();
+
+
+            switch($attributeValues->integer_value){
+                case 1:
+
+                break;
+                 case 2:
+
+                $should_remove_fields=['company_name_en','company_name_ar','license_no',
+                'company_issue_date','company_expiry_date','partner_2','partner_3','local_agent'
+                ];
+
+                break;
+                 case 3:
+ $should_remove_fields=['company_name_en','company_name_ar','license_no',
+                'company_issue_date','company_expiry_date','partner_2','partner_3','local_agent'
+                ];
+
+                break;
+
+            }
+
+    }
+}
+$attributes = $attributes->reject(function ($attribute) use ($should_remove_fields) {
+    return in_array($attribute->code, $should_remove_fields);
+});
+@endphp
                 <x-admin::attributes
-                    :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
-                        'entity_type' => 'persons',
-                    ])"
+                    :custom-attributes="$attributes"
                     :custom-validations="[
                         'name' => [
                             'min:2',
@@ -64,7 +104,7 @@
                     ]"
                     :entity="$person"
                 />
-                
+
                 {!! view_render_event('admin.contacts.persons.edit.form_controls.after') !!}
             </div>
         </div>

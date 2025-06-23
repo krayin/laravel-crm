@@ -364,6 +364,10 @@
     "file": "assets/mobile-light-logo-CjoobCkl.svg",
     "src": "src/Resources/assets/images/mobile-light-logo.svg"
   },
+    "src/Resources/assets/images/landing-logo.svg": {
+        "file": "assets/Shiny_Horizon_.svg",
+        "src": "src/Resources/assets/images/landing-logo.svg"
+    },
   "src/Resources/assets/js/app.js": {
     "file": "assets/app-B1rBjssc.js",
     "name": "app",

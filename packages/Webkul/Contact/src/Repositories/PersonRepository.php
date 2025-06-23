@@ -22,6 +22,9 @@ class PersonRepository extends Repository
         'organization.name',
         'user_id',
         'user.name',
+        'partner_2',     // add this
+        'partner_3',     // add this
+        'local_agent',   // add this
     ];
 
     /**

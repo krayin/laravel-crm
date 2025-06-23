@@ -31,6 +31,8 @@ class File extends Model implements FileContract
         'name',
         'path',
         'activity_id',
+        'issue_date',
+        'expiry_date',
     ];
 
     /**

@@ -202,22 +202,48 @@
                                             class="flex flex-wrap gap-2"
                                             v-if="activity.files.length"
                                         >
-                                            <a
-                                                :href="
+                                            <div
+
+                                                v-for="(file, index) in activity.files"
+                                            >
+                                                <a :href="
                                                     activity.type == 'email'
                                                     ? `{{ route('admin.mail.attachment_download', 'replaceID') }}`.replace('replaceID', file.id)
                                                     : `{{ route('admin.activities.file_download', 'replaceID') }}`.replace('replaceID', file.id)
                                                 "
-                                                class="flex cursor-pointer items-center gap-1 rounded-md p-1.5"
-                                                target="_blank"
-                                                v-for="(file, index) in activity.files"
-                                            >
+                                                   class="flex cursor-pointer items-center gap-1 rounded-md p-1.5"
+                                                >
+
                                                 <span class="icon-attached-file text-xl"></span>
 
                                                 <span class="font-medium text-brandColor">
                                                     @{{ file.name }}
                                                 </span>
-                                            </a>
+                                                </a>
+
+                                                <div class="p-1.5">
+                                                    <span class="icon-calendar text-xl"></span>
+                                                    <span class="font-medium">
+                                                   Issue Date : @{{ file.issue_date }}
+                                                </span>
+                                                </div>
+                                                <div class="p-1.5">
+                                                <span class="icon-calendar text-xl"></span>
+                                                <span class="font-medium"
+                                                      :class="{
+                                                        'text-green-600': new Date(file.expiry_date) > new Date(),
+                                                        'text-red-600': new Date(file.expiry_date) <= new Date()
+                                                    }">
+
+                                                   Expire Date : @{{ file.expiry_date }}
+                                                    (
+                                                        @{{ getRemainingDays(file.expiry_date) }}
+                                                    )
+
+                                                </span>
+                                                </div>
+                                            </div>
+
                                         </div>
 
                                         {!! view_render_event('admin.components.activities.content.activity.item.attachments.after') !!}
@@ -633,6 +659,21 @@
                                 });
                         }
                     });
+                },
+
+                getRemainingDays(expiryDate) {
+                    const now = new Date();
+                    const expiry = new Date(expiryDate);
+                    const diffTime = expiry - now;
+                    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+                    if (diffDays > 0) {
+                        return `${diffDays} day(s) left`;
+                    } else if (diffDays === 0) {
+                        return 'Expires today';
+                    } else {
+                        return `${Math.abs(diffDays)} day(s) ago`;
+                    }
                 },
             },
         });

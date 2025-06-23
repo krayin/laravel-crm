@@ -1,170 +1,193 @@
-<v-datagrid-export {{ $attributes }}>
-    <div class="transparent-button hover:bg-gray-200 dark:text-white dark:hover:bg-gray-800">
-        <span class="icon-export text-xl text-gray-600"></span>
+@php
+    use Illuminate\Support\Facades\Auth;
+    $user = Auth::user();
+    $permissions = $user->role->permissions;
+    $can_export = false;
+    $requestPath = request()->path();
 
-        @lang('admin::app.export.export')
-    </div>
-</v-datagrid-export>
+    $requestPath =  str_replace("admin/","",$requestPath);
 
-@pushOnce('scripts')
-    <script
-        type="text/x-template"
-        id="v-datagrid-export-template"
-    >
-        <div>
-            <x-admin::modal ref="exportModal">
-                <x-slot:toggle>
-                    <button class="transparent-button hover:bg-gray-200 dark:text-white dark:hover:bg-gray-800">
-                        <span class="icon-export text-xl text-gray-600"></span>
+    $requestPath =  str_replace("/",".",$requestPath);
 
-                        @lang('admin::app.export.export')
-                    </button>
-                </x-slot>
+    if (!is_array($user->role->permissions)){
+        $user->role->permissions=[];
+    }
+    if (in_array($requestPath.'.export',$user->role->permissions)){
+        $can_export = true;
+    }
 
-                <x-slot:header>
-                    <p class="text-lg font-bold text-gray-800 dark:text-white">
-                        @lang('admin::app.export.download')
-                    </p>
-                </x-slot>
+@endphp
+@if($can_export)
+    <v-datagrid-export {{ $attributes }} >
+        <div class="transparent-button hover:bg-gray-200 dark:text-white dark:hover:bg-gray-800">
+            <span class="icon-export text-xl text-gray-600"></span>
 
-                <x-slot:content>
-                    <x-admin::form action="">
-                        <x-admin::form.control-group class="!mb-0">
-                            <x-admin::form.control-group.control
-                                type="select"
-                                name="format"
-                                v-model="format"
-                            >
-                                <option value="csv">
-                                    @lang('admin::app.export.csv')
-                                </option>
-
-                                <option value="xls">
-                                    @lang('admin::app.export.xls')
-                                </option>
-
-                                <option value="xlsx">
-                                    @lang('admin::app.export.xlsx')
-                                </option>
-                            </x-admin::form.control-group.control>
-                        </x-admin::form.control-group>
-                    </x-admin::form>
-                </x-slot>
-
-                <x-slot:footer>
-                    <button
-                        type="button"
-                        class="primary-button"
-                        @click="download"
-                    >
-                        @lang('admin::app.export.export')
-                    </button>
-                </x-slot>
-            </x-admin::modal>
+            @lang('admin::app.export.export')
         </div>
-    </script>
+    </v-datagrid-export>
+    @pushOnce('scripts')
+        <script
+            type="text/x-template"
+            id="v-datagrid-export-template"
+        >
+            <div>
+                <x-admin::modal ref="exportModal">
+                    <x-slot:toggle>
+                        <button class="transparent-button hover:bg-gray-200 dark:text-white dark:hover:bg-gray-800">
+                            <span class="icon-export text-xl text-gray-600"></span>
 
-    <script type="module">
-        app.component('v-datagrid-export', {
-            template: '#v-datagrid-export-template',
+                            @lang('admin::app.export.export')
+                        </button>
+                        </x-slot>
 
-            props: ['src'],
+                        <x-slot:header>
+                            <p class="text-lg font-bold text-gray-800 dark:text-white">
+                                @lang('admin::app.export.download')
+                            </p>
+                            </x-slot>
 
-            data() {
-                return {
-                    format: 'xls',
+                            <x-slot:content>
+                                <x-admin::form action="">
+                                    <x-admin::form.control-group class="!mb-0">
+                                        <x-admin::form.control-group.control
+                                            type="select"
+                                            name="format"
+                                            v-model="format"
+                                        >
+                                            <option value="csv">
+                                                @lang('admin::app.export.csv')
+                                            </option>
 
-                    available: null,
+                                            <option value="xls">
+                                                @lang('admin::app.export.xls')
+                                            </option>
 
-                    applied: null,
-                };
-            },
+                                            <option value="xlsx">
+                                                @lang('admin::app.export.xlsx')
+                                            </option>
+                                        </x-admin::form.control-group.control>
+                                    </x-admin::form.control-group>
+                                </x-admin::form>
+                                </x-slot>
 
-            mounted() {
-                this.registerEvents();
-            },
+                                <x-slot:footer>
+                                    <button
+                                        type="button"
+                                        class="primary-button"
+                                        @click="download"
+                                    >
+                                        @lang('admin::app.export.export')
+                                    </button>
+                                    </x-slot>
+                </x-admin::modal>
+            </div>
+        </script>
 
-            methods: {
-                /**
-                 * Registers events to update properties and trigger the download process.
-                 *
-                 * @returns {void}
-                 */
-                registerEvents() {
-                    this.$emitter.on('change-datagrid', this.updateProperties);
+        <script type="module">
+            app.component('v-datagrid-export', {
+                template: '#v-datagrid-export-template',
+
+                props: ['src'],
+
+                data() {
+                    return {
+                        format: 'xls',
+
+                        available: null,
+
+                        applied: null,
+                    };
                 },
 
-                /**
-                 * Updates the available and applied properties with new values.
-                 *
-                 * @param {object} data - Object containing available and applied properties.
-                 * @returns {void}
-                 */
-                updateProperties({ available, applied }) {
-                    this.available = available;
-
-                    this.applied = applied;
+                mounted() {
+                    this.registerEvents();
                 },
 
-                /**
-                 * Initiates the download process for exporting data.
-                 *
-                 * @returns {void}
-                 */
-                download() {
-                    if (! this.available?.records?.length) {
-                        this.$emitter.emit('add-flash', { type: 'warning', message: '@lang('admin::app.export.no-records')' });
+                methods: {
+                    /**
+                     * Registers events to update properties and trigger the download process.
+                     *
+                     * @returns {void}
+                     */
+                    registerEvents() {
+                        this.$emitter.on('change-datagrid', this.updateProperties);
+                    },
 
-                        this.$refs.exportModal.toggle();
-                    } else {
-                        let params = {
-                            export: 1,
+                    /**
+                     * Updates the available and applied properties with new values.
+                     *
+                     * @param {object} data - Object containing available and applied properties.
+                     * @returns {void}
+                     */
+                    updateProperties({available, applied}) {
+                        this.available = available;
 
-                            format: this.format,
+                        this.applied = applied;
+                    },
 
-                            sort: {},
-
-                            filters: {},
-                        };
-
-                        if (
-                            this.applied.sort.column &&
-                            this.applied.sort.order
-                        ) {
-                            params.sort = this.applied.sort;
-                        }
-
-                        this.applied.filters.columns.forEach(column => {
-                            params.filters[column.index] = column.value;
-                        });
-
-                        this.$axios
-                            .get(this.src, {
-                                params,
-                                responseType: 'blob',
-                            })
-                            .then((response) => {
-                                const url = window.URL.createObjectURL(new Blob([response.data]));
-
-                                /**
-                                 * Link generation.
-                                 */
-                                const link = document.createElement('a');
-                                link.href = url;
-                                link.setAttribute('download', `${(Math.random() + 1).toString(36).substring(7)}.${this.format}`);
-
-                                /**
-                                 * Adding a link to a document, clicking on the link, and then removing the link.
-                                 */
-                                document.body.appendChild(link);
-                                link.click();
-                                document.body.removeChild(link);
-
-                                this.$refs.exportModal.toggle();
+                    /**
+                     * Initiates the download process for exporting data.
+                     *
+                     * @returns {void}
+                     */
+                    download() {
+                        if (!this.available?.records?.length) {
+                            this.$emitter.emit('add-flash', {
+                                type: 'warning',
+                                message: '@lang('admin::app.export.no-records')'
                             });
-                    }
+
+                            this.$refs.exportModal.toggle();
+                        } else {
+                            let params = {
+                                export: 1,
+
+                                format: this.format,
+
+                                sort: {},
+
+                                filters: {},
+                            };
+
+                            if (
+                                this.applied.sort.column &&
+                                this.applied.sort.order
+                            ) {
+                                params.sort = this.applied.sort;
+                            }
+
+                            this.applied.filters.columns.forEach(column => {
+                                params.filters[column.index] = column.value;
+                            });
+
+                            this.$axios
+                                .get(this.src, {
+                                    params,
+                                    responseType: 'blob',
+                                })
+                                .then((response) => {
+                                    const url = window.URL.createObjectURL(new Blob([response.data]));
+
+                                    /**
+                                     * Link generation.
+                                     */
+                                    const link = document.createElement('a');
+                                    link.href = url;
+                                    link.setAttribute('download', `${(Math.random() + 1).toString(36).substring(7)}.${this.format}`);
+
+                                    /**
+                                     * Adding a link to a document, clicking on the link, and then removing the link.
+                                     */
+                                    document.body.appendChild(link);
+                                    link.click();
+                                    document.body.removeChild(link);
+
+                                    this.$refs.exportModal.toggle();
+                                });
+                        }
+                    },
                 },
-            },
-        });
-    </script>
-@endPushOnce
+            });
+        </script>
+    @endPushOnce
+@endif

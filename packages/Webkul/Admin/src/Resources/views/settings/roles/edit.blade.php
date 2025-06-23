@@ -16,7 +16,7 @@
                     {!! view_render_event('admin.settings.roles.edit.breadcrumbs.before', ['role' => $role]) !!}
 
                     <!-- Breadcrumbs -->
-                    <x-admin::breadcrumbs 
+                    <x-admin::breadcrumbs
                         name="settings.roles.edit"
                         :entity="$role"
                     />
@@ -162,6 +162,48 @@
                 <!-- Permission Type -->
                 <x-admin::form.control-group>
                     <x-admin::form.control-group.label class="required">
+                        Person Fields
+                    </x-admin::form.control-group.label>
+                    @php
+                    $fields = app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
+                    'entity_type' => 'persons'
+                    ]);
+
+                    if(!is_array($role->visible_person_fields)){
+                        $role->visible_person_fields=[];
+                    }
+
+
+                    @endphp
+
+                    <div class="grid grid-cols-2 md:grid-cols-2 gap-6">
+                    @foreach($fields as $field)
+
+                    <input
+                        type="hidden"
+                        name="field_{{$field->code}}"
+                        value="1"
+                    >
+
+                    <label class="relative inline-flex cursor-pointer items-center">
+                        <input
+                            type="checkbox"
+                            name="field_{{$field->code}}"
+                            value="0"
+                            id="{{$field->code}}"
+                            class="peer sr-only"
+                            {{ in_array($field->code,$role->visible_person_fields) ?  '' : 'checked' }}
+
+                        >
+                        <div class="peer h-5 w-9 cursor-pointer rounded-full bg-gray-200 after:absolute after:top-0.5 after:h-4 after:w-4 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-brandColor peer-checked:after:border-white peer-focus:outline-none peer-focus:ring-blue-300 dark:bg-gray-800 dark:after:border-white dark:after:bg-white dark:peer-checked:bg-gray-950 after:ltr:left-0.5 peer-checked:after:ltr:translate-x-full after:rtl:right-0.5 peer-checked:after:rtl:-translate-x-full"></div>
+                        {{$field->name}}
+                    </label>
+
+                    @endforeach
+                    </div>
+                    <br/>
+
+                    <x-admin::form.control-group.label class="required">
                         @lang('admin::app.settings.roles.edit.permissions')
                     </x-admin::form.control-group.label>
 
@@ -186,7 +228,7 @@
                 </x-admin::form.control-group>
 
                 {!! view_render_event('admin.settings.roles.edit.form.permission_type.after', ['role' => $role]) !!}
-                
+
                 <!-- Tree structure -->
                 <div v-if="permission_type == 'custom'">
                     <x-admin::form.control-group.error control-name="permissions" />

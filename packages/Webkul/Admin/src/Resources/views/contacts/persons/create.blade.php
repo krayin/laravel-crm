@@ -5,7 +5,7 @@
     </x-slot>
 
     {!! view_render_event('admin.persons.create.form.before') !!}
-    
+
     <!--Create Page Form -->
     <x-admin::form
         :action="route('admin.contacts.persons.store')"
@@ -26,7 +26,6 @@
                         @lang('admin::app.contacts.persons.create.title')
                     </div>
                 </div>
-
                 <div class="flex items-center gap-x-2.5">
                     <div class="flex items-center gap-x-2.5">
                         {!! view_render_event('admin.persons.create.create_button.before') !!}
@@ -43,7 +42,7 @@
                     </div>
                 </div>
             </div>
-            
+
             <!-- Form fields -->
             <div class="box-shadow rounded-lg border border-gray-200 bg-white p-4 dark:border-gray-800 dark:bg-gray-900">
                 {!! view_render_event('admin.persons.create.form_controls.before') !!}
@@ -62,7 +61,7 @@
                         ],
                     ]"
                 />
-                
+
                 {!! view_render_event('admin.persons.create.form_controls.after') !!}
             </div>
         </div>

@@ -123,6 +123,8 @@ return [
                     'description'   => 'Description',
                     'file'          => 'File',
                     'save-btn'      => 'Save File',
+                    'issue-date'      => 'Issue Date',
+                    'expiry-date'      => 'Expiry Date',
                 ],
 
                 'note' => [
