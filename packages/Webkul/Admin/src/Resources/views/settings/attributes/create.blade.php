@@ -276,11 +276,57 @@
                             </div>
                         </div>
                     </div>
+
+                   @if (request('entity_type'))
+                        <div class="box-shadow rounded-lg border border-gray-200 bg-white p-4 dark:border-gray-800 dark:bg-gray-900 w-full overflow-auto">
+                            <p class="mb-4 text-base font-semibold text-gray-800 dark:text-white">
+                                Informações Adicionais
+                            </p>
+
+                            <div class="w-full overflow-x-auto">
+                                <table class="w-full text-sm text-left text-gray-700 dark:text-gray-300">
+                                    <thead class="bg-gray-100 dark:bg-gray-700 text-xs uppercase font-medium">
+                                        <tr>
+                                            <th class="px-4 py-2 border-b border-gray-300 dark:border-gray-600">@lang('admin::app.settings.attributes.create.code')</th>
+                                            <th class="px-4 py-2 border-b border-gray-300 dark:border-gray-600">@lang('admin::app.settings.attributes.create.name')</th>
+                                            <th class="px-4 py-2 border-b border-gray-300 dark:border-gray-600">@lang('admin::app.settings.attributes.create.type')</th>
+                                            <th class="px-4 py-2 border-b border-gray-300 dark:border-gray-600">@lang('admin::app.settings.attributes.create.validations')</th>
+                                            <th class="px-4 py-2 border-b border-gray-300 dark:border-gray-600">@lang('admin::app.settings.attributes.create.is-unique')</th>
+                                            <th class="px-4 py-2 border-b border-gray-300 dark:border-gray-600">@lang('admin::app.settings.attributes.create.is-required')</th>
+                                            
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($leadAttributes as $attribute)
+                                            <tr class="hover:bg-gray-50 dark:hover:bg-gray-800">
+                                                <td class="px-4 py-2 border-b border-gray-200 dark:border-gray-700">{{ $attribute['code'] }}</td>
+                                                <td class="px-4 py-2 border-b border-gray-200 dark:border-gray-700">{{ $attribute['name'] }}</td>
+                                                <td class="px-4 py-2 border-b border-gray-200 dark:border-gray-700">{{ $attribute['type'] }}</td>
+                                                <td class="px-4 py-2 border-b border-gray-200 dark:border-gray-700">
+                                                    {{ $attribute['validation'] ? $attribute['validation'] : 'null' }}
+                                                </td>
+                                                <td class="px-4 py-2 border-b border-gray-200 dark:border-gray-700">
+                                                    {{ $attribute['is_unique'] ? $attribute['is_unique'] : 'null' }}
+                                                </td>
+                                                <td class="px-4 py-2 border-b border-gray-200 dark:border-gray-700">
+                                                    {{ $attribute['is_required'] = 0 ? 'Sim' : 'Não' }}
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    @endif
+
                 </div>
 
                 {!! view_render_event('admin.settings.attributes.create.card.label.after') !!}
 
                 {!! view_render_event('admin.settings.attributes.create.card.general.before') !!}
+                
+  
+
 
                 <!-- Right sub-component -->
                 <div class="flex w-[360px] max-w-full flex-col gap-2">
@@ -343,14 +389,27 @@
                                     @change="swatchAttribute=true"
                                 >
                                     <!-- Here! All Needed types are defined -->
-                                    @foreach(['text', 'textarea', 'price', 'boolean', 'select', 'multiselect', 'checkbox', 'email', 'address', 'phone', 'lookup', 'datetime', 'date', 'image', 'file'] as $type)
-                                        <option
-                                            value="{{ $type }}"
-                                            {{ $type === 'text' ? "selected" : '' }}
-                                        >
-                                            @lang('admin::app.settings.attributes.create.'. $type)
-                                        </option>
-                                    @endforeach
+                                    @if (request('entity_type') == 'leads')
+                                        @foreach(['text', 'price', 'multiselect', 'checkbox', 'email', 'phone'] as $type)
+                                            <option
+                                                value="{{ $type }}"
+                                                {{ $type === 'text' ? "selected" : '' }}
+                                            >
+                                                @lang('admin::app.settings.attributes.create.'. $type)
+                                            </option>
+                                        @endforeach
+
+                                    @else
+                                        @foreach(['text', 'textarea', 'price', 'boolean', 'select', 'multiselect', 'checkbox', 'email', 'address', 'phone', 'lookup', 'datetime', 'date', 'image', 'file'] as $type)
+                                            <option
+                                                value="{{ $type }}"
+                                                {{ $type === 'text' ? "selected" : '' }}
+                                            >
+                                                @lang('admin::app.settings.attributes.create.'. $type)
+                                            </option>
+                                        @endforeach
+                                    @endif
+
                                 </x-admin::form.control-group.control>
 
                                 <x-admin::form.control-group.error control-name="type" />

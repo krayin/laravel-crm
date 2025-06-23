@@ -48,8 +48,8 @@ class TenantController extends Controller
     {
         try {
             $this->validate(request(), [
-                'multiatendedor_id' => 'required',
-                'data'              => 'required',
+                'data'                     => 'required',
+                'lead_custom_fields_count' => 'required',
             ]);
 
             $data = request()->all();

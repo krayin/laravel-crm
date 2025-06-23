@@ -15,12 +15,13 @@ class TenantResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'id'                   => $this->id,
-            'data'                 => json_decode($this->data, true),
-            'multiatendedor_id'    => $this->multiatendedor_id,
-            'domains'              => DomainResource::collection($this->whenLoaded('domains')),
-            'created_at'           => $this->created_at,
-            'updated_at'           => $this->updated_at,
+            'id'                       => $this->id,
+            'data'                     => json_decode($this->data, true),
+            'multiatendedor_id'        => $this->multiatendedor_id,
+            'domains'                  => DomainResource::collection($this->whenLoaded('domains')),
+            'created_at'               => $this->created_at,
+            'updated_at'               => $this->updated_at,
+            'lead_custom_fields_count' => $this->lead_custom_fields_count,
         ];
     }
 }

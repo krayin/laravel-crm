@@ -43,8 +43,15 @@ class AttributeController extends Controller
      */
     public function create(): View
     {
-        return view('admin::settings.attributes.create');
+        $leadAttributes = $this->attributeRepository->findWhere([
+            ['entity_type', '=', 'leads'],
+            ['tenant_id', '=', tenant()->id],
+        ]);
+        logger('leads ' . $leadAttributes);
+
+        return view('admin::settings.attributes.create', compact('leadAttributes'));
     }
+
 
     /**
      * Store a newly created resource in storage.
@@ -61,8 +68,6 @@ class AttributeController extends Controller
 
         request()->request->add(['quick_add' => 1]);
 
-        logger(request()->all());
-        logger('Teste ok');
         $attribute = $this->attributeRepository->create(request()->all());
 
         Event::dispatch('settings.attribute.create.after', $attribute);
