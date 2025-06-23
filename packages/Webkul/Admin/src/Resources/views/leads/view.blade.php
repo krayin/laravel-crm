@@ -113,14 +113,10 @@
                 :extra-types="[
                     ['name' => 'description', 'label' => trans('admin::app.leads.view.tabs.description')],
                    
-                    ['name' => 'quotes', 'label' => trans('admin::app.leads.view.tabs.quotes')],
                 ]"
             >
 
-                <!-- Quotes -->
-                <x-slot:quotes>
-                    @include ('admin::leads.view.quotes')
-                </x-slot>
+
 
                 <!-- Description -->
                 <x-slot:description>
