@@ -73,4 +73,8 @@ Route::middleware(['web','super_admin'])
         // Processa a exclusão de usuário
         Route::delete('/{id}', [SuperAdminController::class, 'userDestroy'])
             ->name('destroy');
+
+        // Associa um usuário a um tenant
+        Route::post('/{id}/tenant/{tenant_id}', [SuperAdminController::class, 'userTenantStore'])
+            ->name('tenant.store');
     });

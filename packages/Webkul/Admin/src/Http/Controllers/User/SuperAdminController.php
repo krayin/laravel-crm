@@ -175,11 +175,9 @@ class SuperAdminController extends Controller
         ApiUserTenantCtrl $apiUserTenantCtrl,
         ApiTenantCtrl $apiTenantCtrl
     ) {
-        // 1) Obter dados do usuário via API
         $jsonResource = $apiController->show($id);
         $userModel    = $jsonResource->resource;
     
-        // 2) Montar objeto $user com tenants já associados
         $firstPivot = $userModel->tenantPivots->first();
     
         $user = (object) [
@@ -202,9 +200,8 @@ class SuperAdminController extends Controller
     
             foreach (array_keys($pivotMap) as $tenantId) {
                 $tRes = $apiTenantCtrl->show($tenantId)->resource;
-                $name = data_get($tRes, 'data.name') 
-                      ?? data_get($tRes, 'name')
-                      ?? null;
+                $data_decoded = json_decode($tRes->data, true);
+                $name    = $data_decoded['name'] ?? null;
     
                 $user->tenants[] = (object) [
                     'id'            => $tRes->id,
@@ -214,22 +211,17 @@ class SuperAdminController extends Controller
             }
         }
     
-        // 3) Buscar *todos* os tenants via API
         $allTenantsRes = $apiTenantCtrl->index();
         $respAll       = $allTenantsRes->toResponse($request);
         $payloadAll    = json_decode($respAll->getContent(), true);
         $allTenants    = $payloadAll['data'] ?? [];
     
-        // 4) Filtrar apenas os que *ainda não* estão associados
         $associatedIds     = collect($user->tenants)->pluck('id')->all();
         $availableTenants  = array_filter(
             $allTenants,
             fn(array $t) => ! in_array($t['id'], $associatedIds, true)
         );
-
-        logger($availableTenants);
     
-        // 5) Enviar tanto o usuário quanto os tenants disponíveis para a view
         return view(
             'admin::user.superAdmin.users.edit',
             compact('user', 'availableTenants')
