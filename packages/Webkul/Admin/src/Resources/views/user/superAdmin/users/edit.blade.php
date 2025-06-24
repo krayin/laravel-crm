@@ -13,12 +13,13 @@
         </div>
 
         <div class="px-6 py-4">
-            {{-- Onde exibiremos erros de validação vindos do JSON --}}
+            {{-- Exibição de erros de validação --}}
             <div id="validationErrors" class="hidden bg-red-50 dark:bg-red-900/10 text-red-700 dark:text-red-400 px-4 py-3 rounded-md mb-6">
                 <div class="font-medium">Por favor, corrija os seguintes erros:</div>
                 <ul id="errorsList" class="mt-1 list-disc list-inside text-sm"></ul>
             </div>
 
+            {{-- Formulário principal de edição --}}
             <form id="editUserForm" class="space-y-6">
                 @csrf
                 @method('PUT')
@@ -50,77 +51,10 @@
                     </label>
                     <select name="status" required
                             class="w-full px-3 py-2 border rounded-md bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300">
-                        <option value="1" {{ $user->status ? 'selected' : '' }}>1 (Ativo)</option>
-                        <option value="0" {{ !$user->status ? 'selected' : '' }}>0 (Inativo)</option>
+                        <option value="1" {{ $user->status ? 'selected' : '' }}>Ativo</option>
+                        <option value="0" {{ !$user->status ? 'selected' : '' }}>Inativo</option>
                     </select>
                 </div>
-
-                {{-- Tenant ID --}}
-                <div class="mb-4">
-                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                        Tenants Associados
-                    </label>
-                
-                    @if (!empty($user->tenants))
-                        <div class="overflow-x-auto relative shadow-md sm:rounded-lg">
-                            <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-                                <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                                    <tr>
-                                        <th scope="col" class="py-3 px-6">
-                                            ID da Conexão
-                                        </th>
-                                        <th scope="col" class="py-3 px-6">
-                                            ID do Tenant
-                                        </th>
-                                        <th scope="col" class="py-3 px-6">
-                                            Nome do Tenant
-                                        </th>
-                                        <th scope="col" class="py-3 px-6">
-                                            Ações
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($user->tenants as $tenant)
-                                        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                                            <td class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                                {{ $tenant->connection_id }} {{-- ID da conexão user_tenant --}}
-                                            </td>
-                                            <td class="py-4 px-6">
-                                                {{ $tenant->id }} {{-- ID do tenant --}}
-                                            </td>
-                                            <td class="py-4 px-6">
-                                                {{ $tenant->name }} {{-- Nome do tenant --}}
-                                            </td>
-                                            <td class="py-4 px-6">
-                                                {{-- Formulário para o botão de apagar --}}
-                                                <form action="#" method="POST" onsubmit="return confirm('Tem certeza que deseja desvincular este tenant do usuário?');">
-                                                    @csrf
-                                                    @method('DELETE') {{-- Método HTTP DELETE --}}
-                                                    <button type="submit" class="font-medium text-red-600 dark:text-red-500 hover:underline">
-                                                        Apagar
-                                                    </button>
-                                                </form>
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                        </div>
-                    @else
-                        <p class="text-gray-500 dark:text-gray-400">Nenhum tenant associado a este usuário.</p>
-                    @endif
-                </div>
-                
-                {{-- Você pode manter o input original se for para adicionar um novo tenant --}}
-                {{-- <div>
-                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                        Adicionar Tenant (ID) <span class="text-red-500">*</span>
-                    </label>
-                    <input type="text" name="new_tenant_id"
-                           class="w-full px-3 py-2 border rounded-md bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300">
-                    <button type="button" class="mt-2 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">Adicionar</button>
-                </div> --}}
 
                 {{-- Multiatendedor ID --}}
                 <div>
@@ -152,31 +86,6 @@
                            class="w-full px-3 py-2 border rounded-md bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300">
                 </div>
 
-                {{-- Role ID --}}
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                        Role ID <span class="text-red-500">*</span>
-                    </label>
-                    <select name="role_id" required
-                            class="w-full px-3 py-2 border rounded-md bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300">
-                        <option value="1" {{ $user->role_id==1 ? 'selected' : '' }}>1 (Padrão)</option>
-                        {{-- outras roles --}}
-                    </select>
-                </div>
-
-                {{-- View Permission --}}
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                        View Permission <span class="text-red-500">*</span>
-                    </label>
-                    <select name="view_permission" required
-                            class="w-full px-3 py-2 border rounded-md bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300">
-                        <option value="global" {{ $user->view_permission=='global' ? 'selected' : '' }}>global</option>
-                        <option value="group" {{ $user->view_permission=='group' ? 'selected' : '' }}>group</option>
-                        <option value="individual" {{ $user->view_permission=='individual' ? 'selected' : '' }}>individual</option>
-                    </select>
-                </div>
-
                 {{-- Super Admin --}}
                 <div>
                     <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
@@ -184,8 +93,8 @@
                     </label>
                     <select name="is_super" required
                             class="w-full px-3 py-2 border rounded-md bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300">
-                        <option value="0" {{ !$user->is_super ? 'selected' : '' }}>0 (Inativo)</option>
-                        <option value="1" {{ $user->is_super ? 'selected' : '' }}>1 (Ativo)</option>
+                        <option value="0" {{ !$user->is_super ? 'selected' : '' }}>Não</option>
+                        <option value="1" {{ $user->is_super ? 'selected' : '' }}>Sim</option>
                     </select>
                 </div>
 
@@ -195,77 +104,185 @@
                         Cancelar
                     </a>
                     <button type="submit"
-                            class="px-4 py-2 text-sm font-medium bg-blue-600 rounded-md hover:bg-blue-700 dark:text-white">
+                            class="ml-3 px-4 py-2 text-sm font-medium bg-blue-600 rounded-md hover:bg-blue-700 text-white">
                         Salvar Alterações
                     </button>
                 </div>
             </form>
+
+            {{-- Seção para Adicionar Novo Tenant --}}
+            <div class="mt-8 mb-8 p-4 bg-white dark:bg-gray-800 rounded-lg shadow">
+                <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-4">
+                    Adicionar Tenant
+                </h3>
+              
+                <form id="tenantForm" method="POST">
+                    @csrf
+                    <div>
+                        <label for="tenant_select" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                            Selecione o Tenant
+                        </label>
+                        <select id="tenant_select" name="tenant_id" required
+                                class="block w-full px-3 py-2 border rounded-md bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300">
+                            <option value="" disabled selected>Selecione um Tenant</option>
+                            @foreach ($availableTenants as $tenant)
+                                <option value="{{ $tenant['id'] }}">
+                                    {{ $tenant['id'] }} — {{ data_get($tenant, 'data.name') }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+                  
+                    <div class="mt-4">
+                        <button type="submit"
+                                class="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700">
+                            Adicionar
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            {{-- Listagem de Tenants Associados --}}
+            <div class="mb-4">
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                    Tenants Associados
+                </label>
+            
+                @if (!empty($user->tenants))
+                    <div class="overflow-x-auto relative shadow-md sm:rounded-lg">
+                        <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                                <tr>
+                                    <th scope="col" class="py-3 px-6">
+                                        ID da Conexão
+                                    </th>
+                                    <th scope="col" class="py-3 px-6">
+                                        ID do Tenant
+                                    </th>
+                                    <th scope="col" class="py-3 px-6">
+                                        Nome do Tenant
+                                    </th>
+                                    <th scope="col" class="py-3 px-6">
+                                        Ações
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($user->tenants as $tenant)
+                                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                                        <td class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                            {{ $tenant->connection_id }}
+                                        </td>
+                                        <td class="py-4 px-6">
+                                            {{ $tenant->id }}
+                                        </td>
+                                        <td class="py-4 px-6">
+                                            {{ $tenant->name }}
+                                        </td>
+                                        <td class="py-4 px-6">
+                                            <form action="#" method="POST" onsubmit="return confirm('Tem certeza que deseja desvincular este tenant do usuário?');">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="font-medium text-red-600 dark:text-red-500 hover:underline">
+                                                    Remover
+                                                </button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                @else
+                    <p class="text-gray-500 dark:text-gray-400">Nenhum tenant associado a este usuário.</p>
+                @endif
+            </div>
         </div>
     </div>
 </div>
+@endsection
 
 @push('scripts')
 <script>
-  document.getElementById('editUserForm').addEventListener('submit', function(e) {
-    e.preventDefault();
+document.addEventListener('DOMContentLoaded', function() {
+    // Formulário de edição do usuário
+    const editForm = document.getElementById('editUserForm');
+    if (editForm) {
+        editForm.addEventListener('submit', function(e) {
+            e.preventDefault();
 
-    // validação de senha (se preenchida)
-    const pwd = document.getElementById('password').value;
-    const cpwd = document.getElementById('password_confirmation').value;
-    if ((pwd || cpwd) && (pwd.length < 6 || pwd !== cpwd)) {
-      const errDiv = document.getElementById('validationErrors');
-      const errList = document.getElementById('errorsList');
-      errList.innerHTML = '<li>As senhas devem ter pelo menos 6 caracteres e serem iguais.</li>';
-      errDiv.classList.remove('hidden');
-      return;
+            // Validação de senha
+            const pwd = document.getElementById('password').value;
+            const cpwd = document.getElementById('password_confirmation').value;
+            if ((pwd || cpwd) && (pwd.length < 6 || pwd !== cpwd)) {
+                const errDiv = document.getElementById('validationErrors');
+                const errList = document.getElementById('errorsList');
+                errList.innerHTML = '<li>As senhas devem ter pelo menos 6 caracteres e serem iguais.</li>';
+                errDiv.classList.remove('hidden');
+                return;
+            }
+
+            // Envio do formulário via Fetch API
+            const url = "{{ route('superAdmin.users.update', $user->id) }}";
+            const formData = new FormData(this);
+
+            fetch(url, {
+                method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                    'X-HTTP-Method-Override': 'PUT'
+                },
+                body: formData
+            })
+            .then(response => {
+                if (response.redirected) {
+                    window.location.href = response.url;
+                } else {
+                    return response.json().then(json => {
+                        if (json.errors) {
+                            const errDiv = document.getElementById('validationErrors');
+                            const errList = document.getElementById('errorsList');
+                            errList.innerHTML = '';
+                            Object.values(json.errors).forEach(messages => {
+                                messages.forEach(msg => {
+                                    const li = document.createElement('li');
+                                    li.textContent = msg;
+                                    errList.appendChild(li);
+                                });
+                            });
+                            errDiv.classList.remove('hidden');
+                        }
+                    });
+                }
+            })
+            .catch(error => {
+                console.error('Erro na requisição:', error);
+            });
+        });
     }
 
-    // monta dados
-    const url = "{{ route('superAdmin.users.update', $user->id) }}";
-    const form = this;
-    const data = {
-      name: form.name.value,
-      email: form.email.value,
-      status: form.status.value,
-      tenant_id: parseInt(form.tenant_id.value,10),
-      multiatendedor_id: parseInt(form.multiatendedor_id.value, 10),
-      password: pwd,
-      password_confirmation: cpwd,
-      role_id: form.role_id.value,
-      view_permission: form.view_permission.value,
-      is_super: form.is_super.value === '1'
-    };
-
-    const headers = {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json',
-      'X-CSRF-TOKEN': '{{ csrf_token() }}'
-    };
-
-    fetch(url, { method: 'PUT', headers, body: JSON.stringify(data) })
-      .then(response => {
-        if (response.redirected) {
-          window.location.href = response.url;
-        } else {
-          return response.json().then(json => {
-            if (json.errors) {
-              const errDiv = document.getElementById('validationErrors');
-              const errList = document.getElementById('errorsList');
-              errList.innerHTML = '';
-              json.errors.forEach(msg => {
-                const li = document.createElement('li');
-                li.textContent = msg;
-                errList.appendChild(li);
-              });
-              errDiv.classList.remove('hidden');
+    // Formulário de adição de tenant
+    const tenantForm = document.getElementById('tenantForm');
+    if (tenantForm) {
+        tenantForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const select = document.getElementById('tenant_select');
+            if (!select) {
+                alert('Seletor de tenant não encontrado');
+                return;
             }
-          });
-        }
-      })
-      .catch(error => {
-        console.error('Erro na requisição:', error);
-      });
-  });
+            
+            const tenantId = select.value;
+            if (!tenantId) {
+                alert('Selecione um tenant');
+                return;
+            }
+            
+            this.action = `{{ url("super-admin/users/{$user->id}/tenant") }}/${tenantId}`;
+            this.submit();
+        });
+    }
+});
 </script>
 @endpush
-@endsection

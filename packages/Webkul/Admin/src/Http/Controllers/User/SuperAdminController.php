@@ -168,13 +168,18 @@ class SuperAdminController extends Controller
     /**
      * Exibe formulário de edição de um usuário
      */
-    public function userEdit(Request $request, $id, ApiUserCtrl $apiController, ApiUserTenantCtrl $apiUserTenantCtrl, ApiTenantCtrl $apiTenantCtrl)
-    {
+    public function userEdit(
+        Request $request,
+        $id,
+        ApiUserCtrl $apiController,
+        ApiUserTenantCtrl $apiUserTenantCtrl,
+        ApiTenantCtrl $apiTenantCtrl
+    ) {
+        // 1) Obter dados do usuário via API
         $jsonResource = $apiController->show($id);
+        $userModel    = $jsonResource->resource;
     
-        $userModel = $jsonResource->resource;
-    
-        // Garante que tenantPivots é uma coleção antes de usar first()
+        // 2) Montar objeto $user com tenants já associados
         $firstPivot = $userModel->tenantPivots->first();
     
         $user = (object) [
@@ -187,48 +192,50 @@ class SuperAdminController extends Controller
             'status'            => $firstPivot->status        ?? null,
             'view_permission'   => $firstPivot->view_permission ?? null,
             'groups'            => [],
-            'tenants'           => [], // Inicializa a propriedade 'tenants' como um array vazio
+            'tenants'           => [],
         ];
     
-        // Verifica se tenantPivots existe e não está vazio
-        if ($userModel->tenantPivots && $userModel->tenantPivots->isNotEmpty()) {
-            // Coleta os IDs dos pivôs (user_tenant.id) e os IDs dos tenants (tenant_id)
-            $userTenantPivotsData = $userModel->tenantPivots->mapWithKeys(function ($pivot) {
-                return [$pivot->tenant_id => $pivot->id]; // tenant_id => user_tenant_id
-            })->toArray();
-        
-            $tenantIds = array_keys($userTenantPivotsData); // Apenas os IDs dos tenants
-            
-            $tenantsData = [];
-        
-            foreach ($tenantIds as $tenantId) {
-                $tenantJsonResource = $apiTenantCtrl->show($tenantId);
-                
-                // Acessa o recurso do tenant (que é o modelo Tenant ou um array)
-                $tenantData = $tenantJsonResource->resource;
-                
-                if ($tenantData) {
-                    $tenantName = null;
-                    // Verifica se a propriedade 'data' existe e é uma string
-                    if (isset($tenantData->data) && is_string($tenantData->data)) {
-                        $decodedData = json_decode($tenantData->data);
-                        if ($decodedData && isset($decodedData->name)) {
-                            $tenantName = $decodedData->name;
-                        }
-                    }
+        if ($userModel->tenantPivots->isNotEmpty()) {
+            $pivotMap = $userModel->tenantPivots
+                ->mapWithKeys(fn($p) => [$p->tenant_id => $p->id])
+                ->toArray();
     
-                    $tenantsData[] = (object) [
-                        'id'            => $tenantData->id, // ID do tenant
-                        'name'          => $tenantName,     // Nome do tenant obtido da string JSON
-                        'connection_id' => $userTenantPivotsData[$tenantData->id], // ID da conexão user_tenant
-                    ];
-                }
+            foreach (array_keys($pivotMap) as $tenantId) {
+                $tRes = $apiTenantCtrl->show($tenantId)->resource;
+                $name = data_get($tRes, 'data.name') 
+                      ?? data_get($tRes, 'name')
+                      ?? null;
+    
+                $user->tenants[] = (object) [
+                    'id'            => $tRes->id,
+                    'name'          => $name,
+                    'connection_id' => $pivotMap[$tRes->id],
+                ];
             }
-            $user->tenants = $tenantsData;
         }
     
-        return view('admin::user.superAdmin.users.edit', compact('user'));
+        // 3) Buscar *todos* os tenants via API
+        $allTenantsRes = $apiTenantCtrl->index();
+        $respAll       = $allTenantsRes->toResponse($request);
+        $payloadAll    = json_decode($respAll->getContent(), true);
+        $allTenants    = $payloadAll['data'] ?? [];
+    
+        // 4) Filtrar apenas os que *ainda não* estão associados
+        $associatedIds     = collect($user->tenants)->pluck('id')->all();
+        $availableTenants  = array_filter(
+            $allTenants,
+            fn(array $t) => ! in_array($t['id'], $associatedIds, true)
+        );
+
+        logger($availableTenants);
+    
+        // 5) Enviar tanto o usuário quanto os tenants disponíveis para a view
+        return view(
+            'admin::user.superAdmin.users.edit',
+            compact('user', 'availableTenants')
+        );
     }
+    
 
     /**
      * Atualiza um usuário existente
@@ -267,5 +274,73 @@ class SuperAdminController extends Controller
 
         return back()
             ->withErrors(['error' => $payload['message'] ?? 'Erro ao excluir usuário']);
+    }
+
+    public function userTenantStore(Request $request, $userId, $tenantId, ApiUserTenantCtrl $apiUserTenantCtrl)
+{
+    // Dados fixos (como no Postman)
+    $fixedData = [
+        'role_id'         => 1,          // Valor fixo
+        'status'          => 1,          // Valor fixo
+        'view_permission' => 'global',    // Valor fixo
+        'groups'          => []           // Valor fixo (array vazio)
+    ];
+
+    // Sobrescreve user_id e tenant_id com os valores da rota
+    $requestData = array_merge($fixedData, [
+        'user_id'   => $userId,
+        'tenant_id' => $tenantId
+    ]);
+
+    // Substitui os dados da requisição atual pelos dados ajustados
+    $request->replace($requestData);
+
+    try {
+        // Chama o store() do ApiUserTenantCtrl (que já valida tudo)
+        $jsonResource = $apiUserTenantCtrl->store();
+        $payload = $jsonResource->toResponse($request)->getData(true);
+
+        // Redireciona para a edição do usuário com mensagem de sucesso
+        return redirect()
+            ->route('superAdmin.users.edit', ['user' => $userId]) // <-- Ajuste aqui
+            ->with('success', $payload['message'] ?? 'Usuário vinculado ao tenant com sucesso!');
+
+    } catch (\Exception $e) {
+        return back()
+            ->withErrors(['error' => $e->getMessage() ?? 'Erro ao vincular usuário ao tenant'])
+            ->withInput();
+    }
+}
+    public function userTenantDestroy($id, ApiUserCtrl $apiController)
+    {
+        $jsonResource = $apiController->tenantDestroy($id);
+        $response     = $jsonResource->toResponse(request());
+        $payload      = json_decode($response->getContent(), true);
+
+        if ($response->getStatusCode() === 200) {
+            return redirect()
+                ->route('superAdmin.users.index')
+                ->with('success', $payload['message'] ?? 'Usuário excluído com sucesso');
+        }
+
+        return back()
+            ->withErrors(['error' => $payload['message'] ?? 'Erro ao excluir usuário']);
+    }
+
+    public function userTenantUpdate(Request $request, $id, ApiUserCtrl $apiController)
+    {
+        $jsonResource = $apiController->tenantUpdate($id);
+        $response     = $jsonResource->toResponse($request);
+        $payload      = json_decode($response->getContent(), true);
+
+        if (isset($payload['data'])) {
+            return redirect()
+                ->route('superAdmin.users.index')
+                ->with('success', $payload['message'] ?? 'Usuário atualizado com sucesso');
+        }
+
+        return back()
+            ->withErrors(['error' => $payload['message'] ?? 'Erro ao atualizar usuário'])
+            ->withInput();
     }
 }
