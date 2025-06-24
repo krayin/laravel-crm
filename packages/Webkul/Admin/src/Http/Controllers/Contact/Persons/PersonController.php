@@ -52,6 +52,7 @@ class PersonController extends Controller
      */
     public function store(AttributeForm $request): RedirectResponse|JsonResponse
     {
+
         Event::dispatch('contacts.person.create.before');
 
         $person = $this->personRepository->create($request->all());
@@ -99,6 +100,7 @@ class PersonController extends Controller
      */
     public function edit(int $id): View
     {
+
         $person = $this->personRepository->findOrFail($id);
 
         return view('admin::contacts.persons.edit', compact('person'));
