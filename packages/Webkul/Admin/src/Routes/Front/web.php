@@ -75,6 +75,11 @@ Route::middleware(['web','super_admin'])
             ->name('destroy');
 
         // Associa um usuário a um tenant
-        Route::post('/{id}/tenant/{tenant_id}', [SuperAdminController::class, 'userTenantStore'])
-            ->name('tenant.store');
+        Route::post('/{id}/tenants/{tenant_id}', [SuperAdminController::class, 'userTenantStore'])
+        ->name('tenants.store');
+
+        // Desassocia um usuário de um tenant
+        Route::delete('/tenants/{id}', [SuperAdminController::class, 'userTenantDestroy'])
+        ->name('tenants.destroy');
+        
     });

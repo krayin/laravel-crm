@@ -303,20 +303,19 @@ class SuperAdminController extends Controller
             ->withInput();
     }
 }
-    public function userTenantDestroy($id, ApiUserCtrl $apiController)
+    public function userTenantDestroy($id, ApiUserTenantCtrl $apiUserTenantCtrl)
     {
-        $jsonResource = $apiController->tenantDestroy($id);
+        $jsonResource = $apiUserTenantCtrl->destroy($id);
         $response     = $jsonResource->toResponse(request());
         $payload      = json_decode($response->getContent(), true);
 
         if ($response->getStatusCode() === 200) {
-            return redirect()
-                ->route('superAdmin.users.index')
-                ->with('success', $payload['message'] ?? 'Usuário excluído com sucesso');
+            return back()
+                ->with('success', $payload['message'] ?? 'Associação Usuário-Tenant excluído com sucesso');
         }
 
         return back()
-            ->withErrors(['error' => $payload['message'] ?? 'Erro ao excluir usuário']);
+            ->withErrors(['error' => $payload['message'] ?? 'Erro ao excluir associação usuário-tenant']);
     }
 
     public function userTenantUpdate(Request $request, $id, ApiUserCtrl $apiController)

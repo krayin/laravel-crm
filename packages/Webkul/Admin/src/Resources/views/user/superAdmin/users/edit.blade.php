@@ -180,7 +180,7 @@
                                             {{ $tenant->name }}
                                         </td>
                                         <td class="py-4 px-6">
-                                            <form action="#" method="POST" onsubmit="return confirm('Tem certeza que deseja desvincular este tenant do usuário?');">
+                                            <form action="{{ route('superAdmin.users.tenants.destroy', [$tenant->connection_id]) }}" method="POST" onsubmit="return confirm('Tem certeza que deseja desvincular este tenant do usuário?');">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit" class="font-medium text-red-600 dark:text-red-500 hover:underline">
@@ -279,7 +279,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 return;
             }
             
-            this.action = `{{ url("super-admin/users/{$user->id}/tenant") }}/${tenantId}`;
+            this.action = `{{ url("super-admin/users/{$user->id}/tenants") }}/${tenantId}`;
             this.submit();
         });
     }
