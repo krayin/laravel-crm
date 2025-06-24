@@ -44,18 +44,6 @@
                            class="w-full px-3 py-2 border rounded-md bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300">
                 </div>
 
-                {{-- Status --}}
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                        Status <span class="text-red-500">*</span>
-                    </label>
-                    <select name="status" required
-                            class="w-full px-3 py-2 border rounded-md bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300">
-                        <option value="1" {{ $user->status ? 'selected' : '' }}>Ativo</option>
-                        <option value="0" {{ !$user->status ? 'selected' : '' }}>Inativo</option>
-                    </select>
-                </div>
-
                 {{-- Multiatendedor ID --}}
                 <div>
                     <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">

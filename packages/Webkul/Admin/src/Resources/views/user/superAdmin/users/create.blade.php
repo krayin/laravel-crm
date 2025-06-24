@@ -66,7 +66,7 @@
                 <div class="flex items-center justify-end pt-4 border-t border-gray-200 dark:border-gray-700">
                     <div class="flex space-x-3">
                         <a href="{{ route('superAdmin.users.index') }}"
-                           class="px-4 py-2 text-sm font-medium bg-white dark:bg-gray-700 border rounded-md hover:bg-gray-50 dark:hover:bg-gray-600">
+                           class="px-4 py-2 text-sm font-medium bg-white dark:bg-gray-700 border rounded-md hover:bg-gray-50 dark:hover:bg-gray-600 dark:text-gray-100">
                             Cancelar
                         </a>
                         <button type="submit"
