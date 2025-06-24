@@ -99,6 +99,11 @@
                 </div>
 
                 <div class="flex items-center justify-end pt-4 border-t border-gray-200 dark:border-gray-700">
+                    <button type="button" onclick="confirmUserDelete()"
+                        class="px-4 py-2 text-sm font-medium bg-red-600 rounded-md shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500
+                            dark:text-white dark:bg-red-600 dark:hover:bg-red-700">
+                        Excluir Usuário
+                    </button>
                     <a href="{{ route('superAdmin.users.index') }}"
                        class="px-4 py-2 text-sm font-medium bg-white dark:bg-gray-700 border rounded-md hover:bg-gray-50 dark:hover:bg-gray-600 dark:text-gray-100">
                         Cancelar
@@ -108,6 +113,10 @@
                         Salvar Alterações
                     </button>
                 </div>
+            </form>
+            <form action="{{ route('superAdmin.users.destroy',  $user->id) }}" method="POST" id="deleteUserForm" class="hidden">
+                @csrf
+                @method('DELETE')
             </form>
 
             {{-- Seção para Adicionar Novo Tenant --}}
@@ -233,6 +242,12 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <script>
+function confirmUserDelete() {
+    if (confirm('Tem certeza que deseja excluir este usuário? Esta ação não pode ser desfeita.')) {
+        document.getElementById('deleteUserForm').submit();
+    }
+}
+
 document.addEventListener('DOMContentLoaded', function() {
     // Formulário de edição do usuário
     const editForm = document.getElementById('editUserForm');
