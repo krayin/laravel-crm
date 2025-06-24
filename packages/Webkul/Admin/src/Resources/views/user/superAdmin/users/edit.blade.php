@@ -98,20 +98,24 @@
                     </select>
                 </div>
 
-                <div class="flex items-center justify-end pt-4 border-t border-gray-200 dark:border-gray-700">
-                    <button type="button" onclick="confirmUserDelete()"
-                        class="px-4 py-2 text-sm font-medium bg-red-600 rounded-md shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500
-                            dark:text-white dark:bg-red-600 dark:hover:bg-red-700">
-                        Excluir Usuário
-                    </button>
-                    <a href="{{ route('superAdmin.users.index') }}"
-                       class="px-4 py-2 text-sm font-medium bg-white dark:bg-gray-700 border rounded-md hover:bg-gray-50 dark:hover:bg-gray-600 dark:text-gray-100">
-                        Cancelar
-                    </a>
-                    <button type="submit"
-                            class="ml-3 px-4 py-2 text-sm font-medium bg-blue-600 rounded-md hover:bg-blue-700 dark:text-white">
-                        Salvar Alterações
-                    </button>
+                <div class="flex items-center justify-between pt-4 border-t border-gray-200 dark:border-gray-700">
+                    <div>
+                        <button type="button" onclick="confirmUserDelete()"
+                            class="px-4 py-2 text-sm font-medium bg-red-600 rounded-md shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500
+                                dark:text-white dark:bg-red-600 dark:hover:bg-red-700">
+                            Excluir Usuário
+                        </button>
+                    </div>
+                    <div class="flex items-center">
+                        <a href="{{ route('superAdmin.users.index') }}"
+                           class="px-4 py-2 text-sm font-medium bg-white dark:bg-gray-700 border rounded-md hover:bg-gray-50 dark:hover:bg-gray-600 dark:text-gray-100">
+                            Cancelar
+                        </a>
+                        <button type="submit"
+                                class="ml-3 px-4 py-2 text-sm font-medium bg-blue-600 rounded-md hover:bg-blue-700 dark:text-white">
+                            Salvar Alterações
+                        </button>
+                    </div>
                 </div>
             </form>
             <form action="{{ route('superAdmin.users.destroy',  $user->id) }}" method="POST" id="deleteUserForm" class="hidden">
