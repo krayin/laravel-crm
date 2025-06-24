@@ -73,10 +73,12 @@ class PermissionHelper
             "settings.user.groups.create",
             "settings.user.groups.edit",
             "settings.user.groups.delete",
-            "settings.user.roles",
-            "settings.user.roles.create",
-            "settings.user.roles.edit",
-            "settings.user.roles.delete",
+
+            // "settings.user.roles",
+            // "settings.user.roles.create",
+            // "settings.user.roles.edit",
+            // "settings.user.roles.delete",
+            
             "settings.user.users",
             "settings.user.users.create",
             "settings.user.users.edit",
@@ -88,10 +90,10 @@ class PermissionHelper
             // "settings.lead.pipelines.create",
             // "settings.lead.pipelines.edit",
             // "settings.lead.pipelines.delete",
-            "settings.lead.sources",
-            "settings.lead.sources.create",
-            "settings.lead.sources.edit",
-            "settings.lead.sources.delete",
+            // "settings.lead.sources",
+            // "settings.lead.sources.create",
+            // "settings.lead.sources.edit",
+            // "settings.lead.sources.delete",
             "settings.lead.types",
             "settings.lead.types.create",
             "settings.lead.types.edit",
@@ -140,7 +142,7 @@ class PermissionHelper
             "settings.data_transfer.imports.import",
 
             // Configuration
-            "configuration",
+            // "configuration",
         ];
         
         $itemsArray = is_iterable($allPermissions)
