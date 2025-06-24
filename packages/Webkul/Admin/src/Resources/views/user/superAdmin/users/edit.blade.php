@@ -100,11 +100,11 @@
 
                 <div class="flex items-center justify-end pt-4 border-t border-gray-200 dark:border-gray-700">
                     <a href="{{ route('superAdmin.users.index') }}"
-                       class="px-4 py-2 text-sm font-medium bg-white dark:bg-gray-700 border rounded-md hover:bg-gray-50 dark:hover:bg-gray-600">
+                       class="px-4 py-2 text-sm font-medium bg-white dark:bg-gray-700 border rounded-md hover:bg-gray-50 dark:hover:bg-gray-600 dark:text-gray-100">
                         Cancelar
                     </a>
                     <button type="submit"
-                            class="ml-3 px-4 py-2 text-sm font-medium bg-blue-600 rounded-md hover:bg-blue-700 text-white">
+                            class="ml-3 px-4 py-2 text-sm font-medium bg-blue-600 rounded-md hover:bg-blue-700 dark:text-white">
                         Salvar Alterações
                     </button>
                 </div>
@@ -123,11 +123,11 @@
                             Selecione o Tenant
                         </label>
                         <select id="tenant_select" name="tenant_id" required
-                                class="block w-full px-3 py-2 border rounded-md bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300">
+                                class="block w-full px-3 py-2 border rounded-md bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300 select2">
                             <option value="" disabled selected>Selecione um Tenant</option>
                             @foreach ($availableTenants as $tenant)
                                 <option value="{{ $tenant['id'] }}">
-                                    {{ $tenant['id'] }} — {{ data_get($tenant, 'data.name') }}
+                                    #{{ $tenant['id'] }} — {{ data_get($tenant, 'data.name') }}
                                 </option>
                             @endforeach
                         </select>
@@ -135,7 +135,7 @@
                   
                     <div class="mt-4">
                         <button type="submit"
-                                class="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700">
+                                class="px-4 py-2 text-sm font-medium bg-white dark:bg-gray-700 border rounded-md hover:bg-gray-50 dark:hover:bg-gray-600 dark:text-gray-100">
                             Adicionar
                         </button>
                     </div>
@@ -202,7 +202,36 @@
 </div>
 @endsection
 
+@push('styles')
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <style>
+        .select2-container--default .select2-selection--single {
+            background-color: #fff;
+            border: 1px solid #d1d5db;
+            border-radius: 0.375rem;
+            height: 42px;
+            padding: 0.5rem;
+        }
+        .select2-container--default .select2-selection--single .select2-selection__arrow {
+            height: 40px;
+        }
+        .select2-container--default .select2-selection--single .select2-selection__rendered {
+            color: #374151;
+            line-height: 1.5;
+        }
+        .dark .select2-container--default .select2-selection--single {
+            background-color: #374151;
+            border-color: #4b5563;
+        }
+        .dark .select2-container--default .select2-selection--single .select2-selection__rendered {
+            color: #f3f4f6;
+        }
+    </style>
+@endpush
+
 @push('scripts')
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     // Formulário de edição do usuário
@@ -283,6 +312,36 @@ document.addEventListener('DOMContentLoaded', function() {
             this.submit();
         });
     }
+});
+
+$(document).ready(function() {
+    $('.select2').select2({
+        placeholder: "Selecione um Tenant",
+        allowClear: true,
+        width: '100%',
+        language: {
+            noResults: function() {
+                return "Nenhum resultado encontrado";
+            },
+            searching: function() {
+                return "Pesquisando...";
+            }
+        }
+    });
+    
+    // Adiciona suporte para o modo dark
+    const observer = new MutationObserver(function(mutations) {
+        if (document.documentElement.classList.contains('dark')) {
+            $('.select2-container--default').addClass('dark');
+        } else {
+            $('.select2-container--default').removeClass('dark');
+        }
+    });
+    
+    observer.observe(document.documentElement, {
+        attributes: true,
+        attributeFilter: ['class']
+    });
 });
 </script>
 @endpush
