@@ -91,7 +91,7 @@ class RoleSeeder extends Seeder
             'description'     => trans('installer::app.seeders.user.role.agent-role', [], $defaultLocale), // ou 'Função base para agentes'
             'permission_type' => 'custom',
             'permissions' => [
-                "dashboard",
+                // "dashboard",
                 "leads",
                 "leads.create",
                 "leads.view",
