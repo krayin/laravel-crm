@@ -31,7 +31,7 @@
                     </label>
                     <input type="text" name="name" required
                            value="{{ old('name', $user->name) }}"
-                           class="w-full px-3 py-2 border rounded-md bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300">
+                           class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300">
                 </div>
 
                 {{-- E-mail --}}
@@ -41,7 +41,7 @@
                     </label>
                     <input type="email" name="email" required
                            value="{{ old('email', $user->email) }}"
-                           class="w-full px-3 py-2 border rounded-md bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300">
+                           class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300">
                 </div>
 
                 {{-- Multiatendedor ID --}}
@@ -51,7 +51,7 @@
                     </label>
                     <input type="text" name="multiatendedor_id" required
                            value="{{ old('multiatendedor_id', $user->multiatendedor_id) }}"
-                           class="w-full px-3 py-2 border rounded-md bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300">
+                           class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300">
                 </div>
 
                 {{-- Nova Senha --}}
@@ -61,7 +61,7 @@
                     </label>
                     <input type="password" name="password" id="password" minlength="6"
                            placeholder="Deixe em branco para manter a atual"
-                           class="w-full px-3 py-2 border rounded-md bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300">
+                           class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300">
                 </div>
 
                 {{-- Confirmar Nova Senha --}}
@@ -71,7 +71,7 @@
                     </label>
                     <input type="password" name="password_confirmation" id="password_confirmation" minlength="6"
                            placeholder="Deixe em branco para manter a atual"
-                           class="w-full px-3 py-2 border rounded-md bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300">
+                           class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300">
                 </div>
 
                 {{-- Super Admin --}}
@@ -80,7 +80,7 @@
                         Super Admin <span class="text-red-500">*</span>
                     </label>
                     <select name="is_super" required
-                            class="w-full px-3 py-2 border rounded-md bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300">
+                            class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300">
                         <option value="0" {{ !$user->is_super ? 'selected' : '' }}>Não</option>
                         <option value="1" {{ $user->is_super ? 'selected' : '' }}>Sim</option>
                     </select>
@@ -164,7 +164,7 @@
                 @if (!empty($user->tenants))
                     <div class="overflow-x-auto relative shadow-md sm:rounded-lg">
                         <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-                            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                            <thead class="text-xs text-gray-800 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                                 <tr>
                                     <th scope="col" class="py-3 px-6">
                                         ID da Conexão
@@ -189,13 +189,13 @@
                                         <td class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                             {{ $tenant->connection_id }}
                                         </td>
-                                        <td class="py-4 px-6">
+                                        <td class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                             {{ $tenant->id }}
                                         </td>
-                                        <td class="py-4 px-6">
+                                        <td class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                             {{ $tenant->name }}
                                         </td>
-                                        <td class="py-4 px-6">
+                                        <td class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                             @php
                                                 $roles = [
                                                     1 => 'Administrator',
