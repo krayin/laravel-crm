@@ -89,10 +89,12 @@
                 <div class="flex items-center justify-between pt-4 border-t border-gray-200 dark:border-gray-700">
                     <div>
                         <button type="button" onclick="confirmUserDelete()"
-                            class="px-4 py-2 text-sm font-medium bg-red-600 rounded-md shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500
-                                dark:text-white dark:bg-red-600 dark:hover:bg-red-700">
-                            Excluir Usuário
-                        </button>
+                                class="inline-flex items-center px-4 py-2 text-sm font-medium bg-red-600 rounded-md shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 dark:text-white dark:bg-red-600 dark:hover:bg-red-700">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd" />
+                                </svg>
+                                Excluir Usuário
+                            </button>
                     </div>
                     <div class="flex items-center">
                         <a href="{{ route('superAdmin.users.index') }}"
@@ -100,9 +102,12 @@
                             Cancelar
                         </a>
                         <button type="submit"
-                                class="ml-3 px-4 py-2 text-sm font-medium bg-blue-600 rounded-md hover:bg-blue-700 dark:text-white">
-                            Salvar Alterações
-                        </button>
+                                    class="inline-flex items-center px-4 py-2 ml-3 px-4 py-2 text-sm font-medium bg-blue-600 rounded-md hover:bg-blue-700 dark:text-white">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                                </svg>
+                                Salvar Alterações
+                            </button>
                     </div>
                 </div>
             </form>
@@ -116,7 +121,7 @@
                 <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-4">
                     Adicionar Tenant
                 </h3>
-              
+
                 <form id="tenantForm" method="POST">
                     @csrf
                     <div>
@@ -148,9 +153,12 @@
                   
                     <div class="mt-4">
                         <button type="submit"
-                                class="px-4 py-2 text-sm font-medium bg-white dark:bg-gray-700 border rounded-md hover:bg-gray-50 dark:hover:bg-gray-600 dark:text-gray-100">
-                            Adicionar
-                        </button>
+                                    class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 dark:bg-green-700 dark:hover:bg-green-800">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd" />
+                                </svg>
+                                Adicionar Tenant
+                            </button>
                     </div>
                 </form>
             </div>
@@ -166,36 +174,36 @@
                         <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                             <thead class="text-xs text-gray-800 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                                 <tr>
-                                    <th scope="col" class="py-3 px-6">
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
                                         ID da Conexão
                                     </th>
-                                    <th scope="col" class="py-3 px-6">
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
                                         ID do Tenant
                                     </th>
-                                    <th scope="col" class="py-3 px-6">
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
                                         Nome do Tenant
                                     </th>
-                                    <th scope="col" class="py-3 px-6">
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
                                         Cargo
                                     </th>
-                                    <th scope="col" class="py-3 px-6">
+                                    <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
                                         Ações
                                     </th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody class="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
                                 @foreach ($user->tenants as $tenant)
-                                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                                        <td class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                    <tr>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-white">
                                             {{ $tenant->connection_id }}
                                         </td>
-                                        <td class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-300">
                                             {{ $tenant->id }}
                                         </td>
-                                        <td class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-300">
                                             {{ $tenant->name }}
                                         </td>
-                                        <td class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-300">
                                             @php
                                                 $roles = [
                                                     1 => 'Administrator',
@@ -203,14 +211,21 @@
                                                     3 => 'Agent',
                                                 ];
                                             @endphp
-                                            {{ $roles[$tenant->role_id] ?? 'Desconhecido' }}
+                                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
+                                                {{ $tenant->role_id == 1 ? 'bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200' : 
+                                                   ($tenant->role_id == 2 ? 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200' : 
+                                                   'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200') }}">
+                                                {{ $roles[$tenant->role_id] ?? 'Desconhecido' }}
+                                            </span>
                                         </td>
-                                        <td class="py-4 px-6">
+                                        <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                             <form action="{{ route('superAdmin.users.tenants.destroy', [$tenant->connection_id]) }}" method="POST" onsubmit="return confirm('Tem certeza que deseja desvincular este tenant do usuário?');">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="submit" class="font-medium text-red-600 dark:text-red-500 hover:underline">
-                                                    Remover
+                                                <button type="submit" class="text-red-600 dark:text-red-400 hover:text-red-900 dark:hover:text-red-300">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                                        <path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd" />
+                                                    </svg>
                                                 </button>
                                             </form>
                                         </td>
