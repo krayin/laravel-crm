@@ -133,6 +133,18 @@
                             @endforeach
                         </select>
                     </div>
+                    
+                    <div class="mt-4">
+                        <label for="role_select" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                            Selecione o Cargo
+                        </label>
+                        <select id="role_select" name="role_id" required
+                                class="block w-full px-3 py-2 border rounded-md bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300 select2">
+                            <option value="3">Agent</option>
+                            <option value="2">Manager</option>
+                            <option value="1">Administrator</option>
+                        </select>
+                    </div>
                   
                     <div class="mt-4">
                         <button type="submit"
@@ -164,6 +176,9 @@
                                         Nome do Tenant
                                     </th>
                                     <th scope="col" class="py-3 px-6">
+                                        Cargo
+                                    </th>
+                                    <th scope="col" class="py-3 px-6">
                                         Ações
                                     </th>
                                 </tr>
@@ -179,6 +194,16 @@
                                         </td>
                                         <td class="py-4 px-6">
                                             {{ $tenant->name }}
+                                        </td>
+                                        <td class="py-4 px-6">
+                                            @php
+                                                $roles = [
+                                                    1 => 'Administrator',
+                                                    2 => 'Manager',
+                                                    3 => 'Agent',
+                                                ];
+                                            @endphp
+                                            {{ $roles[$tenant->role_id] ?? 'Desconhecido' }}
                                         </td>
                                         <td class="py-4 px-6">
                                             <form action="{{ route('superAdmin.users.tenants.destroy', [$tenant->connection_id]) }}" method="POST" onsubmit="return confirm('Tem certeza que deseja desvincular este tenant do usuário?');">
@@ -226,6 +251,32 @@
         }
         .dark .select2-container--default .select2-selection--single .select2-selection__rendered {
             color: #f3f4f6;
+        }
+
+        /* fundo e borda da dropdown */
+        .select2-dropdown.dark {
+        background-color: #374151;
+        border: 1px solid #4b5563;
+        border-radius: 0.375rem;
+        }
+        .select2-dropdown.dark .select2-results__option {
+        color: #f3f4f6;
+        }
+        .select2-dropdown.dark .select2-results__option--highlighted {
+        background-color: #4b5563;
+        color: #f3f4f6;
+        }
+
+        .dark .select2-dropdown.dark .select2-results__option--selected {
+        background-color: #4b5563;  /* mesmo tom das opções destacadas */
+        color: #f3f4f6;             /* texto claro */
+        }
+
+        /* campo de busca dentro do dropdown */
+        .dark .select2-dropdown.dark .select2-search__field {
+        background-color: #374151;  /* mesmo tom do input principal */
+        color: #f3f4f6;             /* texto claro */
+        border: 1px solid #4b5563;  /* igual borda dark */
         }
     </style>
 @endpush
@@ -321,34 +372,39 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-$(document).ready(function() {
-    $('.select2').select2({
-        placeholder: "Selecione um Tenant",
-        allowClear: true,
-        width: '100%',
-        language: {
-            noResults: function() {
-                return "Nenhum resultado encontrado";
-            },
-            searching: function() {
-                return "Pesquisando...";
-            }
-        }
+$(function() {
+  // inicializa cada Select2 com dropdownCssClass dinâmico
+  $('.select2').each(function() {
+    $(this).select2({
+      placeholder: "Selecione um Tenant",
+      allowClear: true,
+      width: '100%',
+      dropdownCssClass: document.documentElement.classList.contains('dark') ? 'dark' : '',
+      language: {
+        noResults: () => "Nenhum resultado encontrado",
+        searching: () => "Pesquisando..."
+      }
     });
-    
-    // Adiciona suporte para o modo dark
-    const observer = new MutationObserver(function(mutations) {
-        if (document.documentElement.classList.contains('dark')) {
-            $('.select2-container--default').addClass('dark');
-        } else {
-            $('.select2-container--default').removeClass('dark');
-        }
-    });
-    
-    observer.observe(document.documentElement, {
-        attributes: true,
-        attributeFilter: ['class']
-    });
+  });
+
+  // sempre que um dropdown abrir, aplica/remova dark a ele
+  $(document).on('select2:open select2:close', function() {
+    const isDark = document.documentElement.classList.contains('dark');
+    $('.select2-dropdown').toggleClass('dark', isDark);
+  });
+
+  // monitora troca de dark/light após a inicialização para novos opens
+  new MutationObserver(() => {
+    // opcional: se quiser reabrir já com classe
+    const aberto = !!$('.select2-dropdown').length;
+    if (aberto) {
+      const isDark = document.documentElement.classList.contains('dark');
+      $('.select2-dropdown').toggleClass('dark', isDark);
+    }
+  }).observe(document.documentElement, {
+    attributes: true,
+    attributeFilter: ['class']
+  });
 });
 </script>
 @endpush

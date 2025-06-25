@@ -195,21 +195,26 @@ class SuperAdminController extends Controller
     
         if ($userModel->tenantPivots->isNotEmpty()) {
             $pivotMap = $userModel->tenantPivots
-                ->mapWithKeys(fn($p) => [$p->tenant_id => $p->id])
+                ->mapWithKeys(fn($p) => [$p->tenant_id => [
+                    'pivot_id' => $p->id,
+                    'role_id' => $p->role_id  // Adiciona role_id ao mapeamento
+                ]])
                 ->toArray();
-    
+        
             foreach (array_keys($pivotMap) as $tenantId) {
                 $tRes = $apiTenantCtrl->show($tenantId)->resource;
                 $data_decoded = json_decode($tRes->data, true);
-                $name    = $data_decoded['name'] ?? null;
-    
+                $name = $data_decoded['name'] ?? null;
+        
                 $user->tenants[] = (object) [
                     'id'            => $tRes->id,
                     'name'          => $name,
-                    'connection_id' => $pivotMap[$tRes->id],
+                    'connection_id' => $pivotMap[$tRes->id]['pivot_id'],
+                    'role_id'       => $pivotMap[$tRes->id]['role_id']  // Adiciona role_id aqui
                 ];
             }
         }
+        
     
         $allTenantsRes = $apiTenantCtrl->index();
         $respAll       = $allTenantsRes->toResponse($request);
@@ -272,16 +277,17 @@ class SuperAdminController extends Controller
 {
     // Dados fixos (como no Postman)
     $fixedData = [
-        'role_id'         => 1,          // Valor fixo
         'status'          => 1,          // Valor fixo
         'view_permission' => 'global',    // Valor fixo
         'groups'          => []           // Valor fixo (array vazio)
     ];
 
     // Sobrescreve user_id e tenant_id com os valores da rota
+    // E usa o role_id da requisição
     $requestData = array_merge($fixedData, [
         'user_id'   => $userId,
-        'tenant_id' => $tenantId
+        'tenant_id' => $tenantId,
+        'role_id'   => $request->input('role_id', 1) // Pega do formulário ou usa 1 como padrão
     ]);
 
     // Substitui os dados da requisição atual pelos dados ajustados
@@ -294,7 +300,7 @@ class SuperAdminController extends Controller
 
         // Redireciona para a edição do usuário com mensagem de sucesso
         return redirect()
-            ->route('superAdmin.users.edit', ['user' => $userId]) // <-- Ajuste aqui
+            ->route('superAdmin.users.edit', ['user' => $userId])
             ->with('success', $payload['message'] ?? 'Usuário vinculado ao tenant com sucesso!');
 
     } catch (\Exception $e) {
