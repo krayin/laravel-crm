@@ -373,34 +373,31 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 $(function() {
-  // inicializa cada Select2 com dropdownCssClass dinâmico
+  // Inicializa cada Select2 usando o texto do <label> correspondente como placeholder
   $('.select2').each(function() {
-    $(this).select2({
-      placeholder: "Selecione um Tenant",
+    const $sel = $(this);
+    const placeholderText = $(`label[for="${$sel.attr('id')}"]`).text().trim();
+
+    $sel.select2({
+      placeholder: placeholderText,
       allowClear: true,
       width: '100%',
       dropdownCssClass: document.documentElement.classList.contains('dark') ? 'dark' : '',
       language: {
         noResults: () => "Nenhum resultado encontrado",
-        searching: () => "Pesquisando..."
+        searching:  () => "Pesquisando..."
       }
     });
   });
 
-  // sempre que um dropdown abrir, aplica/remova dark a ele
-  $(document).on('select2:open select2:close', function() {
+  $(document).on('select2:open select2:close', () => {
     const isDark = document.documentElement.classList.contains('dark');
     $('.select2-dropdown').toggleClass('dark', isDark);
   });
 
-  // monitora troca de dark/light após a inicialização para novos opens
   new MutationObserver(() => {
-    // opcional: se quiser reabrir já com classe
-    const aberto = !!$('.select2-dropdown').length;
-    if (aberto) {
-      const isDark = document.documentElement.classList.contains('dark');
-      $('.select2-dropdown').toggleClass('dark', isDark);
-    }
+    const isDark = document.documentElement.classList.contains('dark');
+    $('.select2-dropdown').toggleClass('dark', isDark);
   }).observe(document.documentElement, {
     attributes: true,
     attributeFilter: ['class']
