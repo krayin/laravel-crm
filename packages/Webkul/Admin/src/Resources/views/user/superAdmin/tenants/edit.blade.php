@@ -35,7 +35,7 @@
                     >
                 </div>
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Multiatendedor ID <span class="text-red-500">*</span></label>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Multiatendedor Account ID<span class="text-red-500">*</span></label>
                     <input
                         type="text"
                         name="multiatendedor_id"

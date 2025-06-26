@@ -47,7 +47,7 @@
                 {{-- Multiatendedor ID --}}
                 <div>
                     <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                        Multiatendedor User ID <span class="text-red-500">*</span>
+                        Multiatendedor User ID<span class="text-red-500">*</span>
                     </label>
                     <input type="text" name="multiatendedor_id" required
                            value="{{ old('multiatendedor_id', $user->multiatendedor_id) }}"

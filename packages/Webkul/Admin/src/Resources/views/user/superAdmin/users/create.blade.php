@@ -34,7 +34,7 @@
 
                 {{-- Multiatendedor ID --}}
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Multiatendedor ID <span class="text-red-500">*</span></label>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Multiatendedor User ID<span class="text-red-500">*</span></label>
                     <input type="text" name="multiatendedor_id" required
                            class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300">
                 </div>
@@ -58,8 +58,8 @@
                     <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Super Admin<span class="text-red-500">*</span></label>
                     <select name="is_super" required
                             class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300">
-                        <option value=false selected>0 (Inativo)</option>
-                        <option value=true >1 (Ativo)</option>
+                            <option value=false >Não</option>
+                            <option value=true > Sim</option
                     </select>
                 </div>
 
