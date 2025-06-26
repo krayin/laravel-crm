@@ -177,9 +177,6 @@
                             @lang('admin::app.settings.roles.edit.custom')
                         </option>
 
-                        <option value="all">
-                            @lang('admin::app.settings.roles.edit.all')
-                        </option>
                     </x-admin::form.control-group.control>
 
                     <x-admin::form.control-group.error control-name="permission_type" />
@@ -193,11 +190,15 @@
 
                     {!! view_render_event('admin.settings.roles.edit.form.tree_view.before', ['role' => $role]) !!}
 
+                    @php
+                        $filteredPermissions = \Webkul\Core\Helpers\PermissionHelper::getBaseRolePermissions(acl()->getItems());
+                    @endphp
+
                     <x-admin::tree.view
                         input-type="checkbox"
                         value-field="key"
                         id-field="key"
-                        :items="json_encode(acl()->getItems())"
+                        :items="json_encode($filteredPermissions)"
                         :value="json_encode($role->permissions ?? [])"
                         :fallback-locale="config('app.fallback_locale')"
                     />

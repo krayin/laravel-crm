@@ -68,31 +68,6 @@
             ></v-phone-component>
         </x-admin::form.control-group>
 
-        <!-- Person Organization -->
-        <x-admin::form.control-group>
-            <x-admin::form.control-group.label>
-                @lang('admin::app.leads.common.contact.organization')
-            </x-admin::form.control-group.label>
-
-            @php
-                $organizationAttribute = app('Webkul\Attribute\Repositories\AttributeRepository')->findOneWhere([
-                    'entity_type' => 'persons',
-                    'code'        => 'organization_id'
-                ]);
-
-                $organizationAttribute->code = 'person[' . $organizationAttribute->code . ']';
-            @endphp
-
-            <x-admin::attributes.edit.lookup />
-
-            <v-lookup-component
-                :key="person.organization?.id"
-                :attribute='@json($organizationAttribute)'
-                :value="person.organization"
-                :is-disabled="person?.id ? true : false"
-                can-add-new="true"
-            ></v-lookup-component>
-        </x-admin::form.control-group>
     </script>
 
     <script type="module">

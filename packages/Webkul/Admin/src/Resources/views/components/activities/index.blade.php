@@ -451,14 +451,8 @@
                             name: 'meeting',
                             label: "{{ trans('admin::app.components.activities.index.meetings') }}",
                         }, {
-                            name: 'lunch',
-                            label: "{{ trans('admin::app.components.activities.index.lunches') }}",
-                        }, {
                             name: 'file',
                             label: "{{ trans('admin::app.components.activities.index.files') }}",
-                        }, {
-                            name: 'email',
-                            label: "{{ trans('admin::app.components.activities.index.emails') }}",
                         }, {
                             name: 'system',
                             label: "{{ trans('admin::app.components.activities.index.change-log') }}",
