@@ -105,8 +105,12 @@ return [
 
         'user' => [
             'role' => [
-                'administrator-role' => 'Função de Administrador',
+                'administrator-role' => 'Controle Total',
                 'administrator'      => 'Administrador',
+                'manager-role'       => 'Lidera Equipe',
+                'manager'            => 'Gerente',
+                'agent-role'         => 'Executa Tarefas',
+                'agent'              => 'Agente',   
             ],
         ],
 

@@ -11,7 +11,7 @@
                 <div class="px-4 group/item {{ $menuItem->isActive() ? 'active' : 'inactive' }}">
                     <a
                         class="flex gap-2 p-1.5 items-center cursor-pointer hover:rounded-lg {{ $menuItem->isActive() == 'active' ? 'bg-brandColor rounded-lg' : ' hover:bg-gray-100 hover:dark:bg-gray-950' }} peer"
-                        href="{{ ! in_array($menuItem->getKey(), ['settings', 'configuration']) && $menuItem->haveChildren() ? 'javascript:void(0)' : $menuItem->getUrl() }}"
+                        href="{{ ! in_array($menuItem->getKey(), ['settings', 'configuration', 'contacts']) && $menuItem->haveChildren() ? 'javascript:void(0)' : $menuItem->getUrl() }}"
                         @mouseleave="!isMenuActive ? hoveringMenu = '' : {}"
                         @mouseover="hoveringMenu='{{$menuItem->getKey()}}'"
                         @click="isMenuActive = !isMenuActive"
@@ -21,7 +21,7 @@
                         <div class="flex-1 flex justify-between items-center text-gray-600 dark:text-gray-300 font-medium whitespace-nowrap group-[.sidebar-collapsed]/container:hidden {{ $menuItem->isActive() ? 'text-white' : ''}} group">
                             <p>{{ core()->getConfigData('general.settings.menu.'.$menuItem->getKey()) ?? $menuItem->getName() }}</p>
                         
-                            @if ( ! in_array($menuItem->getKey(), ['settings', 'configuration']) && $menuItem->haveChildren())
+                            @if ( ! in_array($menuItem->getKey(), ['settings', 'configuration', 'contacts']) && $menuItem->haveChildren())
                                 <i class="icon-right-arrow rtl:icon-left-arrow invisible text-2xl group-hover/item:visible {{ $menuItem->isActive() ? 'text-white' : ''}}"></i>
                             @endif
                         </div>
@@ -29,7 +29,7 @@
 
                     <!-- Submenu -->
                     @if (
-                        ! in_array($menuItem->getKey(), ['settings', 'configuration'])
+                        ! in_array($menuItem->getKey(), ['settings', 'configuration', 'contacts'])
                         && $menuItem->haveChildren()
                     )
                         <div

@@ -47,14 +47,16 @@
                 </div>
                 
                 <!-- Activity Actions -->
-                <div class="flex flex-wrap gap-2">
+                <div class="flex flex-wrap gap-2 w-full justify-between">
                     {!! view_render_event('admin.contact.persons.view.actions.before', ['person' => $person]) !!}
 
                     <!-- Mail Activity Action -->
+                    {{--
                     <x-admin::activities.actions.mail
                         :entity="$person"
                         entity-control-name="person_id"
                     />
+                    --}}
 
                     <!-- File Activity Action -->
                     <x-admin::activities.actions.file
@@ -101,9 +103,7 @@
                     ['name' => 'note', 'label' => trans('admin::app.components.activities.index.notes')],
                     ['name' => 'call', 'label' => trans('admin::app.components.activities.index.calls')],
                     ['name' => 'meeting', 'label' => trans('admin::app.components.activities.index.meetings')],
-                    ['name' => 'lunch', 'label' => trans('admin::app.components.activities.index.lunches')],
                     ['name' => 'file', 'label' => trans('admin::app.components.activities.index.files')],
-                    ['name' => 'email', 'label' => trans('admin::app.components.activities.index.emails')],
                     ['name' => 'system', 'label' => trans('admin::app.components.activities.index.change-log')],
                 ]"
                 :activeType="'leads'"

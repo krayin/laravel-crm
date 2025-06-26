@@ -8,7 +8,7 @@
     {!! view_render_event('admin.components.activities.actions.activity.create_btn.before') !!}
 
     <button
-        class="flex h-[74px] w-[84px] flex-col items-center justify-center gap-1 rounded-lg border border-transparent bg-blue-200 font-medium text-blue-800 transition-all hover:border-blue-400"
+        class="flex h-[74px] w-[110px] flex-col items-center justify-center gap-1 rounded-lg border border-transparent bg-blue-200 font-medium text-blue-800 transition-all hover:border-blue-400"
         @click="$refs.actionComponent.openModal('mail')"
     >
         <span class="icon-activity text-2xl dark:!text-blue-800"></span>
