@@ -9,7 +9,6 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>@yield('page_title')</title>
 
-    {{-- Importa a fonte Inter via Google Fonts --}}
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
@@ -17,7 +16,6 @@
       rel="stylesheet"
     >
 
-    {{-- Carrega CSS/JS via Vite --}}
     {{ vite()->set([
         'src/Resources/assets/css/app.css',
         'src/Resources/assets/js/app.js'
@@ -28,9 +26,7 @@
 
 <body class="h-full bg-gray-50 dark:bg-gray-900 font-inter antialiased">
     <div class="flex h-full">
-        {{-- Sidebar --}}
         <aside class="w-64 bg-white dark:bg-gray-800 shadow-lg border-r border-gray-200 dark:border-gray-700 flex flex-col">
-            {{-- Header da sidebar --}}
             <div class="px-6 py-8 border-b border-gray-200 dark:border-gray-700 mb-6">
                 <div class="flex items-center space-x-3">
                     <div class="w-10 h-10 bg-gradient-to-br from-blue-600 to-indigo-700 dark:from-blue-400 dark:to-indigo-500 rounded-lg flex items-center justify-center">
@@ -47,7 +43,6 @@
                 </div>
             </div>
 
-            {{-- Navigation --}}
             <nav class="flex-1 px-6 py-0">
                 <ul class="space-y-2">
                     <li>
@@ -81,7 +76,6 @@
                 </ul>
             </nav>
 
-            {{-- Footer da sidebar --}}
             <div class="px-6 py-4 border-t border-gray-200 dark:border-gray-700">
                 <button 
                     onclick="toggleDarkMode()" 
@@ -98,9 +92,7 @@
             </div>
         </aside>
 
-        {{-- Main content area --}}
         <main class="flex-1 flex flex-col overflow-hidden">
-            {{-- Top header --}}
             <header class="bg-white dark:bg-gray-800 shadow-sm border-b border-gray-200 dark:border-gray-700 px-6 py-4">
                 <div class="flex items-center justify-between">
                     <div>
@@ -115,7 +107,6 @@
                 </div>
             </header>
 
-            {{-- Content area --}}
             <div class="flex-1 overflow-auto bg-gray-50 dark:bg-gray-900">
                 @yield('content')
             </div>

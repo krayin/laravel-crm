@@ -10,7 +10,6 @@
                     Total: <span class="font-semibold text-blue-600 dark:text-blue-400">{{ count($users) }}</span> usuários
                 </p>
             </div>
-            <!-- Botão para criar usuário -->
             <a href="{{ route('superAdmin.users.create') }}"
                class="inline-flex items-center px-4 py-2 text-sm font-medium bg-blue-600 rounded-md shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-200
                       dark:text-white dark:bg-blue-600 dark:hover:bg-blue-700">
@@ -22,7 +21,6 @@
             </a>
         </div>
 
-        <!-- Tabela de usuários -->
         <div class="bg-white dark:bg-gray-900 shadow-lg rounded-xl border border-gray-200 dark:border-gray-700">
             <div class="overflow-auto max-h">
                 <table class="w-full">

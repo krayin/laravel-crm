@@ -20,7 +20,6 @@
                 </div>
             @endif
 
-            {{-- Formulário de Edição --}}
             <form action="{{ route('superAdmin.tenants.update', $tenant['id']) }}" method="POST" class="space-y-6" id="editForm">
                 @csrf
                 @method('PUT')
@@ -35,7 +34,7 @@
                     >
                 </div>
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Multiatendedor Account ID<span class="text-red-500">*</span></label>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Multiatendedor Account ID <span class="text-red-500">*</span></label>
                     <input
                         type="text"
                         name="multiatendedor_id"
@@ -55,7 +54,6 @@
                 </div>
 
                 <div class="flex items-center justify-between pt-4 border-t border-gray-200 dark:border-gray-700">
-                    {{-- Botão de Exclusão (separado do formulário de edição) --}}
                     <button type="button" onclick="confirmDelete()"
                         class="px-4 py-2 text-sm font-medium bg-red-600 rounded-md shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500
                             dark:text-white dark:bg-red-600 dark:hover:bg-red-700">
@@ -75,7 +73,6 @@
                 </div>
             </form>
 
-            {{-- Formulário de Exclusão (hidden) --}}
             <form action="{{ route('superAdmin.tenants.destroy', $tenant['id']) }}" method="POST" id="deleteForm" class="hidden">
                 @csrf
                 @method('DELETE')

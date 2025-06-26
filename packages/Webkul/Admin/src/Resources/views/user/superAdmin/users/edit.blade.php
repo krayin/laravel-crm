@@ -13,18 +13,15 @@
         </div>
 
         <div class="px-6 py-4">
-            {{-- Exibição de erros de validação --}}
             <div id="validationErrors" class="hidden bg-red-50 dark:bg-red-900/10 text-red-700 dark:text-red-400 px-4 py-3 rounded-md mb-6">
                 <div class="font-medium">Por favor, corrija os seguintes erros:</div>
                 <ul id="errorsList" class="mt-1 list-disc list-inside text-sm"></ul>
             </div>
 
-            {{-- Formulário principal de edição --}}
             <form id="editUserForm" class="space-y-6">
                 @csrf
                 @method('PUT')
 
-                {{-- Nome --}}
                 <div>
                     <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                         Nome <span class="text-red-500">*</span>
@@ -34,7 +31,6 @@
                            class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300">
                 </div>
 
-                {{-- E-mail --}}
                 <div>
                     <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                         E-mail <span class="text-red-500">*</span>
@@ -44,17 +40,15 @@
                            class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300">
                 </div>
 
-                {{-- Multiatendedor ID --}}
                 <div>
                     <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                        Multiatendedor User ID<span class="text-red-500">*</span>
+                        Multiatendedor User ID <span class="text-red-500">*</span>
                     </label>
                     <input type="text" name="multiatendedor_id" required
                            value="{{ old('multiatendedor_id', $user->multiatendedor_id) }}"
                            class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300">
                 </div>
 
-                {{-- Nova Senha --}}
                 <div>
                     <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                         Nova Senha
@@ -64,7 +58,6 @@
                            class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300">
                 </div>
 
-                {{-- Confirmar Nova Senha --}}
                 <div>
                     <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                         Confirmar Nova Senha
@@ -74,7 +67,6 @@
                            class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300">
                 </div>
 
-                {{-- Super Admin --}}
                 <div>
                     <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                         Super Admin <span class="text-red-500">*</span>
@@ -116,7 +108,6 @@
                 @method('DELETE')
             </form>
 
-            {{-- Seção para Adicionar Novo Tenant --}}
             <div class="mt-8 mb-8 p-4 bg-white dark:bg-gray-800 rounded-lg shadow">
                 <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-4">
                     Adicionar Tenant
@@ -163,7 +154,6 @@
                 </form>
             </div>
 
-            {{-- Listagem de Tenants Associados --}}
             <div class="mb-4">
                 <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                     Tenants Associados

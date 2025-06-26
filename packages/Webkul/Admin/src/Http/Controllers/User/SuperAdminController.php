@@ -11,11 +11,6 @@ use Illuminate\Http\Request;
 
 class SuperAdminController extends Controller
 {
-    // ===== Métodos de Tenant (prefixados com "tenant") =====
-
-    /**
-     * Lista todos os tenants
-     */
     public function tenantIndex(Request $request, ApiTenantCtrl $apiController)
     {
         $jsonResource = $apiController->index();
@@ -26,17 +21,11 @@ class SuperAdminController extends Controller
         return view('admin::user.superAdmin.tenants.index', compact('tenants'));
     }
 
-    /**
-     * Exibe formulário de criação de tenant
-     */
     public function tenantCreate()
     {
         return view('admin::user.superAdmin.tenants.create');
     }
 
-    /**
-     * Persiste um novo tenant
-     */
     public function tenantStore(Request $request, ApiTenantCtrl $apiController)
     {
         $jsonResource = $apiController->store();
@@ -54,9 +43,6 @@ class SuperAdminController extends Controller
             ->withInput();
     }
 
-    /**
-     * Exibe formulário de edição de um tenant
-     */
     public function tenantEdit(Request $request, $id, ApiTenantCtrl $apiController)
     {
         $jsonResource = $apiController->show($id);
@@ -81,9 +67,6 @@ class SuperAdminController extends Controller
         return view('admin::user.superAdmin.tenants.edit', compact('tenant'));
     }
 
-    /**
-     * Atualiza um tenant existente
-     */
     public function tenantUpdate(Request $request, $id, ApiTenantCtrl $apiController)
     {
         $jsonResource = $apiController->update($id);
@@ -101,9 +84,6 @@ class SuperAdminController extends Controller
             ->withInput();
     }
 
-    /**
-     * Exclui um tenant
-     */
     public function tenantDestroy($id, ApiTenantCtrl $apiController)
     {
         $jsonResource = $apiController->destroy($id);
@@ -121,12 +101,6 @@ class SuperAdminController extends Controller
     }
 
 
-
-    // ===== Métodos de User (prefixados com "user") =====
-
-    /**
-     * Lista todos os usuários
-     */
     public function userIndex(Request $request, ApiUserCtrl $apiController)
     {
         $jsonResource = $apiController->index();
@@ -137,17 +111,11 @@ class SuperAdminController extends Controller
         return view('admin::user.superAdmin.users.index', compact('users'));
     }
 
-    /**
-     * Exibe formulário de criação de usuário
-     */
     public function userCreate()
     {
         return view('admin::user.superAdmin.users.create');
     }
 
-    /**
-     * Persiste um novo usuário
-     */
     public function userStore(Request $request, ApiUserCtrl $apiController)
     {
         $jsonResource = $apiController->store();
@@ -165,9 +133,6 @@ class SuperAdminController extends Controller
             ->withInput();
     }
 
-    /**
-     * Exibe formulário de edição de um usuário
-     */
     public function userEdit(
         Request $request,
         $id,
@@ -197,7 +162,7 @@ class SuperAdminController extends Controller
             $pivotMap = $userModel->tenantPivots
                 ->mapWithKeys(fn($p) => [$p->tenant_id => [
                     'pivot_id' => $p->id,
-                    'role_id' => $p->role_id  // Adiciona role_id ao mapeamento
+                    'role_id' => $p->role_id 
                 ]])
                 ->toArray();
         
@@ -210,7 +175,7 @@ class SuperAdminController extends Controller
                     'id'            => $tRes->id,
                     'name'          => $name,
                     'connection_id' => $pivotMap[$tRes->id]['pivot_id'],
-                    'role_id'       => $pivotMap[$tRes->id]['role_id']  // Adiciona role_id aqui
+                    'role_id'       => $pivotMap[$tRes->id]['role_id'] 
                 ];
             }
         }
@@ -233,10 +198,6 @@ class SuperAdminController extends Controller
         );
     }
     
-
-    /**
-     * Atualiza um usuário existente
-     */
     public function userUpdate(Request $request, $id, ApiUserCtrl $apiController)
     {
         $jsonResource = $apiController->update($id);
@@ -254,9 +215,6 @@ class SuperAdminController extends Controller
             ->withInput();
     }
 
-    /**
-     * Exclui um usuário
-     */
     public function userDestroy($id, ApiUserCtrl $apiController)
     {
         $jsonResource = $apiController->destroy($id);
@@ -275,30 +233,24 @@ class SuperAdminController extends Controller
 
     public function userTenantStore(Request $request, $userId, $tenantId, ApiUserTenantCtrl $apiUserTenantCtrl)
 {
-    // Dados fixos (como no Postman)
     $fixedData = [
-        'status'          => 1,          // Valor fixo
-        'view_permission' => 'global',    // Valor fixo
-        'groups'          => []           // Valor fixo (array vazio)
+        'status'          => 1,
+        'view_permission' => 'global',
+        'groups'          => []
     ];
 
-    // Sobrescreve user_id e tenant_id com os valores da rota
-    // E usa o role_id da requisição
     $requestData = array_merge($fixedData, [
         'user_id'   => $userId,
         'tenant_id' => $tenantId,
-        'role_id'   => $request->input('role_id', 1) // Pega do formulário ou usa 1 como padrão
+        'role_id'   => $request->input('role_id', 1) 
     ]);
 
-    // Substitui os dados da requisição atual pelos dados ajustados
     $request->replace($requestData);
 
     try {
-        // Chama o store() do ApiUserTenantCtrl (que já valida tudo)
         $jsonResource = $apiUserTenantCtrl->store();
         $payload = $jsonResource->toResponse($request)->getData(true);
 
-        // Redireciona para a edição do usuário com mensagem de sucesso
         return redirect()
             ->route('superAdmin.users.edit', ['user' => $userId])
             ->with('success', $payload['message'] ?? 'Usuário vinculado ao tenant com sucesso!');
