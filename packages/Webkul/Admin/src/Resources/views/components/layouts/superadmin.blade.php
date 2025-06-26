@@ -128,15 +128,12 @@
         function toggleDarkMode() {
             const isDarkMode = getDarkModeCookie() ? 0 : 1;
             
-            // Set cookie with 1 month expiry
             const expiryDate = new Date();
             expiryDate.setMonth(expiryDate.getMonth() + 1);
             document.cookie = 'dark_mode=' + isDarkMode + '; path=/; expires=' + expiryDate.toGMTString();
             
-            // Toggle dark class on html element
             document.documentElement.classList.toggle('dark', isDarkMode === 1);
             
-            // Update toggle switch position
             const toggleSwitch = document.getElementById('toggle-switch');
             if (isDarkMode === 1) {
                 toggleSwitch.classList.remove('left-0');
@@ -146,18 +143,15 @@
                 toggleSwitch.classList.add('left-0');
             }
             
-            // Emit events if you have an event emitter system
             if (window.$emitter) {
                 if (isDarkMode) {
                     window.$emitter.emit('change-theme', 'dark');
-                    // Update logo if you have one
                     const logoImage = document.getElementById('logo-image');
                     if (logoImage && window.dark_logo) {
                         logoImage.src = window.dark_logo;
                     }
                 } else {
                     window.$emitter.emit('change-theme', 'light');
-                    // Update logo if you have one
                     const logoImage = document.getElementById('logo-image');
                     if (logoImage && window.logo) {
                         logoImage.src = window.logo;
