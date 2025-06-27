@@ -13,12 +13,18 @@
         </div>
 
         <div class="px-6 py-4">
-            <div id="validationErrors" class="hidden bg-red-50 dark:bg-red-900/10 text-red-700 dark:text-red-400 px-4 py-3 rounded-md mb-6">
-                <div class="font-medium">Por favor, corrija os seguintes erros:</div>
-                <ul id="errorsList" class="mt-1 list-disc list-inside text-sm"></ul>
-            </div>
+            @if($errors->any())
+                <div class="bg-red-50 dark:bg-red-900/10 text-red-700 dark:text-red-400 px-4 py-3 rounded-md mb-6">
+                    <div class="font-medium">Por favor, corrija os seguintes erros:</div>
+                    <ul class="mt-1 list-disc list-inside text-sm">
+                        @foreach($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
 
-            <form id="editUserForm" class="space-y-6">
+            <form action="{{ route('superAdmin.users.update', $user->id) }}" method="POST" class="space-y-6">
                 @csrf
                 @method('PUT')
 
@@ -42,9 +48,9 @@
 
                 <div>
                     <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                        Multiatendedor User ID <span class="text-red-500">*</span>
+                        Multiatendedor User ID</span>
                     </label>
-                    <input type="text" name="multiatendedor_id" required
+                    <input type="text" name="multiatendedor_id"
                            value="{{ old('multiatendedor_id', $user->multiatendedor_id) }}"
                            class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300">
                 </div>
@@ -297,62 +303,6 @@ function confirmUserDelete() {
 }
 
 document.addEventListener('DOMContentLoaded', function() {
-    // Formulário de edição do usuário
-    const editForm = document.getElementById('editUserForm');
-    if (editForm) {
-        editForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-
-            // Validação de senha
-            const pwd = document.getElementById('password').value;
-            const cpwd = document.getElementById('password_confirmation').value;
-            if ((pwd || cpwd) && (pwd.length < 6 || pwd !== cpwd)) {
-                const errDiv = document.getElementById('validationErrors');
-                const errList = document.getElementById('errorsList');
-                errList.innerHTML = '<li>As senhas devem ter pelo menos 6 caracteres e serem iguais.</li>';
-                errDiv.classList.remove('hidden');
-                return;
-            }
-
-            // Envio do formulário via Fetch API
-            const url = "{{ route('superAdmin.users.update', $user->id) }}";
-            const formData = new FormData(this);
-
-            fetch(url, {
-                method: 'POST',
-                headers: {
-                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                    'X-HTTP-Method-Override': 'PUT'
-                },
-                body: formData
-            })
-            .then(response => {
-                if (response.redirected) {
-                    window.location.href = response.url;
-                } else {
-                    return response.json().then(json => {
-                        if (json.errors) {
-                            const errDiv = document.getElementById('validationErrors');
-                            const errList = document.getElementById('errorsList');
-                            errList.innerHTML = '';
-                            Object.values(json.errors).forEach(messages => {
-                                messages.forEach(msg => {
-                                    const li = document.createElement('li');
-                                    li.textContent = msg;
-                                    errList.appendChild(li);
-                                });
-                            });
-                            errDiv.classList.remove('hidden');
-                        }
-                    });
-                }
-            })
-            .catch(error => {
-                console.error('Erro na requisição:', error);
-            });
-        });
-    }
-
     // Formulário de adição de tenant
     const tenantForm = document.getElementById('tenantForm');
     if (tenantForm) {

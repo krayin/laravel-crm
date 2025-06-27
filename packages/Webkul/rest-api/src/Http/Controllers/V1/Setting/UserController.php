@@ -13,6 +13,8 @@ use Webkul\RestApi\Http\Request\MassUpdateRequest;
 use Webkul\RestApi\Http\Resources\V1\Setting\UserResource;
 use Webkul\User\Repositories\UserRepository;
 use Illuminate\Support\Arr;
+use Illuminate\Validation\ValidationException;
+use Illuminate\Database\QueryException;
 
 
 class UserController extends Controller
@@ -43,12 +45,18 @@ class UserController extends Controller
 
     public function store(): JsonResource
     {
-        $data = $this->validate(request(), [
-            'email'            => 'required|email|unique:users,email',
-            'name'             => 'required',
-            'multiatendedor_id'=> 'required',
-            'password'         => 'nullable|confirmed',
-            'is_super'         => 'sometimes|boolean',
+        $request = request();
+
+        if ($request->input('multiatendedor_id') === '') {
+            $request->merge(['multiatendedor_id' => null]);
+        }
+
+        $data = $this->validate($request, [
+            'email'             => 'required|email|unique:users,email',
+            'name'              => 'required',
+            'multiatendedor_id' => 'nullable|unique:users,multiatendedor_id',
+            'password'          => 'nullable|confirmed|min:6',
+            'is_super'          => 'sometimes|boolean',
         ]);
 
         if (!empty($data['password'])) {
@@ -57,19 +65,33 @@ class UserController extends Controller
             unset($data['password']);
         }
 
-        $data['status'] = $data['status'] ?? 1;
-
-        $user = auth('sanctum')->user();
-        if (!($user && $user->is_super)) {
-            unset($data['is_super']); 
+        $authUser = auth('sanctum')->user();
+        if (!($authUser && $authUser->is_super)) {
+            unset($data['is_super']);
         }
-        
+
         Event::dispatch('settings.user.create.before');
 
-        $user = $this->userRepository->create($data);
+        try {
+            $user = $this->userRepository->create($data);
+        } catch (QueryException $e) {
+            $info = $e->errorInfo;
+            if (
+                isset($info[1], $info[2])
+                && $info[1] === 1062
+                && str_contains($info[2], 'users_multiatendedor_id_unique')
+            ) {
+                throw ValidationException::withMessages([
+                    'multiatendedor_id' => [
+                        trans('validation.unique', ['attribute' => 'multiatendedor id'])
+                    ],
+                ]);
+            }
+            throw $e;
+        }
 
         Event::dispatch('settings.user.create.after', $user);
-        
+
         try {
             Mail::queue(new Create($user));
         } catch (\Exception $e) {
@@ -77,19 +99,25 @@ class UserController extends Controller
         }
 
         return new JsonResource([
-            'data' => new UserResource($user),
+            'data'    => new UserResource($user),
             'message' => trans('rest-api::app.settings.users.create-success'),
         ]);
     }
 
+
     public function update(int $id): JsonResource
     {
-        $data = $this->validate(request(), [
-            'email'            => 'sometimes|required|email|unique:users,email,' . $id,
-            'name'             => 'sometimes|required',
-            'password'         => 'nullable|confirmed',
-            'multiatendedor_id'=> 'sometimes|required',
-            'is_super'         => 'sometimes|required|boolean',
+        $request = request();
+        if ($request->input('multiatendedor_id') === '') {
+            $request->merge(['multiatendedor_id' => null]);
+        }
+
+        $data = $this->validate($request, [
+            'email'             => 'sometimes|required|email|unique:users,email,' . $id,
+            'name'              => 'sometimes|required',
+            'password'          => 'nullable|confirmed|min:6',
+            'multiatendedor_id' => 'nullable|unique:users,multiatendedor_id,' . $id,
+            'is_super'          => 'sometimes|required|boolean',
         ]);
 
         if (!empty($data['password'])) {
@@ -101,16 +129,33 @@ class UserController extends Controller
         $userFields = Arr::only($data, [
             'name', 'email', 'password', 'multiatendedor_id', 'is_super'
         ]);
-        $user = $this->userRepository->update($userFields, $id);
 
+        try {
+            $user = $this->userRepository->update($userFields, $id);
+        } catch (QueryException $e) {
+            $info = $e->errorInfo;
+            if (
+                isset($info[1], $info[2]) &&
+                $info[1] === 1062 &&
+                str_contains($info[2], 'users_multiatendedor_id_unique')
+            ) {
+                throw ValidationException::withMessages([
+                    'multiatendedor_id' => [
+                        trans('validation.unique', ['attribute' => 'multiatendedor id'])
+                    ],
+                ]);
+            }
+            throw $e;
+        }
 
         Event::dispatch('settings.user.update.after', $user);
 
         return new JsonResource([
-            'data' => new UserResource($user),
+            'data'    => new UserResource($user),
             'message' => trans('rest-api::app.settings.users.updated-success'),
         ]);
     }
+
 
     public function destroy(int $id): JsonResource
     {

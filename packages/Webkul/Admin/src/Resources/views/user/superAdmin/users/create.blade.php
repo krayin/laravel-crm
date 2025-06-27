@@ -9,12 +9,18 @@
         </div>
 
         <div class="px-6 py-4">
-            <div id="validationErrors" class="hidden bg-red-50 dark:bg-red-900/10 text-red-700 dark:text-red-400 px-4 py-3 rounded-md mb-6">
-                <div class="font-medium">Por favor, corrija os seguintes erros:</div>
-                <ul id="errorsList" class="mt-1 list-disc list-inside text-sm"></ul>
-            </div>
+           @if($errors->any())
+                <div class="bg-red-50 dark:bg-red-900/10 text-red-700 dark:text-red-400 px-4 py-3 rounded-md mb-6">
+                    <div class="font-medium">Por favor, corrija os seguintes erros:</div>
+                    <ul class="mt-1 list-disc list-inside text-sm">
+                        @foreach($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
 
-            <form id="createUserForm" class="space-y-6">
+            <form action="{{ route('superAdmin.users.store') }}" method="POST" class="space-y-6">
                 @csrf
 
                 <div>
@@ -30,8 +36,8 @@
                 </div>
 
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Multiatendedor User ID <span class="text-red-500">*</span></label>
-                    <input type="text" name="multiatendedor_id" required
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Multiatendedor User ID</span></label>
+                    <input type="text" name="multiatendedor_id"
                            class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300">
                 </div>
 
@@ -51,8 +57,8 @@
                     <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Super Admin<span class="text-red-500">*</span></label>
                     <select name="is_super" required
                             class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300">
-                            <option value=false >Não</option>
-                            <option value=true > Sim</option>
+                            <option value="0" >Não</option>
+                            <option value="1" > Sim</option>
                     </select>
                 </div>
 
@@ -72,59 +78,5 @@
         </div>
     </div>
 </div>
-
-@push('scripts')
-<script>
-  document.getElementById('createUserForm').addEventListener('submit', function(e) {
-    e.preventDefault();
-
-    const pwd = document.getElementById('password').value;
-    const cpwd = document.getElementById('password_confirmation').value;
-    if (pwd.length < 6 || cpwd.length < 6 || pwd !== cpwd) {
-      alert('As senhas devem ter pelo menos 6 caracteres e serem iguais.');
-      return;
-    }
-
-    const url = "{{ route('superAdmin.users.store') }}";
-    const data = {
-      name: this.name.value,
-      email: this.email.value,
-      multiatendedor_id: this.multiatendedor_id.value,
-      password: pwd,
-      password_confirmation: cpwd,
-      is_super: this.is_super.value === 'true' 
-    };
-    const headers = {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json',
-      'X-CSRF-TOKEN': '{{ csrf_token() }}'
-    };
-    const fetchOptions = { method: 'POST', headers, body: JSON.stringify(data) };
-
-    fetch(url, fetchOptions)
-  .then(response => {
-    if (response.redirected) {
-      window.location.href = response.url;
-      return;
-    }
-    return response.json().then(json => {
-      if (json.errors) {
-        const errList = document.getElementById('errorsList');
-        errList.innerHTML = '';
-        json.errors.forEach(msg => {
-          const li = document.createElement('li');
-          li.textContent = msg;
-          errList.appendChild(li);
-        });
-        document.getElementById('validationErrors').classList.remove('hidden');
-      }
-    });
-  })
-  .catch(err => {
-  });
-
-  });
-</script>
-@endpush
 
 @endsection

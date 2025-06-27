@@ -252,7 +252,7 @@ class SuperAdminController extends Controller
         $payload = $jsonResource->toResponse($request)->getData(true);
 
         return redirect()
-            ->route('superAdmin.users.edit', ['user' => $userId])
+            ->route('superAdmin.users.edit', ['id' => $userId])
             ->with('success', $payload['message'] ?? 'Usuário vinculado ao tenant com sucesso!');
 
     } catch (\Exception $e) {
