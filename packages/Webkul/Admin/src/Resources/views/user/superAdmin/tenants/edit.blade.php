@@ -34,13 +34,12 @@
                     >
                 </div>
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Multiatendedor Account ID <span class="text-red-500">*</span></label>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Multiatendedor Account ID</label>
                     <input
                         type="text"
                         name="multiatendedor_id"
                         value="{{ old('multiatendedor_id', $tenant['multiatendedor_id'] ?? '') }}"
                         class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300"
-                        required
                     >
                 </div>
                 <div>
