@@ -14,7 +14,7 @@ return [
         'activities'      => 'Activities',
         'webhook'         => 'Webhook',
         'contacts'        => 'Contacts',
-        'persons'         => 'Persons',
+        'persons'         => 'Companies',
         'organizations'   => 'Organizations',
         'products'        => 'Products',
         'settings'        => 'Settings',
@@ -151,7 +151,7 @@ return [
                         'title'       => 'Participants',
                         'placeholder' => 'Type to search participants',
                         'users'       => 'Users',
-                        'persons'     => 'Persons',
+                        'persons'     => 'Companies',
                         'no-results'  => 'No result found...',
                     ],
                 ],
@@ -379,7 +379,7 @@ return [
                     'tabs' => [
                         'leads'    => 'Leads',
                         'quotes'   => 'Quotes',
-                        'persons'  => 'Persons',
+                        'persons'  => 'Companies',
                         'products' => 'Products',
                     ],
 
@@ -434,11 +434,11 @@ return [
 
             'datagrid' => [
                 'subject'        => 'Subject',
-                'sales-person'   => 'Sales Person',
+                'sales-person'   => 'Sales Company',
                 'expired-at'     => 'Expired At',
                 'created-at'     => 'Created At',
                 'expired-quotes' => 'Expired Quote',
-                'person'         => 'Person',
+                'person'         => 'Company',
                 'subtotal'       => 'Subtotal',
                 'discount'       => 'Discount',
                 'tax'            => 'Tax',
@@ -457,12 +457,12 @@ return [
                 'discount'         => 'Discount',
                 'expired-at'       => 'Expired At',
                 'grand-total'      => 'Grand Total',
-                'person'           => 'Person',
+                'person'           => 'Company',
                 'price'            => 'Price',
                 'product-name'     => 'Product Name',
                 'quantity'         => 'Quantity',
                 'quote-id'         => 'Quote ID',
-                'sales-person'     => 'Sales Person',
+                'sales-person'     => 'Sales Company',
                 'shipping-address' => 'Shipping Address',
                 'sku'              => 'SKU',
                 'sub-total'        => 'Sub Total',
@@ -538,12 +538,12 @@ return [
     'contacts' => [
         'persons' => [
             'index' => [
-                'title'          => 'Persons',
-                'create-btn'     => 'Create Person',
-                'create-success' => 'Person created successfully.',
-                'update-success' => 'Person updated successfully.',
-                'delete-success' => 'Person deleted successfully.',
-                'delete-failed'  => 'Person can not be deleted.',
+                'title'          => 'Companies',
+                'create-btn'     => 'Create Company',
+                'create-success' => 'Company created successfully.',
+                'update-success' => 'Company updated successfully.',
+                'delete-success' => 'Company deleted successfully.',
+                'delete-failed'  => 'Company can not be deleted.',
 
                 'datagrid' => [
                     'contact-numbers'   => 'Contact Numbers',
@@ -559,7 +559,7 @@ return [
 
             'view' => [
                 'title'              => ':name',
-                'about-person'       => 'About Person',
+                'about-person'       => 'About Company',
                 'about-organization' => 'About Organization',
 
                 'activities' => [
@@ -628,13 +628,13 @@ return [
             ],
 
             'create' => [
-                'title'    => 'Create Person',
-                'save-btn' => 'Save Person',
+                'title'    => 'Create Company',
+                'save-btn' => 'Save Company',
             ],
 
             'edit' => [
-                'title'    => 'Edit Person',
-                'save-btn' => 'Save Person',
+                'title'    => 'Edit Company',
+                'save-btn' => 'Save Company',
             ],
         ],
 
@@ -652,7 +652,7 @@ return [
                     'edit'          => 'Edit',
                     'id'            => 'ID',
                     'name'          => 'Name',
-                    'persons-count' => 'Person Count',
+                    'persons-count' => 'Company Count',
                 ],
             ],
 
@@ -898,7 +898,7 @@ return [
                 'send-email-to-participants' => 'Send email to participants',
                 'add-webhook'                => 'Add Webhook',
                 'update-lead'                => 'Update Lead',
-                'update-person'              => 'Update Person',
+                'update-person'              => 'Update Company',
                 'send-email-to-person'       => 'Send email to person',
                 'add-tag'                    => 'Add Tag',
                 'add-note-as-activity'       => 'Add Note as Activity',
@@ -1011,7 +1011,7 @@ return [
                 'form-title-color'         => 'Form Title Color',
                 'general'                  => 'General',
                 'leads'                    => 'Leads',
-                'person'                   => 'Person',
+                'person'                   => 'Company',
                 'save-btn'                 => 'Save Webform',
                 'submit-button-label'      => 'Submit Button Label',
                 'submit-success-action'    => 'Submit Success Action',
@@ -1045,7 +1045,7 @@ return [
                 'form-title-color'          => 'Form Title Color',
                 'general'                   => 'General',
                 'leads'                     => 'Leads',
-                'person'                    => 'Person',
+                'person'                    => 'Company',
                 'preview'                   => 'Preview',
                 'public-url'                => 'Public URL',
                 'redirect-to-url'           => 'Redirect To URL',
@@ -1489,7 +1489,7 @@ return [
                     'entity-types' => [
                         'leads'         => 'Leads',
                         'organizations' => 'Organizations',
-                        'persons'       => 'Persons',
+                        'persons'       => 'Companies',
                         'products'      => 'Products',
                         'quotes'        => 'Quotes',
                         'warehouses'    => 'Warehouses',
@@ -1747,7 +1747,7 @@ return [
             'lead'            => 'Lead',
             'participants'    => 'Participants',
             'general'         => 'General',
-            'persons'         => 'Persons',
+            'persons'         => 'Companies',
             'no-result-found' => 'Records not found.',
             'users'           => 'Users',
         ],
@@ -1841,7 +1841,7 @@ return [
             'link-to-lead'               => 'Link To Lead',
             'linked-lead'                => 'Linked Lead',
             'lead-details'               => 'Lead Details',
-            'contact-person'             => 'Contact Person',
+            'contact-person'             => 'Contact Company',
             'product'                    => 'Product',
 
             'tags' => [
@@ -1899,13 +1899,13 @@ return [
 
             'datagrid' => [
                 'id'                  => 'ID',
-                'sales-person'        => 'Sales Person',
+                'sales-person'        => 'Sales Company',
                 'subject'             => 'Subject',
                 'source'              => 'Source',
                 'lead-value'          => 'Lead Value',
                 'lead-type'           => 'Lead Type',
                 'tag-name'            => 'Tag Name',
-                'contact-person'      => 'Contact Person',
+                'contact-person'      => 'Contact Company',
                 'stage'               => 'Stage',
                 'rotten-lead'         => 'Rotten Lead',
                 'date-to'             => 'Date To',
@@ -1924,11 +1924,11 @@ return [
                 'create-lead-btn'        => 'Create Lead',
 
                 'columns' => [
-                    'contact-person'      => 'Contact Person',
+                    'contact-person'      => 'Contact Company',
                     'id'                  => 'ID',
                     'lead-type'           => 'Lead Type',
                     'lead-value'          => 'Lead Value',
-                    'sales-person'        => 'Sales Person',
+                    'sales-person'        => 'Sales Company',
                     'source'              => 'Source',
                     'title'               => 'Title',
                     'tags'                => 'Tags',
@@ -1973,8 +1973,8 @@ return [
             'save-btn'       => 'Save',
             'details'        => 'Details',
             'details-info'   => 'Put The Basic Information of the Lead',
-            'contact-person' => 'Contact Person',
-            'contact-info'   => 'Information About the Contact Person',
+            'contact-person' => 'Contact Company',
+            'contact-info'   => 'Information About the Contact Company',
             'products'       => 'Products',
             'products-info'  => 'Information About the Products',
         ],
@@ -1984,8 +1984,8 @@ return [
             'save-btn'       => 'Save',
             'details'        => 'Details',
             'details-info'   => 'Put The Basic Information of the Lead',
-            'contact-person' => 'Contact Person',
-            'contact-info'   => 'Information About the Contact Person',
+            'contact-person' => 'Contact Company',
+            'contact-info'   => 'Information About the Contact Company',
             'products'       => 'Products',
             'products-info'  => 'Information About the Products',
         ],
@@ -2054,7 +2054,7 @@ return [
             ],
 
             'persons' => [
-                'title'     => 'About Persons',
+                'title'     => 'About Companies',
                 'job-title' => ':job_title at :organization',
             ],
 
@@ -2128,7 +2128,7 @@ return [
                         'mail'           => 'Mail',
                         'organizations'  => 'Organizations',
                         'outbox'         => 'Outbox',
-                        'persons'        => 'Persons',
+                        'persons'        => 'Companies',
                         'products'       => 'Products',
                         'quotes'         => 'Quotes',
                         'sent'           => 'Sent',
@@ -2209,7 +2209,7 @@ return [
                 'total-leads'           => 'Total Leads',
                 'average-leads-per-day' => 'Average Leads Per Day',
                 'total-quotations'      => 'Total Quotations',
-                'total-persons'         => 'Total Persons',
+                'total-persons'         => 'Total Companies',
                 'total-organizations'   => 'Total Organizations',
             ],
 
@@ -2239,8 +2239,8 @@ return [
             ],
 
             'top-persons' => [
-                'title'       => 'Top Persons',
-                'empty-title' => 'No Persons Found',
+                'title'       => 'Top Companies',
+                'empty-title' => 'No Companies Found',
                 'empty-info'  => 'No persons available for selected interval',
             ],
 
@@ -2270,8 +2270,8 @@ return [
         ],
         'activities'           => 'Activities',
         'contacts'             => 'Contacts',
-        'persons'              => 'Persons',
-        'person'               => 'Person',
+        'persons'              => 'Companies',
+        'person'               => 'Company',
         'organizations'        => 'Organizations',
         'organization'         => 'Organization',
         'products'             => 'Products',

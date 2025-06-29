@@ -138,7 +138,7 @@ return [
                 'name'       => 'contacts.persons',
                 'title'      => 'admin::app.configuration.index.general.settings.menu.persons',
                 'type'       => 'text',
-                'default'    => 'Persons',
+                'default'    => 'Companies',
                 'validation' => 'max:20',
             ], [
                 'name'       => 'contacts.organizations',

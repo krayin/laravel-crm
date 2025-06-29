@@ -30,7 +30,7 @@ Route::prefix('contacts')->group(function () {
     /**
      * Persons routes.
      */
-    Route::controller(PersonController::class)->prefix('persons')->group(function () {
+    Route::controller(PersonController::class)->prefix('companies')->group(function () {
         Route::get('', 'index')->name('admin.contacts.persons.index');
 
         Route::get('create', 'create')->name('admin.contacts.persons.create');
