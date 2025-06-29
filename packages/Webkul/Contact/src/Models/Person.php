@@ -2,6 +2,7 @@
 
 namespace Webkul\Contact\Models;
 
+use App\Models\RelatedContact;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Webkul\Activity\Models\ActivityProxy;
@@ -28,7 +29,8 @@ class Person extends Model implements PersonContract
      *
      * @var string
      */
-    protected $with = 'organization';
+    protected $with = ['organization', 'relatedContacts'];
+
 
     /**
      * The attributes that are castable.
@@ -87,6 +89,12 @@ class Person extends Model implements PersonContract
     public function tags()
     {
         return $this->belongsToMany(TagProxy::modelClass(), 'person_tags');
+    }
+
+
+    public function relatedContacts()
+    {
+        return $this->hasMany(RelatedContact::class);
     }
 
     /**

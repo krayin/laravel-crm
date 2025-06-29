@@ -30,7 +30,7 @@
 
                 {!! view_render_event('admin.contact.persons.view.tags.after', ['person' => $person]) !!}
 
-                
+
                 <!-- Title -->
                 <div class="mb-4 flex flex-col gap-0.5">
                     {!! view_render_event('admin.contact.persons.view.title.before', ['person' => $person]) !!}
@@ -45,16 +45,20 @@
 
                     {!! view_render_event('admin.contact.persons.view.title.after', ['person' => $person]) !!}
                 </div>
-                
+
                 <!-- Activity Actions -->
                 <div class="flex flex-wrap gap-2">
                     {!! view_render_event('admin.contact.persons.view.actions.before', ['person' => $person]) !!}
 
-                    <!-- Mail Activity Action -->
-                    <x-admin::activities.actions.mail
+                    <x-admin::activities.actions.related
                         :entity="$person"
                         entity-control-name="person_id"
                     />
+                    <!-- Mail Activity Action -->
+{{--                    <x-admin::activities.actions.mail--}}
+{{--                        :entity="$person"--}}
+{{--                        entity-control-name="person_id"--}}
+{{--                    />--}}
 
                     <!-- File Activity Action -->
                     <x-admin::activities.actions.file

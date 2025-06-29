@@ -31,6 +31,7 @@
         name="base-url"
         content="{{ url()->to('/') }}"
     >
+
     <meta
         name="currency"
         content="{{

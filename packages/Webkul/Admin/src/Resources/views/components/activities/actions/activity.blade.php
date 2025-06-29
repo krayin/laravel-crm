@@ -6,7 +6,6 @@
 <!-- Activity Button -->
 <div>
     {!! view_render_event('admin.components.activities.actions.activity.create_btn.before') !!}
-
     <button
         class="flex h-[74px] w-[84px] flex-col items-center justify-center gap-1 rounded-lg border border-transparent bg-blue-200 font-medium text-blue-800 transition-all hover:border-blue-400"
         @click="$refs.actionComponent.openModal('mail')"
@@ -100,7 +99,7 @@
                                 <x-admin::form.control-group.label class="required">
                                     @lang('admin::app.components.activities.actions.activity.title-control')
                                 </x-admin::form.control-group.label>
-                                
+
                                 <x-admin::form.control-group.control
                                     type="text"
                                     name="title"
@@ -116,7 +115,7 @@
                                 <x-admin::form.control-group.label>
                                     @lang('admin::app.components.activities.actions.activity.description')
                                 </x-admin::form.control-group.label>
-                                
+
                                 <x-admin::form.control-group.control
                                     type="textarea"
                                     name="comment"
@@ -142,7 +141,7 @@
                                     <x-admin::form.control-group.label class="required">
                                         @lang('admin::app.components.activities.actions.activity.schedule-from')
                                     </x-admin::form.control-group.label>
-                                    
+
                                     <x-admin::form.control-group.control
                                         type="datetime"
                                         name="schedule_from"
@@ -152,13 +151,13 @@
 
                                     <x-admin::form.control-group.error control-name="schedule_from" />
                                 </x-admin::form.control-group>
-                                
+
                                 <!-- Started To -->
                                 <x-admin::form.control-group class="w-full">
                                     <x-admin::form.control-group.label class="required">
                                         @lang('admin::app.components.activities.actions.activity.schedule-to')
                                     </x-admin::form.control-group.label>
-                                    
+
                                     <x-admin::form.control-group.control
                                         type="datetime"
                                         name="schedule_to"
@@ -175,7 +174,7 @@
                                 <x-admin::form.control-group.label>
                                     @lang('admin::app.components.activities.actions.activity.location')
                                 </x-admin::form.control-group.label>
-                                
+
                                 <x-admin::form.control-group.control
                                     type="text"
                                     name="location"
@@ -228,7 +227,7 @@
             data: function () {
                 return {
                     isStoring: false,
-                    
+
                     selectedType: {
                         label: "{{ trans('admin::app.components.activities.actions.activity.call') }}",
                         value: 'call'

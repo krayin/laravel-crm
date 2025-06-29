@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\RelatedContactController;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 use Webkul\Admin\Http\Controllers\Contact\OrganizationController;
@@ -16,6 +17,15 @@ Route::prefix('contacts')->group(function () {
         $maxId = DB::table('persons')->max('id') ?? 0;
         return response()->json(['next_crm_code' => $maxId + 1]);
     })->name('admin.contacts.persons.next-crm-code');
+
+
+
+    // Related Contacts CRUD (AJAX)
+    Route::prefix('related-contacts')->group(function () {
+        Route::post('/', [RelatedContactController::class, 'store'])->name('admin.contacts.related-persons.store');
+        Route::patch('{relatedContact}', [RelatedContactController::class, 'update'])->name('admin.contacts.related-persons.update');
+        Route::delete('{relatedContact}', [RelatedContactController::class, 'destroy'])->name('admin.contacts.related-persons.destroy');
+    });
 
     /**
      * Persons routes.

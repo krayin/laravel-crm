@@ -2,6 +2,7 @@
 
 namespace Webkul\Admin\Http\Controllers\Contact\Persons;
 
+use App\Models\RelatedContact;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -52,12 +53,51 @@ class PersonController extends Controller
      */
     public function store(AttributeForm $request): RedirectResponse|JsonResponse
     {
+        $relatedContacts=[];
+        if ($request->has('related_contacts')) {
+            $relatedContacts = $request->input('related_contacts');
+
+            // Remove 'related_contacts' from the request instance
+            $request->request->remove('related_contacts');
+
+            // Now $relatedContacts holds the data, and it's no longer in $request
+            // dd($relatedContacts);
+        }
 
         Event::dispatch('contacts.person.create.before');
 
         $person = $this->personRepository->create($request->all());
 
         Event::dispatch('contacts.person.create.after', $person);
+
+
+        foreach ($relatedContacts as $contactData) {
+            if (!empty($contactData['id'])) {
+                // Update existing
+                $existingContact = RelatedContact::find($contactData['id']);
+                if ($existingContact) {
+                    $existingContact->update([
+                        'name' => $contactData['name'],
+                        'person_id' => $person->id,
+                        'type' => $contactData['type'],
+                        'eid_expiry' => $contactData['eid_expiry'],
+                        'mobile_numbers' => $contactData['mobile_numbers'],
+                        'emails' => $contactData['emails'],
+                    ]);
+                }
+            } else {
+                // Create new
+                RelatedContact::create([
+                    'name' => $contactData['name'],
+                    'person_id' => $person->id,
+                    'type' => $contactData['type'],
+                    'eid_expiry' => $contactData['eid_expiry'],
+                    'mobile_numbers' => $contactData['mobile_numbers'],
+                    'emails' => $contactData['emails'],
+                ]);
+            }
+        }
+
 
         if (request()->ajax()) {
             return response()->json([

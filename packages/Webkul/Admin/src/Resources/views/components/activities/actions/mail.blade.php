@@ -69,14 +69,14 @@
                                 name="type"
                                 value="email"
                             />
-                            
+
                             <!-- Id -->
                             <x-admin::form.control-group.control
                                 type="hidden"
                                 ::name="entityControlName"
                                 ::value="entity.id"
                             />
-                            
+
                             <!-- To -->
                             <x-admin::form.control-group>
                                 <x-admin::form.control-group.label class="required">
