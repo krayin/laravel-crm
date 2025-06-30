@@ -50,48 +50,91 @@
             $currentTenantId = tenant('id');
             $currentTenant = collect($tenants)->firstWhere('id', $currentTenantId);
             $otherTenants = collect($tenants)->filter(fn ($tenant) => $tenant['id'] !== $currentTenantId);
+            $isModalOpen = false; // Variável para controlar o estado do modal
+        
+            $roles = [
+                1 => 'Administrator',
+                2 => 'Manager',
+                3 => 'Agent',
+            ];
         @endphp
-
+        
         @if ($otherTenants->isNotEmpty())
-            <x-admin::dropdown position="bottom-{{ in_array(app()->getLocale(), ['fa', 'ar']) ? 'left' : 'right' }}">
-                <x-slot:toggle>
-                    <button
-                        class="min-w-[20rem] py-1.5 px-4 rounded-md  cursor-pointer transition-all hover:bg-gray-100 dark:text-white dark:hover:bg-gray-950"
-                    >
-                        <span class="flex items-center justify-between w-full">
-                            <span>{{ $currentTenant['name'] ?? 'Tenant atual' }}</span>
-                            <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
-                            </svg>
-                        </span>
-                    </button>
-                   
-                </x-slot>
+        <x-admin::dropdown position="bottom-{{ in_array(app()->getLocale(), ['fa', 'ar']) ? 'left' : 'right' }}">
+            <x-slot:toggle>
+                <button
+                    class="min-w-[20rem] py-1.5 px-4 rounded-md cursor-pointer transition-all hover:bg-gray-100 dark:text-white dark:hover:bg-gray-950"
+                    x-on:click.stop
+                >
+                    <span class="flex items-center justify-between w-full">
+                        <span>{{ $currentTenant['name'] ?? 'Tenant atual' }}</span>
+                        <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+                        </svg>
+                    </span>
+                </button>
+            </x-slot>
 
-                <x-slot:content class="mt-2 border-t-0 !p-0">
-                    <div class="grid gap-1 pb-2.5 max-h-[200px] overflow-y-auto">
-                        @foreach ($otherTenants as $tenant)
-                            <x-admin::form method="POST" action="{{ route('admin.tenant.switch') }}">
-                                <input type="hidden" name="tenant_id" value="{{ $tenant['id'] }}">
-
-                                <button
-                                    type="submit"
-                                    class="w-full text-left cursor-pointer px-5 py-2.5 text-sm text-gray-800 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-950"
-                                >
-                                    {{ $tenant['name'] ?? 'Sem nome' }}
-                                </button>
-                            </x-admin::form>
-                        @endforeach
-                    </div>
-                </x-slot:content>
-            </x-admin::dropdown>
-        @else
-            <button
-                class="min-w-[20rem] py-1.5 px-4 rounded-md cursor-pointer transition-all hover:bg-gray-100 dark:text-white dark:hover:bg-gray-950 flex items-center justify-start"
+            <x-slot:content 
+                class="mt-2 border-t-0 !p-0 w-[25rem]" 
+                x-data="{ search: '', isOpen: false }"
+                x-show="isOpen"
+                @modal-toggle.window="isOpen = $event.detail.open"
+                @click.outside="isOpen = false"
+                x-transition
             >
-                <span>{{ $currentTenant['name'] ?? 'Tenant atual' }}</span>
-            </button>
-        @endif
+                <!-- Search Bar -->
+                <div class="px-4 py-3 border-b dark:border-gray-700" x-on:click.stop>
+                    <input 
+                        type="text" 
+                        x-model="search"
+                        placeholder="Pesquisar por nome ou ID..."
+                        class="w-full px-3 py-2 text-sm border rounded-md dark:bg-gray-800 dark:border-gray-700 dark:text-white"
+                        x-on:click.stop
+                    >
+                </div>
+                
+                <!-- Tenants List -->
+                <div class="grid gap-1 pb-2.5 max-h-[300px] overflow-y-auto" id="tenants-list">
+                    @foreach ($otherTenants as $tenant)
+                        <x-admin::form 
+                            method="POST" 
+                            action="{{ route('admin.tenant.switch') }}" 
+                            class="tenant-item"
+                            x-show="!search || 
+                                    '{{ strtoupper($tenant['name'] ?? '') }}'.includes(search.toUpperCase()) || 
+                                    '{{ $tenant['id'] }}'.includes(search)"
+                            x-on:click.stop
+                        >
+                            <input type="hidden" name="tenant_id" value="{{ $tenant['id'] }}">
+
+                            <button
+                                type="submit"
+                                class="w-full text-left cursor-pointer px-5 py-2.5 text-sm text-gray-800 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-950 flex justify-between items-center"
+                            >
+                                <div>
+                                    <div class="font-medium">{{ $tenant['name'] ?? 'Sem nome' }}</div>
+                                    <div class="text-xs text-gray-500 dark:text-gray-400">ID: {{ $tenant['id'] }}</div>
+                                </div>
+                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
+                                    {{ $tenant['role_id'] == 1 ? 'bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200' : 
+                                    ($tenant['role_id'] == 2 ? 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200' : 
+                                    'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200') }}">
+                                    {{ $roles[$tenant['role_id']] ?? 'Desconhecido' }}
+                                </span>
+                            </button>
+                        </x-admin::form>
+                    @endforeach
+                </div>
+            </x-slot:content>
+        </x-admin::dropdown>
+    @else
+        <button
+            class="min-w-[20rem] py-1.5 px-4 rounded-md cursor-pointer transition-all hover:bg-gray-100 dark:text-white dark:hover:bg-gray-950 flex items-center justify-start"
+        >
+            <span>{{ $currentTenant['name'] ?? 'Tenant atual' }}</span>
+        </button>
+    @endif
 
         <!-- Dark mode -->
         <v-dark>

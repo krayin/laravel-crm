@@ -79,6 +79,7 @@ class Bouncer
                     'id' => $tenant->id,
                     'domain' => $domain,
                     'name' => json_decode($tenant->data)->name ?? null,
+                    'role_id'  => $userTenant->role_id,
                 ];
             });
     }
