@@ -2211,6 +2211,7 @@ return [
         'tags'                 => 'Tags',
         'tags-info'            => 'Adicionar, editar ou excluir tags do CRM',
         'my-account'           => 'Minha conta',
+        'super-admin'          => 'Super Admin',
         'sign-out'             => 'Sair',
         'back'                 => 'Voltar',
         'name'                 => 'Nome',

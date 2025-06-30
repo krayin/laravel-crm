@@ -96,7 +96,6 @@ class ActivityController extends Controller
             ->union(DB::table('emails as parent')->where('parent.person_id', $personId))
             ->get();
 
-        logger('Email pór aqui ' . $emails);
 
         return $activities->concat($emails->map(function ($email) {
             return (object) [

@@ -2334,6 +2334,7 @@ return [
         'tags'                 => 'Tags',
         'tags-info'            => 'Add, edit or delete tags from CRM',
         'my-account'           => 'My Account',
+        'super-admin'          => 'Super Admin',
         'sign-out'             => 'Sign Out',
         'back'                 => 'Back',
         'name'                 => 'Name',

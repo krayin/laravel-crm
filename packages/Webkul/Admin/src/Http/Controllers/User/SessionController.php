@@ -53,7 +53,6 @@ class SessionController extends Controller
             ->exists();
 
         if (! $hasAccessToTenant) {
-            logger("a");
             session()->flash('error', trans('admin::app.users.login-error'));
 
             auth()->guard('user')->logout();

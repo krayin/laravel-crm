@@ -26,6 +26,14 @@ class UserTenantController extends Controller
         return new UserTenantResource($tenant);
     }
 
+    public function getUserTenantsByUserId(int $userId): JsonResource
+    {
+        $tenants = $this->userTenantRepository->findWhere(['user_id' => $userId]);
+
+        return UserTenantResource::collection($tenants);
+    }
+
+
     public function store(): JsonResource
     {
         $data = $this->validate(request(), [
