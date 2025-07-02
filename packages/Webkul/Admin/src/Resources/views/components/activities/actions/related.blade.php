@@ -107,6 +107,12 @@
                     if (!dateStr) return '';
 
                     const date = new Date(dateStr);
+
+
+                    if (isNaN(date.getTime()) || date.getFullYear() <= 2000) {
+                        return '-';
+                    }
+
                     const now = new Date();
 
                     // Format the date like "29 Jun 2025"
