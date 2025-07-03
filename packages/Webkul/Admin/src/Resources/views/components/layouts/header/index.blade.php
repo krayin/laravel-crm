@@ -148,6 +148,17 @@
                     >
                         @lang('admin::app.layouts.my-account')
                     </a>
+                    
+                    @if(auth()->guard('user')->user()->is_super)
+                    <a
+                        class="cursor-pointer px-5 py-2 text-base text-gray-800 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-950"
+                        href="{{ route('superAdmin.tenants.index') }}"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        @lang('admin::app.layouts.super-admin')
+                    </a>
+                    @endif
 
                     <!--Admin logout-->
                     <x-admin::form

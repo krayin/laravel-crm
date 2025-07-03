@@ -102,6 +102,7 @@ Route::group([
         Route::get('{id}', 'show')->where('id', '[0-9]+');
         Route::put('{id}', 'update');
         Route::delete('{id}', 'destroy');
+        Route::get('user/{userId}', 'getUserTenantsByUserId')->where('userId', '[0-9]+');
     });
 
     /**

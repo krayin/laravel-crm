@@ -50,8 +50,9 @@
 
             {!! view_render_event('admin.leads.index.view_switcher.pipeline.content.footer.before') !!}
 
-            <!-- Footer -->
-            <a
+            <!-- Footer --> 
+            {{-- Removendo a possibilidade de criar uma nova pipeline no frontend de leads --}}
+            {{-- <a
                 href="{{ route('admin.settings.pipelines.create') }}"
                 target="_blank"
                 class="flex items-center justify-between border-t border-gray-300 px-3 py-2.5 text-brandColor dark:border-gray-800"
@@ -59,7 +60,7 @@
                 <span class="font-medium">                    
                     @lang('admin::app.leads.index.view-switcher.create-new-pipeline')
                 </span>
-            </a>
+            </a> --}}
 
             {!! view_render_event('admin.leads.index.view_switcher.pipeline.content.footer.after') !!}
         </x-slot>

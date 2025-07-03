@@ -52,16 +52,17 @@
                 {!! view_render_event('admin.leads.view.title.after', ['lead' => $lead]) !!}
 
                 <!-- Activity Actions -->
-                <div class="flex flex-wrap gap-2">
+                <div class="flex flex-wrap gap-2 w-full justify-between">
                     {!! view_render_event('admin.leads.view.actions.before', ['lead' => $lead]) !!}
-
+                    {{--
                     @if (bouncer()->hasPermission('mail.compose'))
                         <!-- Mail Activity Action -->
                         <x-admin::activities.actions.mail
                             :entity="$lead"
                             entity-control-name="lead_id"
                         />
-                    @endif
+                    @endif 
+                    --}}
 
                     @if (bouncer()->hasPermission('activities.create'))
                         <!-- File Activity Action -->
@@ -111,19 +112,11 @@
                 :email-detach-endpoint="route('admin.leads.emails.detach', $lead->id)"
                 :extra-types="[
                     ['name' => 'description', 'label' => trans('admin::app.leads.view.tabs.description')],
-                    ['name' => 'products', 'label' => trans('admin::app.leads.view.tabs.products')],
-                    ['name' => 'quotes', 'label' => trans('admin::app.leads.view.tabs.quotes')],
+                   
                 ]"
             >
-                <!-- Products -->
-                <x-slot:products>
-                    @include ('admin::leads.view.products')
-                </x-slot>
 
-                <!-- Quotes -->
-                <x-slot:quotes>
-                    @include ('admin::leads.view.quotes')
-                </x-slot>
+
 
                 <!-- Description -->
                 <x-slot:description>

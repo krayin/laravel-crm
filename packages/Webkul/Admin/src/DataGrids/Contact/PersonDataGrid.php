@@ -26,11 +26,8 @@ class PersonDataGrid extends DataGrid
                 'persons.id',
                 'persons.name as person_name',
                 'persons.emails',
-                'persons.contact_numbers',
-                'organizations.name as organization',
-                'organizations.id as organization_id'
+                'persons.contact_numbers'
             )
-            ->leftJoin('organizations', 'persons.organization_id', '=', 'organizations.id')
             ->where(fn ($q) => $q->where('persons.tenant_id', tenant('id'))->orWhereNull('persons.tenant_id'));
 
         if ($userIds = bouncer()->getAuthorizedUserIds()) {
@@ -38,8 +35,7 @@ class PersonDataGrid extends DataGrid
         }
 
         $this->addFilter('id', 'persons.id');
-        $this->addFilter('person_name', 'persons.name');
-        $this->addFilter('organization', 'organizations.name');
+        $this->addFilter('person_name', 'persons.name'); 
 
         return $queryBuilder;
     }
@@ -87,22 +83,22 @@ class PersonDataGrid extends DataGrid
             'closure'    => fn ($row) => collect(json_decode($row->contact_numbers, true) ?? [])->pluck('value')->join(', '),
         ]);
 
-        $this->addColumn([
-            'index'              => 'organization',
-            'label'              => trans('admin::app.contacts.persons.index.datagrid.organization-name'),
-            'type'               => 'string',
-            'searchable'         => true,
-            'filterable'         => true,
-            'sortable'           => true,
-            'filterable_type'    => 'searchable_dropdown',
-            'filterable_options' => [
-                'repository' => OrganizationRepository::class,
-                'column'     => [
-                    'label' => 'name',
-                    'value' => 'name',
-                ],
-            ],
-        ]);
+        // $this->addColumn([
+        //     'index'              => 'organization',
+        //     'label'              => trans('admin::app.contacts.persons.index.datagrid.organization-name'),
+        //     'type'               => 'string',
+        //     'searchable'         => true,
+        //     'filterable'         => true,
+        //     'sortable'           => true,
+        //     'filterable_type'    => 'searchable_dropdown',
+        //     'filterable_options' => [
+        //         'repository' => OrganizationRepository::class,
+        //         'column'     => [
+        //             'label' => 'name',
+        //             'value' => 'name',
+        //         ],
+        //     ],
+        // ]);
     }
 
     /**

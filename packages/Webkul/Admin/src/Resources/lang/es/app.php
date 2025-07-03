@@ -2327,6 +2327,7 @@ return [
         'tags'                 => 'Etiquetas',
         'tags-info'            => 'Agregar, editar o eliminar etiquetas del CRM',
         'my-account'           => 'Mi Cuenta',
+        'super-admin'          => 'Super Admin',
         'sign-out'             => 'Cerrar Sesión',
         'back'                 => 'Volver',
         'name'                 => 'Nombre',

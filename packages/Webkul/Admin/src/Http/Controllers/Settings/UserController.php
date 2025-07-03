@@ -127,25 +127,25 @@ class UserController extends Controller
             'view_permission'  => 'nullable|string',
             'groups'           => 'nullable|array',
         ]);
-
-        if (!filled($data['password'])) {
+    
+        if (! filled($data['password'])) {
             unset($data['password'], $data['confirm_password']);
         } else {
             $data['password'] = bcrypt($data['password']);
         }
-
+    
         if (auth()->guard('user')->user()->id == $id) {
             unset($data['status']);
         }
-
+    
         Event::dispatch('settings.user.update.before', $id);
-
-        $admin = $this->userRepository->update($data, $id);
-
-        $userTenant = $admin->tenantPivots()
+    
+        $user = $this->userRepository->update($data, $id);
+    
+        $userTenant = $user->tenantPivots()
             ->where('tenant_id', tenant('id'))
             ->first();
-
+    
         if ($userTenant) {
             $userTenant->update([
                 'role_id'         => $data['role_id'],
@@ -153,16 +153,17 @@ class UserController extends Controller
                 'view_permission' => $data['view_permission'] ?? $userTenant->view_permission,
             ]);
         }
-
-        $admin->groups()->sync($data['groups'] ?? []);
-
-        Event::dispatch('settings.user.update.after', $admin);
-
+    
+        $user->groups()->sync($data['groups'] ?? []);
+    
+        Event::dispatch('settings.user.update.after', $user);
+    
         return new JsonResponse([
-            'data'    => $admin,
+            'data'    => $user,
             'message' => trans('admin::app.settings.users.index.update-success'),
         ]);
     }
+    
 
     /**
      * Search user results.
