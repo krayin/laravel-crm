@@ -19,11 +19,11 @@ class CreateTenantsTable extends Migration
             $table->string('api_token', 64)->nullable()->unique();
             $table->timestamps();
             $table->json('data')->nullable();
+            $table->unsignedInteger('lead_custom_fields_count')->nullable(); 
         });
     }
 
     /**
-     * Reverse the migrations.
      */
     public function down(): void
     {
