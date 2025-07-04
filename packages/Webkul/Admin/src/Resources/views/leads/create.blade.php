@@ -93,20 +93,44 @@
                     {!! view_render_event('admin.leads.create.details.before') !!}
 
                     <!-- Details section -->
-                    <div 
-                        class="flex flex-col gap-4" 
-                        id="lead-details"
-                    >
-                        <div class="flex flex-col gap-1">
-                            <p class="text-base font-semibold dark:text-white">
-                                @lang('admin::app.leads.create.details')
-                            </p>
+                    <div class="flex flex-col gap-4" id="lead-details">
+                        <div class="flex items-center justify-between gap-4">
+                            <div>
+                                <p class="text-base font-semibold dark:text-white">
+                                    @lang('admin::app.leads.create.details')
+                                </p>
 
-                            <p class="text-gray-600 dark:text-white">
-                                @lang('admin::app.leads.create.details-info')
-                            </p>
+                                <p class="text-gray-600 dark:text-white">
+                                    @lang('admin::app.leads.create.details-info')
+                                </p>
+                            </div>
+                            
+                            <!-- Add lead field button -->
+                            @php
+                                $currentTenant = tenant(); 
+                                $maxCustomFields = $currentTenant->lead_custom_fields_count;
+            
+                                $customFieldCount = app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
+                                    ['entity_type', '=', 'leads'],
+                                    ['code', 'NOTIN', ['lead_value', 'lead_type_id', 'lead_source_id', 'expected_close_date', 'user_id', 'lead_pipeline_id', 'lead_pipeline_stage_id']],
+                                    ['tenant_id', '=', $currentTenant->id],
+                                ])->count();
+                                logger('customFieldCount ' . $customFieldCount);
+
+                            @endphp
+
+                            @if ($customFieldCount < $maxCustomFields)
+                                <button
+                                    onclick="window.location.href='{{ route('admin.settings.attributes.create', ['entity_type' => 'leads']) }}'"
+                                    style="background-color:rgb(139, 37, 235); color: white;"
+                                    class="px-4 py-2 rounded hover:bg-blue-700"
+                                >
+                                    @lang('admin::app.leads.create.new-field')
+                                </button>
+                            @endif
+
                         </div>
-
+                        
                         <div class="w-1/2 max-md:w-full">
                             {!! view_render_event('admin.leads.create.details.attributes.before') !!}
 
@@ -130,7 +154,7 @@
                                 <div class="w-full">
                                     <x-admin::attributes
                                         :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
-                                            ['code', 'IN', ['lead_value', 'lead_type_id', 'lead_source_id']],
+                                            ['code', 'IN', ['lead_type_id', 'lead_source_id']],
                                             'entity_type' => 'leads',
                                             'quick_add'   => 1
                                         ])"
@@ -146,7 +170,7 @@
                                 <div class="w-full">
                                     <x-admin::attributes
                                         :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
-                                            ['code', 'IN', ['expected_close_date', 'user_id']],
+                                            ['code', 'IN', ['user_id', 'lead_value']],
                                             'entity_type' => 'leads',
                                             'quick_add'   => 1
                                         ])"
@@ -190,6 +214,27 @@
                     </div>
 
                     {!! view_render_event('admin.leads.create.contact_person.after') !!}
+
+                    <!-- Product Section -->
+                    <div 
+                        class="flex flex-col gap-4" 
+                        id="products"
+                    >
+                        <div class="flex flex-col gap-1">
+                            <p class="text-base font-semibold dark:text-white">
+                                @lang('admin::app.leads.create.products')
+                            </p>
+
+                            <p class="text-gray-600 dark:text-white">
+                                @lang('admin::app.leads.create.products-info')
+                            </p>
+                        </div>
+
+                        <div>
+                            <!-- Product Component -->
+                            @include('admin::leads.common.products')
+                        </div>
+                    </div>
                 </div>
                 
                 {!! view_render_event('admin.leads.form_controls.after') !!}

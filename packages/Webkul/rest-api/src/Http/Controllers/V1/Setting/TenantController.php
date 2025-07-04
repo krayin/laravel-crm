@@ -49,48 +49,53 @@ class TenantController extends Controller
 
     public function store(): JsonResource
     {
-        $validated = request()->validate([
-            'multiatendedor_id' => [
-                'nullable',
-                Rule::unique('tenants', 'multiatendedor_id'),
-            ],
-            'data.name' => [
-                'required',
-                Rule::unique('tenants', 'data->name'),
-            ],
-        ]);
-    
-        $multi = $validated['multiatendedor_id'] ?? null;
-        if (is_string($multi) && trim($multi) === '') {
-            $multi = null;
-        }
-    
-        $payload = [
-            'multiatendedor_id' => $multi,
-            'data'              => json_encode(request('data')),
-        ];
-    
-        DB::beginTransaction();
         try {
-            $tenant = $this->tenantRepository->create($payload);
-            $tenant->save();
-    
-            $domainName = Helper::formatDomainName($validated['data']['name']).'.localhost';
-            $domain = $this->domainRepository->create([
-                'domain'    => $domainName,
-                'tenant_id' => $tenant->id,
+            $this->validate(request(), [
+                'multiatendedor_id' => 'required',
+                'data'              => 'required',
             ]);
-            $domain->save();
-    
-            DB::commit();
-    
+
+            $data = request()->all();
+
+            $domainName = Helper::formatDomainName($data['data']['name']);
+
+            $data['data'] = json_encode($data['data']);
+
+            $admin = $this->tenantRepository->create($data);
+            $admin->save();
+
+            $tenant_id = $admin['id'];
+
+            // Domínio referente ao local
+            $domainData = [
+                'domain'    => $domainName.'.localhost',
+                'tenant_id' => $tenant_id,
+            ];
+
+            try {
+                $domain = $this->domainRepository->create($domainData);
+                $domain->save();
+                $updateDomain = true;
+            } catch (\Exception $e) {
+                logger()->error('Erro ao criar domínio: '.$e->getMessage());
+                $updateDomain = false;
+            }
+
+            if ($updateDomain) {
+                return new JsonResource([
+                    'data' => [
+                        'tenant' => new TenantResource($admin),
+                        'domain' => new DomainResource($domain),
+                    ],
+                    'message' => trans('rest-api::app.settings.tenants.create-success'),
+                ]);
+            }
+
             return new JsonResource([
-                'data'    => [
-                    'tenant' => new TenantResource($tenant),
-                    'domain' => new DomainResource($domain),
-                ],
-                'message' => trans('rest-api::app.settings.tenants.create-success'),
+                'data'    => new TenantResource($admin),
+                'message' => trans('rest-api::app.settings.tenants.failed-create-domain'),
             ]);
+
         } catch (\Exception $e) {
             DB::rollBack();
             logger()->error('Erro ao criar tenant/domínio: '.$e->getMessage());

@@ -32,10 +32,19 @@ class Bouncer
         }
 
         /**
+        * Permite que usuários com permissões limitadas acessem a criação de atributos
+        * personalizados, desde que a URL contenha o parâmetro 'entity_type'. Isso indica
+        * que vieram pelo botão e estão sujeitos a um limite de atributos.
+        */
+        if (request('entity_type')) return $next($request);
+
+        /**
          * If somehow the user deleted all permissions, then it should be
          * auto logged out and need to contact the administrator again.
          */
+
         if ($this->isPermissionsEmpty()) {
+            
             auth()->guard($guard)->logout();
 
             session()->flash('error', __('admin::app.errors.401'));

@@ -43,8 +43,14 @@ class AttributeController extends Controller
      */
     public function create(): View
     {
-        return view('admin::settings.attributes.create');
+        $leadAttributes = $this->attributeRepository->findWhere([
+            ['entity_type', '=', 'leads'],
+            ['tenant_id', '=', tenant()->id],
+        ]);
+        
+        return view('admin::settings.attributes.create', compact('leadAttributes'));
     }
+
 
     /**
      * Store a newly created resource in storage.
@@ -66,8 +72,13 @@ class AttributeController extends Controller
         Event::dispatch('settings.attribute.create.after', $attribute);
 
         session()->flash('success', trans('admin::app.settings.attributes.index.create-success'));
+        $readonlyEntityType = request('readonlyEntityType');
 
-        return redirect()->route('admin.settings.attributes.index');
+        if (!is_null($readonlyEntityType) && $readonlyEntityType !== '') {
+            return redirect()->route('admin.leads.create');
+        } else {
+            return redirect()->route('admin.settings.attributes.index');
+        }
     }
 
     /**
