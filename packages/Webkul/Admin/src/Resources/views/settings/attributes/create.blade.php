@@ -8,6 +8,7 @@
     <!-- Input Form -->
     <x-admin::form
         :action="route('admin.settings.attributes.store')"
+        
         enctype="multipart/form-data"
     >
         <div class="flex flex-col gap-4">
@@ -35,8 +36,8 @@
                     <!-- Create button for Attributes -->
                     <div class="flex items-center gap-x-2.5">
                         {!! view_render_event('admin.settings.attributes.create.create_button.before') !!}
-
-                        @if (bouncer()->hasPermission('settings.automation.attributes.create'))
+                        
+                        @if (bouncer()->hasPermission('settings.automation.attributes.create') || request('entity_type'))
                             <button
                                 type="submit"
                                 class="primary-button"
@@ -63,6 +64,9 @@
     {!! view_render_event('admin.settings.attributes.create.after') !!}
 
     @pushOnce('scripts')
+
+        
+
         <script
             type="text/x-template"
             id="v-create-attributes-template"
@@ -86,15 +90,16 @@
                                 @lang('admin::app.settings.attributes.create.name')
                             </x-admin::form.control-group.label>
 
-                            <x-admin::form.control-group.control
+                           <x-admin::form.control-group.control
                                 type="text"
                                 id="name"
                                 name="name"
                                 rules="required"
-                                value="{{ old('name') }}"
                                 :label="trans('admin::app.settings.attributes.create.name')"
                                 :placeholder="trans('admin::app.settings.attributes.create.name')"
+                                v-model="name"
                             />
+
 
                             <x-admin::form.control-group.error control-name="name" />
                         </x-admin::form.control-group>
@@ -271,11 +276,57 @@
                             </div>
                         </div>
                     </div>
+
+                   @if (request('entity_type'))
+                        <div class="box-shadow rounded-lg border border-gray-200 bg-white p-4 dark:border-gray-800 dark:bg-gray-900 w-full overflow-auto">
+                            <p class="mb-4 text-base font-semibold text-gray-800 dark:text-white">
+                                @lang('admin::app.leads.create.additional-information')
+                            </p>
+
+                            <div class="w-full overflow-x-auto">
+                                <table class="w-full text-sm text-left text-gray-700 dark:text-gray-300">
+                                    <thead class="bg-gray-100 dark:bg-gray-700 text-xs uppercase font-medium">
+                                        <tr>
+                                            <th class="px-4 py-2 border-b border-gray-300 dark:border-gray-600">@lang('admin::app.settings.attributes.create.code')</th>
+                                            <th class="px-4 py-2 border-b border-gray-300 dark:border-gray-600">@lang('admin::app.settings.attributes.create.name')</th>
+                                            <th class="px-4 py-2 border-b border-gray-300 dark:border-gray-600">@lang('admin::app.settings.attributes.create.type')</th>
+                                            <th class="px-4 py-2 border-b border-gray-300 dark:border-gray-600">@lang('admin::app.settings.attributes.create.validations')</th>
+                                            <th class="px-4 py-2 border-b border-gray-300 dark:border-gray-600">@lang('admin::app.settings.attributes.create.is-unique')</th>
+                                            <th class="px-4 py-2 border-b border-gray-300 dark:border-gray-600">@lang('admin::app.settings.attributes.create.is-required')</th>
+                                            
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($leadAttributes as $attribute)
+                                            <tr class="hover:bg-gray-50 dark:hover:bg-gray-800">
+                                                <td class="px-4 py-2 border-b border-gray-200 dark:border-gray-700">{{ $attribute['code'] }}</td>
+                                                <td class="px-4 py-2 border-b border-gray-200 dark:border-gray-700">{{ $attribute['name'] }}</td>
+                                                <td class="px-4 py-2 border-b border-gray-200 dark:border-gray-700">{{ $attribute['type'] }}</td>
+                                                <td class="px-4 py-2 border-b border-gray-200 dark:border-gray-700">
+                                                    {{ $attribute['validation'] ? $attribute['validation'] : 'null' }}
+                                                </td>
+                                                <td class="px-4 py-2 border-b border-gray-200 dark:border-gray-700">
+                                                    {{ $attribute['is_unique'] ? $attribute['is_unique'] : 'null' }}
+                                                </td>
+                                                <td class="px-4 py-2 border-b border-gray-200 dark:border-gray-700">
+                                                    {{ $attribute['is_required'] = 0 ? 'Sim' : 'Não' }}
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    @endif
+
                 </div>
 
                 {!! view_render_event('admin.settings.attributes.create.card.label.after') !!}
 
                 {!! view_render_event('admin.settings.attributes.create.card.general.before') !!}
+                
+  
+
 
                 <!-- Right sub-component -->
                 <div class="flex w-[360px] max-w-full flex-col gap-2">
@@ -291,6 +342,8 @@
 
                         <x-slot:content>
                             {!! view_render_event('admin.settings.attributes.create.form_controls.code.before') !!}
+                            
+                           
 
                             <!-- Code -->
                             <x-admin::form.control-group>
@@ -303,10 +356,13 @@
                                     id="code"
                                     name="code"
                                     rules="required"
-                                    value="{{ old('code') }}"
                                     :label="trans('admin::app.settings.attributes.create.code')"
                                     :placeholder="trans('admin::app.settings.attributes.create.code')"
+                                    :readonly="true"
+                                    v-model="code"
                                 />
+
+
 
                                 <x-admin::form.control-group.error control-name="code" />
                             </x-admin::form.control-group>
@@ -333,14 +389,27 @@
                                     @change="swatchAttribute=true"
                                 >
                                     <!-- Here! All Needed types are defined -->
-                                    @foreach(['text', 'textarea', 'price', 'boolean', 'select', 'multiselect', 'checkbox', 'email', 'address', 'phone', 'lookup', 'datetime', 'date', 'image', 'file'] as $type)
-                                        <option
-                                            value="{{ $type }}"
-                                            {{ $type === 'text' ? "selected" : '' }}
-                                        >
-                                            @lang('admin::app.settings.attributes.create.'. $type)
-                                        </option>
-                                    @endforeach
+                                    @if (request('entity_type') == 'leads')
+                                        @foreach(['text', 'price', 'multiselect', 'checkbox', 'email', 'phone'] as $type)
+                                            <option
+                                                value="{{ $type }}"
+                                                {{ $type === 'text' ? "selected" : '' }}
+                                            >
+                                                @lang('admin::app.settings.attributes.create.'. $type)
+                                            </option>
+                                        @endforeach
+
+                                    @else
+                                        @foreach(['text', 'textarea', 'price', 'boolean', 'select', 'multiselect', 'checkbox', 'email', 'address', 'phone', 'lookup', 'datetime', 'date', 'image', 'file'] as $type)
+                                            <option
+                                                value="{{ $type }}"
+                                                {{ $type === 'text' ? "selected" : '' }}
+                                            >
+                                                @lang('admin::app.settings.attributes.create.'. $type)
+                                            </option>
+                                        @endforeach
+                                    @endif
+
                                 </x-admin::form.control-group.control>
 
                                 <x-admin::form.control-group.error control-name="type" />
@@ -351,6 +420,10 @@
                             {!! view_render_event('admin.settings.attributes.create.form_controls.entity_type.before') !!}
 
                             <!-- Entity Type -->
+                             @php
+                                $readonlyEntityType = request('entity_type');
+                            @endphp
+                           <input type="hidden" name="readonlyEntityType" value="{{ request('entity_type') ?? '' }}" />
                             <x-admin::form.control-group>
                                 <x-admin::form.control-group.label class="required">
                                     @lang('admin::app.settings.attributes.create.entity-type')
@@ -361,16 +434,20 @@
                                     id="entity_type"
                                     name="entity_type"
                                     rules="required"
-                                    value="{{ old('entity_type') }}"
+                                    :value="$readonlyEntityType ?? old('entity_type')"
                                     :label="trans('admin::app.settings.attributes.create.entity-type')"
                                     :placeholder="trans('admin::app.settings.attributes.create.entity-type')"
                                 >
-
                                     @foreach (config('attribute_entity_types') as $key => $entityType)
-                                        <option value="{{ $key }}">{{ trans($entityType['name']) }}</option>
+                                        
+                                        <option value="{{ $key }}"
+                                            {{ (old('entity_type') ?? request('entity_type')) == $key ? 'selected' : '' }}
+                                        >
+                                            {{ trans($entityType['name']) }}
+                                        </option>
                                     @endforeach
                                 </x-admin::form.control-group.control>
-                                    
+
                                 <x-admin::form.control-group.error control-name="entity_type" />
                             </x-admin::form.control-group>
 
@@ -551,6 +628,10 @@
 
                 data() {
                     return {
+                        code: '{{ old('code') }}',
+                        
+                        name: '{{ old('name') }}',
+
                         optionRowCount: 1,
 
                         attributeType: '',
@@ -572,6 +653,15 @@
                         swatchValue: [],
 
                         lookupEntityTypes: @json(config('attribute_lookups')),
+                    }
+                },
+
+                watch: {
+                    name(newVal) {
+                            this.code = newVal
+                                .toLowerCase()
+                                .replace(/\s+/g, '_')
+                                .replace(/[^\w\-]+/g, '');
                     }
                 },
 
@@ -654,5 +744,6 @@
                 },
             });
         </script>
+
     @endPushOnce
 </x-admin::layouts>

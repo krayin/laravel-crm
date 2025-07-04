@@ -16,6 +16,7 @@ class Tenant extends Model implements TenantContract
         'updated_at',
         'data',
         'multiatendedor_id',
+        'lead_custom_fields_count',
     ];
 
     public function domains()
