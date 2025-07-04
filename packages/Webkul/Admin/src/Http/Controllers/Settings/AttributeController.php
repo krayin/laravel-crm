@@ -47,8 +47,7 @@ class AttributeController extends Controller
             ['entity_type', '=', 'leads'],
             ['tenant_id', '=', tenant()->id],
         ]);
-        logger('leads ' . $leadAttributes);
-
+        
         return view('admin::settings.attributes.create', compact('leadAttributes'));
     }
 

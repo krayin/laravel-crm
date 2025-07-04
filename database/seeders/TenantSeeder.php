@@ -17,9 +17,19 @@ class TenantSeeder extends Seeder
 
         DB::table('domains')->delete();
 
-        $tenant1 = Tenant::create(['id' => 1, 'name' => 'Tenant1']);
+        $tenant1 = Tenant::create([
+            'id' => 1, 
+            'name' => 'Tenant1',
+            'lead_custom_fields_count' => 3
+        ]);
+        
         $tenant1->domains()->create(['domain' => 'tenant1.localhost']);
-        $tenant2 = Tenant::create(['id' => 2, 'name' => 'Tenant2']);
+        $tenant2 = Tenant::create([
+            'id' => 2, 
+            'name' => 'Tenant2',
+            'lead_custom_fields_count' => 2
+        ]);
+        
         $tenant2->domains()->create(['domain' => 'tenant2.localhost']);
     }
 }

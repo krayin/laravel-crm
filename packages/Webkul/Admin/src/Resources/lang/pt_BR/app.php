@@ -1873,6 +1873,7 @@ return [
             'details'        => 'Detalhes',
             'details-info'   => 'Coloque as informações básicas do Negócio',
             'new-field'      => 'Novo Campo',
+            'additional-information' => 'Informações Adicionais',
             'contact-person' => 'Pessoa de Contato',
             'contact-info'   => 'Informações sobre a Pessoa de Contato',
             'products'       => 'Produtos',

@@ -36,8 +36,8 @@
                     <!-- Create button for Attributes -->
                     <div class="flex items-center gap-x-2.5">
                         {!! view_render_event('admin.settings.attributes.create.create_button.before') !!}
-
-                        @if (bouncer()->hasPermission('settings.automation.attributes.create'))
+                        
+                        @if (bouncer()->hasPermission('settings.automation.attributes.create') || request('entity_type'))
                             <button
                                 type="submit"
                                 class="primary-button"
@@ -280,7 +280,7 @@
                    @if (request('entity_type'))
                         <div class="box-shadow rounded-lg border border-gray-200 bg-white p-4 dark:border-gray-800 dark:bg-gray-900 w-full overflow-auto">
                             <p class="mb-4 text-base font-semibold text-gray-800 dark:text-white">
-                                Informações Adicionais
+                                @lang('admin::app.leads.create.additional-information')
                             </p>
 
                             <div class="w-full overflow-x-auto">
@@ -439,6 +439,7 @@
                                     :placeholder="trans('admin::app.settings.attributes.create.entity-type')"
                                 >
                                     @foreach (config('attribute_entity_types') as $key => $entityType)
+                                        
                                         <option value="{{ $key }}"
                                             {{ (old('entity_type') ?? request('entity_type')) == $key ? 'selected' : '' }}
                                         >
