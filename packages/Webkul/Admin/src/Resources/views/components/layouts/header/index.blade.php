@@ -49,16 +49,10 @@
             $tenants = bouncer()->getUserTenants();
             $currentTenantId = tenant('id');
             $currentTenant = collect($tenants)->firstWhere('id', $currentTenantId);
-          
-
             $otherTenants = collect($tenants)
             ->filter(fn ($tenant) => $tenant['id'] !== $currentTenantId)
-            ->toArray(); // Convertendo para array
-
-        $otherTenants = array_merge(...array_fill(0, 5, $otherTenants));
-
-        // Se precisar continuar usando como Collection:
-        $otherTenants = collect($otherTenants);
+            ->toArray(); 
+            $otherTenants = collect($otherTenants);
 
             $roles = [
                 1 => 'Administrator',
@@ -74,7 +68,7 @@
                         class="min-w-[20rem] py-1.5 px-4 rounded-md cursor-pointer transition-all hover:bg-gray-100 dark:text-white dark:hover:bg-gray-950"
                     >
                         <span class="flex items-center justify-between w-full">
-                            <span>{{ $currentTenant['name'] ?? 'Tenant atual' }}</span>
+                            <span>{{$currentTenant['name']}}</span>
                             <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
                             </svg>
@@ -83,8 +77,9 @@
                 </x-slot>
 
                 <x-slot:content 
-                    class="mt-2 border-t-0 !p-0 w-[25rem] flex flex-col h-[calc(100vh-10rem)]" 
+                    class="mt-2 border-t-0 !p-0 w-[25rem] flex flex-col" 
                     x-data="{ search: '', hasResults: true }"
+                    style="max-height: calc(100vh - 10rem);"
                 >
                     <!-- Search Bar -->
                     <div class="px-4 py-3 border-b dark:border-gray-700 flex-none" x-on:click.stop>
@@ -108,53 +103,55 @@
                         >
                     </div>
                     
-                    <!-- Tenants List -->
-                    <div class="grid gap-1 pb-2.5 max-h-[300px] overflow-y-auto" id="tenants-list">
-                        @foreach ($otherTenants as $tenant)
-                            <div 
-                                class="tenant-item"
-                                data-name="{{ $tenant['name'] ?? '' }}"
-                                data-id="{{ $tenant['id'] }}"
-                            >
-                                <x-admin::form 
-                                    method="POST" 
-                                    action="{{ route('admin.tenant.switch') }}"
-                                    x-on:click.stop
+                    <!-- Tenants List Container -->
+                    <div class="flex-1 overflow-y-auto" style="max-height: calc(100vh - 15rem);">
+                        <div id="tenants-list">
+                            @foreach ($otherTenants as $tenant)
+                                <div 
+                                    class="tenant-item"
+                                    data-name="{{ $tenant['name'] ?? '' }}"
+                                    data-id="{{ $tenant['id'] }}"
                                 >
-                                    <input type="hidden" name="tenant_id" value="{{ $tenant['id'] }}">
-
-                                    <button
-                                        type="submit"
-                                        class="w-full text-left cursor-pointer px-5 py-2.5 text-sm text-gray-800 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-950 flex justify-between items-center"
+                                    <x-admin::form 
+                                        method="POST" 
+                                        action="{{ route('admin.tenant.switch') }}"
+                                        x-on:click.stop
                                     >
-                                        <div>
-                                            <div class="font-medium">{{ $tenant['name'] ?? __('admin::app.layouts.unknown') }}</div>
-                                            <div class="text-xs text-gray-500 dark:text-gray-400">ID: {{ $tenant['id'] }}</div>
-                                        </div>
-                                        <span class="{{ 
-                                            'px-2 inline-flex text-xs leading-5 font-semibold rounded-full '.
-                                            ($tenant['role_id'] == 1 
-                                                ? 'bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200' 
-                                                : ($tenant['role_id'] == 2 
-                                                    ? 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200' 
-                                                    : 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200'
+                                        <input type="hidden" name="tenant_id" value="{{ $tenant['id'] }}">
+
+                                        <button
+                                            type="submit"
+                                            class="w-full text-left cursor-pointer px-5 py-2.5 text-sm text-gray-800 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-950 flex justify-between items-center"
+                                        >
+                                            <div>
+                                                <div class="font-medium">{{ $tenant['name'] ?? __('admin::app.layouts.unknown') }}</div>
+                                                <div class="text-xs text-gray-500 dark:text-gray-400">ID: {{ $tenant['id'] }}</div>
+                                            </div>
+                                            <span class="{{ 
+                                                'px-2 inline-flex text-xs leading-5 font-semibold rounded-full '.
+                                                ($tenant['role_id'] == 1 
+                                                    ? 'bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200' 
+                                                    : ($tenant['role_id'] == 2 
+                                                        ? 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200' 
+                                                        : 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200'
+                                                    )
                                                 )
-                                            )
-                                    }}">
-                                        {{ $roles[$tenant['role_id']] ?? __('admin::app.layouts.unknown') }}
-                                    </span>                                           
-                                    </button>
-                                </x-admin::form>
+                                            }}">
+                                                {{ $roles[$tenant['role_id']] ?? __('admin::app.layouts.unknown') }}
+                                            </span>                                           
+                                        </button>
+                                    </x-admin::form>
+                                </div>
+                            @endforeach
+                            
+                            <!-- No Results Message -->
+                            <div 
+                                class="px-4 py-3 text-center text-sm text-gray-500 dark:text-gray-400 tenant-no-results"
+                                x-show="!hasResults"
+                                style="display: none;"
+                            >
+                                {{ __('admin::app.layouts.no-other-tenants') }}
                             </div>
-                        @endforeach
-                        
-                        <!-- No Results Message -->
-                        <div 
-                            class="px-4 py-3 text-center text-sm text-gray-500 dark:text-gray-400 tenant-no-results"
-                            x-show="!hasResults"
-                            style="display: none;"
-                        >
-                            {{ __('admin::app.layouts.no-other-tenants') }}
                         </div>
                     </div>
                 </x-slot:content>
