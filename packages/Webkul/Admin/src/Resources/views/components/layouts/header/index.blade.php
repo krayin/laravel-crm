@@ -49,11 +49,7 @@
             $tenants = bouncer()->getUserTenants();
             $currentTenantId = tenant('id');
             $currentTenant = collect($tenants)->firstWhere('id', $currentTenantId);
-            $otherTenants = collect($tenants)
-            ->filter(fn ($tenant) => $tenant['id'] !== $currentTenantId)
-            ->toArray(); 
-            $otherTenants = collect($otherTenants);
-
+            $otherTenants = collect($tenants)->filter(fn ($tenant) => $tenant['id'] !== $currentTenantId);
             $roles = [
                 1 => 'Administrator',
                 2 => 'Manager',

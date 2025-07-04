@@ -82,7 +82,7 @@ class TenantSwitchController extends Controller
 
         auth()->guard('user')->login($user);  
 
-        return redirect()->route('admin.dashboard.index');
+        return redirect()->route('admin.leads.index');
     }
 
 }
