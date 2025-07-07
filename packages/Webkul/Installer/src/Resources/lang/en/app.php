@@ -110,7 +110,7 @@ return [
                 'manager-role'       => 'Leads Team',
                 'manager'            => 'Manager',
                 'agent-role'         => 'Performs Tasks',
-                'agent'              => ' Agent',
+                'agent'              => 'Agent',
             ],
         ],
 

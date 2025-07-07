@@ -50,11 +50,7 @@
             $currentTenantId = tenant('id');
             $currentTenant = collect($tenants)->firstWhere('id', $currentTenantId);
             $otherTenants = collect($tenants)->filter(fn ($tenant) => $tenant['id'] !== $currentTenantId);
-            $roles = [
-                1 => 'Administrator',
-                2 => 'Manager',
-                3 => 'Agent',
-            ];
+            $roles = bouncer()->fetchRoles();
         @endphp
 
         @if ($otherTenants->isNotEmpty())

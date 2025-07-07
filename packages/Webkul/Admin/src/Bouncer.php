@@ -4,6 +4,8 @@ namespace Webkul\Admin;
 
 use Webkul\User\Repositories\UserRepository;
 use Webkul\User\Models\UserTenant;
+use Webkul\RestApi\Http\Controllers\V1\Setting\RoleController;
+use Illuminate\Http\Request;
 
 class Bouncer
 {
@@ -83,4 +85,13 @@ class Bouncer
                 ];
             });
     }
+
+    public function fetchRoles()
+    {
+        $roles = app(RoleController::class)
+        ->index()
+        ->resolve(request());
+        return array_column($roles, 'name', 'id');
+    }
+
 }
