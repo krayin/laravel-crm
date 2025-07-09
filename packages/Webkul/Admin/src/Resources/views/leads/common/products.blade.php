@@ -12,7 +12,7 @@
         <div class="flex flex-col gap-4">
             {!! view_render_event('admin.leads.create.products.form_controls.table.before') !!}
 
-            <div class="block w-full overflow-x-auto">
+            <div class="block w-full">
                 <!-- Table -->
                 <x-admin::table>
                     {!! view_render_event('admin.leads.create.products.form_controls.table.head.before') !!}
@@ -93,6 +93,7 @@
                         ::src="src"
                         ::name="`${inputName}[name]`"
                         ::params="params"
+                        :preload="true"
                         :placeholder="trans('admin::app.leads.common.products.product-name')"
                         @on-selected="(product) => addProduct(product)"
                         ::value="{ id: product.product_id, name: product.name }"
@@ -250,7 +251,7 @@
 
                     this.product.name = result.name;
 
-                    this.product.price = result.price;
+                    this.product.price = result.price ?? 0;
 
                     this.product.quantity = result.quantity ?? 1;
                 },
