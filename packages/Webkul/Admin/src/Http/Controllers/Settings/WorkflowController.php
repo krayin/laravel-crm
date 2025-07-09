@@ -45,7 +45,7 @@ class WorkflowController extends Controller
     public function store(): RedirectResponse
     {
         $this->validate(request(), [
-            'name' => 'required',
+            'name' => 'required|unique:workflows,name',
         ]);
 
         Event::dispatch('settings.workflow.create.before');
@@ -75,7 +75,7 @@ class WorkflowController extends Controller
     public function update(int $id): RedirectResponse
     {
         $this->validate(request(), [
-            'name' => 'required',
+            'name' => 'required|unique:workflows,name,'.$id,
         ]);
 
         Event::dispatch('settings.workflow.update.before', $id);
