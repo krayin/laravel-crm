@@ -474,6 +474,7 @@ return [
                 'subject'          => 'Asunto',
                 'tax'              => 'Impuesto',
                 'title'            => 'Cotización',
+                'description'      => 'Descripción',
             ],
         ],
 
