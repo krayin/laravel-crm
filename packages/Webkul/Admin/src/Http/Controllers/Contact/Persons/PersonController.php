@@ -53,6 +53,7 @@ class PersonController extends Controller
      */
     public function store(AttributeForm $request): RedirectResponse|JsonResponse
     {
+        $data = $request->all();
         $relatedContacts=[];
         if ($request->has('related_contacts')) {
             $relatedContacts = $request->input('related_contacts');
@@ -62,16 +63,47 @@ class PersonController extends Controller
 
             // Now $relatedContacts holds the data, and it's no longer in $request
             // dd($relatedContacts);
+
+
+            foreach ($relatedContacts as $index =>$relatedContact) {
+                if($request->has("mobile_number_$index")){
+                    if ($request->get("mobile_number_$index") !=="+971"){
+
+                        $mobile_numbers = $this->ensureJsonArr($relatedContact['mobile_numbers']);
+
+                        $mobile_numbers[]=$request->get("mobile_number_$index");
+
+                        $relatedContacts[$index]['mobile_numbers']=json_encode($mobile_numbers,true);
+
+                        unset($data["mobile_number_$index"]);
+                    }
+                }
+                if($request->has("email_$index")){
+                    if (!empty($request->get("email_$index") )){
+
+                        $emails = $this->ensureJsonArr($relatedContact['emails']);
+
+                        $emails[]=$request->get("email_$index");
+
+                        $relatedContacts[$index]['emails']=json_encode($emails,true);
+
+
+                        unset($data["email_$index"]);
+                    }
+                }
+
+
+            }
         }
 
         Event::dispatch('contacts.person.create.before');
 
-        $person = $this->personRepository->create($request->all());
+        $person = $this->personRepository->create($data);
 
         Event::dispatch('contacts.person.create.after', $person);
 
 
-        foreach ($relatedContacts as $contactData) {
+        foreach ($relatedContacts as $index => $contactData) {
             if (!empty($contactData['id'])) {
                 // Update existing
                 $existingContact = RelatedContact::find($contactData['id']);
@@ -146,14 +178,74 @@ class PersonController extends Controller
         return view('admin::contacts.persons.edit', compact('person'));
     }
 
+    private function ensureJsonArr($input) {
+        // If input is already an array or object, return as is
+        if (is_array($input) || is_object($input)) {
+            return $input;
+        }
+
+        // If input is a string, check if it's valid JSON
+        if (is_string($input)) {
+            $decoded = json_decode($input, true);
+            if (json_last_error() === JSON_ERROR_NONE) {
+                // Valid JSON string, return decoded array/object
+                return $decoded;
+            } else {
+                // Not valid JSON, treat as plain string: wrap in array
+                return [];
+            }
+        }
+
+        // For anything else, return as is (or you can customize)
+        return [];
+    }
+
     /**
      * Update the specified resource in storage.
      */
     public function update(AttributeForm $request, int $id): RedirectResponse|JsonResponse
     {
+
+
+        $data= $request->all();
+        $relatedContacts=$request->related_contacts;
+
+        foreach ($relatedContacts as $index =>$relatedContact) {
+            if($request->has("mobile_number_$index")){
+                if ($request->get("mobile_number_$index") !=="+971"){
+
+                $mobile_numbers = $this->ensureJsonArr($relatedContact['mobile_numbers']);
+
+                $mobile_numbers[]=$request->get("mobile_number_$index");
+
+               $rc = RelatedContact::findorfail($relatedContact['id']);
+               $rc->mobile_numbers=json_encode($mobile_numbers,true);
+               $rc->save();
+
+                unset($data["mobile_number_$index"]);
+                }
+            }
+            if($request->has("email_$index")){
+                if (!empty($request->get("email_$index") )){
+
+                    $emails = $this->ensureJsonArr($relatedContact['emails']);
+
+                    $emails[]=$request->get("email_$index");
+
+                    $rc = RelatedContact::findorfail($relatedContact['id']);
+                    $rc->emails=json_encode($emails,true);
+                    $rc->save();
+
+                    unset($data["email_$index"]);
+                }
+            }
+
+
+        }
         Event::dispatch('contacts.person.update.before', $id);
 
-        $person = $this->personRepository->update($request->all(), $id);
+
+        $person = $this->personRepository->update($data, $id);
 
         Event::dispatch('contacts.person.update.after', $person);
 

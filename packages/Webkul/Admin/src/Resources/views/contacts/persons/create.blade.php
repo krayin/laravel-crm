@@ -246,7 +246,6 @@
                     <option value="Local Agent" ${contact.type === 'Local Agent' ? 'selected' : ''}>Local Agent</option>
                 </select>
                 <input type="date" name="related_contacts[${index}][eid_expiry]" class="input" value="${contact.eid_expiry}">
-
                 <div class="tags-input-wrapper" data-type="mobile_numbers" data-index="${index}">
                     <div class="tags-container"></div>
                     <div class="flex space-x-1 items-center mt-1">
@@ -261,7 +260,7 @@
                 <div class="tags-input-wrapper" data-type="emails" data-index="${index}">
                     <div class="tags-container"></div>
                     <div class="flex space-x-1 items-center mt-1">
-                        <input type="text" id="emails_${index}" class="tag-input input flex-grow" placeholder="Add email" autocomplete="off" spellcheck="false" />
+                        <input type="text" id="emails_${index}" name="email_${index}" class="tag-input input flex-grow" placeholder="Add email" autocomplete="off" spellcheck="false" />
                         <button data-index="${index}" type="button" class="addEmail flex h-9 w-9 cursor-pointer items-center justify-center rounded-full bg-brandColor text-white add-tag-btn">
                             <i class="icon-add text-2xl"></i>
                         </button>
