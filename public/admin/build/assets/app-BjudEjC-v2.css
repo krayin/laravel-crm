@@ -4,6 +4,10 @@
     height: 46px;
     padding: 0 10px;
 }
+.person-rate input[type="radio"] {
+    display: none;
+}
+
 .person-rate:not(:checked) > input {
     position:absolute;
     top:-9999px;
@@ -18,7 +22,8 @@
     color: #ccc;
     padding: 2px;
 }
-.person-rate:not(:checked) > label:before {
+
+.person-rate:not(:checked) > label:not(.no-rating):before {
     content: '★ ';
 }
 .person-rate > input:checked ~ label {
@@ -55,9 +60,33 @@
     color: #ccc;
     padding: 2px;
 }
-.person-rate-show:not(:checked) > label:before {
+.person-rate-show:not(:checked) > label:not(.no-rating):before {
     content: '★ ';
 }
 .person-rate-show > input:checked ~ label {
     color: #ffc700;
+}
+.icon-fill {
+    fill: gray;
+    transition: fill 0.3s ease;
+}
+
+.icon.red .icon-fill,
+.icon:hover .icon-fill {
+    fill: #D8453E;
+}
+
+.icon .icon-fill {
+    fill: gray;
+    transition: fill 0.3s ease;
+}
+
+/* Hover effect */
+.icon:hover .icon-fill {
+    fill: red;
+}
+
+/* When input is checked, style the associated label’s SVG */
+input[type="radio"]:checked + .icon .icon-fill {
+    fill: red;
 }
