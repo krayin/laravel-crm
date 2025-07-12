@@ -44,6 +44,7 @@ return [
         'import'          => 'Import',
         'event'           => 'Event',
         'campaigns'       => 'Campaigns',
+        'relatedContact'  => 'Persons',
     ],
 
     'users' => [
@@ -116,14 +117,14 @@ return [
                 ],
 
                 'file' => [
-                    'btn'           => 'File',
-                    'title'         => 'Add File',
-                    'title-control' => 'Title',
-                    'name'          => 'Name',
-                    'description'   => 'Description',
-                    'file'          => 'File',
-                    'save-btn'      => 'Save File',
-                    'issue-date'      => 'Issue Date',
+                    'btn'              => 'File',
+                    'title'            => 'Add File',
+                    'title-control'    => 'Title',
+                    'name'             => 'Name',
+                    'description'      => 'Description',
+                    'file'             => 'File',
+                    'save-btn'         => 'Save File',
+                    'issue-date'       => 'Issue Date',
                     'expiry-date'      => 'Expiry Date',
                 ],
 
@@ -634,6 +635,107 @@ return [
 
             'edit' => [
                 'title'    => 'Edit Company',
+                'save-btn' => 'Save Company',
+            ],
+        ],
+        'relatedContact' => [
+            'index' => [
+                'title'          => 'Persons',
+                'create-btn'     => 'Create Person',
+                'create-success' => 'Company created successfully.',
+                'update-success' => 'Company updated successfully.',
+                'delete-success' => 'Company deleted successfully.',
+                'delete-failed'  => 'Company can not be deleted.',
+
+                'datagrid' => [
+                    'contact-numbers'   => 'Contact Numbers',
+                    'delete'            => 'Delete',
+                    'edit'              => 'Edit',
+                    'emails'            => 'Emails',
+                    'id'                => 'ID',
+                    'view'              => 'View',
+                    'name'              => 'Name',
+                    'organization-name' => 'Organization Name',
+                ],
+            ],
+
+            'view' => [
+                'title'              => ':name',
+                'about-person'       => 'About Company',
+                'about-organization' => 'About Organization',
+
+                'activities' => [
+                    'index' => [
+                        'all'          => 'All',
+                        'calls'        => 'Calls',
+                        'meetings'     => 'Meetings',
+                        'lunches'      => 'Lunches',
+                        'files'        => 'Files',
+                        'quotes'       => 'Quotes',
+                        'notes'        => 'Notes',
+                        'emails'       => 'Emails',
+                        'by-user'      => 'By :user',
+                        'scheduled-on' => 'Scheduled on',
+                        'location'     => 'Location',
+                        'participants' => 'Participants',
+                        'mark-as-done' => 'Mark as Done',
+                        'delete'       => 'Delete',
+                        'edit'         => 'Edit',
+                    ],
+
+                    'actions' => [
+                        'mail' => [
+                            'btn'      => 'Mail',
+                            'title'    => 'Compose Mail',
+                            'to'       => 'To',
+                            'cc'       => 'CC',
+                            'bcc'      => 'BCC',
+                            'subject'  => 'Subject',
+                            'send-btn' => 'Send',
+                            'message'  => 'Message',
+                        ],
+
+                        'file' => [
+                            'btn'           => 'File',
+                            'title'         => 'Add File',
+                            'title-control' => 'Title',
+                            'name'          => 'File Name',
+                            'description'   => 'Description',
+                            'file'          => 'File',
+                            'save-btn'      => 'Save File',
+                        ],
+
+                        'note' => [
+                            'btn'      => 'Note',
+                            'title'    => 'Add Note',
+                            'comment'  => 'Comment',
+                            'save-btn' => 'Save Note',
+                        ],
+
+                        'activity' => [
+                            'btn'           => 'Activity',
+                            'title'         => 'Add Activity',
+                            'title-control' => 'Title',
+                            'description'   => 'Description',
+                            'schedule-from' => 'Schedule From',
+                            'schedule-to'   => 'Schedule To',
+                            'location'      => 'Location',
+                            'call'          => 'Call',
+                            'meeting'       => 'Meeting',
+                            'lunch'         => 'Lunch',
+                            'save-btn'      => 'Save Activity',
+                        ],
+                    ],
+                ],
+            ],
+
+            'create' => [
+                'title'    => 'Create Person',
+                'save-btn' => 'Save Person',
+            ],
+
+            'edit' => [
+                'title'    => 'Edit Person',
                 'save-btn' => 'Save Company',
             ],
         ],
@@ -2271,6 +2373,7 @@ return [
         'activities'           => 'Activities',
         'contacts'             => 'Contacts',
         'persons'              => 'Companies',
+        'relatedContact'       => 'Person',
         'person'               => 'Company',
         'organizations'        => 'Organizations',
         'organization'         => 'Organization',

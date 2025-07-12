@@ -2,7 +2,6 @@
 
 namespace Webkul\Admin\Http\Controllers\Contact\Persons;
 
-use App\Models\RelatedContact;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -14,6 +13,7 @@ use Webkul\Admin\Http\Controllers\Controller;
 use Webkul\Admin\Http\Requests\AttributeForm;
 use Webkul\Admin\Http\Requests\MassDestroyRequest;
 use Webkul\Admin\Http\Resources\PersonResource;
+use Webkul\Contact\Models\RelatedContact;
 use Webkul\Contact\Repositories\PersonRepository;
 
 class PersonController extends Controller

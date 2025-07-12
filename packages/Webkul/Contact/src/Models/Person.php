@@ -2,7 +2,6 @@
 
 namespace Webkul\Contact\Models;
 
-use App\Models\RelatedContact;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Webkul\Activity\Models\ActivityProxy;

@@ -1,12 +1,12 @@
 <?php
 
-use App\Http\Controllers\RelatedContactController;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 use Webkul\Admin\Http\Controllers\Contact\OrganizationController;
 use Webkul\Admin\Http\Controllers\Contact\Persons\ActivityController;
 use Webkul\Admin\Http\Controllers\Contact\Persons\PersonController;
 use Webkul\Admin\Http\Controllers\Contact\Persons\TagController;
+use Webkul\Admin\Http\Controllers\Contact\Related\RelatedContactController;
 
 Route::prefix('contacts')->group(function () {
 
@@ -19,12 +19,24 @@ Route::prefix('contacts')->group(function () {
     })->name('admin.contacts.persons.next-crm-code');
 
 
-
     // Related Contacts CRUD (AJAX)
-    Route::prefix('related-contacts')->group(function () {
-        Route::post('/', [RelatedContactController::class, 'store'])->name('admin.contacts.related-persons.store');
-        Route::patch('{relatedContact}', [RelatedContactController::class, 'update'])->name('admin.contacts.related-persons.update');
-        Route::delete('{relatedContact}', [RelatedContactController::class, 'destroy'])->name('admin.contacts.related-persons.destroy');
+    Route::controller(RelatedContactController::class)->prefix('related-contacts')->group(function () {
+        Route::get('/', 'index')->name('admin.contacts.related-contacts.index');
+        Route::post('/', 'store')->name('admin.contacts.related-persons.store');
+        Route::patch('{relatedContact}', 'update')->name('admin.contacts.related-persons.update');
+        Route::delete('{relatedContact}', 'destroy')->name('admin.contacts.related-persons.destroy');
+
+        Route::get('create', 'create')->name('admin.contacts.related-contacts.create');
+        Route::post('create', 'store')->name('admin.contacts.related-contacts.store');
+
+        Route::get('view/{id}', 'show')->name('admin.contacts.related-contacts.view');
+
+        Route::get('edit/{id}', 'edit')->name('admin.contacts.related-contacts.edit');
+
+        Route::put('edit/{relatedContact}', 'update')->name('admin.contacts.related-contacts.update');
+
+        Route::middleware(['throttle:100,60'])->delete('{id}', 'destroy')->name('admin.contacts.related-contacts.delete');
+
     });
 
     /**

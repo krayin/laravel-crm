@@ -156,11 +156,36 @@ return [
         'name'  => 'admin::app.acl.view',
         'route' => 'admin.contacts.persons.view',
         'sort'  => 5,
+    ],[
+        'key'   => 'contacts.relatedContact',
+        'name'  => 'admin::app.acl.relatedContact',
+        'route' => 'admin.contacts.related-contacts.index',
+        'sort'  => 6,
+    ], [
+        'key'   => 'contacts.relatedContact.create',
+        'name'  => 'admin::app.acl.create',
+        'route' => ['admin.contacts.related-contacts.create', 'admin.contacts.related-contacts.store'],
+        'sort'  => 7,
+    ], [
+        'key'   => 'contacts.relatedContact.edit',
+        'name'  => 'admin::app.acl.edit',
+        'route' => ['admin.contacts.related-contacts.edit', 'admin.contacts.related-contacts.update'],
+        'sort'  => 8,
+    ], [
+        'key'   => 'contacts.relatedContact.delete',
+        'name'  => 'admin::app.acl.delete',
+        'route' => ['admin.contacts.related-contacts.delete', 'admin.contacts.related-contacts.mass_delete'],
+        'sort'  => 9,
+    ],  [
+        'key'   => 'contacts.relatedContact.view',
+        'name'  => 'admin::app.acl.view',
+        'route' => 'admin.contacts.persons.view',
+        'sort'  => 10,
     ], [
         'key'   => 'contacts.persons.export',
         'name'  => 'admin::app.acl.export',
         'route' => 'admin.contacts.persons.export',
-        'sort'  => 6,
+        'sort'  => 11,
     ], [
         'key'   => 'contacts.organizations',
         'name'  => 'admin::app.acl.organizations',

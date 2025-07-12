@@ -128,6 +128,22 @@ Breadcrumbs::for('contacts.organizations.edit', function (BreadcrumbTrail $trail
     $trail->push(trans('admin::app.contacts.organizations.edit.title'), route('admin.contacts.organizations.edit', $organization->id));
 });
 
+
+Breadcrumbs::for('contacts.relatedContact', function (BreadcrumbTrail $trail) {
+    $trail->parent('contacts');
+    $trail->push(trans('admin::app.layouts.relatedContact'), route('admin.contacts.related-contacts.index'));
+});
+
+Breadcrumbs::for('contacts.relatedContact.view', function (BreadcrumbTrail $trail, $relatedContact) {
+    $trail->parent('contacts.relatedContact');
+    $trail->push(  $relatedContact->id);
+});
+
+Breadcrumbs::for('contacts.relatedContact.create', function (BreadcrumbTrail $trail) {
+    $trail->parent('contacts.relatedContact');
+    $trail->push(trans('admin::app.contacts.relatedContact.create.title'), route('admin.contacts.related-contacts.create'));
+});
+
 // Products
 Breadcrumbs::for('products', function (BreadcrumbTrail $trail) {
     $trail->parent('dashboard');
