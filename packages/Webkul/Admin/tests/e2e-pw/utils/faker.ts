@@ -464,10 +464,18 @@ function generateCampaignName() {
     ];
 
     return `${randomElement(adjectives)} ${randomElement(nouns)}`;
-}       
+}      
+
+/* Generate a random webhook URL */
+ function generateUniqueWebhookUrl(): string {
+  const timestamp = Date.now();
+  const random = Math.floor(Math.random() * 1000);
+  return `https://webhook.test/${timestamp}-${random}`;
+}
 
 
 export {
+    generateUniqueWebhookUrl,
     generateName,
     generateFirstName,
     generateLastName,
