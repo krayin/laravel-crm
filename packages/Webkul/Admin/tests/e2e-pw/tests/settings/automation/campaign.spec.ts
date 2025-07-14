@@ -1,8 +1,41 @@
 import { expect, test } from "../../../setup";
-import { generateCampaignName, generateDescription } from "../../../utils/faker";
+import { generateCampaignName, generateDate, generateDescription, generateFullName } from "../../../utils/faker";
 
 test.describe("campaign management", () => {
+   test("should create a event for campaign", async ({ adminPage }) => {
+        /**
+         * Reaching to the events listing page.
+         */
+        await adminPage.goto("admin/settings/marketing/events");
 
+        /**
+         * Opening create event form in modal.
+         */
+        await adminPage.getByRole("button", { name: "Create Event" }).click();
+
+        /**
+         * Filling the form with event details.
+         */
+        await adminPage
+            .locator('input[name="name"]')
+            .fill(generateFullName());
+        await adminPage
+            .locator('textarea[name="description"]')
+            .fill(generateDescription());
+        await adminPage
+            .locator('input[name="date"]')
+            .fill(generateDate());
+        await adminPage.getByRole('textbox', { name: 'Date *' }).press('Enter');
+
+        /**
+         * Save event and close the modal.
+         */
+         await adminPage.getByRole('button', { name: 'Save Event' }).click();
+
+        await expect(
+            adminPage.getByText("Event created successfully.")
+        ).toBeVisible();
+    });
     test("should create a campaign", async ({ adminPage }) => {
         /* Navigate to the campaigns listing page */
         await adminPage.goto("admin/settings/marketing/campaigns");
