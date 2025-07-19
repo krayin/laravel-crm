@@ -34,6 +34,7 @@ class PersonController extends Controller
     public function index()
     {
         if (request()->ajax()) {
+
             return datagrid(PersonDataGrid::class)->process();
         }
 

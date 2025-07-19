@@ -4,6 +4,7 @@ namespace Webkul\Admin\DataGrids\Contact;
 
 use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Webkul\Contact\Repositories\OrganizationRepository;
 use Webkul\DataGrid\DataGrid;
 
@@ -22,25 +23,82 @@ class PersonDataGrid extends DataGrid
     public function prepareQueryBuilder(): Builder
     {
         $queryBuilder = DB::table('persons')
+            ->distinct()
             ->addSelect(
                 'persons.id',
-                'persons.name as person_name',
+                DB::raw("CASE WHEN related_contacts.type = 'Manager' THEN related_contacts.name ELSE NULL END as person_name"),
+                'related_contacts.name as person_name',
+               // 'related_contacts.name as manager_name',
                 'persons.emails',
                 'persons.contact_numbers',
                 'organizations.name as organization',
                 'organizations.id as organization_id'
             )
-            ->leftJoin('organizations', 'persons.organization_id', '=', 'organizations.id');
+            ->leftJoin('organizations', 'persons.organization_id', '=', 'organizations.id')
+            ->leftJoin('related_contacts', 'related_contacts.person_id', '=', 'persons.id')
+            ->leftJoin('attribute_values', function ($join) {
+                $join->on('attribute_values.entity_id', '=', 'persons.id')
+                    ->where('attribute_values.entity_type', '=', 'persons');
+            });
+
 
         if ($userIds = bouncer()->getAuthorizedUserIds()) {
             $queryBuilder->whereIn('persons.user_id', $userIds);
         }
 
+
+        if (isset(request()->input('filters')['all'][0])) {
+            $term = request()->input('filters')['all'][0];
+
+            if (!empty($term)) {
+                [$persian, $arabic] = $this->normalizeSearchVariants($term);
+
+                $queryBuilder->whereExists(function ($query) use ($persian, $arabic) {
+                    $query->select(DB::raw(1))
+                        ->from('related_contacts')
+                        ->whereColumn('related_contacts.person_id', 'persons.id')
+                        ->where(function ($q) use ($persian, $arabic) {
+                            $q->where('related_contacts.name', 'like', "%{$persian}%")
+                                ->orWhere('related_contacts.name', 'like', "%{$arabic}%")
+                                ->orWhere('related_contacts.mobile_numbers', 'like', "%{$persian}%")
+                                ->orWhere('related_contacts.mobile_numbers', 'like', "%{$arabic}%")
+                                ->orWhere('related_contacts.emails', 'like', "%{$persian}%")
+                                ->orWhere('related_contacts.emails', 'like', "%{$arabic}%")
+                                ->orWhere('attribute_values.text_value', 'like', "%{$persian}%")
+                                ->orWhere('attribute_values.text_value', 'like', "%{$arabic}%");
+                        });
+                });
+            }
+        }
+
+
         $this->addFilter('id', 'persons.id');
+        $this->addFilter('emails', 'persons.emails');
         $this->addFilter('person_name', 'persons.name');
         $this->addFilter('organization', 'organizations.name');
 
+      //  dd($queryBuilder);
+
+        Log::info(
+            vsprintf(str_replace('?', "'%s'", $queryBuilder->toSql()), $queryBuilder->getBindings())
+        );
+      //  dd($queryBuilder->get());
+
         return $queryBuilder;
+    }
+
+
+    protected function normalizeSearchVariants($string): array
+    {
+        $normalized = trim($string);
+
+        // Arabic → Persian
+        $persian = str_replace(['ي', 'ك'], ['ی', 'ک'], $normalized);
+
+        // Persian → Arabic
+        $arabic = str_replace(['ی', 'ک'], ['ي', 'ك'], $normalized);
+
+        return [$persian, $arabic];
     }
 
     /**
@@ -65,6 +123,7 @@ class PersonDataGrid extends DataGrid
             'filterable' => true,
             'searchable' => true,
         ]);
+
 
         $this->addColumn([
             'index'      => 'emails',

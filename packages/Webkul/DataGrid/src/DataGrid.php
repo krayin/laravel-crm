@@ -328,17 +328,24 @@ abstract class DataGrid
     protected function processRequestedFilters(array $requestedFilters)
     {
         foreach ($requestedFilters as $requestedColumn => $requestedValues) {
-            if ($requestedColumn === 'all') {
-                $this->queryBuilder->where(function ($scopeQueryBuilder) use ($requestedValues) {
-                    foreach ($requestedValues as $value) {
-                        collect($this->columns)
-                            ->filter(fn ($column) => $column->getSearchable() && ! in_array($column->getType(), [
-                                ColumnTypeEnum::BOOLEAN->value,
-                                ColumnTypeEnum::AGGREGATE->value,
-                            ]))
-                            ->each(fn ($column) => $scopeQueryBuilder->orWhere($column->getColumnName(), 'LIKE', '%'.$value.'%'));
-                    }
-                });
+            if ($requestedColumn === 'all' ) {
+
+                if ($this->queryBuilder->from == 'persons'){
+
+                }else{
+                    $this->queryBuilder->where(function ($scopeQueryBuilder) use ($requestedValues) {
+                        foreach ($requestedValues as $value) {
+                            collect($this->columns)
+                                ->filter(fn ($column) => $column->getSearchable() && ! in_array($column->getType(), [
+                                        ColumnTypeEnum::BOOLEAN->value,
+                                        ColumnTypeEnum::AGGREGATE->value,
+                                    ]))
+                                ->each(fn ($column) => $scopeQueryBuilder->orWhere($column->getColumnName(), 'LIKE', '%'.$value.'%'));
+                        }
+                    });
+                }
+
+
             } else {
                 collect($this->columns)
                     ->first(fn ($column) => $column->getIndex() === $requestedColumn)
