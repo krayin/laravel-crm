@@ -511,7 +511,7 @@
                                 list.appendChild(div);
 
                                 // Sync date input
-                                document.querySelector(`input[type="date"]`).addEventListener('input', function () {
+                                document.querySelector(`input[name="related_contacts[${index}][eid_expiry]`).addEventListener('input', function () {
                                     contacts[index].eid_expiry = this.value;
                                     updateRelatedContact(contacts[index]);
                                 });
