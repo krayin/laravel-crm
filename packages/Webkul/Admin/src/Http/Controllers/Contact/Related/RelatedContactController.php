@@ -112,7 +112,7 @@ class RelatedContactController extends Controller
         $relatedContact->update([
             'name' => $validated['name'],
             'type' => $validated['type'] ?? null,
-            'eid_expiry' => $validated['eid_expiry'] ?? null,
+            'eid_expiry' => $request->eid_expiry ?? null,
             'mobile_numbers' => json_encode($mobile_numbers ?? []),
             'emails' => json_encode($emails ?? []),
         ]);
