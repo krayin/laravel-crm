@@ -15,6 +15,7 @@
         type="text/x-template"
         id="v-datagrid-search-template"
     >
+
         <slot
             name="search"
             :available="available"
@@ -28,7 +29,27 @@
 
             <template v-else>
                 <div class="flex w-full items-center gap-x-1.5">
+
+                    @if(request()->route()->getName() === 'admin.contacts.persons.index')
                     <!-- Search Panel -->
+                    <div class="flex max-w-[445px] items-center max-sm:w-full max-sm:max-w-full">
+                        <div class="relative w-full">
+                            <div class="icon-search absolute top-1.5 flex items-center text-2xl ltr:left-3 rtl:right-3"></div>
+
+                            <input
+                                type="text"
+                                name="crm_code"
+                                class="block w-full rounded-lg border bg-white py-1.5 leading-6 text-gray-600 transition-all hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 dark:focus:border-gray-400 ltr:pl-10 ltr:pr-3 rtl:pl-3 rtl:pr-10"
+                                placeholder="crm code"
+                                autocomplete="off"
+                                @keyup.enter="search_code"
+                            >
+                        </div>
+                    </div>
+
+                    @endif
+
+
                     <div class="flex max-w-[445px] items-center max-sm:w-full max-sm:max-w-full">
                         <div class="relative w-full">
                             <div class="icon-search absolute top-1.5 flex items-center text-2xl ltr:left-3 rtl:right-3"></div>
@@ -86,7 +107,7 @@
 
             props: ['isLoading', 'available', 'applied', 'src'],
 
-            emits: ['search', 'filter', 'applySavedFilter'],
+            emits: ['search','search_code', 'filter', 'applySavedFilter'],
 
             data() {
                 return {
@@ -130,7 +151,47 @@
                     }
 
                     this.$emit('search', this.filters);
+                }, search_code($event) {
+                    let requestedValue = $event.target.value;
+                    console.log('clc',requestedValue)
+
+                    let appliedColumn = this.filters.columns.find(column => column.index === 'all');
+
+                    if (! requestedValue) {
+                        console.log('clean')
+
+                        this.filters = {
+                            columns: [],
+                        };
+
+                        if (appliedColumn) {
+                            appliedColumn.value = [];
+                        }
+
+                        this.filters.columns.push({
+                            index: 'crm_code',
+                            value: []
+                        });
+
+                        this.$emit('search', this.filters);
+
+                        return;
+                    }
+
+
+                    if (appliedColumn) {
+                        appliedColumn.value = [];
+                    }
+
+
+                        this.filters.columns.push({
+                            index: 'crm_code',
+                            value: [requestedValue]
+                        });
+
+                    this.$emit('search', this.filters);
                 },
+
 
                 filter(filter) {
                     this.$emit('filter', filter);

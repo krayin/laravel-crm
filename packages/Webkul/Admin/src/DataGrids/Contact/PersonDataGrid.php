@@ -45,7 +45,28 @@ class PersonDataGrid extends DataGrid
         if ($userIds = bouncer()->getAuthorizedUserIds()) {
             $queryBuilder->whereIn('persons.user_id', $userIds);
         }
+        if (isset(request()->input('filters')['crm_code'][0])) {
+           // dd(request()->input('filters'));
+            $crm_code = request()->input('filters')['crm_code'][0];
+            $filters = request()->input('filters', []);
+            if (isset($filters['crm_code'])) {
+                unset($filters['crm_code']);
+                $filters['all']=[''];
+            }
+            request()->merge([
+                'filters' => $filters
+            ]);
 
+            if (intval($crm_code)>0){
+
+                $queryBuilder
+                    ->where('attribute_values.text_value','=', $crm_code)
+                    ->where('attribute_values.attribute_id','=', 74);
+
+
+            }
+
+        }
 
         if (isset(request()->input('filters')['all'][0])) {
             $term = request()->input('filters')['all'][0];
@@ -114,6 +135,7 @@ class PersonDataGrid extends DataGrid
             'sortable'   => true,
             'searchable' => true,
         ]);
+
 
         $this->addColumn([
             'index'      => 'person_name',
