@@ -1,3 +1,4 @@
+
 <x-admin::form.control-group.controls.inline.text
     type="inline"
     ::name="'{{ $attribute->code }}'"
@@ -11,3 +12,4 @@
     :url="$url"
     :allow-edit="$allowEdit"
 />
+

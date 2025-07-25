@@ -19,23 +19,30 @@
         id="v-inline-text-edit-template"
     >
         <div class="group w-full max-w-full hover:rounded-sm">
+
             <!-- Non-editing view -->
             <div
                 v-if="! isEditing"
                 class="flex h-[34px] items-center rounded border border-transparent transition-all"
                 :class="allowEdit ? 'hover:bg-gray-100 dark:hover:bg-gray-800' : ''"
+
             >
                 <x-admin::form.control-group.control
                     type="hidden"
                     ::id="name"
                     ::name="name"
                     v-model="inputValue"
+
+
+
                 />
 
                 <div
                     class="group relative h-[18px] !w-full pl-2.5"
                     :style="{ 'text-align': position }"
+                    @click="handleCopy"
                 >
+
                     <span class="cursor-pointer truncate rounded">
                         <template v-if="isDirty">
                             @{{
@@ -53,6 +60,7 @@
                             }}
                         </template>
                     </span>
+
 
                     <!-- Tooltip -->
                     <div
@@ -202,6 +210,16 @@
             },
 
             methods: {
+                handleCopy(){
+
+                    const text = this.inputValue;
+                    navigator.clipboard.writeText(text).then(() => {
+                        this.$emitter.emit('add-flash', { type: 'success', message: 'Copied to clipboard!' });
+                    }).catch(err => {
+                        console.error('Failed to copy: ', err);
+                    });
+
+                },
                 /**
                  * Toggle the input.
                  *

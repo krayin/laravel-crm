@@ -2,7 +2,7 @@
     'allowEdit' => true,
 ])
 
-<v-inline-date-edit 
+<v-inline-date-edit
     {{ $attributes }}
     :allow-edit="{{ $allowEdit ? 'true' : 'false' }}"
 >
@@ -24,6 +24,7 @@
                 v-if="! isEditing"
                 class="flex h-[34px] items-center rounded border border-transparent transition-all"
                 :class="allowEdit ? 'hover:bg-gray-100 dark:hover:bg-gray-800' : ''"
+                @click="handleCopy"
             >
                 <x-admin::form.control-group.control
                     type="hidden"
@@ -32,13 +33,13 @@
                     v-model="inputValue"
                 />
 
-                <div 
+                <div
                     class="group relative !w-full pl-2.5"
                     :style="{ 'text-align': position }"
                 >
                     <span class="cursor-pointer truncate rounded">
                         @{{ valueLabel ? valueLabel : inputValue.length > 20 ? inputValue.substring(0, 20) + '...' : inputValue }}
-                    </span> 
+                    </span>
 
                     <!-- Tooltip -->
                     <div
@@ -52,7 +53,7 @@
                         <div class="-mt-2 ml-4 h-3 w-3 rotate-45 bg-black dark:bg-white"></div>
                     </div>
                 </div>
-                
+
                 <template v-if="allowEdit">
                     <i
                         @click="toggle"
@@ -60,7 +61,7 @@
                     ></i>
                 </template>
             </div>
-        
+
             <!-- Editing view -->
             <div
                 class="relative flex w-full flex-col ltr:[&>span>i]:right-14 rtl:[&>span>i]:left-14"
@@ -79,7 +80,7 @@
                     ref="input"
                     readonly
                 />
-                    
+
                 <!-- Action Buttons -->
                 <div class="absolute top-1/2 flex -translate-y-1/2 transform gap-0.5 ltr:right-2 rtl:left-2">
                     <button
@@ -89,7 +90,7 @@
                     >
                         <i class="icon-tick text-md cursor-pointer font-bold text-green-600 dark:!text-green-600" />
                     </button>
-                
+
                     <button
                         type="button"
                         class="flex items-center justify-center bg-red-100 p-1 hover:bg-red-200 ltr:rounded-r-md rtl:rounded-l-md"
@@ -174,8 +175,8 @@
             watch: {
                 /**
                  * Watch the value prop.
-                 * 
-                 * @param {String} newValue 
+                 *
+                 * @param {String} newValue
                  */
                 value(newValue) {
                     this.inputValue = newValue;
@@ -183,9 +184,19 @@
             },
 
             methods: {
+                handleCopy(){
+
+                    const text = this.inputValue;
+                    navigator.clipboard.writeText(text).then(() => {
+                        this.$emitter.emit('add-flash', { type: 'success', message: 'Copied to clipboard!' });
+                    }).catch(err => {
+                        console.error('Failed to copy: ', err);
+                    });
+
+                },
                 /**
                  * Toggle the input.
-                 * 
+                 *
                  * @return {void}
                  */
                 toggle() {
@@ -194,7 +205,7 @@
 
                 /**
                  * Save the input value.
-                 * 
+                 *
                  * @return {void}
                  */
                 save() {
@@ -215,7 +226,7 @@
                                 this.inputValue = this.value;
 
                                 this.$emitter.emit('add-flash', { type: 'error', message: error.response.data.message });
-                            });                        
+                            });
                     }
 
                     this.$emit('on-change', {
@@ -226,7 +237,7 @@
 
                 /**
                  * Cancel the input value.
-                 * 
+                 *
                  * @return {void}
                  */
                 cancel() {

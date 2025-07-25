@@ -24,8 +24,9 @@
             <div
                 class="flex h-[34px] items-center rounded border border-transparent transition-all"
                 :class="allowEdit ? 'hover:bg-gray-100 dark:hover:bg-gray-800' : ''"
+                @click="handleCopy"
             >
-                <div 
+                <div
                     class="group relative !w-full pl-2.5"
                     :style="{ 'text-align': position }"
                 >
@@ -103,10 +104,10 @@
                                             @click="remove(email)"
                                         ></i>
                                     </div>
-                        
+
                                     <x-admin::form.control-group.error ::name="`${name}[${index}].value`"/>
                                 </template>
-                        
+
                                 <button
                                     type="button"
                                     class="flex max-w-max items-center gap-2 text-brandColor"
@@ -208,8 +209,8 @@
             watch: {
                 /**
                  * Watch the value prop.
-                 * 
-                 * @param {String} newValue 
+                 *
+                 * @param {String} newValue
                  */
                 value(newValue, oldValue) {
                     if (JSON.stringify(newValue) !== JSON.stringify(oldValue)) {
@@ -232,7 +233,7 @@
             computed: {
                 /**
                  * Get the validation rules.
-                 * 
+                 *
                  * @return {Object}
                  */
                 getValidation() {
@@ -245,9 +246,22 @@
             },
 
             methods: {
+                handleCopy(){
+                    let text = '';
+                    if (Array.isArray(this.inputValue) && this.inputValue.length > 0) {
+                        text = this.inputValue.map(item => item.value).join(', ');
+                    }
+
+                    navigator.clipboard.writeText(text).then(() => {
+                        this.$emitter.emit('add-flash', { type: 'success', message: 'Copied to clipboard!' });
+                    }).catch(err => {
+                        console.error('Failed to copy: ', err);
+                    });
+
+                },
                 /**
                  * Toggle the input.
-                 * 
+                 *
                  * @return {void}
                  */
                 toggle() {

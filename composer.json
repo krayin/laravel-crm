@@ -13,6 +13,7 @@
         "diglactic/laravel-breadcrumbs": "^8.0",
         "doctrine/dbal": "^3.0",
         "guzzlehttp/guzzle": "^7.0.1",
+        "intervention/image": "^3.11",
         "khaled.alshamaa/ar-php": "^6.3",
         "konekt/concord": "^1.10",
         "laravel/framework": "^10.0",

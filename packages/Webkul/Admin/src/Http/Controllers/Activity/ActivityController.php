@@ -17,6 +17,9 @@ use Webkul\Admin\Http\Requests\MassDestroyRequest;
 use Webkul\Admin\Http\Requests\MassUpdateRequest;
 use Webkul\Admin\Http\Resources\ActivityResource;
 use Webkul\Attribute\Repositories\AttributeRepository;
+use Intervention\Image\ImageManager;
+use Intervention\Image\Drivers\Gd\Driver;
+use function Laravel\Prompts\error;
 
 class ActivityController extends Controller
 {
@@ -202,6 +205,10 @@ class ActivityController extends Controller
     {
         try {
             $file = $this->fileRepository->findOrFail($id);
+
+            if (!empty($file->file_code)){
+                abort(404);
+            }
             $extension = pathinfo($file->path, PATHINFO_EXTENSION);
 
             if (!empty($file->name)) {
@@ -211,6 +218,68 @@ class ActivityController extends Controller
 
             return Storage::download($file->path);
         } catch (\Exception $exception) {
+            abort(404);
+        }
+    }
+
+
+    public function preview(int $id): StreamedResponse
+    {
+        try {
+            $file = $this->fileRepository->findOrFail($id);
+            $mimeType = Storage::mimeType($file->path);
+
+            return response()->stream(function () use ($file) {
+                // Get the image content from storage
+                $imageData = Storage::get($file->path);
+                $manager = new ImageManager(new Driver());
+
+                // Load main image and watermark
+                $image = $manager->read($imageData);
+                $watermark = $manager->read(public_path('images/watermark.png'));
+
+                $imgWidth = $image->width();
+                $imgHeight = $image->height();
+                $wmWidth = $watermark->width();
+                $wmHeight = $watermark->height();
+
+                $spacingX = 120; // spacing between watermark X
+                $spacingY = 120; // spacing between watermark Y
+
+                for ($y = 0; $y < $imgHeight; $y += $wmHeight + $spacingY) {
+                    for ($x = 0; $x < $imgWidth; $x += $wmWidth + $spacingX) {
+                        $image->place($watermark, 'top-left', $x, $y,30);
+                    }
+                }
+
+
+                // Insert watermark at bottom-right corner with 10px offset
+
+                // Output the image directly to the browser
+                echo $image->encode();
+            }, 200, [
+                'Content-Type' => $mimeType,
+                'Content-Disposition' => 'inline; filename="' . basename($file->path) . '"',
+            ]);
+        } catch (\Exception $e) {
+            abort(404);
+        }
+    }
+
+    public function previewOld(int $id): StreamedResponse
+    {
+        try {
+            $file = $this->fileRepository->findOrFail($id);
+
+            $mimeType = Storage::mimeType($file->path);
+
+            return response()->stream(function () use ($file) {
+                echo Storage::get($file->path);
+            }, 200, [
+                'Content-Type' => $mimeType,
+                'Content-Disposition' => 'inline; filename="' . basename($file->path) . '"',
+            ]);
+        } catch (\Exception $e) {
             abort(404);
         }
     }

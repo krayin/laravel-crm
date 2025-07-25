@@ -15,6 +15,7 @@ Route::controller(ActivityController::class)->prefix('activities')->group(functi
     Route::put('edit/{id}', 'update')->name('admin.activities.update');
 
     Route::get('download/{id}', 'download')->name('admin.activities.file_download');
+    Route::get('preview/{id}', 'preview')->name('admin.activities.file_preview');
 
     Route::delete('{id}', 'destroy')->name('admin.activities.delete');
 

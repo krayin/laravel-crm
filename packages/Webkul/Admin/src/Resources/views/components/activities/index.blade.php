@@ -9,6 +9,13 @@
 {!! view_render_event('admin.components.activities.before') !!}
 
 <!-- Lead Activities Vue Component -->
+@php
+    $person_id = request()->route('id');
+    $relateds = \Webkul\Contact\Models\RelatedContact::where('person_id','=',$person_id)->get();
+
+
+@endphp
+
 <v-activities
     endpoint="{{ $endpoint }}"
     email-detach-endpoint="{{ $emailDetachEndpoint }}"
@@ -55,6 +62,62 @@
                     {!! view_render_event('admin.components.activities.content.types.after') !!}
                 </div>
 
+                <template v-if="selectedType == 'document'" >
+
+                    <div  class="mx-6 my-4">
+                        <h3 class="font-bold mb-2">Company Documents</h3>
+                        <div class="grid grid-cols-4 gap-4">
+
+                            <UploadBox
+                                v-for="(doc, index) in getCompanyDocuments"
+                                :files="getAllFiles"
+                                :key="index"
+                                :label="doc.label"
+                                :entity_id="{{$person_id}}"
+                                :file_code="doc.code"
+                                :extra="doc.extra || false"
+                                v-model:file="doc.file"
+                            />
+                        </div>
+                    </div>
+                    <div style="height: 1px; background-color: #ccc; box-shadow: 0 2px 5px rgba(0,0,0,0.1); margin: 2rem 0;"></div>
+
+                    <div class="mx-6 my-4">
+                        <h3 class="font-bold mb-2">Manager / Partner Documents</h3>
+                        @foreach($relateds as $related)
+                            <h4 class="mb-2.5">{{$related->type}} : {{$related->name}}</h4>
+                            @if($related->type==='Family Visa')
+                                <div class="grid grid-cols-4 gap-4">
+                                    <UploadBox
+                                        v-for="(doc, index) in familyDocuments"
+                                        :files="getAllFiles"
+                                        :key="{{$related->id}}"
+                                        :label="doc.label"
+                                        :entity_id="{{$related->id}}"
+                                        :file_code="doc.code"
+                                        v-model:file="doc.file"
+                                    />
+                                </div>
+                            @else
+                            <div class="grid grid-cols-4 gap-4">
+                                <UploadBox
+                                    v-for="(doc, index) in relatedDocuments"
+                                    :files="getAllFiles"
+                                    :key="{{$related->id}}"
+                                    :label="doc.label"
+                                    :entity_id="{{$related->id}}"
+                                    :file_code="doc.code"
+                                    v-model:file="doc.file"
+                                />
+                            </div>
+                            @endif
+                            <div style="height: 1px; background-color: #ccc; box-shadow: 0 2px 5px rgba(0,0,0,0.1); margin: 2rem 0;"></div>
+
+
+                        @endforeach
+
+                    </div>
+                </template>
                 <!-- Show Default Activities if selectedType not in extraTypes -->
                 <template v-if="! extraTypes.find(type => type.name == selectedType)">
                     <div class="animate-[on-fade_0.5s_ease-in-out] p-4">
@@ -114,6 +177,7 @@
                                                     </p>
                                                 </template>
                                             </p>
+
 
                                             <template v-if="activity.type == 'email'">
                                                 <p class="dark:text-white">
@@ -206,6 +270,7 @@
 
                                                 v-for="(file, index) in activity.files"
                                             >
+                                            <div v-if="file.file_code===null">
                                                 <a :href="
                                                     activity.type == 'email'
                                                     ? `{{ route('admin.mail.attachment_download', 'replaceID') }}`.replace('replaceID', file.id)
@@ -242,6 +307,7 @@
 
                                                 </span>
                                                 </div>
+                                            </div>
                                             </div>
 
                                         </div>
@@ -432,6 +498,9 @@
                             name: 'all',
                             label: "{{ trans('admin::app.components.activities.index.all') }}",
                         }, {
+                            name: 'document',
+                            label: "Documents",
+                        }, {
                             name: 'planned',
                             label: "{{ trans('admin::app.components.activities.index.planned') }}",
                         }, {
@@ -467,6 +536,74 @@
 
             data() {
                 return {
+                    companyDocuments: [
+                        {
+                            label:'License',code:"license", file: null
+                        },
+                        {
+                            label:'MOA',code:"moa", file: null ,extra: true
+                        },
+                        {
+                            label:'Amendment MOA(1)',code:"amoa1", file: null ,extra: true
+                        },
+                        {
+                            label:'Ejari',code:"ejari", file: null
+                        },
+                        {
+                            label:'Establishment Card',code:"ecard", file: null
+                        },
+                        {
+                            label:'Local Agent Passport',code:"local_agent_passport", file: null
+                        },
+                        {
+                            label:'Local Agent ID',code:"local_agent_id", file: null
+                        }
+            ],
+                    relatedDocuments: [
+                        {
+                            label:'EID',code:"eid", file: null
+                        },
+                        {
+                            label:'Passport',code:"passport", file: null
+                        },
+                        {
+                            label:'Birth Certificate',code:"birth_certificate", file: null
+                        },
+                        {
+                            label:'National ID',code:"national_id", file: null
+                        },
+                        {
+                            label:'Visa Stamp',code:"visa_stamp", file: null
+                        },
+                        {
+                            label:'Official Picture',code:"official_picture", file: null
+                        },
+                        {
+                            label:'Selfi With Passport',code:"selfi", file: null
+                        }
+            ], familyDocuments: [
+                        {
+                            label:'EID',code:"eid", file: null
+                        },
+                        {
+                            label:'Passport',code:"passport", file: null
+                        },
+                        {
+                            label:'Birth Certificate',code:"birth_certificate", file: null
+                        },
+                        {
+                            label:'National ID',code:"national_id", file: null
+                        },
+                        {
+                            label:'Visa Stamp',code:"visa_stamp", file: null
+                        },
+                        {
+                            label:'Official Picture',code:"official_picture", file: null
+                        },
+                        {
+                            label:'Family Relationship Certificate',code:"family_certificate", file: null
+                        }
+            ],
                     isLoading: false,
 
                     isUpdating: {},
@@ -492,37 +629,36 @@
                             title: "{{ trans('admin::app.components.activities.index.empty-placeholders.all.title') }}",
                             description: "{{ trans('admin::app.components.activities.index.empty-placeholders.all.description') }}",
                         },
-
+                        document: {
+                            image: "{{ vite()->asset('images/empty-placeholders/files.svg') }}",
+                            title: "",
+                            description: "",
+                        },
                         planned: {
                             image: "{{ vite()->asset('images/empty-placeholders/plans.svg') }}",
                             title: "{{ trans('admin::app.components.activities.index.empty-placeholders.planned.title') }}",
                             description: "{{ trans('admin::app.components.activities.index.empty-placeholders.planned.description') }}",
                         },
-
                         note: {
                             image: "{{ vite()->asset('images/empty-placeholders/notes.svg') }}",
                             title: "{{ trans('admin::app.components.activities.index.empty-placeholders.notes.title') }}",
                             description: "{{ trans('admin::app.components.activities.index.empty-placeholders.notes.description') }}",
                         },
-
                         call: {
                             image: "{{ vite()->asset('images/empty-placeholders/calls.svg') }}",
                             title: "{{ trans('admin::app.components.activities.index.empty-placeholders.calls.title') }}",
                             description: "{{ trans('admin::app.components.activities.index.empty-placeholders.calls.description') }}",
                         },
-
                         meeting: {
                             image: "{{ vite()->asset('images/empty-placeholders/meetings.svg') }}",
                             title: "{{ trans('admin::app.components.activities.index.empty-placeholders.meetings.title') }}",
                             description: "{{ trans('admin::app.components.activities.index.empty-placeholders.meetings.description') }}",
                         },
-
                         lunch: {
                             image: "{{ vite()->asset('images/empty-placeholders/lunches.svg') }}",
                             title: "{{ trans('admin::app.components.activities.index.empty-placeholders.lunches.title') }}",
                             description: "{{ trans('admin::app.components.activities.index.empty-placeholders.lunches.description') }}",
                         },
-
                         file: {
                             image: "{{ vite()->asset('images/empty-placeholders/files.svg') }}",
                             title: "{{ trans('admin::app.components.activities.index.empty-placeholders.files.title') }}",
@@ -547,14 +683,97 @@
             },
 
             computed: {
+                getCompanyDocuments(){
+                    const files = this.activities.filter(activity => activity.type == "file");
+                    console.log("files",files)
+
+                    const matchingFiles = files
+                        .flatMap(item => item.files || [])  // flatten all nested files
+                        .filter(file => file?.file_code?.startsWith('amoa'));
+                    console.log("matchingFiles",matchingFiles)
+
+// Extract numbers from matching file_codes, e.g. "moa", "moa1", "moa23", "moa100"
+                    const numbers = matchingFiles.map(file => {
+                        const match = file.file_code.match(/^amoa(\d*)$/);
+                        // If no number after 'moa', treat it as 0
+                        return match && match[1] ? parseInt(match[1], 10) : 0;
+                    });
+
+                    console.log("numbers",numbers)
+
+
+// Find the max number
+                    const lastNumber = numbers.length ? Math.max(...numbers) : 0;
+
+                    console.log("lastNumber",lastNumber)
+                   let compDocs= [
+                        {
+                            label:'License',code:"license", file: null
+                        },
+                        {
+                            label:'MOA',code:"moa", file: null ,extra: true
+                        },
+                        {
+                            label:'Amendment MOA(1)',code:"amoa1", file: null ,extra: true
+                        }];
+                    for (let i = 2; i <= lastNumber+1; i++) {
+                        compDocs.push({
+                            label: `Amendment MOA(${i})`,
+                            code: `amoa${i}`,
+                            file: null,
+                            extra: true
+                        });
+                    }
+
+
+                     const end=  [
+                        {
+                            label:'Ejari',code:"ejari", file: null
+                        },
+                        {
+                            label:'Establishment Card',code:"ecard", file: null
+                        },
+                        {
+                            label:'Local Agent Passport',code:"local_agent_passport", file: null
+                        },
+                        {
+                            label:'Local Agent ID',code:"local_agent_id", file: null
+                        }
+                    ];
+                    compDocs = compDocs.concat(end);
+return compDocs;
+
+                },
+                getAllFiles() {
+                    return this.activities.filter(activity => activity.type == "file");
+                }
+                ,
                 filteredActivities() {
                     if (this.selectedType == 'all') {
-                        return this.activities;
+
+                        return this.activities.filter(activity => {
+                            // if type matches, remove only if file_code is NOT null
+                            if (activity.type === 'file') {
+                                // check if file[0] exists and file_code is not null
+                                return (activity.files && activity.files[0] && activity.files[0].file_code == null);
+                            }
+                            // keep all other items
+                            return true;
+                        });
                     } else if (this.selectedType == 'planned') {
                         return this.activities.filter(activity => ! activity.is_done);
                     }
 
-                    return this.activities.filter(activity => activity.type == this.selectedType);
+                    //return this.activities.filter(activity => activity.type == this.selectedType);
+                    return this.activities.filter(activity => {
+                        // if type matches, remove only if file_code is NOT null
+                        if (activity.type === this.selectedType) {
+                            // check if file[0] exists and file_code is not null
+                            return (activity.files && activity.files[0] && activity.files[0].file_code == null);
+                        }
+                        // keep all other items
+                        return false;
+                    });
                 }
             },
 
@@ -677,5 +896,214 @@
                 },
             },
         });
+
+        app.component('UploadBox', {
+            props: {
+                label: String,
+                file_code: String,
+                entity_id: Number,
+                extra: Boolean,
+                file: File,
+                files: {
+                    type: Array,
+                    default: () => []
+                }
+            },
+
+            emits: ['update:file'],
+
+            data() {
+                return {
+                    preview: null,
+                    showModal: false,
+                    allFiles: [],
+                };
+            },
+
+            watch: {
+                files: {
+                    handler(newFiles) {
+
+                        const matchingFiles = this.files
+                            .flatMap(item => item.files || []) // get all nested files
+                            .filter(file => file.file_code === this.file_code)
+                            .filter(file => file.entity_id === this.entity_id);
+
+                        if(matchingFiles.length>0){
+                            const previewUrlTemplate = "{{ route('admin.activities.file_preview', '__ID__') }}";
+                            this.preview = previewUrlTemplate.replace('__ID__', matchingFiles[0].id);
+                        }
+                    },
+                    immediate: true, // triggers on mount too
+                    deep: true
+                },
+                file: {
+                    immediate: true,
+                    handler(file) {
+                        if (file) {
+                            console.log("file handle ",file)
+                            this.preview = URL.createObjectURL(file);
+                        } else {
+                            //this.preview = null;
+                        }
+                    },
+                },
+            },
+
+            methods: {
+
+                selectFile() {
+                    this.$refs.input.click();
+                },
+                openPreview() {
+                    if (this.preview) {
+                        this.showModal = true;
+                    }
+                },
+
+                closePreview() {
+                    this.showModal = false;
+                },
+                onFileChange(e) {
+                    const file = e.target.files[0];
+                    console.log("onFileChange",file);
+                    if (file) {
+                        this.$emit('update:file', file);
+                        this.preview = URL.createObjectURL(file);
+                        this.uploadFile(file);
+                    }
+                },
+
+                handleDrop(e) {
+                    const file = e.dataTransfer.files[0];
+                    console.log("handleDrop",file);
+                    if (file) {
+                        this.$emit('update:file', file);
+                        this.preview = URL.createObjectURL(file);
+
+                        this.uploadFile(file);
+                    }
+                },
+                uploadFile(file) {
+                    const formData = new FormData();
+                    formData.append('file', file);
+                    formData.append('type', "file");
+                    formData.append('person_id', {{$person_id}});
+                    formData.append('file_code', this.file_code);
+                    formData.append('entity_id', this.entity_id);
+
+                    this.isUploading = true;
+
+                    this.$axios.post("{{ route('admin.activities.store') }}", formData, {
+                        headers: {
+                            'Content-Type': 'multipart/form-data',
+                        }
+                    })
+                        .then(response => {
+                            this.isUploading = false;
+
+                            // Example: notify parent or emit event
+                            this.$emitter.emit('add-flash', {
+                                type: 'success',
+                                message: response.data.message || 'File uploaded successfully'
+                            });
+
+                            // Optionally emit uploaded file info
+                            // this.$emit('uploaded', response.data.data);
+                        })
+                        .catch(error => {
+                            this.isUploading = false;
+
+                            if (error.response && error.response.status === 422) {
+                                // You can emit to a parent component or handle locally
+                                this.$emitter.emit('add-flash', {
+                                    type: 'error',
+                                    message: 'Validation error during file upload.'
+                                });
+                            } else {
+                                this.$emitter.emit('add-flash', {
+                                    type: 'error',
+                                    message: error.response?.data?.message || 'Upload failed'
+                                });
+                            }
+                        });
+                },
+            },
+
+
+            template: `
+            <div
+                class="relative w-100 h-100 border border-dashed border-gray-400 rounded-md flex flex-col justify-center items-center text-center cursor-pointer overflow-hidden hover:border-blue-500 transition"
+                style="height: 150px;"
+                @click="selectFile"
+                @dragover.prevent
+                @drop.prevent="handleDrop"
+            >
+                <input type="file" ref="input" class="hidden" @change="onFileChange" />
+
+                <div v-if="preview" class="w-full h-full" @click.stop="openPreview">
+                    <img :src="preview" alt="Uploaded" class="w-full h-full object-cover" />
+                </div>
+                <div v-else class="text-xs text-gray-400 px-1">Click or Drop File</div>
+
+                <div class="absolute bottom-0 w-full bg-white text-[11px] text-black px-1 py-1 border-t border-gray-200 truncate">
+                    @{{label}}
+            </div>
+
+        </div>
+            <!-- Fullscreen Image Modal -->
+            <div
+
+                v-if="showModal"
+                class="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50"
+                @click.self="closePreview"
+                style="overflow: auto; z-index: 9999999;"
+            >
+                <!-- Close Button -->
+                <button
+                    @click="closePreview"
+                    style="
+      position: fixed;
+      top: 20px;
+      right: 30px;
+      background: rgba(255, 255, 255, 0.8);
+      border: none;
+      border-radius: 9999px;
+      width: 32px;
+      height: 32px;
+      font-size: 18px;
+      font-weight: bold;
+      cursor: pointer;
+      z-index: 60;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+    "
+                >
+                    &times;
+                </button>
+
+                <!-- Scrollable image wrapper -->
+                <div
+                    style="
+      max-height: 100vh;
+      max-width: 100vw;
+      overflow: auto;
+      padding: 40px;
+    "
+                >
+                    <img
+                        :src="preview"
+                        style="
+        display: block;
+        margin: auto;
+        border: 4px solid white;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
+      "
+                    />
+                </div>
+            </div>
+
+`
+        });
     </script>
 @endPushOnce
+
