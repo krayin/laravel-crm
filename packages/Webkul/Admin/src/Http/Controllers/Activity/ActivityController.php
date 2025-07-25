@@ -248,7 +248,7 @@ class ActivityController extends Controller
 
                 for ($y = 0; $y < $imgHeight; $y += $wmHeight + $spacingY) {
                     for ($x = 0; $x < $imgWidth; $x += $wmWidth + $spacingX) {
-                        $image->place($watermark, 'top-left', $x, $y,45);
+                        $image->place($watermark, 'top-left', $x, $y,50);
                     }
                 }
 
