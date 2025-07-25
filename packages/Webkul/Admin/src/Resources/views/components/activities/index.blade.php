@@ -92,7 +92,7 @@
                                     <UploadBox
                                         v-for="(doc, index) in familyDocuments"
                                         :files="getAllFiles"
-                                        :key="{{$related->id}}"
+                                        :key="`${{{ $related->id }}}-${doc.code}`"
                                         :label="doc.label"
                                         :entity_id="{{$related->id}}"
                                         :file_code="doc.code"
@@ -104,7 +104,7 @@
                                 <UploadBox
                                     v-for="(doc, index) in relatedDocuments"
                                     :files="getAllFiles"
-                                    :key="{{$related->id}}"
+                                    :key="`${{{ $related->id }}}-${doc.code}`"
                                     :label="doc.label"
                                     :entity_id="{{$related->id}}"
                                     :file_code="doc.code"
@@ -686,12 +686,9 @@
             computed: {
                 getCompanyDocuments(){
                     const files = this.activities.filter(activity => activity.type == "file");
-                    console.log("files",files)
-
                     const matchingFiles = files
                         .flatMap(item => item.files || [])  // flatten all nested files
                         .filter(file => file?.file_code?.startsWith('amoa'));
-                    console.log("matchingFiles",matchingFiles)
 
 // Extract numbers from matching file_codes, e.g. "moa", "moa1", "moa23", "moa100"
                     const numbers = matchingFiles.map(file => {
@@ -700,14 +697,10 @@
                         return match && match[1] ? parseInt(match[1], 10) : 0;
                     });
 
-                    console.log("numbers",numbers)
-
 
 // Find the max number
                     const lastNumber = numbers.length ? Math.max(...numbers) : 0;
-
-                    console.log("lastNumber",lastNumber)
-                   let compDocs= [
+                    let compDocs= [
                         {
                             label:'License',code:"license", file: null
                         },
@@ -942,7 +935,6 @@ return compDocs;
                     immediate: true,
                     handler(file) {
                         if (file) {
-                            console.log("file handle ",file)
                             this.preview = URL.createObjectURL(file);
                         } else {
                             //this.preview = null;
@@ -967,7 +959,6 @@ return compDocs;
                 },
                 onFileChange(e) {
                     const file = e.target.files[0];
-                    console.log("onFileChange",file);
                     if (file) {
                         this.$emit('update:file', file);
                         this.preview = URL.createObjectURL(file);
@@ -977,11 +968,8 @@ return compDocs;
 
                 handleDrop(e) {
                     const file = e.dataTransfer.files[0];
-                    console.log("handleDrop",file);
                     if (file) {
-                        this.$emit('update:file', file);
                         this.preview = URL.createObjectURL(file);
-
                         this.uploadFile(file);
                     }
                 },
