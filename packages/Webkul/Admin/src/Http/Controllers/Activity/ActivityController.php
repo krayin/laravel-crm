@@ -308,8 +308,8 @@ class ActivityController extends Controller
                     $wmHeight = 70;  // ارتفاع واترمارک
 
                     // فاصله بین هر واترمارک در محور X و Y
-                    $spacingX = 20;
-                    $spacingY = 20;
+                    $spacingX = 10;
+                    $spacingY = 5;
 
                     // ابعاد صفحه
                     $pageWidth = $size['width'];
