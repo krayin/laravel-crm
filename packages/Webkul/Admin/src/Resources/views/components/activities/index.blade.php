@@ -909,6 +909,7 @@ return compDocs;
             data() {
                 return {
                     preview: null,
+                    is_pdf: false,
                     showModal: false,
                     allFiles: [],
                 };
@@ -926,6 +927,12 @@ return compDocs;
                         if(matchingFiles.length>0){
                             const previewUrlTemplate = "{{ route('admin.activities.file_preview', '__ID__') }}";
                             this.preview = previewUrlTemplate.replace('__ID__', matchingFiles[0].id);
+
+                             if (matchingFiles[0].path.includes('.pdf')) {
+                                this.is_pdf = true;
+                            } else {
+                                this.is_pdf = false;
+                            }
                         }
                     },
                     immediate: true, // triggers on mount too
@@ -948,9 +955,10 @@ return compDocs;
                 selectFile() {
                     this.$refs.input.click();
                 },
-                openPreview() {
+                openPreview(e) {
                     if (this.preview) {
                         this.showModal = true;
+                        e.target.stopPropagation();
                     }
                 },
 
@@ -961,6 +969,11 @@ return compDocs;
                     const file = e.target.files[0];
                     if (file) {
                         this.$emit('update:file', file);
+                        if (file.name.includes('.pdf')) {
+                            this.is_pdf = true;
+                        } else {
+                            this.is_pdf = false;
+                        }
                         this.preview = URL.createObjectURL(file);
                         this.uploadFile(file);
                     }
@@ -969,6 +982,11 @@ return compDocs;
                 handleDrop(e) {
                     const file = e.dataTransfer.files[0];
                     if (file) {
+                        if (file.name.includes('.pdf')) {
+                            this.is_pdf = true;
+                        } else {
+                            this.is_pdf = false;
+                        }
                         this.preview = URL.createObjectURL(file);
                         this.uploadFile(file);
                     }
@@ -1030,8 +1048,22 @@ return compDocs;
             >
                 <input type="file" ref="input" class="hidden" @change="onFileChange" />
 
+
                 <div v-if="preview" class="w-full h-full" @click.stop="openPreview">
-                    <img :src="preview" alt="Uploaded" class="w-full h-full object-cover" />
+
+                    <img v-if="!is_pdf" :src="preview" alt="Uploaded" class="w-full h-full object-cover" />
+                    <iframe
+                        v-if="is_pdf"
+                        :src="preview + '#toolbar=0'"
+                        width="100%"
+                        height="600px"
+                        frameborder="0">
+                    </iframe>
+                    <div
+                        class="absolute inset-0 z-10 cursor-pointer"
+                        @click="openPreview"
+                        style="background-color: transparent;"
+                    >View</div>
                 </div>
                 <div v-else class="text-xs text-gray-400 px-1">Click or Drop File</div>
 
@@ -1072,6 +1104,7 @@ return compDocs;
 
                 <!-- Scrollable image wrapper -->
                 <div
+                    v-if="!is_pdf"
                     style="
       max-height: 100vh;
       max-width: 100vw;
@@ -1088,6 +1121,50 @@ return compDocs;
         box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
       "
                     />
+                    <iframe
+                        v-if="is_pdf"
+                        :src="preview + '#toolbar=0&view=FitH'"
+                        style="
+    display: block;
+    margin: auto;
+    border: 4px solid white;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
+    width: 100%;
+    height: 90vh;
+  "
+                        width="300"
+                        height="400"
+                        frameborder="0"
+                       >
+                    </iframe>
+                </div>
+                <div
+                    v-if="is_pdf"
+                    style="
+      max-height: 100vh;
+      max-width: 100vw;
+       min-width: 75vw;
+height: auto;
+      overflow: auto;
+      padding: 40px;
+    "
+                >
+                    <iframe
+                        v-if="is_pdf"
+                        :src="preview + '#toolbar=0&view=FitH'"
+                        style="
+    display: block;
+    margin: auto;
+    border: 4px solid white;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
+    width: 100%;
+    height: 90vh;
+  "
+                        width="300"
+                        height="400"
+                        frameborder="0"
+                    >
+                    </iframe>
                 </div>
             </div>
 

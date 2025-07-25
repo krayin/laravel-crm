@@ -20,7 +20,7 @@ use Webkul\Attribute\Repositories\AttributeRepository;
 use Intervention\Image\ImageManager;
 use Intervention\Image\Drivers\Gd\Driver;
 use function Laravel\Prompts\error;
-
+use setasign\Fpdi\Fpdi;
 class ActivityController extends Controller
 {
     /**
@@ -227,40 +227,133 @@ class ActivityController extends Controller
     {
         try {
             $file = $this->fileRepository->findOrFail($id);
-            $mimeType = Storage::mimeType($file->path);
+            $path = $file->path;
+            $mimeType = Storage::mimeType($path);
 
-            return response()->stream(function () use ($file) {
-                // Get the image content from storage
-                $imageData = Storage::get($file->path);
-                $manager = new ImageManager(new Driver());
 
-                // Load main image and watermark
-                $image = $manager->read($imageData);
-                $watermark = $manager->read(public_path('images/watermark.png'));
 
-                $imgWidth = $image->width();
-                $imgHeight = $image->height();
-                $wmWidth = $watermark->width();
-                $wmHeight = $watermark->height();
+            if (str_starts_with($mimeType, 'image/')) {
+                return response()->stream(function () use ($file) {
+                    // Get the image content from storage
+                    $imageData = Storage::get($file->path);
+                    $manager = new ImageManager(new Driver());
 
-                $spacingX = 120; // spacing between watermark X
-                $spacingY = 120; // spacing between watermark Y
+                    // Load main image and watermark
+                    $image = $manager->read($imageData);
+                    $watermark = $manager->read(public_path('images/watermark.png'));
 
-                for ($y = 0; $y < $imgHeight; $y += $wmHeight + $spacingY) {
-                    for ($x = 0; $x < $imgWidth; $x += $wmWidth + $spacingX) {
-                        $image->place($watermark, 'top-left', $x, $y,40);
+                    $imgWidth = $image->width();
+                    $imgHeight = $image->height();
+                    $wmWidth = $watermark->width();
+                    $wmHeight = $watermark->height();
+
+                    $spacingX = 120; // spacing between watermark X
+                    $spacingY = 120; // spacing between watermark Y
+
+                    for ($y = 0; $y < $imgHeight; $y += $wmHeight + $spacingY) {
+                        for ($x = 0; $x < $imgWidth; $x += $wmWidth + $spacingX) {
+                            $image->place($watermark, 'top-left', $x, $y, 40);
+                        }
                     }
+
+
+                    // Insert watermark at bottom-right corner with 10px offset
+
+                    // Output the image directly to the browser
+                    echo $image->encode();
+                }, 200, [
+                    'Content-Type' => $mimeType,
+                    'Content-Disposition' => 'inline; filename="' . basename($file->path) . '"',
+                ]);
+            };
+
+//            if ($mimeType === 'application/pdf') {
+//                return response()->stream(function () use ($path) {
+//                    $stream = Storage::readStream($path);
+//                    fpassthru($stream);
+//                    fclose($stream);
+//                }, 200, [
+//                    'Content-Type' => $mimeType,
+//                    'Content-Disposition' => 'inline; filename="' . basename($path) . '"',
+//                ]);
+//            }
+
+            if ($mimeType === 'application/pdf') {
+
+                $pdf = new Fpdi();
+                try {
+
+                    $absolutePath = public_path('storage/' . $path);
+
+                    $pageCount = $pdf->setSourceFile($absolutePath);
+                }catch (\Exception $e){
+                    dd($e);
                 }
 
 
-                // Insert watermark at bottom-right corner with 10px offset
 
-                // Output the image directly to the browser
-                echo $image->encode();
-            }, 200, [
-                'Content-Type' => $mimeType,
-                'Content-Disposition' => 'inline; filename="' . basename($file->path) . '"',
-            ]);
+
+                for ($pageNo = 1; $pageNo <= $pageCount; $pageNo++) {
+                    $templateId = $pdf->importPage($pageNo);
+                    $size = $pdf->getTemplateSize($templateId);
+
+                    $pdf->AddPage($size['orientation'], [$size['width'], $size['height']]);
+                    $pdf->useTemplate($templateId);
+
+                    // بارگذاری تصویر واترمارک
+                    $watermarkPath = public_path('images/watermark-pdf.png');
+
+                    // اندازه واترمارک (می‌توانید برحسب نیاز تغییر دهید)
+                    $wmWidth = 50;   // عرض واترمارک بر حسب واحد PDF (نقطه یا میلیمتر)
+                    $wmHeight = 70;  // ارتفاع واترمارک
+
+                    // فاصله بین هر واترمارک در محور X و Y
+                    $spacingX = 20;
+                    $spacingY = 20;
+
+                    // ابعاد صفحه
+                    $pageWidth = $size['width'];
+                    $pageHeight = $size['height'];
+
+                    // حلقه برای تکرار واترمارک افقی و عمودی
+                    for ($y = 0; $y < $pageHeight; $y += $wmHeight + $spacingY) {
+                        for ($x = 0; $x < $pageWidth; $x += $wmWidth + $spacingX) {
+                            $pdf->Image(
+                                $watermarkPath, // مسیر تصویر
+                                $x,             // موقعیت X
+                                $y,             // موقعیت Y
+                                $wmWidth,       // عرض
+                                $wmHeight,      // ارتفاع
+                                'PNG',
+                                '',
+                                '',
+                                false,
+                                300,
+                                '',
+                                false,
+                                false,
+                                0,
+                                0,
+                                false,
+                                true
+                            );
+                        }
+                    }
+                }
+
+                // ذخیره فایل خروجی
+                return response()->stream(function () use ($pdf) {
+
+                    $pdfContent = $pdf->Output('S');
+                    echo $pdfContent;
+                }, 200, [
+                    'Content-Type' => 'application/pdf',
+                    'Content-Disposition' => 'inline; filename="watermarked.pdf"',
+                ]);
+            }
+
+            // Unsupported file type
+            abort(415, 'Unsupported media type.');
         } catch (\Exception $e) {
             abort(404);
         }
