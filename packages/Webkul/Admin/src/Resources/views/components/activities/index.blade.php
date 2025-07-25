@@ -85,6 +85,7 @@
                     <div class="mx-6 my-4">
                         <h3 class="font-bold mb-2">Manager / Partner Documents</h3>
                         @foreach($relateds as $related)
+                            @if($related->type!=='Local Agent')
                             <h4 class="mb-2.5">{{$related->type}} : {{$related->name}}</h4>
                             @if($related->type==='Family Visa')
                                 <div class="grid grid-cols-4 gap-4">
@@ -98,7 +99,7 @@
                                         v-model:file="doc.file"
                                     />
                                 </div>
-                            @else
+                            @elseif($related->type!=='Local Agent')
                             <div class="grid grid-cols-4 gap-4">
                                 <UploadBox
                                     v-for="(doc, index) in relatedDocuments"
@@ -113,7 +114,7 @@
                             @endif
                             <div style="height: 1px; background-color: #ccc; box-shadow: 0 2px 5px rgba(0,0,0,0.1); margin: 2rem 0;"></div>
 
-
+                            @endif
                         @endforeach
 
                     </div>
