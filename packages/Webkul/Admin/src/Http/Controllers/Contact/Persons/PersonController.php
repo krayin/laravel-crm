@@ -5,6 +5,7 @@ namespace Webkul\Admin\Http\Controllers\Contact\Persons;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Event;
 use Illuminate\View\View;
 use Prettus\Repository\Criteria\RequestCriteria;
@@ -41,6 +42,33 @@ class PersonController extends Controller
         return view('admin::contacts.persons.index');
     }
 
+    public function nextCrmCode($return_number=false){
+
+//        $maxId = DB::table('persons')->max('id') ?? 0;
+//        return response()->json(['next_crm_code' => $maxId + 1]);
+
+        $nextCrm = DB::selectOne("
+    SELECT
+        COALESCE(
+            (
+                SELECT MIN(p1.crm + 1)
+                FROM persons p1
+                LEFT JOIN persons p2
+                  ON p2.crm = p1.crm + 1
+                WHERE p2.crm IS NULL
+                  AND p1.crm >= 1
+            ),
+            COALESCE((SELECT MAX(crm) + 1 FROM persons), 1)
+        ) AS next_crm
+");
+
+// Access the value:
+        $maxId = $nextCrm->next_crm;
+        if ($return_number) {
+            return $maxId;
+        }
+        return response()->json(['next_crm_code' => $maxId ]);
+    }
     /**
      * Show the form for creating a new resource.
      */
@@ -54,6 +82,7 @@ class PersonController extends Controller
      */
     public function store(AttributeForm $request): RedirectResponse|JsonResponse
     {
+
         $data = $request->all();
         $relatedContacts=[];
         if ($request->has('related_contacts')) {
@@ -100,6 +129,15 @@ class PersonController extends Controller
         Event::dispatch('contacts.person.create.before');
 
         $person = $this->personRepository->create($data);
+
+        if (empty($request->get('crm'))) {
+            $crm_code = $this->nextCrmCode(true);
+
+        }else{
+            $crm_code =$request->get('crm');
+        }
+        $person->crm = $crm_code;
+        $person->save();
 
         Event::dispatch('contacts.person.create.after', $person);
 
@@ -149,7 +187,9 @@ class PersonController extends Controller
      */
     public function show(int $id): View
     {
-        $person = $this->personRepository->findOrFail($id);
+
+//        $person = $this->personRepository->findOrFail($id);
+        $person = $this->personRepository->where('crm','=',$id)->first();
 
         $user = auth()->user();
         $allowedFields = $user->role->visible_person_fields ?? [];
@@ -174,7 +214,8 @@ class PersonController extends Controller
     public function edit(int $id): View
     {
 
-        $person = $this->personRepository->findOrFail($id);
+//        $person = $this->personRepository->findOrFail($id);
+        $person = $this->personRepository->where('crm','=',$id)->first();
 
         return view('admin::contacts.persons.edit', compact('person'));
     }
@@ -243,11 +284,21 @@ class PersonController extends Controller
 
 
         }
-        Event::dispatch('contacts.person.update.before', $id);
+        $person = $this->personRepository->where('crm','=',$id)->first();
+
+        Event::dispatch('contacts.person.update.before', $person->id);
 
 
-        $person = $this->personRepository->update($data, $id);
+        //$person = $this->personRepository->update($data, $id);
+        $person = $this->personRepository->update($data,$person->id);
+        if (empty($request->get('crm'))) {
+            $crm_code = $this->nextCrmCode(true);
 
+        }else{
+            $crm_code =$request->get('crm');
+        }
+        $person->crm = $crm_code;
+        $person->save();
         Event::dispatch('contacts.person.update.after', $person);
 
         if (request()->ajax()) {
@@ -285,14 +336,15 @@ class PersonController extends Controller
      */
     public function destroy(int $id): JsonResponse
     {
-        $person = $this->personRepository->findOrFail($id);
+        //$person = $this->personRepository->findOrFail($id);
+        $person = $this->personRepository->where('crm','=',$id)->first();
 
         try {
-            Event::dispatch('contacts.person.delete.before', $id);
+            Event::dispatch('contacts.person.delete.before', $person->id);
 
-            $person->delete($id);
+            $person->delete($person->id);
 
-            Event::dispatch('contacts.person.delete.after', $id);
+            Event::dispatch('contacts.person.delete.after', $person->id);
 
             return response()->json([
                 'message' => trans('admin::app.contacts.persons.index.delete-success'),

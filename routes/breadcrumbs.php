@@ -101,13 +101,13 @@ Breadcrumbs::for('contacts.persons.create', function (BreadcrumbTrail $trail) {
 // Dashboard > Contacts > Persons > Edit
 Breadcrumbs::for('contacts.persons.edit', function (BreadcrumbTrail $trail, $person) {
     $trail->parent('contacts.persons');
-    $trail->push(trans('admin::app.contacts.persons.edit.title'), route('admin.contacts.persons.edit', $person->id));
+    $trail->push(trans('admin::app.contacts.persons.edit.title'), route('admin.contacts.persons.edit', $person->crm));
 });
 
 // Dashboard > Contacts > Persons > View
 Breadcrumbs::for('contacts.persons.view', function (BreadcrumbTrail $trail, $person) {
     $trail->parent('contacts.persons');
-    $trail->push('#'.$person->id, route('admin.contacts.persons.index'));
+    $trail->push('#'.$person->crm, route('admin.contacts.persons.index'));
 });
 
 // Dashboard > Contacts > Organizations

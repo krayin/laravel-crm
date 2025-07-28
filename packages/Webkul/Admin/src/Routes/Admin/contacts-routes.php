@@ -13,10 +13,7 @@ Route::prefix('contacts')->group(function () {
     /**
      * Route to get the next CRM CODE (max persons id + 1)
      */
-    Route::get('persons/next-crm-code', function () {
-        $maxId = DB::table('persons')->max('id') ?? 0;
-        return response()->json(['next_crm_code' => $maxId + 1]);
-    })->name('admin.contacts.persons.next-crm-code');
+    Route::get('persons/next-crm-code',[PersonController::class,'nextCrmCode'] )->name('admin.contacts.persons.next-crm-code');
 
 
     // Related Contacts CRUD (AJAX)

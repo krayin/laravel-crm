@@ -25,7 +25,8 @@ class PersonDataGrid extends DataGrid
         $queryBuilder = DB::table('persons')
             ->distinct()
             ->addSelect(
-                'persons.id',
+                'persons.crm as id',
+                'persons.id as person_id',
                 DB::raw("CASE WHEN related_contacts.type = 'Manager' THEN related_contacts.name ELSE NULL END as person_name"),
                 'related_contacts.name as person_name',
                // 'related_contacts.name as manager_name',
@@ -129,7 +130,7 @@ class PersonDataGrid extends DataGrid
     {
         $this->addColumn([
             'index'      => 'id',
-            'label'      => trans('admin::app.contacts.persons.index.datagrid.id'),
+            'label'      => "CRM CODE",
             'type'       => 'integer',
             'filterable' => true,
             'sortable'   => true,
