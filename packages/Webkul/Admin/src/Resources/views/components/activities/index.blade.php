@@ -1,3 +1,4 @@
+@php use Webkul\Contact\Models\Person; @endphp
 @props([
     'endpoint',
     'emailDetachEndpoint' => null,
@@ -10,7 +11,9 @@
 
 <!-- Lead Activities Vue Component -->
 @php
-    $person_id = request()->route('id');
+    $crm_id = request()->route('id');
+    $person = Person::where('crm','=',$crm_id)->first();
+    $person_id = $person->id;
     $relateds = \Webkul\Contact\Models\RelatedContact::where('person_id','=',$person_id)->get();
 
 
