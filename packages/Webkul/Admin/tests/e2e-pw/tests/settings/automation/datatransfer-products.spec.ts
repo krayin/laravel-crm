@@ -35,7 +35,8 @@ test.describe('Import Management for Products', () => {
     await adminPage.getByRole('button', { name: 'Save Import' }).click();
 
     /* Click 'Validate' */
-    await adminPage.getByRole('button', { name: 'Validate' }).click();
+    await adminPage.getByRole('button', { name: 'Validate' }).waitFor({ state: 'visible' });
+await adminPage.getByRole('button', { name: 'Validate' }).click();
 
     /* Wait for validation results */
     await expect(adminPage.getByText('Your import is valid. Click')).toBeVisible();
@@ -64,6 +65,7 @@ test.describe('Import Management for Products', () => {
     await adminPage.getByRole('button', { name: 'Save Import' }).click();
 
     /* Click 'Validate' */
+    await adminPage.getByRole('button', { name: 'Validate' }).waitFor({ state: 'visible' });
     await adminPage.getByRole('button', { name: 'Validate' }).click();
 
     /* Wait for validation results */
