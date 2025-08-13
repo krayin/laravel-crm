@@ -88,6 +88,7 @@ jobs:
       - name: Run All Playwright Tests
         env:
           BASE_URL: 'http://127.0.0.1:8000'
+          PWDEBUG: true
         run: |
           npx playwright test --reporter=list --config=tests/e2e-pw/playwright.config.ts --shard=${{ matrix.shard-index }}/${{ matrix.shard-total }}
         working-directory: packages/Webkul/Admin
