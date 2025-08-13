@@ -33,7 +33,7 @@ test.describe('Import Management for Leads', () => {
     await adminPage.getByRole('button', { name: 'Save Import' }).click();
 
     /* Click 'Validate' */
-        await adminPage.locator('//button[@class="primary-button place-self-start"]').click();
+        await adminPage.locator('//button[contains(.,"Validate")]').click();
 
 
     /* Wait for validation results */
