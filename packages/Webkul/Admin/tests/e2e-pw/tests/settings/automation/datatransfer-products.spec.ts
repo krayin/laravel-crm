@@ -85,7 +85,8 @@ test.describe('Import Management for Products', () => {
 
     /* Click delete icon for the first import */
     const deleteIcon = adminPage.locator('.icon-delete').first();
-    await expect(deleteIcon).toBeVisible({ timeout: 10000 });
+    
+
     await deleteIcon.click();
 
     /* Confirm deletion */

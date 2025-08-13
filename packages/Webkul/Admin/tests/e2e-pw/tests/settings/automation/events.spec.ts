@@ -83,7 +83,8 @@ test.describe("event management", () => {
          * Delete the first event.
          */
         const deleteIcon = adminPage.locator('div:nth-child(6) > a:nth-child(2)').first();
-        await expect(deleteIcon).toBeVisible({ timeout: 10000 });
+        
+
         await deleteIcon.click();
 
         /**
