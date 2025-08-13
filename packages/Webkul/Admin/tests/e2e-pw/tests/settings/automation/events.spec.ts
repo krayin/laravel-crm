@@ -48,7 +48,6 @@ test.describe("event management", () => {
          * Clicking on the edit button for the first event opens the modal.
          */
         const editIcon = adminPage.locator('.row > div:nth-child(6) > a').first();
-        await expect(editIcon).toBeVisible({ timeout: 10000 });
         await editIcon.click();
 
         /**

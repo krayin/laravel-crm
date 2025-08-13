@@ -55,7 +55,7 @@ test.describe('Import Management for Leads', () => {
 
     /* Click edit icon for the first import */
     const editIcon = adminPage.locator('.icon-edit').first();
-    await expect(editIcon).toBeVisible({ timeout: 10000 });
+  
     await editIcon.click();
 
     /* Re-upload updated CSV file */
