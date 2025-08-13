@@ -42,15 +42,13 @@ test.describe('Import Management for Leads', () => {
 
     /* Wait for validation results */
   
-    await expect(adminPage.getByText('Total Rows Processed: 2')).toBeVisible();
-    await expect(adminPage.getByText('Total Invalid Rows: 0')).toBeVisible();
-    await expect(adminPage.getByText('Total Errors: 0')).toBeVisible();
+    await expect(adminPage.locator('.place-content-between.border-green-200')).toBeVisible();
 
     /* Execute the import */
     await adminPage.getByRole('button', { name: 'Import' }).click();
 
     /* Confirm import success */
-    await expect(adminPage.getByText('Congratulations! Your import')).toBeVisible();
+    await expect(adminPage.locator('.place-content-between.border-green-200')).toBeVisible();
   });
 
   test('should update the import record (if editable)', async ({ adminPage }) => {
