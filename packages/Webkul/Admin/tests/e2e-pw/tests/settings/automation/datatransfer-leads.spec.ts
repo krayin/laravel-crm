@@ -16,12 +16,16 @@ test.describe('Import Management for Leads', () => {
     /* Navigate to Data Transfer section */
     await adminPage.goto('admin/settings/data-transfer/imports');
 
+    await adminPage.waitForTimeout(2000); 
+    
     /* Click 'Create Import' */
-    await adminPage.getByRole('link', { name: 'Create Import' }).click();
+    // await adminPage.getByRole('link', { name: 'Create Import' }).click();
+      await adminPage.locator('a.primary-button').click();
 
     /* Upload CSV file */
     await adminPage.getByRole('button', { name: 'Choose File' }).setInputFiles(csvPath);
-        /* Uncheck proccess in queue */
+    
+    /* Uncheck proccess in queue */
     await adminPage.locator('.peer.h-5').click(); // Adjust selector if multiple checkboxes present
 
     /* Select Entity Type (leads) */
