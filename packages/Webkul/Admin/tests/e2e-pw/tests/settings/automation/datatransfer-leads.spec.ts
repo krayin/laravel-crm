@@ -42,13 +42,14 @@ test.describe('Import Management for Leads', () => {
 
     /* Wait for validation results */
   
-    await expect(adminPage.locator('.place-content-between.border-green-200')).toBeVisible();
+    await expect(adminPage.locator('//div[@class="flex w-full place-content-between rounded-sm border p-3 border-green-200 bg-green-50 dark:bg-gray-900 dark:border-gray-800"]')).toBeVisible();
 
     /* Execute the import */
     await adminPage.getByRole('button', { name: 'Import' }).click();
 
     /* Confirm import success */
-    await expect(adminPage.locator('.place-content-between.border-green-200')).toBeVisible();
+    await expect(adminPage.locator('//div[@class="flex w-full place-content-between rounded-sm border border-green-200 bg-green-50 p-3 dark:border-gray-800 dark:bg-gray-900 dark:text-white"]')).toBeVisible();
+
   });
 
   test('should update the import record (if editable)', async ({ adminPage }) => {
