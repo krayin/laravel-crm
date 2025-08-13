@@ -41,7 +41,7 @@ test.describe('Import Management for Leads', () => {
 
 
     /* Wait for validation results */
-    await expect(adminPage.getByText('Your import is valid. Click')).toBeVisible();
+    await expect(adminPage.getByText('Your import is valid. Click').first()).toBeVisible();
     await expect(adminPage.getByText('Total Rows Processed: 2')).toBeVisible();
     await expect(adminPage.getByText('Total Invalid Rows: 0')).toBeVisible();
     await expect(adminPage.getByText('Total Errors: 0')).toBeVisible();
