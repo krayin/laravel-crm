@@ -56,7 +56,9 @@ test.describe('Import Management for Products', () => {
     await adminPage.goto('admin/settings/data-transfer/imports');
 
     /* Click edit icon for the first import */
-    await adminPage.locator('.icon-edit').first().click();
+    const editIcon = adminPage.locator('.icon-edit').first();
+    await expect(editIcon).toBeVisible({ timeout: 10000 });
+    await editIcon.click();
 
     /* Re-upload updated CSV file */
     await adminPage.getByRole('button', { name: 'Choose File' }).setInputFiles(updatedCsvPath);
@@ -82,7 +84,9 @@ test.describe('Import Management for Products', () => {
     await adminPage.goto('admin/settings/data-transfer/imports');
 
     /* Click delete icon for the first import */
-    await adminPage.locator('.icon-delete').first().click();
+    const deleteIcon = adminPage.locator('.icon-delete').first();
+    await expect(deleteIcon).toBeVisible({ timeout: 10000 });
+    await deleteIcon.click();
 
     /* Confirm deletion */
     await adminPage.getByRole('button', { name: 'Agree', exact: true }).click();
