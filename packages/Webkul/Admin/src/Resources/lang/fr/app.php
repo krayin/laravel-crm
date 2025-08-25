@@ -375,10 +375,10 @@ return [
                     'title'   => 'Rechercher',
 
                     'tabs' => [
-                        'leads'    => 'Leads',
-                        'quotes'   => 'Devis',
-                        'persons'  => 'Personnes',
-                        'products' => 'Produits',
+                        'leads'          => 'Leads',
+                        'quotes'         => 'Devis',
+                        'persons'        => 'Personnes',
+                        'products'       => 'Produits',
                         'settings'       => 'Paramètres',
                         'configurations' => 'Configurations',
                     ],
@@ -545,15 +545,15 @@ return [
     'contacts' => [
         'persons' => [
             'index' => [
-                'title'          => 'Personnes',
-                'create-btn'     => 'Créer une personne',
-                'create-success' => 'Personne créée avec succès.',
-                'update-success' => 'Personne mise à jour avec succès.',
+                'title'                    => 'Personnes',
+                'create-btn'               => 'Créer une personne',
+                'create-success'           => 'Personne créée avec succès.',
+                'update-success'           => 'Personne mise à jour avec succès.',
                 'all-delete-success'       => 'Toutes les personnes sélectionnées ont été supprimées avec succès.',
                 'partial-delete-warning'   => 'Des personnes ont été supprimées avec succès. D\'autres ne l\'ont pas été car elles sont liées à des leads.',
                 'none-delete-warning'      => 'Les personnes n\'pnt pas pu $etre supprimées car elles sont liées à des leads.',
                 'no-selection'             => 'Aucune personne dans la sélection.',
-                'delete-failed'  => 'La personne ne peut pas être supprimée.',
+                'delete-failed'            => 'La personne ne peut pas être supprimée.',
 
                 'datagrid' => [
                     'contact-numbers'   => 'Numéros de contact',
@@ -635,11 +635,11 @@ return [
                         ],
                     ],
                 ],
-                
+
                 'tags' => [
                     'create-success'  => 'Etiquette créée avec succès.',
                     'destroy-success' => 'Etiquette supprimée avec succès.',
-                ],                
+                ],
             ],
 
             'create' => [
@@ -753,12 +753,12 @@ return [
 
         'groups' => [
             'index' => [
-                'create-btn'        => 'Créer un groupe',
-                'title'             => 'Groupes',
-                'create-success'    => 'Groupe créé avec succès.',
-                'update-success'    => 'Groupe mis à jour avec succès.',
-                'destroy-success'   => 'Groupe supprimé avec succès.',
-                'delete-failed'     => 'Le groupe ne peut pas être supprimé.',
+                'create-btn'                     => 'Créer un groupe',
+                'title'                          => 'Groupes',
+                'create-success'                 => 'Groupe créé avec succès.',
+                'update-success'                 => 'Groupe mis à jour avec succès.',
+                'destroy-success'                => 'Groupe supprimé avec succès.',
+                'delete-failed'                  => 'Le groupe ne peut pas être supprimé.',
                 'delete-failed-associated-users' => 'Le groupe ne peut pas être supprimé, car il est encore utilisé par des utilisateurs.',
 
                 'datagrid'   => [
@@ -866,12 +866,12 @@ return [
 
         'sources' => [
             'index' => [
-                'create-btn'     => 'Créer une Source',
-                'create-success' => 'Source créée avec succès.',
-                'delete-failed'  => 'La source ne peut pas être supprimée.',
-                'delete-success' => 'Source supprimée avec succès.',
-                'title'          => 'Sources',
-                'update-success' => 'Source mise à jour avec succès.',
+                'create-btn'                     => 'Créer une Source',
+                'create-success'                 => 'Source créée avec succès.',
+                'delete-failed'                  => 'La source ne peut pas être supprimée.',
+                'delete-success'                 => 'Source supprimée avec succès.',
+                'title'                          => 'Sources',
+                'update-success'                 => 'Source mise à jour avec succès.',
                 'delete-failed-associated-leads' => 'La source ne peut pas être supprimée car elle est associée à des leads. Déconnectez ou mettez à jour les leads avant la suppression.',
 
                 'datagrid' => [
@@ -1256,20 +1256,20 @@ return [
                 ],
 
                 'create' => [
-                    'confirm-password' => 'Confirmer le mot de passe',
-                    'email'            => 'Email',
-                    'general'          => 'Général',
-                    'global'           => 'Global',
-                    'group'            => 'Groupe',
-                    'individual'       => 'Individuel',
-                    'name'             => 'Nom',
-                    'password'         => 'Mot de passe',
-                    'permission'       => 'Permission',
-                    'role'             => 'Rôle',
-                    'save-btn'         => 'Enregistrer l\'utilisateur',
-                    'status'           => 'Statut',
-                    'title'            => 'Créer un utilisateur',
-                    'view-permission'  => 'Voir la permission',
+                    'confirm-password'         => 'Confirmer le mot de passe',
+                    'email'                    => 'Email',
+                    'general'                  => 'Général',
+                    'global'                   => 'Global',
+                    'group'                    => 'Groupe',
+                    'individual'               => 'Individuel',
+                    'name'                     => 'Nom',
+                    'password'                 => 'Mot de passe',
+                    'permission'               => 'Permission',
+                    'role'                     => 'Rôle',
+                    'save-btn'                 => 'Enregistrer l\'utilisateur',
+                    'status'                   => 'Statut',
+                    'title'                    => 'Créer un utilisateur',
+                    'view-permission'          => 'Voir la permission',
                     'select-at-lest-one-group' => 'Séléctionnez au moins un groupe',
                 ],
 
@@ -1526,15 +1526,15 @@ return [
                         'datetime'    => 'Datetime',
                         'image'       => 'Image',
                         'file'        => 'Fichier',
-                        'address'  => 'Adresse',
-                        'date'     => 'Date',
-                        'email'    => 'Email',
-                        'lookup'   => 'Recherche',
-                        'phone'    => 'Téléphone',
-                        'price'    => 'Prix',
-                        'select'   => 'Liste de sélection',
-                        'text'     => 'Texte',
-                        'textarea' => 'Zone de texte',
+                        'address'     => 'Adresse',
+                        'date'        => 'Date',
+                        'email'       => 'Email',
+                        'lookup'      => 'Recherche',
+                        'phone'       => 'Téléphone',
+                        'price'       => 'Prix',
+                        'select'      => 'Liste de sélection',
+                        'text'        => 'Texte',
+                        'textarea'    => 'Zone de texte',
                     ],
                 ],
             ],
@@ -2120,14 +2120,14 @@ return [
 
     'configuration' => [
         'index' => [
-            'back'         => 'Retour',
+            'back'           => 'Retour',
             'delete'         => 'Supprimer',
-            'save-btn'     => 'Enregistrer la configuration',
-            'save-success' => 'Configuration enregistrée avec succès.',
-            'search'       => 'Rechercher',
+            'save-btn'       => 'Enregistrer la configuration',
+            'save-success'   => 'Configuration enregistrée avec succès.',
+            'search'         => 'Rechercher',
             'select-country' => 'Selectionnez un pays',
             'select-state'   => 'Selectionnez un état',
-            'title'        => 'Configuration',
+            'title'          => 'Configuration',
 
             'general'  => [
                 'title'   => 'Général',
@@ -2368,7 +2368,7 @@ return [
         'warehouses-info'      => 'Ajoutez, modifiez ou supprimez des entrepôts dans le CRM.',
         'data_transfer'        => 'Transfert de données',
         'data_transfer_info'   => 'Géréz des transferts de personnes, de produits, de prospects dans le CRM',
-   ],
+    ],
 
     'user' => [
         'account' => [
