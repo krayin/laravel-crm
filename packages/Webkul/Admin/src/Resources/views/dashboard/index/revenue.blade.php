@@ -21,11 +21,11 @@
         <!-- Total Sales Section -->
         <template v-else>
             <div class="box-shadow rounded-lg border border-gray-200 bg-white p-4 dark:border-gray-800 dark:bg-gray-900">
-                <div class="flex gap-4">
+                <div class="flex gap-4 max-md:flex-wrap">
                     <!-- Total Revenue -->
-                    <div class="flex flex-col gap-2">
+                    <div class="flex gap-2 max-md:flex-wrap md:flex-col">
                         <!-- Won Revenue Card -->
-                        <div class="flex flex-col gap-2 rounded-lg border border-gray-200 px-4 py-5 dark:border-gray-800">
+                        <div class="flex flex-col gap-2 rounded-lg border border-gray-200 px-4 py-5 dark:border-gray-800 max-sm:w-full">
                             <p class="text-xs font-medium text-gray-600 dark:text-gray-300">
                                 @lang('admin::app.dashboard.index.revenue.won-revenue')
                             </p>
@@ -51,8 +51,8 @@
                             </div>
                         </div>
 
-                        <!-- Lost Reveneue Card -->
-                        <div class="flex flex-col gap-2 rounded-lg border border-gray-200 px-4 py-5 dark:border-gray-800">
+                        <!-- Lost Revenue Card -->
+                        <div class="flex flex-col gap-2 rounded-lg border border-gray-200 px-4 py-5 dark:border-gray-800 max-sm:w-full">
                             <p class="text-xs font-medium text-gray-600 dark:text-gray-300">
                                 @lang('admin::app.dashboard.index.revenue.lost-revenue')
                             </p>
@@ -89,15 +89,15 @@
                         <div class="flex justify-center gap-5">
                             <div class="flex items-center gap-2">
                                 <span class="h-3.5 w-3.5 rounded-sm bg-green-500 opacity-80"></span>
-                                
+
                                 <p class="text-xs dark:text-gray-300">
                                     @lang('admin::app.dashboard.index.revenue.won-revenue')
                                 </p>
                             </div>
-                            
+
                             <div class="flex items-center gap-2">
                                 <span class="h-3.5 w-3.5 rounded-sm bg-red-500 opacity-80"></span>
-                                
+
                                 <p class="text-xs dark:text-gray-300">
                                     @lang('admin::app.dashboard.index.revenue.lost-revenue')
                                 </p>
@@ -118,7 +118,7 @@
                     report: [],
 
                     isLoading: true,
-                    
+
                     chart: undefined,
                 }
             },
@@ -151,7 +151,7 @@
                         })
                         .catch(error => {});
                 },
-                
+
                 prepare() {
                     if (this.chart) {
                         this.chart.destroy();
@@ -159,7 +159,7 @@
 
                     this.chart = new Chart(document.getElementById(this.$.uid + '_chart'), {
                         type: 'bar',
-                        
+
                         data: {
                             labels: [
                             "@lang('admin::app.dashboard.index.revenue.won-revenue')",
@@ -178,27 +178,26 @@
                                     'rgba(239, 68, 68, 0.8)',
                                 ],
 
-                                barThickness: [42,42],
-                                
-                                borderWidth: 1
+                                barPercentage: 0.8,
+                                categoryPercentage: 0.7,
                             }],
                         },
-                
+
                         options: {
-                            aspectRatio: 7,
+                            aspectRatio: 5,
 
                             indexAxis: 'y',
-                            
+
                             plugins: {
                                 legend: {
                                     display: false,
                                 },
                             },
-                            
+
                             scales: {
                                 x: {
                                     beginAtZero: true,
-                                    
+
                                     ticks: {
                                         stepSize: 500,
                                     },
@@ -210,14 +209,27 @@
 
                                 y: {
                                     beginAtZero: true,
-                                    
+
                                     ticks: {
-                                        display: false, 
+                                        display: false,
                                     },
 
                                     border: {
                                         dash: [8, 4],
                                     }
+                                }
+                            },
+
+                            maintainAspectRatio: true,
+
+                            responsive: true,
+
+                            layout: {
+                                padding: {
+                                    left: 0,
+                                    right: 0,
+                                    top: 0,
+                                    bottom: 0
                                 }
                             }
                         }

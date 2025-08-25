@@ -88,10 +88,10 @@
                     class="fixed inset-0 z-[10003] transform overflow-y-auto transition"
                     v-if="isOpen"
                 >
-                    <div class="flex min-h-full items-end justify-center p-4 sm:items-center sm:p-0">
+                    <div class="flex min-h-full items-center justify-center max-md:p-4">
                         <div
-                            class="box-shadow absolute z-[999] w-full max-w-[568px] overflow-hidden rounded-lg bg-white dark:bg-gray-900"
-                            :class="[positionClass, sizeClass]"
+                            class="box-shadow z-[999] w-full overflow-hidden rounded-lg bg-white dark:bg-gray-900 sm:absolute"
+                            :class="[finalPositionClass, sizeClass]"
                         >
                             <!-- Header Slot -->
                             <slot
@@ -132,7 +132,17 @@
             data() {
                 return {
                     isOpen: this.isActive,
+
+                    isMobile: window.innerWidth < 640,
                 };
+            },
+
+            created() {
+                window.addEventListener('resize', this.checkScreenSize);
+            },
+
+            beforeUnmount() {
+                window.removeEventListener('resize', this.checkScreenSize);
             },
 
             computed: {
@@ -148,15 +158,23 @@
                     }[this.position];
                 },
 
+                finalPositionClass() {
+                    return this.isMobile 
+                        ? 'items-center justify-center' 
+                        : this.positionClass;
+                },
+
                 sizeClass() {
                     return {
-                        'normal': 'max-w-[568px]',
+                        'normal': 'max-w-[525px]',
                         'medium': 'max-w-[768px]',
                         'large': 'max-w-[950px]',
-                    }[this.size] || 'max-w-[568px]';
+                    }[this.size] || 'max-w-[525px]';
                 },
 
                 enterFromLeaveToClasses() {
+                    const effectivePosition = this.isMobile ? 'center' : this.position;
+                    
                     return {
                         'center': '-translate-y-4 opacity-0',
                         'top-center': '-translate-y-4 opacity-0',
@@ -165,11 +183,15 @@
                         'bottom-left': 'translate-y-4 opacity-0',
                         'top-right': '-translate-y-4 opacity-0',
                         'top-left': '-translate-y-4 opacity-0',
-                    }[this.position];
+                    }[effectivePosition];
                 }
             },
 
             methods: {
+                checkScreenSize() {
+                    this.isMobile = window.innerWidth < 640;
+                },
+                
                 toggle() {
                     this.isOpen = ! this.isOpen;
 

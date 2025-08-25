@@ -12,16 +12,14 @@
         <div class="flex flex-col gap-4">
             <div class="flex items-center justify-between rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
                 <div class="flex flex-col gap-2">
-                    <div class="flex cursor-pointer items-center">
-                        {!! view_render_event('admin.settings.workflows.edit.breadcrumbs.before', ['workflow' => $workflow]) !!}
+                    {!! view_render_event('admin.settings.workflows.edit.breadcrumbs.before', ['workflow' => $workflow]) !!}
 
-                        <x-admin::breadcrumbs
-                            name="settings.workflows.edit"
-                            :entity="$workflow"
-                        />
+                    <x-admin::breadcrumbs
+                        name="settings.workflows.edit"
+                        :entity="$workflow"
+                    />
 
-                        {!! view_render_event('admin.settings.workflows.edit.breadcrumbs.after', ['workflow' => $workflow]) !!}
-                    </div>
+                    {!! view_render_event('admin.settings.workflows.edit.breadcrumbs.after', ['workflow' => $workflow]) !!}
 
                     <div class="text-xl font-bold dark:text-white">
                         @lang('admin::app.settings.workflows.edit.title')
@@ -57,13 +55,13 @@
             type="text/x-template"
             id="v-workflow-template"
         >
-            <div class="box-shadow flex flex-col gap-4 rounded-lg border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900 max-xl:flex-wrap">
+            <div class="box-shadow flex flex-col gap-4 rounded-lg border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900">
                 {!! view_render_event('admin.settings.workflows.edit.form_controls.before') !!}
-                
+
                 <!-- Tab Switcher -->
-                <div class="flex gap-2 border-b border-gray-200 dark:border-gray-800">
+                <div class="flex w-full gap-2 border-b border-gray-200 dark:border-gray-800">
                     <!-- Tabs -->
-                    <template 
+                    <template
                         v-for="tab in tabs"
                         :key="tab.id"
                     >
@@ -85,8 +83,8 @@
                     {!! view_render_event('admin.settings.workflows.edit.basic_details.before', ['workflow' => $workflow]) !!}
 
                     <!-- Basic Details -->
-                    <div 
-                        class="flex flex-col gap-4" 
+                    <div
+                        class="flex flex-col gap-4"
                         id="basic-details"
                     >
                         <div class="flex flex-col gap-1">
@@ -99,7 +97,7 @@
                             </p>
                         </div>
 
-                        <div class="w-1/2">
+                        <div class="w-1/2 max-md:w-full">
                             <x-admin::form.control-group>
                                 <x-admin::form.control-group.label class="required">
                                     @lang('admin::app.settings.workflows.edit.name')
@@ -114,6 +112,7 @@
                                     :label="trans('admin::app.settings.workflows.edit.name')"
                                     :placeholder="trans('admin::app.settings.workflows.edit.name')"
                                 />
+
                                 <x-admin::form.control-group.error control-name="name" />
                             </x-admin::form.control-group>
 
@@ -142,7 +141,7 @@
                     {!! view_render_event('admin.settings.workflows.edit.event.before', ['workflow' => $workflow]) !!}
 
                     <!-- Event -->
-                    <div 
+                    <div
                         class="flex flex-col gap-4"
                         id="event"
                     >
@@ -163,7 +162,7 @@
                             :value="entityType"
                         />
 
-                        <div class="w-1/2">
+                        <div class="w-1/2 max-md:w-full">
                             <!-- Event -->
                             <x-admin::form.control-group>
                                 <x-admin::form.control-group.label class="required">
@@ -202,7 +201,7 @@
                     {!! view_render_event('admin.settings.workflows.edit.condition.before', ['workflow' => $workflow]) !!}
 
                     <!-- Conditions -->
-                    <div 
+                    <div
                         class="flex flex-col gap-4"
                         id="conditions"
                     >
@@ -216,7 +215,7 @@
                             </p>
                         </div>
 
-                        <div class="flex w-1/2 flex-col gap-2">
+                        <div class="flex w-1/2 flex-col gap-2 max-md:w-full">
                             <!-- Condition Type -->
                             <x-admin::form.control-group>
                                 <x-admin::form.control-group.label>
@@ -247,7 +246,7 @@
 
                             <!-- Workflow Condition Vue Component. -->
                             <template
-                                v-for='(condition, index) in conditions' 
+                                v-for='(condition, index) in conditions'
                                 :key="index"
                             >
                                 <v-workflow-condition-item
@@ -275,7 +274,7 @@
                     {!! view_render_event('admin.settings.workflows.edit.action.before', ['workflow' => $workflow]) !!}
 
                     <!-- Actions -->
-                    <div 
+                    <div
                         class="flex flex-col gap-4"
                         id="actions"
                     >
@@ -289,42 +288,46 @@
                             </p>
                         </div>
 
-                        <x-admin::table class="!w-1/2">
-                            <!-- Table Head -->
-                            <x-admin::table.thead>
-                                <x-admin::table.thead.tr>
-                                    <x-admin::table.th>
-                                        @lang('admin::app.settings.workflows.edit.type')
-                                    </x-admin::table.th>
-                        
-                                    <x-admin::table.th>
-                                        @lang('admin::app.settings.workflows.edit.name')
-                                    </x-admin::table.th>
-                                </x-admin::table.thead.tr>
-                            </x-admin::table.thead>
+                        <div class="block w-full">
+                            <x-admin::table class="!w-1/2 !table-auto">
+                                <!-- Table Head -->
+                                <x-admin::table.thead>
+                                    <x-admin::table.thead.tr>
+                                        <x-admin::table.th class="text-center">
+                                            @lang('admin::app.settings.workflows.edit.type')
+                                        </x-admin::table.th>
 
-                            <!-- Table Body -->
-                            <x-admin::table.tbody>
-                                <template
-                                    v-for='(action, index) in actions'
-                                    :key="index"
-                                >
-                                    <v-workflow-action-item
-                                        :entityType="entityType"
-                                        :action="action"
-                                        :index="index"
-                                        @onRemoveAction="removeAction($event)"
-                                    ></v-workflow-action-item>
-                                </template>
-                            </x-admin::table.tbody>
-                        </x-admin::table>
+                                        <x-admin::table.th class="text-center">
+                                            @lang('admin::app.settings.workflows.edit.name')
+                                        </x-admin::table.th>
+
+                                        <x-admin::table.th></x-admin::table.th>
+                                    </x-admin::table.thead.tr>
+                                </x-admin::table.thead>
+
+                                <!-- Table Body -->
+                                <x-admin::table.tbody>
+                                    <template
+                                        v-for='(action, index) in actions'
+                                        :key="index"
+                                    >
+                                        <v-workflow-action-item
+                                            :entityType="entityType"
+                                            :action="action"
+                                            :index="index"
+                                            @onRemoveAction="removeAction($event)"
+                                        ></v-workflow-action-item>
+                                    </template>
+                                </x-admin::table.tbody>
+                            </x-admin::table>
+                        </div>
 
                         <button
                             type="button"
-                            class="flex max-w-max items-center gap-2 text-brandColor"
+                            class="first-line:text-md flex max-w-max items-center gap-2 text-brandColor"
                             @click="addAction"
                         >
-                            <i class="icon-add text-md !text-brandColor"></i>
+                            <i class="icon-add"></i>
 
                             @lang('admin::app.settings.workflows.edit.add-action')
                         </button>
@@ -341,7 +344,7 @@
             type="text/x-template"
             id="v-workflow-condition-item-template"
         >
-            <div class="flex justify-between gap-4">
+            <div class="flex items-center justify-between gap-4">
                 <div class="flex flex-1 gap-4 max-sm:flex-1 max-sm:flex-wrap">
                     <!-- Select main condition. -->
                     <select
@@ -382,7 +385,7 @@
 
                         <template
                             v-if="
-                                matchedAttribute.type == 'text' 
+                                matchedAttribute.type == 'text'
                                 || matchedAttribute.type == 'price'
                                 || matchedAttribute.type == 'decimal'
                                 || matchedAttribute.type == 'integer'
@@ -492,11 +495,15 @@
                             <template v-else>
                                 <div class="w-1/3">
                                     <v-lookup-component
-                                        :attribute="{'code': 'conditions[' + index + '][value]', 'name': 'Email', 'lookup_type': matchedAttribute.lookup_type}"
-                                        validations="required|email"
-                                        :data="condition.value"
+                                        :attribute="{'code': 'conditions[' + index + '][value]', 'name': matchedAttribute?.name, 'lookup_type': matchedAttribute.lookup_type}"
+                                        validations="required"
+                                        :value="{
+                                            id: condition.value
+                                        }"
                                         can-add-new="true"
                                     ></v-lookup-component>
+
+                                    <x-admin::form.control-group.error ::name="`conditions[${index}][value]`"/>
                                 </div>
                             </template>
                         </template>
@@ -519,7 +526,7 @@
                                 ></option>
                             </select>
                         </template>
-                                                    
+
                         <!-- Textarea -->
                         <template v-if="matchedAttribute.type == 'textarea'">
                             <textarea
@@ -543,9 +550,9 @@
         <script
             type="text/x-template"
             id="v-workflow-action-item-template"
-        >   
+        >
             <!-- Table Body -->
-            <x-admin::table.thead.tr class="align-top">
+            <x-admin::table.thead.tr>
                 <x-admin::table.td>
                     <select
                         :name="['actions[' + index + '][id]']"
@@ -563,7 +570,7 @@
 
                 <x-admin::table.td>
                     <div class="flex items-center justify-between gap-4">
-                        <div class="flex w-full justify-between gap-4">
+                        <div class="flex w-full items-center justify-between gap-4">
                             <template v-if="matchedAction && matchedAction.attributes">
                                 <!-- Mattched Attribute -->
                                 <select
@@ -578,18 +585,18 @@
                                         :text="attribute.name"
                                     ></option>
                                 </select>
-    
+
                                 <template v-if="matchedAttribute">
                                     <input
                                         type="hidden"
                                         :name="['actions[' + index + '][attribute_type]']"
                                         v-model="matchedAttribute.type"
                                     >
-    
+
                                     <!-- Text, Price, Decimal and Integer -->
                                     <template
                                         v-if="
-                                            matchedAttribute.type == 'text' 
+                                            matchedAttribute.type == 'text'
                                             || matchedAttribute.type == 'price'
                                             || matchedAttribute.type == 'decimal'
                                             || matchedAttribute.type == 'integer'
@@ -614,7 +621,7 @@
                                                 class="flex h-10 w-full rounded-md border px-3 py-2.5 text-sm text-gray-600 transition-all hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 dark:focus:border-gray-400"
                                             />
                                         </v-field>
-    
+
                                         <v-error-message
                                             :name="`actions[${index}][value]`"
                                             class="mt-1 text-xs italic text-red-500"
@@ -622,7 +629,7 @@
                                         >
                                         </v-error-message>
                                     </template>
-    
+
                                     <!-- Email and Phone -->
                                     <template
                                         v-if="
@@ -635,16 +642,16 @@
                                             :name="['actions[' + index + '][value][0][value]']"
                                             value="work"
                                         />
-    
+
                                         <input
-                                            type="email" 
+                                            type="email"
                                             :name="`actions[${index}][value][0][value]`"
                                             :id="`actions[${index}][value][0][value]`"
                                             class="flex h-10 w-full rounded-md border px-3 py-2.5 text-sm text-gray-600 transition-all hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 dark:focus:border-gray-400"
                                             v-model="action.value[0].value"
                                         />
                                     </template>
-    
+
                                     <!-- Textarea -->
                                     <template v-if="matchedAttribute.type == 'textarea'">
                                         <textarea
@@ -654,7 +661,7 @@
                                             class="w-full rounded-md border px-3 py-2.5 text-sm text-gray-600 transition-all hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 dark:focus:border-gray-400"
                                         ></textarea>
                                     </template>
-    
+
                                     <!-- Date Picker -->
                                     <template v-if="matchedAttribute.type == 'date'">
                                         <x-admin::flat-picker.date
@@ -669,7 +676,7 @@
                                             />
                                         </x-admin::flat-picker.date>
                                     </template>
-    
+
                                     <!-- Date Time Picker -->
                                     <template v-if="matchedAttribute.type == 'datetime'">
                                         <x-admin::flat-picker.date
@@ -684,7 +691,7 @@
                                             />
                                         </x-admin::flat-picker.date>
                                     </template>
-    
+
                                     <!-- Boolean -->
                                     <template v-if="matchedAttribute.type == 'boolean'">
                                         <select
@@ -695,13 +702,13 @@
                                             <option value="1">
                                                 @lang('admin::app.settings.workflows.edit.yes')
                                             </option>
-    
+
                                             <option value="0">
                                                 @lang('admin::app.settings.workflows.edit.no')
                                             </option>
                                         </select>
                                     </template>
-    
+
                                     <!-- Select, Radio and Lookup -->
                                     <template
                                         v-if="
@@ -724,20 +731,24 @@
                                                 ></option>
                                             </select>
                                         </template>
-    
+
                                         <!-- Look vue component -->
                                         <template v-else>
                                             <div class="w-full">
                                                 <v-lookup-component
-                                                    :attribute="{'code': 'actions[' + index + '][value]', 'name': 'Email', 'lookup_type': matchedAttribute.lookup_type}"
-                                                    validations="required|email"
-                                                    :data="action.value"
+                                                    :attribute="{'code': 'actions[' + index + '][value]', 'name': matchedAttribute?.name, 'lookup_type': matchedAttribute.lookup_type}"
+                                                    validations="required"
+                                                    :value="{
+                                                        id: action.value
+                                                    }"
                                                     can-add-new="true"
                                                 ></v-lookup-component>
+
+                                                <x-admin::form.control-group.error ::name="`actions[${index}][value]`"/>
                                             </div>
                                         </template>
                                     </template>
-    
+
                                     <!-- Attribute Options -->
                                     <template v-if="this.matchedAttribute.type === 'multiselect' || this.matchedAttribute.type === 'checkbox'">
                                         <select
@@ -756,7 +767,7 @@
                                     </template>
                                 </template>
                             </template>
-    
+
                             <template v-if="matchedAction && matchedAction.options">
                                 <select
                                     :name="`actions[${index}][value]`"
@@ -770,10 +781,10 @@
                                     ></option>
                                 </select>
                             </template>
-    
+
                             <template
                                 v-if="
-                                    matchedAction 
+                                    matchedAction
                                     && ! matchedAction.attributes
                                     && ! matchedAction.options
                                     && ! matchedAction.request_methods
@@ -792,7 +803,7 @@
                                         class="flex h-10 w-full rounded-md border px-3 py-2.5 text-sm text-gray-600 transition-all hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 dark:focus:border-gray-400"
                                     />
                                 </v-field>
-    
+
                                 <v-error-message
                                     :name="`actions[${index}][value]`"
                                     class="mt-1 text-xs italic text-red-500"
@@ -801,12 +812,14 @@
                                 </v-error-message>
                             </template>
                         </div>
-    
-                        <span
-                            class="icon-delete max-h-9 max-w-9 cursor-pointer rounded-md p-1.5 text-2xl transition-all hover:bg-gray-100 dark:hover:bg-gray-950 max-sm:place-self-center"
-                            @click="removeAction"
-                        ></span>
                     </div>
+                </x-admin::table.td>
+
+                <x-admin::table.td class="text-right">
+                    <span
+                        class="icon-delete cursor-pointer rounded-md p-1.5 text-2xl transition-all hover:bg-gray-100 dark:hover:bg-gray-950"
+                        @click="removeAction"
+                    ></span>
                 </x-admin::table.td>
             </x-admin::table.thead.tr>
         </script>
@@ -841,7 +854,7 @@
                 computed: {
                     /**
                      * Get the entity type.
-                     * 
+                     *
                      * @return {String}
                      */
                      entityType: function () {
@@ -866,7 +879,7 @@
                 watch: {
                     /**
                      * Watch the entity Type.
-                     * 
+                     *
                      * @return {void}
                      */
                     entityType(newValue, oldValue) {
@@ -879,7 +892,7 @@
                 methods: {
                     /**
                      * Add the condition.
-                     * 
+                     *
                      * @returns {void}
                      */
                     addCondition() {
@@ -892,7 +905,7 @@
 
                     /**
                      * Remove the condition.
-                     * 
+                     *
                      * @param {Object} condition
                      * @returns {void}
                      */
@@ -904,7 +917,7 @@
 
                     /**
                      * Add the action.
-                     * 
+                     *
                      * @returns {void}
                      */
                     addAction() {
@@ -917,7 +930,7 @@
 
                     /**
                      * Remove the action.
-                     * 
+                     *
                      * @param {Object} action
                      * @returns {void}
                      */
@@ -929,9 +942,9 @@
 
                     /**
                      * Scroll to the section.
-                     * 
+                     *
                      * @param {String} tabId
-                     * 
+                     *
                      * @returns {void}
                      */
                      scrollToSection(tabId) {
@@ -952,7 +965,7 @@
                 props: ['index', 'entityType', 'condition'],
 
                 emits: ['onRemoveCondition'],
-                
+
                 data() {
                     return {
                         conditions: @json(app('\Webkul\Automation\Helpers\Entity')->getConditions()),
@@ -1129,7 +1142,7 @@
                 computed: {
                     /**
                      * Get the matched attribute.
-                     * 
+                     *
                      * @returns {Object}
                      */
                     matchedAttribute() {
@@ -1144,7 +1157,7 @@
                             || matchedAttribute['type'] == 'checkbox'
                         ) {
                             if (! this.condition.operator) {
-                                this.condition.operator = '{}'; 
+                                this.condition.operator = '{}';
                             }
 
                             if (! this.condition.value) {
@@ -1164,7 +1177,7 @@
                 methods: {
                     /**
                      * Remove the condition.
-                     * 
+                     *
                      * @returns {void}
                      */
                     removeCondition() {
@@ -1189,7 +1202,7 @@
                 computed: {
                     /**
                      * Get the matched action.
-                     * 
+                     *
                      * @returns {Object}
                      */
                     matchedAction () {
@@ -1202,7 +1215,7 @@
 
                     /**
                      * Get the matched attribute.
-                     * 
+                     *
                      * @return {void}
                      */
                     matchedAttribute() {
@@ -1246,7 +1259,7 @@
                 methods: {
                     /**
                      * Remove the action.
-                     * 
+                     *
                      * @returns {void}
                      */
                     removeAction() {
@@ -1263,5 +1276,5 @@
                 scroll-behavior: smooth;
             }
         </style>
-    @endPushOnce    
+    @endPushOnce
 </x-admin::layouts>

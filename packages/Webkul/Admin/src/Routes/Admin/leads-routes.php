@@ -14,6 +14,8 @@ Route::controller(LeadController::class)->prefix('leads')->group(function () {
 
     Route::post('create', 'store')->name('admin.leads.store');
 
+    Route::post('create-by-ai', 'createByAI')->name('admin.leads.create_by_ai');
+
     Route::get('view/{id}', 'view')->name('admin.leads.view');
 
     Route::get('edit/{id}', 'edit')->name('admin.leads.edit');

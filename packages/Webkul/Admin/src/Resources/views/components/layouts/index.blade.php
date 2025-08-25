@@ -114,17 +114,17 @@
             ref="appLayout"
         >
             <!-- Page Sidebar Blade Component -->
-            <x-admin::layouts.sidebar />
+            <x-admin::layouts.sidebar.desktop />
 
-            <div class="flex min-h-[calc(100vh-62px)] max-w-full flex-1 flex-col bg-gray-100 pt-3 transition-all duration-300 dark:bg-gray-950 max-lg:!px-4">
+            <div class="flex min-h-[calc(100vh-62px)] max-w-full flex-1 flex-col bg-gray-100 pt-3 transition-all duration-300 dark:bg-gray-950">
                 <!-- Page Content Blade Component -->
-                <div class="px-4 pb-6 ltr:pl-[85px] rtl:pr-[85px]">
+                <div class="px-4 pb-6 ltr:lg:pl-[85px] rtl:lg:pr-[85px]">
                     {{ $slot }}
                 </div>
-                
+
                 <!-- Powered By -->
                 <div class="mt-auto pt-6">
-                    <div class="border-t bg-white py-5 text-center text-sm font-normal dark:border-gray-800 dark:bg-gray-900 dark:text-white">
+                    <div class="border-t bg-white py-5 text-center text-sm font-normal dark:border-gray-800 dark:bg-gray-900 dark:text-white max-md:py-3">
                         <p>{!! core()->getConfigData('general.settings.footer.label') !!}</p>
                     </div>
                 </div>

@@ -7,6 +7,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\View\View;
 use Prettus\Repository\Criteria\RequestCriteria;
 use Webkul\Admin\DataGrids\Lead\LeadDataGrid;
@@ -18,17 +19,24 @@ use Webkul\Admin\Http\Resources\LeadResource;
 use Webkul\Admin\Http\Resources\StageResource;
 use Webkul\Attribute\Repositories\AttributeRepository;
 use Webkul\Contact\Repositories\PersonRepository;
+use Webkul\Lead\Helpers\MagicAI;
 use Webkul\Lead\Repositories\LeadRepository;
 use Webkul\Lead\Repositories\PipelineRepository;
 use Webkul\Lead\Repositories\ProductRepository;
 use Webkul\Lead\Repositories\SourceRepository;
 use Webkul\Lead\Repositories\StageRepository;
 use Webkul\Lead\Repositories\TypeRepository;
+use Webkul\Lead\Services\MagicAIService;
 use Webkul\Tag\Repositories\TagRepository;
 use Webkul\User\Repositories\UserRepository;
 
 class LeadController extends Controller
 {
+    /**
+     * Const variable for supported types.
+     */
+    const SUPPORTED_TYPES = 'pdf,bmp,jpeg,jpg,png,webp';
+
     /**
      * Create a new controller instance.
      *
@@ -43,6 +51,7 @@ class LeadController extends Controller
         protected StageRepository $stageRepository,
         protected LeadRepository $leadRepository,
         protected ProductRepository $productRepository,
+        protected PersonRepository $personRepository
     ) {
         request()->request->add(['entity_type' => 'leads']);
     }
@@ -144,24 +153,28 @@ class LeadController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(LeadForm $request): RedirectResponse
+    public function store(LeadForm $request): RedirectResponse|JsonResponse
     {
         Event::dispatch('lead.create.before');
 
-        $data = $request->all();
+        $data = request()->all();
 
         $data['status'] = 1;
 
-        if (isset($data['lead_pipeline_stage_id'])) {
+        if (! empty($data['lead_pipeline_stage_id'])) {
             $stage = $this->stageRepository->findOrFail($data['lead_pipeline_stage_id']);
 
             $data['lead_pipeline_id'] = $stage->lead_pipeline_id;
         } else {
-            $pipeline = $this->pipelineRepository->getDefaultPipeline();
+            if (empty($data['lead_pipeline_id'])) {
+                $pipeline = $this->pipelineRepository->getDefaultPipeline();
+
+                $data['lead_pipeline_id'] = $pipeline->id;
+            } else {
+                $pipeline = $this->pipelineRepository->findOrFail($data['lead_pipeline_id']);
+            }
 
             $stage = $pipeline->stages()->first();
-
-            $data['lead_pipeline_id'] = $pipeline->id;
 
             $data['lead_pipeline_stage_id'] = $stage->id;
         }
@@ -172,11 +185,22 @@ class LeadController extends Controller
 
         $lead = $this->leadRepository->create($data);
 
+        if (request()->ajax()) {
+            return response()->json([
+                'message' => trans('admin::app.leads.create-success'),
+                'data'    => new LeadResource($lead),
+            ]);
+        }
+
         Event::dispatch('lead.create.after', $lead);
 
         session()->flash('success', trans('admin::app.leads.create-success'));
 
-        return redirect()->route('admin.leads.index', $data['lead_pipeline_id']);
+        if (! empty($data['lead_pipeline_id'])) {
+            $params['pipeline_id'] = $data['lead_pipeline_id'];
+        }
+
+        return redirect()->route('admin.leads.index', $params ?? []);
     }
 
     /**
@@ -290,14 +314,17 @@ class LeadController extends Controller
 
         Event::dispatch('lead.update.before', $id);
 
-        $lead = $this->leadRepository->update(
-            [
-                'entity_type'            => 'leads',
-                'lead_pipeline_stage_id' => $stage->id,
-            ],
-            $id,
-            ['lead_pipeline_stage_id']
-        );
+        $payload = request()->merge([
+            'entity_type'            => 'leads',
+            'lead_pipeline_stage_id' => $stage->id,
+        ])->only([
+            'closed_at',
+            'lost_reason',
+            'lead_pipeline_stage_id',
+            'entity_type',
+        ]);
+
+        $lead = $this->leadRepository->update($payload, $id, ['lead_pipeline_stage_id']);
 
         Event::dispatch('lead.update.after', $lead);
 
@@ -596,5 +623,112 @@ class LeadController extends Controller
                 ],
             ],
         ];
+    }
+
+    /**
+     * Create lead with specified AI.
+     */
+    public function createByAI()
+    {
+        $leadData = [];
+
+        $errorMessages = [];
+
+        foreach (request()->file('files') as $file) {
+            $lead = $this->processFile($file);
+
+            if (
+                isset($lead['status'])
+                && $lead['status'] === 'error'
+            ) {
+                $errorMessages[] = $lead['message'];
+            } else {
+                $leadData[] = $lead;
+            }
+        }
+
+        if (isset($errorMessages[0]['code'])) {
+            return response()->json(MagicAI::errorHandler($errorMessages[0]['message']));
+        }
+
+        if (
+            empty($leadData)
+            && ! empty($errorMessages)
+        ) {
+            return response()->json(MagicAI::errorHandler(implode(', ', $errorMessages)), 400);
+        }
+
+        if (empty($leadData)) {
+            return response()->json(MagicAI::errorHandler(trans('admin::app.leads.no-valid-files')), 400);
+        }
+
+        return response()->json([
+            'message' => trans('admin::app.leads.create-success'),
+            'leads'   => $this->createLeads($leadData),
+        ]);
+    }
+
+    /**
+     * Process file.
+     *
+     * @param  mixed  $file
+     */
+    private function processFile($file)
+    {
+        $validator = Validator::make(
+            ['file' => $file],
+            ['file' => 'required|extensions:'.str_replace(' ', '', self::SUPPORTED_TYPES)]
+        );
+
+        if ($validator->fails()) {
+            return MagicAI::errorHandler($validator->errors()->first());
+        }
+
+        $base64Pdf = base64_encode(file_get_contents($file->getRealPath()));
+
+        $extractedData = MagicAIService::extractDataFromFile($base64Pdf);
+
+        $lead = MagicAI::mapAIDataToLead($extractedData);
+
+        return $lead;
+    }
+
+    /**
+     * Create multiple leads.
+     */
+    private function createLeads($rawLeads): array
+    {
+        $leads = [];
+
+        foreach ($rawLeads as $rawLead) {
+            Event::dispatch('lead.create.before');
+
+            foreach ($rawLead['person']['emails'] as $email) {
+                $person = $this->personRepository
+                    ->whereJsonContains('emails', [['value' => $email['value']]])
+                    ->first();
+
+                if ($person) {
+                    $rawLead['person']['id'] = $person->id;
+
+                    break;
+                }
+            }
+
+            $pipeline = $this->pipelineRepository->getDefaultPipeline();
+
+            $stage = $pipeline->stages()->first();
+
+            $lead = $this->leadRepository->create(array_merge($rawLead, [
+                'lead_pipeline_id'       => $pipeline->id,
+                'lead_pipeline_stage_id' => $stage->id,
+            ]));
+
+            Event::dispatch('lead.create.after', $lead);
+
+            $leads[] = $lead;
+        }
+
+        return $leads;
     }
 }

@@ -32,6 +32,8 @@ return [
         'other-settings'  => 'Otras configuraciones',
         'tags'            => 'Etiquetas',
         'configuration'   => 'Configuración',
+        'campaigns'       => 'Campañas',
+        'event'           => 'Evento',
         'create'          => 'Crear',
         'edit'            => 'Editar',
         'view'            => 'Ver',
@@ -39,6 +41,11 @@ return [
         'delete'          => 'Eliminar',
         'export'          => 'Exportar',
         'mass-delete'     => 'Eliminar en masa',
+        'data-transfer'   => 'Transferencia de Datos',
+        'imports'         => 'Importaciones',
+        'import'          => 'Importar',
+        'event'           => 'Evento',
+        'campaigns'       => 'Campañas',
     ],
 
     'users' => [
@@ -180,42 +187,42 @@ return [
                 'empty-placeholders' => [
                     'all' => [
                         'title'       => 'No se encontraron actividades',
-                        'description' => 'No se encontraron actividades para esto. Puedes agregar actividades haciendo clic en el botón en el panel lateral.',
+                        'description' => 'No se encontraron actividades para esto. Puedes agregar actividades haciendo clic en el botón Actividad en el panel izquierdo.',
                     ],
 
                     'planned' => [
                         'title'       => 'No se encontraron actividades planificadas',
-                        'description' => 'No se encontraron actividades planificadas para esto. Puedes agregar actividades planificadas haciendo clic en el botón en el panel lateral.',
+                        'description' => 'No se encontraron actividades planificadas para esto. Puedes agregarlas haciendo clic en el botón Actividad en el panel izquierdo.',
                     ],
 
                     'notes' => [
                         'title'       => 'No se encontraron notas',
-                        'description' => 'No se encontraron notas para esto. Puedes agregar notas haciendo clic en el botón en el panel lateral.',
+                        'description' => 'No se encontraron notas para esto. Puedes agregarlas haciendo clic en el botón Nota en el panel izquierdo.',
                     ],
 
                     'calls' => [
                         'title'       => 'No se encontraron llamadas',
-                        'description' => 'No se encontraron llamadas para esto. Puedes agregar llamadas haciendo clic en el botón en el panel lateral.',
+                        'description' => 'No se encontraron llamadas para esto. Puedes agregarlas haciendo clic en el botón Actividad en el panel izquierdo y seleccionando el tipo Llamada.',
                     ],
 
                     'meetings' => [
                         'title'       => 'No se encontraron reuniones',
-                        'description' => 'No se encontraron reuniones para esto. Puedes agregar reuniones haciendo clic en el botón en el panel lateral.',
+                        'description' => 'No se encontraron reuniones para esto. Puedes agregarlas haciendo clic en el botón Actividad en el panel izquierdo y seleccionando el tipo Reunión.',
                     ],
 
                     'lunches' => [
                         'title'       => 'No se encontraron almuerzos',
-                        'description' => 'No se encontraron almuerzos para esto. Puedes agregar almuerzos haciendo clic en el botón en el panel lateral.',
+                        'description' => 'No se encontraron almuerzos para esto. Puedes agregarlos haciendo clic en el botón Actividad en el panel izquierdo y seleccionando el tipo Almuerzo.',
                     ],
 
                     'files' => [
                         'title'       => 'No se encontraron archivos',
-                        'description' => 'No se encontraron archivos para esto. Puedes agregar archivos haciendo clic en el botón en el panel lateral.',
+                        'description' => 'No se encontraron archivos para esto. Puedes agregarlos haciendo clic en el botón Archivo en el panel izquierdo.',
                     ],
 
                     'emails' => [
                         'title'       => 'No se encontraron correos electrónicos',
-                        'description' => 'No se encontraron correos electrónicos para esto. Puedes agregar correos electrónicos haciendo clic en el botón en el panel lateral.',
+                        'description' => 'No se encontraron correos electrónicos para esto. Puedes agregarlos haciendo clic en el botón Correo en el panel izquierdo.',
                     ],
 
                     'system' => [
@@ -367,22 +374,26 @@ return [
 
             'header' => [
                 'mega-search' => [
-                    'title'   => 'Búsqueda Mega',
+                    'title' => 'Búsqueda Avanzada',
 
                     'tabs' => [
-                        'leads'    => 'Oportunidades',
-                        'quotes'   => 'Cotizaciones',
-                        'persons'  => 'Personas',
-                        'products' => 'Productos',
+                        'leads'          => 'Clientes Potenciales',
+                        'quotes'         => 'Cotizaciones',
+                        'persons'        => 'Personas',
+                        'products'       => 'Productos',
+                        'settings'       => 'Configuraciones',
+                        'configurations' => 'Ajustes',
                     ],
 
-                    'explore-all-products'          => 'Explorar todos los Productos',
-                    'explore-all-leads'             => 'Explorar todas las Oportunidades',
-                    'explore-all-contacts'          => 'Explorar todos los Contactos',
-                    'explore-all-quotes'            => 'Explorar todas las Cotizaciones',
+                    'explore-all-products'          => 'Explorar todos los productos',
+                    'explore-all-leads'             => 'Explorar todos los clientes potenciales',
+                    'explore-all-contacts'          => 'Explorar todas las personas',
+                    'explore-all-quotes'            => 'Explorar todas las cotizaciones',
+                    'explore-all-settings'          => 'Explorar todas las configuraciones',
+                    'explore-all-configurations'    => 'Explorar todos los ajustes',
                     'explore-all-matching-products' => 'Explorar todos los productos que coinciden con ":query" (:count)',
-                    'explore-all-matching-leads'    => 'Explorar todas las oportunidades que coinciden con ":query" (:count)',
-                    'explore-all-matching-contacts' => 'Explorar todos los contactos que coinciden con ":query" (:count)',
+                    'explore-all-matching-leads'    => 'Explorar todos los clientes potenciales que coinciden con ":query" (:count)',
+                    'explore-all-matching-contacts' => 'Explorar todas las personas que coinciden con ":query" (:count)',
                     'explore-all-matching-quotes'   => 'Explorar todas las cotizaciones que coinciden con ":query" (:count)',
                 ],
             ],
@@ -414,6 +425,12 @@ return [
             'warning' => 'Advertencia',
             'info'    => 'Información',
         ],
+
+        'tiny-mce' => [
+            'http-error'    => 'Error HTTP',
+            'invalid-json'  => 'Respuesta JSON no válida del servidor.',
+            'upload-failed' => 'Error al subir el archivo. Por favor, inténtelo de nuevo.',
+        ],
     ],
 
     'quotes' => [
@@ -430,7 +447,6 @@ return [
                 'sales-person'   => 'Vendedor',
                 'expired-at'     => 'Vence en',
                 'created-at'     => 'Creado en',
-                'expired-quotes' => 'Cotización Expirada',
                 'person'         => 'Persona',
                 'subtotal'       => 'Subtotal',
                 'discount'       => 'Descuento',
@@ -531,12 +547,15 @@ return [
     'contacts' => [
         'persons' => [
             'index' => [
-                'title'          => 'Personas',
-                'create-btn'     => 'Crear Persona',
-                'create-success' => 'Persona creada con éxito.',
-                'update-success' => 'Persona actualizada con éxito.',
-                'delete-success' => 'Persona eliminada con éxito.',
-                'delete-failed'  => 'No se puede eliminar la persona.',
+                'title'                    => 'Personas',
+                'create-btn'               => 'Crear Persona',
+                'create-success'           => 'Persona creada con éxito.',
+                'update-success'           => 'Persona actualizada con éxito.',
+                'all-delete-success'       => 'Todas las personas seleccionadas fueron eliminadas exitosamente.',
+                'partial-delete-warning'   => 'Algunas personas fueron eliminadas con éxito. Otras no se pudieron eliminar porque están vinculadas a clientes potenciales.',
+                'none-delete-warning'      => 'Ninguna de las personas seleccionadas pudo ser eliminada porque están vinculadas a clientes potenciales.',
+                'no-selection'             => 'No se seleccionaron personas para eliminar.',
+                'delete-failed'            => 'No se pudieron eliminar las personas seleccionadas.',
 
                 'datagrid' => [
                     'contact-numbers'   => 'Números de Contacto',
@@ -618,6 +637,11 @@ return [
                         ],
                     ],
                 ],
+
+                'tags' => [
+                    'create-success'  => 'Etiqueta creada con éxito.',
+                    'destroy-success' => 'Etiqueta eliminada con éxito.',
+                ],
             ],
 
             'create' => [
@@ -676,6 +700,7 @@ return [
                 'edit'      => 'Editar',
                 'id'        => 'ID',
                 'in-stock'  => 'En Stock',
+                'tag-name'  => 'Nombre de etiqueta',
                 'name'      => 'Nombre',
                 'on-hand'   => 'Disponible',
                 'price'     => 'Precio',
@@ -730,12 +755,13 @@ return [
 
         'groups' => [
             'index' => [
-                'create-btn'        => 'Crear Grupo',
-                'title'             => 'Grupos',
-                'create-success'    => 'Grupo creado con éxito.',
-                'update-success'    => 'Grupo actualizado con éxito.',
-                'destroy-success'   => 'Grupo eliminado con éxito.',
-                'delete-failed'     => 'No se puede eliminar el grupo.',
+                'create-btn'                     => 'Crear Grupo',
+                'title'                          => 'Grupos',
+                'create-success'                 => 'Grupo creado con éxito.',
+                'update-success'                 => 'Grupo actualizado con éxito.',
+                'destroy-success'                => 'Grupo eliminado con éxito.',
+                'delete-failed'                  => 'No se puede eliminar el grupo.',
+                'delete-failed-associated-users' => 'No se puede eliminar el grupo, ya que está siendo utilizado por usuarios.',
 
                 'datagrid'   => [
                     'delete'      => 'Eliminar',
@@ -842,12 +868,13 @@ return [
 
         'sources' => [
             'index' => [
-                'create-btn'     => 'Crear Fuente',
-                'create-success' => 'Fuente creada con éxito.',
-                'delete-failed'  => 'No se puede eliminar la fuente.',
-                'delete-success' => 'Fuente eliminada con éxito.',
-                'title'          => 'Fuentes',
-                'update-success' => 'Fuente actualizada con éxito.',
+                'title'                          => 'Fuentes',
+                'create-btn'                     => 'Crear Fuente',
+                'create-success'                 => 'Fuente creada con éxito.',
+                'delete-failed'                  => 'No se puede eliminar la fuente.',
+                'delete-success'                 => 'Fuente eliminada con éxito.',
+                'update-success'                 => 'Fuente actualizada con éxito.',
+                'delete-failed-associated-leads' => 'No se puede eliminar la fuente porque está asociada a clientes potenciales existentes. Por favor, desvincúlelos o actualícelos antes de eliminar.',
 
                 'datagrid' => [
                     'delete' => 'Eliminar',
@@ -1091,6 +1118,82 @@ return [
             ],
         ],
 
+        'marketing' => [
+            'events' => [
+                'index' => [
+                    'create-btn'                         => 'Crear Evento',
+                    'title'                              => 'Eventos',
+                    'create-success'                     => 'Evento creado exitosamente.',
+                    'update-success'                     => 'Evento actualizado exitosamente.',
+                    'delete-success'                     => 'Evento eliminado exitosamente.',
+                    'delete-failed'                      => 'No se puede eliminar el evento.',
+                    'delete-failed-associated-campaigns' => 'No se puede eliminar el evento porque está asociado a campañas.',
+                    'mass-delete-success'                => 'Eventos eliminados exitosamente.',
+                    'partial-delete-warning'             => 'Algunos eventos no se pudieron eliminar porque están asociados a campañas.',
+                    'none-delete-warning'                => 'Ninguno de los eventos seleccionados se pudo eliminar porque están asociados a campañas.',
+                    'no-selection'                       => 'No se seleccionaron eventos para eliminar.',
+
+                    'datagrid'   => [
+                        'delete'       => 'Eliminar',
+                        'edit'         => 'Editar',
+                        'id'           => 'ID',
+                        'name'         => 'Nombre',
+                        'description'  => 'Descripción',
+                        'date'         => 'Fecha',
+                    ],
+
+                    'create'     => [
+                        'title'       => 'Crear Evento',
+                        'name'        => 'Nombre',
+                        'date'        => 'Fecha',
+                        'description' => 'Descripción',
+                        'save-btn'    => 'Guardar Evento',
+                    ],
+
+                    'edit' => [
+                        'title' => 'Editar Evento',
+                    ],
+                ],
+            ],
+
+            'campaigns' => [
+                'index' => [
+                    'create-btn'          => 'Crear Campaña',
+                    'title'               => 'Campañas',
+                    'create-success'      => 'Campaña creada con éxito.',
+                    'update-success'      => 'Campaña actualizada con éxito.',
+                    'delete-success'      => 'Campaña eliminada con éxito.',
+                    'delete-failed'       => 'No se puede eliminar la campaña.',
+                    'mass-delete-success' => 'Campañas eliminadas con éxito.',
+
+                    'datagrid'   => [
+                        'id'       => 'ID',
+                        'name'     => 'Nombre',
+                        'subject'  => 'Asunto',
+                        'status'   => 'Estado',
+                        'active'   => 'Activo',
+                        'inactive' => 'Inactivo',
+                        'edit'     => 'Editar',
+                        'delete'   => 'Eliminar',
+                    ],
+
+                    'create'     => [
+                        'title'          => 'Crear Campaña',
+                        'name'           => 'Nombre',
+                        'type'           => 'Tipo',
+                        'subject'        => 'Asunto',
+                        'event'          => 'Evento',
+                        'email-template' => 'Plantilla de Correo',
+                        'status'         => 'Estado',
+                    ],
+
+                    'edit' => [
+                        'title' => 'Editar Campaña',
+                    ],
+                ],
+            ],
+        ],
+
         'tags' => [
             'index' => [
                 'create-btn'     => 'Crear Etiqueta',
@@ -1181,6 +1284,7 @@ return [
                 'title'                => 'Canales',
                 'create-btn'           => 'Crear Canal',
                 'create-success'       => 'Canal creado exitosamente.',
+                'default-required'     => 'Se requiere al menos una canalización predeterminada.',
                 'update-success'       => 'Canal actualizado exitosamente.',
                 'delete-success'       => 'Canal eliminado exitosamente.',
                 'delete-failed'        => 'No se puede eliminar el Canal.',
@@ -1415,16 +1519,22 @@ return [
                         'warehouses'    => 'Almacenes',
                     ],
 
-                    'types'       => [
-                        'address'  => 'Dirección',
-                        'date'     => 'Fecha',
-                        'email'    => 'Correo Electrónico',
-                        'lookup'   => 'Búsqueda',
-                        'phone'    => 'Teléfono',
-                        'price'    => 'Precio',
-                        'select'   => 'Seleccionar',
-                        'text'     => 'Texto',
-                        'textarea' => 'Área de Texto',
+                    'types' => [
+                        'text'        => 'Texto',
+                        'textarea'    => 'Área de texto',
+                        'price'       => 'Precio',
+                        'boolean'     => 'Booleano',
+                        'select'      => 'Seleccionar',
+                        'multiselect' => 'Selección múltiple',
+                        'checkbox'    => 'Casilla de verificación',
+                        'email'       => 'Correo electrónico',
+                        'address'     => 'Dirección',
+                        'phone'       => 'Teléfono',
+                        'lookup'      => 'Búsqueda',
+                        'datetime'    => 'Fecha y hora',
+                        'date'        => 'Fecha',
+                        'image'       => 'Imagen',
+                        'file'        => 'Archivo',
                     ],
                 ],
             ],
@@ -1516,6 +1626,109 @@ return [
                 'is_required'           => 'Es Requerido',
                 'is_unique'             => 'Es Único',
                 'actions'               => 'Acciones',
+            ],
+        ],
+
+        'data-transfer' => [
+            'imports' => [
+                'create' => [
+                    'action'              => 'Acción',
+                    'allowed-errors'      => 'Errores Permitidos',
+                    'back-btn'            => 'Atrás',
+                    'create-update'       => 'Crear/Actualizar',
+                    'delete'              => 'Eliminar',
+                    'download-sample'     => 'Descargar Muestra',
+                    'field-separator'     => 'Separador de Campos',
+                    'file'                => 'Archivo',
+                    'general'             => 'General',
+                    'images-directory'    => 'Ruta del Directorio de Imágenes',
+                    'process-in-queue'    => 'Procesar en Cola',
+                    'results'             => 'Resultados',
+                    'save-btn'            => 'Guardar Importación',
+                    'settings'            => 'Configuraciones',
+                    'skip-errors'         => 'Omitir Errores',
+                    'stop-on-errors'      => 'Detener en Errores',
+                    'title'               => 'Crear Importación',
+                    'type'                => 'Tipo',
+                    'validation-strategy' => 'Estrategia de Validación',
+                ],
+
+                'edit' => [
+                    'action'              => 'Acción',
+                    'allowed-errors'      => 'Errores Permitidos',
+                    'back-btn'            => 'Atrás',
+                    'create-update'       => 'Crear/Actualizar',
+                    'delete'              => 'Eliminar',
+                    'download-sample'     => 'Descargar Muestra',
+                    'field-separator'     => 'Separador de Campos',
+                    'file'                => 'Archivo',
+                    'general'             => 'General',
+                    'images-directory'    => 'Ruta del Directorio de Imágenes',
+                    'process-in-queue'    => 'Procesar en Cola',
+                    'results'             => 'Resultados',
+                    'save-btn'            => 'Guardar Importación',
+                    'settings'            => 'Configuraciones',
+                    'skip-errors'         => 'Omitir Errores',
+                    'stop-on-errors'      => 'Detener en Errores',
+                    'title'               => 'Editar Importación',
+                    'type'                => 'Tipo',
+                    'validation-strategy' => 'Estrategia de Validación',
+                ],
+
+                'index' => [
+                    'button-title' => 'Crear Importación',
+                    'title'        => 'Importaciones',
+
+                    'datagrid' => [
+                        'actions'       => 'Acciones',
+                        'completed-at'  => 'Completado en',
+                        'created'       => 'Creado',
+                        'delete'        => 'Eliminar',
+                        'deleted'       => 'Eliminado',
+                        'edit'          => 'Editar',
+                        'error-file'    => 'Archivo de Errores',
+                        'id'            => 'ID',
+                        'started-at'    => 'Iniciado en',
+                        'state'         => 'Estado',
+                        'summary'       => 'Resumen',
+                        'type'          => 'Tipo',
+                        'updated'       => 'Actualizado',
+                        'uploaded-file' => 'Archivo Subido',
+                    ],
+                ],
+
+                'import' => [
+                    'back-btn'                => 'Atrás',
+                    'completed-batches'       => 'Total de Lotes Completados:',
+                    'download-error-report'   => 'Descargar Informe Completo',
+                    'edit-btn'                => 'Editar',
+                    'imported-info'           => '¡Felicidades! Tu importación fue exitosa.',
+                    'importing-info'          => 'Importación en Proceso',
+                    'indexing-info'           => 'Indexación de Recursos (Precios, Inventario y Elastic Search) en Progreso',
+                    'linking-info'            => 'Vinculación de Recursos en Progreso',
+                    'progress'                => 'Progreso:',
+                    'title'                   => 'Importación',
+                    'total-batches'           => 'Total de Lotes:',
+                    'total-created'           => 'Total de Registros Creados:',
+                    'total-deleted'           => 'Total de Registros Eliminados:',
+                    'total-errors'            => 'Total de Errores:',
+                    'total-invalid-rows'      => 'Total de Filas Inválidas:',
+                    'total-rows-processed'    => 'Total de Filas Procesadas:',
+                    'total-updated'           => 'Total de Registros Actualizados:',
+                    'validate'                => 'Validar',
+                    'validate-info'           => 'Haz clic en Validar Datos para comprobar tu importación.',
+                    'validating-info'         => 'La lectura y validación de los datos ha comenzado',
+                    'validation-failed-info'  => 'Tu importación no es válida. Por favor, corrige los siguientes errores e intenta de nuevo.',
+                    'validation-success-info' => 'Tu importación es válida. Haz clic en Importar para iniciar el proceso de importación.',
+                ],
+
+                'create-success'    => 'Importación creada exitosamente.',
+                'delete-failed'     => 'La eliminación de la importación falló inesperadamente.',
+                'delete-success'    => 'Importación eliminada exitosamente.',
+                'not-valid'         => 'La importación no es válida',
+                'nothing-to-import' => 'No hay recursos para importar.',
+                'setup-queue-error' => 'Por favor, cambia tu controlador de cola a "database" o "redis" para iniciar el proceso de importación.',
+                'update-success'    => 'Importación actualizada exitosamente.',
             ],
         ],
     ],
@@ -1614,6 +1827,7 @@ return [
                 'attachments'   => 'Archivos adjuntos',
                 'date'          => 'Fecha',
                 'move-to-inbox' => 'Mover a la bandeja de entrada',
+                'move-to-trash' => 'Movido a la papelera',
                 'edit'          => 'Editar',
                 'view'          => 'Ver',
                 'delete'        => 'Eliminar',
@@ -1696,6 +1910,20 @@ return [
         'destroy-success'   => 'Lead eliminado exitosamente.',
         'destroy-failed'    => 'No se puede eliminar el lead.',
 
+        'file' => [
+            'data-not-found'         => 'Datos no encontrados.',
+            'empty-content'          => 'El contenido del PDF está vacío o no se pudo extraer.',
+            'failed-extract'         => 'No se pudo extraer el texto del archivo.',
+            'insufficient-info'      => 'Debido a datos insuficientes, no podemos procesar su solicitud en este momento.',
+            'invalid-base64'         => 'Formato base64 inválido.',
+            'invalid-format'         => 'Formato JSON inválido.',
+            'invalid-response'       => 'Formato de respuesta de IA inválido.',
+            'missing-api-key'        => 'Falta la clave API o la configuración del modelo.',
+            'not-found'              => 'Archivo no encontrado.',
+            'recursive-call'         => 'Se detectó una llamada recursiva.',
+            'text-generation-failed' => 'La extracción de texto falló. El archivo podría estar vacío o ilegible.',
+        ],
+
         'index' => [
             'title'      => 'Leads',
             'create-btn' => 'Crear Lead',
@@ -1741,7 +1969,7 @@ return [
 
                 'toolbar' => [
                     'search' => [
-                        'title' => 'Buscar',
+                        'title' => 'Buscar por título',
                     ],
 
                     'filters' => [
@@ -1754,11 +1982,31 @@ return [
                         'to'            => 'A',
                     ],
                 ],
+
+                'stages' => [
+                    'won-lost'       => 'Ganado/Perdido',
+                    'won'            => 'Ganado',
+                    'lost'           => 'Perdido',
+                    'need-more-info' => 'Necesita Más Información',
+                    'closed-at'      => 'Cerrado En',
+                    'won-value'      => 'Valor Ganado',
+                    'lost-reason'    => 'Razón de la Pérdida',
+                    'save-btn'       => 'Guardar',
+                ],
             ],
 
             'view-switcher' => [
                 'all-pipelines'       => 'Todos los Canales',
                 'create-new-pipeline' => 'Crear Nuevo Canal',
+            ],
+
+            'upload' => [
+                'create-lead'   => 'Crear Lead Usando IA',
+                'file'          => 'Carga de archivo',
+                'file-info'     => 'Solo se aceptan archivos en formato pdf, bmp, jpg, jpeg, png.',
+                'file-required' => 'Por favor, selecciona al menos un archivo válido para continuar.',
+                'save-btn'      => 'Guardar',
+                'upload-file'   => 'Subir archivo',
             ],
         ],
 
@@ -1817,7 +2065,7 @@ return [
                 'title' => 'Sobre el Lead',
             ],
 
-            'quotes'=> [
+            'quotes' => [
                 'subject'         => 'Asunto',
                 'expired-at'      => 'Expirado En',
                 'sub-total'       => 'Subtotal',
@@ -1940,6 +2188,54 @@ return [
                     ],
                 ],
             ],
+
+            'email' => [
+                'title' => 'Configuración de Correo Electrónico',
+                'info'  => 'Configuración de correo electrónico para la aplicación.',
+
+                'imap' => [
+                    'title' => 'Configuración IMAP',
+                    'info'  => 'Configuración de correo electrónico IMAP para recibir correos electrónicos.',
+
+                    'account' => [
+                        'title'         => 'Cuenta IMAP',
+                        'title-info'    => 'Configura los ajustes de tu cuenta IMAP aquí.',
+                        'host'          => 'Host',
+                        'port'          => 'Puerto',
+                        'encryption'    => 'Tipo de Cifrado',
+                        'validate-cert' => 'Validar Certificado SSL',
+                        'username'      => 'Nombre de Usuario IMAP',
+                        'password'      => 'Contraseña IMAP',
+                    ],
+                ],
+            ],
+
+            'magic-ai' => [
+                'title' => 'Magic AI',
+                'info'  => 'Configuración de Magic AI para la aplicación.',
+
+                'settings' => [
+                    'api-key'             => 'Clave API',
+                    'api-key-info'        => 'Recuerda usar una clave API de OpenRouter para cada modelo. Es un paso simple para mejorar la seguridad y el rendimiento.',
+                    'enable'              => 'Habilitar',
+                    'info'                => 'Mejora tu experiencia con Magic AI con tu clave API de OpenRouter. ¡Intégrala ahora para una aventura de IA personalizada y sin problemas, hecha a tu medida! Personaliza la configuración sin esfuerzo y toma el control de tu viaje de IA.',
+                    'other'               => 'Otro Modelo',
+                    'other-model'         => 'Para otros modelos, usa el ID del Modelo de OpenRouter.',
+                    'doc-generation'      => 'Generación de DOC',
+                    'doc-generation-info' => 'Habilita la función de generación de DOC para extraer automáticamente datos de archivos DOC y convertirlos a formato de texto. Mejora tu productividad y eficiencia habilitando esta función para agilizar tu flujo de trabajo.',
+                    'title'               => 'Configuraciones Generales',
+
+                    'models'     => [
+                        'deepseek-r1'           => 'Deepseek R1 Distill-llama-8b',
+                        'gemini-2-0-flash-001'  => 'Gemini 2.0 flash-001',
+                        'gpt-4o'                => 'GPT-4.0',
+                        'gpt-4o-mini'           => 'GPT-4.0 mini',
+                        'grok-2-1212'           => 'Grok 2.12',
+                        'llama-3-2-3b-instruct' => 'Llama 3.2 3b Instruct',
+                        'title'                 => 'Modelos',
+                    ],
+                ],
+            ],
         ],
     ],
 
@@ -2050,6 +2346,10 @@ return [
         'email-templates'      => 'Plantillas de Correo',
         'email'                => 'Correo',
         'email-templates-info' => 'Agregar, editar o eliminar plantillas de correo del CRM',
+        'events'               => 'Eventos',
+        'events-info'          => 'Agregar, editar o eliminar eventos del CRM',
+        'campaigns'            => 'Campañas',
+        'campaigns-info'       => 'Agregar, editar o eliminar campañas del CRM',
         'workflows'            => 'Flujos de Trabajo',
         'workflows-info'       => 'Agregar, editar o eliminar flujos de trabajo del CRM',
         'webhooks'             => 'Webhooks',
@@ -2068,6 +2368,8 @@ return [
         'warehouses'           => 'Almacenes',
         'warehouse'            => 'Almacén',
         'warehouses-info'      => 'Agregar, editar o eliminar almacenes del CRM',
+        'data_transfer'        => 'Transferencia de Datos',
+        'data_transfer_info'   => 'Gestionar la configuración relacionada con la transferencia de datos de personas, productos y clientes potenciales en el CRM',
     ],
 
     'user' => [
@@ -2108,6 +2410,12 @@ return [
                     'thanks'            => '¡Gracias!',
                 ],
             ],
+        ],
+    ],
+
+    'validations' => [
+        'message' => [
+            'decimal' => 'El :attribute debe ser un número decimal.',
         ],
     ],
 

@@ -5,10 +5,12 @@ on: [push, pull_request]
 jobs:
   tests:
     runs-on: ${{ matrix.operating-system }}
+
     strategy:
       matrix:
         operating-system: [ubuntu-latest]
         php-versions: ["8.3", "8.2"]
+
     name: PHP ${{ matrix.php-versions }} test on ${{ matrix.operating-system }}
 
     services:
@@ -30,8 +32,10 @@ jobs:
         with:
           php-version: ${{ matrix.php-versions }}
           extensions: curl, gd, intl, mbstring, openssl, pdo, pdo_mysql, tokenizer, zip
+          ini-values: error_reporting=E_ALL
+          tools: composer:v2
 
-      - name: Composer Install
+      - name: Running Composer Install
         run: composer install
 
       - name: Set Testing Environment
@@ -44,25 +48,8 @@ jobs:
           sed -i "s|^\(DB_USERNAME=\s*\).*$|\1root|" .env
           sed -i "s|^\(DB_PASSWORD=\s*\).*$|\1root|" .env
 
-      - name: Key Generate
-        run: php artisan key:generate
+      - name: Running Krayin Installer
+        run: php artisan krayin-crm::install --skip-env-check --skip-admin-creation
 
-      - name: Complete ENV File
-        run: |
-          printf "The complete `.env` ... \n\n"
-          cat .env
-
-      - name: Migrate Database
-        run: php artisan migrate
-
-      - name: Seed Database
-        run: php artisan db:seed
-
-      - name: Vendor Publish
-        run: php artisan vendor:publish --provider=Webkul\\Core\\Providers\\CoreServiceProvider --force
-
-      - name: Optimize Stuffs
-        run: php artisan optimize:clear
-
-      - name: Run Tests
-        run: vendor/bin/pest
+       - name: Running Pest Test
+        run: vendor/bin/pest --parallel --colors=always

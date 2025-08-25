@@ -40,7 +40,7 @@
                                 {{ $person->organization->address['address'] }}
                             </span>
                         @endisset
-                        
+
                         @if(
                             isset($person->organization->address['postcode'])
                             && isset($person->organization->address['city'])
@@ -69,4 +69,5 @@
         </div>
     </div>
 @endif
+
 {!! view_render_event('admin.contacts.persons.view.organization.after', ['person' => $person]) !!}

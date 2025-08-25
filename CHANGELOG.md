@@ -1,3 +1,55 @@
+## **v2.1.2 (16 of May 2025)** - *Release*
+
+* #2172[fixed] Cleaned up unnecessary label-value JSON from Email and Contact columns in export.
+
+* #2171[fixed] Corrected the success message when adding a tag to a person in Contacts module.
+
+* #2167[fixed] Aligned "Schedule From" and date inputs in the Workflow action UI. 
+
+* #2155[fixed] Resolved validation for required custom attributes when creating a Person. 
+
+* #1992[fixed] Removed duplicate "Stage" options when selecting "Lead" in workflow conditions.
+
+## **v2.1.1 (15 of May 2025)** - *Release*
+
+* Fixed broken password change functionality
+
+* Implemented missing SVG sanitization to enhance security
+
+* Added contact visibility control for individual accounts across different groups.
+
+* Introduced dashboard pie chart features for better data visualization.
+
+* #2195.[fixed]. Resolved migration failure on new setup.
+  
+* #2189.[fixed]. Addressed missing installation instructions in Readme.md.
+  
+* #2185.[fixed]. Corrected display of internal ACL labels on Role Edit/Create page.
+  
+* #2184.[fixed]. Eliminated error 500 when creating lead or contact.
+  
+* #2183.[fixed]. Repaired issue with email view rendering.
+  
+* #2181.[fixed]. Handled installation error in `krayin/rest-api`.
+  
+* #2180.[fixed]. Fixed database migration failure during installation.
+  
+* #2178.[fixed]. Enabled person creation for roles other than Administrator.
+  
+* #2173.[fixed]. Improved condition operator input visibility in workflow automation.
+
+## **v2.1.0 (26th of March 2025)** - *Release*
+
+* Mobile responsive pages.
+
+* Ability to create lead via pdf or images.
+
+* IMAP integration.
+
+* Playwright support.
+
+* Marketing feature for creating events and campaign.
+
 ## **v2.0.6 (20th of March 2025)** - *Release*
 
 * Leads refinement.

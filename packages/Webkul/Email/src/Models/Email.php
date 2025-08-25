@@ -10,8 +10,18 @@ use Webkul\Tag\Models\TagProxy;
 
 class Email extends Model implements EmailContract
 {
+    /**
+     * The table associated with the model.
+     *
+     * @var string
+     */
     protected $table = 'emails';
 
+    /**
+     * The attributes that should be cast.
+     *
+     * @var array
+     */
     protected $casts = [
         'folders'       => 'array',
         'sender'        => 'array',
@@ -55,6 +65,8 @@ class Email extends Model implements EmailContract
         'person_id',
         'parent_id',
         'lead_id',
+        'created_at',
+        'updated_at',
     ];
 
     /**

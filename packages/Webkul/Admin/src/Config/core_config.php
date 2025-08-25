@@ -1,6 +1,9 @@
 <?php
 
 return [
+    /**
+     * General.
+     */
     [
         'key'  => 'general',
         'name' => 'admin::app.configuration.index.general.title',
@@ -44,7 +47,7 @@ return [
         'name'   => 'admin::app.configuration.index.general.settings.title',
         'info'   => 'admin::app.configuration.index.general.settings.info',
         'icon'   => 'icon-configuration',
-        'sort'   => 1,
+        'sort'   => 2,
     ], [
         'key'    => 'general.settings.footer',
         'name'   => 'admin::app.configuration.index.general.settings.footer.title',
@@ -167,13 +170,144 @@ return [
         'key'    => 'general.settings.menu_color',
         'name'   => 'admin::app.configuration.index.general.settings.menu-color.title',
         'info'   => 'admin::app.configuration.index.general.settings.menu-color.info',
-        'sort'   => 2,
+        'sort'   => 3,
         'fields' => [
             [
                 'name'    => 'brand_color',
                 'title'   => 'admin::app.configuration.index.general.settings.menu-color.brand-color',
                 'type'    => 'color',
                 'default' => '#0E90D9',
+            ],
+        ],
+    ], [
+        'key'  => 'general.magic_ai',
+        'name' => 'admin::app.configuration.index.magic-ai.title',
+        'info' => 'admin::app.configuration.index.magic-ai.info',
+        'icon' => 'icon-setting',
+        'sort' => 3,
+    ], [
+        'key'    => 'general.magic_ai.settings',
+        'name'   => 'admin::app.configuration.index.magic-ai.settings.title',
+        'info'   => 'admin::app.configuration.index.magic-ai.settings.info',
+        'sort'   => 1,
+        'fields' => [
+            [
+                'name'          => 'enable',
+                'title'         => 'admin::app.configuration.index.magic-ai.settings.enable',
+                'type'          => 'boolean',
+                'channel_based' => true,
+            ], [
+                'name'          => 'api_key',
+                'title'         => 'admin::app.configuration.index.magic-ai.settings.api-key',
+                'type'          => 'password',
+                'depends'       => 'enable:1',
+                'validation'    => 'required_if:enable,1',
+                'info'          => 'admin::app.configuration.index.magic-ai.settings.api-key-info',
+            ], [
+                'name'          => 'model',
+                'title'         => 'admin::app.configuration.index.magic-ai.settings.models.title',
+                'type'          => 'select',
+                'channel_based' => true,
+                'depends'       => 'enable:1',
+                'options'       => [
+                    [
+                        'title' => 'admin::app.configuration.index.magic-ai.settings.models.gpt-4o',
+                        'value' => 'openai/chatgpt-4o-latest',
+                    ], [
+                        'title' => 'admin::app.configuration.index.magic-ai.settings.models.gpt-4o-mini',
+                        'value' => 'openai/gpt-4o-mini',
+                    ], [
+                        'title' => 'admin::app.configuration.index.magic-ai.settings.models.gemini-2-0-flash-001',
+                        'value' => 'google/gemini-2.0-flash-001',
+                    ], [
+                        'title' => 'admin::app.configuration.index.magic-ai.settings.models.deepseek-r1',
+                        'value' => 'deepseek/deepseek-r1-distill-llama-8b',
+                    ], [
+                        'title' => 'admin::app.configuration.index.magic-ai.settings.models.llama-3-2-3b-instruct',
+                        'value' => 'meta-llama/llama-3.2-3b-instruct',
+                    ], [
+                        'title' => 'admin::app.configuration.index.magic-ai.settings.models.grok-2-1212',
+                        'value' => 'x-ai/grok-2-1212',
+                    ],
+                ],
+            ], [
+                'name'          => 'other_model',
+                'title'         => 'admin::app.configuration.index.magic-ai.settings.other',
+                'type'          => 'text',
+                'info'          => 'admin::app.configuration.index.magic-ai.settings.other-model',
+                'default'       => null,
+                'depends'       => 'enable:1',
+            ],
+        ],
+    ], [
+        'key'    => 'general.magic_ai.doc_generation',
+        'name'   => 'admin::app.configuration.index.magic-ai.settings.doc-generation',
+        'info'   => 'admin::app.configuration.index.magic-ai.settings.doc-generation-info',
+        'sort'   => 2,
+        'fields' => [
+            [
+                'name'          => 'enabled',
+                'title'         => 'admin::app.configuration.index.magic-ai.settings.enable',
+                'type'          => 'boolean',
+            ],
+        ],
+    ],
+
+    /**
+     * Email.
+     */
+    [
+        'key'  => 'email',
+        'name' => 'admin::app.configuration.index.email.title',
+        'info' => 'admin::app.configuration.index.email.info',
+        'sort' => 2,
+    ], [
+        'key'  => 'email.imap',
+        'name' => 'admin::app.configuration.index.email.imap.title',
+        'info' => 'admin::app.configuration.index.email.imap.info',
+        'icon' => 'icon-setting',
+        'sort' => 1,
+    ], [
+        'key'    => 'email.imap.account',
+        'name'   => 'admin::app.configuration.index.email.imap.account.title',
+        'info'   => 'admin::app.configuration.index.email.imap.account.title-info',
+        'sort'   => 1,
+        'fields' => [
+            [
+                'name'    => 'host',
+                'title'   => 'admin::app.configuration.index.email.imap.account.host',
+                'type'    => 'text',
+                'default' => config('imap.accounts.default.host'),
+            ],
+            [
+                'name'    => 'port',
+                'title'   => 'admin::app.configuration.index.email.imap.account.port',
+                'type'    => 'text',
+                'default' => config('imap.accounts.default.port'),
+            ],
+            [
+                'name'    => 'encryption',
+                'title'   => 'admin::app.configuration.index.email.imap.account.encryption',
+                'type'    => 'text',
+                'default' => config('imap.accounts.default.encryption'),
+            ],
+            [
+                'name'    => 'validate_cert',
+                'title'   => 'admin::app.configuration.index.email.imap.account.validate-cert',
+                'type'    => 'boolean',
+                'default' => config('imap.accounts.default.validate_cert'),
+            ],
+            [
+                'name'    => 'username',
+                'title'   => 'admin::app.configuration.index.email.imap.account.username',
+                'type'    => 'text',
+                'default' => config('imap.accounts.default.username'),
+            ],
+            [
+                'name'    => 'password',
+                'title'   => 'admin::app.configuration.index.email.imap.account.password',
+                'type'    => 'password',
+                'default' => config('imap.accounts.default.password'),
             ],
         ],
     ],

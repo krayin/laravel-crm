@@ -84,8 +84,6 @@ class WebFormController extends Controller
 
         $data = request()->all();
 
-        $data['create_lead'] = isset($data['create_lead']) ? 1 : 0;
-
         $webForm = $this->webFormRepository->create($data);
 
         Event::dispatch('settings.web_forms.create.after', $webForm);
@@ -125,8 +123,6 @@ class WebFormController extends Controller
         Event::dispatch('settings.web_forms.update.before', $id);
 
         $data = request()->all();
-
-        $data['create_lead'] = isset($data['create_lead']) ? 1 : 0;
 
         $webForm = $this->webFormRepository->update($data, $id);
 

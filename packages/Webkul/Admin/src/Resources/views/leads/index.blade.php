@@ -10,10 +10,8 @@
         {!! view_render_event('admin.leads.index.header.left.before') !!}
 
         <div class="flex flex-col gap-2">
-            <div class="flex cursor-pointer items-center">
-                <!-- Breadcrumb's -->
-                <x-admin::breadcrumbs name="leads" />
-            </div>
+            <!-- Breadcrumb's -->
+            <x-admin::breadcrumbs name="leads" />
 
             <div class="text-xl font-bold dark:text-white">
                 @lang('admin::app.leads.index.title')
@@ -25,6 +23,11 @@
         {!! view_render_event('admin.leads.index.header.right.before') !!}
 
         <div class="flex items-center gap-x-2.5">
+            <!-- Upload File for Lead Creation -->
+            @if(core()->getConfigData('general.magic_ai.doc_generation.enabled'))
+                @include('admin::leads.index.upload')
+            @endif
+
             @if ((request()->view_type ?? "kanban") == "table")
                 <!-- Export Modal -->
                 <x-admin::datagrid.export :src="route('admin.leads.index')" />
@@ -34,7 +37,7 @@
             <div class="flex items-center gap-x-2.5">
                 @if (bouncer()->hasPermission('leads.create'))
                     <a
-                        href="{{ route('admin.leads.create') }}"
+                        href="{{ route('admin.leads.create', request()->query()) }}"
                         class="primary-button"
                     >
                         @lang('admin::app.leads.index.create-btn')
@@ -51,7 +54,7 @@
     {!! view_render_event('admin.leads.index.content.before') !!}
 
     <!-- Content -->
-    <div class="mt-3.5">
+    <div class="[&>*>*>*.toolbarRight]:max-lg:w-full [&>*>*>*.toolbarRight]:max-lg:justify-between [&>*>*>*.toolbarRight]:max-md:gap-y-2 [&>*>*>*.toolbarRight]:max-md:flex-wrap mt-3.5 [&>*>*:nth-child(1)]:max-lg:!flex-wrap">
         @if ((request()->view_type ?? "kanban") == "table")
             @include('admin::leads.index.table')
         @else

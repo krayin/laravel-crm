@@ -14,6 +14,7 @@ use Webkul\Admin\Http\Controllers\Controller;
 use Webkul\Admin\Http\Requests\MassDestroyRequest;
 use Webkul\Admin\Http\Requests\MassUpdateRequest;
 use Webkul\Admin\Http\Resources\EmailResource;
+use Webkul\Email\InboundEmailProcessor\Contracts\InboundEmailProcessor;
 use Webkul\Email\Mails\Email;
 use Webkul\Email\Repositories\AttachmentRepository;
 use Webkul\Email\Repositories\EmailRepository;
@@ -197,13 +198,13 @@ class EmailController extends Controller
     }
 
     /**
-     * Run process inbound parse email
+     * Run process inbound parse email.
      *
      * @return \Illuminate\Http\Response
      */
-    public function inboundParse()
+    public function inboundParse(InboundEmailProcessor $inboundEmailProcessor)
     {
-        $this->emailRepository->processInboundParseMail(request('email'));
+        $inboundEmailProcessor->processMessage(request('email'));
 
         return response()->json([], 200);
     }

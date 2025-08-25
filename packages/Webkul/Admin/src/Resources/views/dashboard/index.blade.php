@@ -50,7 +50,7 @@
             <!-- Total Leads Stats -->
             @include('admin::dashboard.index.total-leads')
 
-            <div class="flex gap-4 [&>*]:flex-1">
+            <div class="flex gap-4 max-lg:flex-wrap">
                 <!-- Total Products -->
                 @include('admin::dashboard.index.top-selling-products')
 
@@ -101,7 +101,11 @@
             {!! view_render_event('admin.dashboard.index.date_filters.before') !!}
 
             <div class="flex gap-1.5">
-                <x-admin::flat-picker.date class="!w-[140px]" ::allow-input="false">
+                <x-admin::flat-picker.date
+                    class="!w-[140px]"
+                    ::allow-input="false"
+                    ::max-date="filters.end"
+                >
                     <input
                         class="flex min-h-[39px] w-full rounded-md border px-3 py-2 text-sm text-gray-600 transition-all hover:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400"
                         v-model="filters.start"
@@ -109,7 +113,11 @@
                     />
                 </x-admin::flat-picker.date>
 
-                <x-admin::flat-picker.date class="!w-[140px]" ::allow-input="false">
+                <x-admin::flat-picker.date
+                    class="!w-[140px]"
+                    ::allow-input="false"
+                    ::max-date="filters.end"
+                >
                     <input
                         class="flex min-h-[39px] w-full rounded-md border px-3 py-2 text-sm text-gray-600 transition-all hover:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400"
                         v-model="filters.end"

@@ -12,6 +12,13 @@ use Webkul\Tag\Repositories\TagRepository;
 class EmailDataGrid extends DataGrid
 {
     /**
+     * Default sort column of datagrid.
+     *
+     * @var ?string
+     */
+    protected $sortColumn = 'created_at';
+
+    /**
      * Prepare query builder.
      */
     public function prepareQueryBuilder(): Builder
@@ -20,6 +27,7 @@ class EmailDataGrid extends DataGrid
             ->select(
                 'emails.id',
                 'emails.name',
+                'emails.from',
                 'emails.subject',
                 'emails.reply',
                 'emails.is_read',
@@ -48,15 +56,6 @@ class EmailDataGrid extends DataGrid
     public function prepareColumns(): void
     {
         $this->addColumn([
-            'index'      => 'id',
-            'label'      => trans('admin::app.mail.index.datagrid.id'),
-            'type'       => 'string',
-            'sortable'   => true,
-            'searchable' => true,
-            'filterable' => true,
-        ]);
-
-        $this->addColumn([
             'index'      => 'attachments',
             'label'      => trans('admin::app.mail.index.datagrid.attachments'),
             'type'       => 'string',
@@ -73,6 +72,11 @@ class EmailDataGrid extends DataGrid
             'sortable'   => true,
             'searchable' => true,
             'filterable' => true,
+            'closure'    => function ($row) {
+                return $row->name
+                    ? trim($row->name, '"')
+                    : trim($row->from, '"');
+            },
         ]);
 
         $this->addColumn([
@@ -194,7 +198,9 @@ class EmailDataGrid extends DataGrid
 
         $this->addMassAction([
             'icon'   => 'icon-delete',
-            'title'  => trans('admin::app.mail.index.datagrid.delete'),
+            'title'  => request('route') == 'trash'
+                    ? trans('admin::app.mail.index.datagrid.delete')
+                    : trans('admin::app.mail.index.datagrid.move-to-trash'),
             'method' => 'POST',
             'url'    => route('admin.mail.mass_delete', [
                 'type' => request('route') == 'trash'

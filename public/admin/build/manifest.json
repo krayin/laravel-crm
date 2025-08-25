@@ -264,12 +264,12 @@
     "isDynamicEntry": true
   },
   "src/Resources/assets/css/app.css": {
-    "file": "assets/app-C2p4NRgv.css",
+    "file": "assets/app-xcMAMgaV.css",
     "src": "src/Resources/assets/css/app.css",
     "isEntry": true
   },
   "src/Resources/assets/fonts/icomoon.woff": {
-    "file": "assets/icomoon-CO37Y6g-.woff",
+    "file": "assets/icomoon-BbY1GX-d.woff",
     "src": "src/Resources/assets/fonts/icomoon.woff"
   },
   "src/Resources/assets/images/corner-clip.svg": {
@@ -356,8 +356,16 @@
     "file": "assets/logo-Bjh7YAuF.svg",
     "src": "src/Resources/assets/images/logo.svg"
   },
+  "src/Resources/assets/images/mobile-dark-logo.svg": {
+    "file": "assets/mobile-dark-logo-COPgCide.svg",
+    "src": "src/Resources/assets/images/mobile-dark-logo.svg"
+  },
+  "src/Resources/assets/images/mobile-light-logo.svg": {
+    "file": "assets/mobile-light-logo-CjoobCkl.svg",
+    "src": "src/Resources/assets/images/mobile-light-logo.svg"
+  },
   "src/Resources/assets/js/app.js": {
-    "file": "assets/app-DIMVl9Bg.js",
+    "file": "assets/app-B1rBjssc.js",
     "name": "app",
     "src": "src/Resources/assets/js/app.js",
     "isEntry": true,

@@ -6,10 +6,8 @@
     <div class="flex flex-col gap-4">
         <div class="flex items-center justify-between rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
             <div class="flex flex-col gap-2">
-                <div class="flex cursor-pointer items-center">
-                    <!-- Breadcrumbs -->
-                    <x-admin::breadcrumbs name="settings.users" />
-                </div>
+                <!-- Breadcrumbs -->
+                <x-admin::breadcrumbs name="settings.users" />
 
                 <div class="text-xl font-bold dark:text-white">
                     @lang('admin::app.settings.users.index.title')
@@ -18,7 +16,7 @@
 
             <div class="flex items-center gap-x-2.5">
                 {!! view_render_event('admin.settings.users.index.create_button.before') !!}
-                
+
                 <!-- Create button for User -->
                 @if (bouncer()->hasPermission('settings.user.users.create'))
                     <div class="flex items-center gap-x-2.5">
@@ -48,7 +46,7 @@
             id="users-settings-template"
         >
             {!! view_render_event('admin.settings.users.index.datagrid.before') !!}
-        
+
             <!-- Datagrid -->
             <x-admin::datagrid
                 :src="route('admin.settings.users.index')"
@@ -65,11 +63,11 @@
                     <template v-if="isLoading">
                         <x-admin::shimmer.datagrid.table.body />
                     </template>
-        
+
                     <template v-else>
                         <div
                             v-for="record in available.records"
-                            class="row grid items-center gap-2.5 border-b px-4 py-4 text-gray-600 transition-all hover:bg-gray-50 dark:border-gray-800 dark:text-gray-300 dark:hover:bg-gray-950"
+                            class="row grid items-center gap-2.5 border-b px-4 py-4 text-gray-600 transition-all hover:bg-gray-50 dark:border-gray-800 dark:text-gray-300 dark:hover:bg-gray-950 max-lg:hidden"
                             :style="`grid-template-columns: repeat(${gridsCount}, minmax(0, 1fr))`"
                         >
                             <!-- Mass Actions, Title and Created By -->
@@ -88,10 +86,10 @@
                                     :for="`mass_action_select_record_${record.id}`"
                                 ></label>
                             </div>
-                            
+
                             <!-- Users Id -->
                             <p>@{{ record.id }}</p>
-        
+
                             <!-- Users Name and Profile -->
                             <div class="flex items-center gap-2.5">
                                 <template v-if="record.name.image">
@@ -120,7 +118,7 @@
                             >
                                 @{{ record.status == 1 ? '@lang('admin::app.settings.users.index.active')' : '@lang('admin::app.settings.users.index.inactive')' }}
                             </span>
-                        
+
                             <!-- Users Creation Date -->
                             <p>@{{ record.created_at }}</p>
 
@@ -133,7 +131,7 @@
                                     >
                                     </span>
                                 </a>
-    
+
                                 <a @click="performAction(record.actions.find(action => action.index === 'delete'))">
                                     <span
                                         :class="record.actions.find(action => action.index === 'delete')?.icon"
@@ -143,31 +141,94 @@
                                 </a>
                             </div>
                         </div>
-                    </template>
+
+                        <!-- Mobile Card View -->
+                        <div
+                            class="hidden border-b px-4 py-4 text-black dark:border-gray-800 dark:text-gray-300 max-lg:block"
+                            v-for="record in available.records"
+                        >
+                            <div class="mb-2 flex items-center justify-between">
+                                <!-- Mass Actions for Mobile Cards -->
+                                <div class="flex w-full items-center justify-between gap-2">
+                                    <p v-if="available.massActions.length">
+                                        <label :for="`mass_action_select_record_${record[available.meta.primary_column]}`">
+                                            <input
+                                                type="checkbox"
+                                                :name="`mass_action_select_record_${record[available.meta.primary_column]}`"
+                                                :value="record[available.meta.primary_column]"
+                                                :id="`mass_action_select_record_${record[available.meta.primary_column]}`"
+                                                class="peer hidden"
+                                                v-model="applied.massActions.indices"
+                                            >
+
+                                            <span class="icon-checkbox-outline peer-checked:icon-checkbox-select cursor-pointer rounded-md text-2xl text-gray-500 peer-checked:text-brandColor">
+                                            </span>
+                                        </label>
+                                    </p>
+
+                                    <!-- Actions for Mobile -->
+                                    <div
+                                        class="flex w-full items-center justify-end"
+                                        v-if="available.actions.length"
+                                    >
+                                        <!-- Actions -->
+                                        <a @click="editModal(record.actions.find(action => action.index === 'edit')?.url)">
+                                            <span
+                                                :class="record.actions.find(action => action.index === 'edit')?.icon"
+                                                class="cursor-pointer rounded-md p-1.5 text-2xl transition-all hover:bg-gray-200 dark:hover:bg-gray-800 max-sm:place-self-center"
+                                            >
+                                            </span>
+                                        </a>
+
+                                        <a @click="performAction(record.actions.find(action => action.index === 'delete'))">
+                                            <span
+                                                :class="record.actions.find(action => action.index === 'delete')?.icon"
+                                                class="cursor-pointer rounded-md p-1.5 text-2xl transition-all hover:bg-gray-200 dark:hover:bg-gray-800 max-sm:place-self-center"
+                                            >
+                                            </span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Card Content -->
+                            <div class="grid gap-2">
+                                <template v-for="column in available.columns">
+                                    <div class="flex flex-wrap items-baseline gap-x-2">
+                                        <span class="text-slate-600 dark:text-gray-300" v-html="column.label + ':'"></span>
+                                        <span class="break-words font-medium text-slate-900 dark:text-white" v-html="record[column.index]"></span>
+                                    </div>
+                                </template>
+                            </div>
+                        </div>
+                        </template>
                 </template>
             </x-admin::datagrid>
-            
+
             {!! view_render_event('admin.users.index.datagrid.after') !!}
-            
+
             <x-admin::form
                 v-slot="{ meta, values, errors, handleSubmit }"
                 as="div"
                 ref="modalForm"
             >
-                <form 
+                <form
                     @submit="handleSubmit($event, updateOrCreate)"
                     ref="userForm"
                 >
                     {!! view_render_event('admin.settings.users.index.form_controls.before') !!}
 
-                    <x-admin::modal ref="userUpdateAndCreateModal">
+                    <x-admin::modal
+                        ref="userUpdateAndCreateModal"
+                        @toggle="handleToggle"
+                    >
                         <!-- Modal Header -->
                         <x-slot:header>
                             <p class="text-lg font-bold text-gray-800 dark:text-white">
-                                @{{ 
+                                @{{
                                     selectedType == 'create'
                                     ? "@lang('admin::app.settings.users.index.create.title')"
-                                    : "@lang('admin::app.settings.users.index.edit.title')" 
+                                    : "@lang('admin::app.settings.users.index.edit.title')"
                                 }}
                             </p>
                         </x-slot>
@@ -270,7 +331,7 @@
                             {!! view_render_event('admin.settings.users.index.form.password.after') !!}
 
                             {!! view_render_event('admin.settings.users.index.form.role_id.before') !!}
-                            
+
                             <div class="flex gap-4">
                                 <!-- Role -->
                                 <x-admin::form.control-group class="flex-1">
@@ -289,11 +350,11 @@
                                             v-for="role in roles"
                                             :key="role.id"
                                             :value="role.id"
-                                        > 
-                                            @{{ role.name }} 
+                                        >
+                                            @{{ role.name }}
                                         </option>
                                     </x-admin::form.control-group.control>
-                                
+
                                     <x-admin::form.control-group.error control-name="role_id" />
                                 </x-admin::form.control-group>
 
@@ -308,13 +369,14 @@
                                         name="view_permission"
                                         rules="required"
                                         v-model="user.view_permission"
+                                        value="global"
                                         :label="trans('admin::app.settings.users.index.create.view-permission')"
                                     >
                                         <!-- Default Option -->
                                         <option  value="global" selected>
                                             @lang('admin::app.settings.users.index.create.global')
                                         </option>
-                                        
+
                                         <option value="group">
                                             @lang('admin::app.settings.users.index.create.group')
                                         </option>
@@ -332,37 +394,39 @@
 
                             {!! view_render_event('admin.settings.users.index.form.role_id.before') !!}
 
-                            <!-- Group -->
-                            <x-admin::form.control-group>
-                                <x-admin::form.control-group.label class="required">
-                                    @lang('admin::app.settings.users.index.create.group')
-                                </x-admin::form.control-group.label>
+                            <template v-if="user.view_permission === 'group'">
+                                <!-- Group -->
+                                <x-admin::form.control-group>
+                                    <x-admin::form.control-group.label class="required">
+                                        @lang('admin::app.settings.users.index.create.group')
+                                    </x-admin::form.control-group.label>
 
-                                <v-field
-                                    name="groups[]"
-                                    rules="required"
-                                    label="@lang('admin::app.settings.users.index.create.group')"
-                                    multiple
-                                    v-model="user.groups"
-                                >
-                                    <select
+                                    <v-field
                                         name="groups[]"
-                                        class="flex min-h-[39px] w-full rounded-md border px-3 py-2 text-sm text-gray-600 transition-all hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 dark:focus:border-gray-400"
-                                        :class="[errors['groups[]'] ? 'border !border-red-600 hover:border-red-600' : '']"
+                                        label="@lang('admin::app.settings.users.index.create.group')"
                                         multiple
                                         v-model="user.groups"
+                                        rules="required"
                                     >
-                                        <option
-                                            v-for="group in groups"
-                                            :value="group.id"
-                                            :text="group.name"
+                                        <select
+                                            name="groups[]"
+                                            class="flex min-h-[39px] w-full rounded-md border px-3 py-2 text-sm text-gray-600 transition-all hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 dark:focus:border-gray-400"
+                                            :class="[errors['groups[]'] ? 'border !border-red-600 hover:border-red-600' : '']"
+                                            multiple
+                                            v-model="user.groups"
                                         >
-                                        </option>
-                                    </select>
-                                </v-field>
+                                            <option
+                                                v-for="group in groups"
+                                                :value="group.id"
+                                                :text="group.name"
+                                            >
+                                            </option>
+                                        </select>
+                                    </v-field>
 
-                                <x-admin::form.control-group.error name="groups[]" />
-                            </x-admin::form.control-group>
+                                    <x-admin::form.control-group.error name="groups[]" />
+                                </x-admin::form.control-group>
+                            </template>
 
                             {!! view_render_event('admin.settings.users.index.form.role_id.after') !!}
 
@@ -370,7 +434,7 @@
 
                             <!-- Status -->
                             <x-admin::form.control-group>
-                                <x-admin::form.control-group.label>
+                                <x-admin::form.control-group.label for="status">
                                     @lang('admin::app.settings.users.index.create.status')
                                 </x-admin::form.control-group.label>
 
@@ -379,21 +443,16 @@
                                     name="status"
                                     :value="0"
                                 />
-                        
-                                <label class="relative inline-flex cursor-pointer items-center">
-                                    <input  
-                                        type="checkbox"
-                                        name="status"
-                                        :value="1"
-                                        id="status"
-                                        class="peer sr-only"
-                                        :checked="parseInt(user.status || 0)"
-                                    >
 
-                                    <div class="peer h-5 w-9 cursor-pointer rounded-full bg-gray-200 after:absolute after:top-0.5 after:h-4 after:w-4 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-blue-600 peer-checked:after:border-white peer-focus:outline-none peer-focus:ring-blue-300 dark:bg-gray-800 dark:after:border-white dark:after:bg-white dark:peer-checked:bg-gray-950 after:ltr:left-0.5 peer-checked:after:ltr:translate-x-full after:rtl:right-0.5 peer-checked:after:rtl:-translate-x-full"></div>
-                                </label>
+                                <x-admin::form.control-group.control
+                                    type="switch"
+                                    name="status"
+                                    value="1"
+                                    :label="trans('admin::app.settings.users.index.create.status')"
+                                    ::checked="parseInt(user.status || 0)"
+                                />
                             </x-admin::form.control-group>
-                                
+
                             {!! view_render_event('admin.settings.users.index.form.status.after') !!}
                         </x-slot>
 
@@ -422,7 +481,7 @@
         <script type="module">
             app.component('v-users-settings', {
                 template: '#users-settings-template',
-        
+
                 data() {
                     return {
                         isProcessing: false,
@@ -431,22 +490,24 @@
 
                         groups:  @json($groups),
 
-                        user: {},
+                        user: {
+                            view_permission: 'global',
+                        },
                     };
                 },
 
                 computed: {
                     gridsCount() {
                         let count = this.$refs.datagrid.available.columns.length;
-        
+
                         if (this.$refs.datagrid.available.actions.length) {
                             ++count;
                         }
-        
+
                         if (this.$refs.datagrid.available.massActions.length) {
                             ++count;
                         }
-        
+
                         return count;
                     },
 
@@ -454,8 +515,26 @@
                         return this.user.id ? 'edit' : 'create';
                     },
                 },
-        
+
+                mounted() {
+                    @if(request('action') === 'create')
+                        this.openModal();
+                    @endif
+                },
+
                 methods: {
+                    handleToggle(state) {
+                        if (state.isActive) {
+                            return;
+                        }
+
+                        const url = new URL(window.location.href);
+
+                        url.searchParams.delete('action');
+
+                        window.history.replaceState({}, '', url);
+                    },
+
                     openModal() {
                         this.user = {
                             groups: [],
@@ -463,7 +542,7 @@
 
                         this.$refs.userUpdateAndCreateModal.toggle();
                     },
-                    
+
                     updateOrCreate(params, {resetForm, setErrors}) {
                         const userForm = new FormData(this.$refs.userForm);
 
@@ -471,28 +550,33 @@
 
                         this.isProcessing = true;
 
-                        this.$axios.post(params.id ? `{{ route('admin.settings.users.update', '') }}/${params.id}` : "{{ route('admin.settings.users.store') }}", userForm).then(response => {
-                            this.isProcessing = false;
+                        this.$axios.post(
+                                params.id
+                                ? `{{ route('admin.settings.users.update', '') }}/${params.id}`
+                                : "{{ route('admin.settings.users.store') }}", userForm
+                            )
+                            .then(response => {
+                                this.isProcessing = false;
 
-                            this.$refs.userUpdateAndCreateModal.toggle();
+                                this.$refs.userUpdateAndCreateModal.toggle();
 
-                            this.$emitter.emit('add-flash', { type: 'success', message: response.data.message });
+                                this.$emitter.emit('add-flash', { type: 'success', message: response.data.message });
 
-                            this.$refs.datagrid.get();
+                                this.$refs.datagrid.get();
 
-                            resetForm();
-                        }).catch(error => {
-                            this.isProcessing = false;
+                                resetForm();
+                            }).catch(error => {
+                                this.isProcessing = false;
 
-                            if (error.response.status === 422) {
-                                setErrors(error.response.data.errors);
-                            }
-                        });
+                                if (error.response.status === 422) {
+                                    setErrors(error.response.data.errors);
+                                }
+                            });
                     },
-                    
+
                     editModal(url) {
                         this.$axios.get(url)
-                            .then(response => {                                
+                            .then(response => {
                                 this.user = response.data.data;
 
                                 this.user.groups = this.user.groups.map(group => group.id);

@@ -32,6 +32,8 @@ return [
         'other-settings'  => 'Cài đặt khác',
         'tags'            => 'Thẻ',
         'configuration'   => 'Cấu hình',
+        'campaigns'       => 'Chiến dịch',
+        'event'           => 'Sự kiện',
         'create'          => 'Tạo mới',
         'edit'            => 'Chỉnh sửa',
         'view'            => 'Xem',
@@ -39,6 +41,8 @@ return [
         'delete'          => 'Xóa',
         'export'          => 'Xuất khẩu',
         'mass-delete'     => 'Xóa hàng loạt',
+        'event'           => 'Sự kiện',
+        'campaigns'       => 'Chiến dịch',
     ],
 
     'users' => [
@@ -179,48 +183,48 @@ return [
 
                 'empty-placeholders' => [
                     'all' => [
-                        'title'       => 'Không có hoạt động nào',
-                        'description' => 'Không có hoạt động nào cho mục này. Bạn có thể thêm hoạt động bằng cách nhấp vào nút bên trái.',
+                        'title'       => 'Không tìm thấy hoạt động nào',
+                        'description' => 'Không có hoạt động nào được tìm thấy. Bạn có thể thêm hoạt động bằng cách nhấn nút Hoạt động ở bảng bên trái.',
                     ],
 
                     'planned' => [
-                        'title'       => 'Không có hoạt động đã lên kế hoạch nào',
-                        'description' => 'Không có hoạt động đã lên kế hoạch cho mục này. Bạn có thể thêm hoạt động bằng cách nhấp vào nút bên trái.',
+                        'title'       => 'Không tìm thấy hoạt động đã lên kế hoạch',
+                        'description' => 'Không có hoạt động đã lên kế hoạch nào được tìm thấy. Thêm hoạt động bằng cách nhấn nút Hoạt động ở bảng bên trái.',
                     ],
 
                     'notes' => [
-                        'title'       => 'Không có ghi chú nào',
-                        'description' => 'Không có ghi chú cho mục này. Bạn có thể thêm ghi chú bằng cách nhấp vào nút bên trái.',
+                        'title'       => 'Không tìm thấy ghi chú',
+                        'description' => 'Không có ghi chú nào được tìm thấy. Thêm ghi chú bằng cách nhấn nút Ghi chú ở bảng bên trái.',
                     ],
 
                     'calls' => [
-                        'title'       => 'Không có cuộc gọi nào',
-                        'description' => 'Không có ghi chú cho mục này. Bạn có thể thêm ghi chú bằng cách nhấp vào nút bên trái.',
+                        'title'       => 'Không tìm thấy cuộc gọi',
+                        'description' => 'Không có cuộc gọi nào được tìm thấy. Thêm cuộc gọi bằng cách nhấn nút Hoạt động và chọn loại Cuộc gọi.',
                     ],
 
                     'meetings' => [
-                        'title'       => 'Không có cuộc họp nào',
-                        'description' => 'Không có cuộc họp cho mục này. Bạn có thể thêm cuộc họp bằng cách nhấp vào nút bên trái.',
+                        'title'       => 'Không tìm thấy cuộc họp',
+                        'description' => 'Không có cuộc họp nào được tìm thấy. Thêm cuộc họp bằng cách nhấn nút Hoạt động và chọn loại Cuộc họp.',
                     ],
 
                     'lunches' => [
-                        'title'       => 'Không có bữa trưa nào',
-                        'description' => 'Không có bữa trưa cho mục này. Bạn có thể thêm bữa trưa bằng cách nhấp vào nút bên trái.',
+                        'title'       => 'Không tìm thấy buổi ăn trưa',
+                        'description' => 'Không có buổi ăn trưa nào được tìm thấy. Thêm ăn trưa bằng cách nhấn nút Hoạt động và chọn loại Ăn trưa.',
                     ],
 
                     'files' => [
-                        'title'       => 'Không có tệp tin nào',
-                        'description' => 'Không có tệp nào cho mục này. Bạn có thể thêm tệp bằng cách nhấp vào nút bên trái.',
+                        'title'       => 'Không tìm thấy tệp',
+                        'description' => 'Không có tệp nào được tìm thấy. Thêm tệp bằng cách nhấn nút Tệp ở bảng bên trái.',
                     ],
 
                     'emails' => [
-                        'title'       => 'Không có email nào',
-                        'description' => 'Không có email nào cho mục này. Bạn có thể thêm email bằng cách nhấp vào nút bên trái.',
+                        'title'       => 'Không tìm thấy email',
+                        'description' => 'Không có email nào được tìm thấy. Thêm email bằng cách nhấn nút Thư ở bảng bên trái.',
                     ],
 
                     'system' => [
-                        'title'       => 'Không có nhật ký thay đổi nào',
-                        'description' => 'Không có nhật ký thay đổi nào cho mục này.',
+                        'title'       => 'Không tìm thấy nhật ký thay đổi',
+                        'description' => 'Không có nhật ký thay đổi nào được tìm thấy.',
                     ],
                 ],
             ],
@@ -367,23 +371,27 @@ return [
 
             'header' => [
                 'mega-search' => [
-                    'title'   => 'Tìm kiếm Mega',
+                    'title' => 'Tìm kiếm nâng cao',
 
                     'tabs' => [
-                        'leads'    => 'Khách hàng tiềm năng',
-                        'quotes'   => 'Báo giá',
-                        'persons'  => 'Người',
-                        'products' => 'Sản phẩm',
+                        'leads'          => 'Khách hàng tiềm năng',
+                        'quotes'         => 'Báo giá',
+                        'persons'        => 'Người liên hệ',
+                        'products'       => 'Sản phẩm',
+                        'settings'       => 'Cài đặt',
+                        'configurations' => 'Cấu hình',
                     ],
 
-                    'explore-all-products'          => 'Khám phá tất cả Sản phẩm',
-                    'explore-all-leads'             => 'Khám phá tất cả Khách hàng tiềm năng',
-                    'explore-all-contacts'          => 'Khám phá tất cả Liên hệ',
-                    'explore-all-quotes'            => 'Khám phá tất cả Báo giá',
-                    'explore-all-matching-products' => 'Khám phá tất cả sản phẩm khớp với ":query" (:count)',
-                    'explore-all-matching-leads'    => 'Khám phá tất cả khách hàng tiềm năng khớp với ":query" (:count)',
-                    'explore-all-matching-contacts' => 'Khám phá tất cả liên hệ khớp với ":query" (:count)',
-                    'explore-all-matching-quotes'   => 'Khám phá tất cả báo giá khớp với ":query" (:count)',
+                    'explore-all-products'          => 'Xem tất cả sản phẩm',
+                    'explore-all-leads'             => 'Xem tất cả khách hàng tiềm năng',
+                    'explore-all-contacts'          => 'Xem tất cả người liên hệ',
+                    'explore-all-quotes'            => 'Xem tất cả báo giá',
+                    'explore-all-settings'          => 'Xem tất cả cài đặt',
+                    'explore-all-configurations'    => 'Xem tất cả cấu hình',
+                    'explore-all-matching-products' => 'Xem tất cả sản phẩm khớp với ":query" (:count)',
+                    'explore-all-matching-leads'    => 'Xem tất cả khách hàng tiềm năng khớp với ":query" (:count)',
+                    'explore-all-matching-contacts' => 'Xem tất cả người liên hệ khớp với ":query" (:count)',
+                    'explore-all-matching-quotes'   => 'Xem tất cả báo giá khớp với ":query" (:count)',
                 ],
             ],
         ],
@@ -414,6 +422,12 @@ return [
             'warning' => 'Cảnh báo',
             'info'    => 'Thông tin',
         ],
+
+        'tiny-mce' => [
+            'http-error'    => 'Lỗi HTTP',
+            'invalid-json'  => 'Phản hồi JSON không hợp lệ từ máy chủ.',
+            'upload-failed' => 'Tải tệp lên không thành công. Vui lòng thử lại.',
+        ],
     ],
 
     'quotes' => [
@@ -430,7 +444,6 @@ return [
                 'sales-person'   => 'Nhân viên bán hàng',
                 'expired-at'     => 'Hết hạn vào',
                 'created-at'     => 'Tạo vào',
-                'expired-quotes' => 'Báo giá hết hạn',
                 'person'         => 'Người',
                 'subtotal'       => 'Tổng phụ',
                 'discount'       => 'Giảm giá',
@@ -531,12 +544,15 @@ return [
     'contacts' => [
         'persons' => [
             'index' => [
-                'title'          => 'Người',
-                'create-btn'     => 'Tạo Người',
-                'create-success' => 'Người đã được tạo thành công.',
-                'update-success' => 'Người đã được cập nhật thành công.',
-                'delete-success' => 'Người đã được xóa thành công.',
-                'delete-failed'  => 'Không thể xóa người này.',
+                'title'                    => 'Người',
+                'create-btn'               => 'Tạo Người',
+                'create-success'           => 'Người đã được tạo thành công.',
+                'update-success'           => 'Người đã được cập nhật thành công.',
+                'all-delete-success'       => 'Tất cả người được chọn đã được xóa thành công.',
+                'partial-delete-warning'   => 'Một số người đã được xóa thành công. Những người khác không thể xóa vì có liên kết với khách hàng tiềm năng.',
+                'none-delete-warning'      => 'Không thể xóa bất kỳ người nào được chọn vì họ có liên kết với khách hàng tiềm năng.',
+                'no-selection'             => 'Chưa chọn người nào để xóa.',
+                'delete-failed'            => 'Xóa người được chọn không thành công.',
 
                 'datagrid' => [
                     'contact-numbers'   => 'Số Liên hệ',
@@ -618,6 +634,11 @@ return [
                         ],
                     ],
                 ],
+
+                'tags' => [
+                    'create-success'  => 'Thẻ được tạo thành công.',
+                    'destroy-success' => 'Thẻ đã được xóa thành công.',
+                ],
             ],
 
             'create' => [
@@ -676,6 +697,7 @@ return [
                 'edit'      => 'Chỉnh sửa',
                 'id'        => 'ID',
                 'in-stock'  => 'Có sẵn',
+                'tag-name'  => 'Tên thẻ',
                 'name'      => 'Tên',
                 'on-hand'   => 'Sẵn có',
                 'price'     => 'Giá',
@@ -730,12 +752,13 @@ return [
 
         'groups' => [
             'index' => [
-                'create-btn'        => 'Tạo Nhóm',
-                'title'             => 'Nhóm',
-                'create-success'    => 'Nhóm đã được tạo thành công.',
-                'update-success'    => 'Nhóm đã được cập nhật thành công.',
-                'destroy-success'   => 'Nhóm đã được xóa thành công.',
-                'delete-failed'     => 'Không thể xóa nhóm.',
+                'create-btn'                     => 'Tạo Nhóm',
+                'title'                          => 'Nhóm',
+                'create-success'                 => 'Tạo nhóm thành công.',
+                'update-success'                 => 'Cập nhật nhóm thành công.',
+                'destroy-success'                => 'Xóa nhóm thành công.',
+                'delete-failed'                  => 'Không thể xóa nhóm.',
+                'delete-failed-associated-users' => 'Không thể xóa nhóm vì đang được sử dụng bởi người dùng.',
 
                 'datagrid'   => [
                     'delete'      => 'Xóa',
@@ -841,12 +864,13 @@ return [
 
         'sources' => [
             'index' => [
-                'create-btn'     => 'Tạo Nguồn',
-                'create-success' => 'Nguồn đã được tạo thành công.',
-                'delete-failed'  => 'Không thể xóa nguồn.',
-                'delete-success' => 'Nguồn đã được xóa thành công.',
-                'title'          => 'Các Nguồn',
-                'update-success' => 'Nguồn đã được cập nhật thành công.',
+                'title'                          => 'Nguồn',
+                'create-btn'                     => 'Tạo Nguồn',
+                'create-success'                 => 'Tạo nguồn thành công.',
+                'delete-failed'                  => 'Không thể xóa nguồn.',
+                'delete-success'                 => 'Xóa nguồn thành công.',
+                'update-success'                 => 'Cập nhật nguồn thành công.',
+                'delete-failed-associated-leads' => 'Không thể xóa nguồn vì nó đang được liên kết với các khách hàng tiềm năng. Vui lòng hủy liên kết hoặc cập nhật các khách hàng đó trước khi xóa.',
 
                 'datagrid' => [
                     'delete' => 'Xóa',
@@ -1091,6 +1115,82 @@ return [
             ],
         ],
 
+        'marketing' => [
+            'events' => [
+                'index' => [
+                    'create-btn'                         => 'Tạo Sự kiện',
+                    'title'                              => 'Sự kiện',
+                    'create-success'                     => 'Tạo sự kiện thành công.',
+                    'update-success'                     => 'Cập nhật sự kiện thành công.',
+                    'delete-success'                     => 'Xóa sự kiện thành công.',
+                    'delete-failed'                      => 'Không thể xóa sự kiện.',
+                    'delete-failed-associated-campaigns' => 'Không thể xóa sự kiện vì có liên kết với chiến dịch.',
+                    'mass-delete-success'                => 'Đã xóa sự kiện thành công.',
+                    'partial-delete-warning'             => 'Một số sự kiện không thể xóa vì có liên kết với chiến dịch.',
+                    'none-delete-warning'                => 'Không sự kiện nào trong số đã chọn được xóa vì có liên kết với chiến dịch.',
+                    'no-selection'                       => 'Không có sự kiện nào được chọn để xóa.',
+
+                    'datagrid'   => [
+                        'delete'       => 'Xóa',
+                        'edit'         => 'Chỉnh sửa',
+                        'id'           => 'ID',
+                        'name'         => 'Tên',
+                        'description'  => 'Mô tả',
+                        'date'         => 'Ngày',
+                    ],
+
+                    'create'     => [
+                        'title'       => 'Tạo Sự kiện',
+                        'name'        => 'Tên',
+                        'date'        => 'Ngày',
+                        'description' => 'Mô tả',
+                        'save-btn'    => 'Lưu Sự kiện',
+                    ],
+
+                    'edit' => [
+                        'title' => 'Chỉnh sửa Sự kiện',
+                    ],
+                ],
+            ],
+
+            'campaigns' => [
+                'index' => [
+                    'create-btn'          => 'Tạo Chiến dịch',
+                    'title'               => 'Chiến dịch',
+                    'create-success'      => 'Chiến dịch đã được tạo thành công.',
+                    'update-success'      => 'Chiến dịch đã được cập nhật thành công.',
+                    'delete-success'      => 'Chiến dịch đã được xóa thành công.',
+                    'delete-failed'       => 'Không thể xóa chiến dịch.',
+                    'mass-delete-success' => 'Các chiến dịch đã được xóa thành công',
+
+                    'datagrid'   => [
+                        'id'       => 'ID',
+                        'name'     => 'Tên',
+                        'subject'  => 'Chủ đề',
+                        'status'   => 'Trạng thái',
+                        'active'   => 'Kích hoạt',
+                        'inactive' => 'Không kích hoạt',
+                        'edit'     => 'Chỉnh sửa',
+                        'delete'   => 'Xóa',
+                    ],
+
+                    'create'     => [
+                        'title'          => 'Tạo Chiến dịch',
+                        'name'           => 'Tên',
+                        'type'           => 'Loại',
+                        'subject'        => 'Chủ đề',
+                        'event'          => 'Sự kiện',
+                        'email-template' => 'Mẫu Email',
+                        'status'         => 'Trạng thái',
+                    ],
+
+                    'edit' => [
+                        'title' => 'Chỉnh sửa Chiến dịch',
+                    ],
+                ],
+            ],
+        ],
+
         'tags' => [
             'index' => [
                 'create-btn'     => 'Tạo Thẻ',
@@ -1181,6 +1281,7 @@ return [
                 'title'                => 'Quy Trình',
                 'create-btn'           => 'Tạo Quy Trình',
                 'create-success'       => 'Quy trình đã được tạo thành công.',
+                'default-required'     => 'Cần ít nhất một pipeline mặc định.',
                 'update-success'       => 'Quy trình đã được cập nhật thành công.',
                 'delete-success'       => 'Quy trình đã được xóa thành công.',
                 'delete-failed'        => 'Quy trình không thể bị xóa.',
@@ -1415,16 +1516,22 @@ return [
                         'warehouses'    => 'Kho hàng',
                     ],
 
-                    'types'       => [
-                        'address'  => 'Địa chỉ',
-                        'date'     => 'Ngày',
-                        'email'    => 'Email',
-                        'lookup'   => 'Tra cứu',
-                        'phone'    => 'Điện thoại',
-                        'price'    => 'Giá',
-                        'select'   => 'Chọn',
-                        'text'     => 'Văn bản',
-                        'textarea' => 'Khung văn bản',
+                    'types' => [
+                        'text'        => 'Văn bản',
+                        'textarea'    => 'Vùng văn bản',
+                        'price'       => 'Giá',
+                        'boolean'     => 'Boolean',
+                        'select'      => 'Chọn',
+                        'multiselect' => 'Chọn nhiều',
+                        'checkbox'    => 'Hộp kiểm',
+                        'email'       => 'Email',
+                        'address'     => 'Địa chỉ',
+                        'phone'       => 'Điện thoại',
+                        'lookup'      => 'Tìm kiếm',
+                        'datetime'    => 'Ngày giờ',
+                        'date'        => 'Ngày',
+                        'image'       => 'Hình ảnh',
+                        'file'        => 'Tệp tin',
                     ],
                 ],
             ],
@@ -1570,17 +1677,17 @@ return [
             'users'           => 'Người Dùng',
         ],
 
-        'updated'              => 'Cập Nhật :attribute',
-        'created'              => 'Đã Tạo',
-        'duration-overlapping' => 'Người tham gia có cuộc họp khác vào thời điểm này. Bạn có muốn tiếp tục không?',
-        'create-success'       => 'Hoạt động đã được tạo thành công.',
-        'update-success'       => 'Hoạt động đã được cập nhật thành công.',
-        'overlapping-error'    => 'Người tham gia có cuộc họp khác vào thời điểm này.',
+        'updated'              => 'Đã cập nhật :attribute',
+        'created'              => 'Đã tạo',
+        'duration-overlapping' => 'Người tham gia có một cuộc họp khác vào thời điểm này. Bạn có muốn tiếp tục không?',
+        'create-success'       => 'Hoạt động được tạo thành công.',
+        'update-success'       => 'Hoạt động được cập nhật thành công.',
+        'overlapping-error'    => 'Người tham gia có một cuộc họp khác vào thời điểm này.',
         'destroy-success'      => 'Hoạt động đã được xóa thành công.',
-        'delete-failed'        => 'Hoạt động không thể bị xóa.',
+        'delete-failed'        => 'Không thể xóa hoạt động.',
         'mass-update-success'  => 'Hoạt động được cập nhật thành công.',
-        'mass-destroy-success' => 'Hoạt động được xóa thành công.',
-        'mass-delete-failed'   => 'Không thể xóa các hoạt động.',
+        'mass-destroy-success' => 'Hoạt động đã được xóa thành công.',
+        'mass-delete-failed'   => 'Không thể xóa hoạt động.',
     ],
 
     'mail' => [
@@ -1615,6 +1722,7 @@ return [
                 'attachments'   => 'Tệp đính kèm',
                 'date'          => 'Ngày',
                 'move-to-inbox' => 'Di chuyển vào hộp thư đến',
+                'move-to-trash' => 'Đã chuyển vào thùng rác',
                 'edit'          => 'Chỉnh sửa',
                 'view'          => 'Xem',
                 'delete'        => 'Xóa',
@@ -1696,6 +1804,20 @@ return [
         'destroy-success'   => 'Xóa khách hàng tiềm năng thành công.',
         'destroy-failed'    => 'Không thể xóa khách hàng tiềm năng.',
 
+        'file' => [
+            'data-not-found'         => 'Không tìm thấy dữ liệu.',
+            'empty-content'          => 'Nội dung PDF trống hoặc không thể trích xuất.',
+            'failed-extract'         => 'Không thể trích xuất văn bản từ tệp.',
+            'insufficient-info'      => 'Do dữ liệu không đủ, chúng tôi không thể xử lý yêu cầu của bạn vào lúc này.',
+            'invalid-base64'         => 'Định dạng base64 không hợp lệ.',
+            'invalid-format'         => 'Định dạng JSON không hợp lệ.',
+            'invalid-response'       => 'Định dạng phản hồi AI không hợp lệ.',
+            'missing-api-key'        => 'Thiếu khóa API hoặc cấu hình mô hình.',
+            'not-found'              => 'Không tìm thấy tệp.',
+            'recursive-call'         => 'Phát hiện cuộc gọi đệ quy.',
+            'text-generation-failed' => 'Trích xuất văn bản thất bại. Tệp có thể trống hoặc không đọc được.',
+        ],
+
         'index' => [
             'title'      => 'Khách Hàng Tiềm Năng',
             'create-btn' => 'Tạo Khách Hàng Tiềm Năng',
@@ -1741,7 +1863,7 @@ return [
 
                 'toolbar' => [
                     'search' => [
-                        'title' => 'Tìm Kiếm',
+                        'title' => 'Tìm kiếm theo tiêu đề',
                     ],
 
                     'filters' => [
@@ -1754,11 +1876,31 @@ return [
                         'to'            => 'Đến',
                     ],
                 ],
+
+                'stages' => [
+                    'won-lost'       => 'Thắng/Thua',
+                    'won'            => 'Thắng',
+                    'lost'           => 'Thua',
+                    'need-more-info' => 'Cần Thêm Thông Tin',
+                    'closed-at'      => 'Đóng Vào',
+                    'won-value'      => 'Giá Trị Thắng',
+                    'lost-reason'    => 'Lý Do Thua',
+                    'save-btn'       => 'Lưu',
+                ],
             ],
 
             'view-switcher' => [
                 'all-pipelines'       => 'Tất Cả Các Quy Trình',
                 'create-new-pipeline' => 'Tạo Quy Trình Mới',
+            ],
+
+            'upload' => [
+                'create-lead'   => 'Tạo Khách Hàng Tiềm Năng Bằng AI',
+                'file'          => 'Tải tệp lên',
+                'file-info'     => 'Chỉ chấp nhận các tệp định dạng pdf, bmp, jpg, jpeg, png.',
+                'file-required' => 'Vui lòng chọn ít nhất một tệp hợp lệ để tiếp tục.',
+                'save-btn'      => 'Lưu',
+                'upload-file'   => 'Tải lên tệp',
             ],
         ],
 
@@ -1817,7 +1959,7 @@ return [
                 'title' => 'Về Khách Hàng Tiềm Năng',
             ],
 
-            'quotes'=> [
+            'quotes' => [
                 'subject'         => 'Chủ Đề',
                 'expired-at'      => 'Hết Hạn Vào',
                 'sub-total'       => 'Tạm Tính',
@@ -1889,8 +2031,8 @@ return [
                     'title'           => 'Chung',
                     'info'            => 'Cập nhật cài đặt chung của bạn tại đây.',
                     'locale-settings' => [
-                        'title'       => 'Cài đặt Ngôn ngữ',
-                        'title-info'  => 'Định nghĩa ngôn ngữ sử dụng trong giao diện người dùng, như tiếng Ả Rập (ar), tiếng Anh (en), tiếng Tây Ban Nha (es), tiếng Ba Tư (fa) và tiếng Thổ Nhĩ Kỳ (tr).',
+                        'title'       => 'Cài đặt ngôn ngữ',
+                        'title-info'  => 'Định nghĩa ngôn ngữ được sử dụng trong giao diện người dùng, như tiếng Ả Rập (ar), tiếng Anh (en), tiếng Tây Ban Nha (es), tiếng Ba Tư (fa) và tiếng Thổ Nhĩ Kỳ (tr).',
                     ],
 
                     'admin-logo' => [
@@ -1899,45 +2041,92 @@ return [
                         'title-info' => 'Cấu hình hình ảnh logo cho bảng điều khiển quản trị của bạn.',
                     ],
                 ],
+            ],
+
+            'email' => [
+                'title' => 'Cài đặt Email',
+                'info'  => 'Cấu hình email cho ứng dụng.',
+
+                'imap' => [
+                    'title' => 'Cài đặt IMAP',
+                    'info'  => 'Cấu hình email IMAP để nhận email.',
+
+                    'account' => [
+                        'title'         => 'Tài khoản IMAP',
+                        'title-info'    => 'Cấu hình cài đặt tài khoản IMAP của bạn tại đây.',
+                        'host'          => 'Máy chủ',
+                        'port'          => 'Cổng',
+                        'encryption'    => 'Loại mã hóa',
+                        'validate-cert' => 'Xác thực chứng chỉ SSL',
+                        'username'      => 'Tên người dùng IMAP',
+                        'password'      => 'Mật khẩu IMAP',
+                    ],
+                ],
+            ],
+
+            'magic-ai' => [
+                'title' => 'Magic AI',
+                'info'  => 'Cấu hình Magic AI cho ứng dụng.',
 
                 'settings' => [
-                    'title' => 'Cài đặt',
-                    'info'  => 'Cập nhật cài đặt của bạn tại đây.',
+                    'api-key'             => 'Khóa API',
+                    'api-key-info'        => 'Nhớ sử dụng khóa API OpenRouter cho mỗi mô hình. Đây là một bước đơn giản để tăng cường bảo mật và hiệu suất.',
+                    'enable'              => 'Kích hoạt',
+                    'info'                => 'Nâng cao trải nghiệm Magic AI của bạn với Khóa API OpenRouter. Tích hợp ngay bây giờ để có một cuộc phiêu lưu AI liền mạch và cá nhân hóa chỉ dành cho bạn! Dễ dàng tùy chỉnh cài đặt và kiểm soát hành trình AI của bạn.',
+                    'other'               => 'Mô hình khác',
+                    'other-model'         => 'Đối với các mô hình khác, sử dụng ID Mô hình từ OpenRouter.',
+                    'doc-generation'      => 'Tạo DOC',
+                    'doc-generation-info' => 'Bật tính năng Tạo DOC để tự động trích xuất dữ liệu từ các tệp DOC và chuyển đổi chúng sang định dạng văn bản. Nâng cao năng suất và hiệu quả công việc bằng cách bật tính năng này để đơn giản hóa quy trình làm việc của bạn.',
 
-                    'footer' => [
-                        'info'       => 'Chúng tôi có thể cấu hình phần powered by tại đây.',
-                        'powered-by' => 'Được hỗ trợ bởi trình chỉnh sửa văn bản',
-                        'title'      => 'Cấu hình Phần Powered by',
+                    'models'     => [
+                        'deepseek-r1'           => 'Deepseek R1 Distill-llama-8b',
+                        'gemini-2-0-flash-001'  => 'Gemini 2.0 flash-001',
+                        'gpt-4o'                => 'GPT-4.0',
+                        'gpt-4o-mini'           => 'GPT-4.0 mini',
+                        'grok-2-1212'           => 'Grok 2.12',
+                        'llama-3-2-3b-instruct' => 'Llama 3.2 3b Instruct',
+                        'title'                 => 'Mô hình',
                     ],
+                ],
+            ],
 
-                    'menu' => [
-                        'activities'     => 'Hoạt động',
-                        'configuration'  => 'Cấu hình',
-                        'contacts'       => 'Liên hệ',
-                        'dashboard'      => 'Bảng điều khiển',
-                        'draft'          => 'Thư nháp',
-                        'inbox'          => 'Hộp thư đến',
-                        'info'           => 'Chúng tôi có thể cấu hình tên các mục menu tại đây.',
-                        'leads'          => 'Khách hàng tiềm năng',
-                        'mail'           => 'Thư',
-                        'organizations'  => 'Tổ chức',
-                        'outbox'         => 'Hộp thư đi',
-                        'persons'        => 'Người',
-                        'products'       => 'Sản phẩm',
-                        'quotes'         => 'Báo giá',
-                        'sent'           => 'Đã gửi',
-                        'settings'       => 'Cài đặt',
-                        'title'          => 'Cấu hình Mục Menu',
-                        'trash'          => 'Thùng rác',
-                    ],
+            'settings' => [
+                'title' => 'Cài đặt',
+                'info'  => 'Cập nhật cài đặt của bạn tại đây.',
 
-                    'menu-color' => [
-                        'active-background-color' => 'Màu nền Hoạt động',
-                        'active-text-color'       => 'Màu chữ Hoạt động',
-                        'info'                    => 'Chúng tôi có thể thay đổi màu các mục menu tại đây.',
-                        'text-color'              => 'Màu chữ',
-                        'title'                   => 'Cấu hình Màu Mục Menu',
-                    ],
+                'footer' => [
+                    'info'       => 'Chúng tôi có thể cấu hình phần powered by tại đây.',
+                    'powered-by' => 'Được hỗ trợ bởi trình chỉnh sửa văn bản',
+                    'title'      => 'Cấu hình Phần Powered by',
+                ],
+
+                'menu' => [
+                    'activities'     => 'Hoạt động',
+                    'configuration'  => 'Cấu hình',
+                    'contacts'       => 'Liên hệ',
+                    'dashboard'      => 'Bảng điều khiển',
+                    'draft'          => 'Thư nháp',
+                    'inbox'          => 'Hộp thư đến',
+                    'info'           => 'Chúng tôi có thể cấu hình tên các mục menu tại đây.',
+                    'leads'          => 'Khách hàng tiềm năng',
+                    'mail'           => 'Thư',
+                    'organizations'  => 'Tổ chức',
+                    'outbox'         => 'Hộp thư đi',
+                    'persons'        => 'Người',
+                    'products'       => 'Sản phẩm',
+                    'quotes'         => 'Báo giá',
+                    'sent'           => 'Đã gửi',
+                    'settings'       => 'Cài đặt',
+                    'title'          => 'Cấu hình Mục Menu',
+                    'trash'          => 'Thùng rác',
+                ],
+
+                'menu-color' => [
+                    'active-background-color' => 'Màu nền Hoạt động',
+                    'active-text-color'       => 'Màu chữ Hoạt động',
+                    'info'                    => 'Chúng tôi có thể thay đổi màu các mục menu tại đây.',
+                    'text-color'              => 'Màu chữ',
+                    'title'                   => 'Cấu hình Màu Mục Menu',
                 ],
             ],
         ],
@@ -2050,24 +2239,27 @@ return [
         'email-templates'      => 'Mẫu Email',
         'email'                => 'Email',
         'email-templates-info' => 'Thêm, chỉnh sửa hoặc xóa mẫu email khỏi CRM',
+        'events'               => 'Sự kiện',
+        'events-info'          => 'Thêm, chỉnh sửa hoặc xóa sự kiện từ CRM',
+        'campaigns'            => 'Chiến dịch',
+        'campaigns-info'       => 'Thêm, chỉnh sửa hoặc xóa chiến dịch từ CRM',
         'workflows'            => 'Quy Trình',
         'workflows-info'       => 'Thêm, chỉnh sửa hoặc xóa quy trình khỏi CRM',
-        'webhooks'             => 'Webhooks',
-        'webhooks-info'        => 'Thêm, chỉnh sửa hoặc xóa webhooks từ CRM',
+        'webhooks'             => 'Webhook',
+        'webhooks-info'        => 'Thêm, chỉnh sửa hoặc xóa webhook từ CRM',
         'other-settings'       => 'Cài Đặt Khác',
         'other-settings-info'  => 'Quản lý tất cả các cài đặt khác trong CRM',
         'tags'                 => 'Thẻ',
         'tags-info'            => 'Thêm, chỉnh sửa hoặc xóa thẻ khỏi CRM',
         'my-account'           => 'Tài Khoản Của Tôi',
         'sign-out'             => 'Đăng Xuất',
-        'back'                 => 'Quay Lại',
+        'back'                 => 'Quay lại',
         'name'                 => 'Tên',
-        'configuration'        => 'Cấu Hình',
-        'activities'           => 'Hoạt động',
-        'howdy'                => 'Xin Chào!',
-        'warehouses'           => 'Kho Hàng',
-        'warehouse'            => 'Kho Hàng',
-        'warehouses-info'      => 'Thêm, chỉnh sửa hoặc xóa kho hàng khỏi CRM',
+        'configuration'        => 'Cấu hình',
+        'howdy'                => 'Xin chào!',
+        'warehouses'           => 'Kho hàng',
+        'warehouse'            => 'Kho hàng',
+        'warehouses-info'      => 'Thêm, chỉnh sửa hoặc xóa kho hàng từ CRM',
     ],
 
     'user' => [
@@ -2114,30 +2306,30 @@ return [
     'errors' => [
         'dashboard' => 'Bảng điều khiển',
         'go-back'   => 'Quay lại',
-        'support'   => 'Nếu vấn đề vẫn tiếp diễn, hãy liên hệ với chúng tôi tại <a href=":link" class=":class">:email</a> để được hỗ trợ.',
+        'support'   => 'Nếu sự cố vẫn tiếp diễn, vui lòng liên hệ với chúng tôi tại <a href=":link" class=":class">:email</a> để được hỗ trợ.',
 
         '404' => [
-            'description' => 'Ôi! Trang bạn đang tìm kiếm đang nghỉ phép. Có vẻ như chúng tôi không thể tìm thấy những gì bạn đang tìm.',
+            'description' => 'Rất tiếc! Trang bạn đang tìm kiếm hiện không có ở đây. Có vẻ như chúng tôi không thể tìm thấy những gì bạn đang tìm kiếm.',
             'title'       => '404 Không Tìm Thấy Trang',
         ],
 
         '401' => [
-            'description' => 'Ôi! Có vẻ như bạn không được phép truy cập vào trang này. Có vẻ như bạn thiếu thông tin xác thực cần thiết.',
-            'title'       => '401 Chưa Được Ủy Quyền',
+            'description' => 'Rất tiếc! Có vẻ như bạn không được phép truy cập vào trang này. Có vẻ bạn đang thiếu thông tin xác thực cần thiết.',
+            'title'       => '401 Không Được Phép',
         ],
 
         '403' => [
-            'description' => 'Ôi! Trang này bị giới hạn. Có vẻ như bạn không có quyền truy cập vào nội dung này.',
+            'description' => 'Rất tiếc! Trang này bị hạn chế. Có vẻ bạn không có quyền truy cập vào nội dung này.',
             'title'       => '403 Cấm Truy Cập',
         ],
 
         '500' => [
-            'description' => 'Ôi! Có điều gì đó đã sai. Có vẻ như chúng tôi đang gặp sự cố khi tải trang bạn đang tìm.',
+            'description' => 'Rất tiếc! Đã xảy ra sự cố. Có vẻ như chúng tôi đang gặp khó khăn trong việc tải trang mà bạn đang tìm kiếm.',
             'title'       => '500 Lỗi Máy Chủ Nội Bộ',
         ],
 
         '503' => [
-            'description' => 'Ôi! Có vẻ như chúng tôi tạm thời đang bảo trì. Vui lòng quay lại sau.',
+            'description' => 'Rất tiếc! Có vẻ chúng tôi đang tạm ngừng để bảo trì. Vui lòng quay lại sau.',
             'title'       => '503 Dịch Vụ Không Khả Dụng',
         ],
     ],

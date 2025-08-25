@@ -220,10 +220,11 @@ abstract class AbstractEntity
         $webhook = $this->webhookRepository->findOrFail($webhookId);
 
         $payload = [
-            'method'    => $webhook->method,
-            'end_point' => $this->replacePlaceholders($entity, $webhook->end_point),
-            'payload'   => $this->replacePlaceholders($entity, json_encode($webhook->payload)),
-            'headers'   => $this->replacePlaceholders($entity, json_encode($webhook->headers)),
+            'method'       => $webhook->method,
+            'query_params' => $this->replacePlaceholders($entity, json_encode($webhook->query_params)),
+            'end_point'    => $this->replacePlaceholders($entity, $webhook->end_point),
+            'payload'      => $this->replacePlaceholders($entity, json_encode($webhook->payload)),
+            'headers'      => $this->replacePlaceholders($entity, json_encode($webhook->headers)),
         ];
 
         $this->webhookService->triggerWebhook($payload);

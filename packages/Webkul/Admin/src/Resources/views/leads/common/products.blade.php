@@ -12,57 +12,59 @@
         <div class="flex flex-col gap-4">
             {!! view_render_event('admin.leads.create.products.form_controls.table.before') !!}
 
-            <!-- Table -->
-            <x-admin::table>
-                {!! view_render_event('admin.leads.create.products.form_controls.table.head.before') !!}
+            <div class="block w-full overflow-x-auto">
+                <!-- Table -->
+                <x-admin::table>
+                    {!! view_render_event('admin.leads.create.products.form_controls.table.head.before') !!}
 
-                <!-- Table Head -->
-                <x-admin::table.thead>
-                    <x-admin::table.thead.tr>
-                        <x-admin::table.th>
-                            @lang('admin::app.leads.common.products.product-name')
-                        </x-admin::table.th>
+                    <!-- Table Head -->
+                    <x-admin::table.thead>
+                        <x-admin::table.thead.tr>
+                            <x-admin::table.th>
+                                @lang('admin::app.leads.common.products.product-name')
+                            </x-admin::table.th>
 
-                        <x-admin::table.th class="text-center">
-                            @lang('admin::app.leads.common.products.quantity')
-                        </x-admin::table.th>
+                            <x-admin::table.th class="text-center">
+                                @lang('admin::app.leads.common.products.quantity')
+                            </x-admin::table.th>
 
-                        <x-admin::table.th class="text-center">
-                            @lang('admin::app.leads.common.products.price')
-                        </x-admin::table.th>
+                            <x-admin::table.th class="text-center">
+                                @lang('admin::app.leads.common.products.price')
+                            </x-admin::table.th>
 
-                        <x-admin::table.th class="text-center">
-                            @lang('admin::app.leads.common.products.amount')
-                        </x-admin::table.th>
+                            <x-admin::table.th class="text-center">
+                                @lang('admin::app.leads.common.products.amount')
+                            </x-admin::table.th>
 
-                        <x-admin::table.th class="text-right">
-                            @lang('admin::app.leads.common.products.action')
-                        </x-admin::table.th>
-                    </x-admin::table.thead.tr>
-                </x-admin::table.thead>
+                            <x-admin::table.th class="text-right">
+                                @lang('admin::app.leads.common.products.action')
+                            </x-admin::table.th>
+                        </x-admin::table.thead.tr>
+                    </x-admin::table.thead>
 
-                {!! view_render_event('admin.leads.create.products.form_controls.table.head.after') !!}
+                    {!! view_render_event('admin.leads.create.products.form_controls.table.head.after') !!}
 
-                {!! view_render_event('admin.leads.create.products.form_controls.table.body.before') !!}
+                    {!! view_render_event('admin.leads.create.products.form_controls.table.body.before') !!}
 
-                <!-- Table Body -->
-                <x-admin::table.tbody>
-                    {!! view_render_event('admin.leads.create.products.form_controls.table.body.product_item.before') !!}
+                    <!-- Table Body -->
+                    <x-admin::table.tbody>
+                        {!! view_render_event('admin.leads.create.products.form_controls.table.body.product_item.before') !!}
 
-                    <!-- Product Item Vue Component -->
-                    <v-product-item
-                        v-for='(product, index) in products'
-                        :product="product"
-                        :key="index"
-                        :index="index"
-                        @onRemoveProduct="removeProduct($event)"
-                    ></v-product-item>
+                        <!-- Product Item Vue Component -->
+                        <v-product-item
+                            v-for='(product, index) in products'
+                            :product="product"
+                            :key="index"
+                            :index="index"
+                            @onRemoveProduct="removeProduct($event)"
+                        ></v-product-item>
 
-                    {!! view_render_event('admin.leads.create.products.form_controls.table.body.product_item.after') !!}
-                </x-admin::table.tbody>
+                        {!! view_render_event('admin.leads.create.products.form_controls.table.body.product_item.after') !!}
+                    </x-admin::table.tbody>
 
-                {!! view_render_event('admin.leads.create.products.form_controls.table.body.after') !!}
-            </x-admin::table>
+                    {!! view_render_event('admin.leads.create.products.form_controls.table.body.after') !!}
+                </x-admin::table>
+            </div>
 
             {!! view_render_event('admin.leads.create.products.form_controls.table.after') !!}
 

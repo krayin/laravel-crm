@@ -5,6 +5,7 @@ namespace Webkul\Admin\DataGrids\Product;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Facades\DB;
 use Webkul\DataGrid\DataGrid;
+use Webkul\Tag\Repositories\TagRepository;
 
 class ProductDataGrid extends DataGrid
 {
@@ -17,15 +18,18 @@ class ProductDataGrid extends DataGrid
 
         $queryBuilder = DB::table('products')
             ->leftJoin('product_inventories', 'products.id', '=', 'product_inventories.product_id')
+            ->leftJoin('product_tags', 'products.id', '=', 'product_tags.product_id')
+            ->leftJoin('tags', 'tags.id', '=', 'product_tags.tag_id')
             ->select(
                 'products.id',
                 'products.sku',
                 'products.name',
                 'products.price',
+                'tags.name as tag_name',
             )
-            ->addSelect(DB::raw('SUM('.$tablePrefix.'product_inventories.in_stock) as total_in_stock'))
-            ->addSelect(DB::raw('SUM('.$tablePrefix.'product_inventories.allocated) as total_allocated'))
-            ->addSelect(DB::raw('SUM('.$tablePrefix.'product_inventories.in_stock - '.$tablePrefix.'product_inventories.allocated) as total_on_hand'))
+            ->addSelect(DB::raw('SUM(product_inventories.in_stock) as total_in_stock'))
+            ->addSelect(DB::raw('SUM(product_inventories.allocated) as total_allocated'))
+            ->addSelect(DB::raw('SUM(product_inventories.in_stock - product_inventories.allocated) as total_on_hand'))
             ->groupBy('products.id');
 
         if (request()->route('id')) {
@@ -36,6 +40,7 @@ class ProductDataGrid extends DataGrid
         $this->addFilter('total_in_stock', DB::raw('SUM('.$tablePrefix.'product_inventories.in_stock'));
         $this->addFilter('total_allocated', DB::raw('SUM('.$tablePrefix.'product_inventories.allocated'));
         $this->addFilter('total_on_hand', DB::raw('SUM('.$tablePrefix.'product_inventories.in_stock - '.$tablePrefix.'product_inventories.allocated'));
+        $this->addFilter('tag_name', 'tags.name');
 
         return $queryBuilder;
     }
@@ -92,6 +97,24 @@ class ProductDataGrid extends DataGrid
             'label'    => trans('admin::app.products.index.datagrid.on-hand'),
             'type'     => 'string',
             'sortable' => true,
+        ]);
+
+        $this->addColumn([
+            'index'              => 'tag_name',
+            'label'              => trans('admin::app.products.index.datagrid.tag-name'),
+            'type'               => 'string',
+            'searchable'         => false,
+            'sortable'           => true,
+            'filterable'         => true,
+            'filterable_type'    => 'searchable_dropdown',
+            'closure'            => fn ($row) => $row->tag_name ?? '--',
+            'filterable_options' => [
+                'repository' => TagRepository::class,
+                'column'     => [
+                    'label' => 'name',
+                    'value' => 'name',
+                ],
+            ],
         ]);
     }
 

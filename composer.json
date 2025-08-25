@@ -12,6 +12,7 @@
         "barryvdh/laravel-dompdf": "^2.0.0",
         "diglactic/laravel-breadcrumbs": "^8.0",
         "doctrine/dbal": "^3.0",
+        "enshrined/svg-sanitize": "^0.21.0",
         "guzzlehttp/guzzle": "^7.0.1",
         "khaled.alshamaa/ar-php": "^6.3",
         "konekt/concord": "^1.10",
@@ -21,7 +22,9 @@
         "laravel/ui": "^4.5",
         "maatwebsite/excel": "^3.1",
         "mpdf/mpdf": "^8.2",
-        "prettus/l5-repository": "^2.7.9"
+        "prettus/l5-repository": "^2.7.9",
+        "smalot/pdfparser": "^2.11",
+        "webklex/laravel-imap": "^5.3"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.6",
@@ -59,8 +62,11 @@
             "Webkul\\Attribute\\": "packages/Webkul/Attribute/src",
             "Webkul\\Contact\\": "packages/Webkul/Contact/src",
             "Webkul\\Core\\": "packages/Webkul/Core/src",
+            "Webkul\\DataGrid\\": "packages/Webkul/DataGrid/src",
+            "Webkul\\DataTransfer\\": "packages/Webkul/DataTransfer/src",
             "Webkul\\Email\\": "packages/Webkul/Email/src",
             "Webkul\\EmailTemplate\\": "packages/Webkul/EmailTemplate/src",
+            "Webkul\\Marketing\\": "packages/Webkul/Marketing/src",
             "Webkul\\Installer\\": "packages/Webkul/Installer/src",
             "Webkul\\Lead\\": "packages/Webkul/Lead/src",
             "Webkul\\Product\\": "packages/Webkul/Product/src",
@@ -69,8 +75,7 @@
             "Webkul\\User\\": "packages/Webkul/User/src",
             "Webkul\\Warehouse\\": "packages/Webkul/Warehouse/src",
             "Webkul\\WebForm\\": "packages/Webkul/WebForm/src",
-            "Webkul\\Automation\\": "packages/Webkul/Automation/src",
-            "Webkul\\DataGrid\\": "packages/Webkul/DataGrid/src"
+            "Webkul\\Automation\\": "packages/Webkul/Automation/src"
         }
     },
     "autoload-dev": {
@@ -78,13 +83,15 @@
             "Tests\\": "tests/"
         }
     },
-    "repositories": [{
-        "type": "path",
-        "url": "packages/*/*",
-        "options": {
-            "symlink": true
+    "repositories": [
+        {
+            "type": "path",
+            "url": "packages/*/*",
+            "options": {
+                "symlink": true
+            }
         }
-    }],
+    ],
     "minimum-stability": "stable",
     "prefer-stable": true,
     "scripts": {

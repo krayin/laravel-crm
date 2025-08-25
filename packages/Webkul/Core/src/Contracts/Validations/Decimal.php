@@ -2,29 +2,20 @@
 
 namespace Webkul\Core\Contracts\Validations;
 
-use Illuminate\Contracts\Validation\Rule;
+use Closure;
+use Illuminate\Contracts\Validation\ValidationRule;
 
-class Decimal implements Rule
+class Decimal implements ValidationRule
 {
     /**
-     * Determine if the validation rule passes.
+     * Run the validation rule.
      *
-     * @param  string  $attribute
-     * @param  mixed  $value
-     * @return bool
+     * @param  \Closure(string): \Illuminate\Translation\PotentiallyTranslatedString  $fail
      */
-    public function passes($attribute, $value)
+    public function validate(string $attribute, mixed $value, Closure $fail): void
     {
-        return preg_match('/^\d*(\.\d{1,4})?$/', $value);
-    }
-
-    /**
-     * Get the validation error message.
-     *
-     * @return string
-     */
-    public function message()
-    {
-        return trans('core::app.validations.decimal');
+        if (! preg_match('/^\d*(\.\d{1,4})?$/', $value)) {
+            $fail(trans('admin::app.validations.message.decimal', ['attribute' => $attribute]));
+        }
     }
 }

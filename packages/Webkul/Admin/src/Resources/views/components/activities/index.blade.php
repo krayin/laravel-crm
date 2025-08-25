@@ -40,7 +40,7 @@
             {!! view_render_event('admin.components.activities.content.before') !!}
 
             <div class="w-full rounded-md border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900">
-                <div class="flex gap-2 border-b border-gray-200 dark:border-gray-800">
+                <div class="flex gap-2 overflow-x-auto border-b border-gray-200 dark:border-gray-800">
                     {!! view_render_event('admin.components.activities.content.types.before') !!}
 
                     <div
@@ -95,23 +95,23 @@
                                             class="flex flex-col gap-1"
                                             v-if="activity.title"
                                         >
-                                            <p class="flex items-center gap-1 font-medium dark:text-white">
+                                            <p class="flex flex-wrap items-center gap-1 font-medium dark:text-white">
                                                 @{{ activity.title }}
 
                                                 <template v-if="activity.type == 'system' && activity.additional">
-                                                    <div class="flex items-center gap-1">
+                                                    <p class="flex items-center gap-1">
                                                         <span>:</span>
 
-                                                        <span>
+                                                        <span class="break-words">
                                                             @{{ (activity.additional.old.label ? String(activity.additional.old.label).replaceAll('<br>', ' ') : "@lang('admin::app.components.activities.index.empty')") }}
                                                         </span>
 
                                                         <span class="icon-stats-up rotate-90 text-xl"></span>
 
-                                                        <span>
+                                                        <span class="break-words">
                                                             @{{ (activity.additional.new.label ? String(activity.additional.new.label).replaceAll('<br>', ' ') : "@lang('admin::app.components.activities.index.empty')") }}
                                                         </span>
-                                                    </div>
+                                                    </p>
                                                 </template>
                                             </p>
 

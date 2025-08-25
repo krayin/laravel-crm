@@ -5,8 +5,8 @@
 ></v-control-tags>
 
 @pushOnce('scripts')
-    <script 
-        type="text/x-template" 
+    <script
+        type="text/x-template"
         id="v-control-tags-template"
     >
         <div 
@@ -92,15 +92,47 @@
         app.component('v-control-tags', {
             template: '#v-control-tags-template',
 
-            props: [
-                'name',
-                'label',
-                'placeholder',
-                'rules',
-                'inputRules',
-                'data',
-                'errors',
-            ],
+            props: {
+                name: {
+                    type: String,
+                    required: true,
+                },
+
+                label: {
+                    type: String,
+                    default: '',
+                },
+
+                placeholder: {
+                    type: String,
+                    default: '',
+                },
+
+                rules: {
+                    type: String,
+                    default: '',
+                },
+
+                inputRules: {
+                    type: String,
+                    default: '',
+                },
+
+                data: {
+                    type: Array,
+                    default: () => [],
+                },
+
+                errors: {
+                    type: Object,
+                    default: () => {},
+                },
+
+                allowDuplicates: {
+                    type: Boolean,
+                    default: true,
+                },
+            },
 
             data() {
                 return {
@@ -119,6 +151,15 @@
                     const tag = this.input.trim();
 
                     if (! tag) {
+                        return;
+                    }
+
+                    if (
+                        ! this.allowDuplicates
+                        && this.tags.includes(tag)
+                    ) {
+                        this.input = '';
+
                         return;
                     }
 

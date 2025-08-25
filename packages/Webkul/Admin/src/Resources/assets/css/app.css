@@ -28,6 +28,10 @@
   }
 
 @layer components {
+    .icon-image:before {
+        content: "\e956";
+    }
+      
     .icon-bookmark:before {
         content: "\e92c";
     }
@@ -242,6 +246,10 @@
 
     .icon-edit:before {
         content: "\e903";
+    }
+
+    .icon-menu:before {
+        content: "\e955";
     }
 
     .icon-calendar:before {
@@ -641,4 +649,8 @@
 
 .tox .tox-toolbar__group:last-child button:hover {
     @apply border-0 !bg-[#3389ec] text-white shadow-none;
+}
+
+.tox.tox-silver-sink.tox-tinymce-aux {
+    z-index: 99999;
 }

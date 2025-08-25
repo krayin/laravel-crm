@@ -2,76 +2,65 @@
 
 namespace Webkul\Email\Repositories;
 
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Webkul\Core\Eloquent\Repository;
+use Webkul\Email\Contracts\Attachment;
+use Webkul\Email\Contracts\Email;
 
 class AttachmentRepository extends Repository
 {
     /**
-     * Parser object
-     *
-     * @var \Webkul\Email\Helpers\Parser
+     * Specify model class name.
      */
-    protected $emailParser;
-
-    /**
-     * Specify Model class name
-     *
-     * @return mixed
-     */
-    public function model()
+    public function model(): string
     {
-        return 'Webkul\Email\Contracts\Attachment';
+        return Attachment::class;
     }
 
     /**
-     * @param  \Webkul\Email\Helpers\Parser  $emailParser
-     * @return self
+     * Upload attachments.
      */
-    public function setEmailParser($emailParser)
+    public function uploadAttachments(Email $email, array $data): void
     {
-        $this->emailParser = $emailParser;
-
-        return $this;
-    }
-
-    /**
-     * @param  \Webkul\Email\Contracts\Email  $email
-     * @return void
-     */
-    public function uploadAttachments($email, array $data)
-    {
-        if (! isset($data['source'])) {
+        if (
+            empty($data['attachments'])
+            || empty($data['source'])
+        ) {
             return;
         }
 
-        if ($data['source'] == 'email') {
-            foreach ($this->emailParser->getAttachments() as $attachment) {
-                Storage::put($path = 'emails/'.$email->id.'/'.$attachment->getFilename(), $attachment->getContent());
+        foreach ($data['attachments'] as $attachment) {
+            $attributes = $this->prepareData($email, $attachment);
 
-                $this->create([
-                    'path'         => $path,
-                    'name'         => $attachment->getFileName(),
-                    'content_type' => $attachment->contentType,
-                    'content_id'   => $attachment->contentId,
-                    'size'         => Storage::size($path),
-                    'email_id'     => $email->id,
-                ]);
-            }
-        } else {
-            if (! isset($data['attachments'])) {
-                return;
+            if (
+                ! empty($attachment->contentId)
+                && $data['source'] === 'email'
+            ) {
+                $attributes['content_id'] = $attachment->contentId;
             }
 
-            foreach ($data['attachments'] as $index => $attachment) {
-                $this->create([
-                    'path'         => $path = request()->file('attachments.'.$index)->store('emails/'.$email->id),
-                    'name'         => $attachment->getClientOriginalName(),
-                    'content_type' => $attachment->getClientMimeType(),
-                    'size'         => Storage::size($path),
-                    'email_id'     => $email->id,
-                ]);
-            }
+            $this->create($attributes);
         }
+    }
+
+    /**
+     * Get the path for the attachment.
+     */
+    private function prepareData(Email $email, UploadedFile $attachment): array
+    {
+        $path = 'emails/'.$email->id.'/'.$attachment->getClientOriginalName();
+
+        Storage::put($path, $attachment->getContent());
+
+        $attributes = [
+            'path'         => $path,
+            'name'         => $attachment->getClientOriginalName(),
+            'content_type' => $attachment->getMimeType(),
+            'size'         => Storage::size($path),
+            'email_id'     => $email->id,
+        ];
+
+        return $attributes;
     }
 }

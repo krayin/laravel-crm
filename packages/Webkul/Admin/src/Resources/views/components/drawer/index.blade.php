@@ -18,10 +18,10 @@
 
     @isset($header)
         <template v-slot:header="{ close }">
-            <div {{ $header->attributes->merge(['class' => 'grid gap-y-2.5 border-b p-3 dark:border-gray-800 max-sm:px-4']) }}>
+            <div {{ $header->attributes->merge(['class' => 'flex justify-between items-center gap-y-2.5 border-b p-3 dark:border-gray-800 max-sm:px-4']) }}>
                 {{ $header }}
 
-                <div class="absolute top-3 ltr:right-3 rtl:left-3">
+                <div class="w-full flex-1 ltr:right-3 ltr:text-right rtl:left-3 rtl:text-left">
                     <span
                         class="icon-cross-large cursor-pointer text-3xl hover:rounded-md hover:bg-gray-100 dark:hover:bg-gray-950"
                         @click="close"
@@ -90,7 +90,7 @@
                 :leave-to-class="enterFromLeaveToClasses"
             >
                 <div
-                    class="fixed z-[10003] m-3 rounded-lg bg-white dark:bg-gray-900 max-sm:!w-full"
+                    class="fixed z-[10003] m-3 rounded-lg bg-white dark:bg-gray-900 max-sm:!w-[calc(100%-24px)]"
                     :class="{
                         'inset-x-0 top-0': position == 'top',
                         'inset-x-0 bottom-0': position == 'bottom',
