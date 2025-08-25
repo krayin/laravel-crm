@@ -39,6 +39,11 @@ return [
         'delete'          => 'Supprimer',
         'export'          => 'Exporter',
         'mass-delete'     => 'Supprimer en masse',
+        'data-transfer'   => 'Transfert de données',
+        'imports'         => 'Imports',
+        'import'          => 'Import',
+        'event'           => 'Evénement',
+        'campaigns'       => 'Campagnes',
     ],
 
     'users' => [
@@ -374,12 +379,16 @@ return [
                         'quotes'   => 'Devis',
                         'persons'  => 'Personnes',
                         'products' => 'Produits',
+                        'settings'       => 'Paramètres',
+                        'configurations' => 'Configurations',
                     ],
 
                     'explore-all-products'          => 'Rechercher parmi tous les produits',
                     'explore-all-leads'             => 'Rechercher parmi tous les leads',
                     'explore-all-contacts'          => 'Rechercher parmi tous les contacts',
                     'explore-all-quotes'            => 'Rechercher parmi tous les devis',
+                    'explore-all-settings'          => 'Rechercher parmi tous les paramètres',
+                    'explore-all-configurations'    => 'Rechercher parmi toutes les configurations',
                     'explore-all-matching-products' => 'Rechercher parmi tous les produits correspondant à ":query" (:count)',
                     'explore-all-matching-leads'    => 'Rechercher parmi tous les leads correspondant à ":query" (:count)',
                     'explore-all-matching-contacts' => 'Rechercher parmi tous les contacts correspondant à ":query" (:count)',
@@ -414,6 +423,12 @@ return [
             'warning' => 'Avertissement',
             'info'    => 'Info',
         ],
+
+        'tiny-mce' => [
+            'http-error'    => 'Erreur HTTP',
+            'invalid-json'  => 'Réponse JSON invalide depuis le serveur.',
+            'upload-failed' => 'L\'upload à échoué, veullez rééssayer',
+        ],
     ],
 
     'quotes' => [
@@ -430,7 +445,6 @@ return [
                 'sales-person'   => 'Commercial',
                 'expired-at'     => 'Expiré le',
                 'created-at'     => 'Créé le',
-                'expired-quotes' => 'Devis expirés',
                 'person'         => 'Personne',
                 'subtotal'       => 'Sous-total',
                 'discount'       => 'Remise',
@@ -535,7 +549,10 @@ return [
                 'create-btn'     => 'Créer une personne',
                 'create-success' => 'Personne créée avec succès.',
                 'update-success' => 'Personne mise à jour avec succès.',
-                'delete-success' => 'Personne supprimée avec succès.',
+                'all-delete-success'       => 'Toutes les personnes sélectionnées ont été supprimées avec succès.',
+                'partial-delete-warning'   => 'Des personnes ont été supprimées avec succès. D\'autres ne l\'ont pas été car elles sont liées à des leads.',
+                'none-delete-warning'      => 'Les personnes n\'pnt pas pu $etre supprimées car elles sont liées à des leads.',
+                'no-selection'             => 'Aucune personne dans la sélection.',
                 'delete-failed'  => 'La personne ne peut pas être supprimée.',
 
                 'datagrid' => [
@@ -618,6 +635,11 @@ return [
                         ],
                     ],
                 ],
+                
+                'tags' => [
+                    'create-success'  => 'Etiquette créée avec succès.',
+                    'destroy-success' => 'Etiquette supprimée avec succès.',
+                ],                
             ],
 
             'create' => [
@@ -678,6 +700,7 @@ return [
                 'in-stock'  => 'En stock',
                 'name'      => 'Nom',
                 'on-hand'   => 'Disponible',
+                'tag-name'  => 'Etiquette',
                 'price'     => 'Prix',
                 'sku'       => 'SKU',
                 'view'      => 'Voir',
@@ -736,6 +759,7 @@ return [
                 'update-success'    => 'Groupe mis à jour avec succès.',
                 'destroy-success'   => 'Groupe supprimé avec succès.',
                 'delete-failed'     => 'Le groupe ne peut pas être supprimé.',
+                'delete-failed-associated-users' => 'Le groupe ne peut pas être supprimé, car il est encore utilisé par des utilisateurs.',
 
                 'datagrid'   => [
                     'delete'      => 'Supprimer',
@@ -848,6 +872,7 @@ return [
                 'delete-success' => 'Source supprimée avec succès.',
                 'title'          => 'Sources',
                 'update-success' => 'Source mise à jour avec succès.',
+                'delete-failed-associated-leads' => 'La source ne peut pas être supprimée car elle est associée à des leads. Déconnectez ou mettez à jour les leads avant la suppression.',
 
                 'datagrid' => [
                     'delete' => 'Supprimer',
@@ -1092,6 +1117,82 @@ return [
             ],
         ],
 
+        'marketing' => [
+            'events' => [
+                'index' => [
+                    'create-btn'                         => 'Créer un événement',
+                    'title'                              => 'Evénements',
+                    'create-success'                     => 'Evénement créé avec succès.',
+                    'update-success'                     => 'Evénement mis à jour avec succès.',
+                    'delete-success'                     => 'Evénement supprimé avec succès.',
+                    'delete-failed'                      => 'L\événement ne peut pas être supprimé.',
+                    'delete-failed-associated-campaigns' => 'L\événement ne peut pas être supprimé car il est associé à une campagne.',
+                    'mass-delete-success'                => 'Evénements supprimés avec succès.',
+                    'partial-delete-warning'             => 'Certains événements n\'ont pas pu être supprimés car ils sont associés à une campagne.',
+                    'none-delete-warning'                => 'Aucun événement sélectionné n\'a pas pu être supprimé car ils sont associés à une campagne.',
+                    'no-selection'                       => 'Aucun événément à supprimer dans la sélection.',
+
+                    'datagrid'   => [
+                        'delete'       => 'Supprimer',
+                        'edit'         => 'Modifier',
+                        'id'           => 'ID',
+                        'name'         => 'Nom',
+                        'description'  => 'Description',
+                        'date'         => 'Date',
+                    ],
+
+                    'create'     => [
+                        'title'       => 'Créer un événement',
+                        'name'        => 'Non',
+                        'date'        => 'Date',
+                        'description' => 'Description',
+                        'save-btn'    => 'Enregistrer l\'événément',
+                    ],
+
+                    'edit' => [
+                        'title' => 'Modifier l\'événément',
+                    ],
+                ],
+            ],
+
+            'campaigns' => [
+                'index' => [
+                    'create-btn'          => 'Créer une campagne',
+                    'title'               => 'Campagnes',
+                    'create-success'      => 'Campagne créée avec succès.',
+                    'update-success'      => 'Campagne mise à jour avec succes.',
+                    'delete-success'      => 'Campagne supprimée avec succes.',
+                    'delete-failed'       => 'La campagne ne peut pas être supprimée.',
+                    'mass-delete-success' => 'Campaignes supprimées avec succès.',
+
+                    'datagrid'   => [
+                        'id'       => 'ID',
+                        'name'     => 'Noù',
+                        'subject'  => 'Sujet',
+                        'status'   => 'Statut',
+                        'active'   => 'Active',
+                        'inactive' => 'Inactive',
+                        'edit'     => 'Modifier',
+                        'delete'   => 'Supprimer',
+                    ],
+
+                    'create'     => [
+                        'title'          => 'Créer une campagne',
+                        'name'           => 'Nom',
+                        'type'           => 'Type',
+                        'subject'        => 'Sujet',
+                        'event'          => 'Evénément',
+                        'email-template' => 'Template d\'email',
+                        'status'         => 'Statut',
+                    ],
+
+                    'edit' => [
+                        'title' => 'Modifier la campagne',
+                    ],
+                ],
+            ],
+        ],
+
         'tags' => [
             'index' => [
                 'create-btn'     => 'Créer un tag',
@@ -1169,6 +1270,7 @@ return [
                     'status'           => 'Statut',
                     'title'            => 'Créer un utilisateur',
                     'view-permission'  => 'Voir la permission',
+                    'select-at-lest-one-group' => 'Séléctionnez au moins un groupe',
                 ],
 
                 'edit' => [
@@ -1183,6 +1285,7 @@ return [
                 'create-btn'           => 'Créer un pipeline',
                 'create-success'       => 'Pipeline créé avec succès.',
                 'update-success'       => 'Pipeline mis à jour avec succès.',
+                'default-required'     => 'Au moins un pipeline par défaut est requis.',
                 'delete-success'       => 'Pipeline supprimé avec succès.',
                 'delete-failed'        => 'Le pipeline ne peut pas être supprimé.',
                 'default-delete-error' => 'Le pipeline par défaut ne peut pas être supprimé.',
@@ -1417,6 +1520,12 @@ return [
                     ],
 
                     'types'       => [
+                        'boolean'     => 'Booléen',
+                        'multiselect' => 'Liste de sélection à choix multiple',
+                        'checkbox'    => 'Cases à cocher',
+                        'datetime'    => 'Datetime',
+                        'image'       => 'Image',
+                        'file'        => 'Fichier',
                         'address'  => 'Adresse',
                         'date'     => 'Date',
                         'email'    => 'Email',
@@ -1519,6 +1628,109 @@ return [
                 'validations'           => 'Validations',
             ],
         ],
+
+        'data-transfer' => [
+            'imports' => [
+                'create' => [
+                    'action'              => 'Action',
+                    'allowed-errors'      => 'Erreurs autorisées',
+                    'back-btn'            => 'Retour',
+                    'create-update'       => 'Créer/Mettre à jour',
+                    'delete'              => 'Supprimer',
+                    'download-sample'     => 'Télécharger un échantillon',
+                    'field-separator'     => 'Séparateur de champs',
+                    'file'                => 'Fichier',
+                    'general'             => 'Général',
+                    'images-directory'    => 'Chemin du répertoire d\'images',
+                    'process-in-queue'    => 'Processus dans la file',
+                    'results'             => 'Resultats',
+                    'save-btn'            => 'Enregistrer l\'import',
+                    'settings'            => 'Paramètres',
+                    'skip-errors'         => 'Continuer lors des erreurs',
+                    'stop-on-errors'      => 'S\'arrêter lors des erreurs',
+                    'title'               => 'Créer un import',
+                    'type'                => 'Type',
+                    'validation-strategy' => 'Stratégie de validation',
+                ],
+
+                'edit' => [
+                    'action'              => 'Action',
+                    'allowed-errors'      => 'Erreurs autorisées',
+                    'back-btn'            => 'Retour',
+                    'create-update'       => 'Créer/Mettre à jour',
+                    'delete'              => 'Supprimer',
+                    'download-sample'     => 'Télécharger un échantillon',
+                    'field-separator'     => 'Séparateur de champs',
+                    'file'                => 'Fichier',
+                    'general'             => 'Général',
+                    'images-directory'    => 'Chemin du répertoire d\'images',
+                    'process-in-queue'    => 'Processus dans la file',
+                    'results'             => 'Resultats',
+                    'save-btn'            => 'Enregistrer l\'import',
+                    'settings'            => 'Paramètres',
+                    'skip-errors'         => 'Continuer lors des erreurs',
+                    'stop-on-errors'      => 'S\'arrêter lors des erreurs',
+                    'title'               => 'Créer un import',
+                    'type'                => 'Type',
+                    'validation-strategy' => 'Stratégie de validation',
+                ],
+
+                'index' => [
+                    'button-title' => 'Créer un import',
+                    'title'        => 'Imports',
+
+                    'datagrid' => [
+                        'actions'       => 'Actions',
+                        'completed-at'  => 'Terminé le',
+                        'created'       => 'Créé',
+                        'delete'        => 'Supprimer',
+                        'deleted'       => 'Supprimé',
+                        'edit'          => 'Modifier',
+                        'error-file'    => 'Fichier d\'erreurs',
+                        'id'            => 'ID',
+                        'started-at'    => 'Démarré le',
+                        'state'         => 'Etat',
+                        'summary'       => 'Résumé',
+                        'type'          => 'Type',
+                        'updated'       => 'Mis à jour',
+                        'uploaded-file' => 'Fichier téléchargé File',
+                    ],
+                ],
+
+                'import' => [
+                    'back-btn'                => 'Retour',
+                    'completed-batches'       => 'Nombre de lots terminés',
+                    'download-error-report'   => 'Télécharger le rapport complet',
+                    'edit-btn'                => 'Modifier',
+                    'imported-info'           => 'Félicitations, votre import est réussi.',
+                    'importing-info'          => 'Import en cours',
+                    'indexing-info'           => 'Indexation des ressources (Prix, Inventaire and recherche) en cours',
+                    'linking-info'            => 'Liaison des ressources en cours',
+                    'progress'                => 'Avancement :',
+                    'title'                   => 'Import',
+                    'total-batches'           => 'Nombre de lots :',
+                    'total-created'           => 'Nombre d\'enregistrements créés :',
+                    'total-deleted'           => 'Nombre d\'enregistrements supprimés :',
+                    'total-errors'            => 'Nombre d\'erreurs:',
+                    'total-invalid-rows'      => 'Nombre de lignes invalides :',
+                    'total-rows-processed'    => 'Nombre de lignes traitées :',
+                    'total-updated'           => 'Nombre d\'enregistrements mis à jour:',
+                    'validate'                => 'Valider',
+                    'validate-info'           => 'Cliquer sur Valider les données pour vérifier votre import.',
+                    'validating-info'         => 'Les données ont commencé à être lues et validées',
+                    'validation-failed-info'  => 'Votre import est invalide. Corrigez les erreurs et rééssayez.',
+                    'validation-success-info' => 'Votre import est valide. Cliquer sur importer pour lancer le process d\'import.',
+                ],
+
+                'create-success'    => 'Import créé avec succès.',
+                'delete-failed'     => 'La suppression de l\'import a échoué.',
+                'delete-success'    => 'Import supprimé avec succès.',
+                'not-valid'         => 'L\'import est invalide',
+                'nothing-to-import' => 'Aucune ressource à importer.',
+                'setup-queue-error' => 'Changer votre gestionnaire de file à "database" ou "redis" pour démarrer le process d\import.',
+                'update-success'    => 'Import updated successfully.',
+            ],
+        ],
     ],
 
     'activities' => [
@@ -1615,6 +1827,7 @@ return [
                 'attachments'   => 'Attachements',
                 'date'          => 'Date',
                 'move-to-inbox' => 'Déplacé dans la boîte de réception',
+                'move-to-trash' => 'Déplacé dans la corbeille',
                 'edit'          => 'Modifier',
                 'view'          => 'Voir',
                 'delete'        => 'Supprimer',
@@ -1697,6 +1910,20 @@ return [
         'destroy-success'   => 'Prospect supprimé avec succès.',
         'destroy-failed'    => 'Le prospect ne peut pas être supprimé.',
 
+        'file' => [
+            'data-not-found'         => 'Les données n\'ont pas été trouvées.',
+            'empty-content'          => 'Le contenu du PDF est vide ou n\'a pas pu être extrait.',
+            'failed-extract'         => 'Echec d\'extraction du texte depuis le fichier.',
+            'insufficient-info'      => 'Pour cause de données insuffisantes, nous n\'avons pas pu traiter votre demande pour le moment.',
+            'invalid-base64'         => 'Format Base64 invalide.',
+            'invalid-format'         => 'Format JSON invalide.',
+            'invalid-response'       => 'Format de réponse IA invalide.',
+            'missing-api-key'        => 'Il manque la clé d\'API ou la configuation du modèle.',
+            'not-found'              => 'Fichier non trouvé.',
+            'recursive-call'         => 'Appel récursif détecté.',
+            'text-generation-failed' => 'L\'extaction de texte a échoué, le fichier est vide ou illisible.',
+        ],
+
         'index' => [
             'title'      => 'Prospects',
             'create-btn' => 'Créer un Prospect',
@@ -1755,11 +1982,31 @@ return [
                         'to'            => 'A',
                     ],
                 ],
+
+                'stages' => [
+                    'won-lost'       => 'Gagné/Perdu',
+                    'won'            => 'Gagné',
+                    'lost'           => 'Perdu',
+                    'need-more-info' => 'Besoin de plus de détails',
+                    'closed-at'      => 'Fermé le',
+                    'won-value'      => 'Valeur gagnée',
+                    'lost-reason'    => 'Raison de la perte',
+                    'save-btn'       => 'Enregistré',
+                ],
             ],
 
             'view-switcher' => [
                 'all-pipelines'       => 'Tous les pipelines',
                 'create-new-pipeline' => 'Créer un nouveau pipeline',
+            ],
+
+            'upload' => [
+                'create-lead'   => 'Create un prospect avec l\'IA',
+                'file'          => 'Télécharger un fichier',
+                'file-info'     => 'Seuls les formats pdf,bmp,jpg,jpeg,png sont acceptés.',
+                'file-required' => 'Sélectionnez au moins un fichier valide pour le traitement.',
+                'save-btn'      => 'Enregitrer',
+                'upload-file'   => 'Télécharger un fichier',
             ],
         ],
 
@@ -1874,9 +2121,12 @@ return [
     'configuration' => [
         'index' => [
             'back'         => 'Retour',
+            'delete'         => 'Supprimer',
             'save-btn'     => 'Enregistrer la configuration',
             'save-success' => 'Configuration enregistrée avec succès.',
             'search'       => 'Rechercher',
+            'select-country' => 'Selectionnez un pays',
+            'select-state'   => 'Selectionnez un état',
             'title'        => 'Configuration',
 
             'general'  => [
@@ -1889,6 +2139,98 @@ return [
                     'locale-settings' => [
                         'title'       => 'Paramètres de langue',
                         'title-info'  => 'Définit la langue utilisée dans l\'interface utilisateur, telles que l\'arabe (ar), l\'anglais (en), l\'espagnol (es), le français(fr), le persan (fa) et le turc (tr).',
+                    ],
+
+                    'admin-logo' => [
+                        'logo-image' => 'Logo',
+                        'title'      => 'Logo administrateur',
+                        'title-info' => 'Configurez le logo pour votre panneau d\'administration.',
+                    ],
+                ],
+
+                'settings' => [
+                    'title' => 'Paramètres',
+                    'info'  => 'Mettez à jour vos paramètres ici.',
+
+                    'footer' => [
+                        'info'       => 'Configurez ici la section powered by.',
+                        'powered-by' => 'Editeur de texte de la section Powered by',
+                        'title'      => 'Configuration de la section Powered by',
+                    ],
+
+                    'menu' => [
+                        'activities'     => 'Activités',
+                        'configuration'  => 'Configuration',
+                        'contacts'       => 'Contacts',
+                        'dashboard'      => 'Trableau de bord',
+                        'draft'          => 'Brouillon',
+                        'inbox'          => 'Boîte de réception',
+                        'info'           => 'Configurez le nom des items de menu ici.',
+                        'leads'          => 'Prospect',
+                        'mail'           => 'Mail',
+                        'organizations'  => 'Organisations',
+                        'outbox'         => 'Envoyés',
+                        'persons'        => 'Personnes',
+                        'products'       => 'Produits',
+                        'quotes'         => 'Devis',
+                        'sent'           => 'Envoyé',
+                        'settings'       => 'Paramètres',
+                        'title'          => 'Nouvel élément de configuration',
+                        'trash'          => 'Corbeille',
+                    ],
+
+                    'menu-color' => [
+                        'brand-color' => 'Couleur de marque',
+                        'info'        => 'Changez la couleur des éléments de menu.',
+                        'title'       => 'Configuration de la couleur des éléments de menu',
+                    ],
+                ],
+            ],
+
+            'email' => [
+                'title' => 'Paramètres d\email',
+                'info'  => 'configuration d\email pour l\'application.',
+
+                'imap' => [
+                    'title' => 'Paramètres IMAP',
+                    'info'  => 'Configuration IMAP pour la réception des emails.',
+
+                    'account' => [
+                        'title'         => 'Compte IMAP',
+                        'title-info'    => 'Configurez votre compte IMAP ici.',
+                        'host'          => 'Hôte',
+                        'port'          => 'Port',
+                        'encryption'    => 'Type d\'encryption',
+                        'validate-cert' => 'Valider le certificat SSL',
+                        'username'      => 'Identifiant IMAP',
+                        'password'      => 'Mot de passe IMAP',
+                    ],
+                ],
+            ],
+
+            'magic-ai' => [
+                'title' => 'Magic AI',
+                'info'  => 'Magic AI configuration for the application.',
+
+                'settings' => [
+                    'api-key'             => 'Clé d\'API',
+                    'api-key-info'        => 'Rappelez vous d\'utiliser une clé OpenRouter pour chaque modèle. C\'est une étape simple pour améliorer la sécurité et la performance.',
+                    'enable'              => 'Autoriser',
+                    'info'                => 'Améliorez votre expérience Magic AI avec votre clé d\'API OpenRouter. Intégrez la maintenant pour une expérience unique ! Adaptez les paramètres et prenez le contrôle de votre IA.',
+                    'other'               => 'Autres modèles',
+                    'other-model'         => 'Pour les autres modèles, utilisez l\'identifiant du modèle d\'Openrouter.',
+                    'doc-generation'      => 'Génération de documents',
+                    'doc-generation-info' => 'Autorisez la génération de documents pour extraire automatiquement les données de docuemnst et les convertir au format texte. Améliorez votre productivité et votre efficacité en autorisant cette fonctionnalité pour fluidifier vos processus.',
+                    'title'               => 'Paramètres généraux',
+
+                    'models'     => [
+                        'deepseek-r1'           => 'Deepseek R1 Distill-llama-8b',
+                        'gemini-2-0-flash-001'  => 'Gemini 2.0 flash-001',
+                        'gpt-4o'                => 'GPT-4.0',
+                        'gpt-4o-mini'           => 'GPT-4.0 mini',
+                        'grok-2-1212'           => 'Grok 2.12',
+                        'llama-3-2-3b-instruct' => 'Llama 3.2 3b Instruct',
+                        'title'                 => 'Models',
                     ],
                 ],
             ],
@@ -2002,6 +2344,10 @@ return [
         'email-templates'      => 'Modèles d’e-mails',
         'email'                => 'E-mail',
         'email-templates-info' => 'Ajoutez, modifiez ou supprimez des modèles d’e-mails dans le CRM.',
+        'events'               => 'Evénements',
+        'events-info'          => 'Ajoutez, modifiez ou Supprimez des événéments dans le CRM',
+        'campaigns'            => 'Campagnes',
+        'campaigns-info'       => 'Ajoutez, modifiez ou Supprimez des campagnes dans le CRM',
         'workflows'            => 'Flux de travail',
         'workflows-info'       => 'Ajoutez, modifiez ou supprimez des flux de travail dans le CRM.',
         'webhooks'             => 'Webhooks',
@@ -2020,7 +2366,9 @@ return [
         'warehouses'           => 'Entrepôts',
         'warehouse'            => 'Entrepôt',
         'warehouses-info'      => 'Ajoutez, modifiez ou supprimez des entrepôts dans le CRM.',
-    ],
+        'data_transfer'        => 'Transfert de données',
+        'data_transfer_info'   => 'Géréz des transferts de personnes, de produits, de prospects dans le CRM',
+   ],
 
     'user' => [
         'account' => [
@@ -2060,6 +2408,12 @@ return [
                     'thanks'            => 'Merci !',
                 ],
             ],
+        ],
+    ],
+
+    'validations' => [
+        'message' => [
+            'decimal' => 'L\':attribute doit être décimal.',
         ],
     ],
 
