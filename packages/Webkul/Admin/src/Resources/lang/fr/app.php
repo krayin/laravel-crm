@@ -175,6 +175,7 @@ return [
                 'view'         => 'Voir',
                 'unlink'       => 'Supprimer le lien',
                 'empty'        => 'Non renseigné',
+                'system'       => 'Système',
 
                 'empty-placeholders' => [
                     'all' => [
@@ -1681,6 +1682,11 @@ return [
             'select'         => 'Sélectionner',
             'country'        => 'Pays',
             'address'        => 'Adresse',
+            'contact'              => 'Numéro de contact',
+            'email'                => 'Email',
+            'save'                 => 'Enregistrer',
+            'update-contact-title' => 'Mettre à jour le numéro du contact',
+            'update-emails-title'  => 'Mettre à jour l\'email du contact',
         ],
     ],
 
