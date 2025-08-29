@@ -108,7 +108,6 @@
                 <div v-if="notAddedWarehouses.length">
                     <x-admin::dropdown
                         position="bottom-right"
-                        class="!static"
                     >
                         <x-slot:toggle>
                             <button
@@ -121,7 +120,7 @@
                             </button>
                         </x-slot>
 
-                        <x-slot:menu class="!top-[30px] max-h-[200px] overflow-auto">
+                        <x-slot:menu class="max-h-[200px] overflow-auto z-50">
                             {!! view_render_event('admin.products.view.inventory.source.menu.item.before', ['product' => $product]) !!}
 
                             <x-admin::dropdown.menu.item
