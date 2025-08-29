@@ -730,13 +730,13 @@ return [
             ],
 
             'inventory' => [
-                'source'     => 'Origem',
+                'source'     => 'Armazém',
                 'in-stock'   => 'Em Estoque',
                 'allocated'  => 'Alocado',
                 'on-hand'    => 'Disponível',
                 'actions'    => 'Ações',
                 'assign'     => 'Atribuir',
-                'add-source' => 'Adicionar Origem',
+                'add-source' => 'Adicionar Armazém',
                 'location'   => 'Localização',
                 'add-more'   => 'Adicionar Mais',
                 'save'       => 'Salvar',

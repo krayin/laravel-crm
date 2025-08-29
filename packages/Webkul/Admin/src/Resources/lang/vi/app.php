@@ -733,13 +733,13 @@ return [
             ],
 
             'inventory' => [
-                'source'     => 'Nguồn',
+                'source'     => 'Kho Hàng',
                 'in-stock'   => 'Có sẵn',
                 'allocated'  => 'Đã phân bổ',
                 'on-hand'    => 'Sẵn có',
                 'actions'    => 'Hành động',
                 'assign'     => 'Phân bổ',
-                'add-source' => 'Thêm nguồn',
+                'add-source' => 'Thêm Kho Hàng',
                 'location'   => 'Vị trí',
                 'add-more'   => 'Thêm nữa',
                 'save'       => 'Lưu',

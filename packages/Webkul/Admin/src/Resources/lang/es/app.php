@@ -736,13 +736,13 @@ return [
             ],
 
             'inventory' => [
-                'source'     => 'Fuente',
+                'source'     => 'Almacén',
                 'in-stock'   => 'En Stock',
                 'allocated'  => 'Asignado',
                 'on-hand'    => 'Disponible',
                 'actions'    => 'Acciones',
                 'assign'     => 'Asignar',
-                'add-source' => 'Agregar Fuente',
+                'add-source' => 'Agregar Almacén',
                 'location'   => 'Ubicación',
                 'add-more'   => 'Agregar Más',
                 'save'       => 'Guardar',

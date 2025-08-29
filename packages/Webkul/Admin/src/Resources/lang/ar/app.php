@@ -730,13 +730,13 @@ return [
             ],
 
             'inventory' => [
-                'source'     => 'المصدر',
+                'source'     => 'مستودع',
                 'in-stock'   => 'في المخزون',
                 'allocated'  => 'مخصص',
                 'on-hand'    => 'متوفر',
                 'actions'    => 'الإجراءات',
                 'assign'     => 'تعيين',
-                'add-source' => 'إضافة مصدر',
+                'add-source' => 'إضافة مستودع',
                 'location'   => 'الموقع',
                 'add-more'   => 'إضافة المزيد',
                 'save'       => 'حفظ',

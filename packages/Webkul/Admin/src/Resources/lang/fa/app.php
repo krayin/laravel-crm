@@ -737,13 +737,13 @@ return [
             ],
 
             'inventory' => [
-                'source'     => 'منبع',
+                'source'     => 'انبار',
                 'in-stock'   => 'در انبار',
                 'allocated'  => 'اختصاص داده شده',
                 'on-hand'    => 'موجودی',
                 'actions'    => 'عملیات',
                 'assign'     => 'اختصاص دادن',
-                'add-source' => 'افزودن منبع',
+                'add-source' => 'افزودن انبار',
                 'location'   => 'مکان',
                 'add-more'   => 'افزودن بیشتر',
                 'save'       => 'ذخیره',

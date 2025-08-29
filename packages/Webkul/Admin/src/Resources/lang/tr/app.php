@@ -736,13 +736,13 @@ return [
             ],
 
             'inventory' => [
-                'source'     => 'Kaynak',
+                'source'     => 'Depo',
                 'in-stock'   => 'Stokta',
                 'allocated'  => 'Tahsis Edilen',
                 'on-hand'    => 'Elinde',
                 'actions'    => 'İşlemler',
                 'assign'     => 'Ata',
-                'add-source' => 'Kaynak Ekle',
+                'add-source' => 'Depo Ekle',
                 'location'   => 'Konum',
                 'add-more'   => 'Daha Fazla Ekle',
                 'save'       => 'Kaydet',
