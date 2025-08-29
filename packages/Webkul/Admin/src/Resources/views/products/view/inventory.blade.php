@@ -120,7 +120,7 @@
                             </button>
                         </x-slot>
 
-                        <x-slot:menu class="max-h-[200px] overflow-auto z-50">
+                        <x-slot:menu class="!top-[30px] max-h-[200px] overflow-auto">
                             {!! view_render_event('admin.products.view.inventory.source.menu.item.before', ['product' => $product]) !!}
 
                             <x-admin::dropdown.menu.item
