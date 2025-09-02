@@ -374,22 +374,26 @@ return [
 
             'header' => [
                 'mega-search' => [
-                    'title'   => 'Búsqueda Mega',
+                    'title' => 'Búsqueda Avanzada',
 
                     'tabs' => [
-                        'leads'    => 'Oportunidades',
-                        'quotes'   => 'Cotizaciones',
-                        'persons'  => 'Personas',
-                        'products' => 'Productos',
+                        'leads'          => 'Clientes Potenciales',
+                        'quotes'         => 'Cotizaciones',
+                        'persons'        => 'Personas',
+                        'products'       => 'Productos',
+                        'settings'       => 'Configuraciones',
+                        'configurations' => 'Ajustes',
                     ],
 
-                    'explore-all-products'          => 'Explorar todos los Productos',
-                    'explore-all-leads'             => 'Explorar todas las Oportunidades',
-                    'explore-all-contacts'          => 'Explorar todos los Contactos',
-                    'explore-all-quotes'            => 'Explorar todas las Cotizaciones',
+                    'explore-all-products'          => 'Explorar todos los productos',
+                    'explore-all-leads'             => 'Explorar todos los clientes potenciales',
+                    'explore-all-contacts'          => 'Explorar todas las personas',
+                    'explore-all-quotes'            => 'Explorar todas las cotizaciones',
+                    'explore-all-settings'          => 'Explorar todas las configuraciones',
+                    'explore-all-configurations'    => 'Explorar todos los ajustes',
                     'explore-all-matching-products' => 'Explorar todos los productos que coinciden con ":query" (:count)',
-                    'explore-all-matching-leads'    => 'Explorar todas las oportunidades que coinciden con ":query" (:count)',
-                    'explore-all-matching-contacts' => 'Explorar todos los contactos que coinciden con ":query" (:count)',
+                    'explore-all-matching-leads'    => 'Explorar todos los clientes potenciales que coinciden con ":query" (:count)',
+                    'explore-all-matching-contacts' => 'Explorar todas las personas que coinciden con ":query" (:count)',
                     'explore-all-matching-quotes'   => 'Explorar todas las cotizaciones que coinciden con ":query" (:count)',
                 ],
             ],
@@ -1117,13 +1121,17 @@ return [
         'marketing' => [
             'events' => [
                 'index' => [
-                    'create-btn'          => 'Crear Evento',
-                    'title'               => 'Eventos',
-                    'create-success'      => 'Evento creado con éxito.',
-                    'update-success'      => 'Evento actualizado con éxito.',
-                    'delete-success'      => 'Evento eliminado con éxito.',
-                    'delete-failed'       => 'No se puede eliminar el evento.',
-                    'mass-delete-success' => 'Eventos eliminados con éxito',
+                    'create-btn'                         => 'Crear Evento',
+                    'title'                              => 'Eventos',
+                    'create-success'                     => 'Evento creado exitosamente.',
+                    'update-success'                     => 'Evento actualizado exitosamente.',
+                    'delete-success'                     => 'Evento eliminado exitosamente.',
+                    'delete-failed'                      => 'No se puede eliminar el evento.',
+                    'delete-failed-associated-campaigns' => 'No se puede eliminar el evento porque está asociado a campañas.',
+                    'mass-delete-success'                => 'Eventos eliminados exitosamente.',
+                    'partial-delete-warning'             => 'Algunos eventos no se pudieron eliminar porque están asociados a campañas.',
+                    'none-delete-warning'                => 'Ninguno de los eventos seleccionados se pudo eliminar porque están asociados a campañas.',
+                    'no-selection'                       => 'No se seleccionaron eventos para eliminar.',
 
                     'datagrid'   => [
                         'delete'       => 'Eliminar',
@@ -1973,6 +1981,17 @@ return [
                         'select'        => 'Seleccionar',
                         'to'            => 'A',
                     ],
+                ],
+
+                'stages' => [
+                    'won-lost'       => 'Ganado/Perdido',
+                    'won'            => 'Ganado',
+                    'lost'           => 'Perdido',
+                    'need-more-info' => 'Necesita Más Información',
+                    'closed-at'      => 'Cerrado En',
+                    'won-value'      => 'Valor Ganado',
+                    'lost-reason'    => 'Razón de la Pérdida',
+                    'save-btn'       => 'Guardar',
                 ],
             ],
 

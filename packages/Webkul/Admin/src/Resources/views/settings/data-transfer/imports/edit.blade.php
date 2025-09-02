@@ -19,7 +19,7 @@
                 {!! view_render_event('admin.settings.data_transfers.edit.breadcrumbs.before') !!}
 
                 <!-- Breadcrumbs -->
-                <x-admin::breadcrumbs 
+                <x-admin::breadcrumbs
                     name="settings.data_transfers.edit"
                     :entity="$import"
                 />
@@ -69,29 +69,31 @@
                             @lang('admin::app.settings.data-transfer.imports.edit.type')
                         </x-admin::form.control-group.label>
 
-                        <x-admin::form.control-group.control
-                            type="select"
-                            name="type"
-                            id="type"
-                            :value="old('type') ?? $import->type"
-                            ref="importType"
-                            rules="required"
-                            :label="trans('admin::app.settings.data-transfer.imports.edit.type')"
-                        >
-                            @foreach (config('importers') as $code => $importer)
-                                <option value="{{ $code }}">@lang($importer['title'])</option>
-                            @endforeach
-                        </x-admin::form.control-group.control>
+                        <div class="flex flex-col gap-0.5">
+                            <x-admin::form.control-group.control
+                                type="select"
+                                name="type"
+                                id="type"
+                                :value="old('type') ?? $import->type"
+                                ref="importType"
+                                rules="required"
+                                :label="trans('admin::app.settings.data-transfer.imports.edit.type')"
+                            >
+                                @foreach (config('importers') as $code => $importer)
+                                    <option value="{{ $code }}">@lang($importer['title'])</option>
+                                @endforeach
+                            </x-admin::form.control-group.control>
 
-                        <!-- Source Sample Download Links -->
-                        <a
-                            :href="'{{ route('admin.settings.data_transfer.imports.download_sample') }}/' + $refs['importType']?.value"
-                            target="_blank"
-                            id="source-sample-link"
-                            class="mt-1 cursor-pointer text-sm text-brandColor transition-all hover:underline"
-                        >
-                            @lang('admin::app.settings.data-transfer.imports.edit.download-sample')
-                        </a>
+                            <!-- Source Sample Download Links -->
+                            <a
+                                :href="'{{ route('admin.settings.data_transfer.imports.download_sample') }}/' + $refs['importType']?.value"
+                                target="_blank"
+                                id="source-sample-link"
+                                class="mt-1 cursor-pointer text-sm text-brandColor transition-all hover:underline"
+                            >
+                                @lang('admin::app.settings.data-transfer.imports.edit.download-sample')
+                            </a>
+                        </div>
 
                         <x-admin::form.control-group.error control-name="type" />
                     </x-admin::form.control-group>
@@ -102,13 +104,27 @@
                             @lang('admin::app.settings.data-transfer.imports.edit.file')
                         </x-admin::form.control-group.label>
 
-                        <x-admin::form.control-group.control
-                            type="file"
-                            name="file"
-                            :label="trans('admin::app.settings.data-transfer.imports.edit.file')"
-                        />
+                        <div class="flex flex-col gap-0.5">
+                            <x-admin::form.control-group.control
+                                type="file"
+                                name="file"
+                                :label="trans('admin::app.settings.data-transfer.imports.edit.file')"
+                            />
 
-                        <x-admin::form.control-group.error control-name="file" />
+                            <x-admin::form.control-group.error control-name="file" />
+
+                            @if ($import?->file_path)
+                                <!-- Uploaded File Link -->
+                                <a
+                                    href="{{ route('admin.settings.data_transfer.imports.download', $import?->id) }}"
+                                    target="_blank"
+                                    id="uploaded-file-link"
+                                    class="mt-1 cursor-pointer text-sm text-brandColor transition-all hover:underline"
+                                >
+                                   {{ $import?->file_name }}
+                                </a>
+                            @endif
+                        </div>
                     </x-admin::form.control-group>
                 </div>
 

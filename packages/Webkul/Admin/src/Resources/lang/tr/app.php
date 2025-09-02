@@ -374,23 +374,27 @@ return [
 
             'header' => [
                 'mega-search' => [
-                    'title'   => 'Mega Arama',
+                    'title' => 'Gelişmiş Arama',
 
                     'tabs' => [
-                        'leads'    => 'Müşteriler',
-                        'quotes'   => 'Teklifler',
-                        'persons'  => 'Kişiler',
-                        'products' => 'Ürünler',
+                        'leads'          => 'Potansiyel Müşteriler',
+                        'quotes'         => 'Teklifler',
+                        'persons'        => 'Kişiler',
+                        'products'       => 'Ürünler',
+                        'settings'       => 'Ayarlar',
+                        'configurations' => 'Yapılandırmalar',
                     ],
 
-                    'explore-all-products'          => 'Tüm Ürünleri Keşfet',
-                    'explore-all-leads'             => 'Tüm Müşterileri Keşfet',
-                    'explore-all-contacts'          => 'Tüm İletişimleri Keşfet',
-                    'explore-all-quotes'            => 'Tüm Teklifleri Keşfet',
-                    'explore-all-matching-products' => '":query" (:count) ile eşleşen tüm ürünleri keşfet',
-                    'explore-all-matching-leads'    => '":query" (:count) ile eşleşen tüm müşterileri keşfet',
-                    'explore-all-matching-contacts' => '":query" (:count) ile eşleşen tüm iletişimleri keşfet',
-                    'explore-all-matching-quotes'   => '":query" (:count) ile eşleşen tüm teklifleri keşfet',
+                    'explore-all-products'          => 'Tüm ürünleri keşfet',
+                    'explore-all-leads'             => 'Tüm potansiyel müşterileri keşfet',
+                    'explore-all-contacts'          => 'Tüm kişileri keşfet',
+                    'explore-all-quotes'            => 'Tüm teklifleri keşfet',
+                    'explore-all-settings'          => 'Tüm ayarları keşfet',
+                    'explore-all-configurations'    => 'Tüm yapılandırmaları keşfet',
+                    'explore-all-matching-products' => '":query" ile eşleşen tüm ürünleri keşfet (:count)',
+                    'explore-all-matching-leads'    => '":query" ile eşleşen tüm potansiyel müşterileri keşfet (:count)',
+                    'explore-all-matching-contacts' => '":query" ile eşleşen tüm kişileri keşfet (:count)',
+                    'explore-all-matching-quotes'   => '":query" ile eşleşen tüm teklifleri keşfet (:count)',
                 ],
             ],
         ],
@@ -1118,13 +1122,17 @@ return [
         'marketing' => [
             'events' => [
                 'index' => [
-                    'create-btn'          => 'Etkinlik Oluştur',
-                    'title'               => 'Etkinlikler',
-                    'create-success'      => 'Etkinlik başarıyla oluşturuldu.',
-                    'update-success'      => 'Etkinlik başarıyla güncellendi.',
-                    'delete-success'      => 'Etkinlik başarıyla silindi.',
-                    'delete-failed'       => 'Etkinlik silinemedi.',
-                    'mass-delete-success' => 'Etkinlikler başarıyla silindi',
+                    'create-btn'                         => 'Etkinlik Oluştur',
+                    'title'                              => 'Etkinlikler',
+                    'create-success'                     => 'Etkinlik başarıyla oluşturuldu.',
+                    'update-success'                     => 'Etkinlik başarıyla güncellendi.',
+                    'delete-success'                     => 'Etkinlik başarıyla silindi.',
+                    'delete-failed'                      => 'Etkinlik silinemedi.',
+                    'delete-failed-associated-campaigns' => 'Etkinlik, kampanyalarla ilişkili olduğu için silinemiyor.',
+                    'mass-delete-success'                => 'Etkinlikler başarıyla silindi.',
+                    'partial-delete-warning'             => 'Bazı etkinlikler kampanyalarla ilişkili olduğu için silinemedi.',
+                    'none-delete-warning'                => 'Seçilen etkinliklerin hiçbiri kampanyalarla ilişkili olduğu için silinemedi.',
+                    'no-selection'                       => 'Silmek için herhangi bir etkinlik seçilmedi.',
 
                     'datagrid'   => [
                         'delete'       => 'Sil',
@@ -1974,6 +1982,17 @@ return [
                         'select'        => 'Seç',
                         'to'            => 'Kime',
                     ],
+                ],
+
+                'stages' => [
+                    'won-lost'       => 'Kazandı/Kayıp',
+                    'won'            => 'Kazandı',
+                    'lost'           => 'Kayıp',
+                    'need-more-info' => 'Daha Fazla Bilgi Gerekiyor',
+                    'closed-at'      => 'Kapanış Tarihi',
+                    'won-value'      => 'Kazanan Değer',
+                    'lost-reason'    => 'Kayıp Nedeni',
+                    'save-btn'       => 'Kaydet',
                 ],
             ],
 

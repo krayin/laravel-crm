@@ -1,5 +1,5 @@
 <v-mega-search>
-    <div class="relative flex w-[525px] max-w-[525px] items-center max-lg:w-[400px] ltr:ml-2.5 rtl:mr-2.5">
+    <div class="relative flex w-[550px] max-w-[550px] items-center max-lg:w-[400px] ltr:ml-2.5 rtl:mr-2.5">
         <i class="icon-search absolute top-2 flex items-center text-2xl ltr:left-3 rtl:right-3"></i>
 
         <input
@@ -15,7 +15,7 @@
         type="text/x-template"
         id="v-mega-search-template"
     >
-        <div class="relative flex w-[525px] max-w-[525px] items-center max-lg:w-[400px] ltr:ml-2.5 rtl:mr-2.5">
+        <div class="relative flex w-[550px] max-w-[550px] items-center max-lg:w-[400px] ltr:ml-2.5 rtl:mr-2.5">
             <i class="icon-search absolute top-2 flex items-center text-2xl ltr:left-3 rtl:right-3"></i>
 
             <input
@@ -33,7 +33,7 @@
                 v-if="isDropdownOpen"
             >
                 <!-- Search Tabs -->
-                <div class="flex border-b text-sm text-gray-600 dark:border-gray-800 dark:text-gray-300">
+                <div class="flex overflow-x-auto border-b text-sm text-gray-600 dark:border-gray-800 dark:text-gray-300">
                     <div
                         class="cursor-pointer p-4 hover:bg-gray-100 dark:hover:bg-gray-950"
                         :class="{ 'border-b-2 border-brandColor': activeTab == tab.key }"
@@ -266,6 +266,82 @@
                         </div>
                     </template>
                 </template>
+
+                <template v-if="activeTab == 'settings'">
+                    <template v-if="isLoading">
+                        <x-admin::shimmer.header.mega-search.settings />
+                    </template>
+
+                    <template v-else>
+                        <div class="grid max-h-[400px] overflow-y-auto">
+                            <template v-for="setting in searchedResults.settings">
+                                <a
+                                    :href="setting.url"
+                                    class="flex cursor-pointer justify-between gap-2.5 border-b border-slate-300 p-4 last:border-b-0 hover:bg-gray-100 dark:border-gray-800 dark:hover:bg-gray-950"
+                                >
+                                    <!-- Left Information -->
+                                    <div class="flex gap-2.5">
+                                        <!-- Details -->
+                                        <div class="grid place-content-start gap-1.5">
+                                            <p class="text-base font-semibold text-gray-600 dark:text-gray-300">
+                                                @{{ setting.name }}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </a>
+                            </template>
+                        </div>
+
+                        <template v-if="! searchedResults.settings.length">
+                            <div class="flex border-t p-3 dark:border-gray-800">
+                                <a
+                                    href="{{ route('admin.settings.index') }}"
+                                    class="cursor-pointer text-xs font-semibold text-brandColor transition-all hover:underline"
+                                >
+                                    @lang('admin::app.components.layouts.header.mega-search.explore-all-settings')
+                                </a>
+                            </div>
+                        </template>
+                    </template>
+                </template>
+
+                <template v-if="activeTab == 'configurations'">
+                    <template v-if="isLoading">
+                        <x-admin::shimmer.header.mega-search.configurations />
+                    </template>
+
+                    <template v-else>
+                        <div class="grid max-h-[400px] overflow-y-auto">
+                            <template v-for="configuration in searchedResults.configurations">
+                                <a
+                                    :href="configuration.url"
+                                    class="flex cursor-pointer justify-between gap-2.5 border-b border-slate-300 p-4 last:border-b-0 hover:bg-gray-100 dark:border-gray-800 dark:hover:bg-gray-950"
+                                >
+                                    <!-- Left Information -->
+                                    <div class="flex gap-2.5">
+                                        <!-- Details -->
+                                        <div class="grid place-content-start gap-1.5">
+                                            <p class="text-base font-semibold text-gray-600 dark:text-gray-300">
+                                                @{{ configuration.title }}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </a>
+                            </template>
+                        </div>
+
+                        <template v-if="! searchedResults.configurations.length">
+                            <div class="flex border-t p-3 dark:border-gray-800">
+                                <a
+                                    href="{{ route('admin.configuration.index') }}"
+                                    class="cursor-pointer text-xs font-semibold text-brandColor transition-all hover:underline"
+                                >
+                                    @lang('admin::app.components.layouts.header.mega-search.explore-all-configurations')
+                                </a>
+                            </div>
+                        </template>
+                    </template>
+                </template>
             </div>
         </div>
     </script>
@@ -283,9 +359,9 @@
                     tabs: {
                         leads: {
                             key: 'leads',
-                            title: "@lang('admin::app.components.layouts.header.mega-search.tabs.leads')",
+                            title: '@lang('admin::app.components.layouts.header.mega-search.tabs.leads')',
                             is_active: true,
-                            endpoint: "{{ route('admin.leads.search') }}",
+                            endpoint: '{{ route('admin.leads.search') }}',
                             query_params: [
                                 {
                                     search: 'title',
@@ -304,9 +380,9 @@
 
                         quotes: {
                             key: 'quotes',
-                            title: "@lang('admin::app.components.layouts.header.mega-search.tabs.quotes')",
+                            title: '@lang('admin::app.components.layouts.header.mega-search.tabs.quotes')',
                             is_active: false,
-                            endpoint: "{{ route('admin.quotes.search') }}",
+                            endpoint: '{{ route('admin.quotes.search') }}',
                             query_params: [
                                 {
                                     search: 'subject',
@@ -329,9 +405,9 @@
 
                         products: {
                             key: 'products',
-                            title: "@lang('admin::app.components.layouts.header.mega-search.tabs.products')",
+                            title: '@lang('admin::app.components.layouts.header.mega-search.tabs.products')',
                             is_active: false,
-                            endpoint: "{{ route('admin.products.search') }}",
+                            endpoint: '{{ route('admin.products.search') }}',
                             query_params: [
                                 {
                                     search: 'name',
@@ -350,9 +426,9 @@
 
                         persons: {
                             key: 'persons',
-                            title: "@lang('admin::app.components.layouts.header.mega-search.tabs.persons')",
+                            title: '@lang('admin::app.components.layouts.header.mega-search.tabs.persons')',
                             is_active: false,
-                            endpoint: "{{ route('admin.contacts.persons.search') }}",
+                            endpoint: '{{ route('admin.contacts.persons.search') }}',
                             query_params: [
                                 {
                                     search: 'name',
@@ -372,6 +448,22 @@
                                 },
                             ],
                         },
+
+                        settings: {
+                            key: 'settings',
+                            title: '@lang('Settings')',
+                            is_active: false,
+                            endpoint: '{{ route('admin.settings.search') }}',
+                            query: '',
+                        },
+
+                        configurations: {
+                            key: 'configurations',
+                            title: '@lang('Configurations')',
+                            is_active: false,
+                            endpoint: '{{ route('admin.configuration.search') }}',
+                            query: '',
+                        },
                     },
 
                     isLoading: false,
@@ -382,7 +474,9 @@
                         leads: [],
                         quotes: [],
                         products: [],
-                        persons: []
+                        persons: [],
+                        settings: [],
+                        configurations: [],
                     },
 
                     params: {
@@ -407,7 +501,11 @@
             },
 
             methods: {
-                search(endpoint) {
+                search(endpoint = null) {
+                    if (! endpoint) {
+                        return;
+                    }
+
                     if (this.searchTerm.length <= 1) {
                         this.searchedResults[this.activeTab] = [];
 
@@ -445,6 +543,17 @@
                     };
 
                     const tab = this.tabs[this.activeTab];
+
+                    if (
+                        tab.key === 'settings'
+                        || tab.key === 'configurations'
+                    ) {
+                        this.params = null;
+
+                        this.search(`${tab.endpoint}?query=${newTerm}`);
+
+                        return;
+                    }
 
                     this.params.search += tab.query_params.map((param) => `${param.search}:${newTerm};`).join('');
 
