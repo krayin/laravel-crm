@@ -345,7 +345,7 @@
                     <select
                         :name="['conditions[' + index + '][attribute]']"
                         :id="['conditions[' + index + '][attribute]']"
-                        class="custom-select min:w-1/3 flex h-10 w-1/3 rounded-md border bg-white px-3 py-2.5 text-sm font-normal text-gray-600 transition-all hover:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 max-sm:max-w-full max-sm:flex-auto"
+                        class="custom-select min:w-1/3 flex h-10 w-1/3 rounded-md border bg-white py-2.5 pl-2.5 pr-3 text-sm font-normal text-gray-600 transition-all hover:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 max-sm:max-w-full max-sm:flex-auto"
                         v-model="condition.attribute"
                     >
                         <option
@@ -359,7 +359,7 @@
                         <select
                             :name="['conditions[' + index + '][operator]']"
                             :id="['conditions[' + index + '][operator]']"
-                            class="custom-select min:w-1/3 inline-flex h-10 w-1/3 items-center justify-between gap-x-1 rounded-md border bg-white px-3 py-2.5 text-sm font-normal text-gray-600 transition-all hover:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 max-sm:max-w-full max-sm:flex-auto"
+                            class="custom-select min:w-1/3 inline-flex h-10 w-1/3 items-center justify-between gap-x-1 rounded-md border bg-white py-2.5 pl-2.5 pr-3 text-sm font-normal text-gray-600 transition-all hover:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 max-sm:max-w-full max-sm:flex-auto"
                             v-model="condition.operator"
                         >
                             <option
@@ -452,7 +452,7 @@
                         <template v-if="matchedAttribute.type == 'boolean'">
                             <select
                                 :name="['conditions[' + index + '][value]']"
-                                class="custom-select inline-flex h-10 w-1/3 items-center justify-between gap-x-1 rounded-md border bg-white px-3 py-2.5 text-sm font-normal text-gray-600 transition-all hover:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 max-sm:max-w-full max-sm:flex-auto"
+                                class="custom-select inline-flex h-10 w-1/3 items-center justify-between gap-x-1 rounded-md border bg-white py-2.5 pl-2.5 pr-3 text-sm font-normal text-gray-600 transition-all hover:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 max-sm:max-w-full max-sm:flex-auto"
                                 v-model="condition.value"
                             >
                                 <option value="1">
@@ -476,7 +476,7 @@
                             <template v-if="! matchedAttribute.lookup_type">
                                 <select
                                     :name="['conditions[' + index + '][value]']"
-                                    class="custom-select inline-flex h-10 w-1/3 items-center justify-between gap-x-1 rounded-md border bg-white px-3 py-2.5 text-sm font-normal text-gray-600 transition-all hover:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400"
+                                    class="custom-select inline-flex h-10 w-1/3 items-center justify-between gap-x-1 rounded-md border bg-white py-2.5 pl-2.5 pr-3 text-sm font-normal text-gray-600 transition-all hover:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400"
                                     v-model="condition.value"
                                 >
                                     <option
@@ -566,11 +566,11 @@
                 <x-admin::table.td >
                     <div class="flex w-full justify-between gap-4">
                         <template v-if="matchedAction && matchedAction.attributes">
-                            <!-- Mattched Attribute -->
+                            <!-- Matched Attribute -->
                             <select
                                 :name="['actions[' + index + '][attribute]']"
                                 :id="['actions[' + index + '][attribute]']"
-                                class="custom-select inline-flex h-10 w-full items-center justify-between gap-x-1 rounded-md border bg-white px-3 py-2.5 text-sm font-normal text-gray-600 transition-all hover:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 max-sm:max-w-full max-sm:flex-auto"
+                                class="custom-select inline-flex h-10 w-full items-center justify-between gap-x-1 rounded-md border bg-white py-2.5 pl-2.5 pr-3 text-sm font-normal text-gray-600 transition-all hover:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 max-sm:max-w-full max-sm:flex-auto"
                                 v-model="action.attribute"
                             >
                                 <option
@@ -690,7 +690,7 @@
                                 <template v-if="matchedAttribute.type == 'boolean'">
                                     <select
                                         :name="['actions[' + index + '][value]']"
-                                        class="custom-select inline-flex h-10 w-full items-center justify-between gap-x-1 rounded-md border bg-white px-3 py-2.5 text-sm font-normal text-gray-600 transition-all hover:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 max-sm:max-w-full max-sm:flex-auto"
+                                        class="custom-select inline-flex h-10 w-full items-center justify-between gap-x-1 rounded-md border bg-white py-2.5 pl-2.5 pr-3 text-sm font-normal text-gray-600 transition-all hover:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 max-sm:max-w-full max-sm:flex-auto"
                                         v-model="action.value"
                                     >
                                         <option value="1">
@@ -715,7 +715,7 @@
                                     <template v-if="! matchedAttribute.lookup_type">
                                         <select
                                             :name="['actions[' + index + '][value]']"
-                                            class="custom-select inline-flex h-10 w-full items-center justify-between gap-x-1 rounded-md border bg-white px-3 py-2.5 text-sm font-normal text-gray-600 transition-all hover:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400"
+                                            class="custom-select inline-flex h-10 w-full items-center justify-between gap-x-1 rounded-md border bg-white py-2.5 pl-2.5 pr-3 text-sm font-normal text-gray-600 transition-all hover:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400"
                                             v-model="action.value"
                                         >
                                             <option
@@ -765,7 +765,7 @@
                         <template v-if="matchedAction && matchedAction.options">
                             <select
                                 :name="`actions[${index}][value]`"
-                                class="custom-select flex h-10 w-full rounded-md border bg-white px-3 py-2.5 text-sm font-normal text-gray-600 transition-all hover:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 max-sm:max-w-full max-sm:flex-auto"
+                                class="custom-select flex h-10 w-full rounded-md border bg-white py-2.5 pl-2.5 pr-3 text-sm font-normal text-gray-600 transition-all hover:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 max-sm:max-w-full max-sm:flex-auto"
                                 v-model="action.value"
                             >
                                 <option
