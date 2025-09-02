@@ -375,23 +375,27 @@ return [
 
             'header' => [
                 'mega-search' => [
-                    'title'   => 'جستجوی بزرگ',
+                    'title' => 'جستجوی پیشرفته',
 
                     'tabs' => [
-                        'leads'    => 'سرنخ‌ها',
-                        'quotes'   => 'پیشنهادات',
-                        'persons'  => 'افراد',
-                        'products' => 'محصولات',
+                        'leads'          => 'سرنخ‌ها',
+                        'quotes'         => 'پیش‌فاکتورها',
+                        'persons'        => 'افراد',
+                        'products'       => 'محصولات',
+                        'settings'       => 'تنظیمات',
+                        'configurations' => 'پیکربندی‌ها',
                     ],
 
-                    'explore-all-products'          => 'کاوش در تمامی محصولات',
-                    'explore-all-leads'             => 'کاوش در تمامی سرنخ‌ها',
-                    'explore-all-contacts'          => 'کاوش در تمامی مخاطبین',
-                    'explore-all-quotes'            => 'کاوش در تمامی پیشنهادات',
-                    'explore-all-matching-products' => 'کاوش در تمامی محصولات مطابق ":query" (:count)',
-                    'explore-all-matching-leads'    => 'کاوش در تمامی سرنخ‌های مطابق ":query" (:count)',
-                    'explore-all-matching-contacts' => 'کاوش در تمامی مخاطبین مطابق ":query" (:count)',
-                    'explore-all-matching-quotes'   => 'کاوش در تمامی پیشنهادات مطابق ":query" (:count)',
+                    'explore-all-products'          => 'مشاهده همه محصولات',
+                    'explore-all-leads'             => 'مشاهده همه سرنخ‌ها',
+                    'explore-all-contacts'          => 'مشاهده همه افراد',
+                    'explore-all-quotes'            => 'مشاهده همه پیش‌فاکتورها',
+                    'explore-all-settings'          => 'مشاهده همه تنظیمات',
+                    'explore-all-configurations'    => 'مشاهده همه پیکربندی‌ها',
+                    'explore-all-matching-products' => 'مشاهده همه محصولات مطابق با ":query" (:count)',
+                    'explore-all-matching-leads'    => 'مشاهده همه سرنخ‌ها مطابق با ":query" (:count)',
+                    'explore-all-matching-contacts' => 'مشاهده همه افراد مطابق با ":query" (:count)',
+                    'explore-all-matching-quotes'   => 'مشاهده همه پیش‌فاکتورها مطابق با ":query" (:count)',
                 ],
             ],
         ],
@@ -1119,13 +1123,17 @@ return [
         'marketing' => [
             'events' => [
                 'index' => [
-                    'create-btn'          => 'ایجاد رویداد',
-                    'title'               => 'رویدادها',
-                    'create-success'      => 'رویداد با موفقیت ایجاد شد.',
-                    'update-success'      => 'رویداد با موفقیت به‌روزرسانی شد.',
-                    'delete-success'      => 'رویداد با موفقیت حذف شد.',
-                    'delete-failed'       => 'رویداد قابل حذف نیست.',
-                    'mass-delete-success' => 'رویدادها با موفقیت حذف شدند',
+                    'create-btn'                         => 'ایجاد رویداد',
+                    'title'                              => 'رویدادها',
+                    'create-success'                     => 'رویداد با موفقیت ایجاد شد.',
+                    'update-success'                     => 'رویداد با موفقیت به‌روزرسانی شد.',
+                    'delete-success'                     => 'رویداد با موفقیت حذف شد.',
+                    'delete-failed'                      => 'امکان حذف رویداد وجود ندارد.',
+                    'delete-failed-associated-campaigns' => 'رویداد قابل حذف نیست، زیرا با کمپین‌هایی در ارتباط است.',
+                    'mass-delete-success'                => 'رویدادها با موفقیت حذف شدند.',
+                    'partial-delete-warning'             => 'برخی از رویدادها به دلیل وابستگی به کمپین‌ها قابل حذف نیستند.',
+                    'none-delete-warning'                => 'هیچ‌یک از رویدادهای انتخاب شده به دلیل وابستگی به کمپین‌ها قابل حذف نیستند.',
+                    'no-selection'                       => 'هیچ رویدادی برای حذف انتخاب نشده است.',
 
                     'datagrid'   => [
                         'delete'       => 'حذف',
@@ -1975,6 +1983,17 @@ return [
                         'select'        => 'انتخاب',
                         'to'            => 'تا',
                     ],
+                ],
+
+                'stages' => [
+                    'won-lost'       => 'برد/باخت',
+                    'won'            => 'برد',
+                    'lost'           => 'باخت',
+                    'need-more-info' => 'نیاز به اطلاعات بیشتر',
+                    'closed-at'      => 'بسته شده در',
+                    'won-value'      => 'ارزش برد',
+                    'lost-reason'    => 'دلیل باخت',
+                    'save-btn'       => 'ذخیره',
                 ],
             ],
 

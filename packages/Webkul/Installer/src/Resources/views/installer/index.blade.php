@@ -1182,14 +1182,14 @@
                         },
 
                         startSeeding(allParameters) {
-                            this.$axios.post("{{ route('installer.run_seeder') }}", {
-                                'allParameters': allParameters,
-                            })
+                                this.$axios.post("{{ route('installer.run_seeder') }}", {
+                                    'allParameters': allParameters,
+                                })
                                 .then((response) => {
                                     this.completeStep('readyForInstallation', 'createAdmin', 'active', 'complete');
 
                                     this.currentStep = 'createAdmin';
-                            })
+                                })
                                 .catch(error => {
                                     setErrors(error.response.data.errors);
                                 });

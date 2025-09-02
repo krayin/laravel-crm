@@ -371,23 +371,27 @@ return [
 
             'header' => [
                 'mega-search' => [
-                    'title'   => 'Tìm kiếm Mega',
+                    'title' => 'Tìm kiếm nâng cao',
 
                     'tabs' => [
-                        'leads'    => 'Khách hàng tiềm năng',
-                        'quotes'   => 'Báo giá',
-                        'persons'  => 'Người',
-                        'products' => 'Sản phẩm',
+                        'leads'          => 'Khách hàng tiềm năng',
+                        'quotes'         => 'Báo giá',
+                        'persons'        => 'Người liên hệ',
+                        'products'       => 'Sản phẩm',
+                        'settings'       => 'Cài đặt',
+                        'configurations' => 'Cấu hình',
                     ],
 
-                    'explore-all-products'          => 'Khám phá tất cả Sản phẩm',
-                    'explore-all-leads'             => 'Khám phá tất cả Khách hàng tiềm năng',
-                    'explore-all-contacts'          => 'Khám phá tất cả Liên hệ',
-                    'explore-all-quotes'            => 'Khám phá tất cả Báo giá',
-                    'explore-all-matching-products' => 'Khám phá tất cả sản phẩm khớp với ":query" (:count)',
-                    'explore-all-matching-leads'    => 'Khám phá tất cả khách hàng tiềm năng khớp với ":query" (:count)',
-                    'explore-all-matching-contacts' => 'Khám phá tất cả liên hệ khớp với ":query" (:count)',
-                    'explore-all-matching-quotes'   => 'Khám phá tất cả báo giá khớp với ":query" (:count)',
+                    'explore-all-products'          => 'Xem tất cả sản phẩm',
+                    'explore-all-leads'             => 'Xem tất cả khách hàng tiềm năng',
+                    'explore-all-contacts'          => 'Xem tất cả người liên hệ',
+                    'explore-all-quotes'            => 'Xem tất cả báo giá',
+                    'explore-all-settings'          => 'Xem tất cả cài đặt',
+                    'explore-all-configurations'    => 'Xem tất cả cấu hình',
+                    'explore-all-matching-products' => 'Xem tất cả sản phẩm khớp với ":query" (:count)',
+                    'explore-all-matching-leads'    => 'Xem tất cả khách hàng tiềm năng khớp với ":query" (:count)',
+                    'explore-all-matching-contacts' => 'Xem tất cả người liên hệ khớp với ":query" (:count)',
+                    'explore-all-matching-quotes'   => 'Xem tất cả báo giá khớp với ":query" (:count)',
                 ],
             ],
         ],
@@ -1114,13 +1118,17 @@ return [
         'marketing' => [
             'events' => [
                 'index' => [
-                    'create-btn'          => 'Tạo Sự kiện',
-                    'title'               => 'Sự kiện',
-                    'create-success'      => 'Sự kiện đã được tạo thành công.',
-                    'update-success'      => 'Sự kiện đã được cập nhật thành công.',
-                    'delete-success'      => 'Sự kiện đã được xóa thành công.',
-                    'delete-failed'       => 'Không thể xóa sự kiện.',
-                    'mass-delete-success' => 'Các sự kiện đã được xóa thành công',
+                    'create-btn'                         => 'Tạo Sự kiện',
+                    'title'                              => 'Sự kiện',
+                    'create-success'                     => 'Tạo sự kiện thành công.',
+                    'update-success'                     => 'Cập nhật sự kiện thành công.',
+                    'delete-success'                     => 'Xóa sự kiện thành công.',
+                    'delete-failed'                      => 'Không thể xóa sự kiện.',
+                    'delete-failed-associated-campaigns' => 'Không thể xóa sự kiện vì có liên kết với chiến dịch.',
+                    'mass-delete-success'                => 'Đã xóa sự kiện thành công.',
+                    'partial-delete-warning'             => 'Một số sự kiện không thể xóa vì có liên kết với chiến dịch.',
+                    'none-delete-warning'                => 'Không sự kiện nào trong số đã chọn được xóa vì có liên kết với chiến dịch.',
+                    'no-selection'                       => 'Không có sự kiện nào được chọn để xóa.',
 
                     'datagrid'   => [
                         'delete'       => 'Xóa',
@@ -1867,6 +1875,17 @@ return [
                         'select'        => 'Chọn',
                         'to'            => 'Đến',
                     ],
+                ],
+
+                'stages' => [
+                    'won-lost'       => 'Thắng/Thua',
+                    'won'            => 'Thắng',
+                    'lost'           => 'Thua',
+                    'need-more-info' => 'Cần Thêm Thông Tin',
+                    'closed-at'      => 'Đóng Vào',
+                    'won-value'      => 'Giá Trị Thắng',
+                    'lost-reason'    => 'Lý Do Thua',
+                    'save-btn'       => 'Lưu',
                 ],
             ],
 
