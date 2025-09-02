@@ -1,6 +1,7 @@
 import { test, expect } from '../../../setup';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import { createOrganization } from '../../../utils/faker';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -10,6 +11,16 @@ test.describe('Import Management for Persons', () => {
   const updatedCsvFileName = 'persons_updated.csv';
   const csvPath = path.resolve(__dirname, `../../../data/sample/${csvFileName}`);
   const updatedCsvPath = path.resolve(__dirname, `../../../data/sample/${updatedCsvFileName}`);
+
+   test('organization should present for import person', async ({ adminPage }) => {
+        /**
+         * Create Organization.
+         */
+        const companyName = await createOrganization(adminPage);
+        
+
+     
+    });
 
   test('should create a new import and validate records', async ({ adminPage }) => {
     /* Navigate to Data Transfer section */
