@@ -21,21 +21,19 @@ test.describe('Import Management for Products', () => {
     await adminPage.getByRole('link', { name: 'Create Import' }).click();
 
     /* Upload CSV file */
-    await adminPage.getByRole('button', { name: 'Choose File' }).setInputFiles(csvPath);
-        /* Uncheck proccess in queue */
-    await adminPage.locator('.peer.h-5').click(); // Adjust selector if multiple checkboxes present
+    await adminPage.setInputFiles('input[name="file"]', csvPath);
 
+    await adminPage.locator('.peer.h-5').click();
     /* Select Entity Type (products) */
-    
-    await adminPage.locator('#import-type').selectOption('products'); // Adjust selector if multiple checkboxes present
-   
+
+    await adminPage.locator('#import-type').selectOption('products');
 
 
     /* Save the import job */
     await adminPage.getByRole('button', { name: 'Save Import' }).click();
 
     /* Click 'Validate' */
-        await adminPage.locator('//button[@class="primary-button place-self-start"]').click();
+    await adminPage.locator('//button[@class="primary-button place-self-start"]').click();
 
 
     /* Wait for validation results */
@@ -57,7 +55,7 @@ test.describe('Import Management for Products', () => {
 
     /* Click edit icon for the first import */
     const editIcon = adminPage.locator('.icon-edit').first();
-  
+
 
     await editIcon.click();
 
@@ -86,7 +84,7 @@ test.describe('Import Management for Products', () => {
 
     /* Click delete icon for the first import */
     const deleteIcon = adminPage.locator('.icon-delete').first();
-    
+
 
     await deleteIcon.click();
 
