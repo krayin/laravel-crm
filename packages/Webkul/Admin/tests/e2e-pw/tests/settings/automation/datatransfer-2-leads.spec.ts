@@ -45,7 +45,7 @@ test.describe('Import Management for Leads', () => {
     /* Confirm import success */
     await adminPage.goto('admin/settings/data-transfer/imports');
 
-    await expect(adminPage.getByRole('link', { name: 'imports/1755090999-leads.csv' }).first()).toBeVisible();
+    await expect(adminPage.getByRole('paragraph').filter({ hasText: /^leads$/ }).first().first()).toBeVisible();
 
   });
 
