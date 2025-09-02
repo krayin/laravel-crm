@@ -30,7 +30,7 @@ test.describe('Import Management for Persons', () => {
     await adminPage.getByRole('link', { name: 'Create Import' }).click();
 
     /* Upload CSV file */
-    await adminPage.getByRole('button', { name: 'Choose File' }).setInputFiles(csvPath);
+    await adminPage.setInputFiles('input[name="file"]', csvPath);
 
     /* Uncheck proccess in queue */
     await adminPage.locator('.peer.h-5').click(); // Adjust selector if multiple checkboxes present
@@ -68,7 +68,7 @@ test.describe('Import Management for Persons', () => {
 
     /* Change file or settings if editable (depends on system behavior) */
 
-    await adminPage.getByRole('button', { name: 'Choose File' }).setInputFiles(csvPath);
+    await adminPage.setInputFiles('input[name="file"]', updatedCsvPath);
 
     /* Save changes (if applicable) */
     await adminPage.getByRole('button', { name: 'Save Import' }).click();
@@ -104,7 +104,7 @@ test.describe('Import Management for Persons', () => {
     await adminPage.getByRole('button', { name: 'Agree', exact: true }).click();
 
     /* Optional: Assert file name is no longer visible */
-    await expect(adminPage.getByText(updatedCsvFileName)).not.toBeVisible();
+    await expect(adminPage.getByText('No Records Available.')).toBeVisible();
   });
 });
 

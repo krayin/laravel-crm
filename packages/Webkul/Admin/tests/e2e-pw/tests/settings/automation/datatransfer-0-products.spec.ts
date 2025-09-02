@@ -60,7 +60,7 @@ test.describe('Import Management for Products', () => {
     await editIcon.click();
 
     /* Re-upload updated CSV file */
-    await adminPage.getByRole('button', { name: 'Choose File' }).setInputFiles(updatedCsvPath);
+    await adminPage.setInputFiles('input[name="file"]', updatedCsvPath);
 
     /* Save changes */
     await adminPage.getByRole('button', { name: 'Save Import' }).click();
