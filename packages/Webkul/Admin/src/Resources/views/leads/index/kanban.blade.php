@@ -70,7 +70,7 @@
                         </div>
 
                         {!! view_render_event('admin.leads.index.kanban.content.stage.header.after') !!}
-                       
+
                         {!! view_render_event('admin.leads.index.kanban.content.stage.body.before') !!}
 
                         <!-- Draggable Stage Lead Cards -->
@@ -84,16 +84,16 @@
                             item-key="id"
                             group="leads"
                             @scroll="handleScroll(stage, $event)"
-                            @change="updateStage(stage, $event)"
+                            @change="handleUpdate(stage, $event)"
                         >
                             <template #header>
-                                <div 
+                                <div
                                     class="flex flex-col items-center justify-center"
                                     v-if="! stage.leads.data.length"
                                 >
                                     <img
                                         class="dark:mix-blend-exclusion dark:invert"
-                                        src="{{ vite()->asset('images/empty-placeholders/pipedrive.svg') }}"    
+                                        src="{{ vite()->asset('images/empty-placeholders/pipedrive.svg') }}"
                                     >
 
                                     <div class="flex flex-col items-center gap-4">
@@ -133,7 +133,7 @@
                                     <div class="flex items-start justify-between">
                                         <div class="flex items-center gap-1">
                                             <x-admin::avatar ::name="element.person.name" />
-                                  
+
                                             <div class="flex flex-col gap-0.5">
                                                 <span class="text-xs font-medium">
                                                     @{{ element.person.name }}
@@ -178,7 +178,7 @@
                                             v-if="element.user"
                                         >
                                             <span class="icon-settings-user text-sm"></span>
-                                            
+
                                             @{{ element.user.name }}
                                         </div>
 
@@ -223,6 +223,91 @@
 
                 {!! view_render_event('admin.leads.index.kanban.content.after') !!}
             </div>
+
+            <!-- Show modal for additional information while updating the leads into won or lost stage. -->
+            <x-admin::form
+                v-slot="{ meta, errors, handleSubmit }"
+                as="div"
+                ref="stageUpdateForm"
+            >
+                <form @submit="handleSubmit($event, handleFormSubmit)">
+                    <!-- Modal -->
+                    <x-admin::modal
+                        ref="stageUpdateModal"
+                        @toggle="handleCloseModal"
+                    >
+                        <!-- Header -->
+                        <x-slot:header>
+                            <h3 class="text-base font-semibold dark:text-white">
+                                @lang('admin::app.leads.index.kanban.stages.need-more-info')
+                            </h3>
+                        </x-slot>
+
+                        <!-- Content -->
+                        <x-slot:content>
+                            <x-admin::form.control-group.control
+                                type="hidden"
+                                name="lead_pipeline_stage_id"
+                                ::value="finalized.stage.id"
+                            />
+
+                            <!-- Won Value -->
+                            <template v-if="finalized.stage.code == 'won'">
+                                <x-admin::form.control-group>
+                                    <x-admin::form.control-group.label>
+                                        @lang('admin::app.leads.index.kanban.stages.won-value')
+                                    </x-admin::form.control-group.label>
+
+                                    <x-admin::form.control-group.control
+                                        type="price"
+                                        name="lead_value"
+                                        ::value="finalized.lead.lead_value"
+                                    />
+                                </x-admin::form.control-group>
+                            </template>
+
+                            <!-- Lost Reason -->
+                            <template v-else>
+                                <x-admin::form.control-group>
+                                    <x-admin::form.control-group.label>
+                                        @lang('admin::app.leads.index.kanban.stages.lost-reason')
+                                    </x-admin::form.control-group.label>
+
+                                    <x-admin::form.control-group.control
+                                        type="textarea"
+                                        name="lost_reason"
+                                    />
+                                </x-admin::form.control-group>
+                            </template>
+
+                            <!-- Closed At -->
+                            <x-admin::form.control-group>
+                                <x-admin::form.control-group.label>
+                                    @lang('admin::app.leads.index.kanban.stages.closed-at')
+                                </x-admin::form.control-group.label>
+
+                                <x-admin::form.control-group.control
+                                    type="datetime"
+                                    name="closed_at"
+                                    :label="trans('admin::app.leads.index.kanban.stages.closed-at')"
+                                />
+
+                                <x-admin::form.control-group.error control-name="closed_at"/>
+                            </x-admin::form.control-group>
+                        </x-slot>
+
+                        <!-- Footer -->
+                        <x-slot:footer>
+                            <x-admin::button
+                                class="primary-button"
+                                :title="trans('admin::app.leads.index.kanban.stages.save-btn')"
+                                ::loading="finalized.updating"
+                                ::disabled="finalized.updating"
+                            />
+                        </x-slot>
+                    </x-admin::modal>
+                </form>
+            </x-admin::form>
         </template>
     </script>
 
@@ -240,6 +325,12 @@
                         filters: {
                             columns: [],
                         }
+                    },
+
+                    finalized: {
+                        lead: null,
+                        stage: null,
+                        updating: false,
                     },
 
                     stages: @json($pipeline->stages->toArray()),
@@ -260,6 +351,11 @@
             },
 
             computed: {
+                /**
+                 * Computes the total amount of leads across all stages.
+                 *
+                 * @return {number} The total amount of leads.
+                 */
                 totalStagesAmount() {
                     let totalAmount = 0;
 
@@ -281,7 +377,7 @@
                  *
                  * @returns {void}
                  */
-                 boot() {
+                boot() {
                     let kanbans = this.getKanbans();
 
                     if (kanbans?.length) {
@@ -434,8 +530,22 @@
                  * @param {object} event - The event object.
                  * @returns {void}
                  */
-                updateStage(stage, event) {
+                handleUpdate(stage, event) {
                     if (event.moved) {
+                        return;
+                    }
+
+                    if (
+                        (stage.code === "won" || stage.code === "lost")
+                        && event.added
+                        && event.added.element
+                    ) {
+                        this.finalized.lead = event.added.element;
+
+                        this.finalized.stage = stage;
+
+                        this.toggleStageUpdateModal();
+
                         return;
                     }
 
@@ -451,16 +561,97 @@
 
                     this.stageLeads[stage.sort_order].leads.meta.total = this.stageLeads[stage.sort_order].leads.meta.total + 1;
 
-                    this.$axios
-                        .put("{{ route('admin.leads.stage.update', 'replace') }}".replace('replace', event.added.element.id), {
-                            'lead_pipeline_stage_id': stage.id
-                        })
+                    this.updateStage('{{ route('admin.leads.stage.update', '__LEAD_ID__') }}'.replace('__LEAD_ID__', event.added.element.id), {
+                        'lead_pipeline_stage_id': stage.id
+                    })
                         .then(response => {
                             this.$emitter.emit('add-flash', { type: 'success', message: response.data.message });
                         })
                         .catch(error => {
                             this.$emitter.emit('add-flash', { type: 'error', message: error.response.data.message });
+                        });;
+                },
+
+                /**
+                 * Updates the stage with the latest lead data.
+                 *
+                 * @param {string} url - The URL to update the stage.
+                 * @param {object} params - The parameters to be updated.
+                 *
+                 * @returns {Promise} The promise object representing the request.
+                 */
+                updateStage(url, params) {
+                    return this.$axios.put(url, params);
+                },
+
+                handleFormSubmit(params) {
+                    this.finalized.updating = true;
+
+                    this.updateStage("{{ route('admin.leads.stage.update', '__LEAD_ID__') }}".replace('__LEAD_ID__', this.finalized.lead.id), {
+                        ...params,
+                        lead_pipeline_stage_id: this.finalized.stage.id,
+                    })
+                        .then(response => {
+                            this.toggleStageUpdateModal();
+
+                            this.resetFinalized();
+
+                            this.get()
+                                .then(response => {
+                                    for (let [sortOrder, data] of Object.entries(response.data)) {
+                                        this.stageLeads[sortOrder] = data;
+                                    }
+                                });
+
+                            this.$emitter.emit('add-flash', { type: 'success', message: response.data.message });
+                        })
+                        .catch(error => {
+                            this.$emitter.emit('add-flash', { type: 'error', message: error.response.data.message });
+                        }).finally(() => {
+                            this.finalized.updating = false;
                         });
+                },
+
+                /**
+                 * Resets the finalized lead and stage data.
+                 *
+                 * @returns {void}
+                 */
+                resetFinalized() {
+                    this.finalized = {
+                        lead: null,
+                        stage: null,
+                        updating: false,
+                    };
+                },
+
+                /**
+                 * Handles the close event of the modal.
+                 *
+                 * @returns {void}
+                 */
+                handleCloseModal(state) {
+                    if (state.isActive) {
+                        return;
+                    }
+
+                    this.resetFinalized();
+
+                    this.get()
+                        .then(response => {
+                            for (let [sortOrder, data] of Object.entries(response.data)) {
+                                this.stageLeads[sortOrder] = data;
+                            }
+                        });
+                },
+
+                /**
+                 * Toggles the stage update modal.
+                 *
+                 * @returns {void}
+                 */
+                toggleStageUpdateModal() {
+                    this.$refs.stageUpdateModal.toggle();
                 },
 
                 /**

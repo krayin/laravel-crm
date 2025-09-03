@@ -155,8 +155,9 @@
                                 name="create_lead"
                                 value="1"
                                 :label="trans('admin::app.settings.webforms.edit.create-lead')"
-                                v-model="createLead"
+                                :checked="(bool) $webForm->create_lead"
                             />
+
                         </x-admin::form.control-group>
 
                         <!-- Customize webform -->
@@ -645,7 +646,7 @@
                             ],
                         },
 
-                        createLead: Boolean({{ (old('create_lead') ?? $webForm->create_lead) ? true : false }}),
+                        createLead: {{ (old('create_lead') ?? $webForm->create_lead) ?? false }},
 
                         attributes: @json($attributes),
 

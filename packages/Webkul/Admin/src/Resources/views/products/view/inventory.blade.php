@@ -22,19 +22,19 @@
                                 <x-admin::table.th>
                                     @lang('admin::app.products.view.inventory.source')
                                 </x-admin::table.th>
-                    
+
                                 <x-admin::table.th >
                                     @lang('admin::app.products.view.inventory.in-stock')
                                 </x-admin::table.th>
-                    
+
                                 <x-admin::table.th>
                                     @lang('admin::app.products.view.inventory.allocated')
                                 </x-admin::table.th>
-                    
+
                                 <x-admin::table.th>
                                     @lang('admin::app.products.view.inventory.on-hand')
                                 </x-admin::table.th>
-                    
+
                                 <x-admin::table.th>
                                     @lang('admin::app.products.view.inventory.actions')
                                 </x-admin::table.th>
@@ -42,32 +42,32 @@
                         </x-admin::table.thead>
 
                         <!-- Table Body -->
-                        <x-admin::table.tbody class="align-top"> 
+                        <x-admin::table.tbody class="align-top">
                             <template v-for="warehouse in productWarehouses">
                                 <x-admin::table.tbody.tr class="hover:bg-gray-50 dark:hover:bg-gray-950">
-                                    <x-admin::table.td 
+                                    <x-admin::table.td
                                         class="truncate font-bold dark:text-white"
                                         ::title="warehouse.name"
                                     >
                                         @{{ warehouse.name }}
                                     </x-admin::table.td>
-                                    
+
                                     <x-admin::table.td class="dark:text-white">
                                         @{{ warehouse.in_stock }}
                                     </x-admin::table.td>
-                                    
+
                                     <x-admin::table.td class="dark:text-white">
                                         @{{ warehouse.allocated }}
                                     </x-admin::table.td>
-                                    
+
                                     <x-admin::table.td class="dark:text-white">
                                         @{{ warehouse.on_hand }}
                                     </x-admin::table.td>
-                                    
+
                                     <x-admin::table.td>
-                                        <div  
+                                        <div
                                             @click="selectWarehouse(warehouse)"
-                                            class="cursor-pointer text-brandColor" 
+                                            class="cursor-pointer text-brandColor"
                                         >
                                             @lang('admin::app.products.view.inventory.assign')
                                         </div>
@@ -79,19 +79,19 @@
                                         <x-admin::table.td class="dark:text-white">
                                             @{{ location.name }}
                                         </x-admin::table.td>
-                                        
+
                                         <x-admin::table.td class="dark:text-white">
                                             @{{ location.in_stock }}
                                         </x-admin::table.td>
-                                        
+
                                         <x-admin::table.td class="dark:text-white">
                                             @{{ location.allocated }}
                                         </x-admin::table.td>
-                                        
+
                                         <x-admin::table.td class="dark:text-white">
                                             @{{ location.on_hand }}
                                         </x-admin::table.td>
-                                        
+
                                         <x-admin::table.td></x-admin::table.td>
                                     </x-admin::table.tbody.tr>
                                 </template>
@@ -106,13 +106,19 @@
 
                 <!-- Add Source dropdown -->
                 <div v-if="notAddedWarehouses.length">
-                    <x-admin::dropdown position="bottom-right">
+                    <x-admin::dropdown
+                        position="bottom-right"
+                        class="!static"
+                    >
                         <x-slot:toggle>
-                            <p class="text-md flex cursor-pointer items-center gap-2 font-semibold text-brandColor dark:text-brandColor">
+                            <button
+                                type="button"
+                                class="flex max-w-max items-center gap-2 text-brandColor"
+                            >
                                 <i class="icon-add text-md !text-brandColor"></i>
 
                                 @lang('admin::app.products.view.inventory.add-source')
-                            </p>
+                            </button>
                         </x-slot>
 
                         <x-slot:menu class="!top-[30px] max-h-[200px] overflow-auto">
@@ -158,10 +164,10 @@
                             {!! view_render_event('admin.products.view.inventory.form_controls.drawer.header.before', ['product' => $product]) !!}
 
                             <div class="flex items-center justify-between">
-                                <p class="text-xl font-medium dark:text-white"> 
+                                <p class="text-xl font-medium dark:text-white">
                                     @{{ selectedWarehouse.name }}
                                 </p>
-                                
+
                                 <button
                                     type="submit"
                                     class="primary-button ltr:mr-11 rtl:ml-11"
@@ -206,7 +212,7 @@
                             <x-admin::table.th class="!w-56">
                                 @lang('admin::app.products.view.inventory.location')
                             </x-admin::table.th>
-                            
+
                             <x-admin::table.th class="!w-[150px]">
                                 @lang('admin::app.products.view.inventory.in-stock')
                             </x-admin::table.th>
@@ -253,7 +259,7 @@
         <x-admin::table.tbody.tr>
             <x-admin::table.td class="!px-2">
                 <x-admin::form.control-group>
-                    <x-admin::lookup 
+                    <x-admin::lookup
                         ::src="src"
                         ::name="`${inputName('warehouse_location_id')}`"
                         ::params="params"
@@ -300,9 +306,9 @@
 
                 <x-admin::form.control-group.error ::name="'inventories[inventory_' + index + '][allocated]'"/>
             </x-admin::table.td>
-            
+
             <x-admin::table.td class="!px-2 !py-[22px]">
-                <i  
+                <i
                     @click="remove"
                     class="icon-delete cursor-pointer text-2xl"
                 ></i>
@@ -402,13 +408,13 @@
                     })
                     .catch(error => {
                         setErrors(error.response.data.errors);
-                        
+
                         this.$emitter.emit('add-flash', { type: 'error', message: error.response.data.message });
                     });
                 },
             },
         });
-            
+
         app.component('v-warehouse-location-inventories', {
             template: '#v-warehouse-location-inventories-template',
 
@@ -419,7 +425,7 @@
                     warehouseLocations: [],
                 }
             },
-            
+
             created() {
                 if (this.warehouse.locations.length) {
                     this.warehouseLocations = JSON.parse(JSON.stringify(this.warehouse.locations));
@@ -436,10 +442,10 @@
                         on_hand: 0,
                     })
                 },
-                
+
                 removeLocation(inventory) {
                     const index = this.warehouseLocations.indexOf(inventory);
-                    
+
                     if (index !== -1) {
                         this.warehouseLocations.splice(index, 1);
                     }
@@ -476,19 +482,19 @@
                 inputName(type) {
                   return 'inventories[inventory_' + this.index + ']['+ type +']';
                 },
-                
+
                 /**
                  * Add the product.
-                 * 
+                 *
                  * @param {Object} result
-                 * 
+                 *
                  * @return {void}
                  */
                  add(result) {
                     this.location.id = result.id;
 
                     this.location.warehouse_id = result.warehouse_id;
-                    
+
                     this.location.name = result.name;
                 },
 

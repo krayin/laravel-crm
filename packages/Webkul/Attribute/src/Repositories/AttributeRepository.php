@@ -128,8 +128,13 @@ class AttributeRepository extends Repository
             $currentUser = auth()->guard('user')->user();
 
             if ($currentUser?->view_permission === 'group') {
-                return $userRepository->leftJoin('user_groups', 'users.id', '=', 'user_groups.user_id')
-                    ->where('users.name', 'like', '%'.urldecode($query).'%')
+                $query = urldecode($query);
+
+                $userIds = bouncer()->getAuthorizedUserIds();
+
+                return $userRepository
+                    ->when(! empty($userIds), fn ($queryBuilder) => $queryBuilder->whereIn('users.id', $userIds))
+                    ->when(! empty($query), fn ($queryBuilder) => $queryBuilder->where('users.name', 'like', "%{$query}%"))
                     ->get();
             } elseif ($currentUser?->view_permission === 'individual') {
                 return $userRepository->where('users.id', $currentUser->id);

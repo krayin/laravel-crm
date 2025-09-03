@@ -255,6 +255,8 @@
 
             mounted() {
                 window.addEventListener("resize", this.setDropdownPosition);
+
+                this.$emitter.on('show-pop', this.handleShowPop);
             },
 
             computed: {
@@ -295,10 +297,16 @@
                 },
 
                 toggleEditor() {
-                    this.showPopup = ! this.showPopup;
+                    this.$emitter.emit('show-pop', this.$.uid);
+                },
+
+                handleShowPop(uid) {
+                    this.showPopup = (uid === this.$.uid);
 
                     if (this.showPopup) {
-                        this.$nextTick(() => this.$refs.searchInput.focus());
+                        this.$nextTick(() => this.$refs.searchInput?.focus());
+                    } else {
+                        this.isEditing = false;
                     }
                 },
 
@@ -331,7 +339,7 @@
                             })
                             .catch((error) => {
                                 this.isDirty = false;
-                                
+
                                 this.inputValue = this.value;
 
                                 this.$emitter.emit('add-flash', { type: 'error', message: error.response.data.message });

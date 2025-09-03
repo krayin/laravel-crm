@@ -95,6 +95,7 @@
                                     id="submit_success_content"
                                     class="rounded-l-none"
                                     rules="required"
+                                    :value="old('submit_success_content')"
                                     :label="trans('admin::app.settings.webforms.create.submit-success-action')"
                                     ::placeholder="placeholder"
                                 />
@@ -120,7 +121,7 @@
                                 name="create_lead"
                                 value="1"
                                 :label="trans('admin::app.settings.webforms.create.create-lead')"
-                                v-model="createLead"
+                                :checked="false"
                             />
 
                         </x-admin::form.control-group>
@@ -546,7 +547,7 @@
                 data() {
                     return {
                         submitSuccessAction: {
-                            value: 'message',
+                            value: '{{ old('submit_success_action', 'message') }}',
 
                             options: [
                                 { value: 'message', label: '@lang('admin::app.settings.webforms.create.display-custom-message')' },

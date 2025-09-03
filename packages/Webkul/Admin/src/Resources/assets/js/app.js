@@ -52,10 +52,10 @@ window.app = createApp({
             }
 
             const parentElement = event.currentTarget.parentElement;
-             
+
             if (parentElement.classList.contains('sidebar-collapsed')) {
                 parentElement.classList.remove('sidebar-collapsed');
-                
+
                 parentElement.classList.add('sidebar-not-collapsed');
             }
 
@@ -67,7 +67,7 @@ window.app = createApp({
             }
 
             const parentElement = event.currentTarget.parentElement;
-             
+
             if (parentElement.classList.contains('sidebar-not-collapsed')) {
                 parentElement.classList.remove('sidebar-not-collapsed');
 
@@ -79,7 +79,7 @@ window.app = createApp({
             const sidebar = this.$refs.sidebar;
 
             if (
-                sidebar && 
+                sidebar &&
                 !sidebar.contains(event.target)
             ) {
                 this.isMenuActive = false;
@@ -107,6 +107,7 @@ import VeeValidate from "./plugins/vee-validate";
 import CreateElement from "./plugins/createElement";
 import Draggable from "./plugins/draggable";
 import VueCal from "./plugins/vue-cal";
+
 [
     Admin,
     Axios,
@@ -123,9 +124,11 @@ import VueCal from "./plugins/vue-cal";
  */
 import Debounce from "./directives/debounce";
 import DOMPurify from "./directives/dompurify";
+import ToolTip from "./directives/tooltip";
 
 app.directive("debounce", Debounce);
 app.directive("safe-html", DOMPurify);
+app.directive("tooltip", ToolTip);
 
 export default app;
 

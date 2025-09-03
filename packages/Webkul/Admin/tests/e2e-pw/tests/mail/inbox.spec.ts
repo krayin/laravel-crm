@@ -13,14 +13,21 @@ async function composeMail(adminPage, ccMail = false, bccMail = false) {
     await adminPage.getByRole('button', { name: 'Compose Mail' }).click();
     await adminPage.fill('input[name="temp-reply_to"]', generateEmail());
     await adminPage.fill('input[name="subject"]', generateEmailSubject());
-    await adminPage.fill('textarea[name="reply"]', generateDescription());
+    const frameElementHandle = await adminPage.waitForSelector(
+        "iframe.tox-edit-area__iframe"
+    );
+
+    const frame = await frameElementHandle.contentFrame();
+
+    await frame.waitForSelector("body");
+    await frame.fill("body", generateDescription());
 
     /**
      * Sending mail and closing the modal.
      */
-    await adminPage.getByRole('button', { name: 'Send' }).click();
+    await adminPage.getByRole("button", { name: "Send" }).click();
 
-    await expect(adminPage.getByText('Email sent successfully.')).toBeVisible();
+    await expect(adminPage.getByText("Email sent successfully.")).toBeVisible();
 }
 
 test.describe("mail management", () => {

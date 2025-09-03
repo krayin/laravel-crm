@@ -24,7 +24,7 @@
                 />
 
                 {!! view_render_event('admin.mail.view.form.after', ['email' => $email]) !!}
-                
+
                 <!-- Title -->
                 <div class="flex items-center gap-2">
                     <div class="text-xl font-bold dark:text-gray-300">
@@ -250,7 +250,7 @@
 
                     {!! view_render_event('admin.mail.view.attach.before', ['email' => $email]) !!}
 
-                    <div                         
+                    <div
                         class="flex flex-wrap gap-2"
                         v-if="email.attachments.length"
                     >
@@ -264,11 +264,11 @@
                                 <template v-if="isImage(attachment.path)">
                                     <span class="icon-image text-2xl"></span>
                                 </template>
-                                
+
                                 <template v-else-if="isVideo(attachment.path)">
                                     <span class="icon-video text-2xl"></span>
                                 </template>
-                                
+
                                 <template v-else-if="isDocument(attachment.path)">
                                     <span class="icon-file text-2xl"></span>
                                 </template>
@@ -277,12 +277,12 @@
                                     <span class="icon-attachment text-2xl"></span>
                                 </template>
                             </div>
-                    
+
                             <span class="max-w-[400px] truncate dark:text-white">
-                                @{{ attachment.name || attachment.path }} 
+                                @{{ attachment.name || attachment.path }}
                             </span>
 
-                            <a 
+                            <a
                                 class="icon-download absolute right-0 rounded-md bg-gradient-to-r from-transparent via-gray-50 to-gray-100 p-2 pl-8 text-xl opacity-0 transition-all group-hover:opacity-100 dark:via-gray-900 dark:to-gray-900"
                                 :href="'{{ route('admin.mail.attachment_download') }}/' + attachment.id"
                             ></a>
@@ -766,7 +766,7 @@
                                 <!-- Tags -->
                                 <template v-for="tag in email.lead.tags">
                                     <div
-                                        class="rounded-xl bg-slate-200 px-3 py-1 text-xs font-medium"
+                                        class="rounded-xl bg-slate-200 px-3 py-1 text-xs font-medium dark:bg-gray-900"
                                         :style="{
                                             backgroundColor: tag.color,
                                             color: tagTextColor[tag.color]
@@ -777,17 +777,17 @@
                                 </template>
 
                                 <!-- Lead Value -->
-                                <div class="rounded-xl bg-slate-200 px-3 py-1 text-xs font-medium">
+                                <div class="rounded-xl bg-slate-200 px-3 py-1 text-xs font-medium dark:bg-gray-900">
                                     @{{ $admin.formatPrice(email.lead.lead_value) }}
                                 </div>
 
                                 <!-- Source Name -->
-                                <div class="rounded-xl bg-slate-200 px-3 py-1 text-xs font-medium">
+                                <div class="rounded-xl bg-slate-200 px-3 py-1 text-xs font-medium dark:bg-gray-900">
                                     @{{ email.lead.source?.name }}
                                 </div>
 
                                 <!-- Lead Type Name -->
-                                <div class="rounded-xl bg-slate-200 px-3 py-1 text-xs font-medium">
+                                <div class="rounded-xl bg-slate-200 px-3 py-1 text-xs font-medium dark:bg-gray-900">
                                     @{{ email.lead.type?.name }}
                                 </div>
                             </div>
@@ -970,6 +970,7 @@
                 <x-admin::form
                     v-slot="{ meta, errors, handleSubmit }"
                     as="div"
+                    ref="leadFormWrapper"
                 >
                     <form
                         @submit="handleSubmit($event, create)"
@@ -1283,15 +1284,15 @@
                     isImage(path) {
                         return /\.(jpg|jpeg|png|gif|webp)$/i.test(path);
                     },
-                    
+
                     isVideo(path) {
                         return /\.(mp4|avi|mov|wmv|mkv)$/i.test(path);
                     },
-        
+
                     isDocument(path) {
                         return /\.(pdf|docx?|xlsx?|pptx?)$/i.test(path);
                     },
-                    
+
                     emailAction(type) {
                         if (type != 'delete') {
                             this.$emit('on-email-action', {type, email: this.email});
@@ -1803,7 +1804,6 @@
                     return {
                         isStoring: false,
 
-
                         selectedType: "lead",
 
                         types: [
@@ -1819,6 +1819,37 @@
                             },
                         ],
                     };
+                },
+
+                mounted() {
+                    this.$watch(
+                        () => this.$refs.leadFormWrapper?.errors,
+                        (newErrors, oldErrors) => {
+                            if (
+                                newErrors
+                                && ! Object.keys(newErrors).length
+                            ) {
+                                return;
+                            }
+
+                            const allErrorKeys = Object.keys(newErrors);
+
+                            const hasPersonErrors = allErrorKeys.some(key => key.startsWith('person['));
+
+                            const hasNonPersonErrors = allErrorKeys.some(key => !key.startsWith('person['));
+
+                            if (
+                                hasPersonErrors
+                                && ! hasNonPersonErrors
+                            ) {
+                                this.selectedType = 'person';
+                            }
+                        },
+                        {
+                            deep: true,
+                            immediate: true,
+                        }
+                    );
                 },
 
                 methods: {
@@ -1837,6 +1868,10 @@
 
                         this.$axios.post('{{ route('admin.leads.store') }}', formData)
                             .then(response => {
+                                if (response.data.data) {
+                                    this.$parent.$parent.$refs.emailAction.linkLead(response.data.data);
+                                }
+
                                 this.$emitter.emit('add-flash', { type: 'success', message: response.data.message });
 
                                 this.$refs.leadModal.close();
