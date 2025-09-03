@@ -106,10 +106,7 @@
 
                 <!-- Add Source dropdown -->
                 <div v-if="notAddedWarehouses.length">
-                    <x-admin::dropdown
-                        position="bottom-right"
-                        class="!static"
-                    >
+                    <x-admin::dropdown position="bottom-right">
                         <x-slot:toggle>
                             <button
                                 type="button"
@@ -163,7 +160,7 @@
                         <x-slot:header>
                             {!! view_render_event('admin.products.view.inventory.form_controls.drawer.header.before', ['product' => $product]) !!}
 
-                            <div class="flex items-center justify-between">
+                            <div class="w-full flex items-center justify-between">
                                 <p class="text-xl font-medium dark:text-white">
                                     @{{ selectedWarehouse.name }}
                                 </p>
@@ -430,6 +427,14 @@
                 if (this.warehouse.locations.length) {
                     this.warehouseLocations = JSON.parse(JSON.stringify(this.warehouse.locations));
                 }
+
+                this.warehouseLocations.push({
+                    id: null,
+                    name: '',
+                    in_stock: 0,
+                    allocated: 0,
+                    on_hand: 0,
+                })
             },
 
             methods: {
