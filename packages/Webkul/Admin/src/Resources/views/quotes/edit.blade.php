@@ -6,7 +6,10 @@
     {!! view_render_event('admin.contacts.quotes.edit.form_controls.before', ['quote' => $quote]) !!}
 
     <x-admin::form
-        :action="route('admin.quotes.update', $quote->id)"
+        :action="route('admin.quotes.update', $quote->id) . '?' . http_build_query(array_merge(
+            request()->route()->parameters(),
+            request()->all()
+        ))"
         method="PUT"
     >
         <div class="flex flex-col gap-4">
@@ -159,7 +162,7 @@
                                 <x-admin::attributes.edit.lookup />
 
                                 @php
-                                    $leadId = old('lead-id') ?? optional($quote->leads->first())->id;
+                                    $leadId = old('lead_id') ?? optional($quote->leads->first())->id;
 
                                     $lookUpEntityData = app('Webkul\Attribute\Repositories\AttributeRepository')->getLookUpEntity('leads', $leadId);
                                 @endphp
@@ -270,7 +273,7 @@
             id="v-quote-item-list-template"
         >
             <div class="flex flex-col gap-4">
-                <div class="block w-full overflow-x-auto">
+                <div class="block w-full">
                     <!-- Table -->
                     <x-admin::table>
                         <!-- Table Head -->
@@ -768,7 +771,7 @@
                     addProduct(result) {
                         this.product.product_id = result.id;
                         this.product.name = result.name;
-                        this.product.price = result.price;
+                        this.product.price = result.price ?? 0;
                         this.product.quantity = result.quantity ?? 1;
                         this.product.discount_amount = 0;
                         this.product.tax_amount = 0;

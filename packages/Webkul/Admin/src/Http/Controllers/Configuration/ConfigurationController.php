@@ -68,7 +68,7 @@ class ConfigurationController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
+     * Search for configurations.
      */
     public function search(): JsonResponse
     {

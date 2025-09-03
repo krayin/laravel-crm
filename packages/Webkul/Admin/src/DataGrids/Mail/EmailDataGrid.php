@@ -198,7 +198,9 @@ class EmailDataGrid extends DataGrid
 
         $this->addMassAction([
             'icon'   => 'icon-delete',
-            'title'  => trans('admin::app.mail.index.datagrid.delete'),
+            'title'  => request('route') == 'trash'
+                    ? trans('admin::app.mail.index.datagrid.delete')
+                    : trans('admin::app.mail.index.datagrid.move-to-trash'),
             'method' => 'POST',
             'url'    => route('admin.mail.mass_delete', [
                 'type' => request('route') == 'trash'

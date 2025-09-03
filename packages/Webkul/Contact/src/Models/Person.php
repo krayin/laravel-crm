@@ -4,11 +4,15 @@ namespace Webkul\Contact\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Webkul\Activity\Models\ActivityProxy;
 use Webkul\Activity\Traits\LogsActivity;
 use Webkul\Attribute\Traits\CustomAttribute;
 use Webkul\Contact\Contracts\Person as PersonContract;
 use Webkul\Contact\Database\Factories\PersonFactory;
+use Webkul\Lead\Models\LeadProxy;
 use Webkul\Tag\Models\TagProxy;
 use Webkul\User\Models\UserProxy;
 
@@ -58,17 +62,15 @@ class Person extends Model implements PersonContract
     /**
      * Get the user that owns the lead.
      */
-    public function user()
+    public function user(): BelongsTo
     {
         return $this->belongsTo(UserProxy::modelClass());
     }
 
     /**
      * Get the organization that owns the person.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function organization()
+    public function organization(): BelongsTo
     {
         return $this->belongsTo(OrganizationProxy::modelClass());
     }
@@ -76,7 +78,7 @@ class Person extends Model implements PersonContract
     /**
      * Get the activities.
      */
-    public function activities()
+    public function activities(): BelongsToMany
     {
         return $this->belongsToMany(ActivityProxy::modelClass(), 'person_activities');
     }
@@ -84,17 +86,23 @@ class Person extends Model implements PersonContract
     /**
      * The tags that belong to the person.
      */
-    public function tags()
+    public function tags(): BelongsToMany
     {
         return $this->belongsToMany(TagProxy::modelClass(), 'person_tags');
     }
 
     /**
-     * Create a new factory instance for the model.
-     *
-     * @return \Illuminate\Database\Eloquent\Factories\Factory
+     * Get the leads for the person.
      */
-    protected static function newFactory()
+    public function leads(): HasMany
+    {
+        return $this->hasMany(LeadProxy::modelClass(), 'person_id');
+    }
+
+    /**
+     * Create a new factory instance for the model.
+     */
+    protected static function newFactory(): PersonFactory
     {
         return PersonFactory::new();
     }

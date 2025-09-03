@@ -1,5 +1,5 @@
 @props([
-    'inputType' => 'checkbox',
+    'inputType'     => 'checkbox',
     'selectionType' => 'hierarchical',
 ])
 

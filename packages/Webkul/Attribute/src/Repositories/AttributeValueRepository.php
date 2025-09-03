@@ -253,7 +253,11 @@ class AttributeValueRepository extends Repository
                 break;
 
             default:
-                $label = $value;
+                if ($value instanceof Carbon) {
+                    $label = $value->format('D M d, Y H:i A');
+                } else {
+                    $label = $value;
+                }
 
                 break;
         }

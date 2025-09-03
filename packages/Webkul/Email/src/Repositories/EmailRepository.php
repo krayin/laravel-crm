@@ -2,11 +2,19 @@
 
 namespace Webkul\Email\Repositories;
 
+use Illuminate\Container\Container;
 use Webkul\Core\Eloquent\Repository;
 use Webkul\Email\Contracts\Email;
 
 class EmailRepository extends Repository
 {
+    public function __construct(
+        protected AttachmentRepository $attachmentRepository,
+        Container $container
+    ) {
+        parent::__construct($container);
+    }
+
     /**
      * Specify model class name.
      *
@@ -44,7 +52,11 @@ class EmailRepository extends Repository
             'reference_ids' => array_merge($referenceIds, [$uniqueId]),
         ], $data));
 
-        return parent::create($data);
+        $email = parent::create($data);
+
+        $this->attachmentRepository->uploadAttachments($email, $data);
+
+        return $email;
     }
 
     /**

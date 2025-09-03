@@ -2,61 +2,80 @@
 
 namespace Webkul\Email\Repositories;
 
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
+use Webklex\PHPIMAP\Attachment as ImapAttachment;
 use Webkul\Core\Eloquent\Repository;
 use Webkul\Email\Contracts\Attachment;
+use Webkul\Email\Contracts\Email;
 
 class AttachmentRepository extends Repository
 {
     /**
      * Specify model class name.
-     *
-     * @return mixed
      */
-    public function model()
+    public function model(): string
     {
         return Attachment::class;
     }
 
     /**
      * Upload attachments.
-     *
-     * @param  \Webkul\Email\Contracts\Email  $email
-     * @return void
      */
-    public function uploadAttachments($email, array $data)
+    public function uploadAttachments(Email $email, array $data): void
     {
-        if (! isset($data['source'])) {
+        if (
+            empty($data['attachments'])
+            || empty($data['source'])
+        ) {
             return;
         }
 
-        if ($data['source'] == 'email') {
-            foreach ($data['attachments'] as $attachment) {
-                Storage::put($path = 'emails/'.$email->id.'/'.$attachment->getFilename(), $attachment->getContent());
+        foreach ($data['attachments'] as $attachment) {
+            $attributes = $this->prepareData($email, $attachment);
 
-                $this->create([
-                    'path'         => $path,
-                    'name'         => $attachment->getFileName(),
-                    'content_type' => $attachment->contentType,
-                    'content_id'   => $attachment->contentId,
-                    'size'         => Storage::size($path),
-                    'email_id'     => $email->id,
-                ]);
-            }
-        } else {
-            if (! isset($data['attachments'])) {
-                return;
+            if (
+                ! empty($attachment->contentId)
+                && $data['source'] === 'email'
+            ) {
+                $attributes['content_id'] = $attachment->contentId;
             }
 
-            foreach ($data['attachments'] as $index => $attachment) {
-                $this->create([
-                    'path'         => $path = request()->file('attachments.'.$index)->store('emails/'.$email->id),
-                    'name'         => $attachment->getClientOriginalName(),
-                    'content_type' => $attachment->getClientMimeType(),
-                    'size'         => Storage::size($path),
-                    'email_id'     => $email->id,
-                ]);
-            }
+            $this->create($attributes);
         }
+    }
+
+    /**
+     * Get the path for the attachment.
+     */
+    private function prepareData(Email $email, UploadedFile|ImapAttachment $attachment): array
+    {
+        if ($attachment instanceof UploadedFile) {
+            $name = $attachment->getClientOriginalName();
+
+            $content = file_get_contents($attachment->getRealPath());
+
+            $mimeType = $attachment->getMimeType();
+        } else {
+            $name = $attachment->name;
+
+            $content = $attachment->content;
+
+            $mimeType = $attachment->mime;
+        }
+
+        $path = 'emails/'.$email->id.'/'.$name;
+
+        Storage::put($path, $content);
+
+        $attributes = [
+            'path'         => $path,
+            'name'         => $name,
+            'content_type' => $mimeType,
+            'size'         => Storage::size($path),
+            'email_id'     => $email->id,
+        ];
+
+        return $attributes;
     }
 }
