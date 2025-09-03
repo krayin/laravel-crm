@@ -2,6 +2,7 @@
 
 namespace Webkul\Admin\Helpers\Reporting;
 
+use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Webkul\Lead\Repositories\LeadRepository;
 use Webkul\Lead\Repositories\StageRepository;
@@ -55,6 +56,8 @@ class Lead extends AbstractReporting
     {
         $this->stageIds = $this->allStageIds;
 
+        $period = $this->determinePeriod($period);
+
         return $this->getOverTimeStats($this->startDate, $this->endDate, 'leads.id', 'created_at', $period);
     }
 
@@ -66,6 +69,8 @@ class Lead extends AbstractReporting
     public function getTotalWonLeadsOverTime($period = 'auto'): array
     {
         $this->stageIds = $this->wonStageIds;
+
+        $period = $this->determinePeriod($period);
 
         return $this->getOverTimeStats($this->startDate, $this->endDate, 'leads.id', 'closed_at', $period);
     }
@@ -79,7 +84,35 @@ class Lead extends AbstractReporting
     {
         $this->stageIds = $this->lostStageIds;
 
+        $period = $this->determinePeriod($period);
+
         return $this->getOverTimeStats($this->startDate, $this->endDate, 'leads.id', 'closed_at', $period);
+    }
+
+    /**
+     * Determine the appropriate period based on date range
+     *
+     * @param  string  $period
+     */
+    protected function determinePeriod($period = 'auto'): string
+    {
+        if ($period !== 'auto') {
+            return $period;
+        }
+
+        $diffInDays = $this->startDate->diffInDays($this->endDate);
+        $diffInMonths = $this->startDate->diffInMonths($this->endDate);
+        $diffInYears = $this->startDate->diffInYears($this->endDate);
+
+        if ($diffInYears > 3) {
+            return 'year';
+        } elseif ($diffInMonths > 6) {
+            return 'month';
+        } elseif ($diffInDays > 60) {
+            return 'week';
+        } else {
+            return 'day';
+        }
     }
 
     /**
@@ -311,41 +344,140 @@ class Lead extends AbstractReporting
      * @param  \Carbon\Carbon  $startDate
      * @param  \Carbon\Carbon  $endDate
      * @param  string  $valueColumn
+     * @param  string  $dateColumn
      * @param  string  $period
      */
     public function getOverTimeStats($startDate, $endDate, $valueColumn, $dateColumn = 'created_at', $period = 'auto'): array
     {
-        $config = $this->getTimeInterval($startDate, $endDate, $dateColumn, $period);
+        $period = $this->determinePeriod($period);
 
-        $groupColumn = $config['group_column'];
+        $intervals = $this->generateTimeIntervals($startDate, $endDate, $period);
+
+        $groupColumn = $this->getGroupColumn($dateColumn, $period);
 
         $query = $this->leadRepository
             ->resetModel()
             ->select(
                 DB::raw("$groupColumn AS date"),
-                DB::raw(DB::getTablePrefix()."$valueColumn AS total"),
-                DB::raw('COUNT(*) AS count')
+                DB::raw('COUNT(DISTINCT id) AS count'),
+                DB::raw("SUM($valueColumn) AS total")
             )
             ->whereIn('lead_pipeline_stage_id', $this->stageIds)
             ->whereBetween($dateColumn, [$startDate, $endDate])
-            ->groupBy('date');
-
-        if (! empty($stageIds)) {
-            $query->whereIn('lead_pipeline_stage_id', $stageIds);
-        }
+            ->groupBy(DB::raw($groupColumn))
+            ->orderBy(DB::raw($groupColumn));
 
         $results = $query->get();
+        $resultLookup = $results->keyBy('date');
 
-        foreach ($config['intervals'] as $interval) {
-            $total = $results->where('date', $interval['filter'])->first();
+        $stats = [];
+
+        foreach ($intervals as $interval) {
+            $result = $resultLookup->get($interval['key']);
 
             $stats[] = [
-                'label' => $interval['start'],
-                'total' => $total?->total ?? 0,
-                'count' => $total?->count ?? 0,
+                'label' => $interval['label'],
+                'count' => $result ? (int) $result->count : 0,
+                'total' => $result ? (float) $result->total : 0,
             ];
         }
 
-        return $stats ?? [];
+        return $stats;
+    }
+
+    /**
+     * Generate time intervals based on period
+     */
+    protected function generateTimeIntervals(Carbon $startDate, Carbon $endDate, string $period): array
+    {
+        $intervals = [];
+        $current = $startDate->copy();
+
+        while ($current <= $endDate) {
+            $interval = [
+                'key'   => $this->formatDateForGrouping($current, $period),
+                'label' => $this->formatDateForLabel($current, $period),
+            ];
+
+            $intervals[] = $interval;
+
+            switch ($period) {
+                case 'day':
+                    $current->addDay();
+
+                    break;
+                case 'week':
+                    $current->addWeek();
+
+                    break;
+                case 'month':
+                    $current->addMonth();
+
+                    break;
+                case 'year':
+                    $current->addYear();
+
+                    break;
+            }
+        }
+
+        return $intervals;
+    }
+
+    /**
+     * Get the SQL group column based on period
+     */
+    protected function getGroupColumn(string $dateColumn, string $period): string
+    {
+        switch ($period) {
+            case 'day':
+                return "DATE($dateColumn)";
+            case 'week':
+                return "DATE_FORMAT($dateColumn, '%Y-%u')";
+            case 'month':
+                return "DATE_FORMAT($dateColumn, '%Y-%m')";
+            case 'year':
+                return "YEAR($dateColumn)";
+            default:
+                return "DATE($dateColumn)";
+        }
+    }
+
+    /**
+     * Format date for grouping key
+     */
+    protected function formatDateForGrouping(Carbon $date, string $period): string
+    {
+        switch ($period) {
+            case 'day':
+                return $date->format('Y-m-d');
+            case 'week':
+                return $date->format('Y-W');
+            case 'month':
+                return $date->format('Y-m');
+            case 'year':
+                return $date->format('Y');
+            default:
+                return $date->format('Y-m-d');
+        }
+    }
+
+    /**
+     * Format date for display label
+     */
+    protected function formatDateForLabel(Carbon $date, string $period): string
+    {
+        switch ($period) {
+            case 'day':
+                return $date->format('M d');
+            case 'week':
+                return 'Week '.$date->format('W, Y');
+            case 'month':
+                return $date->format('M Y');
+            case 'year':
+                return $date->format('Y');
+            default:
+                return $date->format('M d');
+        }
     }
 }

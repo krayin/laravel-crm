@@ -53,7 +53,7 @@ class EmailTemplateController extends Controller
     public function store(): RedirectResponse
     {
         $this->validate(request(), [
-            'name'    => 'required',
+            'name'    => 'required|unique:email_templates,name',
             'subject' => 'required',
             'content' => 'required',
         ]);
@@ -87,7 +87,7 @@ class EmailTemplateController extends Controller
     public function update(int $id): RedirectResponse
     {
         $this->validate(request(), [
-            'name'    => 'required',
+            'name'    => 'required|unique:email_templates,name,'.$id,
             'subject' => 'required',
             'content' => 'required',
         ]);

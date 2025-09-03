@@ -2,6 +2,7 @@
 
 namespace Webkul\Admin\Http\Controllers\Settings;
 
+use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Event;
 use Illuminate\View\View;
@@ -91,17 +92,23 @@ class SourceController extends Controller
     {
         $source = $this->sourceRepository->findOrFail($id);
 
+        if ($source->leads()->count() > 0) {
+            return new JsonResponse([
+                'message' => trans('admin::app.settings.sources.index.delete-failed-associated-leads'),
+            ], 400);
+        }
+
         try {
             Event::dispatch('settings.source.delete.before', $id);
 
-            $source->delete($id);
+            $source->delete();
 
             Event::dispatch('settings.source.delete.after', $id);
 
             return new JsonResponse([
                 'message' => trans('admin::app.settings.sources.index.delete-success'),
             ], 200);
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
             return new JsonResponse([
                 'message' => trans('admin::app.settings.sources.index.delete-failed'),
             ], 400);

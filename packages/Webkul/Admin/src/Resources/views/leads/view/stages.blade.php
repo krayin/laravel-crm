@@ -147,7 +147,7 @@
                                 </x-admin::form.control-group.label>
 
                                 <x-admin::form.control-group.control
-                                    type="date"
+                                    type="datetime"
                                     name="closed_at"
                                     v-model="nextStage.closed_at"
                                     :label="trans('admin::app.leads.view.stages.closed-at')"

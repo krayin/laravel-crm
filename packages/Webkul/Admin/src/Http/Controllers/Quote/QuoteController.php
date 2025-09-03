@@ -66,8 +66,10 @@ class QuoteController extends Controller
 
         $quote = $this->quoteRepository->create($request->all());
 
-        if (request('lead_id')) {
-            $lead = $this->leadRepository->find(request('lead_id'));
+        $leadId = request('lead_id');
+
+        if ($leadId) {
+            $lead = $this->leadRepository->find($leadId);
 
             $lead->quotes()->attach($quote->id);
         }
@@ -76,7 +78,9 @@ class QuoteController extends Controller
 
         session()->flash('success', trans('admin::app.quotes.index.create-success'));
 
-        return redirect()->route('admin.quotes.index');
+        return request()->query('from') === 'lead' && $leadId
+            ? redirect()->route('admin.leads.view', ['id' => $leadId, 'from' => 'quotes'])
+            : redirect()->route('admin.quotes.index');
     }
 
     /**
@@ -100,8 +104,10 @@ class QuoteController extends Controller
 
         $quote->leads()->detach();
 
-        if (request('lead_id')) {
-            $lead = $this->leadRepository->find(request('lead_id'));
+        $leadId = request('lead_id');
+
+        if ($leadId) {
+            $lead = $this->leadRepository->find($leadId);
 
             $lead->quotes()->attach($quote->id);
         }
@@ -110,7 +116,9 @@ class QuoteController extends Controller
 
         session()->flash('success', trans('admin::app.quotes.index.update-success'));
 
-        return redirect()->route('admin.quotes.index');
+        return request()->query('from') === 'lead' && $leadId
+            ? redirect()->route('admin.leads.view', ['id' => $leadId, 'from' => 'quotes'])
+            : redirect()->route('admin.quotes.index');
     }
 
     /**

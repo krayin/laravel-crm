@@ -45,7 +45,7 @@
                 {!! view_render_event('admin.leads.view.title.before', ['lead' => $lead]) !!}
 
                 <!-- Title -->
-                <h3 class="text-lg font-bold dark:text-white">
+                <h1 class="text-lg font-bold dark:text-white">
                     {{ $lead->title }}
                 </h1>
 
@@ -86,7 +86,7 @@
                     {!! view_render_event('admin.leads.view.actions.after', ['lead' => $lead]) !!}
                 </div>
             </div>
-            
+
             <!-- Lead Attributes -->
             @include ('admin::leads.view.attributes')
 
@@ -97,7 +97,7 @@
         {!! view_render_event('admin.leads.view.left.after', ['lead' => $lead]) !!}
 
         {!! view_render_event('admin.leads.view.right.before', ['lead' => $lead]) !!}
-        
+
         <!-- Right Panel -->
         <div class="flex w-full flex-col gap-4 rounded-lg">
             <!-- Stages Navigation -->
@@ -109,6 +109,7 @@
             <x-admin::activities
                 :endpoint="route('admin.leads.activities.index', $lead->id)"
                 :email-detach-endpoint="route('admin.leads.emails.detach', $lead->id)"
+                :activeType="request()->query('from') === 'quotes' ? 'quotes' : 'all'"
                 :extra-types="[
                     ['name' => 'description', 'label' => trans('admin::app.leads.view.tabs.description')],
                     ['name' => 'products', 'label' => trans('admin::app.leads.view.tabs.products')],
@@ -137,5 +138,5 @@
         </div>
 
         {!! view_render_event('admin.leads.view.right.after', ['lead' => $lead]) !!}
-    </div>    
+    </div>
 </x-admin::layouts>

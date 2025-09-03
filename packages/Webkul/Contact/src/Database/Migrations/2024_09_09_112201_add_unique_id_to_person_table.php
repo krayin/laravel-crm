@@ -16,8 +16,10 @@ return new class extends Migration
             $table->string('unique_id')->nullable()->unique();
         });
 
+        $tableName = DB::getTablePrefix().'persons';
+
         DB::statement("
-            UPDATE persons
+            UPDATE {$tableName}
             SET unique_id = CONCAT(
                 user_id, '|', 
                 organization_id, '|', 

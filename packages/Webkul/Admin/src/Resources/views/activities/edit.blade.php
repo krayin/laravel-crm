@@ -146,57 +146,8 @@
                                 type="text"
                                 placeholder="@lang('admin::app.common.start-typing')"
                             />
-
-                            <x-admin::form.control-group.error control-name="comment" />
-                        </x-admin::form.control-group>
-
-                        <!-- Participants -->
-                        <x-admin::form.control-group>
-                            <x-admin::form.control-group.label>
-                                @lang('admin::app.activities.edit.participants')
-                            </x-admin::form.control-group.label>
-
-                            <!-- Participants Multi lookup Vue Component -->
-                            <v-multi-lookup-component>
-                                <div
-                                    class="relative rounded border border-gray-200 px-2 py-1 hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:hover:border-gray-400 dark:focus:border-gray-400"
-                                    role="button"
-                                >
-                                    <ul class="flex flex-wrap items-center gap-1">
-                                        <li>
-                                            <input
-                                                type="text"
-                                                class="w-full px-1 py-1 dark:bg-gray-900 dark:text-gray-300"
-                                                placeholder="@lang('admin::app.activities.edit.participants')"
-                                            />
-                                        </li>
-                                    </ul>
-
-                                    <span class="icon-down-arrow absolute top-1.5 text-2xl ltr:right-1.5 rtl:left-1.5"></span>
-                                </div>
-                            </v-multi-lookup-component>
-                        </x-admin::form.control-group>
-
-                        <!-- Lead -->
-                        <x-admin::form.control-group class="!mb-0">
-                            <x-admin::form.control-group.label>
-                                @lang('admin::app.activities.edit.lead')
-                            </x-admin::form.control-group.label>
-
-                            <x-admin::attributes.edit.lookup/>
-
-                            <!-- Lead Lookup Vue Component -->
-                            <v-lookup-component
-                                :attribute="{'code': 'lead_id', 'name': 'Lead', 'lookup_type': 'leads'}"
-                                :value='@json($lookUpEntityData)'
-                                can-add-new="true"
-                            >
-                                <x-admin::form.control-group.control
-                                    type="text"
-                                    placeholder="@lang('admin::app.common.start-typing')"
-                                />
-                            </v-lookup-component>
-                        </x-admin::form.control-group>
+                        </v-lookup-component>
+                    </x-admin::form.control-group>
 
                     {!! view_render_event('admin.activities.edit.form_controls.after') !!}
                 </div>

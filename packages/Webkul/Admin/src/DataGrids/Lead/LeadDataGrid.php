@@ -91,8 +91,8 @@ class LeadDataGrid extends DataGrid
         $this->addFilter('id', 'leads.id');
         $this->addFilter('user', 'leads.user_id');
         $this->addFilter('sales_person', 'users.name');
-        $this->addFilter('lead_source_name', 'lead_sources.name');
-        $this->addFilter('lead_type_name', 'lead_types.name');
+        $this->addFilter('lead_source_name', 'lead_sources.id');
+        $this->addFilter('lead_type_name', 'lead_types.id');
         $this->addFilter('person_name', 'persons.name');
         $this->addFilter('type', 'lead_pipeline_stages.code');
         $this->addFilter('stage', 'lead_pipeline_stages.id');

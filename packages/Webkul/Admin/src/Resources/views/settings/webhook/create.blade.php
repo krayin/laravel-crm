@@ -18,12 +18,12 @@
                     <x-admin::breadcrumbs name="settings.webhooks.create" />
 
                     {!! view_render_event('admin.settings.webhook.edit.breadrumbs.after') !!}
-        
+
                     <div class="text-xl font-bold dark:text-white">
                         @lang('admin::app.settings.webhooks.create.title')
                     </div>
                 </div>
-        
+
                 <div class="flex items-center gap-x-2.5">
                     <div class="flex items-center gap-x-2.5">
                         {!! view_render_event('admin.settings.webhook.edit.save_button.before') !!}
@@ -63,7 +63,7 @@
                                 <p class="text-base font-semibold text-gray-800 dark:text-white">
                                     @lang('admin::app.settings.webhooks.create.title')
                                 </p>
-    
+
                                 <p class="text-sm text-gray-600 dark:text-white">
                                     @lang('admin::app.settings.webhooks.create.info')
                                 </p>
@@ -89,7 +89,7 @@
                                             :label="trans('admin::app.settings.webhooks.create.method')"
                                         >
                                             <option value="post">@lang('admin::app.settings.webhooks.create.post')</option>
-                                            
+
                                             <option value="put">@lang('admin::app.settings.webhooks.create.put')</option>
                                         </x-admin::form.control-group.control>
 
@@ -164,7 +164,7 @@
                                             @lang('admin::app.settings.webhooks.create.default')
                                         </label>
                                     </div>
-                                    
+
                                     <div class="flex cursor-pointer items-center justify-center">
                                         <input
                                             id="x-www-form-urlencoded"
@@ -212,7 +212,7 @@
                                                         <i class="icon-down-arrow -mt-px text-xs text-brandColor"></i>
                                                     </div>
                                                 </x-slot>
-                            
+
                                                 <x-slot:menu class="!p-0 dark:border-gray-800">
                                                     <input
                                                         type="hidden"
@@ -242,7 +242,7 @@
                                         </template>
                                     </div>
                                 </div>
-                            
+
                                 <template v-if="showEditor">
                                     <textarea
                                         ref="payload"
@@ -281,7 +281,7 @@
                                 </p>
                             </div>
                         </x-slot>
-    
+
                         <x-slot:content>
                             <!-- Name -->
                             <x-admin::form.control-group>
@@ -358,9 +358,9 @@
                 <x-admin::form.control-group.label class="required">
                     @{{ title }}
                 </x-admin::form.control-group.label>
-            
+
                 <div class="flex flex-col">
-                    <div 
+                    <div
                         class="group my-2 flex items-center justify-between gap-3"
                         v-for="(field, index) in fields"
                         :key="index"
@@ -391,7 +391,7 @@
                             <x-admin::form.control-group.error ::name="`${name}[${index}][value]`" />
                         </div>
 
-                        <i 
+                        <i
                             class="icon-delete ml-1 cursor-pointer rounded-md p-1.5 text-2xl transition-all hover:bg-gray-100 dark:hover:bg-gray-950"
                             @click="remove(index)"
                             v-if="fields.length > 1"
@@ -406,7 +406,7 @@
                                         @lang('admin::app.settings.webhooks.create.insert-placeholder')
                                     </span>
                                 </x-slot>
-            
+
                                 <x-slot:menu class="max-h-80 overflow-y-auto !p-0 dark:border-gray-800">
                                     <div
                                         v-for="entity in placeholders"
@@ -430,12 +430,12 @@
                             </x-admin::dropdown>
                         </div>
                     </div>
-            
+
                     <div class="inline-block">
                         <button
                             type="button"
                             class="flex max-w-max items-center gap-2 text-brandColor"
-                            @click="add(index)" 
+                            @click="add(index)"
                         >
                             <i class="icon-add text-md !text-brandColor"></i>
 
@@ -466,7 +466,7 @@
 
                         tempPayload: [{ key: '', value: ''}],
 
-                        headers: [{ key: 'Content Type', value: 'text/plain;charset=UTF', readOnly: true }],
+                        headers: [{ key: 'Content-Type', value: 'text/plain;charset=UTF', readOnly: true }],
 
                         placeholders: @json($placeholders),
                     };
@@ -485,7 +485,7 @@
                 watch: {
                     /**
                      * Watch the raw type and update the tempPayload.
-                     * 
+                     *
                      * @return {void}
                      */
                     rawType(newValue, oldValue) {
@@ -494,7 +494,7 @@
 
                     /**
                      * Watch the content type and update the tempPayload.
-                     * 
+                     *
                      * @return {void}
                      */
                     contentType(newValue, oldValue) {
@@ -522,7 +522,7 @@
                 methods: {
                     /**
                      * Handle editor display.
-                     * 
+                     *
                      * @returns {void}
                      */
                     handleEditorDisplay() {
@@ -539,7 +539,7 @@
 
                     /**
                      * Initiate Editor.
-                     * 
+                     *
                      * @param {string} rawType
                      * @return {void}
                      */
@@ -567,7 +567,7 @@
 
                     /**
                      * Get the URL endpoint with the parameters
-                     * 
+                     *
                      * @returns {string}
                      */
                     urlEndPoint() {
@@ -585,7 +585,7 @@
 
                             this.parameters.forEach(param => {
                                 if (
-                                    param.key 
+                                    param.key
                                     && param.value
                                 ) {
                                     url.searchParams.append(param.key, param.value);
@@ -616,7 +616,7 @@
                 methods: {
                     /**
                      * Add a new fields.
-                     * 
+                     *
                      * @returns {void}
                      */
                     add() {
@@ -625,7 +625,7 @@
 
                     /**
                      * Remove a fields.
-                     * 
+                     *
                      * @returns {void}
                      */
                     remove(index) {
@@ -634,7 +634,7 @@
 
                     /**
                      * Save the cursor position when the input is focused.
-                     * 
+                     *
                      * @param {Event} event
                      * @returns {void}
                      */
@@ -644,7 +644,7 @@
 
                     /**
                      * Insert the selected placeholder into the subject.
-                     * 
+                     *
                      * @returns {void}
                      */
                     insertPlaceholder(index, value) {
@@ -673,8 +673,8 @@
             src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.30.0/codemirror.js"
         ></script>
 
-        <!-- 
-            Html mixed and xml cnd both are dependent 
+        <!--
+            Html mixed and xml cnd both are dependent
             Used for html and css theme
         -->
         <script
@@ -685,7 +685,7 @@
 
     @pushOnce('styles')
         <!-- Code mirror style cdn -->
-        <link 
+        <link
             rel="stylesheet"
             href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.13.4/codemirror.css"
         ></link>
