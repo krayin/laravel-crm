@@ -2,6 +2,7 @@
 
 namespace Webkul\Admin\Http\Controllers\Settings\Marketing;
 
+use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Event;
 use Illuminate\View\View;
@@ -80,11 +81,19 @@ class EventController extends Controller
      */
     public function destroy(int $id): JsonResponse
     {
-        Event::dispatch('settings.marketing.events.delete.before', $id);
+        $event = $this->eventRepository->findOrFail($id);
 
-        $this->eventRepository->delete($id);
+        if ($event->campaigns->isNotEmpty()) {
+            return response()->json([
+                'message' => trans('admin::app.settings.marketing.events.index.delete-failed-associated-campaigns'),
+            ], 422);
+        }
 
-        Event::dispatch('settings.marketing.events.delete.after', $id);
+        Event::dispatch('settings.marketing.events.delete.before', $event);
+
+        $this->eventRepository->delete($event->id);
+
+        Event::dispatch('settings.marketing.events.delete.after', $event);
 
         return response()->json([
             'message' => trans('admin::app.settings.marketing.events.index.delete-success'),
@@ -94,20 +103,67 @@ class EventController extends Controller
     /**
      * Remove the specified marketing events from storage.
      */
-    public function massDestroy(MassDestroyRequest $massDestroyRequest): JsonResponse
+    public function massDestroy(MassDestroyRequest $request): JsonResponse
     {
-        $marketingEvents = $this->eventRepository->findWhereIn('id', $massDestroyRequest->input('indices'));
+        try {
+            $events = $this->eventRepository->findWhereIn('id', $request->input('indices', []));
 
-        foreach ($marketingEvents as $marketingEvent) {
-            Event::dispatch('settings.marketing.events.delete.before', $marketingEvent);
+            $deletedCount = 0;
 
-            $this->eventRepository->delete($marketingEvent->id);
+            $blockedCount = 0;
 
-            Event::dispatch('settings.marketing.events.delete.after', $marketingEvent);
+            foreach ($events as $event) {
+                if (
+                    $event->campaigns
+                    && $event->campaigns->isNotEmpty()
+                ) {
+                    $blockedCount++;
+
+                    continue;
+                }
+
+                Event::dispatch('settings.marketing.events.delete.before', $event);
+
+                $this->eventRepository->delete($event->id);
+
+                Event::dispatch('settings.marketing.events.delete.after', $event);
+
+                $deletedCount++;
+            }
+
+            $statusCode = 200;
+
+            switch (true) {
+                case $deletedCount > 0 && $blockedCount === 0:
+                    $message = trans('admin::app.settings.marketing.events.index.mass-delete-success');
+
+                    break;
+
+                case $deletedCount > 0 && $blockedCount > 0:
+                    $message = trans('admin::app.settings.marketing.events.index.partial-delete-warning');
+
+                    break;
+
+                case $deletedCount === 0 && $blockedCount > 0:
+                    $message = trans('admin::app.settings.marketing.events.index.none-delete-warning');
+
+                    $statusCode = 400;
+
+                    break;
+
+                default:
+                    $message = trans('admin::app.settings.marketing.events.index.no-selection');
+
+                    $statusCode = 400;
+
+                    break;
+            }
+
+            return response()->json(['message' => $message], $statusCode);
+        } catch (Exception $e) {
+            return response()->json([
+                'message' => trans('admin::app.settings.marketing.events.index.mass-delete-failed'),
+            ], 400);
         }
-
-        return response()->json([
-            'message' => trans('admin::app.settings.marketing.events.index.mass-delete-success'),
-        ]);
     }
 }

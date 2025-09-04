@@ -1,3 +1,85 @@
+## **v2.1.3 (02 of Sep 2025)** - *Release*
+
+* #2236[fixed] Save button now responsive when linking email to lead during lead creation.  
+
+* #2211[fixed] Contact number validation works correctly when a custom checkbox attribute (like Gender) is added for Person.  
+
+* #2242[fixed] Translation string added in Attributes filter panel.  
+
+* #2271[fixed] At least one pipeline must be marked as "Is Default" to ensure proper lead management.  
+
+* #2269[fixed] Lookup attribute for Person entity works correctly with bulk-uploaded data via Data Transfer.  
+
+* #2170[fixed] Organization name now updates correctly in Person record after save in Contact → Person.  
+
+* #2245[fixed] Webhook sends parameter data to endpoint successfully.  
+
+* #2246[fixed] Webhook triggers correctly when nested JSON data is entered in JSON field.  
+
+* #2260[fixed] Duplicate pipeline names are no longer allowed.  
+
+* #2244[fixed] Header key updated to "Content-Type" in Webhook configuration.  
+
+* #2241[fixed] Non-admin users with dashboard access but without roles/users permission no longer get redirected to 401.  
+
+* #2238[fixed] User creation shortcut opens the create user page directly.  
+
+* #2234[fixed] Lead is created in the selected pipeline instead of always default pipeline.  
+
+* #2247[closed] Attribute type change and "Is Unique" option for custom attributes behave as intended.  
+
+* #1916[fixed] Overlay in Name and Organization fields on Person view page removed.  
+
+* #2322[fixed] Lost reason now visible in the activity log when opportunity is marked as "Lost".  
+
+* #2314[fixed] Currency displays consistently across Dashboard and throughout CRM.  
+
+* #2293[fixed] Contact name input is fully visible in Workflow Action UI.  
+
+* #2294[fixed] Salesperson name is fully visible in Workflow Action search dropdown.  
+
+* #2301[fixed] `closed_at` date format displays correctly in Lead activity timeline.  
+
+* #2300[fixed] Mega Search includes Configuration and Settings modules.  
+
+* #2303[fixed] Lead stage change via Kanban drag & drop prompts for required Won/Lost fields.  
+
+* #2304[fixed] Duplicate translation key for campaigns removed from Arabic language file (`ar/app.php`).  
+
+* #2307[fixed] Event cannot be deleted if associated with a campaign where event is required.  
+
+* #2312[fixed] Selected file is visible on Import Edit page.  
+
+* #2278[fixed] Groups associated with users cannot be deleted.  
+
+* #2291[fixed] Clear error message is shown when deleting a source.  
+
+* #2290[fixed] Filters for Source and Lead Type work correctly in Lead list view.  
+
+* #2295[fixed] In Leads, when marked as Won, `closed_at` saves the correct date.  
+
+* #2230[fixed] Leads graph no longer displays duplicate yearly data when selecting multi-year date range.  
+
+* #2282[fixed] Duplicate email template names are no longer allowed.  
+
+* #2256[fixed] Lead is not created from Webform submission when "Create Lead" option is disabled.  
+
+* #2283[fixed] Duplicate email template cannot be created via POST `/api/v1/settings/email-templates`.  
+
+* #2243[fixed] Leads Board View search placeholder updated to "Search by Title".  
+
+* #2146[fixed] "Filter by Tag" option added in Products filter panel.  
+
+* #2153[fixed] Dashboard restricts future date ranges to avoid empty/no data.  
+
+* #2158[fixed] Quote creation from lead negotiation stage redirects correctly within lead context.  
+
+* #2168[fixed] "Expired Quote" column in Quotes table displays date without unnecessary time.  
+
+* #2141[fixed] Group input field is no longer mandatory when creating a new user.  
+
+* #2275[fixed] Users cannot view or assign non-group users as Sales Owner in Persons, Leads, Organizations, and Quotes.  
+ 
 ## **v2.1.2 (16 of May 2025)** - *Release*
 
 * #2172[fixed] Cleaned up unnecessary label-value JSON from Email and Contact columns in export.

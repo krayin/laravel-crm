@@ -32,8 +32,6 @@ return [
         'other-settings'  => 'Diğer Ayarlar',
         'tags'            => 'Etiketler',
         'configuration'   => 'Yapılandırma',
-        'campaigns'       => 'Kampanyalar',
-        'event'           => 'Etkinlik',
         'create'          => 'Oluştur',
         'edit'            => 'Düzenle',
         'view'            => 'Görüntüle',
@@ -47,20 +45,17 @@ return [
         'event'           => 'Etkinlik',
         'campaigns'       => 'Kampanyalar',
     ],
-
     'users' => [
         'activate-warning' => 'Hesabınız henüz etkinleştirilmedi. Lütfen yönetici ile iletişime geçin.',
         'login-error'      => 'Kimlik bilgileri kayıtlarımızla eşleşmiyor.',
         'not-permission'   => 'Yönetici paneline erişim izniniz yok.',
-
-        'login' => [
+        'login'            => [
             'email'                => 'E-posta Adresi',
             'forget-password-link' => 'Şifremi Unuttum?',
             'password'             => 'Şifre',
             'submit-btn'           => 'Giriş Yap',
             'title'                => 'Giriş Yap',
         ],
-
         'forget-password' => [
             'create' => [
                 'email'           => 'Kayıtlı E-posta',
@@ -72,7 +67,6 @@ return [
                 'title'           => 'Şifre Kurtarma',
             ],
         ],
-
         'reset-password' => [
             'back-link-title'  => 'Giriş Yapmaya Dön?',
             'confirm-password' => 'Şifreyi Onayla',
@@ -82,7 +76,6 @@ return [
             'title'            => 'Şifre Sıfırlama',
         ],
     ],
-
     'account' => [
         'edit' => [
             'back-btn'          => 'Geri',
@@ -101,146 +94,129 @@ return [
             'upload-image-info' => 'Profil Resmi Yükleyin (110px X 110px) PNG veya JPG Formatında',
         ],
     ],
-
     'components' => [
-        'activites' => [
+        'activities' => [
             'actions' => [
                 'mail' => [
-                    'btn'          => 'Posta',
-                    'title'        => 'Posta Yaz',
-                    'to'           => 'Kime',
-                    'enter-emails' => 'E-posta eklemek için enter tuşuna basın',
-                    'cc'           => 'Bilgi',
-                    'bcc'          => 'Gizli Bilgi',
-                    'subject'      => 'Konu',
-                    'send-btn'     => 'Gönder',
-                    'message'      => 'Mesaj',
+                    'btn'          => 'Mail',
+                    'title'        => 'Compose Mail',
+                    'to'           => 'To',
+                    'enter-emails' => 'Press enter to add emails',
+                    'cc'           => 'CC',
+                    'bcc'          => 'BCC',
+                    'subject'      => 'Subject',
+                    'send-btn'     => 'Send',
+                    'message'      => 'Message',
                 ],
-
                 'file' => [
-                    'btn'           => 'Dosya',
-                    'title'         => 'Dosya Ekle',
-                    'title-control' => 'Başlık',
-                    'name'          => 'Ad',
-                    'description'   => 'Açıklama',
-                    'file'          => 'Dosya',
-                    'save-btn'      => 'Dosyayı Kaydet',
+                    'btn'           => 'File',
+                    'title'         => 'Add File',
+                    'title-control' => 'Title',
+                    'name'          => 'Name',
+                    'description'   => 'Description',
+                    'file'          => 'File',
+                    'save-btn'      => 'Save File',
                 ],
-
                 'note' => [
-                    'btn'      => 'Not',
-                    'title'    => 'Not Ekle',
-                    'comment'  => 'Yorum',
-                    'save-btn' => 'Notu Kaydet',
+                    'btn'      => 'Note',
+                    'title'    => 'Add Note',
+                    'comment'  => 'Comment',
+                    'save-btn' => 'Save Note',
                 ],
-
                 'activity' => [
-                    'btn'           => 'Etkinlik',
-                    'title'         => 'Etkinlik Ekle',
-                    'title-control' => 'Başlık',
-                    'description'   => 'Açıklama',
-                    'schedule-from' => 'Başlama Tarihi',
-                    'schedule-to'   => 'Bitiş Tarihi',
-                    'location'      => 'Konum',
-                    'call'          => 'Arama',
-                    'meeting'       => 'Toplantı',
-                    'lunch'         => 'Öğle Yemeği',
-                    'save-btn'      => 'Etkinliği Kaydet',
-
-                    'participants' => [
-                        'title'       => 'Katılımcılar',
-                        'placeholder' => 'Katılımcıları aramak için yazın',
-                        'users'       => 'Kullanıcılar',
-                        'persons'     => 'Kişiler',
-                        'no-results'  => 'Sonuç bulunamadı...',
+                    'btn'           => 'Activity',
+                    'title'         => 'Add Activity',
+                    'title-control' => 'Title',
+                    'description'   => 'Description',
+                    'schedule-from' => 'Schedule From',
+                    'schedule-to'   => 'Schedule To',
+                    'location'      => 'Location',
+                    'call'          => 'Call',
+                    'meeting'       => 'Meeting',
+                    'lunch'         => 'Lunch',
+                    'save-btn'      => 'Save Activity',
+                    'participants'  => [
+                        'title'       => 'Participants',
+                        'placeholder' => 'Type to search participants',
+                        'users'       => 'Users',
+                        'persons'     => 'Persons',
+                        'no-results'  => 'No result found...',
                     ],
                 ],
             ],
-
             'index' => [
-                'all'          => 'Tümü',
-                'bcc'          => 'Gizli Bilgi',
-                'by-user'      => ':user tarafından',
-                'calls'        => 'Aramalar',
-                'cc'           => 'Bilgi',
-                'change-log'   => 'Değişiklik Günlükleri',
-                'delete'       => 'Sil',
-                'edit'         => 'Düzenle',
-                'emails'       => 'E-postalar',
-                'empty'        => 'Boş',
-                'files'        => 'Dosyalar',
-                'from'         => 'Kimden',
-                'location'     => 'Konum',
-                'lunches'      => 'Öğle Yemekleri',
-                'mark-as-done' => 'Tamamlandı olarak işaretle',
-                'meetings'     => 'Toplantılar',
-                'notes'        => 'Notlar',
-                'participants' => 'Katılımcılar',
-                'planned'      => 'Planlanan',
-                'quotes'       => 'Teklifler',
-                'scheduled-on' => 'Planlanan Tarih',
-                'system'       => 'Sistem',
-                'to'           => 'Kime',
-                'unlink'       => 'Bağlantıyı Kaldır',
-                'view'         => 'Görüntüle',
-
+                'all'                => 'All',
+                'bcc'                => 'Bcc',
+                'by-user'            => 'By :user',
+                'calls'              => 'Calls',
+                'cc'                 => 'Cc',
+                'change-log'         => 'Changelogs',
+                'delete'             => 'Delete',
+                'edit'               => 'Edit',
+                'emails'             => 'Emails',
+                'empty'              => 'Empty',
+                'files'              => 'Files',
+                'from'               => 'From',
+                'location'           => 'Location',
+                'lunches'            => 'Lunches',
+                'mark-as-done'       => 'Mark as Done',
+                'meetings'           => 'Meetings',
+                'notes'              => 'Notes',
+                'participants'       => 'Participants',
+                'planned'            => 'Planned',
+                'quotes'             => 'Quotes',
+                'scheduled-on'       => 'Scheduled on',
+                'system'             => 'System',
+                'to'                 => 'To',
+                'unlink'             => 'Unlink',
+                'view'               => 'View',
                 'empty-placeholders' => [
                     'all' => [
-                        'title'       => 'Etkinlik Bulunamadı',
-                        'description' => 'Bunun için herhangi bir etkinlik bulunamadı. Sol paneldeki Etkinlik butonuna tıklayarak etkinlik ekleyebilirsiniz.',
+                        'title'       => 'No Activities Found',
+                        'description' => 'No activities found for this. You can add activities by clicking on the Activity button on the left panel.',
                     ],
-
                     'planned' => [
-                        'title'       => 'Planlı Etkinlik Bulunamadı',
-                        'description' => 'Herhangi bir planlı etkinlik bulunamadı. Sol paneldeki Etkinlik butonuna tıklayarak planlı etkinlik ekleyebilirsiniz.',
+                        'title'       => 'No Planned Activities Found',
+                        'description' => 'No planned activities found for this. You can add planned activities by clicking on the Activity button on the left panel.',
                     ],
-
                     'notes' => [
-                        'title'       => 'Not Bulunamadı',
-                        'description' => 'Herhangi bir not bulunamadı. Sol paneldeki Not butonuna tıklayarak not ekleyebilirsiniz.',
+                        'title'       => 'No Notes Found',
+                        'description' => 'No notes found for this. You can add notes by clicking on the Note button on the left panel.',
                     ],
-
                     'calls' => [
-                        'title'       => 'Çağrı Bulunamadı',
-                        'description' => 'Herhangi bir çağrı bulunamadı. Sol paneldeki Etkinlik butonuna tıklayıp Çağrı türünü seçerek çağrı ekleyebilirsiniz.',
+                        'title'       => 'No Calls Found',
+                        'description' => 'No calls found for this. You can add calls by clicking on the Activity button on the left panel and selecting the Call type.',
                     ],
-
                     'meetings' => [
-                        'title'       => 'Toplantı Bulunamadı',
-                        'description' => 'Herhangi bir toplantı bulunamadı. Sol paneldeki Etkinlik butonuna tıklayıp Toplantı türünü seçerek toplantı ekleyebilirsiniz.',
+                        'title'       => 'No Meetings Found',
+                        'description' => 'No meetings found for this. You can add meetings by clicking on the Activity button on the left panel and selecting the Meeting type.',
                     ],
-
                     'lunches' => [
-                        'title'       => 'Yemek Bulunamadı',
-                        'description' => 'Herhangi bir öğle yemeği bulunamadı. Sol paneldeki Etkinlik butonuna tıklayıp Yemek türünü seçerek öğle yemeği ekleyebilirsiniz.',
+                        'title'       => 'No Lunches Found',
+                        'description' => 'No lunches found for this. You can add lunches by clicking on the Activity button on the left panel and selecting the Lunch type.',
                     ],
-
                     'files' => [
-                        'title'       => 'Dosya Bulunamadı',
-                        'description' => 'Herhangi bir dosya bulunamadı. Sol paneldeki Dosya butonuna tıklayarak dosya ekleyebilirsiniz.',
+                        'title'       => 'No Files Found',
+                        'description' => 'No files found for this. You can add files by clicking on the File button on the left panel.',
                     ],
-
                     'emails' => [
-                        'title'       => 'E-posta Bulunamadı',
-                        'description' => 'Herhangi bir e-posta bulunamadı. Sol paneldeki Posta butonuna tıklayarak e-posta ekleyebilirsiniz.',
+                        'title'       => 'No Emails Found',
+                        'description' => 'No emails found for this. You can add emails by clicking on the Mail button on the left panel.',
                     ],
-
                     'system' => [
-                        'title'       => 'Değişiklik Kaydı Bulunamadı',
-                        'description' => 'Bu öğe için herhangi bir değişiklik kaydı bulunamadı.',
+                        'title'       => 'No Changelogs Found',
+                        'description' => 'No changelogs found for this.',
                     ],
                 ],
             ],
         ],
-
         'media' => [
             'images' => [
                 'add-image-btn'     => 'Resim Ekle',
                 'ai-add-image-btn'  => 'Sihirli AI',
                 'allowed-types'     => 'png, jpeg, jpg',
                 'not-allowed-error' => 'Sadece resim dosyalarına (.jpeg, .jpg, .png, vb.) izin verilmektedir.',
-
-                'placeholders' => [
+                'placeholders'      => [
                     'front'     => 'Ön',
                     'next'      => 'Sonraki',
                     'size'      => 'Boyut',
@@ -248,35 +224,30 @@ return [
                     'zoom'      => 'Yakınlaştır',
                 ],
             ],
-
             'videos' => [
                 'add-video-btn'     => 'Video Ekle',
                 'allowed-types'     => 'mp4, webm, mkv',
                 'not-allowed-error' => 'Sadece video dosyalarına (.mp4, .mov, .ogg vb.) izin verilmektedir.',
             ],
         ],
-
         'datagrid' => [
             'index' => [
                 'no-records-selected'              => 'Hiçbir kayıt seçilmedi.',
                 'must-select-a-mass-action-option' => 'Bir toplu işlem seçeneği seçmelisiniz.',
                 'must-select-a-mass-action'        => 'Bir toplu işlem seçmelisiniz.',
             ],
-
             'toolbar' => [
-                'length-of' => ':length kadar',
-                'of'        => 'üzerinden',
-                'per-page'  => 'Sayfa Başına',
-                'results'   => ':total Sonuç',
-                'delete'    => 'Sil',
-                'selected'  => ':total Seçilen Öğeler',
-
+                'length-of'    => ':length kadar',
+                'of'           => 'üzerinden',
+                'per-page'     => 'Sayfa Başına',
+                'results'      => ':total Sonuç',
+                'delete'       => 'Sil',
+                'selected'     => ':total Seçilen Öğeler',
                 'mass-actions' => [
                     'submit'        => 'Gönder',
                     'select-option' => 'Seçim Yap',
                     'select-action' => 'Eylem Seç',
                 ],
-
                 'filter' => [
                     'apply-filters-btn' => 'Filtreleri Uygula',
                     'back-btn'          => 'Geri',
@@ -297,33 +268,27 @@ return [
                     'update-filter'     => 'Filtreyi Güncelle',
                     'updated-success'   => 'Filtre başarıyla güncellendi.',
                 ],
-
                 'search' => [
                     'title' => 'Ara',
                 ],
             ],
-
             'filters' => [
-                'select' => 'Seç',
-                'title'  => 'Filtreler',
-
+                'select'   => 'Seç',
+                'title'    => 'Filtreler',
                 'dropdown' => [
                     'searchable' => [
                         'at-least-two-chars' => 'En az 2 karakter yazın...',
                         'no-results'         => 'Sonuç bulunamadı...',
                     ],
                 ],
-
                 'custom-filters' => [
                     'clear-all' => 'Hepsini Temizle',
                     'title'     => 'Özel Filtreler',
                 ],
-
                 'boolean-options' => [
                     'false' => 'Yanlış',
                     'true'  => 'Doğru',
                 ],
-
                 'date-options' => [
                     'last-month'        => 'Geçen Ay',
                     'last-six-months'   => 'Son 6 Ay',
@@ -335,13 +300,11 @@ return [
                     'yesterday'         => 'Dün',
                 ],
             ],
-
             'table' => [
                 'actions'              => 'Eylemler',
                 'no-records-available' => 'Kayıt Bulunmuyor.',
             ],
         ],
-
         'modal' => [
             'confirm' => [
                 'agree-btn'    => 'Kabul Et',
@@ -350,14 +313,13 @@ return [
                 'title'        => 'Emin Misiniz?',
             ],
         ],
-
         'tags' => [
             'index' => [
                 'title'          => 'Etiketler',
                 'added-tags'     => 'Eklenen Etiketler',
                 'save-btn'       => 'Etiketi Kaydet',
                 'placeholder'    => 'Etiketleri aramak için yazın',
-                'add-tag'        => '\" :term \" Ekle...',
+                'add-tag'        => '\\" :term \\" Ekle...',
                 'aquarelle-red'  => 'Aquarelle Kırmızı',
                 'crushed-cashew' => 'Ezilmiş Antep Fıstığı',
                 'beeswax'        => 'Abeş Mum',
@@ -366,23 +328,19 @@ return [
                 'honeydew'       => 'Honeydew',
             ],
         ],
-
         'layouts' => [
             'powered-by' => [
                 'description' => ':webkul tarafından geliştirilen açık kaynaklı bir proje olan :krayin tarafından desteklenmektedir.',
             ],
-
             'header' => [
                 'mega-search' => [
-                    'title'   => 'Mega Arama',
-
-                    'tabs' => [
+                    'title' => 'Mega Arama',
+                    'tabs'  => [
                         'leads'    => 'Müşteriler',
                         'quotes'   => 'Teklifler',
                         'persons'  => 'Kişiler',
                         'products' => 'Ürünler',
                     ],
-
                     'explore-all-products'          => 'Tüm Ürünleri Keşfet',
                     'explore-all-leads'             => 'Tüm Müşterileri Keşfet',
                     'explore-all-contacts'          => 'Tüm İletişimleri Keşfet',
@@ -394,41 +352,34 @@ return [
                 ],
             ],
         ],
-
         'attributes' => [
-            'edit'   => [
+            'edit' => [
                 'delete' => 'Sil',
             ],
-
             'lookup' => [
                 'click-to-add'    => 'Eklemek için tıklayın',
-                'search'          => 'Arama',
-                'no-result-found' => 'Sonuç bulunamadı',
                 'search'          => 'Arama...',
+                'no-result-found' => 'Sonuç bulunamadı',
             ],
         ],
-
         'lookup' => [
             'click-to-add' => 'Eklemek için Tıklayın',
             'no-results'   => 'Sonuç Bulunamadı',
             'add-as-new'   => 'Yeni Olarak Ekle',
             'search'       => 'Arama...',
         ],
-
         'flash-group' => [
             'success' => 'Başarı',
             'error'   => 'Hata',
             'warning' => 'Uyarı',
             'info'    => 'Bilgi',
         ],
-
         'tiny-mce' => [
             'http-error'    => 'HTTP Hatası',
             'invalid-json'  => 'Sunucudan geçersiz JSON yanıtı.',
             'upload-failed' => 'Dosya yüklemesi başarısız oldu. Lütfen tekrar deneyin.',
         ],
     ],
-
     'quotes' => [
         'index' => [
             'title'          => 'Teklifler',
@@ -437,23 +388,21 @@ return [
             'update-success' => 'Teklif başarıyla güncellendi.',
             'delete-success' => 'Teklif başarıyla silindi.',
             'delete-failed'  => 'Teklif silinemedi.',
-
-            'datagrid' => [
-                'subject'        => 'Konu',
-                'sales-person'   => 'Satış Temsilcisi',
-                'expired-at'     => 'Son Kullanma Tarihi',
-                'created-at'     => 'Oluşturulma Tarihi',
-                'person'         => 'Kişi',
-                'subtotal'       => 'Ara Toplam',
-                'discount'       => 'İndirim',
-                'tax'            => 'Vergi',
-                'adjustment'     => 'Düzenleme',
-                'grand-total'    => 'Genel Toplam',
-                'edit'           => 'Düzenle',
-                'delete'         => 'Sil',
-                'print'          => 'Yazdır',
+            'datagrid'       => [
+                'subject'      => 'Konu',
+                'sales-person' => 'Satış Temsilcisi',
+                'expired-at'   => 'Son Kullanma Tarihi',
+                'created-at'   => 'Oluşturulma Tarihi',
+                'person'       => 'Kişi',
+                'subtotal'     => 'Ara Toplam',
+                'discount'     => 'İndirim',
+                'tax'          => 'Vergi',
+                'adjustment'   => 'Düzenleme',
+                'grand-total'  => 'Genel Toplam',
+                'edit'         => 'Düzenle',
+                'delete'       => 'Sil',
+                'print'        => 'Yazdır',
             ],
-
             'pdf' => [
                 'adjustment'       => 'Düzenleme',
                 'amount'           => 'Tutar',
@@ -476,7 +425,6 @@ return [
                 'title'            => 'Teklif',
             ],
         ],
-
         'create' => [
             'title'             => 'Teklif Oluştur',
             'save-btn'          => 'Teklifi Kaydet',
@@ -507,7 +455,6 @@ return [
             'product-name'      => 'Ürün Adı',
             'action'            => 'Eylem',
         ],
-
         'edit' => [
             'title'             => 'Teklifi Düzenle',
             'save-btn'          => 'Teklifi Kaydet',
@@ -539,21 +486,19 @@ return [
             'action'            => 'Eylem',
         ],
     ],
-
     'contacts' => [
         'persons' => [
             'index' => [
-                'title'                    => 'Kişiler',
-                'create-btn'               => 'Kişi Oluştur',
-                'create-success'           => 'Kişi başarıyla oluşturuldu.',
-                'update-success'           => 'Kişi başarıyla güncellendi.',
-                'all-delete-success'       => 'Seçilen tüm kişiler başarıyla silindi.',
-                'partial-delete-warning'   => 'Bazı kişiler başarıyla silindi. Diğerleri potansiyel müşterilerle bağlantılı olduğu için silinemedi.',
-                'none-delete-warning'      => 'Seçilen kişilerin hiçbiri potansiyel müşterilerle bağlantılı olduğu için silinemedi.',
-                'no-selection'             => 'Silinecek kişi seçilmedi.',
-                'delete-failed'            => 'Seçilen kişiler silinemedi.',
-
-                'datagrid' => [
+                'title'                  => 'Kişiler',
+                'create-btn'             => 'Kişi Oluştur',
+                'create-success'         => 'Kişi başarıyla oluşturuldu.',
+                'update-success'         => 'Kişi başarıyla güncellendi.',
+                'all-delete-success'     => 'Seçilen tüm kişiler başarıyla silindi.',
+                'partial-delete-warning' => 'Bazı kişiler başarıyla silindi. Diğerleri potansiyel müşterilerle bağlantılı olduğu için silinemedi.',
+                'none-delete-warning'    => 'Seçilen kişilerin hiçbiri potansiyel müşterilerle bağlantılı olduğu için silinemedi.',
+                'no-selection'           => 'Silinecek kişi seçilmedi.',
+                'delete-failed'          => 'Seçilen kişiler silinemedi.',
+                'datagrid'               => [
                     'contact-numbers'   => 'İletişim Numaraları',
                     'delete'            => 'Sil',
                     'edit'              => 'Düzenle',
@@ -564,13 +509,11 @@ return [
                     'organization-name' => 'Kuruluş Adı',
                 ],
             ],
-
             'view' => [
                 'title'              => ':name',
                 'about-person'       => 'Kişi Hakkında',
                 'about-organization' => 'Kuruluş Hakkında',
-
-                'activities' => [
+                'activities'         => [
                     'index' => [
                         'all'          => 'Hepsi',
                         'calls'        => 'Aramalar',
@@ -588,7 +531,6 @@ return [
                         'delete'       => 'Sil',
                         'edit'         => 'Düzenle',
                     ],
-
                     'actions' => [
                         'mail' => [
                             'btn'      => 'E-posta',
@@ -600,7 +542,6 @@ return [
                             'send-btn' => 'Gönder',
                             'message'  => 'Mesaj',
                         ],
-
                         'file' => [
                             'btn'           => 'Dosya',
                             'title'         => 'Dosya Ekle',
@@ -610,14 +551,12 @@ return [
                             'file'          => 'Dosya',
                             'save-btn'      => 'Dosyayı Kaydet',
                         ],
-
                         'note' => [
                             'btn'      => 'Not',
                             'title'    => 'Not Ekle',
                             'comment'  => 'Yorum',
                             'save-btn' => 'Notu Kaydet',
                         ],
-
                         'activity' => [
                             'btn'           => 'Etkinlik',
                             'title'         => 'Etkinlik Ekle',
@@ -633,24 +572,20 @@ return [
                         ],
                     ],
                 ],
-
                 'tags' => [
                     'create-success'  => 'Etiket başarıyla oluşturuldu.',
                     'destroy-success' => 'Etiket başarıyla silindi.',
                 ],
             ],
-
             'create' => [
                 'title'    => 'Kişi Oluştur',
                 'save-btn' => 'Kişiyi Kaydet',
             ],
-
             'edit' => [
                 'title'    => 'Kişiyi Düzenle',
                 'save-btn' => 'Kişiyi Kaydet',
             ],
         ],
-
         'organizations' => [
             'index' => [
                 'title'          => 'Kuruluşlar',
@@ -659,8 +594,7 @@ return [
                 'update-success' => 'Kuruluş başarıyla güncellendi.',
                 'delete-success' => 'Kuruluş başarıyla silindi.',
                 'delete-failed'  => 'Kuruluş silinemedi.',
-
-                'datagrid' => [
+                'datagrid'       => [
                     'delete'        => 'Sil',
                     'edit'          => 'Düzenle',
                     'id'            => 'ID',
@@ -668,19 +602,16 @@ return [
                     'persons-count' => 'Kişi Sayısı',
                 ],
             ],
-
             'create' => [
                 'title'    => 'Kuruluş Oluştur',
                 'save-btn' => 'Kuruluşu Kaydet',
             ],
-
             'edit' => [
                 'title'    => 'Kuruluşu Düzenle',
                 'save-btn' => 'Kuruluşu Kaydet',
             ],
         ],
     ],
-
     'products' => [
         'index' => [
             'title'          => 'Ürünler',
@@ -689,36 +620,32 @@ return [
             'update-success' => 'Ürün başarıyla güncellendi.',
             'delete-success' => 'Ürün başarıyla silindi.',
             'delete-failed'  => 'Ürün silinemedi.',
-
-            'datagrid'   => [
+            'datagrid'       => [
                 'allocated' => 'Tahsis Edilen',
                 'delete'    => 'Sil',
                 'edit'      => 'Düzenle',
                 'id'        => 'ID',
                 'in-stock'  => 'Stokta',
-                'tag-name'  => 'Etiket Adı',
                 'name'      => 'Ad',
                 'on-hand'   => 'Elinde',
+                'tag-name'  => 'Etiket Adı',
                 'price'     => 'Fiyat',
                 'sku'       => 'SKU',
                 'view'      => 'Görüntüle',
             ],
         ],
-
         'create' => [
-            'save-btn'  => 'Ürünleri Kaydet',
-            'title'     => 'Ürün Oluştur',
-            'general'   => 'Genel',
-            'price'     => 'Fiyat',
+            'save-btn' => 'Ürünleri Kaydet',
+            'title'    => 'Ürün Oluştur',
+            'general'  => 'Genel',
+            'price'    => 'Fiyat',
         ],
-
         'edit' => [
-            'title'     => 'Ürünleri Düzenle',
-            'save-btn'  => 'Ürünleri Kaydet',
-            'general'   => 'Genel',
-            'price'     => 'Fiyat',
+            'title'    => 'Ürünleri Düzenle',
+            'save-btn' => 'Ürünleri Kaydet',
+            'general'  => 'Genel',
+            'price'    => 'Fiyat',
         ],
-
         'view' => [
             'sku'         => 'SKU',
             'all'         => 'Hepsi',
@@ -726,11 +653,9 @@ return [
             'files'       => 'Dosyalar',
             'inventories' => 'Envanter',
             'change-logs' => 'Değişiklik Günlükleri',
-
-            'attributes' => [
+            'attributes'  => [
                 'about-product' => 'Ürün Hakkında',
             ],
-
             'inventory' => [
                 'source'     => 'Kaynak',
                 'in-stock'   => 'Stokta',
@@ -745,10 +670,8 @@ return [
             ],
         ],
     ],
-
     'settings' => [
-        'title' => 'Ayarlar',
-
+        'title'  => 'Ayarlar',
         'groups' => [
             'index' => [
                 'create-btn'                     => 'Grup Oluştur',
@@ -758,19 +681,16 @@ return [
                 'destroy-success'                => 'Grup başarıyla silindi.',
                 'delete-failed'                  => 'Grup silinemedi.',
                 'delete-failed-associated-users' => 'Grup silinemiyor, çünkü kullanıcılar tarafından kullanılıyor.',
-
-                'datagrid'   => [
+                'datagrid'                       => [
                     'delete'      => 'Sil',
                     'description' => 'Açıklama',
                     'edit'        => 'Düzenle',
                     'id'          => 'ID',
                     'name'        => 'Ad',
                 ],
-
                 'edit' => [
                     'title' => 'Grubu Düzenle',
                 ],
-
                 'create' => [
                     'name'        => 'Ad',
                     'title'       => 'Grup Oluştur',
@@ -779,7 +699,6 @@ return [
                 ],
             ],
         ],
-
         'roles' => [
             'index' => [
                 'being-used'                => 'Rol silinemedi, çünkü bu admin kullanıcısında kullanılıyor.',
@@ -793,8 +712,7 @@ return [
                 'title'                     => 'Roller',
                 'update-success'            => 'Rol başarıyla güncellendi.',
                 'user-define-error'         => 'Sistem rolü silinemedi.',
-
-                'datagrid'   => [
+                'datagrid'                  => [
                     'all'             => 'Hepsi',
                     'custom'          => 'Özel',
                     'delete'          => 'Sil',
@@ -805,7 +723,6 @@ return [
                     'permission-type' => 'İzin Türü',
                 ],
             ],
-
             'create' => [
                 'access-control' => 'Erişim Kontrolü',
                 'all'            => 'Hepsi',
@@ -818,7 +735,6 @@ return [
                 'save-btn'       => 'Rolü Kaydet',
                 'title'          => 'Rol Oluştur',
             ],
-
             'edit' => [
                 'access-control' => 'Erişim Kontrolü',
                 'all'            => 'Hepsi',
@@ -832,7 +748,6 @@ return [
                 'title'          => 'Rol Düzenle',
             ],
         ],
-
         'types' => [
             'index' => [
                 'create-btn'     => 'Tür Oluştur',
@@ -841,27 +756,23 @@ return [
                 'delete-success' => 'Tür başarıyla silindi.',
                 'title'          => 'Türler',
                 'update-success' => 'Tür başarıyla güncellendi.',
-
-                'datagrid' => [
+                'datagrid'       => [
                     'delete'      => 'Sil',
                     'description' => 'Açıklama',
                     'edit'        => 'Düzenle',
                     'id'          => 'ID',
                     'name'        => 'Ad',
                 ],
-
                 'create' => [
                     'name'     => 'Ad',
                     'save-btn' => 'Türü Kaydet',
                     'title'    => 'Tür Oluştur',
                 ],
-
                 'edit' => [
                     'title' => 'Tür Düzenle',
                 ],
             ],
         ],
-
         'sources' => [
             'index' => [
                 'title'                          => 'Kaynaklar',
@@ -871,26 +782,22 @@ return [
                 'delete-success'                 => 'Kaynak başarıyla silindi.',
                 'update-success'                 => 'Kaynak başarıyla güncellendi.',
                 'delete-failed-associated-leads' => 'Kaynak silinemiyor çünkü mevcut adaylarla ilişkili. Lütfen bu adayları silmeden önce bağlantılarını kaldırın veya güncelleyin.',
-
-                'datagrid' => [
+                'datagrid'                       => [
                     'delete' => 'Sil',
                     'edit'   => 'Düzenle',
                     'id'     => 'ID',
                     'name'   => 'Ad',
                 ],
-
                 'create' => [
                     'name'     => 'Ad',
                     'save-btn' => 'Kaynağı Kaydet',
                     'title'    => 'Kaynak Oluştur',
                 ],
-
                 'edit' => [
                     'title' => 'Kaynağı Düzenle',
                 ],
             ],
         ],
-
         'workflows' => [
             'index' => [
                 'title'          => 'İş Akışları',
@@ -907,7 +814,6 @@ return [
                     'name'        => 'Ad',
                 ],
             ],
-
             'helpers' => [
                 'update-related-leads'       => 'İlgili fırsatları güncelle',
                 'send-email-to-sales-owner'  => 'Satış sahibiyle e-posta gönder',
@@ -920,7 +826,6 @@ return [
                 'add-note-as-activity'       => 'Notu Aktivite Olarak Ekle',
                 'update-quote'               => 'Teklifi Güncelle',
             ],
-
             'create' => [
                 'title'                  => 'İş Akışı Oluştur',
                 'event'                  => 'Olay',
@@ -955,7 +860,6 @@ return [
                 'contains'               => 'İçerir',
                 'does-not-contain'       => 'İçermez',
             ],
-
             'edit' => [
                 'title'                  => 'İş Akışını Düzenle',
                 'event'                  => 'Olay',
@@ -991,7 +895,6 @@ return [
                 'does-not-contain'       => 'İçermez',
             ],
         ],
-
         'webforms' => [
             'index' => [
                 'title'          => 'Web Formları',
@@ -1000,7 +903,6 @@ return [
                 'update-success' => 'Web formu başarıyla güncellendi.',
                 'delete-success' => 'Web formu başarıyla silindi.',
                 'delete-failed'  => 'Web formu silinemedi.',
-
                 'datagrid'       => [
                     'id'     => 'ID',
                     'title'  => 'Başlık',
@@ -1008,7 +910,6 @@ return [
                     'delete' => 'Sil',
                 ],
             ],
-
             'create' => [
                 'title'                    => 'Web Formu Oluştur',
                 'add-attribute-btn'        => 'Öznitelik Düğmesi Ekle',
@@ -1037,43 +938,41 @@ return [
                 'select-image'             => 'Görüntü Seç',
                 'enter-value'              => 'Değer Gir',
             ],
-
             'edit' => [
-                'title'                     => 'Web Formunu Düzenle',
-                'add-attribute-btn'         => 'Öznitelik Düğmesi Ekle',
-                'attribute-label-color'     => 'Öznitelik Etiketi Rengi',
-                'attributes'                => 'Öznitelikler',
-                'attributes-info'           => 'Forma özel öznitelikler ekleyin.',
-                'background-color'          => 'Arka Plan Rengi',
-                'code-snippet'              => 'Kod Parçası',
-                'copied'                    => 'Kopyalandı',
-                'copy'                      => 'Kopyala',
-                'create-lead'               => 'Fırsat Oluştur',
-                'customize-webform'         => 'Web Formunu Özelleştir',
-                'customize-webform-info'    => 'Web formunuzu seçtiğiniz eleman renkleri ile özelleştirin.',
-                'description'               => 'Açıklama',
-                'display-custom-message'    => 'Özel mesaj göster',
-                'embed'                     => 'Göm',
-                'form-background-color'     => 'Form Arka Plan Rengi',
-                'form-submit-btn-color'     => 'Form Gönderim Düğmesi Rengi',
-                'form-submit-button-color'  => 'Form Gönderim Düğmesi Rengi',
-                'form-title-color'          => 'Form Başlık Rengi',
-                'general'                   => 'Genel',
-                'leads'                     => 'Fırsatlar',
-                'preview'                   => 'Önizleme',
-                'person'                    => 'Kişi',
-                'public-url'                => 'Genel URL',
-                'save-btn'                  => 'Web Formunu Kaydet',
-                'submit-button-label'       => 'Gönderim Düğmesi Etiketi',
-                'submit-success-action'     => 'Gönderim Başarı Eylemi',
-                'redirect-to-url'           => 'URL\'ye Yönlendir',
-                'choose-value'              => 'Değer Seç',
-                'select-file'               => 'Dosya Seç',
-                'select-image'              => 'Görüntü Seç',
-                'enter-value'               => 'Değer Gir',
+                'add-attribute-btn'        => 'Öznitelik Düğmesi Ekle',
+                'attribute-label-color'    => 'Öznitelik Etiketi Rengi',
+                'attributes'               => 'Öznitelikler',
+                'attributes-info'          => 'Forma özel öznitelikler ekleyin.',
+                'background-color'         => 'Arka Plan Rengi',
+                'choose-value'             => 'Değer Seç',
+                'code-snippet'             => 'Kod Parçası',
+                'copied'                   => 'Kopyalandı',
+                'copy'                     => 'Kopyala',
+                'create-lead'              => 'Fırsat Oluştur',
+                'customize-webform'        => 'Web Formunu Özelleştir',
+                'customize-webform-info'   => 'Web formunuzu seçtiğiniz eleman renkleri ile özelleştirin.',
+                'description'              => 'Açıklama',
+                'display-custom-message'   => 'Özel mesaj göster',
+                'embed'                    => 'Göm',
+                'enter-value'              => 'Değer Gir',
+                'form-background-color'    => 'Form Arka Plan Rengi',
+                'form-submit-btn-color'    => 'Form Gönderim Düğmesi Rengi',
+                'form-submit-button-color' => 'Form Gönderim Düğmesi Rengi',
+                'form-title-color'         => 'Form Başlık Rengi',
+                'general'                  => 'Genel',
+                'leads'                    => 'Fırsatlar',
+                'person'                   => 'Kişi',
+                'preview'                  => 'Önizleme',
+                'public-url'               => 'Genel URL',
+                'redirect-to-url'          => 'URL\'ye Yönlendir',
+                'save-btn'                 => 'Web Formunu Kaydet',
+                'select-file'              => 'Dosya Seç',
+                'select-image'             => 'Görüntü Seç',
+                'submit-button-label'      => 'Gönderim Düğmesi Etiketi',
+                'submit-success-action'    => 'Gönderim Başarı Eylemi',
+                'title'                    => 'Web Formunu Düzenle',
             ],
         ],
-
         'email-template' => [
             'index' => [
                 'create-btn'     => 'E-posta Şablonu Oluştur',
@@ -1082,17 +981,15 @@ return [
                 'update-success' => 'E-posta şablonu başarıyla güncellendi.',
                 'delete-success' => 'E-posta şablonu başarıyla silindi.',
                 'delete-failed'  => 'E-posta şablonu silinemedi.',
-
-                'datagrid'   => [
-                    'delete'       => 'Sil',
-                    'edit'         => 'Düzenle',
-                    'id'           => 'ID',
-                    'name'         => 'Ad',
-                    'subject'      => 'Konu',
+                'datagrid'       => [
+                    'delete'  => 'Sil',
+                    'edit'    => 'Düzenle',
+                    'id'      => 'ID',
+                    'name'    => 'Ad',
+                    'subject' => 'Konu',
                 ],
             ],
-
-            'create'     => [
+            'create' => [
                 'title'                => 'E-posta Şablonu Oluştur',
                 'save-btn'             => 'E-posta Şablonunu Kaydet',
                 'email-template'       => 'E-posta Şablonu',
@@ -1102,7 +999,6 @@ return [
                 'general'              => 'Genel',
                 'name'                 => 'Ad',
             ],
-
             'edit' => [
                 'title'                => 'E-posta Şablonunu Düzenle',
                 'save-btn'             => 'E-posta Şablonunu Kaydet',
@@ -1114,7 +1010,6 @@ return [
                 'name'                 => 'Ad',
             ],
         ],
-
         'marketing' => [
             'events' => [
                 'index' => [
@@ -1125,30 +1020,26 @@ return [
                     'delete-success'      => 'Etkinlik başarıyla silindi.',
                     'delete-failed'       => 'Etkinlik silinemedi.',
                     'mass-delete-success' => 'Etkinlikler başarıyla silindi',
-
-                    'datagrid'   => [
-                        'delete'       => 'Sil',
-                        'edit'         => 'Düzenle',
-                        'id'           => 'ID',
-                        'name'         => 'Ad',
-                        'description'  => 'Açıklama',
-                        'date'         => 'Tarih',
+                    'datagrid'            => [
+                        'delete'      => 'Sil',
+                        'edit'        => 'Düzenle',
+                        'id'          => 'ID',
+                        'name'        => 'Ad',
+                        'description' => 'Açıklama',
+                        'date'        => 'Tarih',
                     ],
-
-                    'create'     => [
+                    'create' => [
                         'title'       => 'Etkinlik Oluştur',
                         'name'        => 'Ad',
                         'date'        => 'Tarih',
                         'description' => 'Açıklama',
                         'save-btn'    => 'Etkinliği Kaydet',
                     ],
-
                     'edit' => [
                         'title' => 'Etkinliği Düzenle',
                     ],
                 ],
             ],
-
             'campaigns' => [
                 'index' => [
                     'create-btn'          => 'Kampanya Oluştur',
@@ -1158,8 +1049,7 @@ return [
                     'delete-success'      => 'Kampanya başarıyla silindi.',
                     'delete-failed'       => 'Kampanya silinemedi.',
                     'mass-delete-success' => 'Kampanyalar başarıyla silindi',
-
-                    'datagrid'   => [
+                    'datagrid'            => [
                         'id'       => 'ID',
                         'name'     => 'Ad',
                         'subject'  => 'Konu',
@@ -1169,8 +1059,7 @@ return [
                         'edit'     => 'Düzenle',
                         'delete'   => 'Sil',
                     ],
-
-                    'create'     => [
+                    'create' => [
                         'title'          => 'Kampanya Oluştur',
                         'name'           => 'Ad',
                         'type'           => 'Tür',
@@ -1179,14 +1068,12 @@ return [
                         'email-template' => 'E-posta Şablonu',
                         'status'         => 'Durum',
                     ],
-
                     'edit' => [
                         'title' => 'Kampanyayı Düzenle',
                     ],
                 ],
             ],
         ],
-
         'tags' => [
             'index' => [
                 'create-btn'     => 'Etiket Oluştur',
@@ -1195,29 +1082,25 @@ return [
                 'update-success' => 'Etiket başarıyla güncellendi.',
                 'delete-success' => 'Etiket başarıyla silindi.',
                 'delete-failed'  => 'Etiket silinemedi.',
-
-                'datagrid' => [
-                    'delete'      => 'Sil',
-                    'edit'        => 'Düzenle',
-                    'id'          => 'ID',
-                    'name'        => 'Ad',
-                    'users'       => 'Kullanıcılar',
-                    'created-at'  => 'Oluşturulma Tarihi',
+                'datagrid'       => [
+                    'delete'     => 'Sil',
+                    'edit'       => 'Düzenle',
+                    'id'         => 'ID',
+                    'name'       => 'Ad',
+                    'users'      => 'Kullanıcılar',
+                    'created-at' => 'Oluşturulma Tarihi',
                 ],
-
                 'create' => [
                     'name'     => 'Ad',
                     'save-btn' => 'Etiketi Kaydet',
                     'title'    => 'Etiket Oluştur',
                     'color'    => 'Renk',
                 ],
-
                 'edit' => [
                     'title' => 'Etiketi Düzenle',
                 ],
             ],
         ],
-
         'users' => [
             'index' => [
                 'create-btn'          => 'Kullanıcı Oluştur',
@@ -1234,8 +1117,7 @@ return [
                 'user-define-error'   => 'Sistem kullanıcısı silinemedi.',
                 'active'              => 'Aktif',
                 'inactive'            => 'Pasif',
-
-                'datagrid' => [
+                'datagrid'            => [
                     'active'        => 'Aktif',
                     'created-at'    => 'Oluşturulma Tarihi',
                     'delete'        => 'Sil',
@@ -1248,42 +1130,39 @@ return [
                     'update-status' => 'Durumu Güncelle',
                     'users'         => 'Kullanıcılar',
                 ],
-
                 'create' => [
-                    'confirm-password' => 'Şifreyi Onayla',
-                    'email'            => 'E-posta',
-                    'general'          => 'Genel',
-                    'global'           => 'Küresel',
-                    'group'            => 'Grup',
-                    'individual'       => 'Bireysel',
-                    'name'             => 'Ad',
-                    'password'         => 'Şifre',
-                    'permission'       => 'İzin',
-                    'role'             => 'Rol',
-                    'save-btn'         => 'Kullanıcıyı Kaydet',
-                    'status'           => 'Durum',
-                    'title'            => 'Kullanıcı Oluştur',
-                    'view-permission'  => 'Görüntüleme İzni',
+                    'confirm-password'         => 'Şifreyi Onayla',
+                    'email'                    => 'E-posta',
+                    'general'                  => 'Genel',
+                    'global'                   => 'Küresel',
+                    'group'                    => 'Grup',
+                    'individual'               => 'Bireysel',
+                    'name'                     => 'Ad',
+                    'password'                 => 'Şifre',
+                    'permission'               => 'İzin',
+                    'role'                     => 'Rol',
+                    'save-btn'                 => 'Kullanıcıyı Kaydet',
+                    'status'                   => 'Durum',
+                    'title'                    => 'Kullanıcı Oluştur',
+                    'view-permission'          => 'Görüntüleme İzni',
+                    'select-at-lest-one-group' => 'Select at least one group',
                 ],
-
                 'edit' => [
                     'title' => 'Kullanıcıyı Düzenle',
                 ],
             ],
         ],
-
         'pipelines' => [
             'index' => [
                 'title'                => 'Pipelines',
                 'create-btn'           => 'Pipeline Oluştur',
                 'create-success'       => 'Pipeline başarıyla oluşturuldu.',
-                'default-required'     => 'En az bir varsayılan boru hattı gereklidir.',
                 'update-success'       => 'Pipeline başarıyla güncellendi.',
+                'default-required'     => 'En az bir varsayılan boru hattı gereklidir.',
                 'delete-success'       => 'Pipeline başarıyla silindi.',
                 'delete-failed'        => 'Pipeline silinemedi.',
                 'default-delete-error' => 'Varsayılan pipeline silinemez.',
-
-                'datagrid' => [
+                'datagrid'             => [
                     'delete'      => 'Sil',
                     'edit'        => 'Düzenle',
                     'id'          => 'ID',
@@ -1294,7 +1173,6 @@ return [
                     'yes'         => 'Evet',
                 ],
             ],
-
             'create' => [
                 'title'                => 'Pipeline Oluştur',
                 'save-btn'             => 'Pipeline Kaydet',
@@ -1315,8 +1193,7 @@ return [
                 'newly-added'          => 'Yeni Eklenen',
                 'stage-delete-success' => 'Aşama Başarıyla Silindi',
             ],
-
-            'edit'  => [
+            'edit' => [
                 'title'                => 'Pipeline\'ı Düzenle',
                 'save-btn'             => 'Pipeline Kaydet',
                 'name'                 => 'Ad',
@@ -1336,7 +1213,6 @@ return [
                 'stage-delete-success' => 'Aşama Başarıyla Silindi',
             ],
         ],
-
         'webhooks' => [
             'index' => [
                 'title'          => 'Webhooks',
@@ -1345,8 +1221,7 @@ return [
                 'update-success' => 'Webhook başarıyla güncellendi.',
                 'delete-success' => 'Webhook başarıyla silindi.',
                 'delete-failed'  => 'Webhook silinemedi.',
-
-                'datagrid' => [
+                'datagrid'       => [
                     'id'          => 'ID',
                     'delete'      => 'Sil',
                     'edit'        => 'Düzenle',
@@ -1355,7 +1230,6 @@ return [
                     'end-point'   => 'Son Nokta',
                 ],
             ],
-
             'create' => [
                 'title'                 => 'Webhook Oluştur',
                 'save-btn'              => 'Webhook Kaydet',
@@ -1384,7 +1258,6 @@ return [
                 'json'                  => 'Json',
                 'text'                  => 'Metin',
             ],
-
             'edit' => [
                 'title'                 => 'Webhook\'u Düzenle',
                 'edit-btn'              => 'Webhook Kaydet',
@@ -1415,7 +1288,6 @@ return [
                 'text'                  => 'Metin',
             ],
         ],
-
         'warehouses' => [
             'index' => [
                 'title'          => 'Depolar',
@@ -1425,8 +1297,7 @@ return [
                 'update-success' => 'Depo başarıyla güncellendi.',
                 'delete-success' => 'Depo başarıyla silindi.',
                 'delete-failed'  => 'Depo silinemedi.',
-
-                'datagrid' => [
+                'datagrid'       => [
                     'id'              => 'ID',
                     'name'            => 'Ad',
                     'contact-name'    => 'İletişim Adı',
@@ -1439,27 +1310,23 @@ return [
                     'contact-numbers' => 'İletişim Numaraları',
                 ],
             ],
-
             'create' => [
-                'title'         => 'Depo Oluştur',
-                'save-btn'      => 'Depoyu Kaydet',
-                'contact-info'  => 'İletişim Bilgileri',
+                'title'        => 'Depo Oluştur',
+                'save-btn'     => 'Depoyu Kaydet',
+                'contact-info' => 'İletişim Bilgileri',
             ],
-
             'edit' => [
-                'title'         => 'Depoyu Düzenle',
-                'save-btn'      => 'Depoyu Kaydet',
-                'contact-info'  => 'İletişim Bilgileri',
+                'title'        => 'Depoyu Düzenle',
+                'save-btn'     => 'Depoyu Kaydet',
+                'contact-info' => 'İletişim Bilgileri',
             ],
-
             'view' => [
                 'all'         => 'Tümü',
                 'notes'       => 'Notlar',
                 'files'       => 'Dosyalar',
                 'location'    => 'Konum',
                 'change-logs' => 'Değişiklik Kayıtları',
-
-                'locations' => [
+                'locations'   => [
                     'action'         => 'Eylem',
                     'add-location'   => 'Konum Ekle',
                     'create-success' => 'Konum başarıyla oluşturuldu.',
@@ -1469,17 +1336,14 @@ return [
                     'name'           => 'Ad',
                     'save-btn'       => 'Kaydet',
                 ],
-
                 'general-information' => [
                     'title' => 'Genel Bilgiler',
                 ],
-
                 'contact-information' => [
                     'title' => 'İletişim Bilgileri',
                 ],
             ],
         ],
-
         'attributes' => [
             'index' => [
                 'title'              => 'Öznitelikler',
@@ -1490,19 +1354,17 @@ return [
                 'delete-failed'      => 'Öznitelik silinemedi.',
                 'user-define-error'  => 'Sistem özniteliği silinemez.',
                 'mass-delete-failed' => 'Sistem öznitelikleri silinemez.',
-
-                'datagrid' => [
-                    'yes'         => 'Evet',
-                    'no'          => 'Hayır',
-                    'id'          => 'ID',
-                    'code'        => 'Kod',
-                    'name'        => 'Ad',
-                    'entity-type' => 'Varlık Türü',
-                    'type'        => 'Tür',
-                    'is-default'  => 'Varsayılan mı',
-                    'edit'        => 'Düzenle',
-                    'delete'      => 'Sil',
-
+                'datagrid'           => [
+                    'yes'          => 'Evet',
+                    'no'           => 'Hayır',
+                    'id'           => 'ID',
+                    'code'         => 'Kod',
+                    'name'         => 'Ad',
+                    'entity-type'  => 'Varlık Türü',
+                    'type'         => 'Tür',
+                    'is-default'   => 'Varsayılan mı',
+                    'edit'         => 'Düzenle',
+                    'delete'       => 'Sil',
                     'entity-types' => [
                         'leads'         => 'Potansiyeller',
                         'organizations' => 'Organizasyonlar',
@@ -1511,7 +1373,6 @@ return [
                         'quotes'        => 'Teklifler',
                         'warehouses'    => 'Depolar',
                     ],
-
                     'types' => [
                         'text'        => 'Metin',
                         'textarea'    => 'Metin alanı',
@@ -1531,64 +1392,18 @@ return [
                     ],
                 ],
             ],
-
-            'create'  => [
-                'actions'               => 'İşlemler',
-                'add-attribute-options' => 'Öznitelik Seçenekleri Ekle',
-                'add-option'            => 'Seçenek Ekle',
-                'address'               => 'Adres',
-                'boolean'               => 'Boolean',
-                'checkbox'              => 'Onay Kutusu',
-                'code'                  => 'Kod',
-                'date'                  => 'Tarih',
-                'datetime'              => 'Tarih Saat',
-                'decimal'               => 'Ondalık',
-                'email'                 => 'E-posta',
-                'entity-type'           => 'Varlık Türü',
-                'entity_type'           => 'Varlık türü',
-                'file'                  => 'Dosya',
-                'general'               => 'Genel',
-                'image'                 => 'Resim',
-                'input-validation'      => 'Girdi Doğrulaması',
-                'is-required'           => 'Gerekli mi',
-                'is-unique'             => 'Benzersiz mi',
-                'is_required'           => 'Gerekli mi',
-                'is_unique'             => 'Benzersiz mi',
-                'labels'                => 'Etiketler',
-                'lookup'                => 'Arama',
-                'lookup-type'           => 'Arama Türü',
-                'multiselect'           => 'Çoklu Seçim',
-                'name'                  => 'Ad',
-                'numeric'               => 'Sayısal',
-                'option-deleted'        => 'Öznitelik Seçeneği başarıyla silindi',
-                'option-name'           => 'Seçenek Adı',
-                'option-type'           => 'Seçenek Türü',
-                'options'               => 'Seçenekler',
-                'phone'                 => 'Telefon',
-                'price'                 => 'Fiyat',
-                'save-btn'              => 'Özniteliği Kaydet',
-                'save-option'           => 'Seçeneği Kaydet',
-                'select'                => 'Seç',
-                'text'                  => 'Metin',
-                'textarea'              => 'Metin Alanı',
+            'create' => [
                 'title'                 => 'Öznitelik Oluştur',
-                'type'                  => 'Tür',
-                'url'                   => 'URL',
-                'validations'           => 'Doğrulamalar',
-            ],
-
-            'edit'  => [
-                'title'                 => 'Özniteliği Düzenle',
                 'save-btn'              => 'Özniteliği Kaydet',
                 'code'                  => 'Kod',
                 'name'                  => 'Ad',
-                'labels'                => 'Etiketler',
                 'entity-type'           => 'Varlık Türü',
                 'type'                  => 'Tür',
                 'validations'           => 'Doğrulamalar',
                 'is-required'           => 'Gerekli mi',
                 'input-validation'      => 'Girdi Doğrulaması',
                 'is-unique'             => 'Benzersiz mi',
+                'labels'                => 'Etiketler',
                 'general'               => 'Genel',
                 'numeric'               => 'Sayısal',
                 'decimal'               => 'Ondalık',
@@ -1619,9 +1434,52 @@ return [
                 'is_required'           => 'Gerekli mi',
                 'is_unique'             => 'Benzersiz mi',
                 'actions'               => 'İşlemler',
+            ],
+            'edit' => [
+                'actions'               => 'İşlemler',
+                'add-attribute-options' => 'Öznitelik Seçenekleri Ekle',
+                'add-option'            => 'Seçenek Ekle',
+                'address'               => 'Adres',
+                'boolean'               => 'Boolean',
+                'checkbox'              => 'Onay Kutusu',
+                'code'                  => 'Kod',
+                'date'                  => 'Tarih',
+                'datetime'              => 'Tarih Saat',
+                'decimal'               => 'Ondalık',
+                'email'                 => 'E-posta',
+                'entity-type'           => 'Varlık Türü',
+                'entity_type'           => 'Varlık türü',
+                'file'                  => 'Dosya',
+                'general'               => 'Genel',
+                'image'                 => 'Resim',
+                'input-validation'      => 'Girdi Doğrulaması',
+                'is-required'           => 'Gerekli mi',
+                'is-unique'             => 'Benzersiz mi',
+                'is_required'           => 'Gerekli mi',
+                'is_unique'             => 'Benzersiz mi',
+                'labels'                => 'Etiketler',
+                'lookup'                => 'Arama',
+                'lookup-type'           => 'Arama Türü',
+                'multiselect'           => 'Çoklu Seçim',
+                'name'                  => 'Ad',
+                'numeric'               => 'Sayısal',
+                'option-deleted'        => 'Attribute Option is deleted successfully',
+                'option-name'           => 'Seçenek Adı',
+                'option-type'           => 'Seçenek Türü',
+                'options'               => 'Seçenekler',
+                'phone'                 => 'Telefon',
+                'price'                 => 'Fiyat',
+                'save-btn'              => 'Özniteliği Kaydet',
+                'save-option'           => 'Seçeneği Kaydet',
+                'select'                => 'Seç',
+                'text'                  => 'Metin',
+                'textarea'              => 'Metin Alanı',
+                'title'                 => 'Özniteliği Düzenle',
+                'type'                  => 'Tür',
+                'url'                   => 'URL',
+                'validations'           => 'Doğrulamalar',
             ],
         ],
-
         'data-transfer' => [
             'imports' => [
                 'create' => [
@@ -1645,7 +1503,6 @@ return [
                     'type'                => 'Tür',
                     'validation-strategy' => 'Doğrulama Stratejisi',
                 ],
-
                 'edit' => [
                     'action'              => 'Eylem',
                     'allowed-errors'      => 'İzin Verilen Hatalar',
@@ -1667,12 +1524,10 @@ return [
                     'type'                => 'Tür',
                     'validation-strategy' => 'Doğrulama Stratejisi',
                 ],
-
                 'index' => [
                     'button-title' => 'İthalat Oluştur',
                     'title'        => 'İthalatlar',
-
-                    'datagrid' => [
+                    'datagrid'     => [
                         'actions'       => 'Eylemler',
                         'completed-at'  => 'Tamamlandığı Zaman',
                         'created'       => 'Oluşturuldu',
@@ -1689,7 +1544,6 @@ return [
                         'uploaded-file' => 'Yüklenen Dosya',
                     ],
                 ],
-
                 'import' => [
                     'back-btn'                => 'Geri',
                     'completed-batches'       => 'Tamamlanan Toplam Gruplar:',
@@ -1714,7 +1568,6 @@ return [
                     'validation-failed-info'  => 'İthalatınız geçersiz. Lütfen aşağıdaki hataları düzeltin ve tekrar deneyin.',
                     'validation-success-info' => 'İthalatınız geçerli. İthalat işlemini başlatmak için İthalat\'a tıklayın.',
                 ],
-
                 'create-success'    => 'İthalat başarıyla oluşturuldu.',
                 'delete-failed'     => 'İthalatı silme beklenmedik bir şekilde başarısız oldu.',
                 'delete-success'    => 'İthalat başarıyla silindi.',
@@ -1725,11 +1578,9 @@ return [
             ],
         ],
     ],
-
     'activities' => [
         'index' => [
-            'title'      => 'Etkinlikler',
-
+            'title'    => 'Etkinlikler',
             'datagrid' => [
                 'comment'       => 'Yorum',
                 'created_at'    => 'Oluşturulma Tarihi',
@@ -1754,7 +1605,6 @@ return [
                 'lunch'         => 'Öğle Yemeği',
             ],
         ],
-
         'edit' => [
             'title'           => 'Etkinliği Düzenle',
             'back-btn'        => 'Geri',
@@ -1774,7 +1624,6 @@ return [
             'no-result-found' => 'Kayıt bulunamadı.',
             'users'           => 'Kullanıcılar',
         ],
-
         'updated'              => 'Güncellendi :attribute',
         'created'              => 'Oluşturuldu',
         'duration-overlapping' => 'Katılımcıların bu saatte başka bir toplantısı var. Devam etmek istiyor musunuz?',
@@ -1787,37 +1636,35 @@ return [
         'mass-destroy-success' => 'Etkinlikler başarıyla silindi.',
         'mass-delete-failed'   => 'Etkinlikler silinemiyor.',
     ],
-
     'mail' => [
         'index' => [
-            'compose'           => 'Oluştur',
-            'draft'             => 'Taslak',
-            'inbox'             => 'Gelen Kutusu',
-            'outbox'            => 'Giden Kutusu',
-            'sent'              => 'Gönderildi',
-            'trash'             => 'Çöp',
-            'compose-mail-btn'  => 'Mail Oluştur',
-            'btn'               => 'Mail',
-            'mail'              => [
-                'title'         => 'Mail Oluştur',
-                'to'            => 'Kime',
-                'enter-emails'  => 'E-posta eklemek için enter tuşuna basın',
-                'cc'            => 'CC',
-                'bcc'           => 'BCC',
-                'subject'       => 'Konu',
-                'send-btn'      => 'Gönder',
-                'message'       => 'Mesaj',
-                'draft'         => 'Taslak',
+            'compose'          => 'Oluştur',
+            'draft'            => 'Taslak',
+            'inbox'            => 'Gelen Kutusu',
+            'outbox'           => 'Giden Kutusu',
+            'sent'             => 'Gönderildi',
+            'trash'            => 'Çöp',
+            'compose-mail-btn' => 'Mail Oluştur',
+            'btn'              => 'Mail',
+            'mail'             => [
+                'title'        => 'Mail Oluştur',
+                'to'           => 'Kime',
+                'enter-emails' => 'E-posta eklemek için enter tuşuna basın',
+                'cc'           => 'CC',
+                'bcc'          => 'BCC',
+                'subject'      => 'Konu',
+                'send-btn'     => 'Gönder',
+                'message'      => 'Mesaj',
+                'draft'        => 'Taslak',
             ],
-
             'datagrid' => [
                 'id'            => 'ID',
                 'from'          => 'Gönderen',
                 'to'            => 'Alıcı',
                 'subject'       => 'Konu',
                 'tags'          => 'Etiketler',
-                'content'       => 'İçerik',
                 'content'       => 'Eklentiler',
+                'attachments'   => 'Attachments',
                 'date'          => 'Tarih',
                 'move-to-inbox' => 'Gelen Kutusuna Taşı',
                 'move-to-trash' => 'Çöp kutusuna taşındı',
@@ -1826,14 +1673,12 @@ return [
                 'delete'        => 'Sil',
             ],
         ],
-
         'create-success'      => 'E-posta başarıyla gönderildi.',
         'update-success'      => 'E-posta başarıyla güncellendi.',
         'mass-update-success' => 'E-postalar başarıyla güncellendi.',
         'delete-success'      => 'E-posta başarıyla silindi.',
         'delete-failed'       => 'E-posta silinemedi.',
-
-        'view' => [
+        'view'                => [
             'title'                      => 'Mails',
             'subject'                    => ':subject',
             'link-mail'                  => 'Maili Bağla',
@@ -1867,14 +1712,12 @@ return [
             'lead-details'               => 'Müşteri Detayları',
             'contact-person'             => 'İletişim Kişisi',
             'product'                    => 'Ürün',
-
-            'tags' => [
+            'tags'                       => [
                 'create-success'  => 'Etiket başarıyla oluşturuldu.',
                 'destroy-success' => 'Etiket başarıyla silindi.',
             ],
         ],
     ],
-
     'common' => [
         'custom-attributes' => [
             'add-more'             => 'Daha Fazla Ekle',
@@ -1895,15 +1738,13 @@ return [
             'work'                 => 'İş',
         ],
     ],
-
     'leads' => [
-        'create-success'    => 'Lead başarıyla oluşturuldu.',
-        'update-success'    => 'Lead başarıyla güncellendi.',
-        'update-failed'     => 'Potansiyel müşteriler silinemez.',
-        'destroy-success'   => 'Lead başarıyla silindi.',
-        'destroy-failed'    => 'Lead silinemedi.',
-
-        'file' => [
+        'create-success'  => 'Lead başarıyla oluşturuldu.',
+        'update-success'  => 'Lead başarıyla güncellendi.',
+        'update-failed'   => 'Potansiyel müşteriler silinemez.',
+        'destroy-success' => 'Lead başarıyla silindi.',
+        'destroy-failed'  => 'Lead silinemedi.',
+        'file'            => [
             'data-not-found'         => 'Veri bulunamadı.',
             'empty-content'          => 'PDF içeriği boş veya çıkarılamadı.',
             'failed-extract'         => 'Dosyadan metin çıkarılamadı.',
@@ -1916,38 +1757,34 @@ return [
             'recursive-call'         => 'Özyinelemeli çağrı tespit edildi.',
             'text-generation-failed' => 'Metin çıkarma başarısız oldu. Dosya boş veya okunamaz olabilir.',
         ],
-
         'index' => [
             'title'      => 'Leads',
             'create-btn' => 'Lead Oluştur',
-
-            'datagrid' => [
-                'id'                  => 'ID',
-                'sales-person'        => 'Satış Temsilcisi',
-                'subject'             => 'Konu',
-                'source'              => 'Kaynak',
-                'lead-value'          => 'Lead Değeri',
-                'lead-type'           => 'Potansiyel Müşteri Türü',
-                'tag-name'            => 'Etiket Adı',
-                'contact-person'      => 'İletişim Kişisi',
-                'stage'               => 'Aşama',
-                'rotten-lead'         => 'Çürümüş Lead',
-                'date-to'             => 'Bitiş Tarihi',
-                'created-at'          => 'Oluşturulma Tarihi',
-                'no'                  => 'Hayır',
-                'yes'                 => 'Evet',
-                'delete'              => 'Sil',
-                'mass-delete'         => 'Toplu Sil',
-                'mass-update'         => 'Toplu Güncelle',
+            'datagrid'   => [
+                'id'             => 'ID',
+                'sales-person'   => 'Satış Temsilcisi',
+                'subject'        => 'Konu',
+                'source'         => 'Kaynak',
+                'lead-value'     => 'Lead Değeri',
+                'lead-type'      => 'Potansiyel Müşteri Türü',
+                'tag-name'       => 'Etiket Adı',
+                'contact-person' => 'İletişim Kişisi',
+                'stage'          => 'Aşama',
+                'rotten-lead'    => 'Çürümüş Lead',
+                'date-to'        => 'Bitiş Tarihi',
+                'created-at'     => 'Oluşturulma Tarihi',
+                'no'             => 'Hayır',
+                'yes'            => 'Evet',
+                'delete'         => 'Sil',
+                'mass-delete'    => 'Toplu Sil',
+                'mass-update'    => 'Toplu Güncelle',
             ],
-
             'kanban' => [
                 'rotten-days'            => 'Bu müşteri adayı :days gündür çürük',
                 'empty-list'             => 'Müşteri Adayı Listeniz Boş',
                 'empty-list-description' => 'Hedeflerinizi düzenlemek için bir müşteri adayı oluşturun.',
                 'create-lead-btn'        => 'Müşteri Adayı Oluştur',
-
-                'columns' => [
+                'columns'                => [
                     'contact-person'      => 'İletişim Kişisi',
                     'id'                  => 'ID',
                     'lead-type'           => 'Lead Türü',
@@ -1959,12 +1796,10 @@ return [
                     'expected-close-date' => 'Beklenen Kapanış Tarihi',
                     'created-at'          => 'Oluşturulma Tarihi',
                 ],
-
                 'toolbar' => [
                     'search' => [
                         'title' => 'Başlığa göre ara',
                     ],
-
                     'filters' => [
                         'apply-filters' => 'Filtreleri Uygula',
                         'clear-all'     => 'Tümünü Temizle',
@@ -1976,12 +1811,10 @@ return [
                     ],
                 ],
             ],
-
             'view-switcher' => [
                 'all-pipelines'       => 'Tüm Boru Hatları',
                 'create-new-pipeline' => 'Yeni Boru Hattı Oluştur',
             ],
-
             'upload' => [
                 'create-lead'   => 'AI Kullanarak Lead Oluştur',
                 'file'          => 'Dosya yükleme',
@@ -1991,7 +1824,6 @@ return [
                 'upload-file'   => 'Dosya yükle',
             ],
         ],
-
         'create' => [
             'title'          => 'Lead Oluştur',
             'save-btn'       => 'Kaydet',
@@ -2002,7 +1834,6 @@ return [
             'products'       => 'Ürünler',
             'products-info'  => 'Ürünler Hakkında Bilgiler',
         ],
-
         'edit' => [
             'title'          => 'Lead\'i Düzenle',
             'save-btn'       => 'Kaydet',
@@ -2013,7 +1844,6 @@ return [
             'products'       => 'Ürünler',
             'products-info'  => 'Ürünler Hakkında Bilgiler',
         ],
-
         'common' => [
             'contact' => [
                 'name'           => 'Ad',
@@ -2021,7 +1851,6 @@ return [
                 'contact-number' => 'İletişim Numarası',
                 'organization'   => 'Kuruluş',
             ],
-
             'products' => [
                 'product-name' => 'Ürün Adı',
                 'quantity'     => 'Miktar',
@@ -2032,21 +1861,17 @@ return [
                 'total'        => 'Toplam',
             ],
         ],
-
         'view' => [
             'title'       => 'Lead: :title',
             'rotten-days' => ':days Gün',
-
-            'tabs' => [
+            'tabs'        => [
                 'description' => 'Açıklama',
                 'products'    => 'Ürünler',
                 'quotes'      => 'Teklifler',
             ],
-
             'attributes' => [
                 'title' => 'Lead Hakkında',
             ],
-
             'quotes' => [
                 'subject'         => 'Konu',
                 'expired-at'      => 'Son Tarih',
@@ -2063,7 +1888,6 @@ return [
                 'empty-info'      => 'Bu Lead için Teklif Bulunamadı',
                 'add-btn'         => 'Teklif Ekle',
             ],
-
             'products' => [
                 'product-name' => 'Ürün Adı',
                 'quantity'     => 'Miktar',
@@ -2076,12 +1900,10 @@ return [
                 'empty-info'   => 'Bu Lead için Ürün Bulunamadı',
                 'add-product'  => 'Ürün Ekle',
             ],
-
             'persons' => [
                 'title'     => 'Kişiler Hakkında',
                 'job-title' => ':job_title @ :organization',
             ],
-
             'stages' => [
                 'won-lost'       => 'Kazandı/Kayıp',
                 'won'            => 'Kazandı',
@@ -2092,14 +1914,12 @@ return [
                 'lost-reason'    => 'Kayıp Nedeni',
                 'save-btn'       => 'Kaydet',
             ],
-
             'tags' => [
                 'create-success'  => 'Etiket başarıyla oluşturuldu.',
                 'destroy-success' => 'Etiket başarıyla silindi.',
             ],
         ],
     ],
-
     'configuration' => [
         'index' => [
             'back'           => 'Geri',
@@ -2110,75 +1930,63 @@ return [
             'select-country' => 'Ülke Seç',
             'select-state'   => 'Eyalet Seç',
             'title'          => 'Yapılandırma',
-
-            'general'  => [
+            'general'        => [
                 'title'   => 'Genel',
                 'info'    => 'Genel Yapılandırma',
-
                 'general' => [
                     'title'           => 'Genel',
                     'info'            => 'Genel ayarlarınızı burada güncelleyin.',
                     'locale-settings' => [
-                        'title'       => 'Yerel Ayarlar',
-                        'title-info'  => 'Kullanıcı arayüzünde kullanılan dili tanımlar, örneğin Arapça (ar), İngilizce (en), İspanyolca (es), Farsça (fa) ve Türkçe (tr).',
+                        'title'      => 'Yerel Ayarlar',
+                        'title-info' => 'Kullanıcı arayüzünde kullanılan dili tanımlar, örneğin Arapça (ar), İngilizce (en), İspanyolca (es), Farsça (fa) ve Türkçe (tr).',
                     ],
-
                     'admin-logo' => [
                         'logo-image' => 'Logo Resmi',
                         'title'      => 'Yönetici Logosu',
                         'title-info' => 'Yönetici paneliniz için logo resmini yapılandırın.',
                     ],
                 ],
-
                 'settings' => [
-                    'title' => 'Ayarlar',
-                    'info'  => 'Ayarlarınızı burada güncelleyin.',
-
+                    'title'  => 'Ayarlar',
+                    'info'   => 'Ayarlarınızı burada güncelleyin.',
                     'footer' => [
                         'info'       => 'Powered by bölümünü burada yapılandırabiliriz.',
                         'powered-by' => 'Powered by metin düzenleyici',
                         'title'      => 'Powered by Bölüm Yapılandırmaları',
                     ],
-
                     'menu' => [
-                        'activities'     => 'Aktiviteler',
-                        'configuration'  => 'Yapılandırma',
-                        'contacts'       => 'İletişim',
-                        'dashboard'      => 'Gösterge Paneli',
-                        'draft'          => 'Taslak',
-                        'inbox'          => 'Gelen Kutusu',
-                        'info'           => 'Menü öğelerinin adlarını burada yapılandırabiliriz.',
-                        'leads'          => 'Leadler',
-                        'mail'           => 'Mail',
-                        'organizations'  => 'Organizasyonlar',
-                        'outbox'         => 'Gönderilenler',
-                        'persons'        => 'Kişiler',
-                        'products'       => 'Ürünler',
-                        'quotes'         => 'Teklifler',
-                        'sent'           => 'Gönderildi',
-                        'settings'       => 'Ayarlar',
-                        'title'          => 'Menü Öğesi Yapılandırmaları',
-                        'trash'          => 'Çöp Kutusu',
+                        'activities'    => 'Aktiviteler',
+                        'configuration' => 'Yapılandırma',
+                        'contacts'      => 'İletişim',
+                        'dashboard'     => 'Gösterge Paneli',
+                        'draft'         => 'Taslak',
+                        'inbox'         => 'Gelen Kutusu',
+                        'info'          => 'Menü öğelerinin adlarını burada yapılandırabiliriz.',
+                        'leads'         => 'Leadler',
+                        'mail'          => 'Mail',
+                        'organizations' => 'Organizasyonlar',
+                        'outbox'        => 'Gönderilenler',
+                        'persons'       => 'Kişiler',
+                        'products'      => 'Ürünler',
+                        'quotes'        => 'Teklifler',
+                        'sent'          => 'Gönderildi',
+                        'settings'      => 'Ayarlar',
+                        'title'         => 'Menü Öğesi Yapılandırmaları',
+                        'trash'         => 'Çöp Kutusu',
                     ],
-
                     'menu-color' => [
-                        'active-background-color' => 'Aktif Arka Plan Rengi',
-                        'active-text-color'       => 'Aktif Metin Rengi',
-                        'info'                    => 'Menü öğelerinin renklerini burada değiştirebiliriz.',
-                        'text-color'              => 'Metin Rengi',
-                        'title'                   => 'Menü Öğesi Renk Yapılandırmaları',
+                        'brand-color' => 'Brand Color',
+                        'info'        => 'Menü öğelerinin renklerini burada değiştirebiliriz.',
+                        'title'       => 'Menü Öğesi Renk Yapılandırmaları',
                     ],
                 ],
             ],
-
             'email' => [
                 'title' => 'Email Settings',
                 'info'  => 'Email configuration for the application.',
-
-                'imap' => [
-                    'title' => 'IMAP Settings',
-                    'info'  => 'IMAP email configuration for receiving emails.',
-
+                'imap'  => [
+                    'title'   => 'IMAP Settings',
+                    'info'    => 'IMAP email configuration for receiving emails.',
                     'account' => [
                         'title'         => 'IMAP Account',
                         'title-info'    => 'Configure your IMAP account settings here.',
@@ -2191,11 +1999,9 @@ return [
                     ],
                 ],
             ],
-
             'magic-ai' => [
-                'title' => 'Sihirli AI',
-                'info'  => 'Uygulama için Sihirli AI yapılandırması.',
-
+                'title'    => 'Sihirli AI',
+                'info'     => 'Uygulama için Sihirli AI yapılandırması.',
                 'settings' => [
                     'api-key'             => 'API Anahtarı',
                     'api-key-info'        => 'Her model için bir OpenRouter API anahtarı kullanmayı unutmayın. Bu, güvenliği ve performansı artırmak için basit bir adımdır.',
@@ -2206,8 +2012,7 @@ return [
                     'doc-generation'      => 'DOC Oluşturma',
                     'doc-generation-info' => 'DOC dosyalarından verileri otomatik olarak çıkartıp metin formatına dönüştürmek için DOC Oluşturma özelliğini etkinleştirin. Bu özelliği etkinleştirerek iş akışınızı kolaylaştırın ve verimliliğinizi artırın.',
                     'title'               => 'Genel Ayarlar',
-
-                    'models'     => [
+                    'models'              => [
                         'deepseek-r1'           => 'Deepseek R1 Distill-llama-8b',
                         'gemini-2-0-flash-001'  => 'Gemini 2.0 flash-001',
                         'gpt-4o'                => 'GPT-4.0',
@@ -2220,16 +2025,13 @@ return [
             ],
         ],
     ],
-
     'dashboard' => [
         'index' => [
-            'title' => 'Gösterge Paneli',
-
+            'title'   => 'Gösterge Paneli',
             'revenue' => [
                 'lost-revenue' => 'Kayıp Gelir',
                 'won-revenue'  => 'Kazançlı Gelir',
             ],
-
             'over-all' => [
                 'average-lead-value'    => 'Ortalama Lead Değeri',
                 'total-leads'           => 'Toplam Lead',
@@ -2238,38 +2040,32 @@ return [
                 'total-persons'         => 'Toplam Kişi',
                 'total-organizations'   => 'Toplam Organizasyon',
             ],
-
             'total-leads' => [
                 'title' => 'Leadler',
                 'total' => 'Toplam Lead',
                 'won'   => 'Kazanan Leadler',
                 'lost'  => 'Kayıp Leadler',
             ],
-
             'revenue-by-sources' => [
                 'title'       => 'Kaynaklara Göre Gelir',
                 'empty-title' => 'Veri Bulunamadı',
                 'empty-info'  => 'Seçilen aralık için veri bulunamadı',
             ],
-
             'revenue-by-types' => [
                 'title'       => 'Türlere Göre Gelir',
                 'empty-title' => 'Veri Bulunamadı',
                 'empty-info'  => 'Seçilen aralık için veri bulunamadı',
             ],
-
             'top-selling-products' => [
                 'title'       => 'En Çok Satılan Ürünler',
                 'empty-title' => 'Ürün Bulunamadı',
                 'empty-info'  => 'Seçilen aralık için ürün bulunamadı',
             ],
-
             'top-persons' => [
                 'title'       => 'En İyi Kişiler',
                 'empty-title' => 'Kişi Bulunamadı',
                 'empty-info'  => 'Seçilen aralık için kişi bulunamadı',
             ],
-
             'open-leads-by-states' => [
                 'title'       => 'Aşamalara Göre Açık Leadler',
                 'empty-title' => 'Veri Bulunamadı',
@@ -2277,14 +2073,13 @@ return [
             ],
         ],
     ],
-
     'layouts' => [
-        'app-version'          => 'Sürüm: :version',
-        'dashboard'            => 'Gösterge Paneli',
-        'leads'                => 'Leadler',
-        'quotes'               => 'Teklifler',
-        'quote'                => 'Teklif',
-        'mail'                 => [
+        'app-version' => 'Sürüm: :version',
+        'dashboard'   => 'Gösterge Paneli',
+        'leads'       => 'Leadler',
+        'quotes'      => 'Teklifler',
+        'quote'       => 'Teklif',
+        'mail'        => [
             'title'   => 'Mail',
             'compose' => 'Yeni Mesaj',
             'inbox'   => 'Gelen Kutusu',
@@ -2345,7 +2140,6 @@ return [
         'back'                 => 'Geri',
         'name'                 => 'Ad',
         'configuration'        => 'Yapılandırma',
-        'activities'           => 'Aktiviteler',
         'howdy'                => 'Merhaba!',
         'warehouses'           => 'Depolar',
         'warehouse'            => 'Depo',
@@ -2353,85 +2147,73 @@ return [
         'data_transfer'        => 'Veri Transferi',
         'data_transfer_info'   => 'CRM’de kişiler, ürünler ve potansiyel müşterilere ilişkin veri transferi ayarlarını yönetin',
     ],
-
     'user' => [
         'account' => [
-            'name'                  => 'İsim',
-            'email'                 => 'E-posta',
-            'password'              => 'Şifre',
-            'my_account'            => 'Hesabım',
-            'update_details'        => 'Bilgileri Güncelle',
-            'current_password'      => 'Mevcut şifre',
-            'confirm_password'      => 'Şifreyi onayla',
-            'password-match'        => 'Mevcut şifre eşleşmiyor.',
-            'account-save'          => 'Hesap değişiklikleri başarıyla kaydedildi.',
-            'permission-denied'     => 'İzin Reddedildi',
-            'remove-image'          => 'Görseli Kaldır',
-            'upload_image_pix'      => 'Profil Görseli Yükle (100px x 100px)',
-            'upload_image_format'   => 'PNG veya JPG Formatında',
-            'image_upload_message'  => 'Sadece görseller (.jpeg, .jpg, .png, ..) izinlidir.',
+            'name'                 => 'İsim',
+            'email'                => 'E-posta',
+            'password'             => 'Şifre',
+            'my_account'           => 'Hesabım',
+            'update_details'       => 'Bilgileri Güncelle',
+            'current_password'     => 'Mevcut şifre',
+            'confirm_password'     => 'Şifreyi onayla',
+            'password-match'       => 'Mevcut şifre eşleşmiyor.',
+            'account-save'         => 'Hesap değişiklikleri başarıyla kaydedildi.',
+            'permission-denied'    => 'İzin Reddedildi',
+            'remove-image'         => 'Görseli Kaldır',
+            'upload_image_pix'     => 'Profil Görseli Yükle (100px x 100px)',
+            'upload_image_format'  => 'PNG veya JPG Formatında',
+            'image_upload_message' => 'Sadece görseller (.jpeg, .jpg, .png, ..) izinlidir.',
         ],
     ],
-
     'emails' => [
         'common' => [
             'dear'   => 'Sevgili :name',
             'cheers' => 'Saygılar,</br>:app_name Ekibi',
-
-            'user' => [
-                'dear'           => 'Sevgili :username',
-                'create-subject' => 'Bir üye olarak eklendiniz.',
-                'create-body'    => 'Tebrikler! Artık ekibimizin bir üyesisiniz.',
-
+            'user'   => [
+                'dear'            => 'Sevgili :username',
+                'create-subject'  => 'Bir üye olarak eklendiniz.',
+                'create-body'     => 'Tebrikler! Artık ekibimizin bir üyesisiniz.',
                 'forget-password' => [
-                    'subject'           => 'Müşteri Şifre Sıfırlama',
-                    'dear'              => 'Sevgili :username',
-                    'reset-password'    => 'Şifreyi Sıfırla',
-                    'info'              => 'Bu e-postayı almanız, hesabınız için bir şifre sıfırlama talebi aldığımız anlamına gelir',
-                    'final-summary'     => 'Eğer şifre sıfırlama talebinde bulunmadıysanız, herhangi bir ek işlem yapmanıza gerek yoktur',
-                    'thanks'            => 'Teşekkürler!',
+                    'subject'        => 'Müşteri Şifre Sıfırlama',
+                    'dear'           => 'Sevgili :username',
+                    'reset-password' => 'Şifreyi Sıfırla',
+                    'info'           => 'Bu e-postayı almanız, hesabınız için bir şifre sıfırlama talebi aldığımız anlamına gelir',
+                    'final-summary'  => 'Eğer şifre sıfırlama talebinde bulunmadıysanız, herhangi bir ek işlem yapmanıza gerek yoktur',
+                    'thanks'         => 'Teşekkürler!',
                 ],
             ],
         ],
     ],
-
     'validations' => [
         'message' => [
             'decimal' => ':attribute ondalıklı bir sayı olmalıdır.',
         ],
     ],
-
     'errors' => [
-        'dashboard' => 'Kontrol Paneli',
-        'go-back'   => 'Geri Dön',
-        'support'   => 'Sorun devam ederse, yardım için bize <a href=":link" class=":class">:email</a> adresinden ulaşın.',
-
-        '404' => [
+        'dashboard'   => 'Kontrol Paneli',
+        'go-back'     => 'Geri Dön',
+        'support'     => 'Sorun devam ederse, yardım için bize <a href=":link" class=":class">:email</a> adresinden ulaşın.',
+        '404'         => [
             'description' => 'Oops! Aradığınız sayfa tatilde. Aradığınız şeyi bulamadık gibi görünüyor.',
             'title'       => '404 Sayfa Bulunamadı',
         ],
-
         '401' => [
             'description' => 'Oops! Bu sayfaya erişim izniniz yok gibi görünüyor. Gerekli yetkilere sahip değilsiniz.',
             'title'       => '401 Yetkisiz',
         ],
-
         '403' => [
             'description' => 'Oops! Bu sayfa erişime kapalı. Bu içeriği görüntülemek için gerekli izinlere sahip değilsiniz gibi görünüyor.',
             'title'       => '403 Yasak',
         ],
-
         '500' => [
             'description' => 'Oops! Bir şeyler ters gitti. Aradığınız sayfa yüklenirken sorun yaşıyoruz gibi görünüyor.',
             'title'       => '500 Sunucu Hatası',
         ],
-
         '503' => [
             'description' => 'Oops! Görünüşe göre geçici bir bakım nedeniyle kapalıyız. Lütfen kısa süre sonra tekrar kontrol edin.',
             'title'       => '503 Hizmet Kullanılamıyor',
         ],
     ],
-
     'export' => [
         'csv'        => 'CSV',
         'download'   => 'İndir',

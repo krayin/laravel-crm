@@ -32,8 +32,6 @@ return [
         'other-settings'  => 'سایر تنظیمات',
         'tags'            => 'برچسب‌ها',
         'configuration'   => 'پیکربندی',
-        'campaigns'       => 'کمپین‌ها',
-        'event'           => 'رویداد',
         'create'          => 'ایجاد',
         'edit'            => 'ویرایش',
         'view'            => 'نمایش',
@@ -47,20 +45,17 @@ return [
         'event'           => 'رویداد',
         'campaigns'       => 'کمپین‌ها',
     ],
-
     'users' => [
         'activate-warning' => 'حساب شما هنوز فعال نشده است. لطفاً با مدیر سیستم تماس بگیرید.',
         'login-error'      => 'اطلاعات وارد شده با سوابق ما مطابقت ندارد.',
         'not-permission'   => 'شما اجازه دسترسی به پنل مدیریت را ندارید.',
-
-        'login' => [
+        'login'            => [
             'email'                => 'آدرس ایمیل',
             'forget-password-link' => 'فراموشی رمز عبور؟',
             'password'             => 'رمز عبور',
             'submit-btn'           => 'ورود',
             'title'                => 'ورود',
         ],
-
         'forget-password' => [
             'create' => [
                 'email'           => 'ایمیل ثبت‌شده',
@@ -72,7 +67,6 @@ return [
                 'title'           => 'بازیابی رمز عبور',
             ],
         ],
-
         'reset-password' => [
             'back-link-title'  => 'بازگشت به ورود؟',
             'confirm-password' => 'تأیید رمز عبور',
@@ -82,7 +76,6 @@ return [
             'title'            => 'بازنشانی رمز عبور',
         ],
     ],
-
     'account' => [
         'edit' => [
             'back-btn'          => 'بازگشت',
@@ -101,7 +94,6 @@ return [
             'upload-image-info' => 'آپلود یک تصویر پروفایل (110px X 110px) در فرمت PNG یا JPG',
         ],
     ],
-
     'components' => [
         'activities' => [
             'actions' => [
@@ -116,7 +108,6 @@ return [
                     'send-btn'     => 'ارسال',
                     'message'      => 'پیام',
                 ],
-
                 'file' => [
                     'btn'           => 'فایل',
                     'title'         => 'افزودن فایل',
@@ -126,14 +117,12 @@ return [
                     'file'          => 'فایل',
                     'save-btn'      => 'ذخیره فایل',
                 ],
-
                 'note' => [
                     'btn'      => 'یادداشت',
                     'title'    => 'افزودن یادداشت',
                     'comment'  => 'نظر',
                     'save-btn' => 'ذخیره یادداشت',
                 ],
-
                 'activity' => [
                     'btn'           => 'فعالیت',
                     'title'         => 'افزودن فعالیت',
@@ -146,8 +135,7 @@ return [
                     'meeting'       => 'جلسه',
                     'lunch'         => 'ناهار',
                     'save-btn'      => 'ذخیره فعالیت',
-
-                    'participants' => [
+                    'participants'  => [
                         'title'       => 'شرکت‌کنندگان',
                         'placeholder' => 'برای جستجوی شرکت‌کنندگان تایپ کنید',
                         'users'       => 'کاربران',
@@ -156,92 +144,79 @@ return [
                     ],
                 ],
             ],
-
             'index' => [
-                'all'          => 'همه',
-                'bcc'          => 'کپی مخفی',
-                'by-user'      => 'توسط :user',
-                'calls'        => 'تماس‌ها',
-                'cc'           => 'کپی',
-                'change-log'   => 'تغییرات',
-                'delete'       => 'حذف',
-                'edit'         => 'ویرایش',
-                'emails'       => 'ایمیل‌ها',
-                'empty'        => 'خالی',
-                'files'        => 'فایل‌ها',
-                'from'         => 'از',
-                'location'     => 'محل',
-                'lunches'      => 'ناهارها',
-                'mark-as-done' => 'علامت زدن به عنوان انجام شده',
-                'meetings'     => 'جلسات',
-                'notes'        => 'یادداشت‌ها',
-                'participants' => 'شرکت‌کنندگان',
-                'planned'      => 'برنامه‌ریزی شده',
-                'quotes'       => 'نقل قول‌ها',
-                'scheduled-on' => 'برنامه‌ریزی شده در',
-                'system'       => 'سیستم',
-                'to'           => 'تا',
-                'unlink'       => 'لغو پیوند',
-                'view'         => 'مشاهده',
-
+                'all'                => 'همه',
+                'bcc'                => 'کپی مخفی',
+                'by-user'            => 'توسط :user',
+                'calls'              => 'تماس‌ها',
+                'cc'                 => 'کپی',
+                'change-log'         => 'تغییرات',
+                'delete'             => 'حذف',
+                'edit'               => 'ویرایش',
+                'emails'             => 'ایمیل‌ها',
+                'empty'              => 'خالی',
+                'files'              => 'فایل‌ها',
+                'from'               => 'از',
+                'location'           => 'محل',
+                'lunches'            => 'ناهارها',
+                'mark-as-done'       => 'علامت زدن به عنوان انجام شده',
+                'meetings'           => 'جلسات',
+                'notes'              => 'یادداشت‌ها',
+                'participants'       => 'شرکت‌کنندگان',
+                'planned'            => 'برنامه‌ریزی شده',
+                'quotes'             => 'نقل قول‌ها',
+                'scheduled-on'       => 'برنامه‌ریزی شده در',
+                'system'             => 'سیستم',
+                'to'                 => 'تا',
+                'unlink'             => 'لغو پیوند',
+                'view'               => 'مشاهده',
                 'empty-placeholders' => [
                     'all' => [
                         'title'       => 'هیچ فعالیتی یافت نشد',
                         'description' => 'هیچ فعالیتی برای این مورد یافت نشد. می‌توانید با کلیک روی دکمه "فعالیت" در پنل سمت چپ، فعالیت اضافه کنید.',
                     ],
-
                     'planned' => [
                         'title'       => 'هیچ فعالیت برنامه‌ریزی‌شده‌ای یافت نشد',
                         'description' => 'هیچ فعالیت برنامه‌ریزی‌شده‌ای برای این مورد یافت نشد. می‌توانید با کلیک روی دکمه "فعالیت" در پنل سمت چپ، فعالیت اضافه کنید.',
                     ],
-
                     'notes' => [
                         'title'       => 'یادداشتی یافت نشد',
                         'description' => 'هیچ یادداشتی برای این مورد یافت نشد. می‌توانید با کلیک روی دکمه "یادداشت" در پنل سمت چپ، یادداشت اضافه کنید.',
                     ],
-
                     'calls' => [
                         'title'       => 'تماسی یافت نشد',
                         'description' => 'هیچ تماسی برای این مورد یافت نشد. می‌توانید با کلیک روی دکمه "فعالیت" و انتخاب نوع تماس، تماس اضافه کنید.',
                     ],
-
                     'meetings' => [
                         'title'       => 'ملاقاتی یافت نشد',
                         'description' => 'هیچ ملاقاتی برای این مورد یافت نشد. می‌توانید با کلیک روی دکمه "فعالیت" و انتخاب نوع جلسه، جلسه اضافه کنید.',
                     ],
-
                     'lunches' => [
                         'title'       => 'ناهاری یافت نشد',
                         'description' => 'هیچ ناهاری برای این مورد یافت نشد. می‌توانید با کلیک روی دکمه "فعالیت" و انتخاب نوع ناهار، ناهار اضافه کنید.',
                     ],
-
                     'files' => [
                         'title'       => 'فایلی یافت نشد',
                         'description' => 'هیچ فایلی برای این مورد یافت نشد. می‌توانید با کلیک روی دکمه "فایل" در پنل سمت چپ، فایل اضافه کنید.',
                     ],
-
                     'emails' => [
                         'title'       => 'ایمیلی یافت نشد',
                         'description' => 'هیچ ایمیلی برای این مورد یافت نشد. می‌توانید با کلیک روی دکمه "ایمیل" در پنل سمت چپ، ایمیل اضافه کنید.',
                     ],
-
                     'system' => [
                         'title'       => 'تغییری ثبت نشده است',
                         'description' => 'هیچ گزارش تغییری برای این مورد یافت نشد.',
                     ],
                 ],
-
             ],
         ],
-
         'media' => [
             'images' => [
                 'add-image-btn'     => 'افزودن تصویر',
                 'ai-add-image-btn'  => 'هوش مصنوعی جادویی',
                 'allowed-types'     => 'png, jpeg, jpg',
                 'not-allowed-error' => 'فقط فایل‌های تصویری (.jpeg, .jpg, .png, ..) مجاز هستند.',
-
-                'placeholders' => [
+                'placeholders'      => [
                     'front'     => 'جلو',
                     'next'      => 'بعدی',
                     'size'      => 'اندازه',
@@ -249,35 +224,30 @@ return [
                     'zoom'      => 'بزرگنمایی',
                 ],
             ],
-
             'videos' => [
                 'add-video-btn'     => 'افزودن ویدیو',
                 'allowed-types'     => 'mp4, webm, mkv',
                 'not-allowed-error' => 'فقط فایل‌های ویدیویی (.mp4, .mov, .ogg ..) مجاز هستند.',
             ],
         ],
-
         'datagrid' => [
             'index' => [
                 'no-records-selected'              => 'هیچ رکوردی انتخاب نشده است.',
                 'must-select-a-mass-action-option' => 'باید یک گزینه از اقدامات انبوه را انتخاب کنید.',
                 'must-select-a-mass-action'        => 'باید یک اقدام انبوه را انتخاب کنید.',
             ],
-
             'toolbar' => [
-                'length-of' => ':length از',
-                'of'        => 'از',
-                'per-page'  => 'در هر صفحه',
-                'results'   => ':total نتایج',
-                'delete'    => 'حذف',
-                'selected'  => ':total موارد انتخاب شده',
-
+                'length-of'    => ':length از',
+                'of'           => 'از',
+                'per-page'     => 'در هر صفحه',
+                'results'      => ':total نتایج',
+                'delete'       => 'حذف',
+                'selected'     => ':total موارد انتخاب شده',
                 'mass-actions' => [
                     'submit'        => 'ارسال',
                     'select-option' => 'انتخاب گزینه',
                     'select-action' => 'انتخاب اقدام',
                 ],
-
                 'filter' => [
                     'apply-filters-btn' => 'اعمال فیلترها',
                     'back-btn'          => 'بازگشت',
@@ -298,33 +268,27 @@ return [
                     'update-filter'     => 'به‌روزرسانی فیلتر',
                     'updated-success'   => 'فیلتر با موفقیت به‌روزرسانی شد.',
                 ],
-
                 'search' => [
                     'title' => 'جستجو',
                 ],
             ],
-
             'filters' => [
-                'select' => 'انتخاب',
-                'title'  => 'فیلترها',
-
+                'select'   => 'انتخاب',
+                'title'    => 'فیلترها',
                 'dropdown' => [
                     'searchable' => [
                         'at-least-two-chars' => 'حداقل ۲ حرف تایپ کنید...',
                         'no-results'         => 'هیچ نتیجه‌ای یافت نشد...',
                     ],
                 ],
-
                 'custom-filters' => [
                     'clear-all' => 'پاک کردن همه',
                     'title'     => 'فیلترهای سفارشی',
                 ],
-
                 'boolean-options' => [
                     'false' => 'نادرست',
                     'true'  => 'درست',
                 ],
-
                 'date-options' => [
                     'last-month'        => 'ماه گذشته',
                     'last-six-months'   => '۶ ماه گذشته',
@@ -336,13 +300,11 @@ return [
                     'yesterday'         => 'دیروز',
                 ],
             ],
-
             'table' => [
                 'actions'              => 'اقدامات',
                 'no-records-available' => 'رکوردی موجود نیست.',
             ],
         ],
-
         'modal' => [
             'confirm' => [
                 'agree-btn'    => 'موافقم',
@@ -351,7 +313,6 @@ return [
                 'title'        => 'آیا مطمئن هستید؟',
             ],
         ],
-
         'tags' => [
             'index' => [
                 'title'          => 'برچسب‌ها',
@@ -367,23 +328,19 @@ return [
                 'honeydew'       => 'شهد عسل',
             ],
         ],
-
         'layouts' => [
             'powered-by' => [
                 'description' => 'توسعه یافته توسط :krayin، یک پروژه متن باز از :webkul.',
             ],
-
             'header' => [
                 'mega-search' => [
-                    'title'   => 'جستجوی بزرگ',
-
-                    'tabs' => [
+                    'title' => 'جستجوی بزرگ',
+                    'tabs'  => [
                         'leads'    => 'سرنخ‌ها',
                         'quotes'   => 'پیشنهادات',
                         'persons'  => 'افراد',
                         'products' => 'محصولات',
                     ],
-
                     'explore-all-products'          => 'کاوش در تمامی محصولات',
                     'explore-all-leads'             => 'کاوش در تمامی سرنخ‌ها',
                     'explore-all-contacts'          => 'کاوش در تمامی مخاطبین',
@@ -395,41 +352,34 @@ return [
                 ],
             ],
         ],
-
         'attributes' => [
-            'edit'   => [
+            'edit' => [
                 'delete' => 'حذف',
             ],
-
             'lookup' => [
                 'click-to-add'    => 'برای اضافه کردن کلیک کنید',
-                'search'          => 'جستجو',
-                'no-result-found' => 'نتیجه‌ای یافت نشد',
                 'search'          => 'جستجو...',
+                'no-result-found' => 'نتیجه‌ای یافت نشد',
             ],
         ],
-
         'lookup' => [
             'click-to-add' => 'برای اضافه کردن کلیک کنید',
             'no-results'   => 'نتیجه‌ای یافت نشد',
             'add-as-new'   => 'اضافه کردن به عنوان جدید',
             'search'       => 'جستجو...',
         ],
-
         'flash-group' => [
             'success' => 'موفقیت',
             'error'   => 'خطا',
             'warning' => 'هشدار',
             'info'    => 'اطلاعات',
         ],
-
         'tiny-mce' => [
             'http-error'    => 'خطای HTTP',
             'invalid-json'  => 'پاسخ JSON نامعتبر از سرور.',
             'upload-failed' => 'آپلود فایل ناموفق بود. لطفاً دوباره تلاش کنید.',
         ],
     ],
-
     'quotes' => [
         'index' => [
             'title'          => 'نقل‌قول‌ها',
@@ -438,23 +388,21 @@ return [
             'update-success' => 'نقل‌قول با موفقیت به‌روزرسانی شد.',
             'delete-success' => 'نقل‌قول با موفقیت حذف شد.',
             'delete-failed'  => 'حذف نقل‌قول ممکن نیست.',
-
-            'datagrid' => [
-                'subject'        => 'موضوع',
-                'sales-person'   => 'فروشنده',
-                'expired-at'     => 'تاریخ انقضا',
-                'created-at'     => 'تاریخ ایجاد',
-                'person'         => 'شخص',
-                'subtotal'       => 'جمع جزء',
-                'discount'       => 'تخفیف',
-                'tax'            => 'مالیات',
-                'adjustment'     => 'تنظیم',
-                'grand-total'    => 'جمع کل',
-                'edit'           => 'ویرایش',
-                'delete'         => 'حذف',
-                'print'          => 'چاپ',
+            'datagrid'       => [
+                'subject'      => 'موضوع',
+                'sales-person' => 'فروشنده',
+                'expired-at'   => 'تاریخ انقضا',
+                'created-at'   => 'تاریخ ایجاد',
+                'person'       => 'شخص',
+                'subtotal'     => 'جمع جزء',
+                'discount'     => 'تخفیف',
+                'tax'          => 'مالیات',
+                'adjustment'   => 'تنظیم',
+                'grand-total'  => 'جمع کل',
+                'edit'         => 'ویرایش',
+                'delete'       => 'حذف',
+                'print'        => 'چاپ',
             ],
-
             'pdf' => [
                 'adjustment'       => 'تنظیم',
                 'amount'           => 'مقدار',
@@ -477,7 +425,6 @@ return [
                 'title'            => 'نقل‌قول',
             ],
         ],
-
         'create' => [
             'title'             => 'ایجاد نقل‌قول',
             'save-btn'          => 'ذخیره نقل‌قول',
@@ -508,7 +455,6 @@ return [
             'product-name'      => 'نام محصول',
             'action'            => 'عملیات',
         ],
-
         'edit' => [
             'title'             => 'ویرایش نقل‌قول',
             'save-btn'          => 'ذخیره نقل‌قول',
@@ -540,21 +486,19 @@ return [
             'action'            => 'عملیات',
         ],
     ],
-
     'contacts' => [
         'persons' => [
             'index' => [
-                'title'                    => 'اشخاص',
-                'create-btn'               => 'ایجاد شخص',
-                'create-success'           => 'شخص با موفقیت ایجاد شد.',
-                'update-success'           => 'شخص با موفقیت به‌روزرسانی شد.',
-                'all-delete-success'       => 'همه افراد انتخاب‌شده با موفقیت حذف شدند.',
-                'partial-delete-warning'   => 'برخی از افراد با موفقیت حذف شدند. بقیه به دلیل مرتبط بودن با سرنخ‌ها حذف نشدند.',
-                'none-delete-warning'      => 'هیچ‌یک از افراد انتخاب‌شده به دلیل مرتبط بودن با سرنخ‌ها حذف نشدند.',
-                'no-selection'             => 'هیچ فردی برای حذف انتخاب نشده است.',
-                'delete-failed'            => 'حذف افراد انتخاب‌شده با شکست مواجه شد.',
-
-                'datagrid' => [
+                'title'                  => 'اشخاص',
+                'create-btn'             => 'ایجاد شخص',
+                'create-success'         => 'شخص با موفقیت ایجاد شد.',
+                'update-success'         => 'شخص با موفقیت به‌روزرسانی شد.',
+                'all-delete-success'     => 'همه افراد انتخاب‌شده با موفقیت حذف شدند.',
+                'partial-delete-warning' => 'برخی از افراد با موفقیت حذف شدند. بقیه به دلیل مرتبط بودن با سرنخ‌ها حذف نشدند.',
+                'none-delete-warning'    => 'هیچ‌یک از افراد انتخاب‌شده به دلیل مرتبط بودن با سرنخ‌ها حذف نشدند.',
+                'no-selection'           => 'هیچ فردی برای حذف انتخاب نشده است.',
+                'delete-failed'          => 'حذف افراد انتخاب‌شده با شکست مواجه شد.',
+                'datagrid'               => [
                     'contact-numbers'   => 'شماره‌های تماس',
                     'delete'            => 'حذف',
                     'edit'              => 'ویرایش',
@@ -565,13 +509,11 @@ return [
                     'organization-name' => 'نام سازمان',
                 ],
             ],
-
             'view' => [
                 'title'              => ':name',
                 'about-person'       => 'درباره شخص',
                 'about-organization' => 'درباره سازمان',
-
-                'activities' => [
+                'activities'         => [
                     'index' => [
                         'all'          => 'همه',
                         'calls'        => 'تماس‌ها',
@@ -589,7 +531,6 @@ return [
                         'delete'       => 'حذف',
                         'edit'         => 'ویرایش',
                     ],
-
                     'actions' => [
                         'mail' => [
                             'btn'      => 'ایمیل',
@@ -601,7 +542,6 @@ return [
                             'send-btn' => 'ارسال',
                             'message'  => 'پیام',
                         ],
-
                         'file' => [
                             'btn'           => 'فایل',
                             'title'         => 'افزودن فایل',
@@ -611,14 +551,12 @@ return [
                             'file'          => 'فایل',
                             'save-btn'      => 'ذخیره فایل',
                         ],
-
                         'note' => [
                             'btn'      => 'یادداشت',
                             'title'    => 'افزودن یادداشت',
                             'comment'  => 'نظر',
                             'save-btn' => 'ذخیره یادداشت',
                         ],
-
                         'activity' => [
                             'btn'           => 'فعالیت',
                             'title'         => 'افزودن فعالیت',
@@ -634,24 +572,20 @@ return [
                         ],
                     ],
                 ],
-
                 'tags' => [
                     'create-success'  => 'برچسب با موفقیت ایجاد شد.',
                     'destroy-success' => 'برچسب با موفقیت حذف شد.',
                 ],
             ],
-
             'create' => [
                 'title'    => 'ایجاد شخص',
                 'save-btn' => 'ذخیره شخص',
             ],
-
             'edit' => [
                 'title'    => 'ویرایش شخص',
                 'save-btn' => 'ذخیره شخص',
             ],
         ],
-
         'organizations' => [
             'index' => [
                 'title'          => 'سازمان‌ها',
@@ -660,8 +594,7 @@ return [
                 'update-success' => 'سازمان با موفقیت به‌روزرسانی شد.',
                 'delete-success' => 'سازمان با موفقیت حذف شد.',
                 'delete-failed'  => 'سازمان قابل حذف نیست.',
-
-                'datagrid' => [
+                'datagrid'       => [
                     'delete'        => 'حذف',
                     'edit'          => 'ویرایش',
                     'id'            => 'شناسه',
@@ -669,19 +602,16 @@ return [
                     'persons-count' => 'تعداد اشخاص',
                 ],
             ],
-
             'create' => [
                 'title'    => 'ایجاد سازمان',
                 'save-btn' => 'ذخیره سازمان',
             ],
-
             'edit' => [
                 'title'    => 'ویرایش سازمان',
                 'save-btn' => 'ذخیره سازمان',
             ],
         ],
     ],
-
     'products' => [
         'index' => [
             'title'          => 'محصولات',
@@ -690,36 +620,32 @@ return [
             'update-success' => 'محصول با موفقیت به‌روزرسانی شد.',
             'delete-success' => 'محصول با موفقیت حذف شد.',
             'delete-failed'  => 'محصول قابل حذف نیست.',
-
-            'datagrid'   => [
+            'datagrid'       => [
                 'allocated' => 'اختصاص داده شده',
                 'delete'    => 'حذف',
                 'edit'      => 'ویرایش',
                 'id'        => 'شناسه',
                 'in-stock'  => 'در انبار',
-                'tag-name'  => 'نام برچسب',
                 'name'      => 'نام',
                 'on-hand'   => 'موجودی',
+                'tag-name'  => 'نام برچسب',
                 'price'     => 'قیمت',
                 'sku'       => 'SKU',
                 'view'      => 'مشاهده',
             ],
         ],
-
         'create' => [
-            'save-btn'  => 'ذخیره محصولات',
-            'title'     => 'ایجاد محصولات',
-            'general'   => 'عمومی',
-            'price'     => 'قیمت',
+            'save-btn' => 'ذخیره محصولات',
+            'title'    => 'ایجاد محصولات',
+            'general'  => 'عمومی',
+            'price'    => 'قیمت',
         ],
-
         'edit' => [
-            'title'     => 'ویرایش محصولات',
-            'save-btn'  => 'ذخیره محصولات',
-            'general'   => 'عمومی',
-            'price'     => 'قیمت',
+            'title'    => 'ویرایش محصولات',
+            'save-btn' => 'ذخیره محصولات',
+            'general'  => 'عمومی',
+            'price'    => 'قیمت',
         ],
-
         'view' => [
             'sku'         => 'SKU',
             'all'         => 'همه',
@@ -727,11 +653,9 @@ return [
             'files'       => 'فایل‌ها',
             'inventories' => 'موجودی',
             'change-logs' => 'تغییرات',
-
-            'attributes' => [
+            'attributes'  => [
                 'about-product' => 'درباره محصول',
             ],
-
             'inventory' => [
                 'source'     => 'منبع',
                 'in-stock'   => 'در انبار',
@@ -746,10 +670,8 @@ return [
             ],
         ],
     ],
-
     'settings' => [
-        'title' => 'تنظیمات',
-
+        'title'  => 'تنظیمات',
         'groups' => [
             'index' => [
                 'create-btn'                     => 'ایجاد گروه',
@@ -759,19 +681,16 @@ return [
                 'destroy-success'                => 'گروه با موفقیت حذف شد.',
                 'delete-failed'                  => 'امکان حذف گروه وجود ندارد.',
                 'delete-failed-associated-users' => 'امکان حذف گروه وجود ندارد زیرا توسط کاربران استفاده می‌شود.',
-
-                'datagrid'   => [
+                'datagrid'                       => [
                     'delete'      => 'حذف',
                     'description' => 'توضیحات',
                     'edit'        => 'ویرایش',
                     'id'          => 'شناسه',
                     'name'        => 'نام',
                 ],
-
                 'edit' => [
                     'title' => 'ویرایش گروه',
                 ],
-
                 'create' => [
                     'name'        => 'نام',
                     'title'       => 'ایجاد گروه',
@@ -780,7 +699,6 @@ return [
                 ],
             ],
         ],
-
         'roles' => [
             'index' => [
                 'being-used'                => 'نقش قابل حذف نیست، زیرا در کاربر مدیر استفاده می‌شود.',
@@ -794,8 +712,7 @@ return [
                 'title'                     => 'نقش‌ها',
                 'update-success'            => 'نقش با موفقیت به‌روزرسانی شد.',
                 'user-define-error'         => 'نقش سیستمی قابل حذف نیست.',
-
-                'datagrid'   => [
+                'datagrid'                  => [
                     'all'             => 'همه',
                     'custom'          => 'سفارشی',
                     'delete'          => 'حذف',
@@ -806,7 +723,6 @@ return [
                     'permission-type' => 'نوع مجوز',
                 ],
             ],
-
             'create' => [
                 'access-control' => 'کنترل دسترسی',
                 'all'            => 'همه',
@@ -819,7 +735,6 @@ return [
                 'save-btn'       => 'ذخیره نقش',
                 'title'          => 'ایجاد نقش',
             ],
-
             'edit' => [
                 'access-control' => 'کنترل دسترسی',
                 'all'            => 'همه',
@@ -833,7 +748,6 @@ return [
                 'title'          => 'ویرایش نقش',
             ],
         ],
-
         'types' => [
             'index' => [
                 'create-btn'     => 'ایجاد نوع',
@@ -842,27 +756,23 @@ return [
                 'delete-success' => 'نوع با موفقیت حذف شد.',
                 'title'          => 'نوع‌ها',
                 'update-success' => 'نوع با موفقیت به‌روزرسانی شد.',
-
-                'datagrid' => [
+                'datagrid'       => [
                     'delete'      => 'حذف',
                     'description' => 'توضیحات',
                     'edit'        => 'ویرایش',
                     'id'          => 'شناسه',
                     'name'        => 'نام',
                 ],
-
                 'create' => [
                     'name'     => 'نام',
                     'save-btn' => 'ذخیره نوع',
                     'title'    => 'ایجاد نوع',
                 ],
-
                 'edit' => [
                     'title' => 'ویرایش نوع',
                 ],
             ],
         ],
-
         'sources' => [
             'index' => [
                 'title'                          => 'منابع',
@@ -872,26 +782,22 @@ return [
                 'delete-success'                 => 'منبع با موفقیت حذف شد.',
                 'update-success'                 => 'منبع با موفقیت به‌روزرسانی شد.',
                 'delete-failed-associated-leads' => 'نمی‌توان منبع را حذف کرد زیرا با سرنخ‌های موجود مرتبط است. لطفاً ابتدا آن‌ها را جدا کرده یا به‌روزرسانی کنید.',
-
-                'datagrid' => [
+                'datagrid'                       => [
                     'delete' => 'حذف',
                     'edit'   => 'ویرایش',
                     'id'     => 'شناسه',
                     'name'   => 'نام',
                 ],
-
                 'create' => [
                     'name'     => 'نام',
                     'save-btn' => 'ذخیره منبع',
                     'title'    => 'ایجاد منبع',
                 ],
-
                 'edit' => [
                     'title' => 'ویرایش منبع',
                 ],
             ],
         ],
-
         'workflows' => [
             'index' => [
                 'title'          => 'جریان‌های کاری',
@@ -908,7 +814,6 @@ return [
                     'name'        => 'نام',
                 ],
             ],
-
             'helpers' => [
                 'update-related-leads'       => 'به‌روزرسانی سرنخ‌های مرتبط',
                 'send-email-to-sales-owner'  => 'ارسال ایمیل به صاحب فروش',
@@ -921,7 +826,6 @@ return [
                 'add-note-as-activity'       => 'افزودن یادداشت به‌عنوان فعالیت',
                 'update-quote'               => 'به‌روزرسانی نقل‌قول',
             ],
-
             'create' => [
                 'title'                  => 'ایجاد جریان کاری',
                 'event'                  => 'رویداد',
@@ -956,7 +860,6 @@ return [
                 'contains'               => 'شامل می‌شود',
                 'does-not-contain'       => 'شامل نمی‌شود',
             ],
-
             'edit' => [
                 'title'                  => 'ویرایش جریان کاری',
                 'event'                  => 'رویداد',
@@ -992,7 +895,6 @@ return [
                 'does-not-contain'       => 'شامل نمی‌شود',
             ],
         ],
-
         'webforms' => [
             'index' => [
                 'title'          => 'فرم‌های وب',
@@ -1001,7 +903,6 @@ return [
                 'update-success' => 'فرم وب با موفقیت به‌روزرسانی شد.',
                 'delete-success' => 'فرم وب با موفقیت حذف شد.',
                 'delete-failed'  => 'فرم وب قابل حذف نیست.',
-
                 'datagrid'       => [
                     'id'     => 'شناسه',
                     'title'  => 'عنوان',
@@ -1009,7 +910,6 @@ return [
                     'delete' => 'حذف',
                 ],
             ],
-
             'create' => [
                 'title'                    => 'ایجاد فرم وب',
                 'add-attribute-btn'        => 'افزودن دکمه ویژگی',
@@ -1038,43 +938,41 @@ return [
                 'select-image'             => 'انتخاب تصویر',
                 'enter-value'              => 'مقدار را وارد کنید',
             ],
-
             'edit' => [
-                'title'                     => 'ویرایش فرم وب',
-                'add-attribute-btn'         => 'افزودن دکمه ویژگی',
-                'attribute-label-color'     => 'رنگ برچسب ویژگی',
-                'attributes'                => 'ویژگی‌ها',
-                'attributes-info'           => 'ویژگی‌های سفارشی را به فرم اضافه کنید.',
-                'background-color'          => 'رنگ پس‌زمینه',
-                'code-snippet'              => 'کد نمونه',
-                'copied'                    => 'کپی شد',
-                'copy'                      => 'کپی',
-                'create-lead'               => 'ایجاد سرب',
-                'customize-webform'         => 'سفارشی‌سازی فرم وب',
-                'customize-webform-info'    => 'فرم وب خود را با رنگ‌های انتخابی سفارشی‌سازی کنید.',
-                'description'               => 'توضیحات',
-                'display-custom-message'    => 'نمایش پیام سفارشی',
-                'embed'                     => 'گنجاندن',
-                'form-background-color'     => 'رنگ پس‌زمینه فرم',
-                'form-submit-btn-color'     => 'رنگ دکمه ارسال فرم',
-                'form-submit-button-color'  => 'رنگ دکمه ارسال فرم',
-                'form-title-color'          => 'رنگ عنوان فرم',
-                'general'                   => 'عمومی',
-                'leads'                     => 'سرنخ‌ها',
-                'preview'                   => 'پیش‌نمایش',
-                'person'                    => 'شخص',
-                'public-url'                => 'آدرس عمومی',
-                'save-btn'                  => 'ذخیره فرم وب',
-                'submit-button-label'       => 'برچسب دکمه ارسال',
-                'submit-success-action'     => 'عملکرد موفقیت آمیز ارسال',
-                'redirect-to-url'           => 'انتقال به آدرس',
-                'choose-value'              => 'انتخاب مقدار',
-                'select-file'               => 'انتخاب فایل',
-                'select-image'              => 'انتخاب تصویر',
-                'enter-value'               => 'مقدار را وارد کنید',
+                'add-attribute-btn'        => 'افزودن دکمه ویژگی',
+                'attribute-label-color'    => 'رنگ برچسب ویژگی',
+                'attributes'               => 'ویژگی‌ها',
+                'attributes-info'          => 'ویژگی‌های سفارشی را به فرم اضافه کنید.',
+                'background-color'         => 'رنگ پس‌زمینه',
+                'choose-value'             => 'انتخاب مقدار',
+                'code-snippet'             => 'کد نمونه',
+                'copied'                   => 'کپی شد',
+                'copy'                     => 'کپی',
+                'create-lead'              => 'ایجاد سرب',
+                'customize-webform'        => 'سفارشی‌سازی فرم وب',
+                'customize-webform-info'   => 'فرم وب خود را با رنگ‌های انتخابی سفارشی‌سازی کنید.',
+                'description'              => 'توضیحات',
+                'display-custom-message'   => 'نمایش پیام سفارشی',
+                'embed'                    => 'گنجاندن',
+                'enter-value'              => 'مقدار را وارد کنید',
+                'form-background-color'    => 'رنگ پس‌زمینه فرم',
+                'form-submit-btn-color'    => 'رنگ دکمه ارسال فرم',
+                'form-submit-button-color' => 'رنگ دکمه ارسال فرم',
+                'form-title-color'         => 'رنگ عنوان فرم',
+                'general'                  => 'عمومی',
+                'leads'                    => 'سرنخ‌ها',
+                'person'                   => 'شخص',
+                'preview'                  => 'پیش‌نمایش',
+                'public-url'               => 'آدرس عمومی',
+                'redirect-to-url'          => 'انتقال به آدرس',
+                'save-btn'                 => 'ذخیره فرم وب',
+                'select-file'              => 'انتخاب فایل',
+                'select-image'             => 'انتخاب تصویر',
+                'submit-button-label'      => 'برچسب دکمه ارسال',
+                'submit-success-action'    => 'عملکرد موفقیت آمیز ارسال',
+                'title'                    => 'ویرایش فرم وب',
             ],
         ],
-
         'email-template' => [
             'index' => [
                 'create-btn'     => 'ایجاد قالب ایمیل',
@@ -1083,16 +981,14 @@ return [
                 'update-success' => 'قالب ایمیل با موفقیت به‌روزرسانی شد.',
                 'delete-success' => 'قالب ایمیل با موفقیت حذف شد.',
                 'delete-failed'  => 'قالب ایمیل قابل حذف نیست.',
-
-                'datagrid'   => [
-                    'delete'       => 'حذف',
-                    'edit'         => 'ویرایش',
-                    'id'           => 'شناسه',
-                    'name'         => 'نام',
-                    'subject'      => 'موضوع',
+                'datagrid'       => [
+                    'delete'  => 'حذف',
+                    'edit'    => 'ویرایش',
+                    'id'      => 'شناسه',
+                    'name'    => 'نام',
+                    'subject' => 'موضوع',
                 ],
             ],
-
             'create' => [
                 'title'                => 'ایجاد قالب ایمیل',
                 'save-btn'             => 'ذخیره قالب ایمیل',
@@ -1103,7 +999,6 @@ return [
                 'general'              => 'عمومی',
                 'name'                 => 'نام',
             ],
-
             'edit' => [
                 'title'                => 'ویرایش قالب ایمیل',
                 'save-btn'             => 'ذخیره قالب ایمیل',
@@ -1115,7 +1010,6 @@ return [
                 'name'                 => 'نام',
             ],
         ],
-
         'marketing' => [
             'events' => [
                 'index' => [
@@ -1126,30 +1020,26 @@ return [
                     'delete-success'      => 'رویداد با موفقیت حذف شد.',
                     'delete-failed'       => 'رویداد قابل حذف نیست.',
                     'mass-delete-success' => 'رویدادها با موفقیت حذف شدند',
-
-                    'datagrid'   => [
-                        'delete'       => 'حذف',
-                        'edit'         => 'ویرایش',
-                        'id'           => 'شناسه',
-                        'name'         => 'نام',
-                        'description'  => 'توضیحات',
-                        'date'         => 'تاریخ',
+                    'datagrid'            => [
+                        'delete'      => 'حذف',
+                        'edit'        => 'ویرایش',
+                        'id'          => 'شناسه',
+                        'name'        => 'نام',
+                        'description' => 'توضیحات',
+                        'date'        => 'تاریخ',
                     ],
-
-                    'create'     => [
+                    'create' => [
                         'title'       => 'ایجاد رویداد',
                         'name'        => 'نام',
                         'date'        => 'تاریخ',
                         'description' => 'توضیحات',
                         'save-btn'    => 'ذخیره رویداد',
                     ],
-
                     'edit' => [
                         'title' => 'ویرایش رویداد',
                     ],
                 ],
             ],
-
             'campaigns' => [
                 'index' => [
                     'create-btn'          => 'ایجاد کمپین',
@@ -1159,8 +1049,7 @@ return [
                     'delete-success'      => 'کمپین با موفقیت حذف شد.',
                     'delete-failed'       => 'کمپین قابل حذف نیست.',
                     'mass-delete-success' => 'کمپین‌ها با موفقیت حذف شدند',
-
-                    'datagrid'   => [
+                    'datagrid'            => [
                         'id'       => 'شناسه',
                         'name'     => 'نام',
                         'subject'  => 'موضوع',
@@ -1170,8 +1059,7 @@ return [
                         'edit'     => 'ویرایش',
                         'delete'   => 'حذف',
                     ],
-
-                    'create'     => [
+                    'create' => [
                         'title'          => 'ایجاد کمپین',
                         'name'           => 'نام',
                         'type'           => 'نوع',
@@ -1180,14 +1068,12 @@ return [
                         'email-template' => 'قالب ایمیل',
                         'status'         => 'وضعیت',
                     ],
-
                     'edit' => [
                         'title' => 'ویرایش کمپین',
                     ],
                 ],
             ],
         ],
-
         'tags' => [
             'index' => [
                 'create-btn'     => 'ایجاد برچسب',
@@ -1196,29 +1082,25 @@ return [
                 'update-success' => 'برچسب با موفقیت به‌روزرسانی شد.',
                 'delete-success' => 'برچسب با موفقیت حذف شد.',
                 'delete-failed'  => 'برچسب قابل حذف نیست.',
-
-                'datagrid' => [
-                    'delete'      => 'حذف',
-                    'edit'        => 'ویرایش',
-                    'id'          => 'شناسه',
-                    'name'        => 'نام',
-                    'users'       => 'کاربران',
-                    'created-at'  => 'تاریخ ایجاد',
+                'datagrid'       => [
+                    'delete'     => 'حذف',
+                    'edit'       => 'ویرایش',
+                    'id'         => 'شناسه',
+                    'name'       => 'نام',
+                    'users'      => 'کاربران',
+                    'created-at' => 'تاریخ ایجاد',
                 ],
-
                 'create' => [
                     'name'     => 'نام',
                     'save-btn' => 'ذخیره برچسب',
                     'title'    => 'ایجاد برچسب',
                     'color'    => 'رنگ',
                 ],
-
                 'edit' => [
                     'title' => 'ویرایش برچسب',
                 ],
             ],
         ],
-
         'users' => [
             'index' => [
                 'create-btn'          => 'ایجاد کاربر',
@@ -1235,8 +1117,7 @@ return [
                 'user-define-error'   => 'قابل حذف نیست.',
                 'active'              => 'فعال',
                 'inactive'            => 'غیرفعال',
-
-                'datagrid' => [
+                'datagrid'            => [
                     'active'        => 'فعال',
                     'created-at'    => 'تاریخ ایجاد',
                     'delete'        => 'حذف',
@@ -1249,30 +1130,28 @@ return [
                     'update-status' => 'به‌روزرسانی وضعیت',
                     'users'         => 'کاربران',
                 ],
-
                 'create' => [
-                    'confirm-password' => 'تأیید رمز عبور',
-                    'email'            => 'ایمیل',
-                    'general'          => 'عمومی',
-                    'global'           => 'سراسری',
-                    'group'            => 'گروه',
-                    'individual'       => 'فردی',
-                    'name'             => 'نام',
-                    'password'         => 'رمز عبور',
-                    'permission'       => 'مجوز',
-                    'role'             => 'نقش',
-                    'save-btn'         => 'ذخیره کاربر',
-                    'status'           => 'وضعیت',
-                    'title'            => 'ایجاد کاربر',
-                    'view-permission'  => 'مجوز مشاهده',
+                    'confirm-password'         => 'تأیید رمز عبور',
+                    'email'                    => 'ایمیل',
+                    'general'                  => 'عمومی',
+                    'global'                   => 'سراسری',
+                    'group'                    => 'گروه',
+                    'individual'               => 'فردی',
+                    'name'                     => 'نام',
+                    'password'                 => 'رمز عبور',
+                    'permission'               => 'مجوز',
+                    'role'                     => 'نقش',
+                    'save-btn'                 => 'ذخیره کاربر',
+                    'status'                   => 'وضعیت',
+                    'title'                    => 'ایجاد کاربر',
+                    'view-permission'          => 'مجوز مشاهده',
+                    'select-at-lest-one-group' => 'Select at least one group',
                 ],
-
                 'edit' => [
                     'title' => 'ویرایش کاربر',
                 ],
             ],
         ],
-
         'pipelines' => [
             'index' => [
                 'title'                => 'پایپ‌لاین‌ها',
@@ -1283,8 +1162,7 @@ return [
                 'delete-success'       => 'پایپ‌لاین با موفقیت حذف شد.',
                 'delete-failed'        => 'پایپ‌لاین قابل حذف نیست.',
                 'default-delete-error' => 'پایپ‌لاین پیش‌فرض قابل حذف نیست.',
-
-                'datagrid' => [
+                'datagrid'             => [
                     'delete'      => 'حذف',
                     'edit'        => 'ویرایش',
                     'id'          => 'شناسه',
@@ -1295,7 +1173,6 @@ return [
                     'yes'         => 'بله',
                 ],
             ],
-
             'create' => [
                 'title'                => 'ایجاد پایپ‌لاین',
                 'save-btn'             => 'ذخیره پایپ‌لاین',
@@ -1316,8 +1193,7 @@ return [
                 'newly-added'          => 'تازه اضافه شده',
                 'stage-delete-success' => 'مرحله با موفقیت حذف شد',
             ],
-
-            'edit'  => [
+            'edit' => [
                 'title'                => 'ویرایش پایپ‌لاین',
                 'save-btn'             => 'ذخیره پایپ‌لاین',
                 'name'                 => 'نام',
@@ -1337,7 +1213,6 @@ return [
                 'stage-delete-success' => 'مرحله با موفقیت حذف شد',
             ],
         ],
-
         'webhooks' => [
             'index' => [
                 'title'          => 'وب‌هوک‌ها',
@@ -1346,8 +1221,7 @@ return [
                 'update-success' => 'وب‌هوک با موفقیت به‌روزرسانی شد.',
                 'delete-success' => 'وب‌هوک با موفقیت حذف شد.',
                 'delete-failed'  => 'وب‌هوک قابل حذف نیست.',
-
-                'datagrid' => [
+                'datagrid'       => [
                     'id'          => 'شناسه',
                     'delete'      => 'حذف',
                     'edit'        => 'ویرایش',
@@ -1356,7 +1230,6 @@ return [
                     'end-point'   => 'پایان نقطه',
                 ],
             ],
-
             'create' => [
                 'title'                 => 'ایجاد وب‌هوک',
                 'save-btn'              => 'ذخیره وب‌هوک',
@@ -1385,7 +1258,6 @@ return [
                 'json'                  => 'جی‌سان',
                 'text'                  => 'متن',
             ],
-
             'edit' => [
                 'title'                 => 'ویرایش وب‌هوک',
                 'edit-btn'              => 'ذخیره وب‌هوک',
@@ -1416,7 +1288,6 @@ return [
                 'text'                  => 'متن',
             ],
         ],
-
         'warehouses' => [
             'index' => [
                 'title'          => 'انبارها',
@@ -1426,8 +1297,7 @@ return [
                 'update-success' => 'انبار با موفقیت به‌روزرسانی شد.',
                 'delete-success' => 'انبار با موفقیت حذف شد.',
                 'delete-failed'  => 'انبار قابل حذف نیست.',
-
-                'datagrid' => [
+                'datagrid'       => [
                     'id'              => 'شناسه',
                     'name'            => 'نام',
                     'contact-name'    => 'نام تماس',
@@ -1440,27 +1310,23 @@ return [
                     'contact-numbers' => 'شماره‌های تماس',
                 ],
             ],
-
             'create' => [
-                'title'         => 'ایجاد انبار',
-                'save-btn'      => 'ذخیره انبار',
-                'contact-info'  => 'اطلاعات تماس',
+                'title'        => 'ایجاد انبار',
+                'save-btn'     => 'ذخیره انبار',
+                'contact-info' => 'اطلاعات تماس',
             ],
-
             'edit' => [
-                'title'         => 'ویرایش انبار',
-                'save-btn'      => 'ذخیره انبار',
-                'contact-info'  => 'اطلاعات تماس',
+                'title'        => 'ویرایش انبار',
+                'save-btn'     => 'ذخیره انبار',
+                'contact-info' => 'اطلاعات تماس',
             ],
-
             'view' => [
                 'all'         => 'همه',
                 'notes'       => 'یادداشت‌ها',
                 'files'       => 'فایل‌ها',
                 'location'    => 'مکان',
                 'change-logs' => 'لاگ‌های تغییرات',
-
-                'locations' => [
+                'locations'   => [
                     'action'         => 'عملیات',
                     'add-location'   => 'افزودن مکان',
                     'create-success' => 'مکان با موفقیت ایجاد شد.',
@@ -1470,17 +1336,14 @@ return [
                     'name'           => 'نام',
                     'save-btn'       => 'ذخیره',
                 ],
-
                 'general-information' => [
                     'title' => 'اطلاعات عمومی',
                 ],
-
                 'contact-information' => [
                     'title' => 'اطلاعات تماس',
                 ],
             ],
         ],
-
         'attributes' => [
             'index' => [
                 'title'              => 'ویژگی‌ها',
@@ -1491,19 +1354,17 @@ return [
                 'delete-failed'      => 'ویژگی قابل حذف نیست.',
                 'user-define-error'  => 'قادر به حذف ویژگی سیستم نیست.',
                 'mass-delete-failed' => 'ویژگی‌های سیستمی قابل حذف نیستند.',
-
-                'datagrid' => [
-                    'yes'         => 'بله',
-                    'no'          => 'خیر',
-                    'id'          => 'شناسه',
-                    'code'        => 'کد',
-                    'name'        => 'نام',
-                    'entity-type' => 'نوع موجودیت',
-                    'type'        => 'نوع',
-                    'is-default'  => 'پیش‌فرض است',
-                    'edit'        => 'ویرایش',
-                    'delete'      => 'حذف',
-
+                'datagrid'           => [
+                    'yes'          => 'بله',
+                    'no'           => 'خیر',
+                    'id'           => 'شناسه',
+                    'code'         => 'کد',
+                    'name'         => 'نام',
+                    'entity-type'  => 'نوع موجودیت',
+                    'type'         => 'نوع',
+                    'is-default'   => 'پیش‌فرض است',
+                    'edit'         => 'ویرایش',
+                    'delete'       => 'حذف',
                     'entity-types' => [
                         'leads'         => 'سرنخ‌ها',
                         'organizations' => 'سازمان‌ها',
@@ -1512,7 +1373,6 @@ return [
                         'quotes'        => 'نقل‌قول‌ها',
                         'warehouses'    => 'انبارها',
                     ],
-
                     'types' => [
                         'text'        => 'متن',
                         'textarea'    => 'ناحیه متنی',
@@ -1532,64 +1392,18 @@ return [
                     ],
                 ],
             ],
-
-            'create'  => [
-                'actions'               => 'عملیات',
-                'add-attribute-options' => 'افزودن گزینه‌های ویژگی',
-                'add-option'            => 'افزودن گزینه',
-                'address'               => 'آدرس',
-                'boolean'               => 'بولی',
-                'checkbox'              => 'چک باکس',
-                'code'                  => 'کد',
-                'date'                  => 'تاریخ',
-                'datetime'              => 'تاریخ و زمان',
-                'decimal'               => 'اعشاری',
-                'email'                 => 'ایمیل',
-                'entity-type'           => 'نوع موجودیت',
-                'entity_type'           => 'نوع موجودیت',
-                'file'                  => 'فایل',
-                'general'               => 'عمومی',
-                'image'                 => 'تصویر',
-                'input-validation'      => 'اعتبارسنجی ورودی',
-                'is-required'           => 'الزامی است',
-                'is-unique'             => 'منحصربه‌فرد است',
-                'is_required'           => 'الزامی است',
-                'is_unique'             => 'منحصربه‌فرد است',
-                'labels'                => 'برچسب‌ها',
-                'lookup'                => 'جستجو',
-                'lookup-type'           => 'نوع جستجو',
-                'multiselect'           => 'چند انتخابی',
-                'name'                  => 'نام',
-                'numeric'               => 'عددی',
-                'option-deleted'        => 'گزینه ویژگی با موفقیت حذف شد',
-                'option-name'           => 'نام گزینه',
-                'option-type'           => 'نوع گزینه',
-                'options'               => 'گزینه‌ها',
-                'phone'                 => 'تلفن',
-                'price'                 => 'قیمت',
-                'save-btn'              => 'ذخیره ویژگی',
-                'save-option'           => 'ذخیره گزینه',
-                'select'                => 'انتخاب',
-                'text'                  => 'متن',
-                'textarea'              => 'میدان متن',
+            'create' => [
                 'title'                 => 'ایجاد ویژگی',
-                'type'                  => 'نوع',
-                'url'                   => 'آدرس',
-                'validations'           => 'اعتبارسنجی‌ها',
-            ],
-
-            'edit'  => [
-                'title'                 => 'ویرایش ویژگی',
                 'save-btn'              => 'ذخیره ویژگی',
                 'code'                  => 'کد',
                 'name'                  => 'نام',
-                'labels'                => 'برچسب‌ها',
                 'entity-type'           => 'نوع موجودیت',
                 'type'                  => 'نوع',
                 'validations'           => 'اعتبارسنجی‌ها',
                 'is-required'           => 'الزامی است',
                 'input-validation'      => 'اعتبارسنجی ورودی',
                 'is-unique'             => 'منحصربه‌فرد است',
+                'labels'                => 'برچسب‌ها',
                 'general'               => 'عمومی',
                 'numeric'               => 'عددی',
                 'decimal'               => 'اعشاری',
@@ -1620,9 +1434,52 @@ return [
                 'is_required'           => 'الزامی است',
                 'is_unique'             => 'منحصربه‌فرد است',
                 'actions'               => 'عملیات',
+            ],
+            'edit' => [
+                'actions'               => 'عملیات',
+                'add-attribute-options' => 'افزودن گزینه‌های ویژگی',
+                'add-option'            => 'افزودن گزینه',
+                'address'               => 'آدرس',
+                'boolean'               => 'بولی',
+                'checkbox'              => 'چک باکس',
+                'code'                  => 'کد',
+                'date'                  => 'تاریخ',
+                'datetime'              => 'تاریخ و زمان',
+                'decimal'               => 'اعشاری',
+                'email'                 => 'ایمیل',
+                'entity-type'           => 'نوع موجودیت',
+                'entity_type'           => 'نوع موجودیت',
+                'file'                  => 'فایل',
+                'general'               => 'عمومی',
+                'image'                 => 'تصویر',
+                'input-validation'      => 'اعتبارسنجی ورودی',
+                'is-required'           => 'الزامی است',
+                'is-unique'             => 'منحصربه‌فرد است',
+                'is_required'           => 'الزامی است',
+                'is_unique'             => 'منحصربه‌فرد است',
+                'labels'                => 'برچسب‌ها',
+                'lookup'                => 'جستجو',
+                'lookup-type'           => 'نوع جستجو',
+                'multiselect'           => 'چند انتخابی',
+                'name'                  => 'نام',
+                'numeric'               => 'عددی',
+                'option-deleted'        => 'Attribute Option is deleted successfully',
+                'option-name'           => 'نام گزینه',
+                'option-type'           => 'نوع گزینه',
+                'options'               => 'گزینه‌ها',
+                'phone'                 => 'تلفن',
+                'price'                 => 'قیمت',
+                'save-btn'              => 'ذخیره ویژگی',
+                'save-option'           => 'ذخیره گزینه',
+                'select'                => 'انتخاب',
+                'text'                  => 'متن',
+                'textarea'              => 'میدان متن',
+                'title'                 => 'ویرایش ویژگی',
+                'type'                  => 'نوع',
+                'url'                   => 'آدرس',
+                'validations'           => 'اعتبارسنجی‌ها',
             ],
         ],
-
         'data-transfer' => [
             'imports' => [
                 'create' => [
@@ -1646,7 +1503,6 @@ return [
                     'type'                => 'نوع',
                     'validation-strategy' => 'استراتژی اعتبارسنجی',
                 ],
-
                 'edit' => [
                     'action'              => 'عملیات',
                     'allowed-errors'      => 'خطاهای مجاز',
@@ -1668,12 +1524,10 @@ return [
                     'type'                => 'نوع',
                     'validation-strategy' => 'استراتژی اعتبارسنجی',
                 ],
-
                 'index' => [
                     'button-title' => 'ایجاد واردات',
                     'title'        => 'واردات‌ها',
-
-                    'datagrid' => [
+                    'datagrid'     => [
                         'actions'       => 'عملیات',
                         'completed-at'  => 'تکمیل شده در',
                         'created'       => 'ایجاد شده',
@@ -1690,7 +1544,6 @@ return [
                         'uploaded-file' => 'فایل آپلود شده',
                     ],
                 ],
-
                 'import' => [
                     'back-btn'                => 'بازگشت',
                     'completed-batches'       => 'کل دسته‌های تکمیل شده:',
@@ -1715,7 +1568,6 @@ return [
                     'validation-failed-info'  => 'واردات شما نامعتبر است. لطفاً خطاهای زیر را رفع کرده و دوباره تلاش کنید.',
                     'validation-success-info' => 'واردات شما معتبر است. برای شروع فرآیند واردات، روی "واردات" کلیک کنید.',
                 ],
-
                 'create-success'    => 'واردات با موفقیت ایجاد شد.',
                 'delete-failed'     => 'حذف واردات به طور غیرمنتظره‌ای ناکام ماند.',
                 'delete-success'    => 'واردات با موفقیت حذف شد.',
@@ -1726,11 +1578,9 @@ return [
             ],
         ],
     ],
-
     'activities' => [
         'index' => [
-            'title'      => 'فعالیت‌ها',
-
+            'title'    => 'فعالیت‌ها',
             'datagrid' => [
                 'comment'       => 'نظر',
                 'created_at'    => 'تاریخ ایجاد',
@@ -1755,7 +1605,6 @@ return [
                 'lunch'         => 'ناهار',
             ],
         ],
-
         'edit' => [
             'title'           => 'ویرایش فعالیت',
             'back-btn'        => 'برگشت',
@@ -1775,7 +1624,6 @@ return [
             'no-result-found' => 'سوابقی یافت نشد.',
             'users'           => 'کاربران',
         ],
-
         'updated'              => 'به‌روزرسانی شد :attribute',
         'created'              => 'ایجاد شد',
         'duration-overlapping' => 'شرکت‌کنندگان در این زمان جلسه دیگری دارند. آیا می‌خواهید ادامه دهید؟',
@@ -1788,29 +1636,27 @@ return [
         'mass-destroy-success' => 'فعالیت‌ها با موفقیت حذف شدند.',
         'mass-delete-failed'   => 'امکان حذف فعالیت‌ها وجود ندارد.',
     ],
-
     'mail' => [
         'index' => [
-            'compose'           => 'نوشتن',
-            'draft'             => 'پیش‌نویس',
-            'inbox'             => 'صندوق ورودی',
-            'outbox'            => 'صندوق خروجی',
-            'sent'              => 'ارسال شده',
-            'trash'             => 'سطل زباله',
-            'compose-mail-btn'  => 'نوشتن ایمیل',
-            'btn'               => 'ایمیل',
-            'mail'              => [
-                'title'         => 'نوشتن ایمیل',
-                'to'            => 'به',
-                'enter-emails'  => 'برای اضافه کردن ایمیل‌ها، کلید Enter را فشار دهید',
-                'cc'            => 'CC',
-                'bcc'           => 'BCC',
-                'subject'       => 'موضوع',
-                'send-btn'      => 'ارسال',
-                'message'       => 'پیام',
-                'draft'         => 'پیش‌نویس',
+            'compose'          => 'نوشتن',
+            'draft'            => 'پیش‌نویس',
+            'inbox'            => 'صندوق ورودی',
+            'outbox'           => 'صندوق خروجی',
+            'sent'             => 'ارسال شده',
+            'trash'            => 'سطل زباله',
+            'compose-mail-btn' => 'نوشتن ایمیل',
+            'btn'              => 'ایمیل',
+            'mail'             => [
+                'title'        => 'نوشتن ایمیل',
+                'to'           => 'به',
+                'enter-emails' => 'برای اضافه کردن ایمیل‌ها، کلید Enter را فشار دهید',
+                'cc'           => 'CC',
+                'bcc'          => 'BCC',
+                'subject'      => 'موضوع',
+                'send-btn'     => 'ارسال',
+                'message'      => 'پیام',
+                'draft'        => 'پیش‌نویس',
             ],
-
             'datagrid' => [
                 'id'            => 'شناسه',
                 'from'          => 'از',
@@ -1827,14 +1673,12 @@ return [
                 'delete'        => 'حذف',
             ],
         ],
-
         'create-success'      => 'ایمیل با موفقیت ارسال شد.',
         'update-success'      => 'ایمیل با موفقیت به‌روزرسانی شد.',
         'mass-update-success' => 'ایمیل‌ها با موفقیت به‌روزرسانی شدند.',
         'delete-success'      => 'ایمیل با موفقیت حذف شد.',
         'delete-failed'       => 'ایمیل قابل حذف نیست.',
-
-        'view' => [
+        'view'                => [
             'title'                      => 'ایمیل‌ها',
             'subject'                    => ':subject',
             'link-mail'                  => 'لینک ایمیل',
@@ -1868,14 +1712,12 @@ return [
             'lead-details'               => 'جزئیات سرنخ',
             'contact-person'             => 'شخص تماس',
             'product'                    => 'محصول',
-
-            'tags' => [
+            'tags'                       => [
                 'create-success'  => 'برچسب با موفقیت ایجاد شد.',
                 'destroy-success' => 'برچسب با موفقیت حذف شد.',
             ],
         ],
     ],
-
     'common' => [
         'custom-attributes' => [
             'add-more'             => 'افزودن بیشتر',
@@ -1896,15 +1738,13 @@ return [
             'work'                 => 'محل کار',
         ],
     ],
-
     'leads' => [
-        'create-success'    => 'سرنخ با موفقیت ایجاد شد.',
-        'update-success'    => 'سرنخ با موفقیت به‌روزرسانی شد.',
-        'update-failed'     => 'سرنخ‌ها قابل حذف نیستند.',
-        'destroy-success'   => 'سرنخ با موفقیت حذف شد.',
-        'destroy-failed'    => 'سرنخ قابل حذف نیست.',
-
-        'file' => [
+        'create-success'  => 'سرنخ با موفقیت ایجاد شد.',
+        'update-success'  => 'سرنخ با موفقیت به‌روزرسانی شد.',
+        'update-failed'   => 'سرنخ‌ها قابل حذف نیستند.',
+        'destroy-success' => 'سرنخ با موفقیت حذف شد.',
+        'destroy-failed'  => 'سرنخ قابل حذف نیست.',
+        'file'            => [
             'data-not-found'         => 'داده‌ای یافت نشد.',
             'empty-content'          => 'محتوای PDF خالی است یا نمی‌توان آن را استخراج کرد.',
             'failed-extract'         => 'استخراج متن از فایل ناموفق بود.',
@@ -1917,38 +1757,34 @@ return [
             'recursive-call'         => 'تماس بازگشتی شناسایی شد.',
             'text-generation-failed' => 'استخراج متن ناموفق بود. فایل ممکن است خالی یا غیرقابل خواندن باشد.',
         ],
-
         'index' => [
             'title'      => 'سرنخ‌ها',
             'create-btn' => 'ایجاد سرنخ',
-
-            'datagrid' => [
-                'id'                  => 'شناسه',
-                'sales-person'        => 'کارشناس فروش',
-                'subject'             => 'موضوع',
-                'source'              => 'منبع',
-                'lead-value'          => 'ارزش سرنخ',
-                'lead-type'           => 'نوع سرنخ',
-                'tag-name'            => 'نام برچسب',
-                'contact-person'      => 'شخص تماس',
-                'stage'               => 'مرحله',
-                'rotten-lead'         => 'سرنخ خراب شده',
-                'date-to'             => 'تاریخ تا',
-                'created-at'          => 'تاریخ ایجاد',
-                'no'                  => 'خیر',
-                'yes'                 => 'بله',
-                'delete'              => 'حذف',
-                'mass-delete'         => 'حذف گروهی',
-                'mass-update'         => 'به‌روزرسانی گروهی',
+            'datagrid'   => [
+                'id'             => 'شناسه',
+                'sales-person'   => 'کارشناس فروش',
+                'subject'        => 'موضوع',
+                'source'         => 'منبع',
+                'lead-value'     => 'ارزش سرنخ',
+                'lead-type'      => 'نوع سرنخ',
+                'tag-name'       => 'نام برچسب',
+                'contact-person' => 'شخص تماس',
+                'stage'          => 'مرحله',
+                'rotten-lead'    => 'سرنخ خراب شده',
+                'date-to'        => 'تاریخ تا',
+                'created-at'     => 'تاریخ ایجاد',
+                'no'             => 'خیر',
+                'yes'            => 'بله',
+                'delete'         => 'حذف',
+                'mass-delete'    => 'حذف گروهی',
+                'mass-update'    => 'به‌روزرسانی گروهی',
             ],
-
             'kanban' => [
                 'rotten-days'            => 'سرنخ برای :days روز خراب شده است',
                 'empty-list'             => 'لیست سرنخ‌های شما خالی است',
                 'empty-list-description' => 'یک سرنخ ایجاد کنید تا اهداف خود را سازماندهی کنید.',
                 'create-lead-btn'        => 'ایجاد سرنخ',
-
-                'columns' => [
+                'columns'                => [
                     'contact-person'      => 'شخص تماس',
                     'id'                  => 'شناسه',
                     'lead-type'           => 'نوع سرنخ',
@@ -1960,12 +1796,10 @@ return [
                     'expected-close-date' => 'تاریخ بسته شدن مورد انتظار',
                     'created-at'          => 'تاریخ ایجاد',
                 ],
-
                 'toolbar' => [
                     'search' => [
                         'title' => 'جستجو بر اساس عنوان',
                     ],
-
                     'filters' => [
                         'apply-filters' => 'اعمال فیلترها',
                         'clear-all'     => 'پاک کردن همه',
@@ -1977,12 +1811,10 @@ return [
                     ],
                 ],
             ],
-
             'view-switcher' => [
                 'all-pipelines'       => 'تمام خطوط تولید',
                 'create-new-pipeline' => 'ایجاد خط تولید جدید',
             ],
-
             'upload' => [
                 'create-lead'   => 'ایجاد سرنخ با استفاده از هوش مصنوعی',
                 'file'          => 'آپلود فایل',
@@ -1992,7 +1824,6 @@ return [
                 'upload-file'   => 'بارگذاری فایل',
             ],
         ],
-
         'create' => [
             'title'          => 'ایجاد سرنخ',
             'save-btn'       => 'ذخیره',
@@ -2003,7 +1834,6 @@ return [
             'products'       => 'محصولات',
             'products-info'  => 'اطلاعات درباره محصولات',
         ],
-
         'edit' => [
             'title'          => 'ویرایش سرنخ',
             'save-btn'       => 'ذخیره',
@@ -2014,7 +1844,6 @@ return [
             'products'       => 'محصولات',
             'products-info'  => 'اطلاعات درباره محصولات',
         ],
-
         'common' => [
             'contact' => [
                 'name'           => 'نام',
@@ -2022,7 +1851,6 @@ return [
                 'contact-number' => 'شماره تماس',
                 'organization'   => 'سازمان',
             ],
-
             'products' => [
                 'product-name' => 'نام محصول',
                 'quantity'     => 'تعداد',
@@ -2033,21 +1861,17 @@ return [
                 'total'        => 'جمع',
             ],
         ],
-
         'view' => [
             'title'       => 'سرنخ: :title',
             'rotten-days' => ':days روز',
-
-            'tabs' => [
+            'tabs'        => [
                 'description' => 'توضیحات',
                 'products'    => 'محصولات',
                 'quotes'      => 'نقل‌قول‌ها',
             ],
-
             'attributes' => [
                 'title' => 'درباره سرنخ',
             ],
-
             'quotes' => [
                 'subject'         => 'موضوع',
                 'expired-at'      => 'تاریخ انقضا',
@@ -2064,7 +1888,6 @@ return [
                 'empty-info'      => 'هیچ پیشنهادی برای این سرنخ یافت نشد',
                 'add-btn'         => 'افزودن پیشنهاد',
             ],
-
             'products' => [
                 'product-name' => 'نام محصول',
                 'quantity'     => 'تعداد',
@@ -2077,12 +1900,10 @@ return [
                 'empty-info'   => 'هیچ محصولی برای این سرنخ یافت نشد',
                 'add-product'  => 'افزودن محصول',
             ],
-
             'persons' => [
                 'title'     => 'درباره افراد',
                 'job-title' => ':job_title در :organization',
             ],
-
             'stages' => [
                 'won-lost'       => 'برد/باخت',
                 'won'            => 'برد',
@@ -2093,14 +1914,12 @@ return [
                 'lost-reason'    => 'دلیل باخت',
                 'save-btn'       => 'ذخیره',
             ],
-
             'tags' => [
                 'create-success'  => 'برچسب با موفقیت ایجاد شد.',
                 'destroy-success' => 'برچسب با موفقیت حذف شد.',
             ],
         ],
     ],
-
     'configuration' => [
         'index' => [
             'back'           => 'بازگشت',
@@ -2111,75 +1930,63 @@ return [
             'select-country' => 'انتخاب کشور',
             'select-state'   => 'انتخاب ایالت',
             'title'          => 'پیکربندی',
-
-            'general'  => [
+            'general'        => [
                 'title'   => 'عمومی',
                 'info'    => 'پیکربندی عمومی',
-
                 'general' => [
                     'title'           => 'عمومی',
                     'info'            => 'تنظیمات عمومی خود را اینجا به‌روزرسانی کنید.',
                     'locale-settings' => [
-                        'title'       => 'تنظیمات محلی',
-                        'title-info'  => 'زبان مورد استفاده در رابط کاربری را تعریف می‌کند، مانند عربی (ar)، انگلیسی (en)، اسپانیایی (es)، فارسی (fa) و ترکی (tr).',
+                        'title'      => 'تنظیمات محلی',
+                        'title-info' => 'زبان مورد استفاده در رابط کاربری را تعریف می‌کند، مانند عربی (ar)، انگلیسی (en)، اسپانیایی (es)، فارسی (fa) و ترکی (tr).',
                     ],
-
                     'admin-logo' => [
                         'logo-image' => 'تصویر لوگو',
                         'title'      => 'لوگوی مدیر',
                         'title-info' => 'تصویر لوگو برای پنل مدیریت خود را پیکربندی کنید.',
                     ],
                 ],
-
                 'settings' => [
-                    'title' => 'تنظیمات',
-                    'info'  => 'تنظیمات خود را اینجا به‌روزرسانی کنید.',
-
+                    'title'  => 'تنظیمات',
+                    'info'   => 'تنظیمات خود را اینجا به‌روزرسانی کنید.',
                     'footer' => [
                         'info'       => 'ما می‌توانیم بخش "توسعه یافته توسط" را اینجا پیکربندی کنیم.',
                         'powered-by' => 'توسعه یافته توسط ویرایشگر متن',
                         'title'      => 'پیکربندی بخش "توسعه یافته توسط"',
                     ],
-
                     'menu' => [
-                        'activities'     => 'فعالیت‌ها',
-                        'configuration'  => 'پیکربندی',
-                        'contacts'       => 'مخاطبین',
-                        'dashboard'      => 'داشبورد',
-                        'draft'          => 'پیش‌نویس',
-                        'inbox'          => 'صندوق ورودی',
-                        'info'           => 'ما می‌توانیم نام آیتم‌های منو را اینجا پیکربندی کنیم.',
-                        'leads'          => 'سرنخ‌ها',
-                        'mail'           => 'ایمیل',
-                        'organizations'  => 'سازمان‌ها',
-                        'outbox'         => 'صندوق خروجی',
-                        'persons'        => 'افراد',
-                        'products'       => 'محصولات',
-                        'quotes'         => 'نقل‌قول‌ها',
-                        'sent'           => 'ارسال شده',
-                        'settings'       => 'تنظیمات',
-                        'title'          => 'پیکربندی آیتم‌های منو',
-                        'trash'          => 'زباله‌دان',
+                        'activities'    => 'فعالیت‌ها',
+                        'configuration' => 'پیکربندی',
+                        'contacts'      => 'مخاطبین',
+                        'dashboard'     => 'داشبورد',
+                        'draft'         => 'پیش‌نویس',
+                        'inbox'         => 'صندوق ورودی',
+                        'info'          => 'ما می‌توانیم نام آیتم‌های منو را اینجا پیکربندی کنیم.',
+                        'leads'         => 'سرنخ‌ها',
+                        'mail'          => 'ایمیل',
+                        'organizations' => 'سازمان‌ها',
+                        'outbox'        => 'صندوق خروجی',
+                        'persons'       => 'افراد',
+                        'products'      => 'محصولات',
+                        'quotes'        => 'نقل‌قول‌ها',
+                        'sent'          => 'ارسال شده',
+                        'settings'      => 'تنظیمات',
+                        'title'         => 'پیکربندی آیتم‌های منو',
+                        'trash'         => 'زباله‌دان',
                     ],
-
                     'menu-color' => [
-                        'active-background-color' => 'رنگ پس‌زمینه فعال',
-                        'active-text-color'       => 'رنگ متن فعال',
-                        'info'                    => 'ما می‌توانیم رنگ آیتم‌های منو را اینجا تغییر دهیم.',
-                        'text-color'              => 'رنگ متن',
-                        'title'                   => 'پیکربندی رنگ آیتم‌های منو',
+                        'brand-color' => 'Brand Color',
+                        'info'        => 'ما می‌توانیم رنگ آیتم‌های منو را اینجا تغییر دهیم.',
+                        'title'       => 'پیکربندی رنگ آیتم‌های منو',
                     ],
                 ],
             ],
-
             'email' => [
                 'title' => 'تنظیمات ایمیل',
                 'info'  => 'پیکربندی ایمیل برای برنامه.',
-
-                'imap' => [
-                    'title' => 'تنظیمات IMAP',
-                    'info'  => 'پیکربندی ایمیل IMAP برای دریافت ایمیل‌ها.',
-
+                'imap'  => [
+                    'title'   => 'تنظیمات IMAP',
+                    'info'    => 'پیکربندی ایمیل IMAP برای دریافت ایمیل‌ها.',
                     'account' => [
                         'title'         => 'حساب IMAP',
                         'title-info'    => 'تنظیمات حساب IMAP خود را اینجا پیکربندی کنید.',
@@ -2192,11 +1999,9 @@ return [
                     ],
                 ],
             ],
-
             'magic-ai' => [
-                'title' => 'هوش مصنوعی جادویی',
-                'info'  => 'پیکربندی هوش مصنوعی جادویی برای برنامه.',
-
+                'title'    => 'هوش مصنوعی جادویی',
+                'info'     => 'پیکربندی هوش مصنوعی جادویی برای برنامه.',
                 'settings' => [
                     'api-key'             => 'کلید API',
                     'api-key-info'        => 'به یاد داشته باشید که برای هر مدل از کلید API OpenRouter استفاده کنید. این یک گام ساده برای افزایش امنیت و عملکرد است.',
@@ -2207,8 +2012,7 @@ return [
                     'doc-generation'      => 'تولید DOC',
                     'doc-generation-info' => 'ویژگی تولید DOC را فعال کنید تا به‌صورت خودکار داده‌ها را از فایل‌های DOC استخراج و به فرمت متنی تبدیل کند. با فعال‌سازی این ویژگی، بهره‌وری و کارایی خود را افزایش دهید و فرآیند کاری را ساده‌تر کنید.',
                     'title'               => 'تنظیمات عمومی',
-
-                    'models'     => [
+                    'models'              => [
                         'deepseek-r1'           => 'Deepseek R1 Distill-llama-8b',
                         'gemini-2-0-flash-001'  => 'Gemini 2.0 flash-001',
                         'gpt-4o'                => 'GPT-4.0',
@@ -2221,16 +2025,13 @@ return [
             ],
         ],
     ],
-
     'dashboard' => [
         'index' => [
-            'title' => 'داشبورد',
-
+            'title'   => 'داشبورد',
             'revenue' => [
                 'lost-revenue' => 'درآمد از دست رفته',
                 'won-revenue'  => 'درآمد برنده',
             ],
-
             'over-all' => [
                 'average-lead-value'    => 'میانگین ارزش لید',
                 'total-leads'           => 'کل لیدها',
@@ -2239,38 +2040,32 @@ return [
                 'total-persons'         => 'کل افراد',
                 'total-organizations'   => 'کل سازمان‌ها',
             ],
-
             'total-leads' => [
                 'title' => 'لیدها',
                 'total' => 'کل لیدها',
                 'won'   => 'لیدهای برنده',
                 'lost'  => 'لیدهای از دست رفته',
             ],
-
             'revenue-by-sources' => [
                 'title'       => 'درآمد بر اساس منابع',
                 'empty-title' => 'هیچ داده‌ای موجود نیست',
                 'empty-info'  => 'داده‌ای برای بازه زمانی انتخاب شده وجود ندارد',
             ],
-
             'revenue-by-types' => [
                 'title'       => 'درآمد بر اساس انواع',
                 'empty-title' => 'هیچ داده‌ای موجود نیست',
                 'empty-info'  => 'داده‌ای برای بازه زمانی انتخاب شده وجود ندارد',
             ],
-
             'top-selling-products' => [
                 'title'       => 'محصولات برتر',
                 'empty-title' => 'هیچ محصولی پیدا نشد',
                 'empty-info'  => 'محصولی برای بازه زمانی انتخاب شده موجود نیست',
             ],
-
             'top-persons' => [
                 'title'       => 'افراد برتر',
                 'empty-title' => 'هیچ فردی پیدا نشد',
                 'empty-info'  => 'فردی برای بازه زمانی انتخاب شده موجود نیست',
             ],
-
             'open-leads-by-states' => [
                 'title'       => 'سرنخ‌های باز بر اساس مراحل',
                 'empty-title' => 'هیچ داده‌ای موجود نیست',
@@ -2278,14 +2073,13 @@ return [
             ],
         ],
     ],
-
     'layouts' => [
-        'app-version'          => 'نسخه: :version',
-        'dashboard'            => 'داشبورد',
-        'leads'                => 'لیدها',
-        'quotes'               => 'نقل قول‌ها',
-        'quote'                => 'نقل قول',
-        'mail'                 => [
+        'app-version' => 'نسخه: :version',
+        'dashboard'   => 'داشبورد',
+        'leads'       => 'لیدها',
+        'quotes'      => 'نقل قول‌ها',
+        'quote'       => 'نقل قول',
+        'mail'        => [
             'title'   => 'ایمیل',
             'compose' => 'تدوین',
             'inbox'   => 'صندوق ورودی',
@@ -2346,7 +2140,6 @@ return [
         'back'                 => 'برگشت',
         'name'                 => 'نام',
         'configuration'        => 'پیکربندی',
-        'activities'           => 'فعالیت‌ها',
         'howdy'                => 'سلام!',
         'warehouses'           => 'انبارها',
         'warehouse'            => 'انبار',
@@ -2354,85 +2147,73 @@ return [
         'data_transfer'        => 'انتقال داده',
         'data_transfer_info'   => 'مدیریت تنظیمات مربوط به انتقال داده‌های اشخاص، محصولات و سرنخ‌ها در CRM',
     ],
-
     'user' => [
         'account' => [
-            'name'                  => 'نام',
-            'email'                 => 'ایمیل',
-            'password'              => 'رمز عبور',
-            'my_account'            => 'حساب من',
-            'update_details'        => 'بروزرسانی جزئیات',
-            'current_password'      => 'رمز عبور فعلی',
-            'confirm_password'      => 'تأیید رمز عبور',
-            'password-match'        => 'رمز عبور فعلی مطابقت ندارد.',
-            'account-save'          => 'تغییرات حساب با موفقیت ذخیره شد.',
-            'permission-denied'     => 'دسترسی مجاز نیست',
-            'remove-image'          => 'حذف تصویر',
-            'upload_image_pix'      => 'بارگذاری تصویر پروفایل (100px x 100px)',
-            'upload_image_format'   => 'در فرمت PNG یا JPG',
-            'image_upload_message'  => 'فقط تصاویر (.jpeg, .jpg, .png, ..) مجاز هستند.',
+            'name'                 => 'نام',
+            'email'                => 'ایمیل',
+            'password'             => 'رمز عبور',
+            'my_account'           => 'حساب من',
+            'update_details'       => 'بروزرسانی جزئیات',
+            'current_password'     => 'رمز عبور فعلی',
+            'confirm_password'     => 'تأیید رمز عبور',
+            'password-match'       => 'رمز عبور فعلی مطابقت ندارد.',
+            'account-save'         => 'تغییرات حساب با موفقیت ذخیره شد.',
+            'permission-denied'    => 'دسترسی مجاز نیست',
+            'remove-image'         => 'حذف تصویر',
+            'upload_image_pix'     => 'بارگذاری تصویر پروفایل (100px x 100px)',
+            'upload_image_format'  => 'در فرمت PNG یا JPG',
+            'image_upload_message' => 'فقط تصاویر (.jpeg, .jpg, .png, ..) مجاز هستند.',
         ],
     ],
-
     'emails' => [
         'common' => [
             'dear'   => 'عزیز :name',
             'cheers' => 'با احترام،</br>تیم :app_name',
-
-            'user' => [
-                'dear'           => 'سلام :username',
-                'create-subject' => 'شما به عنوان عضو اضافه شدید.',
-                'create-body'    => 'تبریک می‌گوییم! شما اکنون عضو تیم ما هستید.',
-
+            'user'   => [
+                'dear'            => 'سلام :username',
+                'create-subject'  => 'شما به عنوان عضو اضافه شدید.',
+                'create-body'     => 'تبریک می‌گوییم! شما اکنون عضو تیم ما هستید.',
                 'forget-password' => [
-                    'subject'           => 'بازنشانی رمز عبور مشتری',
-                    'dear'              => 'سلام :username',
-                    'reset-password'    => 'بازنشانی رمز عبور',
-                    'info'              => 'شما این ایمیل را دریافت کرده‌اید زیرا ما درخواست بازنشانی رمز عبور برای حساب شما دریافت کرده‌ایم',
-                    'final-summary'     => 'اگر درخواست بازنشانی رمز عبور نکرده‌اید، نیازی به انجام اقدام دیگری نیست',
-                    'thanks'            => 'متشکریم!',
+                    'subject'        => 'بازنشانی رمز عبور مشتری',
+                    'dear'           => 'سلام :username',
+                    'reset-password' => 'بازنشانی رمز عبور',
+                    'info'           => 'شما این ایمیل را دریافت کرده‌اید زیرا ما درخواست بازنشانی رمز عبور برای حساب شما دریافت کرده‌ایم',
+                    'final-summary'  => 'اگر درخواست بازنشانی رمز عبور نکرده‌اید، نیازی به انجام اقدام دیگری نیست',
+                    'thanks'         => 'متشکریم!',
                 ],
             ],
         ],
     ],
-
     'validations' => [
         'message' => [
             'decimal' => ':attribute باید یک عدد اعشاری باشد.',
         ],
     ],
-
     'errors' => [
-        'dashboard' => 'داشبورد',
-        'go-back'   => 'بازگشت',
-        'support'   => 'اگر مشکل ادامه داشت، برای کمک با ما از طریق <a href=":link" class=":class">:email</a> تماس بگیرید.',
-
-        '404' => [
+        'dashboard'   => 'داشبورد',
+        'go-back'     => 'بازگشت',
+        'support'     => 'اگر مشکل ادامه داشت، برای کمک با ما از طریق <a href=":link" class=":class">:email</a> تماس بگیرید.',
+        '404'         => [
             'description' => 'اوه! به نظر می‌رسد صفحه‌ای که دنبال آن بودید، در دسترس نیست. نتوانستیم چیزی که دنبالش بودید را پیدا کنیم.',
             'title'       => '404 صفحه پیدا نشد',
         ],
-
         '401' => [
             'description' => 'اوه! به نظر می‌رسد که شما مجاز به دسترسی به این صفحه نیستید. شما مجوزهای لازم را ندارید.',
             'title'       => '401 مجاز نیست',
         ],
-
         '403' => [
             'description' => 'اوه! این صفحه ممنوع است. به نظر می‌رسد شما مجوزهای لازم برای مشاهده این محتوا را ندارید.',
             'title'       => '403 ممنوع',
         ],
-
         '500' => [
             'description' => 'اوه! مشکلی پیش آمده است. به نظر می‌رسد مشکلی در بارگذاری صفحه مورد نظر شما وجود دارد.',
             'title'       => '500 خطای سرور داخلی',
         ],
-
         '503' => [
             'description' => 'اوه! به نظر می‌رسد که به طور موقت برای نگهداری آفلاین هستیم. لطفاً بعداً دوباره بررسی کنید.',
             'title'       => '503 سرویس در دسترس نیست',
         ],
     ],
-
     'export' => [
         'csv'        => 'CSV',
         'download'   => 'دانلود',

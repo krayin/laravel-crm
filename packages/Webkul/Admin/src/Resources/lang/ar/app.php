@@ -4,13 +4,13 @@ return [
     'acl' => [
         'leads'           => 'العملاء المحتملون',
         'lead'            => 'عميل محتمل',
-        'quotes'          => 'العروض',
+        'quotes'          => 'عروض الأسعار',
         'mail'            => 'البريد',
         'inbox'           => 'الوارد',
         'draft'           => 'المسودات',
         'outbox'          => 'الصادر',
-        'sent'            => 'المرسلة',
-        'trash'           => 'المهملات',
+        'sent'            => 'المرسل',
+        'trash'           => 'المحذوفات',
         'activities'      => 'الأنشطة',
         'webhook'         => 'Webhook',
         'contacts'        => 'جهات الاتصال',
@@ -21,19 +21,17 @@ return [
         'groups'          => 'المجموعات',
         'roles'           => 'الأدوار',
         'users'           => 'المستخدمون',
-        'user'            => 'مستخدم',
-        'automation'      => 'التشغيل الآلي',
+        'user'            => 'المستخدم',
+        'automation'      => 'الأتمتة',
         'attributes'      => 'السمات',
-        'pipelines'       => 'خطوط الأنابيب',
+        'pipelines'       => 'قنوات البيع',
         'sources'         => 'المصادر',
         'types'           => 'الأنواع',
         'email-templates' => 'قوالب البريد الإلكتروني',
         'workflows'       => 'سير العمل',
         'other-settings'  => 'إعدادات أخرى',
-        'tags'            => 'العلامات',
-        'configuration'   => 'التكوين',
-        'campaigns'       => 'الحملات',
-        'event'           => 'الحدث',
+        'tags'            => 'الوسوم',
+        'configuration'   => 'التهيئة',
         'create'          => 'إنشاء',
         'edit'            => 'تعديل',
         'view'            => 'عرض',
@@ -42,25 +40,22 @@ return [
         'export'          => 'تصدير',
         'mass-delete'     => 'حذف جماعي',
         'data-transfer'   => 'نقل البيانات',
-        'imports'         => 'الواردات',
+        'imports'         => 'الاستيرادات',
         'import'          => 'استيراد',
         'event'           => 'حدث',
-        'campaigns'       => 'حملات',
+        'campaigns'       => 'الحملات',
     ],
-
     'users' => [
         'activate-warning' => 'حسابك لم يتم تفعيله بعد. يرجى الاتصال بالمسؤول.',
         'login-error'      => 'بيانات الاعتماد لا تتطابق مع سجلاتنا.',
         'not-permission'   => 'ليس لديك إذن للوصول إلى لوحة الإدارة.',
-
-        'login' => [
+        'login'            => [
             'email'                => 'عنوان البريد الإلكتروني',
             'forget-password-link' => 'نسيت كلمة المرور؟',
             'password'             => 'كلمة المرور',
             'submit-btn'           => 'تسجيل الدخول',
             'title'                => 'تسجيل الدخول',
         ],
-
         'forget-password' => [
             'create' => [
                 'email'           => 'البريد الإلكتروني المسجل',
@@ -72,7 +67,6 @@ return [
                 'title'           => 'استعادة كلمة المرور',
             ],
         ],
-
         'reset-password' => [
             'back-link-title'  => 'العودة إلى تسجيل الدخول؟',
             'confirm-password' => 'تأكيد كلمة المرور',
@@ -82,7 +76,6 @@ return [
             'title'            => 'إعادة تعيين كلمة المرور',
         ],
     ],
-
     'account' => [
         'edit' => [
             'back-btn'          => 'رجوع',
@@ -101,7 +94,6 @@ return [
             'upload-image-info' => 'قم بتحميل صورة الملف الشخصي (110px X 110px) بتنسيق PNG أو JPG',
         ],
     ],
-
     'components' => [
         'activities' => [
             'actions' => [
@@ -116,7 +108,6 @@ return [
                     'send-btn'     => 'إرسال',
                     'message'      => 'رسالة',
                 ],
-
                 'file' => [
                     'btn'           => 'ملف',
                     'title'         => 'إضافة ملف',
@@ -126,14 +117,12 @@ return [
                     'file'          => 'ملف',
                     'save-btn'      => 'حفظ الملف',
                 ],
-
                 'note' => [
                     'btn'      => 'ملاحظة',
                     'title'    => 'إضافة ملاحظة',
                     'comment'  => 'تعليق',
                     'save-btn' => 'حفظ الملاحظة',
                 ],
-
                 'activity' => [
                     'btn'           => 'نشاط',
                     'title'         => 'إضافة نشاط',
@@ -146,8 +135,7 @@ return [
                     'meeting'       => 'اجتماع',
                     'lunch'         => 'غداء',
                     'save-btn'      => 'حفظ النشاط',
-
-                    'participants' => [
+                    'participants'  => [
                         'title'       => 'المشاركون',
                         'placeholder' => 'اكتب للبحث عن المشاركين',
                         'users'       => 'المستخدمون',
@@ -156,75 +144,65 @@ return [
                     ],
                 ],
             ],
-
             'index' => [
-                'all'          => 'الكل',
-                'bcc'          => 'نسخة مخفية',
-                'by-user'      => 'بواسطة :user',
-                'calls'        => 'المكالمات',
-                'cc'           => 'نسخة',
-                'change-log'   => 'سجلات التغيير',
-                'delete'       => 'حذف',
-                'edit'         => 'تعديل',
-                'emails'       => 'البريد الإلكتروني',
-                'empty'        => 'فارغ',
-                'files'        => 'الملفات',
-                'from'         => 'من',
-                'location'     => 'موقع',
-                'lunches'      => 'الغداء',
-                'mark-as-done' => 'وضع علامة تم',
-                'meetings'     => 'الاجتماعات',
-                'notes'        => 'الملاحظات',
-                'participants' => 'المشاركون',
-                'planned'      => 'مخطط له',
-                'quotes'       => 'الاقتباسات',
-                'scheduled-on' => 'مجدول في',
-                'system'       => 'النظام',
-                'to'           => 'إلى',
-                'unlink'       => 'إلغاء الارتباط',
-                'view'         => 'عرض',
-
+                'all'                => 'الكل',
+                'bcc'                => 'نسخة مخفية',
+                'by-user'            => 'بواسطة :user',
+                'calls'              => 'المكالمات',
+                'cc'                 => 'نسخة',
+                'change-log'         => 'سجلات التغيير',
+                'delete'             => 'حذف',
+                'edit'               => 'تعديل',
+                'emails'             => 'البريد الإلكتروني',
+                'empty'              => 'فارغ',
+                'files'              => 'الملفات',
+                'from'               => 'من',
+                'location'           => 'موقع',
+                'lunches'            => 'الغداء',
+                'mark-as-done'       => 'وضع علامة تم',
+                'meetings'           => 'الاجتماعات',
+                'notes'              => 'الملاحظات',
+                'participants'       => 'المشاركون',
+                'planned'            => 'مخطط له',
+                'quotes'             => 'الاقتباسات',
+                'scheduled-on'       => 'مجدول في',
+                'system'             => 'النظام',
+                'to'                 => 'إلى',
+                'unlink'             => 'إلغاء الارتباط',
+                'view'               => 'عرض',
                 'empty-placeholders' => [
                     'all' => [
                         'title'       => 'لم يتم العثور على أي أنشطة',
                         'description' => 'لم يتم العثور على أي أنشطة لهذا العنصر. يمكنك إضافة الأنشطة من خلال النقر على زر "النشاط" في اللوحة الجانبية اليسرى.',
                     ],
-
                     'planned' => [
                         'title'       => 'لم يتم العثور على أنشطة مخططة',
                         'description' => 'لم يتم العثور على أنشطة مخططة لهذا العنصر. يمكنك إضافة أنشطة مخططة من خلال النقر على زر "النشاط" في اللوحة الجانبية اليسرى.',
                     ],
-
                     'notes' => [
                         'title'       => 'لم يتم العثور على ملاحظات',
                         'description' => 'لم يتم العثور على ملاحظات لهذا العنصر. يمكنك إضافة الملاحظات من خلال النقر على زر "الملاحظة" في اللوحة الجانبية اليسرى.',
                     ],
-
                     'calls' => [
                         'title'       => 'لم يتم العثور على مكالمات',
                         'description' => 'لم يتم العثور على مكالمات لهذا العنصر. يمكنك إضافة المكالمات من خلال النقر على زر "النشاط" في اللوحة الجانبية اليسرى واختيار نوع المكالمة.',
                     ],
-
                     'meetings' => [
                         'title'       => 'لم يتم العثور على اجتماعات',
                         'description' => 'لم يتم العثور على اجتماعات لهذا العنصر. يمكنك إضافة الاجتماعات من خلال النقر على زر "النشاط" في اللوحة الجانبية اليسرى واختيار نوع الاجتماع.',
                     ],
-
                     'lunches' => [
                         'title'       => 'لم يتم العثور على غداءات',
                         'description' => 'لم يتم العثور على غداءات لهذا العنصر. يمكنك إضافة الغداءات من خلال النقر على زر "النشاط" في اللوحة الجانبية اليسرى واختيار نوع الغداء.',
                     ],
-
                     'files' => [
                         'title'       => 'لم يتم العثور على ملفات',
                         'description' => 'لم يتم العثور على ملفات لهذا العنصر. يمكنك إضافة الملفات من خلال النقر على زر "الملف" في اللوحة الجانبية اليسرى.',
                     ],
-
                     'emails' => [
                         'title'       => 'لم يتم العثور على رسائل بريد إلكتروني',
                         'description' => 'لم يتم العثور على رسائل بريد إلكتروني لهذا العنصر. يمكنك إضافة الرسائل من خلال النقر على زر "البريد" في اللوحة الجانبية اليسرى.',
                     ],
-
                     'system' => [
                         'title'       => 'لم يتم العثور على سجلات التغيير',
                         'description' => 'لم يتم العثور على سجلات التغيير لهذا العنصر.',
@@ -232,15 +210,13 @@ return [
                 ],
             ],
         ],
-
         'media' => [
             'images' => [
                 'add-image-btn'     => 'إضافة صورة',
                 'ai-add-image-btn'  => 'الذكاء الاصطناعي السحري',
                 'allowed-types'     => 'png, jpeg, jpg',
                 'not-allowed-error' => 'فقط ملفات الصور (.jpeg, .jpg, .png) مسموح بها.',
-
-                'placeholders' => [
+                'placeholders'      => [
                     'front'     => 'الأمام',
                     'next'      => 'التالي',
                     'size'      => 'الحجم',
@@ -248,35 +224,30 @@ return [
                     'zoom'      => 'تكبير',
                 ],
             ],
-
             'videos' => [
                 'add-video-btn'     => 'إضافة فيديو',
                 'allowed-types'     => 'mp4, webm, mkv',
                 'not-allowed-error' => 'فقط ملفات الفيديو (.mp4, .mov, .ogg) مسموح بها.',
             ],
         ],
-
         'datagrid' => [
             'index' => [
                 'no-records-selected'              => 'لم يتم اختيار أي سجلات.',
                 'must-select-a-mass-action-option' => 'يجب أن تختار خيارًا للإجراء الجماعي.',
                 'must-select-a-mass-action'        => 'يجب أن تختار إجراءً جماعيًا.',
             ],
-
             'toolbar' => [
-                'length-of' => ':length من',
-                'of'        => 'من',
-                'per-page'  => 'لكل صفحة',
-                'results'   => ':total نتائج',
-                'delete'    => 'حذف',
-                'selected'  => ':total عناصر مختارة',
-
+                'length-of'    => ':length من',
+                'of'           => 'من',
+                'per-page'     => 'لكل صفحة',
+                'results'      => ':total نتائج',
+                'delete'       => 'حذف',
+                'selected'     => ':total عناصر مختارة',
                 'mass-actions' => [
                     'submit'        => 'إرسال',
                     'select-option' => 'اختر خيارًا',
                     'select-action' => 'اختر إجراءً',
                 ],
-
                 'filter' => [
                     'apply-filters-btn' => 'تطبيق الفلاتر',
                     'back-btn'          => 'رجوع',
@@ -297,33 +268,27 @@ return [
                     'update-filter'     => 'تحديث الفلتر',
                     'updated-success'   => 'تم تحديث الفلتر بنجاح.',
                 ],
-
                 'search' => [
                     'title' => 'بحث',
                 ],
             ],
-
             'filters' => [
-                'select' => 'اختر',
-                'title'  => 'فلاتر',
-
+                'select'   => 'اختر',
+                'title'    => 'فلاتر',
                 'dropdown' => [
                     'searchable' => [
                         'at-least-two-chars' => 'اكتب حرفين على الأقل...',
                         'no-results'         => 'لم يتم العثور على نتائج...',
                     ],
                 ],
-
                 'custom-filters' => [
                     'clear-all' => 'مسح الكل',
                     'title'     => 'فلاتر مخصصة',
                 ],
-
                 'boolean-options' => [
                     'false' => 'خاطئ',
                     'true'  => 'صحيح',
                 ],
-
                 'date-options' => [
                     'last-month'        => 'الشهر الماضي',
                     'last-six-months'   => 'آخر 6 أشهر',
@@ -335,13 +300,11 @@ return [
                     'yesterday'         => 'الأمس',
                 ],
             ],
-
             'table' => [
                 'actions'              => 'الإجراءات',
                 'no-records-available' => 'لا توجد سجلات متاحة.',
             ],
         ],
-
         'modal' => [
             'confirm' => [
                 'agree-btn'    => 'موافق',
@@ -350,7 +313,6 @@ return [
                 'title'        => 'هل أنت متأكد؟',
             ],
         ],
-
         'tags' => [
             'index' => [
                 'title'          => 'الوسوم',
@@ -366,19 +328,19 @@ return [
                 'honeydew'       => 'شمام',
             ],
         ],
-
         'layouts' => [
+            'powered-by' => [
+                'description' => 'Powered by :krayin, an open-source project by :webkul.',
+            ],
             'header' => [
                 'mega-search' => [
-                    'title'   => 'البحث الشامل',
-
-                    'tabs' => [
+                    'title' => 'البحث الشامل',
+                    'tabs'  => [
                         'leads'    => 'العملاء المحتملين',
                         'quotes'   => 'عروض الأسعار',
                         'persons'  => 'الأشخاص',
                         'products' => 'المنتجات',
                     ],
-
                     'explore-all-products'          => 'استكشاف جميع المنتجات',
                     'explore-all-leads'             => 'استكشاف جميع العملاء المحتملين',
                     'explore-all-contacts'          => 'استكشاف جميع جهات الاتصال',
@@ -390,41 +352,34 @@ return [
                 ],
             ],
         ],
-
         'attributes' => [
-            'edit'   => [
+            'edit' => [
                 'delete' => 'حذف',
             ],
-
             'lookup' => [
                 'click-to-add'    => 'انقر للإضافة',
-                'search'          => 'بحث',
-                'no-result-found' => 'لم يتم العثور على نتائج',
                 'search'          => 'بحث...',
+                'no-result-found' => 'لم يتم العثور على نتائج',
             ],
         ],
-
         'lookup' => [
             'click-to-add' => 'انقر للإضافة',
             'no-results'   => 'لم يتم العثور على نتائج',
             'add-as-new'   => 'إضافة كجديد',
             'search'       => 'بحث...',
         ],
-
         'flash-group' => [
             'success' => 'نجاح',
             'error'   => 'خطأ',
             'warning' => 'تحذير',
             'info'    => 'معلومات',
         ],
-
         'tiny-mce' => [
             'http-error'    => 'خطأ في HTTP',
             'invalid-json'  => 'استجابة JSON غير صالحة من الخادم.',
             'upload-failed' => 'فشل تحميل الملف. يرجى المحاولة مرة أخرى.',
         ],
     ],
-
     'quotes' => [
         'index' => [
             'title'          => 'عروض الأسعار',
@@ -433,23 +388,21 @@ return [
             'update-success' => 'تم تحديث عرض السعر بنجاح.',
             'delete-success' => 'تم حذف عرض السعر بنجاح.',
             'delete-failed'  => 'لا يمكن حذف عرض السعر.',
-
-            'datagrid' => [
-                'subject'        => 'الموضوع',
-                'sales-person'   => 'مندوب المبيعات',
-                'expired-at'     => 'تاريخ الانتهاء',
-                'created-at'     => 'تاريخ الإنشاء',
-                'person'         => 'الشخص',
-                'subtotal'       => 'المجموع الفرعي',
-                'discount'       => 'الخصم',
-                'tax'            => 'الضريبة',
-                'adjustment'     => 'التعديل',
-                'grand-total'    => 'المجموع الكلي',
-                'edit'           => 'تعديل',
-                'delete'         => 'حذف',
-                'print'          => 'طباعة',
+            'datagrid'       => [
+                'subject'      => 'الموضوع',
+                'sales-person' => 'مندوب المبيعات',
+                'expired-at'   => 'تاريخ الانتهاء',
+                'created-at'   => 'تاريخ الإنشاء',
+                'person'       => 'الشخص',
+                'subtotal'     => 'المجموع الفرعي',
+                'discount'     => 'الخصم',
+                'tax'          => 'الضريبة',
+                'adjustment'   => 'التعديل',
+                'grand-total'  => 'المجموع الكلي',
+                'edit'         => 'تعديل',
+                'delete'       => 'حذف',
+                'print'        => 'طباعة',
             ],
-
             'pdf' => [
                 'adjustment'       => 'التعديل',
                 'amount'           => 'المبلغ',
@@ -472,7 +425,6 @@ return [
                 'title'            => 'عرض السعر',
             ],
         ],
-
         'create' => [
             'title'             => 'إنشاء عرض سعر',
             'save-btn'          => 'حفظ عرض السعر',
@@ -503,7 +455,6 @@ return [
             'product-name'      => 'اسم المنتج',
             'action'            => 'الإجراء',
         ],
-
         'edit' => [
             'title'             => 'تعديل عرض السعر',
             'save-btn'          => 'حفظ عرض السعر',
@@ -535,21 +486,19 @@ return [
             'action'            => 'الإجراء',
         ],
     ],
-
     'contacts' => [
         'persons' => [
             'index' => [
-                'title'                    => 'الأشخاص',
-                'create-btn'               => 'إنشاء شخص',
-                'create-success'           => 'تم إنشاء الشخص بنجاح.',
-                'update-success'           => 'تم تحديث الشخص بنجاح.',
-                'all-delete-success'       => 'تم حذف جميع الأشخاص المحددين بنجاح.',
-                'partial-delete-warning'   => 'تم حذف بعض الأشخاص بنجاح. لم يتم حذف الآخرين لأنهم مرتبطون بعملاء محتملين.',
-                'none-delete-warning'      => 'لم يتم حذف أي من الأشخاص المحددين لأنهم مرتبطون بعملاء محتملين.',
-                'no-selection'             => 'لم يتم تحديد أي أشخاص للحذف.',
-                'delete-failed'            => 'فشل في حذف الأشخاص المحددين.',
-
-                'datagrid' => [
+                'title'                  => 'الأشخاص',
+                'create-btn'             => 'إنشاء شخص',
+                'create-success'         => 'تم إنشاء الشخص بنجاح.',
+                'update-success'         => 'تم تحديث الشخص بنجاح.',
+                'all-delete-success'     => 'تم حذف جميع الأشخاص المحددين بنجاح.',
+                'partial-delete-warning' => 'تم حذف بعض الأشخاص بنجاح. لم يتم حذف الآخرين لأنهم مرتبطون بعملاء محتملين.',
+                'none-delete-warning'    => 'لم يتم حذف أي من الأشخاص المحددين لأنهم مرتبطون بعملاء محتملين.',
+                'no-selection'           => 'لم يتم تحديد أي أشخاص للحذف.',
+                'delete-failed'          => 'فشل في حذف الأشخاص المحددين.',
+                'datagrid'               => [
                     'contact-numbers'   => 'أرقام الاتصال',
                     'delete'            => 'حذف',
                     'edit'              => 'تعديل',
@@ -560,13 +509,11 @@ return [
                     'organization-name' => 'اسم المؤسسة',
                 ],
             ],
-
             'view' => [
                 'title'              => ':name',
                 'about-person'       => 'عن الشخص',
                 'about-organization' => 'حول المؤسسة',
-
-                'activities' => [
+                'activities'         => [
                     'index' => [
                         'all'          => 'الكل',
                         'calls'        => 'المكالمات',
@@ -584,7 +531,6 @@ return [
                         'delete'       => 'حذف',
                         'edit'         => 'تعديل',
                     ],
-
                     'actions' => [
                         'mail' => [
                             'btn'      => 'بريد',
@@ -596,7 +542,6 @@ return [
                             'send-btn' => 'إرسال',
                             'message'  => 'الرسالة',
                         ],
-
                         'file' => [
                             'btn'           => 'ملف',
                             'title'         => 'إضافة ملف',
@@ -606,14 +551,12 @@ return [
                             'file'          => 'الملف',
                             'save-btn'      => 'حفظ الملف',
                         ],
-
                         'note' => [
                             'btn'      => 'ملاحظة',
                             'title'    => 'إضافة ملاحظة',
                             'comment'  => 'التعليق',
                             'save-btn' => 'حفظ الملاحظة',
                         ],
-
                         'activity' => [
                             'btn'           => 'نشاط',
                             'title'         => 'إضافة نشاط',
@@ -629,24 +572,20 @@ return [
                         ],
                     ],
                 ],
-
                 'tags' => [
                     'create-success'  => 'تم إنشاء الوسم بنجاح.',
                     'destroy-success' => 'تم حذف الوسم بنجاح.',
                 ],
             ],
-
             'create' => [
                 'title'    => 'إنشاء شخص',
                 'save-btn' => 'حفظ الشخص',
             ],
-
             'edit' => [
                 'title'    => 'تعديل الشخص',
                 'save-btn' => 'حفظ الشخص',
             ],
         ],
-
         'organizations' => [
             'index' => [
                 'title'          => 'المؤسسات',
@@ -655,8 +594,7 @@ return [
                 'update-success' => 'تم تحديث المؤسسة بنجاح.',
                 'delete-success' => 'تم حذف المؤسسة بنجاح.',
                 'delete-failed'  => 'لا يمكن حذف المؤسسة.',
-
-                'datagrid' => [
+                'datagrid'       => [
                     'delete'        => 'حذف',
                     'edit'          => 'تعديل',
                     'id'            => 'المعرف',
@@ -664,19 +602,16 @@ return [
                     'persons-count' => 'عدد الأشخاص',
                 ],
             ],
-
             'create' => [
                 'title'    => 'إنشاء مؤسسة',
                 'save-btn' => 'حفظ المؤسسة',
             ],
-
             'edit' => [
                 'title'    => 'تعديل المؤسسة',
                 'save-btn' => 'حفظ المؤسسة',
             ],
         ],
     ],
-
     'products' => [
         'index' => [
             'title'          => 'المنتجات',
@@ -685,36 +620,32 @@ return [
             'update-success' => 'تم تحديث المنتج بنجاح.',
             'delete-success' => 'تم حذف المنتج بنجاح.',
             'delete-failed'  => 'لا يمكن حذف المنتج.',
-
-            'datagrid'   => [
+            'datagrid'       => [
                 'allocated' => 'مخصص',
                 'delete'    => 'حذف',
                 'edit'      => 'تعديل',
                 'id'        => 'المعرف',
                 'in-stock'  => 'في المخزون',
-                'tag-name'  => 'اسم الوسم',
                 'name'      => 'الاسم',
                 'on-hand'   => 'متوفر',
+                'tag-name'  => 'اسم الوسم',
                 'price'     => 'السعر',
                 'sku'       => 'رمز المنتج',
                 'view'      => 'عرض',
             ],
         ],
-
         'create' => [
-            'save-btn'  => 'حفظ المنتجات',
-            'title'     => 'إنشاء منتجات',
-            'general'   => 'عام',
-            'price'     => 'السعر',
+            'save-btn' => 'حفظ المنتجات',
+            'title'    => 'إنشاء منتجات',
+            'general'  => 'عام',
+            'price'    => 'السعر',
         ],
-
         'edit' => [
-            'title'     => 'تعديل المنتجات',
-            'save-btn'  => 'حفظ المنتجات',
-            'general'   => 'عام',
-            'price'     => 'السعر',
+            'title'    => 'تعديل المنتجات',
+            'save-btn' => 'حفظ المنتجات',
+            'general'  => 'عام',
+            'price'    => 'السعر',
         ],
-
         'view' => [
             'sku'         => 'رمز المنتج',
             'all'         => 'الكل',
@@ -722,11 +653,9 @@ return [
             'files'       => 'الملفات',
             'inventories' => 'المخزون',
             'change-logs' => 'سجلات التغيير',
-
-            'attributes' => [
+            'attributes'  => [
                 'about-product' => 'عن المنتج',
             ],
-
             'inventory' => [
                 'source'     => 'المصدر',
                 'in-stock'   => 'في المخزون',
@@ -741,10 +670,8 @@ return [
             ],
         ],
     ],
-
     'settings' => [
-        'title' => 'الإعدادات',
-
+        'title'  => 'الإعدادات',
         'groups' => [
             'index' => [
                 'create-btn'                     => 'إنشاء مجموعة',
@@ -754,19 +681,16 @@ return [
                 'destroy-success'                => 'تم حذف المجموعة بنجاح.',
                 'delete-failed'                  => 'لا يمكن حذف المجموعة.',
                 'delete-failed-associated-users' => 'لا يمكن حذف المجموعة لأنها مستخدمة من قبل المستخدمين.',
-
-                'datagrid'   => [
+                'datagrid'                       => [
                     'delete'      => 'حذف',
                     'description' => 'الوصف',
                     'edit'        => 'تعديل',
                     'id'          => 'المعرف',
                     'name'        => 'الاسم',
                 ],
-
                 'edit' => [
                     'title' => 'تعديل المجموعة',
                 ],
-
                 'create' => [
                     'name'        => 'الاسم',
                     'title'       => 'إنشاء مجموعة',
@@ -775,7 +699,6 @@ return [
                 ],
             ],
         ],
-
         'roles' => [
             'index' => [
                 'being-used'                => 'لا يمكن حذف الدور، حيث أنه قيد الاستخدام في مستخدم الإدارة.',
@@ -789,8 +712,7 @@ return [
                 'title'                     => 'الأدوار',
                 'update-success'            => 'تم تحديث الدور بنجاح.',
                 'user-define-error'         => 'لا يمكن حذف دور النظام.',
-
-                'datagrid'   => [
+                'datagrid'                  => [
                     'all'             => 'الكل',
                     'custom'          => 'مخصص',
                     'delete'          => 'حذف',
@@ -801,7 +723,6 @@ return [
                     'permission-type' => 'نوع الإذن',
                 ],
             ],
-
             'create' => [
                 'access-control' => 'التحكم في الوصول',
                 'all'            => 'الكل',
@@ -814,7 +735,6 @@ return [
                 'save-btn'       => 'حفظ الدور',
                 'title'          => 'إنشاء دور',
             ],
-
             'edit' => [
                 'access-control' => 'التحكم في الوصول',
                 'all'            => 'الكل',
@@ -828,7 +748,6 @@ return [
                 'title'          => 'تعديل الدور',
             ],
         ],
-
         'types' => [
             'index' => [
                 'create-btn'     => 'إنشاء نوع',
@@ -837,27 +756,23 @@ return [
                 'delete-success' => 'تم حذف النوع بنجاح.',
                 'title'          => 'الأنواع',
                 'update-success' => 'تم تحديث النوع بنجاح.',
-
-                'datagrid' => [
+                'datagrid'       => [
                     'delete'      => 'حذف',
                     'description' => 'الوصف',
                     'edit'        => 'تعديل',
                     'id'          => 'المعرف',
                     'name'        => 'الاسم',
                 ],
-
                 'create' => [
                     'name'     => 'الاسم',
                     'save-btn' => 'حفظ النوع',
                     'title'    => 'إنشاء نوع',
                 ],
-
                 'edit' => [
                     'title' => 'تعديل النوع',
                 ],
             ],
         ],
-
         'sources' => [
             'index' => [
                 'title'                          => 'المصادر',
@@ -867,26 +782,22 @@ return [
                 'delete-success'                 => 'تم حذف المصدر بنجاح.',
                 'update-success'                 => 'تم تحديث المصدر بنجاح.',
                 'delete-failed-associated-leads' => 'لا يمكن حذف المصدر لأنه مرتبط بعملاء محتملين موجودين. يرجى فصل أو تحديث هؤلاء العملاء قبل الحذف.',
-
-                'datagrid' => [
+                'datagrid'                       => [
                     'delete' => 'حذف',
                     'edit'   => 'تعديل',
                     'id'     => 'المعرف',
                     'name'   => 'الاسم',
                 ],
-
                 'create' => [
                     'name'     => 'اسم',
                     'save-btn' => 'حفظ المصدر',
                     'title'    => 'إنشاء مصدر',
                 ],
-
                 'edit' => [
                     'title' => 'تعديل المصدر',
                 ],
             ],
         ],
-
         'workflows' => [
             'index' => [
                 'title'          => 'سير العمل',
@@ -903,7 +814,6 @@ return [
                     'name'        => 'الاسم',
                 ],
             ],
-
             'helpers' => [
                 'update-related-leads'       => 'تحديث العملاء المحتملين ذوي الصلة',
                 'send-email-to-sales-owner'  => 'إرسال بريد إلكتروني إلى مسؤول المبيعات',
@@ -916,7 +826,6 @@ return [
                 'add-note-as-activity'       => 'إضافة ملاحظة كنشاط',
                 'update-quote'               => 'تحديث العرض',
             ],
-
             'create' => [
                 'title'                  => 'إنشاء سير عمل',
                 'event'                  => 'الحدث',
@@ -951,7 +860,6 @@ return [
                 'contains'               => 'يحتوي',
                 'does-not-contain'       => 'لا يحتوي',
             ],
-
             'edit' => [
                 'title'                  => 'تعديل سير العمل',
                 'event'                  => 'الحدث',
@@ -987,7 +895,6 @@ return [
                 'does-not-contain'       => 'لا يحتوي',
             ],
         ],
-
         'webforms' => [
             'index' => [
                 'title'          => 'نماذج الويب',
@@ -996,7 +903,6 @@ return [
                 'update-success' => 'تم تحديث نموذج الويب بنجاح.',
                 'delete-success' => 'تم حذف نموذج الويب بنجاح.',
                 'delete-failed'  => 'لا يمكن حذف نموذج الويب.',
-
                 'datagrid'       => [
                     'id'     => 'المعرف',
                     'title'  => 'العنوان',
@@ -1004,7 +910,6 @@ return [
                     'delete' => 'حذف',
                 ],
             ],
-
             'create' => [
                 'title'                    => 'إنشاء استمارة ويب',
                 'add-attribute-btn'        => 'زر إضافة سمة',
@@ -1033,43 +938,41 @@ return [
                 'select-image'             => 'اختر صورة',
                 'enter-value'              => 'أدخل القيمة',
             ],
-
             'edit' => [
-                'title'                     => 'تعديل استمارة ويب',
-                'add-attribute-btn'         => 'زر إضافة سمة',
-                'attribute-label-color'     => 'لون تسمية السمة',
-                'attributes'                => 'السمات',
-                'attributes-info'           => 'أضف سمات مخصصة إلى النموذج.',
-                'background-color'          => 'لون الخلفية',
-                'code-snippet'              => 'مقتطف الكود',
-                'copied'                    => 'تم النسخ',
-                'copy'                      => 'نسخ',
-                'create-lead'               => 'إنشاء عميل محتمل',
-                'customize-webform'         => 'تخصيص نموذج الويب',
-                'customize-webform-info'    => 'خصص نموذج الويب الخاص بك بألوان العناصر التي تختارها.',
-                'description'               => 'الوصف',
-                'display-custom-message'    => 'عرض رسالة مخصصة',
-                'embed'                     => 'تضمين',
-                'form-background-color'     => 'لون خلفية النموذج',
-                'form-submit-btn-color'     => 'لون زر إرسال النموذج',
-                'form-submit-button-color'  => 'لون زر إرسال النموذج',
-                'form-title-color'          => 'لون عنوان النموذج',
-                'general'                   => 'عام',
-                'leads'                     => 'العملاء المحتملون',
-                'preview'                   => 'معاينة',
-                'person'                    => 'شخص',
-                'public-url'                => 'الرابط العام',
-                'redirect-to-url'           => 'إعادة التوجيه إلى الرابط',
-                'save-btn'                  => 'حفظ نموذج الويب',
-                'submit-button-label'       => 'تسمية زر الإرسال',
-                'submit-success-action'     => 'إجراء نجاح الإرسال',
-                'choose-value'              => 'اختر القيمة',
-                'select-file'               => 'اختر ملف',
-                'select-image'              => 'اختر صورة',
-                'enter-value'               => 'أدخل القيمة',
+                'add-attribute-btn'        => 'زر إضافة سمة',
+                'attribute-label-color'    => 'لون تسمية السمة',
+                'attributes'               => 'السمات',
+                'attributes-info'          => 'أضف سمات مخصصة إلى النموذج.',
+                'background-color'         => 'لون الخلفية',
+                'choose-value'             => 'اختر القيمة',
+                'code-snippet'             => 'مقتطف الكود',
+                'copied'                   => 'تم النسخ',
+                'copy'                     => 'نسخ',
+                'create-lead'              => 'إنشاء عميل محتمل',
+                'customize-webform'        => 'تخصيص نموذج الويب',
+                'customize-webform-info'   => 'خصص نموذج الويب الخاص بك بألوان العناصر التي تختارها.',
+                'description'              => 'الوصف',
+                'display-custom-message'   => 'عرض رسالة مخصصة',
+                'embed'                    => 'تضمين',
+                'enter-value'              => 'أدخل القيمة',
+                'form-background-color'    => 'لون خلفية النموذج',
+                'form-submit-btn-color'    => 'لون زر إرسال النموذج',
+                'form-submit-button-color' => 'لون زر إرسال النموذج',
+                'form-title-color'         => 'لون عنوان النموذج',
+                'general'                  => 'عام',
+                'leads'                    => 'العملاء المحتملون',
+                'person'                   => 'شخص',
+                'preview'                  => 'معاينة',
+                'public-url'               => 'الرابط العام',
+                'redirect-to-url'          => 'إعادة التوجيه إلى الرابط',
+                'save-btn'                 => 'حفظ نموذج الويب',
+                'select-file'              => 'اختر ملف',
+                'select-image'             => 'اختر صورة',
+                'submit-button-label'      => 'تسمية زر الإرسال',
+                'submit-success-action'    => 'إجراء نجاح الإرسال',
+                'title'                    => 'تعديل استمارة ويب',
             ],
         ],
-
         'email-template' => [
             'index' => [
                 'create-btn'     => 'إنشاء قالب بريد إلكتروني',
@@ -1078,17 +981,15 @@ return [
                 'update-success' => 'تم تحديث قالب البريد الإلكتروني بنجاح.',
                 'delete-success' => 'تم حذف قالب البريد الإلكتروني بنجاح.',
                 'delete-failed'  => 'لا يمكن حذف قالب البريد الإلكتروني.',
-
-                'datagrid'   => [
-                    'delete'       => 'حذف',
-                    'edit'         => 'تعديل',
-                    'id'           => 'المعرف',
-                    'name'         => 'الاسم',
-                    'subject'      => 'الموضوع',
+                'datagrid'       => [
+                    'delete'  => 'حذف',
+                    'edit'    => 'تعديل',
+                    'id'      => 'المعرف',
+                    'name'    => 'الاسم',
+                    'subject' => 'الموضوع',
                 ],
             ],
-
-            'create'     => [
+            'create' => [
                 'title'                => 'إنشاء قالب بريد إلكتروني',
                 'save-btn'             => 'حفظ قالب البريد الإلكتروني',
                 'email-template'       => 'قالب البريد الإلكتروني',
@@ -1098,7 +999,6 @@ return [
                 'general'              => 'عام',
                 'name'                 => 'الاسم',
             ],
-
             'edit' => [
                 'title'                => 'تعديل قالب البريد الإلكتروني',
                 'save-btn'             => 'حفظ قالب البريد الإلكتروني',
@@ -1110,7 +1010,6 @@ return [
                 'name'                 => 'الاسم',
             ],
         ],
-
         'marketing' => [
             'events' => [
                 'index' => [
@@ -1121,30 +1020,26 @@ return [
                     'delete-success'      => 'تم حذف الحدث بنجاح.',
                     'delete-failed'       => 'لا يمكن حذف الحدث.',
                     'mass-delete-success' => 'تم حذف الأحداث بنجاح',
-
-                    'datagrid'   => [
-                        'delete'       => 'حذف',
-                        'edit'         => 'تحرير',
-                        'id'           => 'المعرف',
-                        'name'         => 'الاسم',
-                        'description'  => 'الوصف',
-                        'date'         => 'التاريخ',
+                    'datagrid'            => [
+                        'delete'      => 'حذف',
+                        'edit'        => 'تحرير',
+                        'id'          => 'المعرف',
+                        'name'        => 'الاسم',
+                        'description' => 'الوصف',
+                        'date'        => 'التاريخ',
                     ],
-
-                    'create'     => [
+                    'create' => [
                         'title'       => 'إنشاء حدث',
                         'name'        => 'الاسم',
                         'date'        => 'التاريخ',
                         'description' => 'الوصف',
                         'save-btn'    => 'حفظ الحدث',
                     ],
-
                     'edit' => [
                         'title' => 'تحرير الحدث',
                     ],
                 ],
             ],
-
             'campaigns' => [
                 'index' => [
                     'create-btn'          => 'إنشاء حملة',
@@ -1154,8 +1049,7 @@ return [
                     'delete-success'      => 'تم حذف الحملة بنجاح.',
                     'delete-failed'       => 'لا يمكن حذف الحملة.',
                     'mass-delete-success' => 'تم حذف الحملات بنجاح.',
-
-                    'datagrid'   => [
+                    'datagrid'            => [
                         'id'       => 'المعرف',
                         'name'     => 'الاسم',
                         'subject'  => 'الموضوع',
@@ -1165,8 +1059,7 @@ return [
                         'edit'     => 'تحرير',
                         'delete'   => 'حذف',
                     ],
-
-                    'create'     => [
+                    'create' => [
                         'title'          => 'إنشاء حملة',
                         'name'           => 'الاسم',
                         'type'           => 'النوع',
@@ -1175,14 +1068,12 @@ return [
                         'email-template' => 'نموذج البريد الإلكتروني',
                         'status'         => 'الحالة',
                     ],
-
                     'edit' => [
                         'title' => 'تحرير الحملة',
                     ],
                 ],
             ],
         ],
-
         'tags' => [
             'index' => [
                 'create-btn'     => 'إنشاء وسم',
@@ -1191,29 +1082,25 @@ return [
                 'update-success' => 'تم تحديث الوسم بنجاح.',
                 'delete-success' => 'تم حذف الوسم بنجاح.',
                 'delete-failed'  => 'لا يمكن حذف الوسم.',
-
-                'datagrid' => [
-                    'delete'      => 'حذف',
-                    'edit'        => 'تعديل',
-                    'id'          => 'المعرف',
-                    'name'        => 'الاسم',
-                    'users'       => 'المستخدمون',
-                    'created-at'  => 'تم الإنشاء في',
+                'datagrid'       => [
+                    'delete'     => 'حذف',
+                    'edit'       => 'تعديل',
+                    'id'         => 'المعرف',
+                    'name'       => 'الاسم',
+                    'users'      => 'المستخدمون',
+                    'created-at' => 'تم الإنشاء في',
                 ],
-
                 'create' => [
                     'name'     => 'الاسم',
                     'save-btn' => 'حفظ الوسم',
                     'title'    => 'إنشاء وسم',
                     'color'    => 'اللون',
                 ],
-
                 'edit' => [
                     'title' => 'تعديل الوسم',
                 ],
             ],
         ],
-
         'users' => [
             'index' => [
                 'create-btn'          => 'إنشاء مستخدم',
@@ -1230,8 +1117,7 @@ return [
                 'user-define-error'   => 'لا يمكن حذف مستخدم النظام.',
                 'active'              => 'نشط',
                 'inactive'            => 'غير نشط',
-
-                'datagrid' => [
+                'datagrid'            => [
                     'active'        => 'نشط',
                     'created-at'    => 'تم الإنشاء في',
                     'delete'        => 'حذف',
@@ -1244,30 +1130,28 @@ return [
                     'update-status' => 'تحديث الحالة',
                     'users'         => 'المستخدمون',
                 ],
-
                 'create' => [
-                    'confirm-password' => 'تأكيد كلمة المرور',
-                    'email'            => 'البريد الإلكتروني',
-                    'general'          => 'عام',
-                    'global'           => 'عالمي',
-                    'group'            => 'مجموعة',
-                    'individual'       => 'فردي',
-                    'name'             => 'الاسم',
-                    'password'         => 'كلمة المرور',
-                    'permission'       => 'الصلاحية',
-                    'role'             => 'الدور',
-                    'save-btn'         => 'حفظ المستخدم',
-                    'status'           => 'الحالة',
-                    'title'            => 'إنشاء مستخدم',
-                    'view-permission'  => 'عرض الصلاحية',
+                    'confirm-password'         => 'تأكيد كلمة المرور',
+                    'email'                    => 'البريد الإلكتروني',
+                    'general'                  => 'عام',
+                    'global'                   => 'عالمي',
+                    'group'                    => 'مجموعة',
+                    'individual'               => 'فردي',
+                    'name'                     => 'الاسم',
+                    'password'                 => 'كلمة المرور',
+                    'permission'               => 'الصلاحية',
+                    'role'                     => 'الدور',
+                    'save-btn'                 => 'حفظ المستخدم',
+                    'status'                   => 'الحالة',
+                    'title'                    => 'إنشاء مستخدم',
+                    'view-permission'          => 'عرض الصلاحية',
+                    'select-at-lest-one-group' => 'Select at least one group',
                 ],
-
                 'edit' => [
                     'title' => 'تعديل المستخدم',
                 ],
             ],
         ],
-
         'pipelines' => [
             'index' => [
                 'title'                => 'خطوط الأنابيب',
@@ -1278,8 +1162,7 @@ return [
                 'delete-success'       => 'تم حذف خط الأنابيب بنجاح.',
                 'delete-failed'        => 'لا يمكن حذف خط الأنابيب.',
                 'default-delete-error' => 'لا يمكن حذف خط الأنابيب الافتراضي.',
-
-                'datagrid' => [
+                'datagrid'             => [
                     'delete'      => 'حذف',
                     'edit'        => 'تعديل',
                     'id'          => 'المعرف',
@@ -1290,7 +1173,6 @@ return [
                     'yes'         => 'نعم',
                 ],
             ],
-
             'create' => [
                 'title'                => 'إنشاء خط أنابيب',
                 'save-btn'             => 'حفظ خط الأنابيب',
@@ -1311,8 +1193,7 @@ return [
                 'newly-added'          => 'تمت الإضافة حديثًا',
                 'stage-delete-success' => 'تم حذف المرحلة بنجاح',
             ],
-
-            'edit'  => [
+            'edit' => [
                 'title'                => 'تعديل خط الأنابيب',
                 'save-btn'             => 'حفظ خط الأنابيب',
                 'name'                 => 'الاسم',
@@ -1332,7 +1213,6 @@ return [
                 'stage-delete-success' => 'تم حذف المرحلة بنجاح',
             ],
         ],
-
         'webhooks' => [
             'index' => [
                 'title'          => 'الويب هوكس',
@@ -1341,8 +1221,7 @@ return [
                 'update-success' => 'تم تحديث الويب هوك بنجاح.',
                 'delete-success' => 'تم حذف الويب هوك بنجاح.',
                 'delete-failed'  => 'لا يمكن حذف الويب هوك.',
-
-                'datagrid' => [
+                'datagrid'       => [
                     'id'          => 'المعرف',
                     'delete'      => 'حذف',
                     'edit'        => 'تعديل',
@@ -1351,7 +1230,6 @@ return [
                     'end-point'   => 'نقطة النهاية',
                 ],
             ],
-
             'create' => [
                 'title'                 => 'إنشاء ويب هوك',
                 'save-btn'              => 'حفظ الويب هوك',
@@ -1380,7 +1258,6 @@ return [
                 'json'                  => 'Json',
                 'text'                  => 'نص',
             ],
-
             'edit' => [
                 'title'                 => 'تعديل الويب هوك',
                 'edit-btn'              => 'حفظ الويب هوك',
@@ -1411,7 +1288,6 @@ return [
                 'text'                  => 'نص',
             ],
         ],
-
         'warehouses' => [
             'index' => [
                 'title'          => 'المستودعات',
@@ -1421,8 +1297,7 @@ return [
                 'update-success' => 'تم تحديث المستودع بنجاح.',
                 'delete-success' => 'تم حذف المستودع بنجاح.',
                 'delete-failed'  => 'لا يمكن حذف المستودع.',
-
-                'datagrid' => [
+                'datagrid'       => [
                     'id'              => 'المعرف',
                     'name'            => 'الاسم',
                     'contact-name'    => 'اسم جهة الاتصال',
@@ -1435,27 +1310,23 @@ return [
                     'contact-numbers' => 'أرقام الاتصال',
                 ],
             ],
-
             'create' => [
-                'title'         => 'إنشاء مستودع',
-                'save-btn'      => 'حفظ المستودع',
-                'contact-info'  => 'معلومات الاتصال',
+                'title'        => 'إنشاء مستودع',
+                'save-btn'     => 'حفظ المستودع',
+                'contact-info' => 'معلومات الاتصال',
             ],
-
             'edit' => [
-                'title'         => 'تعديل المستودع',
-                'save-btn'      => 'حفظ المستودع',
-                'contact-info'  => 'معلومات الاتصال',
+                'title'        => 'تعديل المستودع',
+                'save-btn'     => 'حفظ المستودع',
+                'contact-info' => 'معلومات الاتصال',
             ],
-
             'view' => [
                 'all'         => 'الكل',
                 'notes'       => 'الملاحظات',
                 'files'       => 'الملفات',
                 'location'    => 'الموقع',
                 'change-logs' => 'سجلات التغيير',
-
-                'locations' => [
+                'locations'   => [
                     'action'         => 'إجراء',
                     'add-location'   => 'إضافة موقع',
                     'create-success' => 'تم إنشاء الموقع بنجاح.',
@@ -1465,17 +1336,14 @@ return [
                     'name'           => 'الاسم',
                     'save-btn'       => 'حفظ',
                 ],
-
                 'general-information' => [
                     'title' => 'معلومات عامة',
                 ],
-
                 'contact-information' => [
                     'title' => 'معلومات الاتصال',
                 ],
             ],
         ],
-
         'attributes' => [
             'index' => [
                 'title'              => 'السمات',
@@ -1486,19 +1354,17 @@ return [
                 'delete-failed'      => 'لا يمكن حذف السمة.',
                 'user-define-error'  => 'لا يمكن حذف سمة النظام.',
                 'mass-delete-failed' => 'لا يمكن حذف سمات النظام.',
-
-                'datagrid' => [
-                    'yes'         => 'نعم',
-                    'no'          => 'لا',
-                    'id'          => 'المعرف',
-                    'code'        => 'الرمز',
-                    'name'        => 'الاسم',
-                    'entity-type' => 'نوع الكيان',
-                    'type'        => 'النوع',
-                    'is-default'  => 'افتراضي',
-                    'edit'        => 'تعديل',
-                    'delete'      => 'حذف',
-
+                'datagrid'           => [
+                    'yes'          => 'نعم',
+                    'no'           => 'لا',
+                    'id'           => 'المعرف',
+                    'code'         => 'الرمز',
+                    'name'         => 'الاسم',
+                    'entity-type'  => 'نوع الكيان',
+                    'type'         => 'النوع',
+                    'is-default'   => 'افتراضي',
+                    'edit'         => 'تعديل',
+                    'delete'       => 'حذف',
                     'entity-types' => [
                         'leads'         => 'العملاء المحتملين',
                         'organizations' => 'المنظمات',
@@ -1507,7 +1373,6 @@ return [
                         'quotes'        => 'عروض الأسعار',
                         'warehouses'    => 'المستودعات',
                     ],
-
                     'types' => [
                         'text'        => 'نص',
                         'textarea'    => 'منطقة نصية',
@@ -1527,64 +1392,18 @@ return [
                     ],
                 ],
             ],
-
-            'create'  => [
-                'actions'               => 'الإجراءات',
-                'add-attribute-options' => 'إضافة خيارات السمة',
-                'add-option'            => 'إضافة خيار',
-                'address'               => 'عنوان',
-                'boolean'               => 'منطقي',
-                'checkbox'              => 'خانة اختيار',
-                'code'                  => 'الرمز',
-                'date'                  => 'تاريخ',
-                'datetime'              => 'تاريخ ووقت',
-                'decimal'               => 'عشري',
-                'email'                 => 'بريد إلكتروني',
-                'entity-type'           => 'نوع الكيان',
-                'entity_type'           => 'نوع الكيان',
-                'file'                  => 'ملف',
-                'general'               => 'عام',
-                'image'                 => 'صورة',
-                'input-validation'      => 'التحقق من الإدخال',
-                'is-required'           => 'مطلوب',
-                'is-unique'             => 'فريد',
-                'is_required'           => 'مطلوب',
-                'is_unique'             => 'فريد',
-                'labels'                => 'التسميات',
-                'lookup'                => 'بحث',
-                'lookup-type'           => 'نوع البحث',
-                'multiselect'           => 'اختيار متعدد',
-                'name'                  => 'الاسم',
-                'numeric'               => 'رقمي',
-                'option-deleted'        => 'تم حذف خيار السمة بنجاح',
-                'option-name'           => 'اسم الخيار',
-                'option-type'           => 'نوع الخيار',
-                'options'               => 'الخيارات',
-                'phone'                 => 'هاتف',
-                'price'                 => 'السعر',
-                'save-btn'              => 'حفظ السمة',
-                'save-option'           => 'حفظ الخيار',
-                'select'                => 'اختيار',
-                'text'                  => 'نص',
-                'textarea'              => 'منطقة نص',
+            'create' => [
                 'title'                 => 'إنشاء سمة',
-                'type'                  => 'النوع',
-                'url'                   => 'رابط',
-                'validations'           => 'التحققات',
-            ],
-
-            'edit'  => [
-                'title'                 => 'تعديل السمة',
                 'save-btn'              => 'حفظ السمة',
                 'code'                  => 'الرمز',
                 'name'                  => 'الاسم',
-                'labels'                => 'التسميات',
                 'entity-type'           => 'نوع الكيان',
                 'type'                  => 'النوع',
                 'validations'           => 'التحققات',
                 'is-required'           => 'مطلوب',
                 'input-validation'      => 'التحقق من الإدخال',
                 'is-unique'             => 'فريد',
+                'labels'                => 'التسميات',
                 'general'               => 'عام',
                 'numeric'               => 'رقمي',
                 'decimal'               => 'عشري',
@@ -1615,9 +1434,52 @@ return [
                 'is_required'           => 'مطلوب',
                 'is_unique'             => 'فريد',
                 'actions'               => 'الإجراءات',
+            ],
+            'edit' => [
+                'actions'               => 'الإجراءات',
+                'add-attribute-options' => 'إضافة خيارات السمة',
+                'add-option'            => 'إضافة خيار',
+                'address'               => 'عنوان',
+                'boolean'               => 'منطقي',
+                'checkbox'              => 'خانة اختيار',
+                'code'                  => 'الرمز',
+                'date'                  => 'تاريخ',
+                'datetime'              => 'تاريخ ووقت',
+                'decimal'               => 'عشري',
+                'email'                 => 'بريد إلكتروني',
+                'entity-type'           => 'نوع الكيان',
+                'entity_type'           => 'نوع الكيان',
+                'file'                  => 'ملف',
+                'general'               => 'عام',
+                'image'                 => 'صورة',
+                'input-validation'      => 'التحقق من الإدخال',
+                'is-required'           => 'مطلوب',
+                'is-unique'             => 'فريد',
+                'is_required'           => 'مطلوب',
+                'is_unique'             => 'فريد',
+                'labels'                => 'التسميات',
+                'lookup'                => 'بحث',
+                'lookup-type'           => 'نوع البحث',
+                'multiselect'           => 'اختيار متعدد',
+                'name'                  => 'الاسم',
+                'numeric'               => 'رقمي',
+                'option-deleted'        => 'Attribute Option is deleted successfully',
+                'option-name'           => 'اسم الخيار',
+                'option-type'           => 'نوع الخيار',
+                'options'               => 'الخيارات',
+                'phone'                 => 'هاتف',
+                'price'                 => 'السعر',
+                'save-btn'              => 'حفظ السمة',
+                'save-option'           => 'حفظ الخيار',
+                'select'                => 'اختيار',
+                'text'                  => 'نص',
+                'textarea'              => 'منطقة نص',
+                'title'                 => 'تعديل السمة',
+                'type'                  => 'النوع',
+                'url'                   => 'رابط',
+                'validations'           => 'التحققات',
             ],
         ],
-
         'data-transfer' => [
             'imports' => [
                 'create' => [
@@ -1641,7 +1503,6 @@ return [
                     'type'                => 'النوع',
                     'validation-strategy' => 'استراتيجية التحقق',
                 ],
-
                 'edit' => [
                     'action'              => 'إجراء',
                     'allowed-errors'      => 'الأخطاء المسموح بها',
@@ -1663,12 +1524,10 @@ return [
                     'type'                => 'النوع',
                     'validation-strategy' => 'استراتيجية التحقق',
                 ],
-
                 'index' => [
                     'button-title' => 'إنشاء استيراد',
                     'title'        => 'الاستيرادات',
-
-                    'datagrid' => [
+                    'datagrid'     => [
                         'actions'       => 'الإجراءات',
                         'completed-at'  => 'اكتمل في',
                         'created'       => 'تم الإنشاء',
@@ -1685,7 +1544,6 @@ return [
                         'uploaded-file' => 'الملف المرفوع',
                     ],
                 ],
-
                 'import' => [
                     'back-btn'                => 'عودة',
                     'completed-batches'       => 'إجمالي الدفعات المكتملة:',
@@ -1710,7 +1568,6 @@ return [
                     'validation-failed-info'  => 'استيرادك غير صالح. يرجى إصلاح الأخطاء التالية والمحاولة مرة أخرى.',
                     'validation-success-info' => 'استيرادك صالح. انقر على استيراد لبدء عملية الاستيراد.',
                 ],
-
                 'create-success'    => 'تم إنشاء الاستيراد بنجاح.',
                 'delete-failed'     => 'فشل حذف الاستيراد بشكل غير متوقع.',
                 'delete-success'    => 'تم حذف الاستيراد بنجاح.',
@@ -1721,11 +1578,9 @@ return [
             ],
         ],
     ],
-
     'activities' => [
         'index' => [
-            'title'      => 'الأنشطة',
-
+            'title'    => 'الأنشطة',
             'datagrid' => [
                 'comment'       => 'تعليق',
                 'created_at'    => 'تاريخ الإنشاء',
@@ -1750,7 +1605,6 @@ return [
                 'lunch'         => 'غداء',
             ],
         ],
-
         'edit' => [
             'title'           => 'تحرير النشاط',
             'back-btn'        => 'رجوع',
@@ -1770,7 +1624,6 @@ return [
             'no-result-found' => 'لم يتم العثور على سجلات.',
             'users'           => 'المستخدمون',
         ],
-
         'updated'              => 'تم تحديث :attribute',
         'created'              => 'تم الإنشاء',
         'duration-overlapping' => 'لدى المشاركين اجتماع آخر في هذا الوقت. هل تريد المتابعة؟',
@@ -1783,29 +1636,27 @@ return [
         'mass-destroy-success' => 'تم حذف الأنشطة بنجاح.',
         'mass-delete-failed'   => 'لا يمكن حذف الأنشطة.',
     ],
-
     'mail' => [
         'index' => [
-            'compose'           => 'إنشاء',
-            'draft'             => 'مسودة',
-            'inbox'             => 'الوارد',
-            'outbox'            => 'الصادر',
-            'sent'              => 'تم الإرسال',
-            'trash'             => 'المهملات',
-            'compose-mail-btn'  => 'إنشاء بريد',
-            'btn'               => 'البريد',
-            'mail'              => [
-                'title'         => 'إنشاء بريد',
-                'to'            => 'إلى',
-                'enter-emails'  => 'اضغط على Enter لإضافة البريد الإلكتروني',
-                'cc'            => 'نسخة إلى',
-                'bcc'           => 'نسخة مخفية إلى',
-                'subject'       => 'الموضوع',
-                'send-btn'      => 'إرسال',
-                'message'       => 'الرسالة',
-                'draft'         => 'مسودة',
+            'compose'          => 'إنشاء',
+            'draft'            => 'مسودة',
+            'inbox'            => 'الوارد',
+            'outbox'           => 'الصادر',
+            'sent'             => 'تم الإرسال',
+            'trash'            => 'المهملات',
+            'compose-mail-btn' => 'إنشاء بريد',
+            'btn'              => 'البريد',
+            'mail'             => [
+                'title'        => 'إنشاء بريد',
+                'to'           => 'إلى',
+                'enter-emails' => 'اضغط على Enter لإضافة البريد الإلكتروني',
+                'cc'           => 'نسخة إلى',
+                'bcc'          => 'نسخة مخفية إلى',
+                'subject'      => 'الموضوع',
+                'send-btn'     => 'إرسال',
+                'message'      => 'الرسالة',
+                'draft'        => 'مسودة',
             ],
-
             'datagrid' => [
                 'id'            => 'المعرف',
                 'from'          => 'من',
@@ -1822,14 +1673,12 @@ return [
                 'delete'        => 'حذف',
             ],
         ],
-
         'create-success'      => 'تم إرسال البريد الإلكتروني بنجاح.',
         'update-success'      => 'تم تحديث البريد الإلكتروني بنجاح.',
         'mass-update-success' => 'تم تحديث البريد الإلكتروني بنجاح.',
         'delete-success'      => 'تم حذف البريد الإلكتروني بنجاح.',
         'delete-failed'       => 'لا يمكن حذف البريد الإلكتروني.',
-
-        'view' => [
+        'view'                => [
             'title'                      => 'الرسائل',
             'subject'                    => ':الموضوع',
             'link-mail'                  => 'ربط البريد',
@@ -1863,14 +1712,12 @@ return [
             'lead-details'               => 'تفاصيل العميل المحتمل',
             'contact-person'             => 'الشخص المسؤول',
             'product'                    => 'المنتج',
-
-            'tags' => [
+            'tags'                       => [
                 'create-success'  => 'تم إنشاء العلامة بنجاح.',
                 'destroy-success' => 'تم حذف العلامة بنجاح.',
             ],
         ],
     ],
-
     'common' => [
         'custom-attributes' => [
             'add-more'             => 'أضف المزيد',
@@ -1891,15 +1738,13 @@ return [
             'work'                 => 'العمل',
         ],
     ],
-
     'leads' => [
-        'create-success'    => 'تم إنشاء العميل المحتمل بنجاح.',
-        'update-success'    => 'تم تحديث العميل المحتمل بنجاح.',
-        'update-failed'     => 'Leads can not be deleted.',
-        'destroy-success'   => 'تم حذف العميل المحتمل بنجاح.',
-        'destroy-failed'    => 'لا يمكن حذف العميل المحتمل.',
-
-        'file' => [
+        'create-success'  => 'تم إنشاء العميل المحتمل بنجاح.',
+        'update-success'  => 'تم تحديث العميل المحتمل بنجاح.',
+        'update-failed'   => 'Leads can not be deleted.',
+        'destroy-success' => 'تم حذف العميل المحتمل بنجاح.',
+        'destroy-failed'  => 'لا يمكن حذف العميل المحتمل.',
+        'file'            => [
             'data-not-found'         => 'البيانات غير موجودة.',
             'empty-content'          => 'محتوى PDF فارغ أو لم يتم استخراجه.',
             'failed-extract'         => 'فشل في استخراج النص من الملف.',
@@ -1912,38 +1757,34 @@ return [
             'recursive-call'         => 'تم الكشف عن استدعاء متكرر.',
             'text-generation-failed' => 'فشل استخراج النص. قد يكون الملف فارغًا أو غير قابل للقراءة.',
         ],
-
         'index' => [
             'title'      => 'العملاء المحتملون',
             'create-btn' => 'إنشاء عميل محتمل',
-
-            'datagrid' => [
-                'id'                  => 'ID',
-                'sales-person'        => 'مندوب المبيعات',
-                'subject'             => 'الموضوع',
-                'source'              => 'المصدر',
-                'lead-value'          => 'قيمة العميل المحتمل',
-                'lead-type'           => 'نوع العميل المحتمل',
-                'tag-name'            => 'اسم العلامة',
-                'contact-person'      => 'شخص الاتصال',
-                'stage'               => 'المرحلة',
-                'rotten-lead'         => 'عميل محتمل متعفن',
-                'date-to'             => 'تاريخ إلى',
-                'created-at'          => 'تم الإنشاء في',
-                'no'                  => 'لا',
-                'yes'                 => 'نعم',
-                'delete'              => 'حذف',
-                'mass-delete'         => 'حذف جماعي',
-                'mass-update'         => 'تحديث جماعي',
+            'datagrid'   => [
+                'id'             => 'ID',
+                'sales-person'   => 'مندوب المبيعات',
+                'subject'        => 'الموضوع',
+                'source'         => 'المصدر',
+                'lead-value'     => 'قيمة العميل المحتمل',
+                'lead-type'      => 'نوع العميل المحتمل',
+                'tag-name'       => 'اسم العلامة',
+                'contact-person' => 'شخص الاتصال',
+                'stage'          => 'المرحلة',
+                'rotten-lead'    => 'عميل محتمل متعفن',
+                'date-to'        => 'تاريخ إلى',
+                'created-at'     => 'تم الإنشاء في',
+                'no'             => 'لا',
+                'yes'            => 'نعم',
+                'delete'         => 'حذف',
+                'mass-delete'    => 'حذف جماعي',
+                'mass-update'    => 'تحديث جماعي',
             ],
-
             'kanban' => [
                 'rotten-days'            => 'العميل الفاسد منذ :days أيام',
                 'empty-list'             => 'قائمة العملاء الخاصة بك فارغة',
                 'empty-list-description' => 'قم بإنشاء عميل لتنظيم أهدافك.',
                 'create-lead-btn'        => 'إنشاء عميل',
-
-                'columns' => [
+                'columns'                => [
                     'contact-person'      => 'شخص الاتصال',
                     'id'                  => 'ID',
                     'lead-type'           => 'نوع العميل المحتمل',
@@ -1955,12 +1796,10 @@ return [
                     'expected-close-date' => 'تاريخ الإغلاق المتوقع',
                     'created-at'          => 'تم الإنشاء في',
                 ],
-
                 'toolbar' => [
                     'search' => [
                         'title' => 'البحث حسب العنوان',
                     ],
-
                     'filters' => [
                         'apply-filters' => 'تطبيق الفلاتر',
                         'clear-all'     => 'مسح الكل',
@@ -1972,12 +1811,10 @@ return [
                     ],
                 ],
             ],
-
             'view-switcher' => [
                 'all-pipelines'       => 'كل المسارات',
                 'create-new-pipeline' => 'إنشاء مسار جديد',
             ],
-
             'upload' => [
                 'create-lead'   => 'إنشاء عميل محتمل باستخدام الذكاء الاصطناعي',
                 'file'          => 'رفع ملف',
@@ -1987,7 +1824,6 @@ return [
                 'upload-file'   => 'رفع الملف',
             ],
         ],
-
         'create' => [
             'title'          => 'إنشاء عميل محتمل',
             'save-btn'       => 'حفظ',
@@ -1998,7 +1834,6 @@ return [
             'products'       => 'المنتجات',
             'products-info'  => 'معلومات عن المنتجات',
         ],
-
         'edit' => [
             'title'          => 'تعديل العميل المحتمل',
             'save-btn'       => 'حفظ',
@@ -2009,7 +1844,6 @@ return [
             'products'       => 'المنتجات',
             'products-info'  => 'معلومات عن المنتجات',
         ],
-
         'common' => [
             'contact' => [
                 'name'           => 'الاسم',
@@ -2017,7 +1851,6 @@ return [
                 'contact-number' => 'رقم الاتصال',
                 'organization'   => 'المنظمة',
             ],
-
             'products' => [
                 'product-name' => 'اسم المنتج',
                 'quantity'     => 'الكمية',
@@ -2028,21 +1861,17 @@ return [
                 'total'        => 'الإجمالي',
             ],
         ],
-
         'view' => [
             'title'       => 'الفرصة: :title',
             'rotten-days' => ':days أيام',
-
-            'tabs' => [
+            'tabs'        => [
                 'description' => 'الوصف',
                 'products'    => 'المنتجات',
                 'quotes'      => 'الاقتباسات',
             ],
-
             'attributes' => [
                 'title' => 'حول الفرصة',
             ],
-
             'quotes' => [
                 'subject'         => 'الموضوع',
                 'expired-at'      => 'تنتهي في',
@@ -2059,7 +1888,6 @@ return [
                 'empty-info'      => 'لم يتم العثور على عروض لهذه الفرصة',
                 'add-btn'         => 'إضافة عرض',
             ],
-
             'products' => [
                 'product-name' => 'اسم المنتج',
                 'quantity'     => 'الكمية',
@@ -2072,12 +1900,10 @@ return [
                 'empty-info'   => 'لم يتم العثور على منتجات لهذه الفرصة',
                 'add-product'  => 'إضافة منتج',
             ],
-
             'persons' => [
                 'title'     => 'حول الأشخاص',
                 'job-title' => ':job_title في :organization',
             ],
-
             'stages' => [
                 'won-lost'       => 'ربحت/خسرت',
                 'won'            => 'ربحت',
@@ -2088,14 +1914,12 @@ return [
                 'lost-reason'    => 'سبب الخسارة',
                 'save-btn'       => 'حفظ',
             ],
-
             'tags' => [
                 'create-success'  => 'تم إنشاء العلامة بنجاح.',
                 'destroy-success' => 'تم حذف العلامة بنجاح.',
             ],
         ],
     ],
-
     'configuration' => [
         'index' => [
             'back'           => 'رجوع',
@@ -2106,36 +1930,63 @@ return [
             'select-country' => 'اختر الدولة',
             'select-state'   => 'اختر الولاية',
             'title'          => 'التكوين',
-
-            'general'  => [
+            'general'        => [
                 'title'   => 'عام',
                 'info'    => 'تكوين عام',
-
                 'general' => [
                     'title'           => 'عام',
                     'info'            => 'قم بتحديث إعداداتك العامة هنا.',
-
                     'locale-settings' => [
-                        'title'       => 'إعدادات اللغة',
-                        'title-info'  => 'تعريف اللغة المستخدمة في واجهة المستخدم، مثل العربية (ar)، الإنجليزية (en)، الإسبانية (es)، الفارسية (fa) والتركية (tr).',
+                        'title'      => 'إعدادات اللغة',
+                        'title-info' => 'تعريف اللغة المستخدمة في واجهة المستخدم، مثل العربية (ar)، الإنجليزية (en)، الإسبانية (es)، الفارسية (fa) والتركية (tr).',
                     ],
-
                     'admin-logo' => [
                         'logo-image' => 'صورة الشعار',
                         'title'      => 'شعار الإدارة',
                         'title-info' => 'تكوين صورة الشعار للوحة الإدارة الخاصة بك.',
                     ],
                 ],
+                'settings' => [
+                    'title'  => 'Settings',
+                    'info'   => 'Update your settings here.',
+                    'footer' => [
+                        'info'       => 'We can configure the powered by section here.',
+                        'powered-by' => 'Powered by text editor',
+                        'title'      => 'Powered by Section Configurations',
+                    ],
+                    'menu' => [
+                        'activities'    => 'Activities',
+                        'configuration' => 'Configuration',
+                        'contacts'      => 'Contacts',
+                        'dashboard'     => 'Dashboard',
+                        'draft'         => 'Draft',
+                        'inbox'         => 'Inbox',
+                        'info'          => 'We can configure the menu items name here.',
+                        'leads'         => 'Leads',
+                        'mail'          => 'Mail',
+                        'organizations' => 'Organizations',
+                        'outbox'        => 'Outbox',
+                        'persons'       => 'Persons',
+                        'products'      => 'Products',
+                        'quotes'        => 'Quotes',
+                        'sent'          => 'Sent',
+                        'settings'      => 'Settings',
+                        'title'         => 'Menu Item Configurations',
+                        'trash'         => 'Trash',
+                    ],
+                    'menu-color' => [
+                        'brand-color' => 'Brand Color',
+                        'info'        => 'We can change the menu items colors here.',
+                        'title'       => 'Menu Item Color Configurations',
+                    ],
+                ],
             ],
-
             'email' => [
                 'title' => 'إعدادات البريد الإلكتروني',
                 'info'  => 'تكوين البريد الإلكتروني للتطبيق.',
-
-                'imap' => [
-                    'title' => 'إعدادات IMAP',
-                    'info'  => 'تكوين البريد الإلكتروني IMAP لتلقي الرسائل.',
-
+                'imap'  => [
+                    'title'   => 'إعدادات IMAP',
+                    'info'    => 'تكوين البريد الإلكتروني IMAP لتلقي الرسائل.',
                     'account' => [
                         'title'         => 'حساب IMAP',
                         'title-info'    => 'قم بتكوين إعدادات حساب IMAP هنا.',
@@ -2148,11 +1999,9 @@ return [
                     ],
                 ],
             ],
-
             'magic-ai' => [
-                'title' => 'الذكاء الاصطناعي السحري',
-                'info'  => 'تكوين الذكاء الاصطناعي السحري للتطبيق.',
-
+                'title'    => 'الذكاء الاصطناعي السحري',
+                'info'     => 'تكوين الذكاء الاصطناعي السحري للتطبيق.',
                 'settings' => [
                     'api-key'             => 'مفتاح API',
                     'api-key-info'        => 'تذكر استخدام مفتاح API من OpenRouter لكل نموذج. إنها خطوة بسيطة لتعزيز الأمان والأداء.',
@@ -2163,8 +2012,7 @@ return [
                     'doc-generation'      => 'توليد DOC',
                     'doc-generation-info' => 'قم بتمكين ميزة توليد DOC لاستخراج البيانات تلقائيًا من ملفات DOC وتحويلها إلى تنسيق نصي. عزز إنتاجيتك وكفاءتك من خلال تفعيل هذه الميزة لتبسيط سير عملك.',
                     'title'               => 'الإعدادات العامة',
-
-                    'models'     => [
+                    'models'              => [
                         'deepseek-r1'           => 'Deepseek R1 Distill-llama-8b',
                         'gemini-2-0-flash-001'  => 'Gemini 2.0 flash-001',
                         'gpt-4o'                => 'GPT-4.0',
@@ -2175,58 +2023,15 @@ return [
                     ],
                 ],
             ],
-
-            'settings' => [
-                'title' => 'الإعدادات',
-                'info'  => 'قم بتحديث إعداداتك هنا.',
-
-                'footer' => [
-                    'info'       => 'يمكننا تكوين قسم "مشغل بواسطة" هنا.',
-                    'powered-by' => 'مشغل بواسطة',
-                    'title'      => 'تكوينات قسم "مشغل بواسطة"',
-                ],
-
-                'menu' => [
-                    'activities'     => 'الأنشطة',
-                    'configuration'  => 'التكوين',
-                    'contacts'       => 'جهات الاتصال',
-                    'dashboard'      => 'لوحة القيادة',
-                    'draft'          => 'مسودة',
-                    'inbox'          => 'الوارد',
-                    'info'           => 'يمكننا تكوين أسماء عناصر القائمة هنا.',
-                    'leads'          => 'العملاء المحتملين',
-                    'mail'           => 'البريد',
-                    'organizations'  => 'المنظمات',
-                    'outbox'         => 'الصادر',
-                    'persons'        => 'الأشخاص',
-                    'products'       => 'المنتجات',
-                    'quotes'         => 'عروض الأسعار',
-                    'sent'           => 'المرسل',
-                    'settings'       => 'الإعدادات',
-                    'title'          => 'تكوينات عناصر القائمة',
-                    'trash'          => 'المهملات',
-                ],
-
-                'menu-color' => [
-                    'active-background-color' => 'لون الخلفية النشطة',
-                    'active-text-color'       => 'لون النص النشط',
-                    'info'                    => 'يمكننا تغيير ألوان عناصر القائمة هنا.',
-                    'text-color'              => 'لون النص',
-                    'title'                   => 'تكوينات ألوان عناصر القائمة',
-                ],
-            ],
         ],
     ],
-
     'dashboard' => [
         'index' => [
-            'title' => 'لوحة القيادة',
-
+            'title'   => 'لوحة القيادة',
             'revenue' => [
                 'lost-revenue' => 'الإيرادات المفقودة',
                 'won-revenue'  => 'الإيرادات المكتسبة',
             ],
-
             'over-all' => [
                 'average-lead-value'    => 'متوسط قيمة العملاء المحتملين',
                 'total-leads'           => 'إجمالي العملاء المحتملين',
@@ -2235,38 +2040,32 @@ return [
                 'total-persons'         => 'إجمالي الأشخاص',
                 'total-organizations'   => 'إجمالي المؤسسات',
             ],
-
             'total-leads' => [
                 'title' => 'العملاء المحتملين',
                 'total' => 'إجمالي العملاء المحتملين',
                 'won'   => 'العملاء المحتملين المكتسبين',
                 'lost'  => 'العملاء المحتملين المفقودين',
             ],
-
             'revenue-by-sources' => [
                 'title'       => 'الإيرادات حسب المصادر',
                 'empty-title' => 'لا توجد بيانات متاحة',
                 'empty-info'  => 'لا توجد بيانات متاحة للفترة المختارة',
             ],
-
             'revenue-by-types' => [
                 'title'       => 'الإيرادات حسب الأنواع',
                 'empty-title' => 'لا توجد بيانات متاحة',
                 'empty-info'  => 'لا توجد بيانات متاحة للفترة المختارة',
             ],
-
             'top-selling-products' => [
                 'title'       => 'أفضل المنتجات مبيعاً',
                 'empty-title' => 'لم يتم العثور على منتجات',
                 'empty-info'  => 'لا توجد منتجات متاحة للفترة المختارة',
             ],
-
             'top-persons' => [
                 'title'       => 'أفضل الأشخاص',
                 'empty-title' => 'لم يتم العثور على أشخاص',
                 'empty-info'  => 'لا توجد أشخاص متاحة للفترة المختارة',
             ],
-
             'open-leads-by-states' => [
                 'title'       => 'العملاء المحتملين المفتوحين حسب المراحل',
                 'empty-title' => 'لا توجد بيانات متاحة',
@@ -2274,14 +2073,13 @@ return [
             ],
         ],
     ],
-
     'layouts' => [
-        'app-version'          => 'الإصدار: :version',
-        'dashboard'            => 'لوحة القيادة',
-        'leads'                => 'العملاء المحتملين',
-        'quotes'               => 'العروض',
-        'quote'                => 'عرض',
-        'mail'                 => [
+        'app-version' => 'الإصدار: :version',
+        'dashboard'   => 'لوحة القيادة',
+        'leads'       => 'العملاء المحتملين',
+        'quotes'      => 'العروض',
+        'quote'       => 'عرض',
+        'mail'        => [
             'title'   => 'البريد',
             'compose' => 'إنشاء رسالة',
             'inbox'   => 'البريد الوارد',
@@ -2342,7 +2140,6 @@ return [
         'back'                 => 'رجوع',
         'name'                 => 'الاسم',
         'configuration'        => 'الإعدادات',
-        'activities'           => 'الأنشطة',
         'howdy'                => 'مرحبا!',
         'warehouses'           => 'المستودعات',
         'warehouse'            => 'مستودع',
@@ -2350,85 +2147,73 @@ return [
         'data_transfer'        => 'نقل البيانات',
         'data_transfer_info'   => 'إدارة إعدادات نقل البيانات المتعلقة بالأشخاص والمنتجات والعملاء المحتملين في إدارة علاقات العملاء (CRM)',
     ],
-
     'user' => [
         'account' => [
-            'name'                  => 'الاسم',
-            'email'                 => 'البريد الإلكتروني',
-            'password'              => 'كلمة المرور',
-            'my_account'            => 'حسابي',
-            'update_details'        => 'تحديث التفاصيل',
-            'current_password'      => 'كلمة المرور الحالية',
-            'confirm_password'      => 'تأكيد كلمة المرور',
-            'password-match'        => 'كلمة المرور الحالية لا تطابق.',
-            'account-save'          => 'تم حفظ تغييرات الحساب بنجاح.',
-            'permission-denied'     => 'تم رفض الإذن',
-            'remove-image'          => 'إزالة الصورة',
-            'upload_image_pix'      => 'تحميل صورة الملف الشخصي (100 بكسل × 100 بكسل)',
-            'upload_image_format'   => 'بصيغة PNG أو JPG',
-            'image_upload_message'  => 'فقط الصور (.jpeg، .jpg، .png، ..) مسموح بها.',
+            'name'                 => 'الاسم',
+            'email'                => 'البريد الإلكتروني',
+            'password'             => 'كلمة المرور',
+            'my_account'           => 'حسابي',
+            'update_details'       => 'تحديث التفاصيل',
+            'current_password'     => 'كلمة المرور الحالية',
+            'confirm_password'     => 'تأكيد كلمة المرور',
+            'password-match'       => 'كلمة المرور الحالية لا تطابق.',
+            'account-save'         => 'تم حفظ تغييرات الحساب بنجاح.',
+            'permission-denied'    => 'تم رفض الإذن',
+            'remove-image'         => 'إزالة الصورة',
+            'upload_image_pix'     => 'تحميل صورة الملف الشخصي (100 بكسل × 100 بكسل)',
+            'upload_image_format'  => 'بصيغة PNG أو JPG',
+            'image_upload_message' => 'فقط الصور (.jpeg، .jpg، .png، ..) مسموح بها.',
         ],
     ],
-
     'emails' => [
         'common' => [
             'dear'   => 'عزيزي :name',
             'cheers' => 'مع أطيب التحيات،</br>فريق :app_name',
-
-            'user' => [
-                'dear'           => 'عزيزي :username',
-                'create-subject' => 'تم إضافتك كعضو.',
-                'create-body'    => 'تهانينا! أنت الآن عضو في فريقنا.',
-
+            'user'   => [
+                'dear'            => 'عزيزي :username',
+                'create-subject'  => 'تم إضافتك كعضو.',
+                'create-body'     => 'تهانينا! أنت الآن عضو في فريقنا.',
                 'forget-password' => [
-                    'subject'           => 'إعادة تعيين كلمة مرور العميل',
-                    'dear'              => 'عزيزي :username',
-                    'reset-password'    => 'إعادة تعيين كلمة المرور',
-                    'info'              => 'تتلقى هذا البريد الإلكتروني لأننا تلقينا طلب إعادة تعيين كلمة المرور لحسابك',
-                    'final-summary'     => 'إذا لم تكن قد طلبت إعادة تعيين كلمة المرور، فلا يلزم اتخاذ أي إجراء إضافي',
-                    'thanks'            => 'شكراً!',
+                    'subject'        => 'إعادة تعيين كلمة مرور العميل',
+                    'dear'           => 'عزيزي :username',
+                    'reset-password' => 'إعادة تعيين كلمة المرور',
+                    'info'           => 'تتلقى هذا البريد الإلكتروني لأننا تلقينا طلب إعادة تعيين كلمة المرور لحسابك',
+                    'final-summary'  => 'إذا لم تكن قد طلبت إعادة تعيين كلمة المرور، فلا يلزم اتخاذ أي إجراء إضافي',
+                    'thanks'         => 'شكراً!',
                 ],
             ],
         ],
     ],
-
     'validations' => [
         'message' => [
             'decimal' => ':attribute يجب أن يكون رقمًا عشريًا.',
         ],
     ],
-
     'errors' => [
-        'dashboard' => 'لوحة التحكم',
-        'go-back'   => 'العودة',
-        'support'   => 'إذا استمرت المشكلة، تواصل معنا على <a href=":link" class=":class">:email</a> للحصول على المساعدة.',
-
-        '404' => [
+        'dashboard'   => 'لوحة التحكم',
+        'go-back'     => 'العودة',
+        'support'     => 'إذا استمرت المشكلة، تواصل معنا على <a href=":link" class=":class">:email</a> للحصول على المساعدة.',
+        '404'         => [
             'description' => 'عذرًا! الصفحة التي تبحث عنها في إجازة. يبدو أننا لم نجد ما كنت تبحث عنه.',
             'title'       => '404 الصفحة غير موجودة',
         ],
-
         '401' => [
             'description' => 'عذرًا! يبدو أنك غير مصرح لك بالوصول إلى هذه الصفحة. يبدو أنك تفتقد الأوراق اللازمة.',
             'title'       => '401 غير مصرح',
         ],
-
         '403' => [
             'description' => 'عذرًا! هذه الصفحة محظورة. يبدو أنك لا تملك الأذونات اللازمة لعرض هذا المحتوى.',
             'title'       => '403 ممنوع الدخول',
         ],
-
         '500' => [
             'description' => 'عذرًا! حدث خطأ ما. يبدو أننا نواجه مشكلة في تحميل الصفحة التي تبحث عنها.',
             'title'       => '500 خطأ داخلي في الخادم',
         ],
-
         '503' => [
             'description' => 'عذرًا! يبدو أننا متوقفون مؤقتًا للصيانة. يرجى العودة لاحقًا.',
             'title'       => '503 الخدمة غير متوفرة',
         ],
     ],
-
     'export' => [
         'csv'        => 'CSV',
         'download'   => 'تحميل',

@@ -52,4 +52,12 @@ class Import extends Model implements ImportContract
     {
         return $this->hasMany(ImportBatchProxy::modelClass());
     }
+
+    /**
+     * Get the file name.
+     */
+    public function getFileNameAttribute(): string
+    {
+        return preg_replace('/^.*?\/\d+-/', '', $this->file_path);
+    }
 }
