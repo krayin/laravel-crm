@@ -153,7 +153,7 @@
                         :name="name"
                         v-bind="data.field"
                         :class="[data.errors.length ? 'border border-red-500' : '']"
-                        class="custom-select w-full rounded-md border bg-white px-3 py-2.5 text-sm font-normal text-gray-600 transition-all hover:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400"
+                        class="custom-select w-full rounded-md border bg-white py-2.5 pl-2.5 pr-3 text-sm font-normal text-gray-600 transition-all hover:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400"
                     >
                         <option
                             v-for="option in field.options"
@@ -180,7 +180,7 @@
                         :name="`${name}[]`"
                         v-bind="data.field"
                         :class="[data.errors.length ? 'border border-red-500' : '']"
-                        class="custom-select w-full rounded-md border bg-white px-3 py-2.5 text-sm font-normal text-gray-600 transition-all hover:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400"
+                        class="custom-select w-full rounded-md border bg-white py-2.5 pl-2.5 pr-3 text-sm font-normal text-gray-600 transition-all hover:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400"
                         multiple
                     >
                         <option
