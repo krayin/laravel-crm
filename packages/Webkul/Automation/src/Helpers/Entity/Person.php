@@ -128,7 +128,7 @@ class Person extends AbstractEntity
 
                 case 'trigger_webhook':
                     try {
-                        $this->triggerWebhook($action['value'], $person);
+                        $this->triggerWebhook($action['value'], $workflow, $person);
                     } catch (\Exception $e) {
                         report($e);
                     }
