@@ -42,14 +42,10 @@ class WebhookService
             ];
         }
 
-        $headers = isset($data['headers']) ? $this->parseJsonField($data['headers']) : [];
-        $payload = isset($data['payload']) ? $data['payload'] : null;
-        $data['end_point'] = $this->appendQueryParams($data['end_point'], $data['query_params'] ?? '');
+        $payload = isset($data) ? $data : null;
 
-        $formattedHeaders = $this->formatHeaders($headers);
-
-        $options = $this->buildRequestOptions($data['method'], $formattedHeaders, $payload);
-
+        $options = $this->buildRequestOptions($data['method'], $payload);
+       
         try {
             $response = $this->client->request(
                 strtoupper($data['method']),
@@ -73,366 +69,78 @@ class WebhookService
     }
 
     /**
-     * Parse JSON field safely.
+     * Build workflow payload.
      */
-    protected function parseJsonField(mixed $field): array
+    protected function buildWorkflowPayload(mixed $workflow): array
     {
-        if (is_array($field)) {
-            return $field;
-        }
-
-        if (is_string($field)) {
-            $decoded = json_decode($field, true);
-
-            if (
-                json_last_error() === JSON_ERROR_NONE
-                && is_array($decoded)
-            ) {
-                return $decoded;
-            }
-        }
-
-        return [];
+        return [
+            'name'        => $workflow->name,
+            'description' => $workflow->description,
+            'entity_type' => $workflow->entity_type,
+            'event'       => $workflow->event,
+        ];
     }
 
     /**
      * Build request options based on method and content type.
      */
-    protected function buildRequestOptions(string $method, array $headers, mixed $payload): array
+    protected function buildRequestOptions(string $method, mixed $data): array
     {
         $options = [];
 
-        if (! empty($headers)) {
-            $options['headers'] = $headers;
-        }
-
         if (
-            $payload !== null
+            $data !== null
             && ! in_array(strtoupper($method), ['GET', 'HEAD'])
         ) {
-            $contentType = $this->getContentType($headers);
-
-            switch ($contentType) {
-                case 'application/json':
-                    $options['json'] = $this->prepareJsonPayload($payload);
-
-                    break;
-
-                case 'application/x-www-form-urlencoded':
-                    $options['form_params'] = $this->prepareFormPayload($payload);
-
-                    break;
-
-                case 'multipart/form-data':
-                    $options['multipart'] = $this->prepareMultipartPayload($payload);
-
-                    break;
-
-                case 'text/plain':
-                case 'text/xml':
-                case 'application/xml':
-                    $options['body'] = $this->prepareRawPayload($payload);
-
-                    break;
-
-                default:
-                    $options = array_merge($options, $this->autoDetectPayloadFormat($payload));
-
-                    break;
-            }
+            $options['json'] = [
+                'data' => $data['payload'],
+            ];
         }
+
+        /**
+         * If workflow data is present, merge it into the JSON payload
+         */
+        if (isset($data['workflow'])) {
+            $options['json'] = array_merge($options['json'], $this->buildWorkflowPayload($data['workflow']));
+        }
+
+        /**
+         * Remove any key-value pairs from the payload array where the key ends with '_id'
+         */
+        $options['json'] = $this->removeIdKeys($options['json'], ['_id', 'user', 'attribute_values']);
 
         return $options;
     }
 
     /**
-     * Prepare JSON payload.
+     * Recursively remove any key-value pairs where the key is in the $keysToRemove array (at any depth).
+     *
+     * @param array $array The array to process
+     * @param array $keysToRemove The keys to remove (exact match)
+     * @return array
      */
-    protected function prepareJsonPayload(mixed $payload): mixed
+    protected function removeIdKeys(array $array, array $keysToRemove = []): array
     {
-        if (is_string($payload)) {
-            $decoded = json_decode($payload, true);
-
-            if (json_last_error() === JSON_ERROR_NONE) {
-                return $decoded;
+        foreach ($array as $key => &$value) {
+            if (is_array($value)) {
+                $value = $this->removeIdKeys($value, $keysToRemove);
             }
 
-            return $payload;
-        }
-
-        if (is_array($payload)) {
-            return $this->formatPayload($payload);
-        }
-
-        return $payload;
-    }
-
-    /**
-     * Prepare form payload.
-     */
-    protected function prepareFormPayload(mixed $payload): array
-    {
-        if (is_string($payload)) {
-            $decoded = json_decode($payload, true);
-
-            if (
-                json_last_error() === JSON_ERROR_NONE
-                && is_array($decoded)
-            ) {
-                return $this->formatPayload($decoded);
-            }
-
-            parse_str($payload, $parsed);
-
-            return $parsed ?: [];
-        }
-
-        if (is_array($payload)) {
-            return $this->formatPayload($payload);
-        }
-
-        return [];
-    }
-
-    /**
-     * Prepare multipart payload.
-     */
-    protected function prepareMultipartPayload(mixed $payload): array
-    {
-        $formattedPayload = $this->prepareFormPayload($payload);
-
-        return $this->buildMultipartData($formattedPayload);
-    }
-
-    /**
-     * Prepare raw payload.
-     */
-    protected function prepareRawPayload(mixed $payload): string
-    {
-        if (is_string($payload)) {
-            return $payload;
-        }
-
-        if (is_array($payload)) {
-            return json_encode($payload);
-        }
-
-        return (string) $payload;
-    }
-
-    /**
-     * Auto-detect payload format when no content-type is specified.
-     */
-    protected function autoDetectPayloadFormat(mixed $payload): array
-    {
-        if (is_string($payload)) {
-            $decoded = json_decode($payload, true);
-
-            if (json_last_error() === JSON_ERROR_NONE) {
-                return ['json' => $decoded];
-            }
-
-            if (
-                strpos($payload, '=') !== false
-                && strpos($payload, '&') !== false
-            ) {
-                parse_str($payload, $parsed);
-
-                return ['form_params' => $parsed];
-            }
-
-            return ['body' => $payload];
-        }
-
-        if (is_array($payload)) {
-            $formatted = $this->formatPayload($payload);
-
-            return ['json' => $formatted];
-        }
-
-        return ['body' => (string) $payload];
-    }
-
-    /**
-     * Get content type from headers.
-     */
-    protected function getContentType(array $headers): string
-    {
-        foreach ($headers as $key => $value) {
-            if (strtolower($key) === 'content-type') {
-                $contentType = strtolower(trim(explode(';', $value)[0]));
-
-                return $contentType;
-            }
-        }
-
-        return '';
-    }
-
-    /**
-     * Build multipart data array.
-     */
-    protected function buildMultipartData(array $payload): array
-    {
-        $multipart = [];
-
-        foreach ($payload as $key => $value) {
-            $multipart[] = [
-                'name'     => $key,
-                'contents' => is_array($value) ? json_encode($value) : (string) $value,
-            ];
-        }
-
-        return $multipart;
-    }
-
-    /**
-     * Format headers array.
-     */
-    protected function formatHeaders(array $headers): array
-    {
-        if (empty($headers)) {
-            return [];
-        }
-
-        $formattedHeaders = [];
-
-        if ($this->isKeyValuePairArray($headers)) {
-            foreach ($headers as $header) {
-                if (
-                    isset($header['key'])
-                    && array_key_exists('value', $header)
-                ) {
-                    if (
-                        isset($header['disabled'])
-                        && $header['disabled']
-                    ) {
-                        continue;
-                    }
-
-                    if (
-                        isset($header['enabled'])
-                        && ! $header['enabled']
-                    ) {
-                        continue;
-                    }
-
-                    $formattedHeaders[$header['key']] = $header['value'];
+            /**
+             * Remove if key exactly matches or ends with any of the keysToRemove
+             */
+            foreach ($keysToRemove as $removeKey) {
+                if ($key === $removeKey 
+                    || (is_string($removeKey)
+                    && is_string($key)
+                    && str_ends_with($key, $removeKey))) {
+                        unset($array[$key]);
+                    
+                        break;
                 }
             }
-        } else {
-            $formattedHeaders = $headers;
         }
 
-        return $formattedHeaders;
-    }
-
-    /**
-     * Format any incoming payload into a clean associative array.
-     */
-    protected function formatPayload(mixed $payload): array
-    {
-        if (empty($payload)) {
-            return [];
-        }
-
-        if (
-            is_array($payload)
-            && isset($payload['key'])
-            && array_key_exists('value', $payload)
-        ) {
-            return [$payload['key'] => $payload['value']];
-        }
-
-        if (
-            is_array($payload)
-            && array_is_list($payload)
-            && $this->isKeyValuePairArray($payload)
-        ) {
-            $formatted = [];
-
-            foreach ($payload as $item) {
-                if (
-                    isset($item['key'])
-                    && array_key_exists('value', $item)
-                ) {
-                    if (
-                        isset($item['disabled'])
-                        && $item['disabled']
-                    ) {
-                        continue;
-                    }
-
-                    if (
-                        isset($item['enabled'])
-                        && ! $item['enabled']
-                    ) {
-                        continue;
-                    }
-
-                    $formatted[$item['key']] = $item['value'];
-                }
-            }
-
-            return $formatted;
-        }
-
-        return is_array($payload) ? $payload : [];
-    }
-
-    /**
-     * Check if array is a key-value pair array.
-     */
-    protected function isKeyValuePairArray(array $array): bool
-    {
-        if (empty($array)) {
-            return false;
-        }
-
-        if (
-            isset($array['key'])
-            && array_key_exists('value', $array)
-        ) {
-            return true;
-        }
-
-        if (array_is_list($array)) {
-            return collect($array)->every(fn ($item) => is_array($item) && isset($item['key']) && array_key_exists('value', $item)
-            );
-        }
-
-        return false;
-    }
-
-    /**
-     * Append query parameters to the endpoint URL.
-     */
-    protected function appendQueryParams(string $endPoint, string $queryParamsJson): string
-    {
-        $queryParams = json_decode($queryParamsJson, true);
-
-        if (
-            json_last_error() !== JSON_ERROR_NONE
-            || ! is_array($queryParams)
-        ) {
-            return $endPoint;
-        }
-
-        $queryArray = [];
-
-        foreach ($queryParams as $param) {
-            if (
-                isset($param['key'])
-                && array_key_exists('value', $param)
-            ) {
-                $queryArray[$param['key']] = $param['value'];
-            }
-        }
-
-        $queryString = http_build_query($queryArray);
-
-        $glue = str_contains($endPoint, '?') ? '&' : '?';
-
-        return $endPoint.($queryString ? $glue.$queryString : '');
+        return $array;
     }
 }

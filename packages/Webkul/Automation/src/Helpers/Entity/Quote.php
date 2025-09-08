@@ -160,7 +160,7 @@ class Quote extends AbstractEntity
 
                 case 'trigger_webhook':
                     try {
-                        $this->triggerWebhook($action['value'], $quote);
+                        $this->triggerWebhook($action['value'], $workflow, $quote);
                     } catch (\Exception $e) {
                         report($e);
                     }

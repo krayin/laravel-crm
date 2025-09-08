@@ -19,23 +19,6 @@ class Webhook extends Model implements ContractsWebhook
         'name',
         'entity_type',
         'description',
-        'method',
         'end_point',
-        'query_params',
-        'headers',
-        'payload_type',
-        'raw_payload_type',
-        'payload',
-    ];
-
-    /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array<string, string>
-     */
-    protected $casts = [
-        'query_params' => 'array',
-        'headers'      => 'array',
-        'payload'      => 'array',
     ];
 }

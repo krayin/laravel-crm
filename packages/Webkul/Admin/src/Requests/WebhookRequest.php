@@ -26,22 +26,7 @@ class WebhookRequest extends FormRequest
             'name'         => 'required|string|max:255',
             'entity_type'  => 'required|string|max:255',
             'description'  => 'nullable|string|max:255',
-            'method'       => 'required|string|max:255',
             'end_point'    => 'required|string|max:255',
-            'query_params' => 'nullable',
-            'headers'      => 'nullable',
-            'payload_type' => [
-                'required',
-                'string',
-                'max:255',
-                Rule::in(['default', 'x-www-form-urlencoded', 'raw']),
-            ],
-            'raw_payload_type' => [
-                'string',
-                'max:255',
-                Rule::in(['json', 'text']),
-            ],
-            'payload' => 'nullable',
         ];
     }
 }

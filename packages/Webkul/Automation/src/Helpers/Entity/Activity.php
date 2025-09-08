@@ -271,7 +271,7 @@ class Activity extends AbstractEntity
 
                 case 'trigger_webhook':
                     try {
-                        $this->triggerWebhook($action['value'], $activity);
+                        $this->triggerWebhook($action['value'], $workflow, $activity);
                     } catch (\Exception $e) {
                         report($e);
                     }

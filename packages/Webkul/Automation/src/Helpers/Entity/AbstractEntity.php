@@ -215,16 +215,65 @@ abstract class AbstractEntity
      *
      * @return void
      */
-    public function triggerWebhook(int $webhookId, mixed $entity)
+    public function triggerWebhook(int $webhookId, mixed $workflow, mixed $entity)
     {
         $webhook = $this->webhookRepository->findOrFail($webhookId);
 
+        /**
+         * Eager load all relationships of the entity (Lead model)
+         */
+        $entity->load($entity->getRelations() ? array_keys($entity->getRelations()) : $entity->getRelations());
+
+        /**
+         * Try to load all relationships defined as methods on the model
+         */
+        $reflection = new \ReflectionClass($entity);
+
+        $relationships = [];
+
+        /**
+         * Remove relationships that are not needed
+         * such as user, users, getAttribute, setAttribute, hasAttribute, getRelations
+         */
+        $excludedMethods = [
+            'user', 
+            'users', 
+            'getAttribute', 
+            'setAttribute', 
+            'hasAttribute', 
+            'getRelations', 
+            'getRelationValue', 
+            'getRelation',
+        ];
+
+        /**
+         * Load relationships by invoking methods that return a Relation instance
+         * and have no parameters
+         */
+        foreach ($reflection->getMethods(\ReflectionMethod::IS_PUBLIC) as $method) {
+            if (
+                $method->class === get_class($entity)
+                && $method->getNumberOfParameters() === 0
+                && ! in_array($method->name, $excludedMethods)
+            ) {
+                $return = $method->invoke($entity);
+
+                if ($return instanceof \Illuminate\Database\Eloquent\Relations\Relation) {
+                    $relationships[] = $method->name;
+                }
+            }
+        }
+
+        if ($relationships) {
+            $entity->load($relationships);
+        }
+        
         $payload = [
-            'method'       => $webhook->method,
-            'query_params' => $this->replacePlaceholders($entity, json_encode($webhook->query_params)),
-            'end_point'    => $this->replacePlaceholders($entity, $webhook->end_point),
-            'payload'      => $this->replacePlaceholders($entity, json_encode($webhook->payload)),
-            'headers'      => $this->replacePlaceholders($entity, json_encode($webhook->headers)),
+            'workflow'  => $workflow,
+            'end_point' => $webhook->end_point,
+            'method'    => request()->getMethod() ?? 'POST',
+            'payload'   => $entity->toArray(),
+            'headers'   => ['content-type' => 'application/json'],
         ];
 
         $this->webhookService->triggerWebhook($payload);

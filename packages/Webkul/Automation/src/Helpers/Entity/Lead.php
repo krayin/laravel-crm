@@ -198,7 +198,7 @@ class Lead extends AbstractEntity
 
                 case 'trigger_webhook':
                     try {
-                        $this->triggerWebhook($action['value'], $lead);
+                        $this->triggerWebhook($action['value'], $workflow, $lead);
                     } catch (\Exception $e) {
                         report($e);
                     }
