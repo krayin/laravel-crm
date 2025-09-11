@@ -1020,6 +1020,7 @@ return [
                     'delete-success'      => 'Etkinlik başarıyla silindi.',
                     'delete-failed'       => 'Etkinlik silinemedi.',
                     'mass-delete-success' => 'Etkinlikler başarıyla silindi',
+                    'delete-failed-associated-campaigns' => 'Etkinlik silinemiyor çünkü mevcut kampanyalarla ilişkili. Lütfen bu kampanyaları silmeden önce bağlantılarını kaldırın veya güncelleyin.',
                     'datagrid'            => [
                         'delete'      => 'Sil',
                         'edit'        => 'Düzenle',

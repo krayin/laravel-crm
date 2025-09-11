@@ -1020,6 +1020,7 @@ return [
                     'delete-success'      => 'Evento eliminado con éxito.',
                     'delete-failed'       => 'No se puede eliminar el evento.',
                     'mass-delete-success' => 'Eventos eliminados con éxito',
+                    'delete-failed-associated-campaigns' => 'No se puede eliminar el evento porque está asociado con campañas existentes. Por favor, desasocie o actualice esas campañas antes de eliminarlo.',
                     'datagrid'            => [
                         'delete'      => 'Eliminar',
                         'edit'        => 'Editar',

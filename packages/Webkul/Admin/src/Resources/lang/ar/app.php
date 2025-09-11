@@ -1020,6 +1020,7 @@ return [
                     'delete-success'      => 'تم حذف الحدث بنجاح.',
                     'delete-failed'       => 'لا يمكن حذف الحدث.',
                     'mass-delete-success' => 'تم حذف الأحداث بنجاح',
+                    'delete-failed-associated-campaigns' => 'لا يمكن حذف الحدث لأنه مرتبط بحملات موجودة. يرجى فصل أو تحديث هذه الحملات قبل الحذف.',
                     'datagrid'            => [
                         'delete'      => 'حذف',
                         'edit'        => 'تحرير',

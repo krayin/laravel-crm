@@ -1123,6 +1123,7 @@ return [
                     'delete-success'      => 'Event deleted successfully.',
                     'delete-failed'       => 'Event can not be deleted.',
                     'mass-delete-success' => 'Events deleted successfully',
+                    'delete-failed-associated-campaigns'=> 'Event cannot be deleted because it is associated with existing campaigns. Please detach or update those campaigns before deletion.',
 
                     'datagrid'   => [
                         'delete'       => 'Delete',
