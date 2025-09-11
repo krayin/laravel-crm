@@ -1813,6 +1813,12 @@ return [
                         'to'            => 'Đến',
                     ],
                 ],
+                'stages' => [
+                    'won-value'   => 'Giá trị đã thắng',
+                    'closed-at'   => 'Đã đóng vào',
+                    'save-btn'    => 'Lưu',
+                    'lost-reason' => 'Lý do mất',
+                ],
             ],
             'view-switcher' => [
                 'all-pipelines'       => 'Tất Cả Các Quy Trình',

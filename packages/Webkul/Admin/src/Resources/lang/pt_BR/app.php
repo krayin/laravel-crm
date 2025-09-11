@@ -1813,6 +1813,12 @@ return [
                         'to'            => 'Para',
                     ],
                 ],
+                'stages' => [
+                    'won-value'   => 'Valor Ganhado',
+                    'closed-at'   => 'Fechado em',
+                    'save-btn'    => 'Salvar',
+                    'lost-reason' => 'Motivo da Perda',
+                ],
             ],
             'view-switcher' => [
                 'all-pipelines'       => 'Todos os Funis',

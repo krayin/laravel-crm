@@ -1977,6 +1977,12 @@ return [
                         'to'            => 'To',
                     ],
                 ],
+                'stages' => [
+                    'won-value'       => 'Won Value',
+                    'closed-at'       => 'Closed At',
+                    'save-btn'        => 'Save',
+                    'lost-reason'     => 'Lost Reason',
+                ],
             ],
 
             'view-switcher' => [

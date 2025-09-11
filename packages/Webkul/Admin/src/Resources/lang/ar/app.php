@@ -1813,6 +1813,12 @@ return [
                         'to'            => 'إلى',
                     ],
                 ],
+                'stages' => [
+                    'won-value'       => 'قيمة الربح',
+                    'closed-at'       => 'أغلقت في',
+                    'save-btn'        => 'حفظ',
+                    'lost-reason'     => 'سبب الفقدان',
+                ],
             ],
             'view-switcher' => [
                 'all-pipelines'       => 'كل المسارات',

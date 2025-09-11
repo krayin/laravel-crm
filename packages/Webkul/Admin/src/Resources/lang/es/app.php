@@ -1813,6 +1813,12 @@ return [
                         'to'            => 'A',
                     ],
                 ],
+                'stages' => [
+                    'won-value'       => 'Valor Ganado',
+                    'closed-at'       => 'Cerrado El',
+                    'save-btn'        => 'Guardar',
+                    'lost-reason'     => 'Razón de Pérdida',
+                ],
             ],
             'view-switcher' => [
                 'all-pipelines'       => 'Todos los Canales',

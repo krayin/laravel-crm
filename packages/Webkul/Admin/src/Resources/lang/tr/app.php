@@ -1813,6 +1813,12 @@ return [
                         'to'            => 'Kime',
                     ],
                 ],
+                'stages' => [
+                    'won-value'   => 'Kazanılan Değer',
+                    'closed-at'   => 'Kapanış Tarihi',
+                    'save-btn'    => 'Kaydet',
+                    'lost-reason' => 'Kaybetme Nedeni',
+                ],
             ],
             'view-switcher' => [
                 'all-pipelines'       => 'Tüm Boru Hatları',

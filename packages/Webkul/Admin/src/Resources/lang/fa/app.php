@@ -1813,6 +1813,12 @@ return [
                         'to'            => 'تا',
                     ],
                 ],
+                'stages' => [
+                    'won-value'   => 'ارزش برنده',
+                    'closed-at'   => 'بسته شده در',
+                    'save-btn'    => 'ذخیره',
+                    'lost-reason' => 'دلیل از دست دادن',
+                ],
             ],
             'view-switcher' => [
                 'all-pipelines'       => 'تمام خطوط تولید',
