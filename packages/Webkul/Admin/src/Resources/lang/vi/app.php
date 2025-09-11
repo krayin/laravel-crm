@@ -349,6 +349,8 @@ return [
                     'explore-all-matching-leads'    => 'Khám phá tất cả khách hàng tiềm năng khớp với ":query" (:count)',
                     'explore-all-matching-contacts' => 'Khám phá tất cả liên hệ khớp với ":query" (:count)',
                     'explore-all-matching-quotes'   => 'Khám phá tất cả báo giá khớp với ":query" (:count)',
+                    'explore-all-settings'          => 'Khám phá tất cả Cài đặt',
+                    'explore-all-configurations'    => 'Khám phá tất cả Cấu hình',
                 ],
             ],
         ],

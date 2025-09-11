@@ -349,6 +349,8 @@ return [
                     'explore-all-matching-leads'    => 'Explorar todas las oportunidades que coinciden con ":query" (:count)',
                     'explore-all-matching-contacts' => 'Explorar todos los contactos que coinciden con ":query" (:count)',
                     'explore-all-matching-quotes'   => 'Explorar todas las cotizaciones que coinciden con ":query" (:count)',
+                    'explore-all-settings'          => 'Explorar todas las Configuraciones',
+                    'explore-all-configurations'    => 'Explorar todas las Configuraciones',
                 ],
             ],
         ],

@@ -349,6 +349,8 @@ return [
                     'explore-all-matching-leads'    => 'Explorar todos os negócios correspondentes a ":query" (:count)',
                     'explore-all-matching-contacts' => 'Explorar todos os contatos correspondentes a ":query" (:count)',
                     'explore-all-matching-quotes'   => 'Explorar todas as cotações correspondentes a ":query" (:count)',
+                    'explore-all-settings'          => 'Explorar todas as Configurações',
+                    'explore-all-configurations'    => 'Explorar todas as Configurações',
                 ],
             ],
         ],

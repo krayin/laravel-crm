@@ -349,6 +349,8 @@ return [
                     'explore-all-matching-leads'    => 'کاوش در تمامی سرنخ‌های مطابق ":query" (:count)',
                     'explore-all-matching-contacts' => 'کاوش در تمامی مخاطبین مطابق ":query" (:count)',
                     'explore-all-matching-quotes'   => 'کاوش در تمامی پیشنهادات مطابق ":query" (:count)',
+                    'explore-all-settings'          => 'کاوش در تمامی تنظیمات',
+                    'explore-all-configurations'    => 'کاوش در تمامی پیکربندی‌ها',
                 ],
             ],
         ],

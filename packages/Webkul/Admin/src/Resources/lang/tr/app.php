@@ -349,6 +349,8 @@ return [
                     'explore-all-matching-leads'    => '":query" (:count) ile eşleşen tüm müşterileri keşfet',
                     'explore-all-matching-contacts' => '":query" (:count) ile eşleşen tüm iletişimleri keşfet',
                     'explore-all-matching-quotes'   => '":query" (:count) ile eşleşen tüm teklifleri keşfet',
+                    'explore-all-settings'          => 'Tüm Ayarları Keşfet',
+                    'explore-all-configurations'    => 'Tüm Yapılandırmaları Keşfet',
                 ],
             ],
         ],

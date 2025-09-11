@@ -349,6 +349,8 @@ return [
                     'explore-all-matching-leads'    => 'استكشاف جميع العملاء المحتملين المطابقين لـ ":query" (:count)',
                     'explore-all-matching-contacts' => 'استكشاف جميع جهات الاتصال المطابقة لـ ":query" (:count)',
                     'explore-all-matching-quotes'   => 'استكشاف جميع عروض الأسعار المطابقة لـ ":query" (:count)',
+                    'explore-all-settings'          => 'استكشاف جميع الإعدادات',
+                    'explore-all-configurations'    => 'استكشاف جميع التكوينات',
                 ],
             ],
         ],

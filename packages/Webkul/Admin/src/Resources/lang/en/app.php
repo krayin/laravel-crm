@@ -389,6 +389,8 @@ return [
                     'explore-all-matching-leads'    => 'Explore all leads matching ":query" (:count)',
                     'explore-all-matching-contacts' => 'Explore all contacts matching ":query" (:count)',
                     'explore-all-matching-quotes'   => 'Explore all quotes matching ":query" (:count)',
+                    'explore-all-settings'          => 'Explore all Settings',
+                    'explore-all-configurations'    => 'Explore all Configurations',
                 ],
             ],
         ],
