@@ -1814,10 +1814,11 @@ return [
                     ],
                 ],
                 'stages' => [
-                    'won-value'   => 'Valor Ganhado',
-                    'closed-at'   => 'Fechado em',
-                    'save-btn'    => 'Salvar',
-                    'lost-reason' => 'Motivo da Perda',
+                    'won-value'       => 'Valor Ganhado',
+                    'closed-at'       => 'Fechado em',
+                    'save-btn'        => 'Salvar',
+                    'lost-reason'     => 'Motivo da Perda',
+                    'need-more-info'  => 'Precisa de Mais Informações',
                 ],
             ],
             'view-switcher' => [

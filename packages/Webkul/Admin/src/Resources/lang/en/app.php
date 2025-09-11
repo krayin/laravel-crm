@@ -1982,6 +1982,7 @@ return [
                     'closed-at'       => 'Closed At',
                     'save-btn'        => 'Save',
                     'lost-reason'     => 'Lost Reason',
+                    'need-more-info'  => 'Need More Details',
                 ],
             ],
 

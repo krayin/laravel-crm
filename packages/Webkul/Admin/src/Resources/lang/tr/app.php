@@ -1814,10 +1814,11 @@ return [
                     ],
                 ],
                 'stages' => [
-                    'won-value'   => 'Kazanılan Değer',
-                    'closed-at'   => 'Kapanış Tarihi',
-                    'save-btn'    => 'Kaydet',
-                    'lost-reason' => 'Kaybetme Nedeni',
+                    'won-value'       => 'Kazanılan Değer',
+                    'closed-at'       => 'Kapanış Tarihi',
+                    'save-btn'        => 'Kaydet',
+                    'lost-reason'     => 'Kaybetme Nedeni',
+                    'need-more-info'  => 'Daha Fazla Bilgi Gerekiyor',
                 ],
             ],
             'view-switcher' => [

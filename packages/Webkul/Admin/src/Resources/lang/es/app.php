@@ -1818,6 +1818,7 @@ return [
                     'closed-at'       => 'Cerrado El',
                     'save-btn'        => 'Guardar',
                     'lost-reason'     => 'Razón de Pérdida',
+                    'need-more-info'  => 'Necesita Más Información',
                 ],
             ],
             'view-switcher' => [

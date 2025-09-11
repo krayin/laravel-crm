@@ -1818,6 +1818,7 @@ return [
                     'closed-at'       => 'أغلقت في',
                     'save-btn'        => 'حفظ',
                     'lost-reason'     => 'سبب الفقدان',
+                    'need-more-info'  => 'تحتاج إلى مزيد من التفاصيل',
                 ],
             ],
             'view-switcher' => [

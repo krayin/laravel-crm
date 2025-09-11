@@ -1818,6 +1818,7 @@ return [
                     'closed-at'   => 'بسته شده در',
                     'save-btn'    => 'ذخیره',
                     'lost-reason' => 'دلیل از دست دادن',
+                    'need-more-info'  => 'تحتاج إلى مزيد من التفاصيل',
                 ],
             ],
             'view-switcher' => [
