@@ -30,14 +30,16 @@ return new class extends Migration
     public function down()
     {
         Schema::table('activities', function (Blueprint $table) {
+            $tablePrefix = DB::getTablePrefix();
+
             // Disable foreign key checks temporarily.
             DB::statement('SET FOREIGN_KEY_CHECKS=0');
 
             // Drop the foreign key constraint using raw SQL.
-            DB::statement('ALTER TABLE activities DROP FOREIGN KEY activities_user_id_foreign');
+            DB::statement('ALTER TABLE '.$tablePrefix.'activities DROP FOREIGN KEY activities_user_id_foreign');
 
             // Drop the index.
-            DB::statement('ALTER TABLE activities DROP INDEX activities_user_id_foreign');
+            DB::statement('ALTER TABLE '.$tablePrefix.'activities DROP INDEX activities_user_id_foreign');
 
             // Change the column to be non-nullable.
             $table->unsignedInteger('user_id')->nullable(false)->change();
