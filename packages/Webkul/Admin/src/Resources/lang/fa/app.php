@@ -1015,15 +1015,15 @@ return [
         'marketing' => [
             'events' => [
                 'index' => [
-                    'create-btn'          => 'ایجاد رویداد',
-                    'title'               => 'رویدادها',
-                    'create-success'      => 'رویداد با موفقیت ایجاد شد.',
-                    'update-success'      => 'رویداد با موفقیت به‌روزرسانی شد.',
-                    'delete-success'      => 'رویداد با موفقیت حذف شد.',
-                    'delete-failed'       => 'رویداد قابل حذف نیست.',
-                    'mass-delete-success' => 'رویدادها با موفقیت حذف شدند',
+                    'create-btn'                         => 'ایجاد رویداد',
+                    'title'                              => 'رویدادها',
+                    'create-success'                     => 'رویداد با موفقیت ایجاد شد.',
+                    'update-success'                     => 'رویداد با موفقیت به‌روزرسانی شد.',
+                    'delete-success'                     => 'رویداد با موفقیت حذف شد.',
+                    'delete-failed'                      => 'رویداد قابل حذف نیست.',
+                    'mass-delete-success'                => 'رویدادها با موفقیت حذف شدند',
                     'delete-failed-associated-campaigns' => 'رویداد قابل حذف نیست زیرا با کمپین‌های موجود مرتبط است. لطفاً ابتدا آن‌ها را جدا کرده یا به‌روزرسانی کنید.',
-                    'datagrid'            => [
+                    'datagrid'                           => [
                         'delete'      => 'حذف',
                         'edit'        => 'ویرایش',
                         'id'          => 'شناسه',
@@ -1814,10 +1814,10 @@ return [
                     ],
                 ],
                 'stages' => [
-                    'won-value'   => 'ارزش برنده',
-                    'closed-at'   => 'بسته شده در',
-                    'save-btn'    => 'ذخیره',
-                    'lost-reason' => 'دلیل از دست دادن',
+                    'won-value'       => 'ارزش برنده',
+                    'closed-at'       => 'بسته شده در',
+                    'save-btn'        => 'ذخیره',
+                    'lost-reason'     => 'دلیل از دست دادن',
                     'need-more-info'  => 'تحتاج إلى مزيد من التفاصيل',
                 ],
             ],
