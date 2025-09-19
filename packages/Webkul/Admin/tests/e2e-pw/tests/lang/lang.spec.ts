@@ -1,7 +1,8 @@
+import { expect, test } from '@playwright/test';
+import { execSync } from 'child_process';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { test, expect } from '@playwright/test';
 
 // Resolve file paths relative to this test file
 const __filename = fileURLToPath(import.meta.url);
@@ -17,24 +18,22 @@ const BASE_LANG = 'en';
 
 // Helper to extract just the keys from app.php
 function getNormalizedKeys(filePath: string): string[] {
-  const raw = fs.readFileSync(filePath, 'utf-8');
+  // PHP one-liner to output the array as JSON
+  const phpCode = `echo json_encode(include '${filePath}');`;
+  const json = execSync(`php -r "${phpCode.replace(/"/g, '\\"')}"`).toString();
+  const obj = JSON.parse(json);
 
-  const clean = raw
-    .replace(/<\?php\s*/g, '')
-    .replace(/return\s*\[/, '')
-    .replace(/\];/, '')
-    .trim();
+  function flattenKeys(obj: any, prefix = ''): string[] {
+    return Object.keys(obj).flatMap(key => {
+      const fullKey = prefix ? `${prefix}.${key}` : key;
+      if (typeof obj[key] === 'object' && obj[key] !== null) {
+        return flattenKeys(obj[key], fullKey);
+      }
+      return [fullKey];
+    });
+  }
 
-  return clean
-    .split('\n')
-    .map(line => line.trim())
-    .filter(line => line.includes('=>') && !line.startsWith('//'))
-    .map(line => {
-      // Extract the key before =>
-      const match = line.match(/^['"](.+?)['"]\s*=>/);
-      return match ? match[1] : null;
-    })
-    .filter(Boolean) as string[];
+  return flattenKeys(obj);
 }
 test('All language files must match number of keys and key names with English app.php', () => {
   const baseFile = path.join(LANG_DIR, BASE_LANG, 'app.php');
