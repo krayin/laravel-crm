@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\StreamedResponse;
+use Webkul\Activity\Models\File;
 use Webkul\Activity\Repositories\ActivityRepository;
 use Webkul\Activity\Repositories\FileRepository;
 use Webkul\Admin\DataGrids\Activity\ActivityDataGrid;
@@ -358,6 +359,9 @@ class ActivityController extends Controller
             // Unsupported file type
             abort(415, 'Unsupported media type.');
         } catch (\Exception $e) {
+
+            $file = File::findOrFail($id);
+            dump($file);
             $file = $this->fileRepository->findOrFail($id);
             dump($file);
             dump($e);
