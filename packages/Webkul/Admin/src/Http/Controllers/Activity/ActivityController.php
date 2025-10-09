@@ -355,6 +355,7 @@ class ActivityController extends Controller
             // Unsupported file type
             abort(415, 'Unsupported media type.');
         } catch (\Exception $e) {
+            dump($e);
             abort(404);
         }
     }
