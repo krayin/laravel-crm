@@ -231,7 +231,7 @@ class ActivityController extends Controller
             $mimeType = Storage::mimeType($path);
 
 
-            dump($mimeType);
+
 
 
 
@@ -358,6 +358,8 @@ class ActivityController extends Controller
             // Unsupported file type
             abort(415, 'Unsupported media type.');
         } catch (\Exception $e) {
+            $file = $this->fileRepository->findOrFail($id);
+            dump($file);
             dump($e);
             abort(404);
         }
