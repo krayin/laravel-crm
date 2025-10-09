@@ -232,10 +232,6 @@ class ActivityController extends Controller
             $mimeType = Storage::mimeType($path);
 
 
-
-
-
-
             if (str_starts_with($mimeType, 'image/')) {
                 return response()->stream(function () use ($file) {
                     // Get the image content from storage
@@ -361,7 +357,11 @@ class ActivityController extends Controller
         } catch (\Exception $e) {
 
             $file = File::findOrFail($id);
+
+            $mim = Storage::mimeType($path);
+
             dump($file);
+            dump($mim);
             $file = $this->fileRepository->findOrFail($id);
             dump($file);
             dump($e);
