@@ -358,6 +358,9 @@ class ActivityController extends Controller
 
             $file = File::findOrFail($id);
 
+            dump($path); // see what the path actually is
+            dump(Storage::exists($path));
+
             $mim = Storage::mimeType($path);
 
             dump($file);
