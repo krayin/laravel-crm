@@ -231,6 +231,9 @@ class ActivityController extends Controller
             $mimeType = Storage::mimeType($path);
 
 
+            dump($mimeType);
+
+
 
             if (str_starts_with($mimeType, 'image/')) {
                 return response()->stream(function () use ($file) {
