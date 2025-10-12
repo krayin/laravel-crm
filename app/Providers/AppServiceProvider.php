@@ -13,7 +13,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        // Register custom package provider for Analytical CRM
+        $this->app->register(\Famindo\AnalyticalCRM\Providers\ServiceProvider::class);
     }
 
     /**

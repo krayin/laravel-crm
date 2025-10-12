@@ -15,5 +15,8 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $this->call(KrayinDatabaseSeeder::class);
+
+        // Seed demo data for Analytical CRM (engineering orders & items)
+        $this->call(AnalyticalCrmDemoSeeder::class);
     }
 }

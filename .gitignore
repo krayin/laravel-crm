@@ -33,3 +33,4 @@ node_modules/
 /test-results/
 /blob-report/
 /playwright/.cache/
+/.phpunit.cache/test-results
