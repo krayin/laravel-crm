@@ -110,28 +110,43 @@ php artisan serve
 email:admin@example.com
 password:admin123
 ```
-### Krayin CRM Multi Tenant SaaS
 
-[Krayin CRM Multi Tenant SaaS](https://krayincrm.com/extensions/krayin-crm-multi-tenant-saas-extension/) Krayin Multitenant SaaS is a Laravel-based CRM solution that allows multiple businesses (tenants) to use a single application instance while keeping their data isolated and secure.
+### Seeding Data dengan Custom Attributes (EAV) – Penting
 
-![enter image description here](https://raw.githubusercontent.com/krayin/temp-media/master/krayin-saas.png)
+Krayin menggunakan pola EAV (Entity–Attribute–Value) untuk banyak field di UI. Pada form, nilai atribut dibaca dari tabel `attribute_values` dan dapat menimpa nilai kolom inti (mis. `persons.organization_id`, `organizations.address`, dll). Akibatnya, data hasil seeding yang hanya mengisi kolom tabel bisa terlihat di listing, tetapi kosong/tidak muncul di komponen lookup sampai `attribute_values` ikut diisi.
 
-### WhatsApp CRM Integration
+- Gejala umum jika `attribute_values` tidak diisi:
+  - Field lookup (mis. Organization pada Person, Person pada Quote) tampak kosong di halaman edit, baru muncul setelah Anda klik Save sekali.
+  - Error filter di lookup: `item.name is null` saat pencarian.
 
-[Krayin CRM WhatsApp](https://krayincrm.com/extensions/krayin-crm-whatsapp-extension/) Extension enables the store administrator to generate leads via their WhatsApp number.
+- Guardrails saat membuat seeder untuk entitas yang punya custom attributes:
+  - Isi tabel utama (mis. `persons`, `organizations`) seperti biasa menggunakan `insert/upsert`.
+  - Lalu isi juga tabel EAV `attribute_values` untuk atribut yang dipakai di form/lookup.
+  - Set kolom `user_id` (owner) pada record utama DAN simpan juga sebagai attribute (`user_id` → tipe lookup/integer) agar lolos batasan ACL (authorized user ids) di pencarian/lookup.
+  - Komponen lookup mulai mencari setelah ≥ 3 karakter; ini normal.
 
-![enter image description here](https://raw.githubusercontent.com/krayin/temp-media/master/krayin-crm-whatsapp-integration.png)
+- Checklist atribut yang umum:
+  - Persons (`entity_type = persons`): `name` (text), `emails` (json), `contact_numbers` (json), `job_title` (text), `user_id` (integer/lookup), `organization_id` (integer/lookup).
+  - Organizations (`entity_type = organizations`): `name` (text), `address` (json), `user_id` (integer/lookup).
 
-### VoIP CRM Integration
+- Contoh pola seeding ringkas (pseudo):
 
-[Krayin CRM VoIP](https://krayincrm.com/extensions/krayin-crm-voip/) extension allows the user to make Trunk calls over a broadband Internet connection and the user can also perform Inbound routes.
+```
+// 1) Upsert tabel utama
+DB::table('persons')->upsert($rows, ['unique_id'], ['name', 'emails', '...']);
 
-![enter image description here](https://raw.githubusercontent.com/krayin/temp-media/master/krayin-voip.png)
+// 2) Ambil id atribut yang relevan
+$attrIds = DB::table('attributes')
+  ->where('entity_type', 'persons')
+  ->whereIn('code', ['name','emails','contact_numbers','job_title','user_id','organization_id'])
+  ->pluck('id','code');
 
-### License
+// 3) Susun baris EAV sesuai tipe field (text/json/integer) dan upsert
+DB::table('attribute_values')->upsert($attributeValues,
+  ['entity_type','entity_id','attribute_id'],
+  ['text_value','boolean_value','integer_value','float_value','datetime_value','date_value','json_value']);
 
-Krayin CRM is a fully open-source CRM framework which will always be free under the [MIT License](https://github.com/krayin/laravel-crm/blob/2.1/LICENSE).
+// Catatan: set juga owner `user_id` (mis. admin@example.com) pada record utama dan EAV.
+```
 
-### Security Vulnerabilities
-
-Please don't disclose security vulnerabilities publicly. If you find any security vulnerability in Krayin CRM then please email us: sales@krayincrm.com.
+- Jika sudah terlanjur seeding tanpa EAV: jalankan `php artisan migrate:fresh --seed` (atau seed ulang seeder terkait) lalu `php artisan optimize:clear`.
