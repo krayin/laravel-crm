@@ -33,13 +33,20 @@ class PersonDataGrid extends DataGrid
                 'persons.emails',
                 'persons.contact_numbers',
                 'organizations.name as organization',
-                'organizations.id as organization_id'
+                'organizations.id as organization_id',
+                'license_attr.text_value as license_no'
             )
+
             ->leftJoin('organizations', 'persons.organization_id', '=', 'organizations.id')
             ->leftJoin('related_contacts', 'related_contacts.person_id', '=', 'persons.id')
             ->leftJoin('attribute_values', function ($join) {
                 $join->on('attribute_values.entity_id', '=', 'persons.id')
                     ->where('attribute_values.entity_type', '=', 'persons');
+            })
+            ->leftJoin('attribute_values as license_attr', function ($join) {
+                $join->on('license_attr.entity_id', '=', 'persons.id')
+                    ->where('license_attr.entity_type', '=', 'persons')
+                    ->where('license_attr.attribute_id', '=', 63); // new join specifically for license_no
             });
 
 
@@ -95,6 +102,7 @@ class PersonDataGrid extends DataGrid
 
 
         $this->addFilter('id', 'persons.id');
+        $this->addFilter('license_no', 'license_attr.text_value');
         $this->addFilter('emails', 'persons.emails');
         $this->addFilter('person_name', 'persons.name');
         $this->addFilter('organization', 'organizations.name');
@@ -137,6 +145,16 @@ class PersonDataGrid extends DataGrid
             'searchable' => true,
         ]);
 
+        $this->addColumn([
+            'index'      => 'license_no',
+            'label'      => 'License No',
+            'type'       => 'string',
+            'searchable' => true,
+            'filterable' => true,
+            'sortable'   => true,
+            'closure'    => fn ($row) => $row->license_no ?? '-',
+        ]);
+
 
         $this->addColumn([
             'index'      => 'person_name',
@@ -168,22 +186,22 @@ class PersonDataGrid extends DataGrid
             'closure'    => fn ($row) => collect(json_decode($row->contact_numbers, true) ?? [])->pluck('value')->join(', '),
         ]);
 
-        $this->addColumn([
-            'index'              => 'organization',
-            'label'              => trans('admin::app.contacts.persons.index.datagrid.organization-name'),
-            'type'               => 'string',
-            'searchable'         => true,
-            'filterable'         => true,
-            'sortable'           => true,
-            'filterable_type'    => 'searchable_dropdown',
-            'filterable_options' => [
-                'repository' => OrganizationRepository::class,
-                'column'     => [
-                    'label' => 'name',
-                    'value' => 'name',
-                ],
-            ],
-        ]);
+//        $this->addColumn([
+//            'index'              => 'organization',
+//            'label'              => trans('admin::app.contacts.persons.index.datagrid.organization-name'),
+//            'type'               => 'string',
+//            'searchable'         => true,
+//            'filterable'         => true,
+//            'sortable'           => true,
+//            'filterable_type'    => 'searchable_dropdown',
+//            'filterable_options' => [
+//                'repository' => OrganizationRepository::class,
+//                'column'     => [
+//                    'label' => 'name',
+//                    'value' => 'name',
+//                ],
+//            ],
+//        ]);
     }
 
     /**

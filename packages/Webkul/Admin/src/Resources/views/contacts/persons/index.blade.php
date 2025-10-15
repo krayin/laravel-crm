@@ -71,7 +71,7 @@
                         <div class="row grid grid-cols-[.1fr_.2fr_.2fr_.2fr_.2fr_.2fr] grid-rows-1 items-center border-b px-4 py-2.5 dark:border-gray-800 max-lg:hidden">
                             <div
                                 class="flex select-none items-center gap-2.5"
-                                v-for="(columnGroup, index) in [['id'], ['person_name'], ['emails'], ['contact_numbers'], ['organization']]"
+                                v-for="(columnGroup, index) in [['id'],['license_no'], ['person_name'], ['emails'], ['contact_numbers'], ['organization']]"
                             >
                                 <label
                                     class="flex w-max cursor-pointer select-none items-center gap-1"
@@ -154,7 +154,7 @@
                                         </span>
                                     </label>
                                 </div>
-                                
+
                                 <!-- Mobile Sort Dropdown -->
                                 <div v-if="available.columns.some(column => column.sortable)">
                                     <x-admin::dropdown position="bottom-{{ in_array(app()->getLocale(), ['fa', 'ar']) ? 'left' : 'right' }}">
@@ -167,12 +167,12 @@
                                                     <span>
                                                         Sort
                                                     </span>
-                    
+
                                                     <span class="icon-down-arrow text-2xl"></span>
                                                 </button>
                                             </div>
                                         </x-slot>
-                
+
                                         <x-slot:menu>
                                             <x-admin::dropdown.menu.item
                                                 v-for="column in available.columns.filter(column => column.sortable && column.visibility)"
@@ -233,6 +233,11 @@
                                 </div>
                             </div>
 
+                            <!-- license_no -->
+                            <p class="flex items-center dark:text-gray-300">
+                                @{{ record.license_no }}
+                            </p>
+
                             <!-- Name -->
                             <div class="flex items-center gap-1.5 dark:text-gray-300">
                                 <x-admin::avatar ::name="record.person_name" />
@@ -250,10 +255,10 @@
                                 @{{ record.contact_numbers }}
                             </p>
 
-                            <!-- Organization -->
-                            <p class="flex items-center dark:text-gray-300">
-                                @{{ record.organization }}
-                            </p>
+{{--                            <!-- Organization -->--}}
+{{--                            <p class="flex items-center dark:text-gray-300">--}}
+{{--                                @{{ record.organization }}--}}
+{{--                            </p>--}}
 
                             <!-- Actions -->
                             <div class="flex items-center justify-end gap-x-4">
@@ -292,7 +297,7 @@
                                                 class="peer hidden"
                                                 v-model="applied.massActions.indices"
                                             >
-    
+
                                             <span class="icon-checkbox-outline peer-checked:icon-checkbox-select cursor-pointer rounded-md text-2xl text-gray-500 peer-checked:text-brandColor">
                                             </span>
                                         </label>
