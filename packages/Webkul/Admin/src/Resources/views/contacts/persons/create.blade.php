@@ -167,6 +167,37 @@
                             });
                         }
 
+                        function attachHandlers(root = document) {
+                            // Remove contact buttons
+                            root.querySelectorAll('.remove-contact-btn').forEach(btn => {
+                                if (!btn.dataset.bound) {
+                                    btn.dataset.bound = 'true';
+                                    btn.onclick = () => {
+                                        const index = parseInt(btn.dataset.index);
+                                        contacts.splice(index, 1);
+                                        renderContacts();
+                                    };
+                                }
+                            });
+
+                            // Add phone number buttons
+                            root.querySelectorAll('.addPhoneNumber').forEach(btn => {
+                                if (!btn.dataset.bound) {
+                                    btn.dataset.bound = 'true';
+                                    btn.onclick = () => {
+                                        addFun(btn, 'mobile_numbers');
+                                    }
+                                }
+                            });
+
+                            // Add email buttons
+                            root.querySelectorAll('.addEmail').forEach(btn => {
+                                if (!btn.dataset.bound) {
+                                    btn.dataset.bound = 'true';
+                                    btn.onclick = () => addFun(btn, 'emails');
+                                }
+                            });
+                        }
                         function initTagsInput(wrapper, index, field) {
                             const input = wrapper.querySelector('.tag-input');
                             const container = wrapper.querySelector('.tags-container');
@@ -226,6 +257,7 @@
 
                             renderTags();
                         }
+
 
                         function renderContacts() {
                             const list = document.getElementById('contacts-list');
@@ -294,26 +326,11 @@
                             });
 
                             // Remove contact buttons
-                            document.querySelectorAll('.remove-contact-btn').forEach(btn => {
-                                btn.onclick = () => {
-                                    const index = parseInt(btn.dataset.index);
-                                    contacts.splice(index, 1);
-                                    renderContacts();
-                                };
-                            });
 
-                            // Add phone number button handlers
-                            document.querySelectorAll('.addPhoneNumber').forEach(btn => {
-                                btn.onclick = () => {
-                                    addFun(btn, 'mobile_numbers');
-                                };
-                            });
+                                attachHandlers(list);
 
-                            document.querySelectorAll('.addEmail').forEach(btn => {
-                                btn.onclick = () => {
-                                    addFun(btn, 'emails');
-                                };
-                            });
+
+
                         }
 
                         function addFun(btn, field) {
@@ -380,6 +397,12 @@
                             contacts.push(emptyContact());
                             renderContacts();
                         }
+                        function rsyncContactRow() {
+                            syncInputsToContacts();
+
+
+                            renderContacts();
+                        }
 
                         function initRelatedContacts() {
                             const oldContacts = {!! json_encode(old('related_contacts') ?? []) !!};
@@ -396,10 +419,17 @@
                                 contacts = [emptyContact()];
                             }
                             renderContacts();
+
                         }
 
-                        document.addEventListener('inertia:load', initRelatedContacts);
-                        document.addEventListener('DOMContentLoaded', initRelatedContacts);
+                       // document.addEventListener('inertia:load', initRelatedContacts);
+                        document.addEventListener('DOMContentLoaded', ()=>{
+                            setTimeout(() => {
+                                initRelatedContacts();
+                            }, 300);
+
+
+                        });
                     </script>
 
                     <style>
