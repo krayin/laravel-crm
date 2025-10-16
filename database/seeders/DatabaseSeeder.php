@@ -24,6 +24,12 @@ class DatabaseSeeder extends Seeder
         $this->call(WarehousesTableSeeder::class);
         $this->call(WarehouseLocationsTableSeeder::class);
 
+        // Seed Products
+        $this->call(ProductsTableSeeder::class);
+
+        // Seed initial Product Inventories for Gudang Bandung / Lantai 1
+        $this->call(ProductInventoriesTableSeeder::class);
+
         // Seed demo data for Analytical CRM (engineering orders & items)
         $this->call(AnalyticalCrmDemoSeeder::class);
     }
