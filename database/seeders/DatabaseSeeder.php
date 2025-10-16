@@ -20,6 +20,9 @@ class DatabaseSeeder extends Seeder
         $this->call(OrganizationsTableSeeder::class);
         $this->call(PersonsFromOrganizationsSeeder::class);
 
+        // Seed Warehouses (Krayin core schema)
+        $this->call(WarehousesTableSeeder::class);
+
         // Seed demo data for Analytical CRM (engineering orders & items)
         $this->call(AnalyticalCrmDemoSeeder::class);
     }
