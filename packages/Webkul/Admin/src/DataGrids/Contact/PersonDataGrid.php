@@ -67,11 +67,8 @@ class PersonDataGrid extends DataGrid
 
             if (intval($crm_code)>0){
 
-//                $queryBuilder
-//                    ->where('attribute_values.text_value','=', $crm_code)
-//                    ->where('attribute_values.attribute_id','=', 74);
                 $queryBuilder
-                    ->where('persons.id','=', $crm_code);
+                    ->where('persons.crm','=', $crm_code);
 
             }
 
@@ -102,7 +99,7 @@ class PersonDataGrid extends DataGrid
         }
 
 
-        $this->addFilter('id', 'persons.id');
+        $this->addFilter('id', 'persons.crm');
         $this->addFilter('license_no', 'license_attr.text_value');
         $this->addFilter('emails', 'persons.emails');
         $this->addFilter('person_name', 'persons.name');
