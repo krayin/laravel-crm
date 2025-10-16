@@ -67,10 +67,11 @@ class PersonDataGrid extends DataGrid
 
             if (intval($crm_code)>0){
 
+//                $queryBuilder
+//                    ->where('attribute_values.text_value','=', $crm_code)
+//                    ->where('attribute_values.attribute_id','=', 74);
                 $queryBuilder
-                    ->where('attribute_values.text_value','=', $crm_code)
-                    ->where('attribute_values.attribute_id','=', 74);
-
+                    ->where('id','=', $crm_code);
 
             }
 
