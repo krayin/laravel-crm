@@ -151,6 +151,14 @@ class ProductController extends Controller
      */
     public function search(): JsonResource
     {
+        // Map UI param `query` -> Prettus RequestCriteria expected params
+        if ($term = request('query')) {
+            request()->request->add([
+                'search'       => $term,
+                'searchFields' => 'sku:like;name:like;description:like',
+            ]);
+        }
+
         $products = $this->productRepository
             ->pushCriteria(app(RequestCriteria::class))
             ->orderBy('created_at', 'desc')

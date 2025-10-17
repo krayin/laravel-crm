@@ -224,6 +224,13 @@ php artisan analytics:apriori --from=2025-01-01 --to=2025-06-30 --support=0.05 -
 - Jika memilih lewat Repository core (mis. `WarehouseRepository->create($data)`), jangan sisipkan `entity_type` ke payload model (akan error kolom tidak ada). Simpan EAV terpisah memakai `AttributeValueRepository->save()` seperti di langkah (2).
 - Persons/Organizations: set juga `user_id` (owner) pada record inti dan EAV agar lookup/ACL bekerja mulus di UI.
 
+### 9.2 Catatan Khusus (Short‑Term Project)
+- Untuk tugas ini bersifat jangka pendek/eksperimental dan tidak ditujukan ke produksi, maka diperbolehkan melakukan perubahan pada kode di `packages/Webkul/**` bila diperlukan untuk mempercepat implementasi/bugfix.
+- Tetap dilarang mengubah kode di `vendor/**` karena:
+  - File di `vendor/` dikelola Composer dan tidak masuk kendali versi kita (rawan ter‑overwrite),
+  - Tidak aman untuk upgrade/deploy.
+- Usahakan perubahan di `packages/Webkul/**` tetap minimal, terdokumentasi, dan mudah di‑rollback. Jika nantinya dibutuhkan upgrade‑safe, pindahkan ke package kustom (override routes/controller/datagrid/binding) sesuai pola di dokumen ini.
+
 ---
 
 ## 10) Testing & Evaluasi
