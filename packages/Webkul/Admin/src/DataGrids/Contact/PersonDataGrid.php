@@ -227,6 +227,16 @@ class PersonDataGrid extends DataGrid
                     return route('admin.contacts.persons.edit', $row->id);
                 },
             ]);
+
+            $this->addAction([
+                'icon'   => 'icon-file',
+                'title'  => "Duplicate",
+                'method' => 'POST',
+                'url'    => function ($row) {
+                    return route('admin.contacts.persons.duplicate', $row->id);
+                },
+            ]);
+
         }
 
         if (bouncer()->hasPermission('contacts.persons.delete')) {

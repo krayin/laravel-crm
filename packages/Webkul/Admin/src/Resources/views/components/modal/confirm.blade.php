@@ -46,6 +46,13 @@
                                 @{{ message }}
                             </div>
 
+                            <input
+                                type="text"
+                                v-model="crm"
+                                placeholder="CRM Code"
+                                class="w-full rounded-md border border-gray-300 px-3 py-2 text-gray-800 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200"
+                            />
+
                             <div class="flex justify-end gap-2.5 px-4 py-2.5">
                                 <button type="button" class="transparent-button" @click="disagree">
                                     @{{ options.btnDisagree }}
@@ -71,6 +78,8 @@
                     isOpen: false,
 
                     title: '',
+
+                    crm:'',
 
                     message: '',
 

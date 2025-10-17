@@ -58,6 +58,10 @@ Route::prefix('contacts')->group(function () {
 
         Route::post('mass-destroy', 'massDestroy')->name('admin.contacts.persons.mass_delete');
 
+
+        Route::post('duplicate/{id}', 'duplicate')->name('admin.contacts.persons.duplicate');
+
+
         /**
          * Tag routes.
          */

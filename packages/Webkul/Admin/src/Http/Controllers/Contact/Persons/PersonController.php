@@ -2,6 +2,7 @@
 
 namespace Webkul\Admin\Http\Controllers\Contact\Persons;
 
+use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -9,11 +10,14 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Event;
 use Illuminate\View\View;
 use Prettus\Repository\Criteria\RequestCriteria;
+use Webkul\Activity\Models\Activity;
+use Webkul\Activity\Models\File;
 use Webkul\Admin\DataGrids\Contact\PersonDataGrid;
 use Webkul\Admin\Http\Controllers\Controller;
 use Webkul\Admin\Http\Requests\AttributeForm;
 use Webkul\Admin\Http\Requests\MassDestroyRequest;
 use Webkul\Admin\Http\Resources\PersonResource;
+use Webkul\Attribute\Models\AttributeValue;
 use Webkul\Contact\Models\RelatedContact;
 use Webkul\Contact\Repositories\PersonRepository;
 
@@ -42,7 +46,8 @@ class PersonController extends Controller
         return view('admin::contacts.persons.index');
     }
 
-    public function nextCrmCode($return_number=false){
+    public function nextCrmCode($return_number = false)
+    {
 
 //        $maxId = DB::table('persons')->max('id') ?? 0;
 //        return response()->json(['next_crm_code' => $maxId + 1]);
@@ -67,8 +72,9 @@ class PersonController extends Controller
         if ($return_number) {
             return $maxId;
         }
-        return response()->json(['next_crm_code' => $maxId ]);
+        return response()->json(['next_crm_code' => $maxId]);
     }
+
     /**
      * Show the form for creating a new resource.
      */
@@ -84,7 +90,7 @@ class PersonController extends Controller
     {
 
         $data = $request->all();
-        $relatedContacts=[];
+        $relatedContacts = [];
         if ($request->has('related_contacts')) {
             $relatedContacts = $request->input('related_contacts');
 
@@ -95,27 +101,27 @@ class PersonController extends Controller
             // dd($relatedContacts);
 
 
-            foreach ($relatedContacts as $index =>$relatedContact) {
-                if($request->has("mobile_number_$index")){
-                    if ($request->get("mobile_number_$index") !=="+971"){
+            foreach ($relatedContacts as $index => $relatedContact) {
+                if ($request->has("mobile_number_$index")) {
+                    if ($request->get("mobile_number_$index") !== "+971") {
 
                         $mobile_numbers = $this->ensureJsonArr($relatedContact['mobile_numbers']);
 
-                        $mobile_numbers[]=$request->get("mobile_number_$index");
+                        $mobile_numbers[] = $request->get("mobile_number_$index");
 
-                        $relatedContacts[$index]['mobile_numbers']=json_encode($mobile_numbers,true);
+                        $relatedContacts[$index]['mobile_numbers'] = json_encode($mobile_numbers, true);
 
                         unset($data["mobile_number_$index"]);
                     }
                 }
-                if($request->has("email_$index")){
-                    if (!empty($request->get("email_$index") )){
+                if ($request->has("email_$index")) {
+                    if (!empty($request->get("email_$index"))) {
 
                         $emails = $this->ensureJsonArr($relatedContact['emails']);
 
-                        $emails[]=$request->get("email_$index");
+                        $emails[] = $request->get("email_$index");
 
-                        $relatedContacts[$index]['emails']=json_encode($emails,true);
+                        $relatedContacts[$index]['emails'] = json_encode($emails, true);
 
 
                         unset($data["email_$index"]);
@@ -133,8 +139,8 @@ class PersonController extends Controller
         if (empty($request->get('crm'))) {
             $crm_code = $this->nextCrmCode(true);
 
-        }else{
-            $crm_code =$request->get('crm');
+        } else {
+            $crm_code = $request->get('crm');
         }
         $person->crm = $crm_code;
         $person->save();
@@ -147,34 +153,17 @@ class PersonController extends Controller
                 // Update existing
                 $existingContact = RelatedContact::find($contactData['id']);
                 if ($existingContact) {
-                    $existingContact->update([
-                        'name' => $contactData['name'],
-                        'person_id' => $person->id,
-                        'type' => $contactData['type'],
-                        'eid_expiry' => $contactData['eid_expiry'],
-                        'mobile_numbers' => $contactData['mobile_numbers'],
-                        'emails' => $contactData['emails'],
-                    ]);
+                    $existingContact->update(['name' => $contactData['name'], 'person_id' => $person->id, 'type' => $contactData['type'], 'eid_expiry' => $contactData['eid_expiry'], 'mobile_numbers' => $contactData['mobile_numbers'], 'emails' => $contactData['emails'],]);
                 }
             } else {
                 // Create new
-                RelatedContact::create([
-                    'name' => $contactData['name'],
-                    'person_id' => $person->id,
-                    'type' => $contactData['type'],
-                    'eid_expiry' => $contactData['eid_expiry'],
-                    'mobile_numbers' => $contactData['mobile_numbers'],
-                    'emails' => $contactData['emails'],
-                ]);
+                RelatedContact::create(['name' => $contactData['name'], 'person_id' => $person->id, 'type' => $contactData['type'], 'eid_expiry' => $contactData['eid_expiry'], 'mobile_numbers' => $contactData['mobile_numbers'], 'emails' => $contactData['emails'],]);
             }
         }
 
 
         if (request()->ajax()) {
-            return response()->json([
-                'data'    => $person,
-                'message' => trans('admin::app.contacts.persons.index.create-success'),
-            ]);
+            return response()->json(['data' => $person, 'message' => trans('admin::app.contacts.persons.index.create-success'),]);
         }
 
         session()->flash('success', trans('admin::app.contacts.persons.index.create-success'));
@@ -189,7 +178,7 @@ class PersonController extends Controller
     {
 
 //        $person = $this->personRepository->findOrFail($id);
-        $person = $this->personRepository->where('crm','=',$id)->first();
+        $person = $this->personRepository->where('crm', '=', $id)->first();
 
         $user = auth()->user();
         $allowedFields = $user->role->visible_person_fields ?? [];
@@ -199,13 +188,10 @@ class PersonController extends Controller
             $allowedFields[] = 'id';
         }
 
-      //  $person = $this->personRepository->getModel()->select($allowedFields)->findOrFail($id);
+        //  $person = $this->personRepository->getModel()->select($allowedFields)->findOrFail($id);
 
 
-
-        return view('admin::contacts.persons.view', [
-            'person' => (object) $person,
-        ]);
+        return view('admin::contacts.persons.view', ['person' => (object)$person,]);
     }
 
     /**
@@ -215,12 +201,13 @@ class PersonController extends Controller
     {
 
 //        $person = $this->personRepository->findOrFail($id);
-        $person = $this->personRepository->where('crm','=',$id)->first();
+        $person = $this->personRepository->where('crm', '=', $id)->first();
 
         return view('admin::contacts.persons.edit', compact('person'));
     }
 
-    private function ensureJsonArr($input) {
+    private function ensureJsonArr($input)
+    {
         // If input is already an array or object, return as is
         if (is_array($input) || is_object($input)) {
             return $input;
@@ -249,33 +236,33 @@ class PersonController extends Controller
     {
         $request->merge(['entity_id' => $id]);
 
-        $data= $request->all();
-        $relatedContacts=$request->related_contacts;
+        $data = $request->all();
+        $relatedContacts = $request->related_contacts;
 
-        foreach ($relatedContacts as $index =>$relatedContact) {
-            if($request->has("mobile_number_$index")){
-                if ($request->get("mobile_number_$index") !=="+971"){
+        foreach ($relatedContacts as $index => $relatedContact) {
+            if ($request->has("mobile_number_$index")) {
+                if ($request->get("mobile_number_$index") !== "+971") {
 
-                $mobile_numbers = $this->ensureJsonArr($relatedContact['mobile_numbers']);
+                    $mobile_numbers = $this->ensureJsonArr($relatedContact['mobile_numbers']);
 
-                $mobile_numbers[]=$request->get("mobile_number_$index");
+                    $mobile_numbers[] = $request->get("mobile_number_$index");
 
-               $rc = RelatedContact::findorfail($relatedContact['id']);
-               $rc->mobile_numbers=json_encode($mobile_numbers,true);
-               $rc->save();
+                    $rc = RelatedContact::findorfail($relatedContact['id']);
+                    $rc->mobile_numbers = json_encode($mobile_numbers, true);
+                    $rc->save();
 
-                unset($data["mobile_number_$index"]);
+                    unset($data["mobile_number_$index"]);
                 }
             }
-            if($request->has("email_$index")){
-                if (!empty($request->get("email_$index") )){
+            if ($request->has("email_$index")) {
+                if (!empty($request->get("email_$index"))) {
 
                     $emails = $this->ensureJsonArr($relatedContact['emails']);
 
-                    $emails[]=$request->get("email_$index");
+                    $emails[] = $request->get("email_$index");
 
                     $rc = RelatedContact::findorfail($relatedContact['id']);
-                    $rc->emails=json_encode($emails,true);
+                    $rc->emails = json_encode($emails, true);
                     $rc->save();
 
                     unset($data["email_$index"]);
@@ -284,28 +271,25 @@ class PersonController extends Controller
 
 
         }
-        $person = $this->personRepository->where('crm','=',$id)->first();
+        $person = $this->personRepository->where('crm', '=', $id)->first();
 
         Event::dispatch('contacts.person.update.before', $person->id);
 
 
         //$person = $this->personRepository->update($data, $id);
-        $person = $this->personRepository->update($data,$person->id);
+        $person = $this->personRepository->update($data, $person->id);
         if (empty($request->get('crm'))) {
             $crm_code = $this->nextCrmCode(true);
 
-        }else{
-            $crm_code =$request->get('crm');
+        } else {
+            $crm_code = $request->get('crm');
         }
         $person->crm = $crm_code;
         $person->save();
         Event::dispatch('contacts.person.update.after', $person);
 
         if (request()->ajax()) {
-            return response()->json([
-                'data'    => $person,
-                'message' => trans('admin::app.contacts.persons.index.update-success'),
-            ], 200);
+            return response()->json(['data' => $person, 'message' => trans('admin::app.contacts.persons.index.update-success'),], 200);
         }
 
         session()->flash('success', trans('admin::app.contacts.persons.index.update-success'));
@@ -319,13 +303,9 @@ class PersonController extends Controller
     public function search(): JsonResource
     {
         if ($userIds = bouncer()->getAuthorizedUserIds()) {
-            $persons = $this->personRepository
-                ->pushCriteria(app(RequestCriteria::class))
-                ->findWhereIn('user_id', $userIds);
+            $persons = $this->personRepository->pushCriteria(app(RequestCriteria::class))->findWhereIn('user_id', $userIds);
         } else {
-            $persons = $this->personRepository
-                ->pushCriteria(app(RequestCriteria::class))
-                ->all();
+            $persons = $this->personRepository->pushCriteria(app(RequestCriteria::class))->all();
         }
 
         return PersonResource::collection($persons);
@@ -337,7 +317,7 @@ class PersonController extends Controller
     public function destroy(int $id): JsonResponse
     {
         //$person = $this->personRepository->findOrFail($id);
-        $person = $this->personRepository->where('crm','=',$id)->first();
+        $person = $this->personRepository->where('crm', '=', $id)->first();
 
         try {
             Event::dispatch('contacts.person.delete.before', $person->id);
@@ -346,13 +326,9 @@ class PersonController extends Controller
 
             Event::dispatch('contacts.person.delete.after', $person->id);
 
-            return response()->json([
-                'message' => trans('admin::app.contacts.persons.index.delete-success'),
-            ], 200);
-        } catch (\Exception $exception) {
-            return response()->json([
-                'message' => trans('admin::app.contacts.persons.index.delete-failed'),
-            ], 400);
+            return response()->json(['message' => trans('admin::app.contacts.persons.index.delete-success'),], 200);
+        } catch (Exception $exception) {
+            return response()->json(['message' => trans('admin::app.contacts.persons.index.delete-failed'),], 400);
         }
     }
 
@@ -371,9 +347,7 @@ class PersonController extends Controller
             Event::dispatch('contact.person.delete.after', $person);
         }
 
-        return response()->json([
-            'message' => trans('admin::app.contacts.persons.index.delete-success'),
-        ]);
+        return response()->json(['message' => trans('admin::app.contacts.persons.index.delete-success'),]);
     }
 
 
@@ -386,6 +360,7 @@ class PersonController extends Controller
         }
 
         DB::beginTransaction();
+        $mapIds = [];
 
         try {
             // 1️⃣ Duplicate Person (excluding ID)
@@ -397,11 +372,14 @@ class PersonController extends Controller
 
             $newPerson->save();
 
+            $mapIds[$originalPerson->id] = $newPerson->id;
+
             // 3️⃣ Duplicate Related Contacts
             foreach ($originalPerson->relatedContacts as $contact) {
                 $newContact = $contact->replicate();
                 $newContact->person_id = $newPerson->id;
                 $newContact->save();
+                $mapIds[$contact->id] = $newContact->id;
             }
 
             // 4️⃣ Duplicate Activities
@@ -414,32 +392,60 @@ class PersonController extends Controller
 
             // 6️⃣ Duplicate Attributes
             // Option A: if attributes are JSON on person table
-            if (isset($originalPerson->attributes)) {
-                $newPerson->attributes = $originalPerson->attributes;
-                $newPerson->save();
-            }
 
-            // Option B: if attributes are in a separate table via relationship
-            if (method_exists($originalPerson, 'attributeValues')) {
-                foreach ($originalPerson->attributeValues as $attr) {
-                    $newAttr = $attr->replicate();
-                    $newAttr->person_id = $newPerson->id;
-                    $newAttr->save();
+            $activities = $originalPerson->activities()->get();
+
+            foreach ($activities as $activity) {
+
+                $newActivity = new Activity();
+                $newActivity->title = $activity->title;
+                $newActivity->type = $activity->type;
+                $newActivity->location = $activity->location;
+                $newActivity->comment = $activity->comment;
+                $newActivity->additional = $activity->additional;
+                $newActivity->schedule_from = $activity->schedule_from;
+                $newActivity->schedule_to = $activity->schedule_to;
+                $newActivity->is_done = $activity->is_done;
+                $newActivity->user_id = $activity->user_id;
+                $newActivity->save();
+
+                DB::table('person_activities')->insert(
+                    [
+                        'activity_id'=>$newActivity->id,
+                        'person_id'=>$newPerson->id,
+                    ]
+                );
+
+                $files = File::where('activity_id', $activity->id)->get();
+
+                foreach ($files as $file) {
+                    if(isset($mapIds[$file->entity_id])){
+                        $newFile = $file->replicate();
+                        $newFile->activity_id = $newActivity->id;
+                        $newFile->entity_id = $mapIds[$file->entity_id];
+                        $newFile->save();
+                    }
                 }
             }
 
+            $originalAttributes = AttributeValue::where('entity_type', 'persons')->where('entity_id', $originalPerson->id)->get();
+
+            $originalAttributes->each(function ($attributeValue) use ($newPerson) {
+                $newAttributeValue = $attributeValue->replicate();
+                $newAttributeValue->entity_id = $newPerson->id;
+
+                // Temporarily disable unique validation if your repository checks it
+                $newAttributeValue->saveQuietly(); // Bypasses events/validation
+            });
+
+
             DB::commit();
 
-            return response()->json([
-                'data' => $newPerson,
-                'message' => 'Person duplicated successfully with all related data and attributes',
-            ]);
+            return response()->json(['data' => $newPerson, 'message' => 'Person duplicated successfully with all related data and attributes',]);
 
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             DB::rollBack();
-            return response()->json([
-                'message' => 'Duplication failed: ' . $e->getMessage(),
-            ], 500);
+            return response()->json(['message' => 'Duplication failed: ' . $e->getMessage(),], 500);
         }
 
     }

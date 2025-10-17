@@ -69,7 +69,7 @@
                                     :class="{'cursor-pointer select-none hover:text-gray-800 dark:hover:text-white': column.sortable}"
                                     @click="sort(column)"
                                     v-if="column.visibility"
-                                > 
+                                >
                                     <p v-html="column.label"></p>
 
                                     <i
@@ -88,7 +88,7 @@
                                 @lang('admin::app.components.datagrid.table.actions')
                             </p>
                         </div>
-                        
+
                         <!-- Mobile Sort/Filter Header -->
                         <div class="hidden border-b bg-gray-50 px-4 py-3 text-black dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 max-lg:block">
                             <div class="flex items-center justify-between">
@@ -103,7 +103,7 @@
                                             :checked="['all', 'partial'].includes(applied.massActions.meta.mode)"
                                             @change="selectAll"
                                         >
-    
+
                                         <span
                                             class="icon-checkbox-outline cursor-pointer rounded-md text-2xl text-gray-500 peer-checked:text-brandColor"
                                             :class="[
@@ -115,7 +115,7 @@
                                         </span>
                                     </label>
                                 </div>
-                                
+
                                 <!-- Mobile Sort Dropdown -->
                                 <div class="flex w-full justify-end" v-if="available.columns.some(column => column.sortable)">
                                     <x-admin::dropdown position="bottom-{{ in_array(app()->getLocale(), ['fa', 'ar']) ? 'left' : 'right' }}">
@@ -128,12 +128,12 @@
                                                     <span>
                                                         Sort
                                                     </span>
-                    
+
                                                     <span class="icon-down-arrow text-2xl"></span>
                                                 </button>
                                             </div>
                                         </x-slot>
-                
+
                                         <x-slot:menu>
                                             <x-admin::dropdown.menu.item
                                                 v-for="column in available.columns.filter(column => column.sortable && column.visibility)"
@@ -219,7 +219,7 @@
                                     </span>
                                 </p>
                             </div>
-                            
+
                             <!-- Mobile Card View -->
                             <div
                                 class="hidden border-b px-4 py-4 text-black dark:border-gray-800 dark:text-gray-300 max-lg:block"
@@ -238,7 +238,7 @@
                                                     class="peer hidden"
                                                     v-model="applied.massActions.indices"
                                                 >
-        
+
                                                 <span class="icon-checkbox-outline peer-checked:icon-checkbox-select cursor-pointer rounded-md text-2xl text-gray-500 peer-checked:text-brandColor">
                                                 </span>
                                             </label>
@@ -291,7 +291,7 @@
             template: '#v-datagrid-table-template',
 
             props: ['isLoading', 'available', 'applied'],
-            
+
             computed: {
                 gridsCount() {
                     let count = this.available.columns.filter((column) => column.visibility).length;
@@ -343,13 +343,33 @@
 
                             break;
 
+                        case 'duplicate':
+                            this.$emitter.emit('open-confirm-modal', {
+                                agree: () => {
+                                    this.$axios['post'](action.url)
+                                        .then(response => {
+                                            this.$emitter.emit('add-flash', { type: 'success', message: response.data.message });
+
+                                            this.$emit('actionSuccess', response.data);
+                                        })
+                                        .catch((error) => {
+                                            this.$emitter.emit('add-flash', { type: 'error', message: error.response.data.message });
+
+                                            this.$emit('actionError', error.response.data);
+                                        });
+                                }
+                            });
+                            break;
                         case 'post':
                         case 'put':
                         case 'patch':
                         case 'delete':
                             this.$emitter.emit('open-confirm-modal', {
-                                agree: () => {
-                                    this.$axios[method](action.url)
+                                title: 'Duplicate Company', // Your custom title
+                                message: 'Please enter CRM value for the duplicated record:',
+                                agree: (crm) => {
+                                    const payload = { crm };
+                                    this.$axios[method](action.url,payload)
                                         .then(response => {
                                             this.$emitter.emit('add-flash', { type: 'success', message: response.data.message });
 
