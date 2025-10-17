@@ -7,7 +7,7 @@
     {!! view_render_event('admin.persons.edit.form.before') !!}
 
     <x-admin::form
-        :action="route('admin.contacts.persons.update', $person->id)"
+        :action="route('admin.contacts.persons.update', $person->crm)"
         method="PUT"
         enctype="multipart/form-data"
     >
