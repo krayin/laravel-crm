@@ -247,7 +247,7 @@ class PersonController extends Controller
      */
     public function update(AttributeForm $request, int $id): RedirectResponse|JsonResponse
     {
-
+        $request->merge(['entity_id' => $id]);
 
         $data= $request->all();
         $relatedContacts=$request->related_contacts;
@@ -375,4 +375,74 @@ class PersonController extends Controller
             'message' => trans('admin::app.contacts.persons.index.delete-success'),
         ]);
     }
+
+
+    public function duplicate(int $id): JsonResponse|RedirectResponse
+    {
+        $originalPerson = $this->personRepository->where('crm', $id)->first();
+
+        if (!$originalPerson) {
+            return response()->json(['message' => 'Person not found'], 404);
+        }
+
+        DB::beginTransaction();
+
+        try {
+            // 1️⃣ Duplicate Person (excluding ID)
+            $newPerson = $originalPerson->replicate();
+
+            // 2️⃣ Set CRM code from request if provided, otherwise generate new
+            $crmFromRequest = request()->input('crm');
+            $newPerson->crm = $crmFromRequest ?: $this->nextCrmCode(true);
+
+            $newPerson->save();
+
+            // 3️⃣ Duplicate Related Contacts
+            foreach ($originalPerson->relatedContacts as $contact) {
+                $newContact = $contact->replicate();
+                $newContact->person_id = $newPerson->id;
+                $newContact->save();
+            }
+
+            // 4️⃣ Duplicate Activities
+            $activityIds = $originalPerson->activities()->pluck('activity_id')->toArray();
+            $newPerson->activities()->sync($activityIds);
+
+            // 5️⃣ Duplicate Tags
+            $tagIds = $originalPerson->tags()->pluck('tag_id')->toArray();
+            $newPerson->tags()->sync($tagIds);
+
+            // 6️⃣ Duplicate Attributes
+            // Option A: if attributes are JSON on person table
+            if (isset($originalPerson->attributes)) {
+                $newPerson->attributes = $originalPerson->attributes;
+                $newPerson->save();
+            }
+
+            // Option B: if attributes are in a separate table via relationship
+            if (method_exists($originalPerson, 'attributeValues')) {
+                foreach ($originalPerson->attributeValues as $attr) {
+                    $newAttr = $attr->replicate();
+                    $newAttr->person_id = $newPerson->id;
+                    $newAttr->save();
+                }
+            }
+
+            DB::commit();
+
+            return response()->json([
+                'data' => $newPerson,
+                'message' => 'Person duplicated successfully with all related data and attributes',
+            ]);
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json([
+                'message' => 'Duplication failed: ' . $e->getMessage(),
+            ], 500);
+        }
+
+    }
+
+
 }

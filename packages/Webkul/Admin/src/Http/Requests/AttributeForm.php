@@ -102,15 +102,41 @@ class AttributeForm extends FormRequest
             }
 
             if ($attribute->is_unique) {
-                array_push($validations[in_array($attribute->type, ['email', 'phone'])
-                    ? $attribute->code.'.*.value'
-                    : $attribute->code
-                ], function ($field, $value, $fail) use ($attribute) {
-                    if (! $this->attributeValueRepository->isValueUnique($this->id, $attribute->entity_type, $attribute, request($field))) {
-                        $fail('The value has already been taken.');
+                array_push(
+                    $validations[in_array($attribute->type, ['email', 'phone'])
+                        ? $attribute->code.'.*.value'
+                        : $attribute->code
+                    ],
+                    function ($field, $value, $fail) use ($attribute) {
+                        // Use $this->input() to access request values
+                        $currentValue = $this->input($field);
+
+                        // $this->route('id') gives the current entity ID
+                        $entityId = $this->route('id') ?? null;
+                        if ($attribute->entity_type==="persons"){
+                            $person = null;
+                            if ( $entityId) {
+                                $person = app(\Webkul\Contact\Repositories\PersonRepository::class)
+                                    ->where('crm', $entityId)
+                                    ->first();
+                            }
+                            $entityId = $person?->id;
+                        }
+
+                        if (! $this->attributeValueRepository->isValueUnique(
+                            $entityId,
+                            $attribute->entity_type,
+                            $attribute,
+                            $currentValue
+                        )) {
+                            $fail('The value has already been taken.');
+                        }
                     }
-                });
+                );
             }
+
+
+
 
             $this->rules = array_merge($this->rules, $validations);
         }
