@@ -260,18 +260,28 @@
                         id="quote-items"
                         class="flex flex-col gap-4"
                     >
-                        <div class="flex flex-col gap-1">
-                            <p class="text-base font-semibold text-gray-800 dark:text-white">
-                                @lang('admin::app.quotes.create.quote-items')
-                            </p>
+                        <div class="flex items-start justify-between">
+                            <div class="flex flex-col gap-1">
+                                <p class="text-base font-semibold text-gray-800 dark:text-white">
+                                    @lang('admin::app.quotes.create.quote-items')
+                                </p>
 
-                            <p class="text-sm text-gray-600 dark:text-white">
-                                @lang('admin::app.quotes.create.quote-item-info')
-                            </p>
+                                <p class="text-sm text-gray-600 dark:text-white">
+                                    @lang('admin::app.quotes.create.quote-item-info')
+                                </p>
+                            </div>
+
+                            <!-- Moved "+ Add Item" action into the header row -->
+                            <span
+                                class="text-md flex max-w-max cursor-pointer items-center gap-2 text-brandColor"
+                                @click="addProduct"
+                            >
+                                @lang('admin::app.quotes.create.add-item')
+                            </span>
                         </div>
 
                         <!-- Quote Item List Vue Component -->
-                        <v-quote-item-list :errors="errors"></v-quote-item-list>
+                        <v-quote-item-list ref="quoteItemList" :errors="errors"></v-quote-item-list>
                     </div>
 
                     {!! view_render_event('admin.contacts.quotes.create.quote_items.after') !!}
@@ -349,13 +359,7 @@
                     {!! view_render_event('admin.contacts.quotes.create.table.before') !!}
                 </div>
 
-                <!-- Add New Quote Item -->
-                <span
-                    class="text-md flex max-w-max cursor-pointer items-center gap-2 text-brandColor"
-                    @click="addProduct"
-                >
-                    @lang('admin::app.quotes.create.add-item')
-                </span>
+                <!-- Add New Quote Item button moved to header above -->
 
                 <div class="flex justify-end">
                     <div class="grid w-[348px] gap-4 rounded-lg bg-gray-100 p-4 text-sm dark:bg-gray-950 dark:text-white">
@@ -597,6 +601,15 @@
 
                         if (section) {
                             section.scrollIntoView({ behavior: 'smooth' });
+                        }
+                    },
+
+                    /**
+                     * Forward click to child list component.
+                     */
+                    addProduct() {
+                        if (this.$refs && this.$refs.quoteItemList && typeof this.$refs.quoteItemList.addProduct === 'function') {
+                            this.$refs.quoteItemList.addProduct();
                         }
                     },
                 },
