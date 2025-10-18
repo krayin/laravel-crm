@@ -154,8 +154,11 @@ class ProductController extends Controller
         // Map UI param `query` -> Prettus RequestCriteria expected params
         if ($term = request('query')) {
             request()->request->add([
+                // apply the same term to multiple fields
                 'search'       => $term,
-                'searchFields' => 'sku:like;name:like;description:like',
+                // ensure OR logic across fields so name OR sku (or description)
+                'searchJoin'   => 'or',
+                'searchFields' => 'name:like;sku:like;description:like',
             ]);
         }
 

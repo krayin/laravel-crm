@@ -88,7 +88,11 @@
                         class="cursor-pointer px-4 py-2 text-gray-800 transition-colors hover:bg-blue-100 dark:text-white dark:hover:bg-gray-900"
                         @click="selectItem(item)"
                     >
-                        @{{ item.name }}
+                        <span>@{{ item.name }}</span>
+
+                        <template v-if="item.sku">
+                            <span class="text-xs text-gray-500 ltr:ml-2 rtl:mr-2">(@{{ item.sku }})</span>
+                        </template>
                     </li>
 
                     <template v-if="filteredResults.length === 0">
@@ -209,9 +213,14 @@
                  * @return {Array}
                  */
                 filteredResults() {
-                    return this.searchedResults.filter(item =>
-                        item.name.toLowerCase().includes(this.searchTerm.toLowerCase())
-                    );
+                    const term = (this.searchTerm || '').toLowerCase();
+
+                    return this.searchedResults.filter(item => {
+                        const name = (item.name || '').toLowerCase();
+                        const sku  = (item.sku  || '').toLowerCase();
+
+                        return name.includes(term) || sku.includes(term);
+                    });
                 }
             },
 
