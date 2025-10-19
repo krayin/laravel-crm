@@ -32,5 +32,8 @@ class DatabaseSeeder extends Seeder
 
         // Seed demo data for Analytical CRM (engineering orders & items)
         $this->call(AnalyticalCrmDemoSeeder::class);
+
+        // Seed demo Leads & Quotes dataset (300 pairs)
+        $this->call(LeadQuoteDemoSeeder::class);
     }
 }

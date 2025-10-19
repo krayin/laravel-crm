@@ -54,13 +54,20 @@ class QuoteRepository extends Repository
      */
     public function create(array $data)
     {
+        $attributePayload = $data;
+        $entityType = $data['entity_type'] ?? 'quotes';
+        $items = $data['items'] ?? [];
+
+        unset($data['entity_type'], $data['quick_add'], $data['items']);
+
         $quote = parent::create($data);
 
-        $this->attributeValueRepository->save(array_merge($data, [
+        $this->attributeValueRepository->save(array_merge($attributePayload, [
+            'entity_type' => $entityType,
             'entity_id' => $quote->id,
         ]));
 
-        foreach ($data['items'] as $itemData) {
+        foreach ($items as $itemData) {
             $this->quoteItemRepository->create(array_merge($itemData, [
                 'quote_id' => $quote->id,
             ]));
@@ -80,15 +87,21 @@ class QuoteRepository extends Repository
     {
         $quote = $this->find($id);
 
+        $attributePayload = $data;
+        $entityType = $data['entity_type'] ?? 'quotes';
+        $items = $data['items'] ?? null;
+
+        unset($data['entity_type'], $data['quick_add'], $data['items']);
+
         parent::update($data, $id);
 
         /**
          * If attributes are provided then only save the provided attributes and return.
          */
         if (! empty($attributes)) {
-            $conditions = ['entity_type' => $data['entity_type']];
+            $conditions = ['entity_type' => $entityType];
 
-            if (isset($data['quick_add'])) {
+            if (isset($attributePayload['quick_add'])) {
                 $conditions['quick_add'] = 1;
             }
 
@@ -96,21 +109,23 @@ class QuoteRepository extends Repository
                 ->whereIn('code', $attributes)
                 ->get();
 
-            $this->attributeValueRepository->save(array_merge($data, [
+            $this->attributeValueRepository->save(array_merge($attributePayload, [
+                'entity_type' => $entityType,
                 'entity_id' => $quote->id,
             ]), $attributes);
 
             return $quote;
         }
 
-        $this->attributeValueRepository->save(array_merge($data, [
+        $this->attributeValueRepository->save(array_merge($attributePayload, [
+            'entity_type' => $entityType,
             'entity_id' => $quote->id,
         ]));
 
         $previousItemIds = $quote->items->pluck('id');
 
-        if (isset($data['items'])) {
-            foreach ($data['items'] as $itemId => $itemData) {
+        if (is_array($items)) {
+            foreach ($items as $itemId => $itemData) {
                 if (Str::contains($itemId, 'item_')) {
                     $this->quoteItemRepository->create(array_merge($itemData, [
                         'quote_id' => $id,

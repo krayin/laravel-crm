@@ -112,6 +112,11 @@ class LeadRepository extends Repository
      */
     public function create(array $data)
     {
+        $attributePayload = $data;
+        $entityType = $data['entity_type'] ?? 'leads';
+
+        unset($data['entity_type'], $data['quick_add']);
+
         /**
          * If a person is provided, create or update the person and set the `person_id`.
          */
@@ -136,7 +141,8 @@ class LeadRepository extends Repository
             'lead_pipeline_stage_id' => 1,
         ], $data));
 
-        $this->attributeValueRepository->save(array_merge($data, [
+        $this->attributeValueRepository->save(array_merge($attributePayload, [
+            'entity_type' => $entityType,
             'entity_id' => $lead->id,
         ]));
 
@@ -161,6 +167,11 @@ class LeadRepository extends Repository
      */
     public function update(array $data, $id, $attributes = [])
     {
+        $attributePayload = $data;
+        $entityType = $data['entity_type'] ?? 'leads';
+
+        unset($data['entity_type'], $data['quick_add']);
+
         /**
          * If a person is provided, create or update the person and set the `person_id`.
          * Be cautious, as a lead can be updated without providing person data.
@@ -205,9 +216,9 @@ class LeadRepository extends Repository
              * otherwise, use the provided collection of attributes.
              */
             if (is_array($attributes)) {
-                $conditions = ['entity_type' => $data['entity_type']];
+                $conditions = ['entity_type' => $entityType];
 
-                if (isset($data['quick_add'])) {
+                if (isset($attributePayload['quick_add'])) {
                     $conditions['quick_add'] = 1;
                 }
 
@@ -216,14 +227,16 @@ class LeadRepository extends Repository
                     ->get();
             }
 
-            $this->attributeValueRepository->save(array_merge($data, [
+            $this->attributeValueRepository->save(array_merge($attributePayload, [
+                'entity_type' => $entityType,
                 'entity_id' => $lead->id,
             ]), $attributes);
 
             return $lead;
         }
 
-        $this->attributeValueRepository->save(array_merge($data, [
+        $this->attributeValueRepository->save(array_merge($attributePayload, [
+            'entity_type' => $entityType,
             'entity_id' => $lead->id,
         ]));
 
