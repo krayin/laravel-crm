@@ -30,9 +30,6 @@ class DatabaseSeeder extends Seeder
         // Seed initial Product Inventories for Gudang Bandung / Lantai 1
         $this->call(ProductInventoriesTableSeeder::class);
 
-        // Seed demo data for Analytical CRM (engineering orders & items)
-        $this->call(AnalyticalCrmDemoSeeder::class);
-
         // Seed demo Leads & Quotes dataset (300 pairs)
         $this->call(LeadQuoteDemoSeeder::class);
     }
