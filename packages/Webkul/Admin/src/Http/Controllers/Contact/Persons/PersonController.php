@@ -368,6 +368,7 @@ class PersonController extends Controller
 
             // 2️⃣ Set CRM code from request if provided, otherwise generate new
             $crmFromRequest = request()->input('crm');
+
             $newPerson->crm = $crmFromRequest ?: $this->nextCrmCode(true);
 
             $newPerson->save();

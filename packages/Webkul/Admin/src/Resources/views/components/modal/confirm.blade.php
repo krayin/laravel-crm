@@ -48,6 +48,7 @@
 
                             <input
                                 type="text"
+                                v-if="isOpen && title.toLowerCase().includes('duplicate')"
                                 v-model="crm"
                                 placeholder="CRM Code"
                                 class="w-full rounded-md border border-gray-300 px-3 py-2 text-gray-800 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200"
@@ -129,6 +130,8 @@
 
                     document.body.style.overflow = 'auto';
 
+                    this.crm = '';
+
                     this.disagreeCallback();
                 },
 
@@ -137,7 +140,7 @@
 
                     document.body.style.overflow = 'auto';
 
-                    this.agreeCallback();
+                    this.agreeCallback(this.crm);
                 },
 
                 registerGlobalEvents() {

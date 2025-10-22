@@ -231,7 +231,7 @@ class PersonDataGrid extends DataGrid
             $this->addAction([
                 'icon'   => 'icon-file',
                 'title'  => "Duplicate",
-                'method' => 'POST',
+                'method' => 'duplicate',
                 'url'    => function ($row) {
                     return route('admin.contacts.persons.duplicate', $row->id);
                 },

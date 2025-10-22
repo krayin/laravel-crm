@@ -344,9 +344,13 @@
                             break;
 
                         case 'duplicate':
+
                             this.$emitter.emit('open-confirm-modal', {
-                                agree: () => {
-                                    this.$axios['post'](action.url)
+                                title: 'Duplicate Company', // Your custom title
+                                message: 'Please enter CRM value for the duplicated record:',
+                                agree: (crm) => {
+                                    const payload = { crm };
+                                    this.$axios["post"](action.url,payload)
                                         .then(response => {
                                             this.$emitter.emit('add-flash', { type: 'success', message: response.data.message });
 
@@ -359,17 +363,16 @@
                                         });
                                 }
                             });
+
+
                             break;
                         case 'post':
                         case 'put':
                         case 'patch':
                         case 'delete':
                             this.$emitter.emit('open-confirm-modal', {
-                                title: 'Duplicate Company', // Your custom title
-                                message: 'Please enter CRM value for the duplicated record:',
-                                agree: (crm) => {
-                                    const payload = { crm };
-                                    this.$axios[method](action.url,payload)
+                                agree: () => {
+                                    this.$axios[method](action.url)
                                         .then(response => {
                                             this.$emitter.emit('add-flash', { type: 'success', message: response.data.message });
 
