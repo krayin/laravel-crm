@@ -16,7 +16,9 @@ return new class extends Migration
             $table->string('unique_id')->nullable();
         });
 
-        DB::statement("UPDATE attribute_values SET unique_id = CONCAT(entity_id, '|', attribute_id)");
+        $tablePrefix = DB::getTablePrefix();
+
+        DB::statement('UPDATE '.$tablePrefix."attribute_values SET unique_id = CONCAT(entity_id, '|', attribute_id)");
 
         Schema::table('attribute_values', function (Blueprint $table) {
             $table->unique('unique_id');

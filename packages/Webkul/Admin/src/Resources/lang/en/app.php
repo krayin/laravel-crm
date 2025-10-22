@@ -375,20 +375,16 @@ return [
                     'title'   => 'Mega Search',
 
                     'tabs' => [
-                        'leads'          => 'Leads',
-                        'quotes'         => 'Quotes',
-                        'persons'        => 'Persons',
-                        'products'       => 'Products',
-                        'settings'       => 'Settings',
-                        'configurations' => 'Configurations',
+                        'leads'    => 'Leads',
+                        'quotes'   => 'Quotes',
+                        'persons'  => 'Persons',
+                        'products' => 'Products',
                     ],
 
                     'explore-all-products'          => 'Explore all Products',
                     'explore-all-leads'             => 'Explore all Leads',
                     'explore-all-contacts'          => 'Explore all Contacts',
                     'explore-all-quotes'            => 'Explore all Quotes',
-                    'explore-all-settings'          => 'Explore all Settings',
-                    'explore-all-configurations'    => 'Explore all Configurations',
                     'explore-all-matching-products' => 'Explore all products matching ":query" (:count)',
                     'explore-all-matching-leads'    => 'Explore all leads matching ":query" (:count)',
                     'explore-all-matching-contacts' => 'Explore all contacts matching ":query" (:count)',
@@ -1120,17 +1116,13 @@ return [
         'marketing' => [
             'events' => [
                 'index' => [
-                    'create-btn'                         => 'Create Event',
-                    'title'                              => 'Events',
-                    'create-success'                     => 'Event created successfully.',
-                    'update-success'                     => 'Event updated successfully.',
-                    'delete-success'                     => 'Event deleted successfully.',
-                    'delete-failed'                      => 'Event can not be deleted.',
-                    'delete-failed-associated-campaigns' => 'Event can not be deleted, as it is associated with campaigns.',
-                    'mass-delete-success'                => 'Events deleted successfully.',
-                    'partial-delete-warning'             => 'Some events could not be deleted, as they are associated with campaigns.',
-                    'none-delete-warning'                => 'None of the selected events could be deleted, as they are associated with campaigns.',
-                    'no-selection'                       => 'No events were selected for deletion.',
+                    'create-btn'          => 'Create Event',
+                    'title'               => 'Events',
+                    'create-success'      => 'Event created successfully.',
+                    'update-success'      => 'Event updated successfully.',
+                    'delete-success'      => 'Event deleted successfully.',
+                    'delete-failed'       => 'Event can not be deleted.',
+                    'mass-delete-success' => 'Events deleted successfully',
 
                     'datagrid'   => [
                         'delete'       => 'Delete',
@@ -1982,17 +1974,6 @@ return [
                         'to'            => 'To',
                     ],
                 ],
-
-                'stages' => [
-                    'won-lost'       => 'Won/Lost',
-                    'won'            => 'Won',
-                    'lost'           => 'Lost',
-                    'need-more-info' => 'Need More Details',
-                    'closed-at'      => 'Closed At',
-                    'won-value'      => 'Won Value',
-                    'lost-reason'    => 'Lost Reason',
-                    'save-btn'       => 'Save',
-                ],
             ],
 
             'view-switcher' => [
@@ -2101,7 +2082,6 @@ return [
             ],
 
             'stages' => [
-                'won-lost'       => 'Won/Lost',
                 'won'            => 'Won',
                 'lost'           => 'Lost',
                 'need-more-info' => 'Need More Details',

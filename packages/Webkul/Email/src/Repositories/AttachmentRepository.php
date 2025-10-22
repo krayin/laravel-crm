@@ -4,6 +4,7 @@ namespace Webkul\Email\Repositories;
 
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
+use Webklex\PHPIMAP\Attachment as ImapAttachment;
 use Webkul\Core\Eloquent\Repository;
 use Webkul\Email\Contracts\Attachment;
 use Webkul\Email\Contracts\Email;
@@ -47,16 +48,30 @@ class AttachmentRepository extends Repository
     /**
      * Get the path for the attachment.
      */
-    private function prepareData(Email $email, UploadedFile $attachment): array
+    private function prepareData(Email $email, UploadedFile|ImapAttachment $attachment): array
     {
-        $path = 'emails/'.$email->id.'/'.$attachment->getClientOriginalName();
+        if ($attachment instanceof UploadedFile) {
+            $name = $attachment->getClientOriginalName();
 
-        Storage::put($path, $attachment->getContent());
+            $content = file_get_contents($attachment->getRealPath());
+
+            $mimeType = $attachment->getMimeType();
+        } else {
+            $name = $attachment->name;
+
+            $content = $attachment->content;
+
+            $mimeType = $attachment->mime;
+        }
+
+        $path = 'emails/'.$email->id.'/'.$name;
+
+        Storage::put($path, $content);
 
         $attributes = [
             'path'         => $path,
-            'name'         => $attachment->getClientOriginalName(),
-            'content_type' => $attachment->getMimeType(),
+            'name'         => $name,
+            'content_type' => $mimeType,
             'size'         => Storage::size($path),
             'email_id'     => $email->id,
         ];

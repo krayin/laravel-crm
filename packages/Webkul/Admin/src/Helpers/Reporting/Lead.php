@@ -360,7 +360,7 @@ class Lead extends AbstractReporting
             ->select(
                 DB::raw("$groupColumn AS date"),
                 DB::raw('COUNT(DISTINCT id) AS count'),
-                DB::raw("SUM($valueColumn) AS total")
+                DB::raw('SUM('.\DB::getTablePrefix()."$valueColumn) AS total")
             )
             ->whereIn('lead_pipeline_stage_id', $this->stageIds)
             ->whereBetween($dateColumn, [$startDate, $endDate])
