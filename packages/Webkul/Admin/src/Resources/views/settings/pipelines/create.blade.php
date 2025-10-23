@@ -298,12 +298,12 @@
                         }, {
                             'id': 'stage_99',
                             'code': 'won',
-                            'name': "{{ __('admin::app.settings.pipelines.create.won-stage') }}",
+                            'name': "@lang('admin::app.settings.pipelines.create.won-stage')",
                             'probability': 100
                         }, {
                             'id': 'stage_100',
                             'code': 'lost',
-                            'name': "{{ __('admin::app.settings.pipelines.create.lost-stage') }}",
+                            'name': "@lang('admin::app.settings.pipelines.create.lost-stage')",
                             'probability': 0
                         }],
 

@@ -1905,7 +1905,6 @@ return [
                 'job-title' => ':job_title en :organization',
             ],
             'stages' => [
-                'won-lost'       => 'Ganado/Perdido',
                 'won'            => 'Ganado',
                 'lost'           => 'Perdido',
                 'need-more-info' => 'Necesita Más Información',

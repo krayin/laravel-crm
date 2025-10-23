@@ -27,9 +27,9 @@ class ProductDataGrid extends DataGrid
                 'products.price',
                 'tags.name as tag_name',
             )
-            ->addSelect(DB::raw('SUM(product_inventories.in_stock) as total_in_stock'))
-            ->addSelect(DB::raw('SUM(product_inventories.allocated) as total_allocated'))
-            ->addSelect(DB::raw('SUM(product_inventories.in_stock - product_inventories.allocated) as total_on_hand'))
+            ->addSelect(DB::raw('SUM('.$tablePrefix.'product_inventories.in_stock) as total_in_stock'))
+            ->addSelect(DB::raw('SUM('.$tablePrefix.'product_inventories.allocated) as total_allocated'))
+            ->addSelect(DB::raw('SUM('.$tablePrefix.'product_inventories.in_stock - '.$tablePrefix.'product_inventories.allocated) as total_on_hand'))
             ->groupBy('products.id');
 
         if (request()->route('id')) {

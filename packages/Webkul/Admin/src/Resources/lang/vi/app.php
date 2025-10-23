@@ -1905,7 +1905,6 @@ return [
                 'job-title' => ':job_title tại :organization',
             ],
             'stages' => [
-                'won-lost'       => 'Thắng/Thua',
                 'won'            => 'Thắng',
                 'lost'           => 'Thua',
                 'need-more-info' => 'Cần Thêm Thông Tin',

@@ -1,3 +1,7 @@
+## **v2.1.5 (19 of Sep 2025)** - *Release*
+
+* #2355[fixed] db_prefix support — installation and dashboard now function as expected
+
 ## **v2.1.4 (16 of Sep 2025)** - *Release*
 
 * #2355[fixed] Improved database setup compatibility—now supports longer table prefixes during installation.
