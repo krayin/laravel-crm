@@ -1905,7 +1905,6 @@ return [
                 'job-title' => ':job_title @ :organization',
             ],
             'stages' => [
-                'won-lost'       => 'Kazandı/Kayıp',
                 'won'            => 'Kazandı',
                 'lost'           => 'Kayıp',
                 'need-more-info' => 'Daha Fazla Bilgi Gerekiyor',

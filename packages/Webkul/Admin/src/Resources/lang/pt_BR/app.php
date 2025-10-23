@@ -1905,7 +1905,6 @@ return [
                 'job-title' => ':job_title em :organization',
             ],
             'stages' => [
-                'won-lost'       => 'Ganho/Perdido',
                 'won'            => 'Ganho',
                 'lost'           => 'Perdido',
                 'need-more-info' => 'Precisa de Mais Informações',
@@ -2197,7 +2196,10 @@ return [
             'description' => 'Oops! The page you\'re looking for is on vacation. It seems we couldn\'t find what you were searching for.',
             'title'       => '404 Page Not Found',
         ],
-        '401' => 'Você não tem autorização para acessar esta página',
+        '401' => [
+            'description' => 'Ops! Parece que você não tem permissão para acessar esta página. Parece que estão faltando as credenciais necessárias.',
+            'title'       => '401 Não autorizado.',
+        ],
         '403' => [
             'description' => 'Oops! This page is off-limits. It appears you don\'t have the required permissions to view this content.',
             'title'       => '403 Forbidden',

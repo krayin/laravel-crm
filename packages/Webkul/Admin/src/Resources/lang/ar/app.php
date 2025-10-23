@@ -1905,7 +1905,6 @@ return [
                 'job-title' => ':job_title في :organization',
             ],
             'stages' => [
-                'won-lost'       => 'ربحت/خسرت',
                 'won'            => 'ربحت',
                 'lost'           => 'خسرت',
                 'need-more-info' => 'تحتاج إلى مزيد من التفاصيل',
