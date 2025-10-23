@@ -24,4 +24,9 @@ class Event extends Model implements EventContract
         'description',
         'date',
     ];
+
+    public function campaigns()
+    {
+        return $this->hasMany(CampaignProxy::modelClass(), 'marketing_event_id');
+    }
 }

@@ -23,13 +23,17 @@ use Webkul\Admin\Http\Controllers\Settings\WebhookController;
 use Webkul\Admin\Http\Controllers\Settings\WorkflowController;
 
 /**
- * Settings routes.
+ * Settings group routes.
  */
 Route::prefix('settings')->group(function () {
     /**
-     * Settings main display page.
+     * Settings routes.
      */
-    Route::get('', [SettingController::class, 'index'])->name('admin.settings.index');
+    Route::controller(SettingController::class)->prefix('settings')->group(function () {
+        Route::get('', 'index')->name('admin.settings.index');
+
+        Route::get('search', 'search')->name('admin.settings.search');
+    });
 
     /**
      * Groups routes.

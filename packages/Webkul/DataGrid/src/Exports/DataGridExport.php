@@ -37,13 +37,42 @@ class DataGridExport implements FromQuery, ShouldAutoSize, WithHeadings, WithMap
     }
 
     /**
-     * Mapping.
+     * Map each row for export.
      */
     public function map(mixed $record): array
     {
         return collect($this->datagrid->getColumns())
             ->filter(fn ($column) => $column->getExportable())
-            ->map(fn ($column) => $record->{$column->getIndex()})
+            ->map(function ($column) use ($record) {
+                $index = $column->getIndex();
+                $value = $record->{$index};
+
+                if (
+                    in_array($index, ['emails', 'contact_numbers'])
+                    && is_string($value)
+                ) {
+                    return $this->extractValuesFromJson($value);
+                }
+
+                return $value;
+            })
             ->toArray();
+    }
+
+    /**
+     * Extract 'value' fields from a JSON string.
+     */
+    protected function extractValuesFromJson(string $json): string
+    {
+        $items = json_decode($json, true);
+
+        if (
+            json_last_error() === JSON_ERROR_NONE
+            && is_array($items)
+        ) {
+            return collect($items)->map(fn ($item) => "{$item['value']} ({$item['label']})")->implode(', ');
+        }
+
+        return $json;
     }
 }

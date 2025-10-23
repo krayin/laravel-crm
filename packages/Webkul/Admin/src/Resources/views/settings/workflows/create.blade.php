@@ -283,8 +283,8 @@
                             </p>
                         </div>
 
-                        <div class="block w-full overflow-x-auto">
-                            <x-admin::table class="!w-1/2">
+                        <div class="block w-full">
+                            <x-admin::table class="!w-1/2 !table-auto">
                                 <!-- Table Head -->
                                 <x-admin::table.thead>
                                     <x-admin::table.thead.tr>
@@ -339,7 +339,7 @@
             type="text/x-template"
             id="v-workflow-condition-item-template"
         >
-            <div class="flex justify-between gap-4">
+            <div class="flex items-center justify-between gap-4">
                 <div class="flex flex-1 gap-4 max-sm:flex-1 max-sm:flex-wrap">
                     <!-- Select main condition. -->
                     <select
@@ -490,11 +490,15 @@
                             <template v-else>
                                 <div class="w-1/3">
                                     <v-lookup-component
-                                        :attribute="{'code': 'conditions[' + index + '][value]', 'name': 'Email', 'lookup_type': matchedAttribute.lookup_type}"
-                                        validations="required|email"
-                                        :data="condition.value"
+                                        :attribute="{'code': 'conditions[' + index + '][value]', 'name': matchedAttribute?.name, 'lookup_type': matchedAttribute.lookup_type}"
+                                        validations="required"
+                                        :value="{
+                                            id: condition.value
+                                        }"
                                         can-add-new="true"
                                     ></v-lookup-component>
+
+                                    <x-admin::form.control-group.error ::name="`conditions[${index}][value]`"/>
                                 </div>
                             </template>
                         </template>
@@ -726,11 +730,15 @@
                                     <template v-else>
                                         <div class="w-full">
                                             <v-lookup-component
-                                                :attribute="{'code': 'actions[' + index + '][value]', 'name': 'Email', 'lookup_type': matchedAttribute.lookup_type}"
-                                                validations="required|email"
-                                                :data="action.value"
+                                                :attribute="{'code': 'actions[' + index + '][value]', 'name': matchedAttribute?.name, 'lookup_type': matchedAttribute.lookup_type}"
+                                                validations="required"
+                                                :value="{
+                                                    id: action.value
+                                                }"
                                                 can-add-new="true"
                                             ></v-lookup-component>
+
+                                            <x-admin::form.control-group.error ::name="`actions[${index}][value]`"/>
                                         </div>
                                     </template>
                                 </template>

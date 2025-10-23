@@ -17,7 +17,12 @@
 
     {!! view_render_event('admin.contacts.quotes.create.form_controls.before') !!}
 
-    <x-admin::form :action="route('admin.quotes.store')">
+    <x-admin::form
+        :action="route('admin.quotes.store').'?'.http_build_query(array_merge(
+            request()->route()->parameters(),
+            request()->all()
+        ))"
+    >
         <div class="flex flex-col gap-4">
             <div class="flex items-center justify-between rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
                 <div class="flex flex-col gap-2">
@@ -170,7 +175,7 @@
                                 <x-admin::attributes.edit.lookup />
 
                                 @php
-                                    $lookUpEntityData = app('Webkul\Attribute\Repositories\AttributeRepository')->getLookUpEntity('leads', request('id'));
+                                    $lookUpEntityData = app('Webkul\Attribute\Repositories\AttributeRepository')->getLookUpEntity('leads', request('lead_id'));
                                 @endphp
 
                                 <x-admin::form.control-group class="w-full">
@@ -279,7 +284,7 @@
             id="v-quote-item-list-template"
         >
             <div class="flex flex-col gap-4">
-                <div class="block w-full overflow-x-auto">
+                <div class="block w-full">
                     {!! view_render_event('admin.contacts.quotes.create.table.after') !!}
 
                     <!-- Table -->
@@ -434,6 +439,7 @@
                         <x-admin::lookup
                             ::src="src"
                             ::name="`${inputName}[product_id]`"
+                            :preload="true"
                             :placeholder="trans('admin::app.quotes.create.search-products')"
                             @on-selected="(product) => addProduct(product)"
                         />
@@ -443,6 +449,7 @@
                 <!-- Quantity -->
                 <x-admin::table.td class="!px-2 ltr:text-right rtl:text-left">
                     <x-admin::form.control-group class="!mb-0">
+
                         <x-admin::form.control-group.control
                             type="inline"
                             ::name="`${inputName}[quantity]`"
@@ -769,9 +776,9 @@
                      * @return {void}
                      */
                     addProduct(result) {
-                        this.product.product_id = result.id;
-                        this.product.name = result.name;
-                        this.product.price = result.price;
+                        this.product.product_id = result.id ?? null;
+                        this.product.name = result.name ?? '';
+                        this.product.price = result.price ?? 0;
                         this.product.quantity = result.quantity ?? 1;
                         this.product.discount_amount = 0;
                         this.product.tax_amount = 0;

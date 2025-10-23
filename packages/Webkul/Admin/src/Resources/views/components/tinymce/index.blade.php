@@ -22,7 +22,7 @@
     <script type="module">
         app.component('v-tinymce', {
             template: '#v-tinymce-template',
-                
+
             props: ['selector', 'field'],
 
             data() {
@@ -36,12 +36,12 @@
             },
 
             mounted() {
+                this.destroyTinymceInstance();
+
                 this.init();
 
                 this.$emitter.on('change-theme', (theme) => {
-                    if (tinymce.activeEditor) {
-                        tinymce.activeEditor.destroy();
-                    }
+                    this.destroyTinymceInstance();
 
                     this.currentSkin = (theme === 'dark') ? 'oxide-dark' : 'oxide';
                     this.currentContentCSS = (theme === 'dark') ? 'dark' : 'default';
@@ -51,6 +51,14 @@
             },
 
             methods: {
+                destroyTinymceInstance() {
+                    if (! tinymce.activeEditor) {
+                        return;
+                    }
+
+                    tinymce.activeEditor.destroy();
+                },
+
                 init() {
                     let self = this;
 
@@ -58,7 +66,7 @@
                         initTinyMCE: function(extraConfiguration) {
                             let self2 = this;
 
-                            let config = {  
+                            let config = {
                                 relative_urls: false,
                                 menubar: false,
                                 remove_script_host: false,
@@ -127,7 +135,7 @@
                                 let json;
 
                                 if (xhr.status === 403) {
-                                    reject("@lang('admin::app.error.tinymce.http-error')", {
+                                    reject("@lang('admin::app.components.tiny-mce.http-error')", {
                                         remove: true
                                     });
 
@@ -135,7 +143,7 @@
                                 }
 
                                 if (xhr.status < 200 || xhr.status >= 300) {
-                                    reject("@lang('admin::app.error.tinymce.http-error')");
+                                    reject("@lang('admin::app.components.tiny-mce.http-error')");
 
                                     return;
                                 }
@@ -143,7 +151,7 @@
                                 json = JSON.parse(xhr.responseText);
 
                                 if (! json || typeof json.location != 'string') {
-                                    reject("@lang('admin::app.error.tinymce.invalid-json')" + xhr.responseText);
+                                    reject("@lang('admin::app.components.tiny-mce.invalid-json')" + xhr.responseText);
 
                                     return;
                                 }
@@ -151,7 +159,7 @@
                                 resolve(json.location);
                             };
 
-                            xhr.onerror = (()=>reject("@lang('admin::app.error.tinymce.upload-failed')"));
+                            xhr.onerror = (()=>reject("@lang('admin::app.components.tiny-mce.upload-failed')"));
 
                             formData = new FormData();
                             formData.append('_token', config.csrfToken);
@@ -197,7 +205,9 @@
                                 }
                             });
 
-                            editor.on('keyup', () => this.field.onInput(editor.getContent()));
+                            ['change', 'paste', 'keyup'].forEach((event) => {
+                                editor.on(event, () => this.field.onInput(editor.getContent()));
+                            });
                         }
                     });
                 },

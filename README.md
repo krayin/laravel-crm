@@ -110,6 +110,12 @@ php artisan serve
 email:admin@example.com
 password:admin123
 ```
+### Krayin CRM Multi Tenant SaaS
+
+[Krayin CRM Multi Tenant SaaS](https://krayincrm.com/extensions/krayin-crm-multi-tenant-saas-extension/) Krayin Multitenant SaaS is a Laravel-based CRM solution that allows multiple businesses (tenants) to use a single application instance while keeping their data isolated and secure.
+
+![enter image description here](https://raw.githubusercontent.com/krayin/temp-media/master/krayin-saas.png)
+
 ### WhatsApp CRM Integration
 
 [Krayin CRM WhatsApp](https://krayincrm.com/extensions/krayin-crm-whatsapp-extension/) Extension enables the store administrator to generate leads via their WhatsApp number.

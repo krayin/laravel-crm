@@ -73,7 +73,7 @@
         </template>
 
         <span
-            class="flex cursor-pointer items-center gap-2 text-brandColor"
+            class="flex w-fit cursor-pointer items-center gap-2 text-brandColor"
             @click="add"
             v-if="! isDisabled"
         >

@@ -6,7 +6,7 @@ use Webkul\Admin\Http\Controllers\Quote\QuoteController;
 Route::controller(QuoteController::class)->prefix('quotes')->group(function () {
     Route::get('', 'index')->name('admin.quotes.index');
 
-    Route::get('create/{id?}', 'create')->name('admin.quotes.create');
+    Route::get('create/{lead_id?}', 'create')->name('admin.quotes.create');
 
     Route::post('create', 'store')->name('admin.quotes.store');
 

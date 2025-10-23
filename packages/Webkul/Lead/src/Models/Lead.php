@@ -4,6 +4,9 @@ namespace Webkul\Lead\Models;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Webkul\Activity\Models\ActivityProxy;
 use Webkul\Activity\Traits\LogsActivity;
 use Webkul\Attribute\Traits\CustomAttribute;
@@ -17,20 +20,6 @@ use Webkul\User\Models\UserProxy;
 class Lead extends Model implements LeadContract
 {
     use CustomAttribute, LogsActivity;
-
-    protected $casts = [
-        'closed_at'           => 'datetime',
-        'expected_close_date' => 'date',
-    ];
-
-    /**
-     * The attributes that are appended.
-     *
-     * @var array
-     */
-    protected $appends = [
-        'rotten_days',
-    ];
 
     /**
      * The attributes that are mass assignable.
@@ -54,9 +43,28 @@ class Lead extends Model implements LeadContract
     ];
 
     /**
+     * Cast the attributes to their respective types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'closed_at'           => 'datetime:D M d, Y H:i A',
+        'expected_close_date' => 'date:D M d, Y',
+    ];
+
+    /**
+     * The attributes that are appended.
+     *
+     * @var array
+     */
+    protected $appends = [
+        'rotten_days',
+    ];
+
+    /**
      * Get the user that owns the lead.
      */
-    public function user()
+    public function user(): BelongsTo
     {
         return $this->belongsTo(UserProxy::modelClass());
     }
@@ -64,7 +72,7 @@ class Lead extends Model implements LeadContract
     /**
      * Get the person that owns the lead.
      */
-    public function person()
+    public function person(): BelongsTo
     {
         return $this->belongsTo(PersonProxy::modelClass());
     }
@@ -72,7 +80,7 @@ class Lead extends Model implements LeadContract
     /**
      * Get the type that owns the lead.
      */
-    public function type()
+    public function type(): BelongsTo
     {
         return $this->belongsTo(TypeProxy::modelClass(), 'lead_type_id');
     }
@@ -80,7 +88,7 @@ class Lead extends Model implements LeadContract
     /**
      * Get the source that owns the lead.
      */
-    public function source()
+    public function source(): BelongsTo
     {
         return $this->belongsTo(SourceProxy::modelClass(), 'lead_source_id');
     }
@@ -88,7 +96,7 @@ class Lead extends Model implements LeadContract
     /**
      * Get the pipeline that owns the lead.
      */
-    public function pipeline()
+    public function pipeline(): BelongsTo
     {
         return $this->belongsTo(PipelineProxy::modelClass(), 'lead_pipeline_id');
     }
@@ -96,7 +104,7 @@ class Lead extends Model implements LeadContract
     /**
      * Get the pipeline stage that owns the lead.
      */
-    public function stage()
+    public function stage(): BelongsTo
     {
         return $this->belongsTo(StageProxy::modelClass(), 'lead_pipeline_stage_id');
     }
@@ -104,7 +112,7 @@ class Lead extends Model implements LeadContract
     /**
      * Get the activities.
      */
-    public function activities()
+    public function activities(): BelongsToMany
     {
         return $this->belongsToMany(ActivityProxy::modelClass(), 'lead_activities');
     }
@@ -112,7 +120,7 @@ class Lead extends Model implements LeadContract
     /**
      * Get the products.
      */
-    public function products()
+    public function products(): HasMany
     {
         return $this->hasMany(ProductProxy::modelClass());
     }
@@ -120,7 +128,7 @@ class Lead extends Model implements LeadContract
     /**
      * Get the emails.
      */
-    public function emails()
+    public function emails(): HasMany
     {
         return $this->hasMany(EmailProxy::modelClass());
     }
@@ -128,7 +136,7 @@ class Lead extends Model implements LeadContract
     /**
      * The quotes that belong to the lead.
      */
-    public function quotes()
+    public function quotes(): BelongsToMany
     {
         return $this->belongsToMany(QuoteProxy::modelClass(), 'lead_quotes');
     }
@@ -136,7 +144,7 @@ class Lead extends Model implements LeadContract
     /**
      * The tags that belong to the lead.
      */
-    public function tags()
+    public function tags(): BelongsToMany
     {
         return $this->belongsToMany(TagProxy::modelClass(), 'lead_tags');
     }

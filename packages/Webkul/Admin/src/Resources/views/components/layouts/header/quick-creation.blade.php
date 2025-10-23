@@ -128,7 +128,7 @@
                         <!-- Link to create new User-->
                         @if (bouncer()->hasPermission('settings.user.users.create'))
                             <div class="rounded-lg bg-white p-2 hover:bg-gray-100 dark:bg-gray-800 dark:hover:bg-gray-950">
-                                <a href="{{ route('admin.settings.users.index') }}">
+                                <a href="{{ route('admin.settings.users.index', ['action' => 'create']) }}">
                                     <div class="flex flex-col gap-1">
                                         <i class="icon-user text-2xl text-gray-600"></i>
 

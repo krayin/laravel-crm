@@ -2,6 +2,7 @@
 
 namespace Webkul\Admin\Http\Controllers\Contact\Persons;
 
+use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -138,17 +139,27 @@ class PersonController extends Controller
     {
         $person = $this->personRepository->findOrFail($id);
 
+        if (
+            $person->leads
+            && $person->leads->count() > 0
+        ) {
+            return response()->json([
+                'message' => trans('admin::app.contacts.persons.index.delete-failed'),
+            ], 400);
+        }
+
         try {
-            Event::dispatch('contacts.person.delete.before', $id);
+            Event::dispatch('contacts.person.delete.before', $person);
 
-            $person->delete($id);
+            $person->delete();
 
-            Event::dispatch('contacts.person.delete.after', $id);
+            Event::dispatch('contacts.person.delete.after', $person);
 
             return response()->json([
                 'message' => trans('admin::app.contacts.persons.index.delete-success'),
             ], 200);
-        } catch (\Exception $exception) {
+
+        } catch (Exception $exception) {
             return response()->json([
                 'message' => trans('admin::app.contacts.persons.index.delete-failed'),
             ], 400);
@@ -156,22 +167,69 @@ class PersonController extends Controller
     }
 
     /**
-     * Mass Delete the specified resources.
+     * Mass destroy the specified resources from storage.
      */
-    public function massDestroy(MassDestroyRequest $massDestroyRequest): JsonResponse
+    public function massDestroy(MassDestroyRequest $request): JsonResponse
     {
-        $persons = $this->personRepository->findWhereIn('id', $massDestroyRequest->input('indices'));
+        try {
+            $persons = $this->personRepository->findWhereIn('id', $request->input('indices', []));
 
-        foreach ($persons as $person) {
-            Event::dispatch('contact.person.delete.before', $person);
+            $deletedCount = 0;
 
-            $this->personRepository->delete($person->id);
+            $blockedCount = 0;
 
-            Event::dispatch('contact.person.delete.after', $person);
+            foreach ($persons as $person) {
+                if (
+                    $person->leads
+                    && $person->leads->count() > 0
+                ) {
+                    $blockedCount++;
+
+                    continue;
+                }
+
+                Event::dispatch('contact.person.delete.before', $person);
+
+                $this->personRepository->delete($person->id);
+
+                Event::dispatch('contact.person.delete.after', $person);
+
+                $deletedCount++;
+            }
+
+            $statusCode = 200;
+
+            switch (true) {
+                case $deletedCount > 0 && $blockedCount === 0:
+                    $message = trans('admin::app.contacts.persons.index.all-delete-success');
+
+                    break;
+
+                case $deletedCount > 0 && $blockedCount > 0:
+                    $message = trans('admin::app.contacts.persons.index.partial-delete-warning');
+
+                    break;
+
+                case $deletedCount === 0 && $blockedCount > 0:
+                    $message = trans('admin::app.contacts.persons.index.none-delete-warning');
+
+                    $statusCode = 400;
+
+                    break;
+
+                default:
+                    $message = trans('admin::app.contacts.persons.index.no-selection');
+
+                    $statusCode = 400;
+
+                    break;
+            }
+
+            return response()->json(['message' => $message], $statusCode);
+        } catch (Exception $exception) {
+            return response()->json([
+                'message' => trans('admin::app.contacts.persons.index.delete-failed'),
+            ], 400);
         }
-
-        return response()->json([
-            'message' => trans('admin::app.contacts.persons.index.delete-success'),
-        ]);
     }
 }

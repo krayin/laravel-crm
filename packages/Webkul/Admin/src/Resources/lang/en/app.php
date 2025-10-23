@@ -42,6 +42,8 @@ return [
         'data-transfer'   => 'Data Transfer',
         'imports'         => 'Imports',
         'import'          => 'Import',
+        'event'           => 'Event',
+        'campaigns'       => 'Campaigns',
     ],
 
     'users' => [
@@ -183,42 +185,42 @@ return [
                 'empty-placeholders' => [
                     'all' => [
                         'title'       => 'No Activities Found',
-                        'description' => 'No activities found for this. You can add activities by clicking on the button on the left panel.',
+                        'description' => 'No activities found for this. You can add activities by clicking on the Activity button on the left panel.',
                     ],
 
                     'planned' => [
                         'title'       => 'No Planned Activities Found',
-                        'description' => 'No planned activities found for this. You can add planned activities by clicking on the button on the left panel.',
+                        'description' => 'No planned activities found for this. You can add planned activities by clicking on the Activity button on the left panel.',
                     ],
 
                     'notes' => [
                         'title'       => 'No Notes Found',
-                        'description' => 'No notes found for this. You can add notes by clicking on the button on the left panel.',
+                        'description' => 'No notes found for this. You can add notes by clicking on the Note button on the left panel.',
                     ],
 
                     'calls' => [
                         'title'       => 'No Calls Found',
-                        'description' => 'No notes found for this. You can add notes by clicking on the button on the left panel.',
+                        'description' => 'No calls found for this. You can add calls by clicking on the Activity button on the left panel and selecting the Call type.',
                     ],
 
                     'meetings' => [
                         'title'       => 'No Meetings Found',
-                        'description' => 'No meetings found for this. You can add meetings by clicking on the button on the left panel.',
+                        'description' => 'No meetings found for this. You can add meetings by clicking on the Activity button on the left panel and selecting the Meeting type.',
                     ],
 
                     'lunches' => [
                         'title'       => 'No Lunches Found',
-                        'description' => 'No lunches found for this. You can add lunches by clicking on the button on the left panel.',
+                        'description' => 'No lunches found for this. You can add lunches by clicking on the Activity button on the left panel and selecting the Lunch type.',
                     ],
 
                     'files' => [
                         'title'       => 'No Files Found',
-                        'description' => 'No files found for this. You can add files by clicking on the button on the left panel.',
+                        'description' => 'No files found for this. You can add files by clicking on the File button on the left panel.',
                     ],
 
                     'emails' => [
                         'title'       => 'No Emails Found',
-                        'description' => 'No emails found for this. You can add email by clicking on the button on the left panel.',
+                        'description' => 'No emails found for this. You can add emails by clicking on the Mail button on the left panel.',
                     ],
 
                     'system' => [
@@ -417,6 +419,12 @@ return [
             'warning' => 'Warning',
             'info'    => 'Info',
         ],
+
+        'tiny-mce' => [
+            'http-error'    => 'HTTP Error',
+            'invalid-json'  => 'Invalid JSON response from the server.',
+            'upload-failed' => 'File upload failed. Please try again.',
+        ],
     ],
 
     'quotes' => [
@@ -433,7 +441,6 @@ return [
                 'sales-person'   => 'Sales Person',
                 'expired-at'     => 'Expired At',
                 'created-at'     => 'Created At',
-                'expired-quotes' => 'Expired Quote',
                 'person'         => 'Person',
                 'subtotal'       => 'Subtotal',
                 'discount'       => 'Discount',
@@ -534,12 +541,15 @@ return [
     'contacts' => [
         'persons' => [
             'index' => [
-                'title'          => 'Persons',
-                'create-btn'     => 'Create Person',
-                'create-success' => 'Person created successfully.',
-                'update-success' => 'Person updated successfully.',
-                'delete-success' => 'Person deleted successfully.',
-                'delete-failed'  => 'Person can not be deleted.',
+                'title'                    => 'Persons',
+                'create-btn'               => 'Create Person',
+                'create-success'           => 'Person created successfully.',
+                'update-success'           => 'Person updated successfully.',
+                'all-delete-success'       => 'All selected persons were deleted successfully.',
+                'partial-delete-warning'   => 'Some persons were deleted successfully. Others could not be deleted because they are linked to leads.',
+                'none-delete-warning'      => 'None of the selected persons could be deleted because they are linked to leads.',
+                'no-selection'             => 'No persons were selected for deletion.',
+                'delete-failed'            => 'Failed to delete selected persons.',
 
                 'datagrid' => [
                     'contact-numbers'   => 'Contact Numbers',
@@ -621,6 +631,11 @@ return [
                         ],
                     ],
                 ],
+
+                'tags' => [
+                    'create-success'  => 'Tag created successfully.',
+                    'destroy-success' => 'Tag deleted successfully.',
+                ],
             ],
 
             'create' => [
@@ -681,6 +696,7 @@ return [
                 'in-stock'  => 'In Stock',
                 'name'      => 'Name',
                 'on-hand'   => 'On Hand',
+                'tag-name'  => 'Tag Name',
                 'price'     => 'Price',
                 'sku'       => 'SKU',
                 'view'      => 'View',
@@ -733,12 +749,13 @@ return [
 
         'groups' => [
             'index' => [
-                'create-btn'        => 'Create Group',
-                'title'             => 'Groups',
-                'create-success'    => 'Group created successfully.',
-                'update-success'    => 'Group updated successfully.',
-                'destroy-success'   => 'Group deleted successfully.',
-                'delete-failed'     => 'Group can not be deleted.',
+                'create-btn'                     => 'Create Group',
+                'title'                          => 'Groups',
+                'create-success'                 => 'Group created successfully.',
+                'update-success'                 => 'Group updated successfully.',
+                'destroy-success'                => 'Group deleted successfully.',
+                'delete-failed'                  => 'Group can not be deleted.',
+                'delete-failed-associated-users' => 'Group can not be deleted, as this is being used by users.',
 
                 'datagrid'   => [
                     'delete'      => 'Delete',
@@ -845,12 +862,13 @@ return [
 
         'sources' => [
             'index' => [
-                'create-btn'     => 'Create Source',
-                'create-success' => 'Source created successfully.',
-                'delete-failed'  => 'Source can not be deleted.',
-                'delete-success' => 'Source deleted successfully.',
-                'title'          => 'Sources',
-                'update-success' => 'Source updated successfully.',
+                'title'                          => 'Sources',
+                'create-btn'                     => 'Create Source',
+                'create-success'                 => 'Source created successfully.',
+                'delete-failed'                  => 'Source can not be deleted.',
+                'delete-success'                 => 'Source deleted successfully.',
+                'update-success'                 => 'Source updated successfully.',
+                'delete-failed-associated-leads' => 'Source cannot be deleted because it is associated with existing leads. Please detach or update those leads before deletion.',
 
                 'datagrid' => [
                     'delete' => 'Delete',
@@ -1230,24 +1248,25 @@ return [
                 ],
 
                 'create' => [
-                    'confirm-password' => 'Confirm Password',
-                    'email'            => 'Email',
-                    'general'          => 'General',
-                    'global'           => 'Global',
-                    'group'            => 'Group',
-                    'individual'       => 'Individual',
-                    'name'             => 'Name',
-                    'password'         => 'Password',
-                    'permission'       => 'Permission',
-                    'role'             => 'Role',
-                    'save-btn'         => 'Save User',
-                    'status'           => 'Status',
-                    'title'            => 'Create User',
-                    'view-permission'  => 'View Permission',
+                    'confirm-password'         => 'Confirm Password',
+                    'email'                    => 'Email',
+                    'general'                  => 'General',
+                    'global'                   => 'Global',
+                    'group'                    => 'Group',
+                    'individual'               => 'Individual',
+                    'name'                     => 'Name',
+                    'password'                 => 'Password',
+                    'permission'               => 'Permission',
+                    'role'                     => 'Role',
+                    'save-btn'                 => 'Save User',
+                    'status'                   => 'Status',
+                    'title'                    => 'Create User',
+                    'view-permission'          => 'View Permission',
+                    'select-at-lest-one-group' => 'Select at least one group',
                 ],
 
                 'edit' => [
-                    'title' => 'Edit User',
+                    'title'                    => 'Edit User',
                 ],
             ],
         ],
@@ -1258,6 +1277,7 @@ return [
                 'create-btn'           => 'Create Pipeline',
                 'create-success'       => 'Pipeline created successfully.',
                 'update-success'       => 'Pipeline updated successfully.',
+                'default-required'     => 'At least one default pipeline is required.',
                 'delete-success'       => 'Pipeline deleted successfully.',
                 'delete-failed'        => 'Pipeline can not be deleted.',
                 'default-delete-error' => 'Default pipeline can not be deleted.',
@@ -1492,15 +1512,21 @@ return [
                     ],
 
                     'types'       => [
-                        'address'  => 'Address',
-                        'date'     => 'Date',
-                        'email'    => 'Email',
-                        'lookup'   => 'Lookup',
-                        'phone'    => 'Phone',
-                        'price'    => 'Price',
-                        'select'   => 'Select',
-                        'text'     => 'Text',
-                        'textarea' => 'Textarea',
+                        'text'        => 'Text',
+                        'textarea'    => 'Textarea',
+                        'price'       => 'Price',
+                        'boolean'     => 'Boolean',
+                        'select'      => 'Select',
+                        'multiselect' => 'Multiselect',
+                        'checkbox'    => 'Checkbox',
+                        'email'       => 'Email',
+                        'address'     => 'Address',
+                        'phone'       => 'Phone',
+                        'lookup'      => 'Lookup',
+                        'datetime'    => 'Datetime',
+                        'date'        => 'Date',
+                        'image'       => 'Image',
+                        'file'        => 'File',
                     ],
                 ],
             ],
@@ -1793,6 +1819,7 @@ return [
                 'attachments'   => 'Attachments',
                 'date'          => 'Date',
                 'move-to-inbox' => 'Moved To Inbox',
+                'move-to-trash' => 'Moved To Trash',
                 'edit'          => 'Edit',
                 'view'          => 'View',
                 'delete'        => 'Delete',
@@ -1934,7 +1961,7 @@ return [
 
                 'toolbar' => [
                     'search' => [
-                        'title' => 'Search',
+                        'title' => 'Search by Title',
                     ],
 
                     'filters' => [
@@ -2055,7 +2082,6 @@ return [
             ],
 
             'stages' => [
-                'won-lost'       => 'Won/Lost',
                 'won'            => 'Won',
                 'lost'           => 'Lost',
                 'need-more-info' => 'Need More Details',

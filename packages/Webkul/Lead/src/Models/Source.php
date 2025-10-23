@@ -23,6 +23,6 @@ class Source extends Model implements SourceContract
      */
     public function leads()
     {
-        return $this->hasMany(LeadProxy::modelClass());
+        return $this->hasMany(LeadProxy::modelClass(), 'lead_source_id', 'id');
     }
 }

@@ -8,6 +8,8 @@
         :validations="'{{ $validations }}'"
         :value="{{ json_encode($lookUpEntityData)}}"
         can-add-new="{{ $canAddNew ?? false }}"
+        @lookup-added="handleLookupAdded"
+        @lookup-removed="handleLookupRemoved"
     >
         <div class="relative inline-block w-full">
             <!-- Input Container -->
@@ -151,6 +153,8 @@
             template: '#v-lookup-component-template',
 
             props: ['validations', 'isDisabled', 'attribute', 'value', 'canAddNew'],
+
+            emits: ['lookup-added', 'lookup-removed'],
 
             data() {
                 return {

@@ -5,7 +5,7 @@
     </x-slot>
 
     {!! view_render_event('admin.persons.create.form.before') !!}
-    
+
     <!--Create Page Form -->
     <x-admin::form
         :action="route('admin.contacts.persons.store')"
@@ -43,13 +43,14 @@
                     </div>
                 </div>
             </div>
-            
+
             <!-- Form fields -->
             <div class="box-shadow rounded-lg border border-gray-200 bg-white p-4 dark:border-gray-800 dark:bg-gray-900">
                 {!! view_render_event('admin.persons.create.form_controls.before') !!}
 
                 <x-admin::attributes
                     :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
+                        ['code', 'NOTIN', ['organization_id']],
                         'entity_type' => 'persons',
                     ])"
                     :custom-validations="[
@@ -62,11 +63,55 @@
                         ],
                     ]"
                 />
-                
+
+                <v-organization></v-organization>
+
                 {!! view_render_event('admin.persons.create.form_controls.after') !!}
             </div>
         </div>
     </x-admin::form>
 
     {!! view_render_event('admin.persons.create.form.after') !!}
+
+    @pushOnce('scripts')
+        <script
+            type="text/x-template"
+            id="v-organization-template"
+        >
+            <div>
+                <x-admin::attributes
+                    :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
+                        ['code', 'IN', ['organization_id']],
+                        'entity_type' => 'persons',
+                    ])"
+                />
+
+                <template v-if="organizationName">
+                    <x-admin::form.control-group.control
+                        type="hidden"
+                        name="organization_name"
+                        v-model="organizationName"
+                    />
+                </template>
+            </div>
+        </script>
+
+        <script type="module">
+            app.component('v-organization', {
+                template: '#v-organization-template',
+
+                data() {
+                    return {
+                        organizationName: null,
+                    };
+                },
+
+                methods: {
+                    handleLookupAdded(event) {
+                        this.organizationName = event?.name || null;
+                    },
+                },
+            });
+        </script>
+    @endPushOnce
 </x-admin::layouts>

@@ -61,7 +61,7 @@
 
                     <x-admin::table.tbody>
                         <x-admin::table.tbody.tr v-for="quote in quotes" class="border-b">
-                            <x-admin::table.td class="!px-2">@{{ quote.subject }}</x-admin::table.td>
+                            <x-admin::table.td class="text-wrap !px-2">@{{ quote.subject }}</x-admin::table.td>
 
                             <x-admin::table.td class="!px-2">@{{ quote.expired_at }}</x-admin::table.td>
 
@@ -88,7 +88,7 @@
                                             {!! view_render_event('admin.leads.view.quotes.table.table_body.dropdown.item.before', ['lead' => $lead]) !!}
 
                                             <x-admin::dropdown.menu.item>
-                                                <a :href="'{{ route('admin.quotes.edit') }}/' + quote.id">
+                                                <a :href="'{{ route('admin.quotes.edit') }}/' + quote.id + '?from=lead&lead_id={{ $lead->id }}'">
                                                     <div class="flex items-center gap-2">
                                                         <span class="icon-edit text-2xl"></span>
 
@@ -162,7 +162,7 @@
 
                         <a
                             class="secondary-button"
-                            href="{{ route('admin.quotes.create', $lead->id) }}"
+                            href="{{ route('admin.quotes.create', $lead->id) }}?from=lead"
                         >
                             @lang('admin::app.leads.view.quotes.add-btn')
                         </a>

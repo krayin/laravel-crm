@@ -120,7 +120,7 @@
 
             @if ($attributes->get('tinymce', false) || $attributes->get(':tinymce', false))
                 <x-admin::tinymce
-                    :selector="'textarea#' . $attributes->get(':id', 'id')"
+                    :selector="'textarea#' . ($attributes->get('id') ?? $attributes->get(':id'))"
                     ::field="field"
                 />
             @endif

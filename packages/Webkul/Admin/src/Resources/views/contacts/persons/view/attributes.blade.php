@@ -22,7 +22,7 @@
                     <x-admin::attributes.view
                         :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
                             'entity_type' => 'persons',
-                            ['code', 'NOTIN', ['name', 'jon_title']]
+                            ['code', 'NOTIN', ['name']]
                         ])"
                         :entity="$person"
                         :url="route('admin.contacts.persons.update', $person->id)"

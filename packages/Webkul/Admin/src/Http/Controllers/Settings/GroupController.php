@@ -102,6 +102,12 @@ class GroupController extends Controller
     {
         $group = $this->groupRepository->findOrFail($id);
 
+        if ($group->users()->exists()) {
+            return response()->json([
+                'message' => trans('admin::app.settings.groups.index.delete-failed-associated-users'),
+            ], 400);
+        }
+
         try {
             Event::dispatch('settings.group.delete.before', $id);
 
