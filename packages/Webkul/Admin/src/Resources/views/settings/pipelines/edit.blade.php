@@ -146,7 +146,7 @@
                     class="flex gap-4"
                 >
                     <template #item="{ element, index }">
-                        <div class="draggable flex gap-4 overflow-x-auto">
+                        <div ::class="{ draggable: isDragable(element) }" class="flex gap-4 overflow-x-auto">
                             <div class="flex min-w-[275px] max-w-[275px] flex-col justify-between rounded-lg border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900">
                                 <div class="flex flex-col gap-6 px-4 py-3">
                                     <!-- Stage Title and Action -->
@@ -155,7 +155,10 @@
                                             @{{ element.name ? element.name : 'New Added' }} 
                                         </span>
 
-                                        <i class="icon-move cursor-grab rounded-md p-1 text-2xl transition-all hover:bg-gray-100 dark:hover:bg-gray-950">
+                                        <i
+                                            v-if="isDragable(element)" 
+                                            class="icon-move cursor-grab rounded-md p-1 text-2xl transition-all hover:bg-gray-100 dark:hover:bg-gray-950"
+                                        >
                                         </i>
                                     </div>
                                     
@@ -165,7 +168,7 @@
                                         <!-- Code -->
                                         <input
                                             type="hidden"
-                                            :value="slugify(element.name)"
+                                            :value="slugify(element.code ? element.code : element.name)"
                                             :name="'stages[' + element.id + '][code]'"
                                         />
 
@@ -225,7 +228,8 @@
                                 <!-- Remove Stage -->
                                 <div
                                     class="flex cursor-pointer items-center gap-2 border-t border-gray-200 p-2 text-red-600 dark:border-gray-800" 
-                                    @click="remove(element)" 
+                                    @click="remove(element)"
+                                    v-if="isDragable(element)"
                                 >
                                     <i class="icon-delete text-2xl"></i>
                                     
@@ -367,6 +371,14 @@
                         const draggedElement = event.draggedContext.element;
                         
                         const relatedElement = event.relatedContext.element;
+
+                        return this.isDragable(draggedElement) && this.isDragable(relatedElement);
+                    },
+
+                    isDragable (stage) {
+                        if (stage.code == 'new' || stage.code == 'won' || stage.code == 'lost') {
+                            return false;
+                        }
 
                         return true;
                     },

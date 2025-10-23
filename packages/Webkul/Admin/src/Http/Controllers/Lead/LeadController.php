@@ -314,15 +314,17 @@ class LeadController extends Controller
 
         Event::dispatch('lead.update.before', $id);
 
-        $lead = $this->leadRepository->update(
-            [
-                'closed_at'              => request()->input('closed_at'),
-                'entity_type'            => 'leads',
-                'lead_pipeline_stage_id' => $stage->id,
-            ],
-            $id,
-            ['lead_pipeline_stage_id']
-        );
+        $payload = request()->merge([
+            'entity_type'            => 'leads',
+            'lead_pipeline_stage_id' => $stage->id,
+        ])->only([
+            'closed_at',
+            'lost_reason',
+            'lead_pipeline_stage_id',
+            'entity_type',
+        ]);
+
+        $lead = $this->leadRepository->update($payload, $id, ['lead_pipeline_stage_id']);
 
         Event::dispatch('lead.update.after', $lead);
 

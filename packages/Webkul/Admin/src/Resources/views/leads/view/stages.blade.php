@@ -52,7 +52,7 @@
                         @click="stageToggler = ! stageToggler"
                     >
                         <span class="z-20 whitespace-nowrap text-sm font-medium dark:text-white">
-                            {{ __('admin::app.leads.view.stages.won-lost') }}
+                             @{{ stages.filter(stage => ['won', 'lost'].includes(stage.code)).map(stage => stage.name).join('/') }}
                         </span>
 
                         <span
@@ -68,15 +68,10 @@
                     {!! view_render_event('admin.leads.view.stages.items.dropdown.menu_item.before', ['lead' => $lead]) !!}
 
                     <x-admin::dropdown.menu.item
-                        @click="openModal(this.stages.find(stage => stage.code == 'won'))"
+                        v-for="stage in stages.filter(stage => ['won', 'lost'].includes(stage.code))"
+                        @click="openModal(stage)"
                     >
-                        @lang('admin::app.leads.view.stages.won')
-                    </x-admin::dropdown.menu.item>
-
-                    <x-admin::dropdown.menu.item
-                        @click="openModal(this.stages.find(stage => stage.code == 'lost'))"
-                    >
-                        @lang('admin::app.leads.view.stages.lost')
+                        @{{ stage.name }}
                     </x-admin::dropdown.menu.item>
 
                     {!! view_render_event('admin.leads.view.stages.items.dropdown.menu_item.after', ['lead' => $lead]) !!}
