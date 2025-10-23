@@ -1,0 +1,73 @@
+version: "3.9"
+
+services:
+  krayin_app:
+    container_name: krayin_app
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: krayin_app_image
+    restart: unless-stopped
+    volumes:
+      - .:/var/www/html
+    working_dir: /var/www/html
+    environment:
+      - APP_ENV=local
+      - APP_DEBUG=true
+      - APP_URL=http://localhost:8085
+      - DB_HOST=krayin_db
+      - DB_PORT=3306
+      - DB_DATABASE=krayin
+      - DB_USERNAME=krayin
+      - DB_PASSWORD=krayin123
+    depends_on:
+      - krayin_db
+    networks:
+      - krayin_network
+
+  krayin_db:
+    container_name: krayin_db
+    image: mysql:8.0
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: krayin
+      MYSQL_USER: krayin
+      MYSQL_PASSWORD: krayin123
+    volumes:
+      - krayin_db_data:/var/lib/mysql
+    ports:
+      - "3308:3306"   # dùng cổng 3308 để tránh trùng MySQL local
+    networks:
+      - krayin_network
+
+  krayin_nginx:
+    container_name: krayin_nginx
+    image: nginx:stable
+    restart: unless-stopped
+    ports:
+      - "8085:80"   # cổng chính để truy cập web
+    volumes:
+      - .:/var/www/html
+      - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - krayin_app
+    networks:
+      - krayin_network
+
+  krayin_node:
+    container_name: krayin_node
+    image: node:18
+    working_dir: /var/www/html
+    volumes:
+      - .:/var/www/html
+    command: bash -c "npm install && npm run build"
+    networks:
+      - krayin_network
+
+volumes:
+  krayin_db_data:
+
+networks:
+  krayin_network:
+    driver: bridge
