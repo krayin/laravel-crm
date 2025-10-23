@@ -8,14 +8,14 @@
         id="v-mobile-mega-search-template"
     >
         <div>
-            <i 
+            <i
                 class="icon-search flex items-center text-2xl"
                 @click="toggleSearchInput"
                 v-show="!isSearchVisible"
             ></i>
-        
-            <div 
-                v-show="isSearchVisible" 
+
+            <div
+                v-show="isSearchVisible"
                 class="absolute left-1/2 top-3 z-[10002] flex w-full max-w-full -translate-x-1/2 items-center px-2"
             >
                 <i class="icon-search absolute top-2 flex items-center text-2xl ltr:left-4 rtl:right-4"></i>
@@ -34,13 +34,13 @@
                 <i class="icon-cross-large absolute top-2 flex items-center text-2xl ltr:right-4 rtl:left-4"></i>
 
                 <div
-                    class="absolute top-10 z-10 w-full rounded-lg border bg-white shadow-[0px_0px_0px_0px_rgba(0,0,0,0.10),0px_1px_3px_0px_rgba(0,0,0,0.10),0px_5px_5px_0px_rgba(0,0,0,0.09),0px_12px_7px_0px_rgba(0,0,0,0.05),0px_22px_9px_0px_rgba(0,0,0,0.01),0px_34px_9px_0px_rgba(0,0,0,0.00)] dark:border-gray-800 dark:bg-gray-900"
+                    class="absolute left-[6px] right-[6px] top-10 z-10 max-h-[80vh] overflow-y-auto rounded-lg border bg-white shadow-[0px_0px_0px_0px_rgba(0,0,0,0.10),0px_1px_3px_0px_rgba(0,0,0,0.10),0px_5px_5px_0px_rgba(0,0,0,0.09),0px_12px_7px_0px_rgba(0,0,0,0.05),0px_22px_9px_0px_rgba(0,0,0,0.01),0px_34px_9px_0px_rgba(0,0,0,0.00)] dark:border-gray-800 dark:bg-gray-900"
                     v-if="isDropdownOpen"
                 >
                     <!-- Search Tabs -->
-                    <div class="flex border-b text-sm text-gray-600 dark:border-gray-800 dark:text-gray-300">
+                    <div class="flex overflow-x-auto border-b text-sm text-gray-600 dark:border-gray-800 dark:text-gray-300 sm:text-base">
                         <div
-                            class="cursor-pointer p-4 hover:bg-gray-100 dark:hover:bg-gray-950"
+                            class="flex-shrink-0 cursor-pointer whitespace-nowrap px-3 py-2 hover:bg-gray-100 dark:hover:bg-gray-950 sm:px-4 sm:py-3"
                             :class="{ 'border-b-2 border-brandColor': activeTab == tab.key }"
                             v-for="tab in tabs"
                             @click="activeTab = tab.key; search();"
@@ -56,36 +56,34 @@
                         </template>
 
                         <template v-else>
-                            <div class="grid max-h-[400px] overflow-y-auto">
+                            <div class="grid max-h-[400px] divide-y divide-slate-200 overflow-y-auto dark:divide-gray-800">
                                 <template v-for="product in searchedResults.products">
                                     <a
                                         :href="'{{ route('admin.products.view', ':id') }}'.replace(':id', product.id)"
-                                        class="flex cursor-pointer justify-between gap-2.5 border-b border-slate-300 p-4 last:border-b-0 hover:bg-gray-100 dark:border-gray-800 dark:hover:bg-gray-950"
+                                        class="flex flex-col justify-between gap-2.5 p-4 hover:bg-gray-100 dark:hover:bg-gray-950 sm:flex-row"
                                     >
                                         <!-- Left Information -->
-                                        <div class="flex gap-2.5">
+                                        <div class="flex flex-col gap-2.5 sm:flex-row sm:items-center">
                                             <!-- Details -->
                                             <div class="grid place-content-start gap-1.5">
-                                                <p class="text-base font-semibold text-gray-600 dark:text-gray-300">
+                                                <p class="text-sm font-semibold text-gray-600 dark:text-gray-300 sm:text-base">
                                                     @{{ product.name }}
                                                 </p>
 
-                                                <p class="text-gray-500">
+                                                <p class="text-sm text-gray-500">
                                                     @{{ "@lang(':sku')".replace(':sku', product.sku) }}
                                                 </p>
                                             </div>
                                         </div>
 
                                         <!-- Right Information -->
-                                        <div class="grid place-content-center gap-1 text-right">
-                                            <!-- Formatted Price -->
-                                            <p class="font-semibold text-gray-600 dark:text-gray-300">
+                                        <div class="mt-2 text-right sm:mt-0 sm:text-right">
+                                            <p class="text-gray-600 dark:text-gray-300 sm:text-base">
                                                 @{{ $admin.formatPrice(product.price) }}
                                             </p>
                                         </div>
                                     </a>
                                 </template>
-
                             </div>
 
                             <div class="flex border-t p-3 dark:border-gray-800">
@@ -127,7 +125,7 @@
                                         <div class="flex gap-2.5">
                                             <!-- Details -->
                                             <div class="grid place-content-start gap-1.5">
-                                                <p class="text-base font-semibold text-gray-600 dark:text-gray-300">
+                                                <p class="text-gray-600 dark:text-gray-300">
                                                     @{{ lead.title }}
                                                 </p>
 
@@ -186,7 +184,7 @@
                                         <div class="flex gap-2.5">
                                             <!-- Details -->
                                             <div class="grid place-content-start gap-1.5">
-                                                <p class="text-base font-semibold text-gray-600 dark:text-gray-300">
+                                                <p class="text-gray-600 dark:text-gray-300">
                                                     @{{ person.name }}
                                                 </p>
 
@@ -269,6 +267,82 @@
                                     </a>
                                 </template>
                             </div>
+                        </template>
+                    </template>
+
+                    <template v-if="activeTab == 'settings'">
+                        <template v-if="isLoading">
+                            <x-admin::shimmer.header.mega-search.settings />
+                        </template>
+
+                        <template v-else>
+                            <div class="grid max-h-[400px] overflow-y-auto">
+                                <template v-for="setting in searchedResults.settings">
+                                    <a
+                                        :href="setting.url"
+                                        class="flex cursor-pointer justify-between gap-2.5 border-b border-slate-300 p-4 last:border-b-0 hover:bg-gray-100 dark:border-gray-800 dark:hover:bg-gray-950"
+                                    >
+                                        <!-- Left Information -->
+                                        <div class="flex gap-2.5">
+                                            <!-- Details -->
+                                            <div class="grid place-content-start gap-1.5">
+                                                <p class="text-gray-600 dark:text-gray-300">
+                                                    @{{ setting.name }}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </template>
+                            </div>
+
+                            <template v-if="! searchedResults.settings.length">
+                                <div class="flex border-t p-3 dark:border-gray-800">
+                                    <a
+                                        href="{{ route('admin.settings.index') }}"
+                                        class="cursor-pointer text-xs font-semibold text-brandColor transition-all hover:underline"
+                                    >
+                                        @lang('admin::app.components.layouts.header.mega-search.explore-all-settings')
+                                    </a>
+                                </div>
+                            </template>
+                        </template>
+                    </template>
+
+                    <template v-if="activeTab == 'configurations'">
+                        <template v-if="isLoading">
+                            <x-admin::shimmer.header.mega-search.configurations />
+                        </template>
+
+                        <template v-else>
+                            <div class="grid max-h-[400px] overflow-y-auto">
+                                <template v-for="configuration in searchedResults.configurations">
+                                    <a
+                                        :href="configuration.url"
+                                        class="flex cursor-pointer justify-between gap-2.5 border-b border-slate-300 p-4 last:border-b-0 hover:bg-gray-100 dark:border-gray-800 dark:hover:bg-gray-950"
+                                    >
+                                        <!-- Left Information -->
+                                        <div class="flex gap-2.5">
+                                            <!-- Details -->
+                                            <div class="grid place-content-start gap-1.5">
+                                                <p class="text-gray-600 dark:text-gray-300">
+                                                    @{{ configuration.title }}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </template>
+                            </div>
+
+                            <template v-if="! searchedResults.configurations.length">
+                                <div class="flex border-t p-3 dark:border-gray-800">
+                                    <a
+                                        href="{{ route('admin.configuration.index') }}"
+                                        class="cursor-pointer text-xs font-semibold text-brandColor transition-all hover:underline"
+                                    >
+                                        @lang('admin::app.components.layouts.header.mega-search.explore-all-configurations')
+                                    </a>
+                                </div>
+                            </template>
                         </template>
                     </template>
                 </div>
@@ -380,6 +454,22 @@
                                 },
                             ],
                         },
+
+                        settings: {
+                            key: 'settings',
+                            title: '@lang('Settings')',
+                            is_active: false,
+                            endpoint: '{{ route('admin.settings.search') }}',
+                            query: '',
+                        },
+
+                        configurations: {
+                            key: 'configurations',
+                            title: '@lang('Configurations')',
+                            is_active: false,
+                            endpoint: '{{ route('admin.configuration.search') }}',
+                            query: '',
+                        },
                     },
 
                     isLoading: false,
@@ -390,7 +480,9 @@
                         leads: [],
                         quotes: [],
                         products: [],
-                        persons: []
+                        persons: [],
+                        settings: [],
+                        configurations: [],
                     },
 
                     params: {
@@ -418,7 +510,7 @@
                 toggleSearchInput() {
                     this.isSearchVisible = ! this.isSearchVisible;
                     this.isDropdownOpen = false;
-                    
+
                     if (this.isSearchVisible) {
                         this.$nextTick(() => {
                             if (this.$refs.searchInput) {
@@ -429,8 +521,12 @@
                         this.searchTerm = '';
                     }
                 },
-                
+
                 search(endpoint) {
+                    if (! endpoint) {
+                        return;
+                    }
+
                     if (this.searchTerm.length <= 1) {
                         this.searchedResults[this.activeTab] = [];
 
@@ -453,10 +549,10 @@
                         .finally(() => this.isLoading = false);
                 },
 
-                handleFocusOut(e) {   
+                handleFocusOut(e) {
                     if (! this.$el.contains(e.target) || e.target.classList.contains('icon-cross-large')) {
                         this.isDropdownOpen = false;
-                        
+
                         if (! this.isDropdownOpen) {
                             this.isSearchVisible = false;
                             this.searchTerm = '';
@@ -473,6 +569,17 @@
                     };
 
                     const tab = this.tabs[this.activeTab];
+
+                    if (
+                        tab.key === 'settings'
+                        || tab.key === 'configurations'
+                    ) {
+                        this.params = null;
+
+                        this.search(`${tab.endpoint}?query=${newTerm}`);
+
+                        return;
+                    }
 
                     this.params.search += tab.query_params.map((param) => `${param.search}:${newTerm};`).join('');
 

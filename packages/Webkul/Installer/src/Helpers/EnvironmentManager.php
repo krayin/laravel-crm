@@ -48,7 +48,7 @@ class EnvironmentManager
      *
      * @return string
      */
-    public function setEnvConfiguration($request)
+    public function setEnvConfiguration(array $request)
     {
         $envDBParams = [];
 
@@ -70,6 +70,7 @@ class EnvironmentManager
             $envDBParams['APP_URL'] = $request['app_url'];
             $envDBParams['APP_LOCALE'] = $request['app_locale'];
             $envDBParams['APP_TIMEZONE'] = $request['app_timezone'];
+            $envDBParams['APP_CURRENCY'] = $request['app_currency'];
         }
 
         $data = file_get_contents(base_path('.env'));

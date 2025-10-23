@@ -83,12 +83,12 @@ class InstallerController extends Controller
 
         $parameter = [
             'parameter' => [
-                'default_locales'    => $allParameters['app_locale'] ?? null,
-                'default_currency'   => $allParameters['app_currency'] ?? null,
+                'default_locales'  => $allParameters['app_locale'] ?? null,
+                'default_currency' => $allParameters['app_currency'] ?? null,
             ],
         ];
 
-        $response = $this->environmentManager->setEnvConfiguration(request()->allParameters);
+        $response = $this->environmentManager->setEnvConfiguration($allParameters);
 
         if ($response) {
             $seeder = $this->databaseManager->seeder($parameter);

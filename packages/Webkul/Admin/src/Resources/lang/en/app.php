@@ -2082,7 +2082,6 @@ return [
             ],
 
             'stages' => [
-                'won-lost'       => 'Won/Lost',
                 'won'            => 'Won',
                 'lost'           => 'Lost',
                 'need-more-info' => 'Need More Details',
