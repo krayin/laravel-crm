@@ -123,7 +123,7 @@ class AttributeForm extends FormRequest
                             $entityId = $person?->id;
                         }
 
-                        if (! $this->attributeValueRepository->isValueUnique(
+                        if (!empty($entityId) && ! $this->attributeValueRepository->isValueUnique(
                             $entityId,
                             $attribute->entity_type,
                             $attribute,
