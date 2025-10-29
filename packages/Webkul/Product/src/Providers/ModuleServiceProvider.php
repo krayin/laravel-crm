@@ -9,5 +9,6 @@ class ModuleServiceProvider extends BaseModuleServiceProvider
     protected $models = [
         \Webkul\Product\Models\Product::class,
         \Webkul\Product\Models\ProductInventory::class,
+        \Webkul\Product\Models\ProductCategory::class,
     ];
 }

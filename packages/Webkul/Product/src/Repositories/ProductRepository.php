@@ -18,6 +18,8 @@ class ProductRepository extends Repository
         'sku',
         'name',
         'description',
+        'reference',
+        'barcode',
     ];
 
     /**
@@ -188,5 +190,103 @@ class ProductRepository extends Repository
         }
 
         return $warehouses;
+    }
+
+    /**
+     * Get active products.
+     *
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function getActiveProducts()
+    {
+        return $this->model->active()->get();
+    }
+
+    /**
+     * Get favorite products.
+     *
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function getFavoriteProducts()
+    {
+        return $this->model->favorites()->get();
+    }
+
+    /**
+     * Get saleable products.
+     *
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function getSaleableProducts()
+    {
+        return $this->model->saleable()->get();
+    }
+
+    /**
+     * Get purchaseable products.
+     *
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function getPurchaseableProducts()
+    {
+        return $this->model->purchaseable()->get();
+    }
+
+    /**
+     * Find product by reference.
+     *
+     * @param  string  $reference
+     * @return \Webkul\Product\Contracts\Product|null
+     */
+    public function findByReference($reference)
+    {
+        return $this->findWhere(['reference' => $reference])->first();
+    }
+
+    /**
+     * Find product by barcode.
+     *
+     * @param  string  $barcode
+     * @return \Webkul\Product\Contracts\Product|null
+     */
+    public function findByBarcode($barcode)
+    {
+        return $this->findWhere(['barcode' => $barcode])->first();
+    }
+
+    /**
+     * Get products by type.
+     *
+     * @param  string  $type
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function getProductsByType($type)
+    {
+        return $this->findWhere(['type' => $type]);
+    }
+
+    /**
+     * Update product status.
+     *
+     * @param  int  $id
+     * @param  string  $status
+     * @return \Webkul\Product\Contracts\Product
+     */
+    public function updateStatus($id, $status)
+    {
+        return $this->update(['status' => $status], $id);
+    }
+
+    /**
+     * Toggle favorite status.
+     *
+     * @param  int  $id
+     * @return \Webkul\Product\Contracts\Product
+     */
+    public function toggleFavorite($id)
+    {
+        $product = $this->find($id);
+        
+        return $this->update(['is_favorite' => !$product->is_favorite], $id);
     }
 }
