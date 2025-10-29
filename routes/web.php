@@ -17,12 +17,12 @@ use Webkul\Admin\Http\Controllers\SSOController;
 
 Route::middleware(['web'])->get('/', function () {
     dd(Auth::check(), Auth::user(), session()->all());
+
     return view('welcome');
 });
 
 // Route::get('/login/sso', [SSOController::class, 'redirectToSSO'])->name('ssologin');
 // Route::get('/oauth/callback', [SSOController::class, 'handleCallback'])->name('ssocalback');
-
 
 // Route::middleware(['web'])->group(function () {
 // Route để redirect đến SSO provider

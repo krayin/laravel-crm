@@ -7,8 +7,6 @@ use Webkul\Admin\Http\Controllers\User\ForgotPasswordController;
 use Webkul\Admin\Http\Controllers\User\ResetPasswordController;
 use Webkul\Admin\Http\Controllers\User\SessionController;
 
-
-
 Route::middleware(['web'])->withoutMiddleware(['user'])->group(function () {
     /**
      * Redirect route.
