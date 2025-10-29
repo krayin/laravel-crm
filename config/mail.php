@@ -36,13 +36,14 @@ return [
     'mailers' => [
         'smtp' => [
             'transport'   => 'smtp',
-            'host'        => env('MAIL_HOST', 'smtp.mailgun.org'),
+            'host'        => env('MAIL_HOST', 'smtp.office365.com'),
             'port'        => env('MAIL_PORT', 587),
             'encryption'  => env('MAIL_ENCRYPTION', 'tls'),
-            'username'    => env('MAIL_USERNAME'),
-            'password'    => env('MAIL_PASSWORD'),
+            'username'    => env('MAIL_USERNAME', 'duypm@aiot-global.com'),
+            'password'    => null,
             'timeout'     => null,
             'verify_peer' => false,
+            'auth_mode'   => 'xoauth2',
         ],
 
         'ses' => [
@@ -92,8 +93,8 @@ return [
     */
 
     'from' => [
-        'address' => env('MAIL_FROM_ADDRESS'),
-        'name'    => env('MAIL_FROM_NAME'),
+        'address' => env('MAIL_FROM_ADDRESS', 'duypm@aiot-global.com'),
+        'name'    => env('MAIL_FROM_NAME', 'Duy PM'),
     ],
 
     /*
