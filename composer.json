@@ -18,7 +18,6 @@
         "konekt/concord": "^1.10",
         "laravel/framework": "^10.0",
         "laravel/sanctum": "^3.2",
-        "laravel/socialite": "^5.23",
         "laravel/tinker": "^2.5",
         "laravel/ui": "^4.5",
         "maatwebsite/excel": "^3.1",

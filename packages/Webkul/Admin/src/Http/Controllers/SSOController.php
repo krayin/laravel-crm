@@ -59,7 +59,14 @@ class SSOController extends Controller
                     'auth' => 'Account is still not granted: '.$user['email'],
                 ]);
         }
+        // session()->regenerate(); // rất quan trọng để tránh session fixation
+        // dd($userLogin);
+        // Store login method
+        session(['login_method' => 'sso']);
         Auth::login($userLogin);
+        // dd($userLogin);
+
+        // var_dump(Auth::check(), Auth::user(), session()->all());
 
         return redirect('/');
     }

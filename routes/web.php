@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Webkul\Admin\Http\Controllers\SSOController;
 
@@ -14,9 +15,19 @@ use Webkul\Admin\Http\Controllers\SSOController;
 |
 */
 
-Route::get('/', function () {
+Route::middleware(['web'])->get('/', function () {
+    dd(Auth::check(), Auth::user(), session()->all());
+
     return view('welcome');
 });
 
+// Route::get('/login/sso', [SSOController::class, 'redirectToSSO'])->name('ssologin');
+// Route::get('/oauth/callback', [SSOController::class, 'handleCallback'])->name('ssocalback');
+
+// Route::middleware(['web'])->group(function () {
+// Route để redirect đến SSO provider
 Route::get('/login/sso', [SSOController::class, 'redirectToSSO'])->name('ssologin');
-Route::get('/oauth/callback', [SSOController::class, 'handleCallback'])->name('ssocalback');
+
+// Route để xử lý callback từ SSO provider
+Route::get('/oauth/callback', [SSOController::class, 'handleCallback'])->name('ssocallback');
+// });
