@@ -54,6 +54,7 @@ return [
         'login' => [
             'email'                => 'Email Address',
             'forget-password-link' => 'Forget Password ?',
+            'sso-login-link'       => 'Login by group?',
             'password'             => 'Password',
             'submit-btn'           => 'Sign In',
             'title'                => 'Sign In',

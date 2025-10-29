@@ -13,7 +13,7 @@
         "diglactic/laravel-breadcrumbs": "^8.0",
         "doctrine/dbal": "^3.0",
         "enshrined/svg-sanitize": "^0.21.0",
-        "guzzlehttp/guzzle": "^7.0.1",
+        "guzzlehttp/guzzle": "^7.10",
         "khaled.alshamaa/ar-php": "^6.3",
         "konekt/concord": "^1.10",
         "laravel/framework": "^10.0",
