@@ -1,12 +1,15 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Webkul\Admin\Http\Controllers\Controller;
 use Webkul\Admin\Http\Controllers\User\ForgotPasswordController;
 use Webkul\Admin\Http\Controllers\User\ResetPasswordController;
 use Webkul\Admin\Http\Controllers\User\SessionController;
 
-Route::withoutMiddleware(['user'])->group(function () {
+
+
+Route::middleware(['web'])->withoutMiddleware(['user'])->group(function () {
     /**
      * Redirect route.
      */
@@ -16,6 +19,9 @@ Route::withoutMiddleware(['user'])->group(function () {
      * Session routes.
      */
     Route::controller(SessionController::class)->group(function () {
+
+        // var_dump(Auth::check(), Auth::user(), session()->all());
+
         Route::prefix('login')->group(function () {
             Route::get('', 'create')->name('admin.session.create');
 

@@ -46,6 +46,7 @@ class SSOController extends Controller
         // ], [
         //     'name' => $user['username'],
         // ]));
+        // dd($user);
         if (!isset($user)) {
             return $this->redirectToLogin()
                 ->withErrors([
@@ -55,6 +56,7 @@ class SSOController extends Controller
         }
 
         $userLogin = User::where('email', $user['email'])->first();
+        // dd($userLogin);
         if (!isset($userLogin)) {
             return $this->redirectToLogin()
                 ->withErrors([
@@ -62,7 +64,14 @@ class SSOController extends Controller
                 ])
             ;
         }
+        // session()->regenerate(); // rất quan trọng để tránh session fixation
+        // dd($userLogin);
+        // Store login method
+        session(['login_method' => 'sso']);
         Auth::login($userLogin);
+        // dd($userLogin);
+
+        // var_dump(Auth::check(), Auth::user(), session()->all());
 
         return redirect('/');
     }
