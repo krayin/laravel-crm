@@ -13,14 +13,30 @@
     </template>
 </v-tab-item>
 
+@pushOnce('styles')
+<style>
+    /* Smooth transitions for tab content */
+    .tab-content {
+        transition: opacity 0.3s ease-in-out;
+    }
+    
+    /* Ensure form elements maintain their state */
+    .tab-content input, 
+    .tab-content textarea, 
+    .tab-content select {
+        transition: none; /* Prevent form field transitions that might interfere */
+    }
+</style>
+@endPushOnce
+
 @pushOnce('scripts')
     <script 
         type="text/x-template" 
         id="v-tab-item-template"
     >
         <div
-            v-if="isActive"
-            class="animate-[on-fade_0.5s_ease-in-out]"
+            :style="{ display: isActive ? 'block' : 'none' }"
+            class="tab-content animate-[on-fade_0.3s_ease-in-out]"
         >
             <slot></slot>
         </div>
