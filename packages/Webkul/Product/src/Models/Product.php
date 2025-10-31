@@ -63,6 +63,42 @@ class Product extends Model implements ProductContract
     ];
 
     /**
+     * Set the price attribute.
+     * Handle empty strings by converting them to null.
+     */
+    public function setPriceAttribute($value)
+    {
+        $this->attributes['price'] = ($value === '' || $value === null) ? null : $value;
+    }
+
+    /**
+     * Set the cost attribute.
+     * Handle empty strings by converting them to null.
+     */
+    public function setCostAttribute($value)
+    {
+        $this->attributes['cost'] = ($value === '' || $value === null) ? null : $value;
+    }
+
+    /**
+     * Set the volume attribute.
+     * Handle empty strings by converting them to null.
+     */
+    public function setVolumeAttribute($value)
+    {
+        $this->attributes['volume'] = ($value === '' || $value === null) ? null : $value;
+    }
+
+    /**
+     * Set the weight attribute.
+     * Handle empty strings by converting them to null.
+     */
+    public function setWeightAttribute($value)
+    {
+        $this->attributes['weight'] = ($value === '' || $value === null) ? null : $value;
+    }
+
+    /**
      * Scope a query to only include active products.
      */
     public function scopeActive($query)

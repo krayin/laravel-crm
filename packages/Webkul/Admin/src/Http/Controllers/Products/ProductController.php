@@ -13,6 +13,7 @@ use Webkul\Admin\Http\Requests\AttributeForm;
 use Webkul\Admin\Http\Requests\MassDestroyRequest;
 use Webkul\Admin\Http\Resources\ProductResource;
 use Webkul\Product\Repositories\ProductRepository;
+use Webkul\Product\Repositories\ProductCategoryRepository;
 
 class ProductController extends Controller
 {
@@ -21,8 +22,10 @@ class ProductController extends Controller
      *
      * @return void
      */
-    public function __construct(protected ProductRepository $productRepository)
-    {
+    public function __construct(
+        protected ProductRepository $productRepository,
+        protected ProductCategoryRepository $categoryRepository
+    ) {
         request()->request->add(['entity_type' => 'products']);
     }
 
@@ -211,6 +214,52 @@ class ProductController extends Controller
 
         return new JsonResponse([
             'message' => trans('admin::app.products.index.delete-success'),
+        ]);
+    }
+
+    /**
+     * Get active categories for dropdown.
+     */
+    public function getCategories(): JsonResponse
+    {
+        $query = request()->get('query', '');
+        
+        $categories = $this->categoryRepository
+            ->getActiveCategoriesForSelect()
+            ->when($query, function ($collection) use ($query) {
+                return $collection->filter(function ($category) use ($query) {
+                    return stripos($category->name, $query) !== false || 
+                           stripos($category->full_name, $query) !== false;
+                });
+            })
+            ->map(function ($category) {
+                $depth = $category->getDepth();
+                $displayName = str_repeat('— ', $depth) . $category->name;
+                
+                return [
+                    'id' => $category->id,
+                    'name' => $displayName,
+                    'full_name' => $category->full_name,
+                    'depth' => $depth,
+                    'has_children' => $category->hasChildren()
+                ];
+            })
+            ->values();
+
+        return response()->json([
+            'data' => $categories
+        ]);
+    }
+
+    /**
+     * Get category tree structure.
+     */
+    public function getCategoryTree(): JsonResponse
+    {
+        $tree = $this->categoryRepository->getCategoryTree();
+        
+        return response()->json([
+            'data' => $tree
         ]);
     }
 }

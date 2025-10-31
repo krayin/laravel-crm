@@ -29,6 +29,10 @@ Route::group(['middleware' => ['user']], function () {
 
         Route::post('mass-destroy', 'massDestroy')->name('admin.products.mass_delete');
 
+        Route::get('categories', 'getCategories')->name('admin.products.categories');
+
+        Route::get('categories/tree', 'getCategoryTree')->name('admin.products.categories.tree');
+
         Route::controller(ActivityController::class)->prefix('{id}/activities')->group(function () {
             Route::get('', 'index')->name('admin.products.activities.index');
         });

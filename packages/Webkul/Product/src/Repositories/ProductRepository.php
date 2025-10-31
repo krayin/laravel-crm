@@ -53,6 +53,14 @@ class ProductRepository extends Repository
      */
     public function create(array $data)
     {
+        // Clean decimal fields - convert empty strings to null
+        $decimalFields = ['price', 'cost', 'volume', 'weight'];
+        foreach ($decimalFields as $field) {
+            if (isset($data[$field]) && $data[$field] === '') {
+                $data[$field] = null;
+            }
+        }
+
         $product = parent::create($data);
 
         $this->attributeValueRepository->save(array_merge($data, [
@@ -71,6 +79,14 @@ class ProductRepository extends Repository
      */
     public function update(array $data, $id, $attributes = [])
     {
+        // Clean decimal fields - convert empty strings to null
+        $decimalFields = ['price', 'cost', 'volume', 'weight'];
+        foreach ($decimalFields as $field) {
+            if (isset($data[$field]) && $data[$field] === '') {
+                $data[$field] = null;
+            }
+        }
+
         $product = parent::update($data, $id);
 
         /**
