@@ -1,0 +1,21 @@
+{
+    "name": "webkul/featureflag",
+    "description": "Feature Flags implementation for Krayin CRM using Laravel Pennant",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Webkul\\FeatureFlag\\": "src/"
+        }
+    },
+    "require": {
+        "laravel/pennant": "^1.0"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Webkul\\FeatureFlag\\Providers\\ModuleServiceProvider"
+            ]
+        }
+    }
+}
