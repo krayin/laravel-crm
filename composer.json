@@ -17,6 +17,7 @@
         "khaled.alshamaa/ar-php": "^6.3",
         "konekt/concord": "^1.10",
         "laravel/framework": "^10.0",
+        "laravel/pennant": "^1.18",
         "laravel/sanctum": "^3.2",
         "laravel/tinker": "^2.5",
         "laravel/ui": "^4.5",
@@ -75,7 +76,8 @@
             "Webkul\\User\\": "packages/Webkul/User/src",
             "Webkul\\Warehouse\\": "packages/Webkul/Warehouse/src",
             "Webkul\\WebForm\\": "packages/Webkul/WebForm/src",
-            "Webkul\\Automation\\": "packages/Webkul/Automation/src"
+            "Webkul\\Automation\\": "packages/Webkul/Automation/src",
+            "Webkul\\FeatureFlag\\": "packages/Webkul/FeatureFlag/src"
         }
     },
     "autoload-dev": {
