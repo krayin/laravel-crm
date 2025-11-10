@@ -115,12 +115,21 @@ class AttributeForm extends FormRequest
                         $entityId = $this->route('id') ?? null;
                         if ($attribute->entity_type==="persons"){
                             $person = null;
-                            if ( $entityId) {
+                            if ($entityId) {
                                 $person = app(\Webkul\Contact\Repositories\PersonRepository::class)
                                     ->where('crm', $entityId)
                                     ->first();
                             }
                             $entityId = $person?->id;
+
+                            if (empty($entityId) && $attribute->code==='crm'){
+                                $person = app(\Webkul\Contact\Repositories\PersonRepository::class)
+                                    ->where('crm', $currentValue)
+                                    ->first();
+                               if ($person){
+                                   $fail('The value has already been taken.');
+                               }
+                            }
                         }
 
                         if (!empty($entityId) && ! $this->attributeValueRepository->isValueUnique(
