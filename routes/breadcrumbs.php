@@ -456,3 +456,13 @@ Breadcrumbs::for('dashboard.account.edit', function (BreadcrumbTrail $trail, $us
     $trail->parent('dashboard');
     $trail->push(trans('admin::app.account.edit.title'), route('admin.user.account.edit', $user->id));
 });
+
+Breadcrumbs::for('google.calendar.create', function (BreadcrumbTrail $trail) {
+    $trail->parent('dashboard');
+    $trail->push(trans('google::app.calendar.index.title'), route('admin.google.index', ['route' => request('route')]));
+});
+
+Breadcrumbs::for('google.meet.create', function (BreadcrumbTrail $trail) {
+    $trail->parent('dashboard');
+    $trail->push(trans('google::app.meet.index.title'), route('admin.google.index', ['route' => request('route')]));
+});

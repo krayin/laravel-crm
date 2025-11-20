@@ -16,6 +16,7 @@
         "guzzlehttp/guzzle": "^7.0.1",
         "khaled.alshamaa/ar-php": "^6.3",
         "konekt/concord": "^1.10",
+        "krayin/krayin-google-integration": "^2.0",
         "laravel/framework": "^10.0",
         "laravel/pennant": "^1.18",
         "laravel/sanctum": "^3.2",
