@@ -20,7 +20,7 @@
                 <x-admin::breadcrumbs
                     name="mail.route.view"
                     :entity="$email"
-                    :route="request('route')"
+                    :route="$route"
                 />
 
                 {!! view_render_event('admin.mail.view.form.after', ['email' => $email]) !!}
@@ -31,7 +31,7 @@
                         @lang('admin::app.mail.view.title')
                     </div>
 
-                    <span class="label-active">{{ ucfirst(request('route')) }}</span>
+                    <span class="label-active">{{ ucfirst($route) }}</span>
 
                     {!! view_render_event('admin.mail.view.tags.before', ['email' => $email]) !!}
 

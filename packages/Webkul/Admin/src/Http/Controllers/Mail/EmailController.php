@@ -14,6 +14,7 @@ use Webkul\Admin\Http\Controllers\Controller;
 use Webkul\Admin\Http\Requests\MassDestroyRequest;
 use Webkul\Admin\Http\Requests\MassUpdateRequest;
 use Webkul\Admin\Http\Resources\EmailResource;
+use Webkul\Email\Enums\SupportedFolderEnum;
 use Webkul\Email\InboundEmailProcessor\Contracts\InboundEmailProcessor;
 use Webkul\Email\Mails\Email;
 use Webkul\Email\Repositories\AttachmentRepository;
@@ -38,25 +39,21 @@ class EmailController extends Controller
      */
     public function index(): View|JsonResponse|RedirectResponse
     {
-        if (! request('route')) {
-            return redirect()->route('admin.mail.index', ['route' => 'inbox']);
+        $route = request('route');
+
+        if (! $route) {
+            return redirect()->route('admin.mail.index', ['route' => SupportedFolderEnum::INBOX->value]);
         }
 
-        if (! bouncer()->hasPermission('mail.'.request('route'))) {
-            abort(401, 'This action is unauthorized');
+        if (! bouncer()->hasPermission('mail.'.$route)) {
+            abort(401, trans('admin::app.mail.unauthorized'));
         }
 
-        switch (request('route')) {
-            case 'compose':
-                return view('admin::mail.compose');
-
-            default:
-                if (request()->ajax()) {
-                    return datagrid(EmailDataGrid::class)->process();
-                }
-
-                return view('admin::mail.index');
+        if (request()->ajax()) {
+            return datagrid(EmailDataGrid::class)->process();
         }
+
+        return view('admin::mail.index', compact('route'));
     }
 
     /**
@@ -66,8 +63,20 @@ class EmailController extends Controller
      */
     public function view()
     {
+        $route = request('route');
+
         $email = $this->emailRepository
-            ->with(['emails', 'attachments', 'emails.attachments', 'lead', 'lead.person', 'lead.tags', 'lead.source', 'lead.type', 'person'])
+            ->with([
+                'emails',
+                'attachments',
+                'emails.attachments',
+                'lead',
+                'lead.person',
+                'lead.tags',
+                'lead.source',
+                'lead.type',
+                'person',
+            ])
             ->findOrFail(request('id'));
 
         if ($userIds = bouncer()->getAuthorizedUserIds()) {
@@ -85,13 +94,13 @@ class EmailController extends Controller
             unset($email->lead_id);
         }
 
-        if (request('route') == 'draft') {
+        if ($route == SupportedFolderEnum::DRAFT->value) {
             return response()->json([
                 'data' => new EmailResource($email),
             ]);
         }
 
-        return view('admin::mail.view', compact('email'));
+        return view('admin::mail.view', compact('email', 'route'));
     }
 
     /**
@@ -116,7 +125,7 @@ class EmailController extends Controller
                 Mail::send(new Email($email));
 
                 $this->emailRepository->update([
-                    'folders' => ['sent'],
+                    'folders' => [SupportedFolderEnum::SENT->value],
                 ], $email->id);
             } catch (\Exception $e) {
             }
@@ -134,12 +143,12 @@ class EmailController extends Controller
         if (request('is_draft')) {
             session()->flash('success', trans('admin::app.mail.saved-to-draft'));
 
-            return redirect()->route('admin.mail.index', ['route' => 'draft']);
+            return redirect()->route('admin.mail.index', ['route' => SupportedFolderEnum::DRAFT->value]);
         }
 
         session()->flash('success', trans('admin::app.mail.create-success'));
 
-        return redirect()->route('admin.mail.index', ['route'   => 'sent']);
+        return redirect()->route('admin.mail.index', ['route'   => SupportedFolderEnum::SENT->value]);
     }
 
     /**
@@ -155,7 +164,7 @@ class EmailController extends Controller
         $data = request()->all();
 
         if (! is_null(request('is_draft'))) {
-            $data['folders'] = request('is_draft') ? ['draft'] : ['outbox'];
+            $data['folders'] = request('is_draft') ? [SupportedFolderEnum::DRAFT->value] : [SupportedFolderEnum::OUTBOX->value];
         }
 
         $email = $this->emailRepository->update($data, request('id') ?? $id);
@@ -167,7 +176,7 @@ class EmailController extends Controller
                 Mail::send(new Email($email));
 
                 $this->emailRepository->update([
-                    'folders' => ['inbox', 'sent'],
+                    'folders' => [SupportedFolderEnum::INBOX->value, SupportedFolderEnum::SENT->value],
                 ], $email->id);
             } catch (\Exception $e) {
             }
@@ -177,11 +186,11 @@ class EmailController extends Controller
             if (request('is_draft')) {
                 session()->flash('success', trans('admin::app.mail.saved-to-draft'));
 
-                return redirect()->route('admin.mail.index', ['route' => 'draft']);
+                return redirect()->route('admin.mail.index', ['route' => SupportedFolderEnum::DRAFT->value]);
             } else {
                 session()->flash('success', trans('admin::app.mail.create-success'));
 
-                return redirect()->route('admin.mail.index', ['route' => 'inbox']);
+                return redirect()->route('admin.mail.index', ['route' => SupportedFolderEnum::INBOX->value]);
             }
         }
 
@@ -268,9 +277,9 @@ class EmailController extends Controller
 
             $parentId = $email->parent_id;
 
-            if (request('type') == 'trash') {
+            if (request('type') == SupportedFolderEnum::TRASH->value) {
                 $this->emailRepository->update([
-                    'folders' => ['trash'],
+                    'folders' => [SupportedFolderEnum::TRASH->value],
                 ], $id);
             } else {
                 $this->emailRepository->delete($id);
@@ -290,7 +299,7 @@ class EmailController extends Controller
                 return redirect()->back();
             }
 
-            return redirect()->route('admin.mail.index', ['route' => 'inbox']);
+            return redirect()->route('admin.mail.index', ['route' => SupportedFolderEnum::INBOX->value]);
         } catch (\Exception $exception) {
             if (request()->ajax()) {
                 return response()->json([
@@ -315,8 +324,8 @@ class EmailController extends Controller
             foreach ($mails as $email) {
                 Event::dispatch('email.'.$massDestroyRequest->input('type').'.before', $email->id);
 
-                if ($massDestroyRequest->input('type') == 'trash') {
-                    $this->emailRepository->update(['folders' => ['trash']], $email->id);
+                if ($massDestroyRequest->input('type') == SupportedFolderEnum::TRASH->value) {
+                    $this->emailRepository->update(['folders' => [SupportedFolderEnum::TRASH->value]], $email->id);
                 } else {
                     $this->emailRepository->delete($email->id);
                 }

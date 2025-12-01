@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 use Webkul\Admin\Http\Controllers\Mail\EmailController;
 use Webkul\Admin\Http\Controllers\Mail\TagController;
 
-Route::prefix('mail')->group(function () {
+Route::prefix('mail')->middleware('sanitize_url')->group(function () {
     Route::controller(EmailController::class)->group(function () {
         Route::post('create', 'store')->name('admin.mail.store');
 

@@ -1673,11 +1673,15 @@ return [
                 'delete'        => 'Sil',
             ],
         ],
+
         'create-success'      => 'E-posta başarıyla gönderildi.',
         'update-success'      => 'E-posta başarıyla güncellendi.',
         'mass-update-success' => 'E-postalar başarıyla güncellendi.',
         'delete-success'      => 'E-posta başarıyla silindi.',
         'delete-failed'       => 'E-posta silinemedi.',
+        'invalid-route'       => 'Geçersiz rota için mail.',
+        'unauthorized'        => 'Bu işlem yetkilendirilmemiştir.',
+
         'view'                => [
             'title'                      => 'Mails',
             'subject'                    => ':subject',
@@ -2026,8 +2030,10 @@ return [
     ],
     'dashboard' => [
         'index' => [
-            'title'   => 'Gösterge Paneli',
-            'revenue' => [
+            'title'      => 'Gösterge Paneli',
+            'start-date' => 'Start Date',
+            'end-date'   => 'End Date',
+            'revenue'    => [
                 'lost-revenue' => 'Kayıp Gelir',
                 'won-revenue'  => 'Kazançlı Gelir',
             ],

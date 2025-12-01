@@ -1673,11 +1673,15 @@ return [
                 'delete'        => 'Xóa',
             ],
         ],
+
         'create-success'      => 'Email đã được gửi thành công.',
         'update-success'      => 'Email đã được cập nhật thành công.',
         'mass-update-success' => 'Các email đã được cập nhật thành công.',
         'delete-success'      => 'Email đã được xóa thành công.',
         'delete-failed'       => 'Email không thể bị xóa.',
+        'invalid-route'       => 'Đường dẫn không hợp lệ cho email.',
+        'unauthorized'        => 'Hành động này không được phép.',
+
         'view'                => [
             'title'                      => 'Thư',
             'subject'                    => ':subject',
@@ -2026,8 +2030,10 @@ return [
     ],
     'dashboard' => [
         'index' => [
-            'title'   => 'Bảng Điều Khiển',
-            'revenue' => [
+            'title'      => 'Bảng Điều Khiển',
+            'start-date' => 'Start Date',
+            'end-date'   => 'End Date',
+            'revenue'    => [
                 'lost-revenue' => 'Doanh Thu Bị Mất',
                 'won-revenue'  => 'Doanh Thu Đã Đạt',
             ],

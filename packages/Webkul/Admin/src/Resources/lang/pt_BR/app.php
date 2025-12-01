@@ -1673,11 +1673,15 @@ return [
                 'delete'        => 'Excluir',
             ],
         ],
+
         'create-success'      => 'E-mail enviado com sucesso.',
         'update-success'      => 'E-mail atualizado com sucesso.',
         'mass-update-success' => 'E-mails atualizados com sucesso.',
         'delete-success'      => 'E-mail excluído com sucesso.',
         'delete-failed'       => 'E-mail não pode ser excluído.',
+        'invalid-route'       => 'Rota inválida para o e-mail.',
+        'unauthorized'        => 'Esta ação não está autorizada.',
+
         'view'                => [
             'title'                      => 'E-mails',
             'subject'                    => ':subject',
@@ -2026,8 +2030,10 @@ return [
     ],
     'dashboard' => [
         'index' => [
-            'title'   => 'Início',
-            'revenue' => [
+            'title'      => 'Início',
+            'start-date' => 'Start Date',
+            'end-date'   => 'End Date',
+            'revenue'    => [
                 'lost-revenue' => 'Negócios Perdidos',
                 'won-revenue'  => 'Negócios Ganhos',
             ],

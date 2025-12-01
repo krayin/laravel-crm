@@ -1678,6 +1678,8 @@ return [
         'mass-update-success' => 'ایمیل‌ها با موفقیت به‌روزرسانی شدند.',
         'delete-success'      => 'ایمیل با موفقیت حذف شد.',
         'delete-failed'       => 'ایمیل قابل حذف نیست.',
+        'invalid-route'       => 'مسیر نامعتبر برای ایمیل.',
+        'unauthorized'        => 'این عمل مجاز نیست.',
         'view'                => [
             'title'                      => 'ایمیل‌ها',
             'subject'                    => ':subject',
@@ -2026,8 +2028,10 @@ return [
     ],
     'dashboard' => [
         'index' => [
-            'title'   => 'داشبورد',
-            'revenue' => [
+            'title'      => 'داشبورد',
+            'start-date' => 'Start Date',
+            'end-date'   => 'End Date',
+            'revenue'    => [
                 'lost-revenue' => 'درآمد از دست رفته',
                 'won-revenue'  => 'درآمد برنده',
             ],

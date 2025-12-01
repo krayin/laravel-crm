@@ -1,24 +1,24 @@
 <x-admin::layouts>
     <x-slot:title>
-        @lang('admin::app.mail.index.' . request('route'))
+        @lang('admin::app.mail.index.' . $route)
     </x-slot>
 
     <div class="flex flex-col gap-4">
         <div class="flex items-center justify-between rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
             <div class="flex flex-col gap-2">
                 {!! view_render_event('admin.mail.create.breadcrumbs.before') !!}
-
+                
                 <!-- breadcrumbs -->
                 <x-admin::breadcrumbs
                     name="mail.route"
-                    :entity="request('route')"
+                    :entity="$route"
                 />
 
                 {!! view_render_event('admin.mail.create.breadcrumbs.after') !!}
 
                 <div class="text-xl font-bold dark:text-white">
                     <!-- title -->
-                    @lang('admin::app.mail.index.' . request('route'))
+                    @lang('admin::app.mail.index.' . $route)
                 </div>
             </div>
 
@@ -54,12 +54,12 @@
             type="text/x-template"
             id="v-mail-template"
         >
-            {!! view_render_event('admin.mail.'.request('route').'.datagrid.before') !!}
+            {!! view_render_event('admin.mail.'. $route .'.datagrid.before') !!}
 
             <!-- DataGrid -->
             <x-admin::datagrid
                 ref="datagrid"
-                :src="route('admin.mail.index', request('route'))"
+                :src="route('admin.mail.index', $route)"
             >
                 <template #header="{
                     isLoading,
@@ -359,7 +359,7 @@
                 </template>
             </x-admin::datagrid>
 
-            {!! view_render_event('admin.mail.'.request('route').'.datagrid.after') !!}
+            {!! view_render_event('admin.mail.'. $route .'.datagrid.after') !!}
 
             {!! view_render_event('admin.mail.create.form.before') !!}
 
