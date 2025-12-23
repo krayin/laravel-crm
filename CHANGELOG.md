@@ -1,3 +1,7 @@
+## **v2.1.6-preview (24 of Oct 2025)** - *Preview Release*
+
+* Preview version created for testing and development purposes.
+
 ## **v2.1.5 (19 of Sep 2025)** - *Release*
 
 * #2355[fixed] db_prefix support — installation and dashboard now function as expected
