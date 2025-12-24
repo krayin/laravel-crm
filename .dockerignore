@@ -1,0 +1,99 @@
+# =============================================================================
+# Krayin CRM - Docker Ignore File
+# Files and directories to exclude from Docker build context
+# =============================================================================
+
+# Git
+.git
+.gitignore
+.gitattributes
+
+# IDE and editors
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Documentation (not needed in production image)
+docs/
+*.md
+!README.md
+
+# Development files
+.env
+.env.local
+.env.*.local
+.env.docker
+
+# Node modules (will be built in container)
+node_modules/
+
+# Vendor (will be installed in container)
+vendor/
+
+# Laravel storage (will be mounted as volume)
+storage/app/*
+storage/framework/cache/*
+storage/framework/sessions/*
+storage/framework/views/*
+storage/logs/*
+!storage/app/.gitignore
+!storage/framework/.gitignore
+!storage/logs/.gitignore
+
+# Bootstrap cache
+bootstrap/cache/*
+!bootstrap/cache/.gitignore
+
+# Testing
+tests/
+phpunit.xml
+.phpunit.result.cache
+.phpunit.cache/
+
+# CI/CD
+.github/
+.gitlab-ci.yml
+.travis.yml
+Jenkinsfile
+
+# Docker files (avoid recursive inclusion)
+docker-compose*.yml
+docker-stack.yml
+Dockerfile*
+
+# Build artifacts
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# IDE specific
+*.sublime-project
+*.sublime-workspace
+
+# Archives
+*.zip
+*.tar
+*.tar.gz
+*.rar
+
+# Temporary files
+*.tmp
+*.temp
+*.bak
+
+# Claude/AI
+.claude/
+CLAUDE.md
+
+# Verification/audit files
+VERIFICACAO_*.md
+
+# Tools (deployment scripts can be separate)
+tools/
