@@ -1,0 +1,272 @@
+<style>
+/* ============================================
+   STELIUM LOGIN CARD - TEMA MÍSTICO
+   ============================================ */
+
+/* Fonte Philosopher */
+@import url('https://fonts.googleapis.com/css2?family=Philosopher:wght@400;700&display=swap');
+
+/* ============================================
+   VARIÁVEIS
+   ============================================ */
+:root {
+    --stelium-gold: #bd9f57;
+    --stelium-gold-light: #d4bb7a;
+    --stelium-forest: #0a2d0f;
+}
+
+/* ============================================
+   BACKGROUND DA PÁGINA
+   ============================================ */
+.flex.h-\[100vh\].flex-col.items-center.justify-center,
+body {
+    background: #f0eeeb !important;
+}
+
+/* ============================================
+   CARD DE LOGIN - ESTRUTURA
+   ============================================ */
+.box-shadow.flex.min-w-\[300px\].flex-col.rounded-md.bg-white.dark\:bg-gray-900 {
+    position: relative !important;
+    background: rgba(10, 45, 15, 0.95) !important;
+    border-radius: 20px !important;
+    overflow: hidden !important;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.12), 0 12px 48px rgba(0, 0, 0, 0.08) !important;
+    min-width: 380px !important;
+    animation: cardIn 0.5s ease forwards !important;
+}
+
+/* Background místico dentro do card */
+.box-shadow.flex.min-w-\[300px\].flex-col.rounded-md::before {
+    content: '';
+    position: absolute !important;
+    inset: 0 !important;
+    background-image: url('https://i.imgur.com/3OgU2w0.png') !important;
+    background-size: cover !important;
+    background-position: center top !important;
+    opacity: 0.15 !important;
+    z-index: 0 !important;
+    pointer-events: none !important;
+}
+
+@keyframes cardIn {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* ============================================
+   TÍTULO "SIGN IN" - ESTILIZAR
+   ============================================ */
+.box-shadow.flex.min-w-\[300px\].flex-col.rounded-md p.p-4.text-xl.font-bold {
+    font-family: 'Philosopher', Georgia, serif !important;
+    font-size: 1.5rem !important;
+    font-weight: 700 !important;
+    color: #ffffff !important;
+    text-align: center !important;
+    text-shadow: 0 2px 12px rgba(0, 0, 0, 0.3) !important;
+    padding: 32px 32px 8px 32px !important;
+    position: relative !important;
+    z-index: 1 !important;
+}
+
+/* Adicionar estrela antes do título */
+.box-shadow.flex.min-w-\[300px\].flex-col.rounded-md p.p-4.text-xl.font-bold::before {
+    content: '✨';
+    display: block !important;
+    font-size: 2rem !important;
+    margin-bottom: 8px !important;
+    filter: drop-shadow(0 0 8px rgba(189, 159, 87, 0.4)) !important;
+}
+
+/* ============================================
+   ÁREA DOS INPUTS
+   ============================================ */
+.border-y.p-4.dark\:border-gray-800 {
+    border: none !important;
+    padding: 16px 32px !important;
+    background: transparent !important;
+    position: relative !important;
+    z-index: 1 !important;
+}
+
+/* Labels */
+.border-y.p-4 label,
+.border-y.p-4 .mb-1\.5.flex.items-center {
+    font-size: 0.8125rem !important;
+    font-weight: 500 !important;
+    color: rgba(255, 255, 255, 0.9) !important;
+}
+
+/* Asterisco required */
+.border-y.p-4 label span.text-red-500,
+.border-y.p-4 label .text-red-500 {
+    color: #d4bb7a !important;
+}
+
+/* Inputs Email e Senha */
+.border-y.p-4 input[type="email"],
+.border-y.p-4 input[type="password"],
+.border-y.p-4 input#email,
+.border-y.p-4 input#password {
+    width: 100% !important;
+    height: 48px !important;
+    padding: 0 16px !important;
+    font-size: 0.9375rem !important;
+    color: #1a1816 !important;
+    background: #ffffff !important;
+    border: 2px solid transparent !important;
+    border-radius: 12px !important;
+    outline: none !important;
+    transition: border-color 200ms ease, box-shadow 200ms ease !important;
+}
+
+.border-y.p-4 input[type="email"]:focus,
+.border-y.p-4 input[type="password"]:focus,
+.border-y.p-4 input#email:focus,
+.border-y.p-4 input#password:focus {
+    border-color: #bd9f57 !important;
+    box-shadow: 0 0 0 3px rgba(189, 159, 87, 0.25) !important;
+}
+
+.border-y.p-4 input::placeholder {
+    color: #9b968e !important;
+}
+
+/* Ícone de olho da senha */
+.icon-eye-hide,
+.icon-eye {
+    color: rgba(255, 255, 255, 0.7) !important;
+    right: 12px !important;
+}
+
+/* ============================================
+   ÁREA DE AÇÕES (BOTÃO E LINK)
+   ============================================ */
+.flex.items-center.justify-between.p-4 {
+    padding: 24px 32px 32px 32px !important;
+    background: transparent !important;
+    position: relative !important;
+    z-index: 1 !important;
+}
+
+/* Link Esqueceu Senha */
+.flex.items-center.justify-between.p-4 a,
+a.text-brandColor[href*="forget-password"] {
+    font-size: 0.8125rem !important;
+    font-weight: 500 !important;
+    color: #d4bb7a !important;
+    text-decoration: none !important;
+}
+
+.flex.items-center.justify-between.p-4 a:hover,
+a.text-brandColor[href*="forget-password"]:hover {
+    color: #ffffff !important;
+    text-decoration: underline !important;
+}
+
+/* ============================================
+   BOTÃO SIGN IN
+   ============================================ */
+.flex.items-center.justify-between.p-4 button.primary-button,
+button.primary-button[aria-label="Sign In"] {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    height: 46px !important;
+    padding: 0 24px !important;
+    font-size: 0.9375rem !important;
+    font-weight: 600 !important;
+    color: #0a2d0f !important;
+    background: linear-gradient(135deg, #d4bb7a 0%, #bd9f57 100%) !important;
+    border: none !important;
+    border-radius: 8px !important;
+    cursor: pointer !important;
+    transition: transform 200ms ease, box-shadow 200ms ease !important;
+}
+
+.flex.items-center.justify-between.p-4 button.primary-button:hover,
+button.primary-button[aria-label="Sign In"]:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: 0 6px 20px rgba(189, 159, 87, 0.4) !important;
+    color: #0a2d0f !important;
+    background: linear-gradient(135deg, #d4bb7a 0%, #bd9f57 100%) !important;
+}
+
+/* ============================================
+   ESCONDER POWERED BY
+   ============================================ */
+.flex.h-\[100vh\] .text-sm.font-normal,
+.text-sm.font-normal:has(a[href*="krayincrm"]) {
+    display: none !important;
+}
+
+/* ============================================
+   LOGO ACIMA DO CARD
+   ============================================ */
+.flex.flex-col.items-center.gap-5 > img.w-max {
+    height: 40px !important;
+    margin-bottom: 16px !important;
+}
+
+/* ============================================
+   DARK MODE FIX
+   ============================================ */
+.dark .box-shadow.flex.min-w-\[300px\].flex-col.rounded-md {
+    background: rgba(10, 45, 15, 0.95) !important;
+}
+
+.dark .border-y.p-4 input[type="email"],
+.dark .border-y.p-4 input[type="password"] {
+    background: #ffffff !important;
+    color: #1a1816 !important;
+}
+</style>
+
+<script>
+// Executar imediatamente sem DOMContentLoaded
+(function() {
+    console.log('🌟 Stelium Theme: Iniciando...');
+
+    // Função para aplicar tema
+    function aplicarTema() {
+        var loginCard = document.querySelector('.box-shadow.flex.min-w-\\[300px\\].flex-col.rounded-md');
+
+        if (!loginCard) {
+            console.log('⚠️ Card não encontrado ainda, tentando novamente...');
+            return false;
+        }
+
+        console.log('✅ Card encontrado!');
+
+        // 1. Modificar título "Sign In" para "Bem-vindo"
+        var signInTitle = loginCard.querySelector('p.p-4.text-xl.font-bold');
+        if (signInTitle && signInTitle.textContent.includes('Sign')) {
+            signInTitle.textContent = 'Bem-vindo';
+            console.log('✓ Título modificado');
+
+            // 2. Adicionar subtítulo
+            var subtitle = document.createElement('p');
+            subtitle.style.cssText = 'text-align:center;font-size:0.875rem;color:rgba(255,255,255,0.75);margin:0 0 16px 0;padding:0 32px;position:relative;z-index:1;';
+            subtitle.textContent = 'Acesse sua conta para continuar';
+            signInTitle.parentNode.insertBefore(subtitle, signInTitle.nextSibling);
+            console.log('✓ Subtítulo adicionado');
+        }
+
+        // 3. Esconder "Powered by"
+        var poweredBy = document.querySelector('.text-sm.font-normal');
+        if (poweredBy && poweredBy.textContent.includes('Powered')) {
+            poweredBy.style.display = 'none';
+            console.log('✓ Powered by escondido');
+        }
+
+        console.log('✅ Stelium Theme aplicado com sucesso!');
+        return true;
+    }
+
+    // Tentar aplicar imediatamente
+    if (!aplicarTema()) {
+        // Se falhar, tentar depois de 100ms
+        setTimeout(aplicarTema, 100);
+    }
+})();
+</script>

@@ -110,6 +110,9 @@ return [
 
             'support-email' => 'Support Email',
             'support-email-help' => 'Support contact email displayed in the help link',
+
+            'custom-code' => 'Custom HTML/CSS/JavaScript Code',
+            'custom-code-hint' => 'Paste your custom HTML, CSS, and JavaScript code here. This code will be injected directly into the login card. Use with caution!',
         ],
 
         'empty-states' => [

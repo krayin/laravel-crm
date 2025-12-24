@@ -48,6 +48,7 @@ return new class extends Migration
             $table->boolean('login_card_sparkles')->default(false);
             $table->boolean('login_card_help_link')->default(true);
             $table->string('login_card_support_email', 100)->default('suporte@empresa.com.br');
+            $table->text('login_card_custom_code')->nullable();
 
             // Empty States
             $table->string('empty_state_activities', 500)->nullable();

@@ -1,0 +1,191 @@
+{
+  "Krayin ServiceProvider": {
+    "prefix": "ksp",
+    "body": [
+      "<?php",
+      "",
+      "namespace Webkul\\\\ThemeManager\\\\Providers;",
+      "",
+      "use Illuminate\\\\Support\\\\ServiceProvider;",
+      "",
+      "class ThemeManagerServiceProvider extends ServiceProvider",
+      "{",
+      "    public function register()",
+      "    {",
+      "        $0",
+      "    }",
+      "",
+      "    public function boot()",
+      "    {",
+      "        \\$this->loadMigrationsFrom(__DIR__ . '/../../Database/Migrations');",
+      "        \\$this->loadRoutesFrom(__DIR__ . '/../Routes/web.php');",
+      "        \\$this->loadViewsFrom(__DIR__ . '/../../Resources/views', 'theme-manager');",
+      "    }",
+      "}"
+    ],
+    "description": "Krayin Service Provider"
+  },
+
+  "Krayin Model": {
+    "prefix": "kmodel",
+    "body": [
+      "<?php",
+      "",
+      "namespace Webkul\\\\ThemeManager\\\\Models;",
+      "",
+      "use Illuminate\\\\Database\\\\Eloquent\\\\Model;",
+      "",
+      "class ${1:ThemeConfig} extends Model",
+      "{",
+      "    protected \\$table = '${2:theme_configs}';",
+      "",
+      "    protected \\$fillable = [",
+      "        $0",
+      "    ];",
+      "",
+      "    public static function getInstance(): self",
+      "    {",
+      "        return static::firstOrCreate(['id' => 1]);",
+      "    }",
+      "}"
+    ],
+    "description": "Krayin Model"
+  },
+
+  "Krayin Controller": {
+    "prefix": "kcontroller",
+    "body": [
+      "<?php",
+      "",
+      "namespace Webkul\\\\ThemeManager\\\\Http\\\\Controllers;",
+      "",
+      "use Illuminate\\\\Http\\\\Request;",
+      "use Illuminate\\\\Routing\\\\Controller;",
+      "",
+      "class ${1:ThemeController} extends Controller",
+      "{",
+      "    public function index()",
+      "    {",
+      "        return view('theme-manager::admin.settings.theme.index');",
+      "    }",
+      "",
+      "    public function update(Request \\$request)",
+      "    {",
+      "        $0",
+      "        return redirect()->back()->with('success', 'Salvo!');",
+      "    }",
+      "}"
+    ],
+    "description": "Krayin Controller"
+  },
+
+  "Krayin Repository": {
+    "prefix": "krepo",
+    "body": [
+      "<?php",
+      "",
+      "namespace Webkul\\\\ThemeManager\\\\Repositories;",
+      "",
+      "use Webkul\\\\Core\\\\Eloquent\\\\Repository;",
+      "",
+      "class ${1:ThemeConfig}Repository extends Repository",
+      "{",
+      "    public function model()",
+      "    {",
+      "        return '${2:Webkul\\\\ThemeManager\\\\Contracts\\\\ThemeConfig}';",
+      "    }",
+      "",
+      "    $0",
+      "}"
+    ],
+    "description": "Krayin Repository"
+  },
+
+  "Krayin Helper": {
+    "prefix": "khelper",
+    "body": [
+      "<?php",
+      "",
+      "namespace Webkul\\\\ThemeManager\\\\Helpers;",
+      "",
+      "use Illuminate\\\\Support\\\\Facades\\\\Cache;",
+      "",
+      "class ${1:ThemeHelper}",
+      "{",
+      "    public function getConfig()",
+      "    {",
+      "        return Cache::remember('${2:theme_config}', 3600, function () {",
+      "            $0",
+      "        });",
+      "    }",
+      "",
+      "    public function clearCache(): void",
+      "    {",
+      "        Cache::forget('${2:theme_config}');",
+      "    }",
+      "}"
+    ],
+    "description": "Krayin Helper with Cache"
+  },
+
+  "Krayin Migration": {
+    "prefix": "kmigration",
+    "body": [
+      "<?php",
+      "",
+      "use Illuminate\\\\Database\\\\Migrations\\\\Migration;",
+      "use Illuminate\\\\Database\\\\Schema\\\\Blueprint;",
+      "use Illuminate\\\\Support\\\\Facades\\\\Schema;",
+      "",
+      "return new class extends Migration",
+      "{",
+      "    public function up(): void",
+      "    {",
+      "        Schema::create('${1:table_name}', function (Blueprint \\$table) {",
+      "            \\$table->id();",
+      "            $0",
+      "            \\$table->timestamps();",
+      "        });",
+      "    }",
+      "",
+      "    public function down(): void",
+      "    {",
+      "        Schema::dropIfExists('${1:table_name}');",
+      "    }",
+      "};"
+    ],
+    "description": "Krayin Migration"
+  },
+
+  "Krayin Route Group": {
+    "prefix": "kroute",
+    "body": [
+      "Route::group(['middleware' => ['admin']], function () {",
+      "    Route::prefix('admin')->group(function () {",
+      "        Route::controller(${1:Controller}::class)->group(function () {",
+      "            Route::get('${2:path}', 'index')->name('admin.${3:name}.index');",
+      "            Route::post('${2:path}', 'store')->name('admin.${3:name}.store');",
+      "            Route::put('${2:path}/{id}', 'update')->name('admin.${3:name}.update');",
+      "            Route::delete('${2:path}/{id}', 'destroy')->name('admin.${3:name}.delete');",
+      "            $0",
+      "        });",
+      "    });",
+      "});"
+    ],
+    "description": "Krayin Admin Route Group"
+  },
+
+  "Krayin Blade Component": {
+    "prefix": "kblade",
+    "body": [
+      "@php",
+      "    \\$${1:variable} = ${2:value};",
+      "@endphp",
+      "",
+      "<div class=\"${3:class}\">",
+      "    $0",
+      "</div>"
+    ],
+    "description": "Krayin Blade Template"
+  }
+}

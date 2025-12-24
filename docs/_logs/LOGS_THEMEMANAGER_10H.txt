@@ -1,0 +1,233 @@
+﻿
+[2025-12-21 06:46:09] local.ERROR: Class Webkul\ThemeManager\Models\ThemeConfig must extend or implement 
+Webkul\ThemeManager\Contracts\ThemeConfig.  {"exception":"[object] (InvalidArgumentException(code: 0): Class 
+Webkul\\ThemeManager\\Models\\ThemeConfig must extend or implement Webkul\\ThemeManager\\Contracts\\ThemeConfig.  at 
+C:\\Users\\Usuario\\Desktop\\Krayin-\\laravel-crm\\vendor\\konekt\\concord\\src\\Concord.php:126)
+#8 C:\\Users\\Usuario\\Desktop\\Krayin-\\laravel-crm\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Applicat
+ion.php(1040): 
+Illuminate\\Foundation\\Application->bootProvider(Object(Webkul\\ThemeManager\\Providers\\ModuleServiceProvider))
+#9 [internal function]: Illuminate\\Foundation\\Application->Illuminate\\Foundation\\{closure}(Object(Webkul\\ThemeMana
+ger\\Providers\\ModuleServiceProvider), 34)
+[2025-12-21 06:47:55] local.ERROR: Class Webkul\ThemeManager\Contracts\ThemeConfig must extend or implement 
+Webkul\ThemeManager\Contracts\ThemeConfig.  {"exception":"[object] (InvalidArgumentException(code: 0): Class 
+Webkul\\ThemeManager\\Contracts\\ThemeConfig must extend or implement Webkul\\ThemeManager\\Contracts\\ThemeConfig.  
+at C:\\Users\\Usuario\\Desktop\\Krayin-\\laravel-crm\\vendor\\konekt\\concord\\src\\Concord.php:126)
+#8 C:\\Users\\Usuario\\Desktop\\Krayin-\\laravel-crm\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Applicat
+ion.php(1040): 
+Illuminate\\Foundation\\Application->bootProvider(Object(Webkul\\ThemeManager\\Providers\\ModuleServiceProvider))
+#9 [internal function]: Illuminate\\Foundation\\Application->Illuminate\\Foundation\\{closure}(Object(Webkul\\ThemeMana
+ger\\Providers\\ModuleServiceProvider), 34)
+[2025-12-21 06:48:12] local.ERROR: Class Webkul\ThemeManager\Contracts\ThemeConfig must extend or implement 
+Webkul\ThemeManager\Contracts\ThemeConfig.  {"exception":"[object] (InvalidArgumentException(code: 0): Class 
+Webkul\\ThemeManager\\Contracts\\ThemeConfig must extend or implement Webkul\\ThemeManager\\Contracts\\ThemeConfig.  
+at C:\\Users\\Usuario\\Desktop\\Krayin-\\laravel-crm\\vendor\\konekt\\concord\\src\\Concord.php:126)
+#8 C:\\Users\\Usuario\\Desktop\\Krayin-\\laravel-crm\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Applicat
+ion.php(1040): 
+Illuminate\\Foundation\\Application->bootProvider(Object(Webkul\\ThemeManager\\Providers\\ModuleServiceProvider))
+#9 [internal function]: Illuminate\\Foundation\\Application->Illuminate\\Foundation\\{closure}(Object(Webkul\\ThemeMana
+ger\\Providers\\ModuleServiceProvider), 34)
+[2025-12-21 06:48:53] local.ERROR: Class "Webkul\ThemeManager\Models\ThemeConfigProxy" not found 
+{"exception":"[object] (Error(code: 0): Class \"Webkul\\ThemeManager\\Models\\ThemeConfigProxy\" not found at 
+C:\\Users\\Usuario\\Desktop\\Krayin-\\laravel-crm\\vendor\\konekt\\concord\\src\\Concord.php:269)
+#9 C:\\Users\\Usuario\\Desktop\\Krayin-\\laravel-crm\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Applicat
+ion.php(1040): 
+Illuminate\\Foundation\\Application->bootProvider(Object(Webkul\\ThemeManager\\Providers\\ModuleServiceProvider))
+#10 [internal function]: Illuminate\\Foundation\\Application->Illuminate\\Foundation\\{closure}(Object(Webkul\\ThemeMan
+ager\\Providers\\ModuleServiceProvider), 34)
+#21 C:\\Users\\Usuario\\Desktop\\Krayin-\\laravel-crm\\packages\\Webkul\\ThemeManager\\src\\Http\\Middleware\\ThemeMidd
+leware.php(20): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#22 C:\\Users\\Usuario\\Desktop\\Krayin-\\laravel-crm\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.
+php(183): Webkul\\ThemeManager\\Http\\Middleware\\ThemeMiddleware->handle(Object(Illuminate\\Http\\Request), 
+Object(Closure))
+#23 C:\\Users\\Usuario\\Desktop\\Krayin-\\laravel-crm\\packages\\Webkul\\ThemeManager\\src\\Http\\Middleware\\ThemeMidd
+leware.php(20): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#24 C:\\Users\\Usuario\\Desktop\\Krayin-\\laravel-crm\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.
+php(183): Webkul\\ThemeManager\\Http\\Middleware\\ThemeMiddleware->handle(Object(Illuminate\\Http\\Request), 
+Object(Closure))
+#15 C:\\Users\\Usuario\\Desktop\\Krayin-\\laravel-crm\\packages\\Webkul\\ThemeManager\\src\\Http\\Middleware\\ThemeMidd
+leware.php(20): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#16 C:\\Users\\Usuario\\Desktop\\Krayin-\\laravel-crm\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.
+php(183): Webkul\\ThemeManager\\Http\\Middleware\\ThemeMiddleware->handle(Object(Illuminate\\Http\\Request), 
+Object(Closure))
+#17 C:\\Users\\Usuario\\Desktop\\Krayin-\\laravel-crm\\packages\\Webkul\\ThemeManager\\src\\Http\\Middleware\\ThemeMidd
+leware.php(20): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#18 C:\\Users\\Usuario\\Desktop\\Krayin-\\laravel-crm\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.
+php(183): Webkul\\ThemeManager\\Http\\Middleware\\ThemeMiddleware->handle(Object(Illuminate\\Http\\Request), 
+Object(Closure))
+#5 C:\\Users\\Usuario\\Desktop\\Krayin-\\laravel-crm\\packages\\Webkul\\ThemeManager\\src\\Http\\Middleware\\ThemeMiddl
+eware.php(20): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#6 C:\\Users\\Usuario\\Desktop\\Krayin-\\laravel-crm\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.p
+hp(183): Webkul\\ThemeManager\\Http\\Middleware\\ThemeMiddleware->handle(Object(Illuminate\\Http\\Request), 
+Object(Closure))
+#6 C:\\Users\\Usuario\\Desktop\\Krayin-\\laravel-crm\\packages\\Webkul\\ThemeManager\\src\\Http\\Middleware\\ThemeMiddl
+eware.php(20): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#7 C:\\Users\\Usuario\\Desktop\\Krayin-\\laravel-crm\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.p
+hp(183): Webkul\\ThemeManager\\Http\\Middleware\\ThemeMiddleware->handle(Object(Illuminate\\Http\\Request), 
+Object(Closure))
+#21 C:\\Users\\Usuario\\Desktop\\Krayin-\\laravel-crm\\packages\\Webkul\\ThemeManager\\src\\Http\\Middleware\\ThemeMidd
+leware.php(20): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#22 C:\\Users\\Usuario\\Desktop\\Krayin-\\laravel-crm\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.
+php(183): Webkul\\ThemeManager\\Http\\Middleware\\ThemeMiddleware->handle(Object(Illuminate\\Http\\Request), 
+Object(Closure))
+#23 C:\\Users\\Usuario\\Desktop\\Krayin-\\laravel-crm\\packages\\Webkul\\ThemeManager\\src\\Http\\Middleware\\ThemeMidd
+leware.php(20): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#24 C:\\Users\\Usuario\\Desktop\\Krayin-\\laravel-crm\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.
+php(183): Webkul\\ThemeManager\\Http\\Middleware\\ThemeMiddleware->handle(Object(Illuminate\\Http\\Request), 
+Object(Closure))
+#21 C:\\Users\\Usuario\\Desktop\\Krayin-\\laravel-crm\\packages\\Webkul\\ThemeManager\\src\\Http\\Middleware\\ThemeMidd
+leware.php(20): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#22 C:\\Users\\Usuario\\Desktop\\Krayin-\\laravel-crm\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.
+php(183): Webkul\\ThemeManager\\Http\\Middleware\\ThemeMiddleware->handle(Object(Illuminate\\Http\\Request), 
+Object(Closure))
+#23 C:\\Users\\Usuario\\Desktop\\Krayin-\\laravel-crm\\packages\\Webkul\\ThemeManager\\src\\Http\\Middleware\\ThemeMidd
+leware.php(20): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#24 C:\\Users\\Usuario\\Desktop\\Krayin-\\laravel-crm\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.
+php(183): Webkul\\ThemeManager\\Http\\Middleware\\ThemeMiddleware->handle(Object(Illuminate\\Http\\Request), 
+Object(Closure))
+#25 C:\\Users\\Usuario\\Desktop\\Krayin-\\laravel-crm\\packages\\Webkul\\ThemeManager\\src\\Http\\Middleware\\ThemeMidd
+leware.php(20): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#26 C:\\Users\\Usuario\\Desktop\\Krayin-\\laravel-crm\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.
+php(183): Webkul\\ThemeManager\\Http\\Middleware\\ThemeMiddleware->handle(Object(Illuminate\\Http\\Request), 
+Object(Closure))
+#27 C:\\Users\\Usuario\\Desktop\\Krayin-\\laravel-crm\\packages\\Webkul\\ThemeManager\\src\\Http\\Middleware\\ThemeMidd
+leware.php(20): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#28 C:\\Users\\Usuario\\Desktop\\Krayin-\\laravel-crm\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.
+php(183): Webkul\\ThemeManager\\Http\\Middleware\\ThemeMiddleware->handle(Object(Illuminate\\Http\\Request), 
+Object(Closure))
+[2025-12-21 11:57:04] local.ERROR: Too few arguments to function 
+Webkul\ThemeManager\Repositories\ThemeConfigRepository::__construct(), 0 passed in 
+C:\Users\Usuario\Desktop\Krayin-\laravel-crm\test_theme_advanced.php on line 92 and exactly 2 expected 
+{"exception":"[object] (ArgumentCountError(code: 0): Too few arguments to function 
+Webkul\\ThemeManager\\Repositories\\ThemeConfigRepository::__construct(), 0 passed in 
+C:\\Users\\Usuario\\Desktop\\Krayin-\\laravel-crm\\test_theme_advanced.php on line 92 and exactly 2 expected at C:\\Use
+rs\\Usuario\\Desktop\\Krayin-\\laravel-crm\\packages\\Webkul\\ThemeManager\\src\\Repositories\\ThemeConfigRepository.ph
+p:32)
+#0 C:\\Users\\Usuario\\Desktop\\Krayin-\\laravel-crm\\test_theme_advanced.php(92): 
+Webkul\\ThemeManager\\Repositories\\ThemeConfigRepository->__construct()
+[2025-12-21 11:57:48] local.ERROR: Too few arguments to function 
+Webkul\ThemeManager\Http\Controllers\ThemeController::__construct(), 0 passed in 
+C:\Users\Usuario\Desktop\Krayin-\laravel-crm\test_theme_advanced.php on line 118 and exactly 1 expected 
+{"exception":"[object] (ArgumentCountError(code: 0): Too few arguments to function 
+Webkul\\ThemeManager\\Http\\Controllers\\ThemeController::__construct(), 0 passed in 
+C:\\Users\\Usuario\\Desktop\\Krayin-\\laravel-crm\\test_theme_advanced.php on line 118 and exactly 1 expected at C:\\Us
+ers\\Usuario\\Desktop\\Krayin-\\laravel-crm\\packages\\Webkul\\ThemeManager\\src\\Http\\Controllers\\ThemeController.ph
+p:25)
+#0 C:\\Users\\Usuario\\Desktop\\Krayin-\\laravel-crm\\test_theme_advanced.php(118): 
+Webkul\\ThemeManager\\Http\\Controllers\\ThemeController->__construct()
+#21 C:\\Users\\Usuario\\Desktop\\Krayin-\\laravel-crm\\packages\\Webkul\\ThemeManager\\src\\Http\\Middleware\\ThemeMidd
+leware.php(20): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#22 C:\\Users\\Usuario\\Desktop\\Krayin-\\laravel-crm\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.
+php(183): Webkul\\ThemeManager\\Http\\Middleware\\ThemeMiddleware->handle(Object(Illuminate\\Http\\Request), 
+Object(Closure))
+#23 C:\\Users\\Usuario\\Desktop\\Krayin-\\laravel-crm\\packages\\Webkul\\ThemeManager\\src\\Http\\Middleware\\ThemeMidd
+leware.php(20): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#24 C:\\Users\\Usuario\\Desktop\\Krayin-\\laravel-crm\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.
+php(183): Webkul\\ThemeManager\\Http\\Middleware\\ThemeMiddleware->handle(Object(Illuminate\\Http\\Request), 
+Object(Closure))
+#25 C:\\Users\\Usuario\\Desktop\\Krayin-\\laravel-crm\\packages\\Webkul\\ThemeManager\\src\\Http\\Middleware\\ThemeMidd
+leware.php(20): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#26 C:\\Users\\Usuario\\Desktop\\Krayin-\\laravel-crm\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.
+php(183): Webkul\\ThemeManager\\Http\\Middleware\\ThemeMiddleware->handle(Object(Illuminate\\Http\\Request), 
+Object(Closure))
+#27 C:\\Users\\Usuario\\Desktop\\Krayin-\\laravel-crm\\packages\\Webkul\\ThemeManager\\src\\Http\\Middleware\\ThemeMidd
+leware.php(20): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#28 C:\\Users\\Usuario\\Desktop\\Krayin-\\laravel-crm\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.
+php(183): Webkul\\ThemeManager\\Http\\Middleware\\ThemeMiddleware->handle(Object(Illuminate\\Http\\Request), 
+Object(Closure))
+#21 C:\\Users\\Usuario\\Desktop\\Krayin-\\laravel-crm\\packages\\Webkul\\ThemeManager\\src\\Http\\Middleware\\ThemeMidd
+leware.php(20): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#22 C:\\Users\\Usuario\\Desktop\\Krayin-\\laravel-crm\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.
+php(183): Webkul\\ThemeManager\\Http\\Middleware\\ThemeMiddleware->handle(Object(Illuminate\\Http\\Request), 
+Object(Closure))
+#23 C:\\Users\\Usuario\\Desktop\\Krayin-\\laravel-crm\\packages\\Webkul\\ThemeManager\\src\\Http\\Middleware\\ThemeMidd
+leware.php(20): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#24 C:\\Users\\Usuario\\Desktop\\Krayin-\\laravel-crm\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.
+php(183): Webkul\\ThemeManager\\Http\\Middleware\\ThemeMiddleware->handle(Object(Illuminate\\Http\\Request), 
+Object(Closure))
+#25 C:\\Users\\Usuario\\Desktop\\Krayin-\\laravel-crm\\packages\\Webkul\\ThemeManager\\src\\Http\\Middleware\\ThemeMidd
+leware.php(20): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#26 C:\\Users\\Usuario\\Desktop\\Krayin-\\laravel-crm\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.
+php(183): Webkul\\ThemeManager\\Http\\Middleware\\ThemeMiddleware->handle(Object(Illuminate\\Http\\Request), 
+Object(Closure))
+#27 C:\\Users\\Usuario\\Desktop\\Krayin-\\laravel-crm\\packages\\Webkul\\ThemeManager\\src\\Http\\Middleware\\ThemeMidd
+leware.php(20): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#28 C:\\Users\\Usuario\\Desktop\\Krayin-\\laravel-crm\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.
+php(183): Webkul\\ThemeManager\\Http\\Middleware\\ThemeMiddleware->handle(Object(Illuminate\\Http\\Request), 
+Object(Closure))
+#21 C:\\Users\\Usuario\\Desktop\\Krayin-\\laravel-crm\\packages\\Webkul\\ThemeManager\\src\\Http\\Middleware\\ThemeMidd
+leware.php(20): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#22 C:\\Users\\Usuario\\Desktop\\Krayin-\\laravel-crm\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.
+php(183): Webkul\\ThemeManager\\Http\\Middleware\\ThemeMiddleware->handle(Object(Illuminate\\Http\\Request), 
+Object(Closure))
+#23 C:\\Users\\Usuario\\Desktop\\Krayin-\\laravel-crm\\packages\\Webkul\\ThemeManager\\src\\Http\\Middleware\\ThemeMidd
+leware.php(20): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#24 C:\\Users\\Usuario\\Desktop\\Krayin-\\laravel-crm\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.
+php(183): Webkul\\ThemeManager\\Http\\Middleware\\ThemeMiddleware->handle(Object(Illuminate\\Http\\Request), 
+Object(Closure))
+#25 C:\\Users\\Usuario\\Desktop\\Krayin-\\laravel-crm\\packages\\Webkul\\ThemeManager\\src\\Http\\Middleware\\ThemeMidd
+leware.php(20): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#26 C:\\Users\\Usuario\\Desktop\\Krayin-\\laravel-crm\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.
+php(183): Webkul\\ThemeManager\\Http\\Middleware\\ThemeMiddleware->handle(Object(Illuminate\\Http\\Request), 
+Object(Closure))
+#27 C:\\Users\\Usuario\\Desktop\\Krayin-\\laravel-crm\\packages\\Webkul\\ThemeManager\\src\\Http\\Middleware\\ThemeMidd
+leware.php(20): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#28 C:\\Users\\Usuario\\Desktop\\Krayin-\\laravel-crm\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.
+php(183): Webkul\\ThemeManager\\Http\\Middleware\\ThemeMiddleware->handle(Object(Illuminate\\Http\\Request), 
+Object(Closure))
+#21 C:\\Users\\Usuario\\Desktop\\Krayin-\\laravel-crm\\packages\\Webkul\\ThemeManager\\src\\Http\\Middleware\\ThemeMidd
+leware.php(20): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#22 C:\\Users\\Usuario\\Desktop\\Krayin-\\laravel-crm\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.
+php(183): Webkul\\ThemeManager\\Http\\Middleware\\ThemeMiddleware->handle(Object(Illuminate\\Http\\Request), 
+Object(Closure))
+#23 C:\\Users\\Usuario\\Desktop\\Krayin-\\laravel-crm\\packages\\Webkul\\ThemeManager\\src\\Http\\Middleware\\ThemeMidd
+leware.php(20): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#24 C:\\Users\\Usuario\\Desktop\\Krayin-\\laravel-crm\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.
+php(183): Webkul\\ThemeManager\\Http\\Middleware\\ThemeMiddleware->handle(Object(Illuminate\\Http\\Request), 
+Object(Closure))
+#21 C:\\Users\\Usuario\\Desktop\\Krayin-\\laravel-crm\\packages\\Webkul\\ThemeManager\\src\\Http\\Middleware\\ThemeMidd
+leware.php(20): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#22 C:\\Users\\Usuario\\Desktop\\Krayin-\\laravel-crm\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.
+php(183): Webkul\\ThemeManager\\Http\\Middleware\\ThemeMiddleware->handle(Object(Illuminate\\Http\\Request), 
+Object(Closure))
+#23 C:\\Users\\Usuario\\Desktop\\Krayin-\\laravel-crm\\packages\\Webkul\\ThemeManager\\src\\Http\\Middleware\\ThemeMidd
+leware.php(20): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#24 C:\\Users\\Usuario\\Desktop\\Krayin-\\laravel-crm\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.
+php(183): Webkul\\ThemeManager\\Http\\Middleware\\ThemeMiddleware->handle(Object(Illuminate\\Http\\Request), 
+Object(Closure))
+#25 C:\\Users\\Usuario\\Desktop\\Krayin-\\laravel-crm\\packages\\Webkul\\ThemeManager\\src\\Http\\Middleware\\ThemeMidd
+leware.php(20): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#26 C:\\Users\\Usuario\\Desktop\\Krayin-\\laravel-crm\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.
+php(183): Webkul\\ThemeManager\\Http\\Middleware\\ThemeMiddleware->handle(Object(Illuminate\\Http\\Request), 
+Object(Closure))
+#27 C:\\Users\\Usuario\\Desktop\\Krayin-\\laravel-crm\\packages\\Webkul\\ThemeManager\\src\\Http\\Middleware\\ThemeMidd
+leware.php(20): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#28 C:\\Users\\Usuario\\Desktop\\Krayin-\\laravel-crm\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.
+php(183): Webkul\\ThemeManager\\Http\\Middleware\\ThemeMiddleware->handle(Object(Illuminate\\Http\\Request), 
+Object(Closure))
+[2025-12-22 03:45:03] local.INFO: ðŸ” ThemeManager Upload Debug {"all_keys":["_token","is_active","color_primary","col
+or_primary_dark","color_primary_light","color_success","color_warning","color_danger","logo_light_delete","login_bg_zoo
+m","login_bg_opacity","login_card_overlay_color","login_card_title","login_card_subtitle","login_card_support_email","l
+ogo_light"],"files_keys":["logo_light"],"hasFile_logo_main":false,"hasFile_logo_light":true,"hasFile_favicon":false,"lo
+go_main_info":null} 
+[2025-12-22 03:45:03] local.INFO: ðŸ” Merged Data Debug {"merged_keys":["_token","is_active","color_primary","color_pr
+imary_dark","color_primary_light","color_success","color_warning","color_danger","logo_light_delete","login_bg_zoom","l
+ogin_bg_opacity","login_card_overlay_color","login_card_title","login_card_subtitle","login_card_support_email","logo_l
+ight"],"logo_main_type":"not set"} 
+[2025-12-22 03:45:03] local.INFO: ðŸ” Repository Update Debug {"data_keys":["_token","is_active","color_primary","colo
+r_primary_dark","color_primary_light","color_success","color_warning","color_danger","logo_light_delete","login_bg_zoom
+","login_bg_opacity","login_card_overlay_color","login_card_title","login_card_subtitle","login_card_support_email","lo
+go_light"],"has_logo_main":false,"logo_main_type":"not set","logo_main_instanceof_UploadedFile":false} 
+[2025-12-22 04:49:36] local.INFO: ðŸ” ThemeManager Upload Debug {"all_keys":["_token","is_active","color_primary","col
+or_primary_dark","color_primary_light","color_success","color_warning","color_danger","login_bg_zoom","login_bg_opacity
+","login_card_overlay_color","login_card_title","login_card_subtitle","login_card_support_email"],"files_keys":[],"hasF
+ile_logo_main":false,"hasFile_logo_light":false,"hasFile_favicon":false,"logo_main_info":null} 
+[2025-12-22 04:49:36] local.INFO: ðŸ” Merged Data Debug {"merged_keys":["_token","is_active","color_primary","color_pr
+imary_dark","color_primary_light","color_success","color_warning","color_danger","login_bg_zoom","login_bg_opacity","lo
+gin_card_overlay_color","login_card_title","login_card_subtitle","login_card_support_email"],"logo_main_type":"not 
+set"} 
+[2025-12-22 04:49:36] local.INFO: ðŸ” Repository Update Debug {"data_keys":["_token","is_active","color_primary","colo
+r_primary_dark","color_primary_light","color_success","color_warning","color_danger","login_bg_zoom","login_bg_opacity"
+,"login_card_overlay_color","login_card_title","login_card_subtitle","login_card_support_email"],"has_logo_main":false,
+"logo_main_type":"not set","logo_main_instanceof_UploadedFile":false} 
+
+

@@ -4,7 +4,6 @@ use Illuminate\Support\Facades\Facade;
 use Illuminate\Support\ServiceProvider;
 
 return [
-
     /*
     |--------------------------------------------------------------------------
     | Application Name
@@ -16,7 +15,7 @@ return [
     |
      */
 
-    'name' => env('APP_NAME', 'Laravel'),
+    "name" => env("APP_NAME", "Laravel"),
 
     /*
     |--------------------------------------------------------------------------
@@ -29,7 +28,7 @@ return [
     |
      */
 
-    'env' => env('APP_ENV', 'production'),
+    "env" => env("APP_ENV", "production"),
 
     /*
     |--------------------------------------------------------------------------
@@ -42,7 +41,7 @@ return [
     |
      */
 
-    'debug' => (bool) env('APP_DEBUG', false),
+    "debug" => (bool) env("APP_DEBUG", false),
 
     /*
     |--------------------------------------------------------------------------
@@ -55,7 +54,7 @@ return [
     |
      */
 
-    'url' => env('APP_URL', 'http://localhost'),
+    "url" => env("APP_URL", "http://localhost"),
 
     /*
     |--------------------------------------------------------------------------
@@ -67,9 +66,9 @@ return [
     |
      */
 
-    'admin_path' => env('APP_ADMIN_PATH', 'admin'),
+    "admin_path" => env("APP_ADMIN_PATH", "admin"),
 
-    'asset_url' => env('ASSET_URL', null),
+    "asset_url" => env("ASSET_URL", null),
 
     /*
     |--------------------------------------------------------------------------
@@ -82,7 +81,7 @@ return [
     |
      */
 
-    'timezone' => env('APP_TIMEZONE', 'Asia/Kolkata'),
+    "timezone" => env("APP_TIMEZONE", "Asia/Kolkata"),
 
     /*
     |--------------------------------------------------------------------------
@@ -95,7 +94,7 @@ return [
     |
      */
 
-    'locale' => env('APP_LOCALE', 'en'),
+    "locale" => env("APP_LOCALE", "en"),
 
     /*
     |--------------------------------------------------------------------------
@@ -107,14 +106,14 @@ return [
     |
      */
 
-    'available_locales' => [
-        'ar'    => 'Arabic',
-        'en'    => 'English',
-        'es'    => 'Español',
-        'fa'    => 'Persian',
-        'pt_BR' => 'Portuguese',
-        'tr'    => 'Türkçe',
-        'vi'    => 'Vietnamese',
+    "available_locales" => [
+        "ar" => "Arabic",
+        "en" => "English",
+        "es" => "Español",
+        "fa" => "Persian",
+        "pt_BR" => "Portuguese",
+        "tr" => "Türkçe",
+        "vi" => "Vietnamese",
     ],
 
     /*
@@ -128,7 +127,7 @@ return [
     |
      */
 
-    'fallback_locale' => 'en',
+    "fallback_locale" => "en",
 
     /*
     |--------------------------------------------------------------------------
@@ -141,7 +140,7 @@ return [
     |
      */
 
-    'faker_locale' => 'en_US',
+    "faker_locale" => "en_US",
 
     /*
     |--------------------------------------------------------------------------
@@ -152,7 +151,7 @@ return [
     |
      */
 
-    'currency' => env('APP_CURRENCY', 'USD'),
+    "currency" => env("APP_CURRENCY", "USD"),
 
     /*
     |--------------------------------------------------------------------------
@@ -165,9 +164,9 @@ return [
     |
      */
 
-    'key' => env('APP_KEY'),
+    "key" => env("APP_KEY"),
 
-    'cipher' => 'AES-256-CBC',
+    "cipher" => "AES-256-CBC",
 
     /*
     |--------------------------------------------------------------------------
@@ -180,47 +179,55 @@ return [
     |
      */
 
-    'providers' => ServiceProvider::defaultProviders()->merge([
-        /*
-         * Package Service Providers...
-         */
-        Barryvdh\DomPDF\ServiceProvider::class,
-        Konekt\Concord\ConcordServiceProvider::class,
-        Prettus\Repository\Providers\RepositoryServiceProvider::class,
+    "providers" => ServiceProvider::defaultProviders()
+        ->merge([
+            /*
+             * Package Service Providers...
+             */
+            Barryvdh\DomPDF\ServiceProvider::class,
+            Konekt\Concord\ConcordServiceProvider::class,
+            Prettus\Repository\Providers\RepositoryServiceProvider::class,
 
-        /*
-         * Application Service Providers...
-         */
-        App\Providers\AppServiceProvider::class,
-        App\Providers\AuthServiceProvider::class,
-        // App\Providers\BroadcastServiceProvider::class,
-        App\Providers\EventServiceProvider::class,
-        App\Providers\RouteServiceProvider::class,
+            /*
+             * Application Service Providers...
+             */
+            App\Providers\AppServiceProvider::class,
+            App\Providers\AuthServiceProvider::class,
+            // App\Providers\BroadcastServiceProvider::class,
+            App\Providers\EventServiceProvider::class,
+            App\Providers\RouteServiceProvider::class,
 
-        /*
-         * Webkul Service Providers...
-         */
-        Webkul\Activity\Providers\ActivityServiceProvider::class,
-        Webkul\Admin\Providers\AdminServiceProvider::class,
-        Webkul\Attribute\Providers\AttributeServiceProvider::class,
-        Webkul\Automation\Providers\WorkflowServiceProvider::class,
-        Webkul\Contact\Providers\ContactServiceProvider::class,
-        Webkul\Core\Providers\CoreServiceProvider::class,
-        Webkul\DataGrid\Providers\DataGridServiceProvider::class,
-        Webkul\DataTransfer\Providers\DataTransferServiceProvider::class,
-        Webkul\EmailTemplate\Providers\EmailTemplateServiceProvider::class,
-        Webkul\Email\Providers\EmailServiceProvider::class,
-        Webkul\Marketing\Providers\MarketingServiceProvider::class,
-        Webkul\Installer\Providers\InstallerServiceProvider::class,
-        Webkul\Lead\Providers\LeadServiceProvider::class,
-        Webkul\Product\Providers\ProductServiceProvider::class,
-        Webkul\Quote\Providers\QuoteServiceProvider::class,
-        Webkul\Tag\Providers\TagServiceProvider::class,
-        Webkul\User\Providers\UserServiceProvider::class,
-        Webkul\Warehouse\Providers\WarehouseServiceProvider::class,
-        Webkul\WebForm\Providers\WebFormServiceProvider::class,
-        Webkul\ThemeManager\Providers\ThemeManagerServiceProvider::class,
-    ])->toArray(),
+            /*
+             * Webkul Service Providers...
+             */
+            Webkul\Activity\Providers\ActivityServiceProvider::class,
+            Webkul\Admin\Providers\AdminServiceProvider::class,
+            Webkul\Attribute\Providers\AttributeServiceProvider::class,
+            Webkul\Automation\Providers\WorkflowServiceProvider::class,
+            Webkul\Contact\Providers\ContactServiceProvider::class,
+            Webkul\Core\Providers\CoreServiceProvider::class,
+            Webkul\DataGrid\Providers\DataGridServiceProvider::class,
+            Webkul\DataTransfer\Providers\DataTransferServiceProvider::class,
+            Webkul\EmailTemplate\Providers\EmailTemplateServiceProvider::class,
+            Webkul\Email\Providers\EmailServiceProvider::class,
+            Webkul\Marketing\Providers\MarketingServiceProvider::class,
+            Webkul\Installer\Providers\InstallerServiceProvider::class,
+            Webkul\Lead\Providers\LeadServiceProvider::class,
+            Webkul\Product\Providers\ProductServiceProvider::class,
+            Webkul\Quote\Providers\QuoteServiceProvider::class,
+            Webkul\Tag\Providers\TagServiceProvider::class,
+            Webkul\User\Providers\UserServiceProvider::class,
+            Webkul\Warehouse\Providers\WarehouseServiceProvider::class,
+            Webkul\WebForm\Providers\WebFormServiceProvider::class,
+            Webkul\ThemeManager\Providers\ThemeManagerServiceProvider::class,
+
+            /*
+             * Theme Override Provider (upgrade-safe)
+             * Deve vir DEPOIS do ThemeManagerServiceProvider para ter prioridade
+             */
+            App\Providers\ThemeBootProvider::class,
+        ])
+        ->toArray(),
 
     /*
     |--------------------------------------------------------------------------
@@ -233,6 +240,5 @@ return [
     |
      */
 
-    'aliases' => Facade::defaultAliases()->merge([])->toArray(),
-
+    "aliases" => Facade::defaultAliases()->merge([])->toArray(),
 ];

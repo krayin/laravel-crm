@@ -44,6 +44,7 @@ class ThemeConfig extends Model implements ThemeConfigContract
         'login_card_sparkles',
         'login_card_help_link',
         'login_card_support_email',
+        'login_card_custom_code',
         'empty_state_activities',
         'empty_state_calls',
         'empty_state_emails',

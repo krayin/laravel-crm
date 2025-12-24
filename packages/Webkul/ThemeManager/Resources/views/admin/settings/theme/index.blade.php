@@ -52,10 +52,9 @@
                                 @lang('theme-manager::app.settings.activation.is-active')
                             </x-admin::form.control-group.label>
 
-                            <x-admin::form.control-group.control
-                                type="select"
+                            <select
                                 name="is_active"
-                                :value="old('is_active', $config->is_active)"
+                                class="block w-full rounded-md border border-gray-200 px-3 py-2.5 text-sm text-gray-600 transition-all hover:border-gray-400 focus:border-blue-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 dark:focus:border-blue-400"
                             >
                                 <option value="0" {{ old('is_active', $config->is_active) == 0 ? 'selected' : '' }}>
                                     @lang('theme-manager::app.settings.activation.no')
@@ -63,7 +62,7 @@
                                 <option value="1" {{ old('is_active', $config->is_active) == 1 ? 'selected' : '' }}>
                                     @lang('theme-manager::app.settings.activation.yes')
                                 </option>
-                            </x-admin::form.control-group.control>
+                            </select>
 
                             <x-admin::form.control-group.error control-name="is_active" />
                         </x-admin::form.control-group>
@@ -403,7 +402,15 @@
                         </div>
                     </div>
 
-                    <!-- SEÇÃO 4 - PÁGINA DE LOGIN (BACKGROUND) -->
+                    {{--
+                    ============================================================================
+                    SEÇÕES DE LOGIN PAGE TEMPORARIAMENTE DESABILITADAS
+                    Backend mantido intacto para facilitar reativação futura.
+                    Para reativar: remova os comentários {{-- e --}} das seções 4 e 5 abaixo.
+                    ============================================================================
+                    --}}
+
+                    {{-- SEÇÃO 4 - PÁGINA DE LOGIN (BACKGROUND) - DESABILITADA
                     <div class="box-shadow rounded-lg border border-gray-200 bg-white p-4 dark:border-gray-800 dark:bg-gray-900">
                         <p class="mb-4 text-base font-semibold text-gray-800 dark:text-white">
                             @lang('theme-manager::app.settings.login.title')
@@ -414,7 +421,6 @@
                         </p>
 
                         <div class="grid grid-cols-1 gap-6">
-                            <!-- Imagem de Fundo -->
                             <x-admin::form.control-group>
                                 <x-admin::form.control-group.label>
                                     @lang('theme-manager::app.settings.login.bg-image')
@@ -448,7 +454,6 @@
                                 <x-admin::form.control-group.error control-name="login_bg_image" />
                             </x-admin::form.control-group>
 
-                            <!-- Zoom da Imagem -->
                             <x-admin::form.control-group>
                                 <x-admin::form.control-group.label>
                                     @lang('theme-manager::app.settings.login.bg-zoom')
@@ -470,7 +475,6 @@
                                 <x-admin::form.control-group.error control-name="login_bg_zoom" />
                             </x-admin::form.control-group>
 
-                            <!-- Opacidade da Sobreposição -->
                             <x-admin::form.control-group>
                                 <x-admin::form.control-group.label>
                                     @lang('theme-manager::app.settings.login.bg-opacity')
@@ -489,7 +493,6 @@
                                 <x-admin::form.control-group.error control-name="login_bg_opacity" />
                             </x-admin::form.control-group>
 
-                            <!-- Mostrar "Powered By" -->
                             <x-admin::form.control-group>
                                 <x-admin::form.control-group.label>
                                     @lang('theme-manager::app.settings.login.show-powered-by')
@@ -508,8 +511,9 @@
                             </x-admin::form.control-group>
                         </div>
                     </div>
+                    FIM SEÇÃO 4 --}}
 
-                    <!-- SEÇÃO 5 - CAIXA DE LOGIN CUSTOMIZADA -->
+                    {{-- SEÇÃO 5 - CAIXA DE LOGIN CUSTOMIZADA - DESABILITADA
                     <div class="box-shadow rounded-lg border border-gray-200 bg-white p-4 dark:border-gray-800 dark:bg-gray-900">
                         <p class="mb-4 text-base font-semibold text-gray-800 dark:text-white">
                             @lang('theme-manager::app.settings.login-card.section-title')
@@ -519,28 +523,28 @@
                             @lang('theme-manager::app.settings.login-card.description')
                         </p>
 
-                        <!-- Toggle para habilitar -->
                         <x-admin::form.control-group class="mb-6">
                             <x-admin::form.control-group.label>
                                 @lang('theme-manager::app.settings.login-card.enabled')
                             </x-admin::form.control-group.label>
 
-                            <x-admin::form.control-group.control
-                                type="select"
+                            <select
                                 name="login_card_enabled"
                                 id="login_card_enabled"
-                                :value="old('login_card_enabled', $config->login_card_enabled)"
+                                class="block w-full rounded-md border border-gray-200 px-3 py-2.5 text-sm text-gray-600 transition-all hover:border-gray-400 focus:border-blue-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 dark:focus:border-blue-400"
                             >
-                                <option value="0">@lang('theme-manager::app.settings.activation.no')</option>
-                                <option value="1">@lang('theme-manager::app.settings.activation.yes')</option>
-                            </x-admin::form.control-group.control>
+                                <option value="0" {{ old('login_card_enabled', $config->login_card_enabled) == 0 ? 'selected' : '' }}>
+                                    @lang('theme-manager::app.settings.activation.no')
+                                </option>
+                                <option value="1" {{ old('login_card_enabled', $config->login_card_enabled) == 1 ? 'selected' : '' }}>
+                                    @lang('theme-manager::app.settings.activation.yes')
+                                </option>
+                            </select>
 
                             <x-admin::form.control-group.error control-name="login_card_enabled" />
                         </x-admin::form.control-group>
 
-                        <!-- Opções do Card (mostrado/escondido via JS) -->
                         <div id="login-card-options" class="grid grid-cols-1 gap-6">
-                            <!-- Imagem de Fundo do Card -->
                             <x-admin::form.control-group>
                                 <x-admin::form.control-group.label>
                                     @lang('theme-manager::app.settings.login-card.bg-image')
@@ -574,7 +578,6 @@
                                 <x-admin::form.control-group.error control-name="login_card_bg_image" />
                             </x-admin::form.control-group>
 
-                            <!-- Opacidade da Imagem -->
                             <x-admin::form.control-group>
                                 <x-admin::form.control-group.label>
                                     @lang('theme-manager::app.settings.login-card.bg-opacity')
@@ -593,7 +596,6 @@
                                 <x-admin::form.control-group.error control-name="login_card_bg_opacity" />
                             </x-admin::form.control-group>
 
-                            <!-- Cor do Overlay -->
                             <x-admin::form.control-group>
                                 <x-admin::form.control-group.label>
                                     @lang('theme-manager::app.settings.login-card.overlay-color')
@@ -613,7 +615,6 @@
                                 <x-admin::form.control-group.error control-name="login_card_overlay_color" />
                             </x-admin::form.control-group>
 
-                            <!-- Título de Boas-vindas -->
                             <x-admin::form.control-group>
                                 <x-admin::form.control-group.label>
                                     @lang('theme-manager::app.settings.login-card.welcome-title')
@@ -628,7 +629,6 @@
                                 <x-admin::form.control-group.error control-name="login_card_title" />
                             </x-admin::form.control-group>
 
-                            <!-- Subtítulo -->
                             <x-admin::form.control-group>
                                 <x-admin::form.control-group.label>
                                     @lang('theme-manager::app.settings.login-card.subtitle')
@@ -643,7 +643,6 @@
                                 <x-admin::form.control-group.error control-name="login_card_subtitle" />
                             </x-admin::form.control-group>
 
-                            <!-- Efeito de Brilhos -->
                             <x-admin::form.control-group>
                                 <x-admin::form.control-group.label>
                                     @lang('theme-manager::app.settings.login-card.sparkles')
@@ -665,7 +664,6 @@
                                 <x-admin::form.control-group.error control-name="login_card_sparkles" />
                             </x-admin::form.control-group>
 
-                            <!-- Link de Ajuda -->
                             <x-admin::form.control-group>
                                 <x-admin::form.control-group.label>
                                     @lang('theme-manager::app.settings.login-card.help-link')
@@ -683,7 +681,6 @@
                                 <x-admin::form.control-group.error control-name="login_card_help_link" />
                             </x-admin::form.control-group>
 
-                            <!-- E-mail de Suporte -->
                             <x-admin::form.control-group>
                                 <x-admin::form.control-group.label>
                                     @lang('theme-manager::app.settings.login-card.support-email')
@@ -697,8 +694,28 @@
 
                                 <x-admin::form.control-group.error control-name="login_card_support_email" />
                             </x-admin::form.control-group>
+
+                            <x-admin::form.control-group class="mb-6">
+                                <x-admin::form.control-group.label>
+                                    @lang('theme-manager::app.settings.login-card.custom-code')
+                                </x-admin::form.control-group.label>
+
+                                <textarea
+                                    name="login_card_custom_code"
+                                    rows="10"
+                                    class="block w-full rounded-md border border-gray-200 px-3 py-2.5 text-sm text-gray-600 transition-all hover:border-gray-400 focus:border-blue-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 dark:focus:border-blue-400 font-mono"
+                                    placeholder="<!-- Cole seu código HTML/CSS/JavaScript aqui -->"
+                                >{{ old('login_card_custom_code', $config->login_card_custom_code) }}</textarea>
+
+                                <p class="mt-2 text-xs text-gray-600 dark:text-gray-300">
+                                    @lang('theme-manager::app.settings.login-card.custom-code-hint')
+                                </p>
+
+                                <x-admin::form.control-group.error control-name="login_card_custom_code" />
+                            </x-admin::form.control-group>
                         </div>
                     </div>
+                    FIM SEÇÃO 5 --}}
 
                     <!-- SEÇÃO 6 - EMPTY STATES -->
                     <div class="box-shadow rounded-lg border border-gray-200 bg-white p-4 dark:border-gray-800 dark:bg-gray-900">
@@ -749,6 +766,7 @@
         </div>
     </x-admin::form>
 
+    {{-- JavaScript desabilitado junto com as seções de Login Page
     @pushOnce('scripts')
         <script>
             // Toggle login card options based on enabled status
@@ -772,4 +790,5 @@
             });
         </script>
     @endPushOnce
+    --}}
 </x-admin::layouts>
