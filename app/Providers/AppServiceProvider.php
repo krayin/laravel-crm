@@ -11,9 +11,13 @@ class AppServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function register()
+    public function register(): void
     {
-        //
+        $this->app->singleton(\App\Support\CssValidator::class);
+        $this->app->singleton(\App\Support\BrandKitResolver::class);
+        $this->app->singleton(\App\Support\ThemeSelectionResolver::class);
+        $this->app->singleton(\App\Support\ThemeContextFactory::class);
+        $this->app->singleton(\App\Repositories\BrandKitRepository::class);
     }
 
     /**
@@ -21,7 +25,7 @@ class AppServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot()
+    public function boot(): void
     {
         //
     }

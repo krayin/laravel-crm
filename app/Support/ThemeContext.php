@@ -2,252 +2,222 @@
 
 namespace App\Support;
 
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 /**
- * Value object imutável que representa o contexto do tema atual.
- * Usado para passar informações de tema para as views de forma type-safe.
+ * Value Object imutavel: Views so leem propriedades/metodos.
+ * Zero queries em Blade.
  */
 final class ThemeContext
 {
-    /**
-     * @param bool   $enabled      Se o sistema de temas está ativo
-     * @param string $slug         Slug do tema selecionado
-     * @param array  $config       Configurações gerais (cores, logos)
-     * @param array  $loginConfig  Configurações específicas do login
-     * @param bool   $isPreview    Se está em modo preview (não persistido)
-     */
     public function __construct(
         public readonly bool $enabled,
         public readonly string $slug,
+        public readonly string $scopeKey,
         public readonly array $config,
         public readonly array $loginConfig,
-        public readonly bool $isPreview = false,
+        public readonly bool $isPreview,
+        public readonly string $customCssAdmin,
+        public readonly string $customCssLogin,
     ) {}
 
     /**
-     * Retorna classes CSS para o body baseado no estado do tema.
-     */
-    public function bodyClasses(): string
-    {
-        $classes = [];
-
-        if ($this->enabled) {
-            $classes[] = "theme-enabled";
-            $classes[] = "theme-" . $this->slug;
-        } else {
-            $classes[] = "theme-disabled";
-        }
-
-        // Adiciona classe de preview se estiver nesse modo
-        if ($this->isPreview) {
-            $classes[] = "theme-preview-mode";
-        }
-
-        // Sempre adiciona classe de login (útil para estilos específicos)
-        $classes[] = "theme-login";
-
-        // Adiciona classe de background se tiver imagem configurada
-        if ($this->enabled && !empty($this->loginConfig["bg_image"])) {
-            $classes[] = "theme-login-bg";
-        }
-
-        // Adiciona classe de card customizado se habilitado
-        if ($this->enabled && !empty($this->loginConfig["card_enabled"])) {
-            $classes[] = "theme-login-card-custom";
-        }
-
-        return implode(" ", $classes);
-    }
-
-    /**
-     * Verifica se está em modo preview.
-     */
-    public function inPreviewMode(): bool
-    {
-        return $this->isPreview;
-    }
-
-    /**
-     * Obtém valor de configuração geral com fallback.
-     */
-    public function get(string $key, mixed $default = null): mixed
-    {
-        if (!$this->enabled) {
-            return $default;
-        }
-
-        return $this->config[$key] ?? $default;
-    }
-
-    /**
-     * Obtém valor de configuração de login com fallback.
-     */
-    public function login(string $key, mixed $default = null): mixed
-    {
-        if (!$this->enabled) {
-            return $default;
-        }
-
-        return $this->loginConfig[$key] ?? $default;
-    }
-
-    /**
-     * Obtém URL do logo por tipo (main, light, icon).
-     * Retorna null se tema desativado ou logo não configurado.
-     */
-    public function logo(string $type): ?string
-    {
-        if (!$this->enabled) {
-            return null;
-        }
-
-        $key = "logo_{$type}";
-        $filename = $this->config[$key] ?? null;
-
-        if (empty($filename)) {
-            return null;
-        }
-
-        // Assets do tema ficam em storage/app/public/themes/{slug}/
-        // ou no path legado theme-manager/
-        if (
-            Storage::disk("public")->exists("themes/{$this->slug}/{$filename}")
-        ) {
-            return Storage::disk("public")->url(
-                "themes/{$this->slug}/{$filename}",
-            );
-        }
-
-        // Fallback para path legado (theme-manager/)
-        if (Storage::disk("public")->exists("theme-manager/{$filename}")) {
-            return Storage::disk("public")->url("theme-manager/{$filename}");
-        }
-
-        return null;
-    }
-
-    /**
-     * Obtém URL do CSS externo do tema (opcional).
-     */
-    public function cssUrl(): ?string
-    {
-        if (!$this->enabled) {
-            return null;
-        }
-
-        $cssPath = "themes/{$this->slug}/theme.css";
-
-        if (Storage::disk("public")->exists($cssPath)) {
-            return Storage::disk("public")->url($cssPath) .
-                "?v=" .
-                filemtime(storage_path("app/public/{$cssPath}"));
-        }
-
-        return null;
-    }
-
-    /**
-     * Obtém URL do background de login.
-     */
-    public function loginBgUrl(): ?string
-    {
-        if (!$this->enabled) {
-            return null;
-        }
-
-        $filename = $this->loginConfig["bg_image"] ?? null;
-
-        if (empty($filename)) {
-            return null;
-        }
-
-        // Se já é URL completa
-        if (str_starts_with($filename, "http")) {
-            return $filename;
-        }
-
-        // Tenta no diretório do tema
-        if (
-            Storage::disk("public")->exists("themes/{$this->slug}/{$filename}")
-        ) {
-            return Storage::disk("public")->url(
-                "themes/{$this->slug}/{$filename}",
-            );
-        }
-
-        // Fallback para path legado
-        if (Storage::disk("public")->exists("theme-manager/{$filename}")) {
-            return Storage::disk("public")->url("theme-manager/{$filename}");
-        }
-
-        return null;
-    }
-
-    /**
-     * Obtém URL do background do card de login.
-     */
-    public function loginCardBgUrl(): ?string
-    {
-        if (!$this->enabled || empty($this->loginConfig["card_enabled"])) {
-            return null;
-        }
-
-        $filename = $this->loginConfig["card_bg_image"] ?? null;
-
-        if (empty($filename)) {
-            return null;
-        }
-
-        if (str_starts_with($filename, "http")) {
-            return $filename;
-        }
-
-        if (
-            Storage::disk("public")->exists("themes/{$this->slug}/{$filename}")
-        ) {
-            return Storage::disk("public")->url(
-                "themes/{$this->slug}/{$filename}",
-            );
-        }
-
-        if (Storage::disk("public")->exists("theme-manager/{$filename}")) {
-            return Storage::disk("public")->url("theme-manager/{$filename}");
-        }
-
-        return null;
-    }
-
-    /**
-     * Verifica se o card customizado está habilitado.
-     */
-    public function hasCustomCard(): bool
-    {
-        return $this->enabled && !empty($this->loginConfig["card_enabled"]);
-    }
-
-    /**
-     * Verifica se deve mostrar "Powered by".
-     */
-    public function showPoweredBy(): bool
-    {
-        if (!$this->enabled) {
-            return true; // Padrão quando tema desativado
-        }
-
-        return (bool) ($this->loginConfig["show_powered_by"] ?? true);
-    }
-
-    /**
-     * Retorna contexto vazio/desativado (para fallback).
+     * Factory para contexto desabilitado (fallback seguro)
      */
     public static function disabled(): self
     {
         return new self(
             enabled: false,
             slug: "default",
+            scopeKey: "global",
             config: [],
             loginConfig: [],
+            isPreview: false,
+            customCssAdmin: "",
+            customCssLogin: "",
         );
+    }
+
+    public function get(string $key, mixed $default = null): mixed
+    {
+        return $this->config[$key] ?? $default;
+    }
+
+    /**
+     * Acesso aos itens de login (ja normalizados / filtrados)
+     */
+    public function login(string $key, mixed $default = null): mixed
+    {
+        return $this->loginConfig[$key] ?? $default;
+    }
+
+    /**
+     * Variaveis CSS para injecao no <head>.
+     */
+    public function cssVariables(): string
+    {
+        $vars = [
+            "--color-primary" => $this->get("color_primary"),
+            "--color-primary-dark" => $this->get("color_primary_dark"),
+            "--color-primary-light" => $this->get("color_primary_light"),
+            "--color-success" => $this->get("color_success"),
+            "--color-warning" => $this->get("color_warning"),
+            "--color-danger" => $this->get("color_danger"),
+        ];
+
+        $css = ":root {";
+        foreach ($vars as $name => $value) {
+            if ($value !== null && $value !== "") {
+                $css .= " {$name}: {$value};";
+            }
+        }
+        $css .= " }";
+
+        return $css;
+    }
+
+    /**
+     * Classes globais do body (compat)
+     */
+    public function bodyClasses(): string
+    {
+        if (!$this->enabled) {
+            return "";
+        }
+
+        $classes = [
+            "theme-enabled",
+            "theme-" . $this->slug,
+            $this->isPreview ? "theme-preview" : null,
+        ];
+
+        // Background de login
+        if ($this->login("bg_image")) {
+            $classes[] = "theme-login-bg";
+        }
+
+        // Card customizado
+        if ($this->hasCustomCard()) {
+            $classes[] = "theme-login-card-custom";
+        }
+
+        return trim(implode(" ", array_filter($classes)));
+    }
+
+    /**
+     * URL do background do login (compat)
+     */
+    public function loginBgUrl(): ?string
+    {
+        // suportar tanto login_bg_image quanto login_bg_url
+        $bg = $this->get("login_bg_image") ?? $this->get("login_bg_url");
+
+        return $this->resolveAssetUrl($bg, "storage/themes/{$this->slug}");
+    }
+
+    /**
+     * Exibe card custom no login (compat)
+     */
+    public function hasCustomCard(): bool
+    {
+        // seu plano usa login_card_enabled
+        $val = $this->get("login_card_enabled", false);
+
+        // garantir bool mesmo se vier string
+        return filter_var($val, FILTER_VALIDATE_BOOLEAN);
+    }
+
+    /**
+     * Background do card de login (compat)
+     */
+    public function loginCardBgUrl(): ?string
+    {
+        // Nem todo theme.json tem isso; deixamos opcional e seguro
+        $bg =
+            $this->get("login_card_bg_image") ??
+            $this->get("login_card_bg_url");
+
+        return $this->resolveAssetUrl($bg, "storage/themes/{$this->slug}");
+    }
+
+    /**
+     * URL de um CSS adicional do tema (compat)
+     */
+    public function cssUrl(): ?string
+    {
+        // 1) se existir key explicita no config, usa ela
+        $css = $this->get("theme_css") ?? $this->get("css");
+
+        $url = $this->resolveAssetUrl($css, "storage/themes/{$this->slug}");
+        if ($url) {
+            return $url;
+        }
+
+        // 2) fallback: procurar theme.css no storage do tema
+        $candidate = public_path("storage/themes/{$this->slug}/theme.css");
+        if (is_file($candidate)) {
+            return asset("storage/themes/{$this->slug}/theme.css");
+        }
+
+        return null;
+    }
+
+    /**
+     * Helper: resolve url segura para assets do tema
+     */
+    private function resolveAssetUrl(
+        ?string $value,
+        string $basePublicPath,
+    ): ?string {
+        if (!$value) {
+            return null;
+        }
+
+        $value = trim($value);
+
+        // URL absoluta
+        if (Str::startsWith($value, ["http://", "https://"])) {
+            return $value;
+        }
+
+        // Path absoluto no site
+        if (Str::startsWith($value, ["/"])) {
+            return url($value);
+        }
+
+        // Arquivo relativo ao tema
+        return asset($basePublicPath . "/" . ltrim($value, "/"));
+    }
+
+    /**
+     * Helpers de assets do tema
+     */
+    public function themeAsset(?string $relativePath): ?string
+    {
+        if (!$relativePath) {
+            return null;
+        }
+
+        return asset("storage/themes/{$this->slug}/{$relativePath}");
+    }
+
+    public function logoMain(): ?string
+    {
+        return $this->themeAsset($this->get("logo_main"));
+    }
+
+    public function logoLight(): ?string
+    {
+        return $this->themeAsset($this->get("logo_light"));
+    }
+
+    public function logoIcon(): ?string
+    {
+        return $this->themeAsset($this->get("logo_icon"));
+    }
+
+    public function favicon(): ?string
+    {
+        return $this->themeAsset($this->get("favicon"));
     }
 }
