@@ -16,6 +16,9 @@ Checklists de diagnóstico organizados por sintoma. Siga os passos na ordem até
 8. [Logo não atualiza](#runbook-008---logo-não-atualiza)
 9. [Login background não aparece](#runbook-009---login-background-não-aparece)
 10. [Permissão negada](#runbook-010---permissão-negada)
+11. [View não atualiza](#runbook-011---view-não-atualiza)
+12. [Assets / Versionamento](#runbook-012---assets--versionamento)
+13. [Migration travou / Rollback](#runbook-013---migration-travou--rollback)
 
 ---
 
@@ -975,6 +978,523 @@ Gate::before(function ($user, $ability) {
     }
 });
 ```
+
+---
+
+## Runbook #011 - View Não Atualiza
+
+**Sintoma:** Alterou blade/partial mas mudança não aparece no browser.
+
+### Checklist de Diagnóstico
+
+```
+□ Passo 1: Limpar view cache
+```
+```bash
+php artisan view:clear
+```
+**Esperado:** `Compiled views cleared successfully.`
+
+---
+
+```
+□ Passo 2: Verificar se está editando o arquivo correto
+```
+```bash
+# Krayin usa vendor publish - pode haver duplicatas
+find . -name "NOME_DO_ARQUIVO.blade.php" -type f 2>/dev/null
+```
+**Verificar:** Pode existir em:
+- `resources/views/vendor/admin/...` (sua versão)
+- `packages/Webkul/Admin/src/Resources/views/...` (original)
+
+---
+
+```
+□ Passo 3: Verificar ordem de resolução de views
+```
+Laravel resolve views nesta ordem:
+1. `resources/views/vendor/{package}/...` ← Sua customização
+2. `packages/{Vendor}/{Package}/src/Resources/views/...` ← Original
+
+Se editou no lugar errado, não terá efeito.
+
+---
+
+```
+□ Passo 4: Verificar cache de browser
+```
+- Ctrl+Shift+R (hard refresh)
+- Abrir DevTools (F12) → Network → "Disable cache"
+- Testar em aba anônima
+
+---
+
+```
+□ Passo 5: Verificar se OPcache está cacheando
+```
+```bash
+php artisan tinker --execute="
+    dump([
+        'opcache_enabled' => function_exists('opcache_get_status'),
+        'validate_timestamps' => ini_get('opcache.validate_timestamps'),
+    ]);
+"
+```
+**Se `validate_timestamps = 0`:** OPcache não detecta mudanças.
+```bash
+# Forçar refresh do OPcache (se disponível)
+php artisan tinker --execute="
+    if (function_exists('opcache_reset')) {
+        opcache_reset();
+        echo 'OPcache reset';
+    }
+"
+```
+
+---
+
+```
+□ Passo 6: Verificar if/else no blade
+```
+```bash
+# Ver se há condicionais que podem esconder seu código
+grep -B5 -A5 "@if\|@unless" resources/views/vendor/admin/ARQUIVO.blade.php
+```
+
+---
+
+```
+□ Passo 7: Adicionar debug temporário
+```
+```blade
+{{-- Adicionar no início do arquivo para confirmar que está carregando --}}
+<!-- DEBUG: Este arquivo foi carregado em {{ now() }} -->
+```
+
+---
+
+```
+□ Passo 8: Verificar @extends e @section
+```
+```bash
+grep -n "@extends\|@section\|@yield" resources/views/vendor/admin/ARQUIVO.blade.php
+```
+**Verificar:**
+- `@section` deve ter `@endsection` ou `@show`
+- Nome do `@section` deve bater com `@yield` no layout
+
+---
+
+```
+□ Passo 9: Nuclear - limpar tudo
+```
+```bash
+php artisan optimize:clear
+# Reiniciar PHP-FPM se disponível
+sudo systemctl restart php8.2-fpm
+```
+
+---
+
+### Erros Comuns
+
+| Sintoma | Causa | Solução |
+|---------|-------|---------|
+| View antiga aparece | Cache de view | `php artisan view:clear` |
+| Alteração some após deploy | OPcache | `opcache_reset()` ou restart PHP-FPM |
+| Partial não inclui | Path errado no @include | Verificar namespace do pacote |
+| Section não aparece | @yield não existe no layout | Verificar layout pai |
+| Duplicata sendo usada | Editou arquivo errado | Encontrar com `find` e editar o correto |
+
+---
+
+## Runbook #012 - Assets / Versionamento
+
+**Sintoma:** CSS/JS não atualiza, browser mostra versão antiga.
+
+### Checklist de Diagnóstico
+
+```
+□ Passo 1: Verificar se build foi feito
+```
+```bash
+ls -la public/build/
+# Deve existir manifest.json e assets
+```
+**Se não existe:**
+```bash
+npm run build
+```
+
+---
+
+```
+□ Passo 2: Verificar manifest.json
+```
+```bash
+cat public/build/manifest.json
+```
+**Esperado:** Arquivos com hash no nome
+```json
+{
+  "resources/css/app.css": {
+    "file": "assets/app-BxH12345.css",
+    "src": "resources/css/app.css"
+  }
+}
+```
+
+---
+
+```
+□ Passo 3: Verificar @vite no blade
+```
+```bash
+grep -r "@vite" resources/views/
+```
+**Esperado:** `@vite(['resources/css/app.css', 'resources/js/app.js'])`
+
+---
+
+```
+□ Passo 4: Verificar hot file (dev mode)
+```
+```bash
+ls -la public/hot
+```
+**Se existe:** Vite dev server está rodando ou arquivo órfão.
+```bash
+# Remover arquivo órfão
+rm public/hot
+```
+
+---
+
+```
+□ Passo 5: Verificar URL gerada no HTML
+```
+No browser, View Source, procurar por `<link` e `<script>`:
+```html
+<!-- CORRETO (production) -->
+<link href="/build/assets/app-BxH12345.css" rel="stylesheet">
+
+<!-- CORRETO (dev) -->
+<link href="http://localhost:5173/resources/css/app.css" rel="stylesheet">
+
+<!-- INCORRETO (sem hash) -->
+<link href="/css/app.css" rel="stylesheet">
+```
+
+---
+
+```
+□ Passo 6: Forçar novo build
+```
+```bash
+rm -rf public/build/
+npm run build
+```
+
+---
+
+```
+□ Passo 7: Verificar cache headers do servidor
+```
+```bash
+curl -I https://seusite.com/build/assets/app-BxH12345.css | grep -i cache
+```
+**Esperado:** `Cache-Control: max-age=31536000` para assets com hash
+
+---
+
+```
+□ Passo 8: Verificar CDN (se aplicável)
+```
+Se usa CDN (CloudFlare, CloudFront):
+- Purgar cache da CDN
+- Verificar se origin está servindo versão nova
+
+---
+
+```
+□ Passo 9: Verificar APP_URL
+```
+```bash
+grep "APP_URL" .env
+```
+**Deve bater com URL real do site.**
+
+Se errado, assets podem apontar para URL incorreta.
+
+---
+
+```
+□ Passo 10: Debug do Vite manifest
+```
+```bash
+php artisan tinker --execute="
+    \$manifest = json_decode(file_get_contents(public_path('build/manifest.json')), true);
+    dump(\$manifest);
+"
+```
+
+---
+
+### Cache Busting Manual (Emergência)
+
+Se nada funcionar, adicionar query string manual:
+```blade
+{{-- Temporário - não recomendado --}}
+<link href="{{ asset('css/custom.css') }}?v={{ time() }}" rel="stylesheet">
+```
+
+---
+
+### Erros Comuns
+
+| Sintoma | Causa | Solução |
+|---------|-------|---------|
+| CSS antigo após build | Cache do browser | Hard refresh (Ctrl+Shift+R) |
+| 404 nos assets | Build não feito | `npm run build` |
+| Assets sem hash | Usando `asset()` em vez de `@vite` | Trocar para `@vite()` |
+| Hot file órfão | Dev server parou abruptamente | `rm public/hot` |
+| CDN cache | CDN servindo versão antiga | Purgar cache da CDN |
+| Mix em vez de Vite | Projeto migrado parcialmente | Atualizar helpers de asset |
+
+---
+
+## Runbook #013 - Migration Travou / Rollback
+
+**Sintoma:** Migration falha, fica presa, ou precisa de rollback.
+
+### Checklist de Diagnóstico
+
+```
+□ Passo 1: Verificar status das migrations
+```
+```bash
+php artisan migrate:status
+```
+**Esperado:** Lista com status `Ran` ou `Pending`
+
+---
+
+```
+□ Passo 2: Verificar erro específico
+```
+```bash
+php artisan migrate 2>&1
+```
+**Erros comuns:**
+- `Table already exists` → Tabela já criada
+- `Unknown column` → Coluna referenciada não existe
+- `Foreign key constraint` → Tabela pai não existe
+- `Duplicate entry` → Dados duplicados violando unique
+
+---
+
+```
+□ Passo 3: Verificar tabela de migrations
+```
+```bash
+php artisan tinker --execute="
+    dump(DB::table('migrations')->orderBy('id', 'desc')->take(10)->get());
+"
+```
+**Verificar:** Se migration está registrada mas tabela não existe (ou vice-versa).
+
+---
+
+```
+□ Passo 4: Rollback última migration
+```
+```bash
+php artisan migrate:rollback --step=1
+```
+**Se falhar:** Migration pode não ter método `down()` ou tabela já foi removida.
+
+---
+
+```
+□ Passo 5: Rollback forçado (se necessário)
+```
+```bash
+# Ver qual migration causou problema
+php artisan migrate:status
+
+# Remover manualmente do registro (CUIDADO)
+php artisan tinker --execute="
+    DB::table('migrations')
+        ->where('migration', '2025_12_25_205615_create_brand_kit_overrides_table')
+        ->delete();
+    echo 'Registro removido';
+"
+```
+
+---
+
+```
+□ Passo 6: Verificar se tabela existe
+```
+```bash
+php artisan tinker --execute="
+    dump([
+        'brand_kit_overrides' => Schema::hasTable('brand_kit_overrides'),
+        'brand_kit_custom_css' => Schema::hasTable('brand_kit_custom_css'),
+        'brand_kit_snapshots' => Schema::hasTable('brand_kit_snapshots'),
+    ]);
+"
+```
+
+---
+
+```
+□ Passo 7: Drop tabela manualmente (se necessário)
+```
+```bash
+php artisan tinker --execute="
+    Schema::dropIfExists('brand_kit_overrides');
+    echo 'Tabela removida';
+"
+```
+
+---
+
+```
+□ Passo 8: Re-rodar migration específica
+```
+```bash
+# Primeiro, verificar se está no registro
+php artisan tinker --execute="
+    DB::table('migrations')
+        ->where('migration', 'like', '%brand_kit%')
+        ->delete();
+"
+
+# Depois, rodar novamente
+php artisan migrate
+```
+
+---
+
+```
+□ Passo 9: Verificar foreign keys (se aplicável)
+```
+```bash
+php artisan tinker --execute="
+    // Desabilitar temporariamente (MySQL)
+    DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+    
+    // Sua operação aqui...
+    
+    // Reabilitar
+    DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+"
+```
+
+---
+
+```
+□ Passo 10: Fresh migration (AMBIENTE DEV APENAS)
+```
+```bash
+# CUIDADO: Apaga todos os dados!
+php artisan migrate:fresh
+
+# Com seeders
+php artisan migrate:fresh --seed
+```
+
+---
+
+### Cenários Específicos
+
+#### Migration travada (lock de banco)
+```bash
+# MySQL - ver processos
+php artisan tinker --execute="
+    dump(DB::select('SHOW FULL PROCESSLIST'));
+"
+
+# Matar processo travado (cuidado)
+php artisan tinker --execute="
+    DB::select('KILL PROCESS_ID');
+"
+```
+
+#### "Nothing to migrate" mas tabela não existe
+```bash
+# Migration está no registro mas não rodou de verdade
+php artisan tinker --execute="
+    DB::table('migrations')
+        ->where('migration', 'NOME_DA_MIGRATION')
+        ->delete();
+"
+php artisan migrate
+```
+
+#### Rollback falha porque tabela não existe
+```php
+// No método down() da migration, usar dropIfExists
+public function down()
+{
+    Schema::dropIfExists('brand_kit_overrides');  // Não dá erro se não existir
+}
+```
+
+#### Conflito de ordem de migrations
+```bash
+# Ver batch de cada migration
+php artisan tinker --execute="
+    dump(DB::table('migrations')->select('migration','batch')->get());
+"
+```
+Migrations do mesmo batch rodam juntas. Se uma depende de outra, devem estar em batches diferentes.
+
+---
+
+### Erros Comuns
+
+| Erro | Causa | Solução |
+|------|-------|---------|
+| `Table already exists` | Migration parcial ou reroda | Drop tabela ou remover do registro |
+| `Foreign key constraint fails` | Ordem errada | Rodar parent tables primeiro |
+| `Unknown column` | Migration depende de outra | Verificar ordem/batch |
+| `Nothing to migrate` | Já está no registro | Remover do registro se necessário |
+| `Cannot drop index` | Index não existe | Usar `$table->dropIndexIfExists()` |
+| `Lock wait timeout` | Outra transação travou | Verificar/matar processos |
+
+---
+
+### Boas Práticas
+
+1. **Sempre faça backup antes de migrations em produção**
+   ```bash
+   mysqldump -u user -p database > backup_before_migration.sql
+   ```
+
+2. **Use transações no método up()**
+   ```php
+   public function up()
+   {
+       DB::transaction(function () {
+           Schema::create('tabela', function ($table) { ... });
+       });
+   }
+   ```
+
+3. **Teste rollback em dev antes de prod**
+   ```bash
+   php artisan migrate
+   php artisan migrate:rollback
+   php artisan migrate
+   ```
+
+4. **Nome descritivo para migrations**
+   ```
+   2025_12_27_143000_add_theme_slug_to_brand_kit_overrides.php
+   ```
 
 ---
 
