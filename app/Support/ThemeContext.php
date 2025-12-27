@@ -201,23 +201,98 @@ final class ThemeContext
         return asset("storage/themes/{$this->slug}/{$relativePath}");
     }
 
+    /**
+     * Get logo by type: main, light, icon
+     * Used by views: $themeContext->logo('main')
+     */
+    public function logo(string $type = "main"): ?string
+    {
+        $key = match ($type) {
+            "main" => "logo_main",
+            "light" => "logo_light",
+            "icon" => "logo_icon",
+            default => "logo_{$type}",
+        };
+
+        $value = $this->get($key);
+
+        if (!$value) {
+            return null;
+        }
+
+        // Se já é URL completa, retorna direto
+        if (
+            str_starts_with($value, "http://") ||
+            str_starts_with($value, "https://") ||
+            str_starts_with($value, "/")
+        ) {
+            return $value;
+        }
+
+        // Se é path relativo, monta URL do storage
+        return asset("storage/theme-manager/{$value}");
+    }
+
     public function logoMain(): ?string
     {
-        return $this->themeAsset($this->get("logo_main"));
+        return $this->logo("main");
     }
 
     public function logoLight(): ?string
     {
-        return $this->themeAsset($this->get("logo_light"));
+        return $this->logo("light");
     }
 
     public function logoIcon(): ?string
     {
-        return $this->themeAsset($this->get("logo_icon"));
+        return $this->logo("icon");
     }
 
     public function favicon(): ?string
     {
-        return $this->themeAsset($this->get("favicon"));
+        $value = $this->get("favicon");
+
+        if (!$value) {
+            return null;
+        }
+
+        if (
+            str_starts_with($value, "http://") ||
+            str_starts_with($value, "https://") ||
+            str_starts_with($value, "/")
+        ) {
+            return $value;
+        }
+
+        return asset("storage/theme-manager/{$value}");
+    }
+
+    /**
+     * Whether to show "Powered by Krayin/Webkul" footer
+     * Default: true (show it)
+     */
+    public function showPoweredBy(): bool
+    {
+        $value = $this->get("show_powered_by", true);
+
+        // Handle various truthy/falsy values
+        if (is_bool($value)) {
+            return $value;
+        }
+
+        return filter_var(
+            $value,
+            FILTER_VALIDATE_BOOLEAN,
+            FILTER_NULL_ON_FAILURE,
+        ) ?? true;
+    }
+
+    /**
+     * Check if currently in preview mode
+     * Alias for isPreview property for view compatibility
+     */
+    public function inPreviewMode(): bool
+    {
+        return $this->isPreview;
     }
 }
