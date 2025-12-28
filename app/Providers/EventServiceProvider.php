@@ -25,7 +25,11 @@ class EventServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        // Invalida caches quando o tema e atualizado no ThemeManager
+        Event::listen(
+            'theme.update.after',
+            \App\Listeners\InvalidateThemeCacheOnUpdate::class
+        );
     }
 
     /**
