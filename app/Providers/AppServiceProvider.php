@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
+use Konekt\Concord\Facades\Concord;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -17,8 +18,22 @@ class AppServiceProvider extends ServiceProvider
         $this->app->singleton(\App\Support\CssValidator::class);
         $this->app->singleton(\App\Support\BrandKitResolver::class);
         $this->app->singleton(\App\Support\ThemeSelectionResolver::class);
+        $this->app->singleton(\App\Support\ThemeSlugResolver::class);
         $this->app->singleton(\App\Support\ThemeContextFactory::class);
         $this->app->singleton(\App\Repositories\BrandKitRepository::class);
+
+        // Override Webkul's ThemeConfig model with our extended version
+        // that includes selected_theme in fillable
+        $this->app->bind(
+            \Webkul\ThemeManager\Contracts\ThemeConfig::class,
+            \App\Models\ThemeConfig::class,
+        );
+
+        // Override Webkul's ThemeConfigRepository to use our extended model
+        $this->app->bind(
+            \Webkul\ThemeManager\Repositories\ThemeConfigRepository::class,
+            \App\Repositories\ThemeConfigRepository::class,
+        );
     }
 
     /**
@@ -28,6 +43,13 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        // Register our extended ThemeConfig model to override Webkul's
+        // This allows selected_theme to be mass-assigned
+        Concord::registerModel(
+            \Webkul\ThemeManager\Contracts\ThemeConfig::class,
+            \App\Models\ThemeConfig::class,
+        );
+
         // View Composer para injetar availableThemes na view do ThemeManager
         View::composer("theme-manager::admin.settings.theme.index", function (
             $view,

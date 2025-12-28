@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin\BrandKit\Concerns;
 
+use App\Support\ThemeSlugResolver;
 use Illuminate\Http\Request;
 
 trait BrandKitControllerHelpers
@@ -15,9 +16,15 @@ trait BrandKitControllerHelpers
 
         $validated = $request->validate($rules);
 
+        // Resolve theme_slug: request > preview session > DB selected > 'default'
+        $themeSlugResolver = app(ThemeSlugResolver::class);
+        $resolvedThemeSlug = $themeSlugResolver->resolveFromRequest(
+            $validated['theme_slug'] ?? null
+        );
+
         return [
             'scope_key'  => $validated['scope_key'] ?? 'global',
-            'theme_slug' => $validated['theme_slug'] ?? 'default',
+            'theme_slug' => $resolvedThemeSlug,
         ] + $validated;
     }
 
