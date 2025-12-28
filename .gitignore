@@ -55,5 +55,12 @@ docs/_archive/*.patch
 # ========== Arquivos Windows ==========
 desktop.ini
 Thumbs.db
+nul
 .phpunit.cache/
 laravel-crm.zip
+
+# ========== Claude Code (local) ==========
+.claude/settings.local.json
+
+# ========== Docs: Logs pessoais ==========
+docs/LOGS_*.md
