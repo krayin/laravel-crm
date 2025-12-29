@@ -276,8 +276,6 @@ Artisan::call('cache:clear');
 
 ---
 
----
-
 ## 9. Suite de Testes
 
 ### 9.1 Rodar Testes BrandKit

@@ -21,6 +21,8 @@ class ThemeConfig extends Model implements ThemeConfigContract
      */
     protected $fillable = [
         'is_active',
+        'selected_theme',
+        'previous_theme',
         'color_primary',
         'color_primary_dark',
         'color_primary_light',

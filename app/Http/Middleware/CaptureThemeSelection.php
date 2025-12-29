@@ -127,6 +127,14 @@ class CaptureThemeSelection
     private function saveThemeSelection(Request $request): void
     {
         $raw = (string) $request->input('selected_theme', '');
+
+        // DEBUG: Log what's being received
+        Log::debug('[Theme] CaptureThemeSelection received', [
+            'raw_selected_theme' => $raw,
+            'all_input'          => $request->only(['selected_theme', 'is_active']),
+            'session_preview'    => session('theme_preview'),
+        ]);
+
         $slug = ThemeConfigResolver::sanitizeSlug($raw);
 
         // Validar existência real do tema. Se inválido => fallback.

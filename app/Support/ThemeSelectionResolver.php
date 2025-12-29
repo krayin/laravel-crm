@@ -18,7 +18,9 @@ class ThemeSelectionResolver
             try {
                 $row = DB::table('theme_configs')->where('id', 1)->first();
 
-                if ($row && isset($row->is_active) && (int) $row->is_active === 1) {
+                if ($row) {
+                    // Retorna o selected_theme independente de is_active
+                    // (is_active controla se as customizações são aplicadas, não qual tema está selecionado)
                     $slug = (string) ($row->selected_theme ?? '');
                     $slug = $this->sanitizeSlug($slug);
 

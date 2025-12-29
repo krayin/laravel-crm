@@ -136,4 +136,73 @@ class ThemeController extends Controller
 
         return redirect()->back();
     }
+
+    /**
+     * Restore theme to default settings.
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function restore()
+    {
+        $config = $this->themeConfigRepository->get();
+
+        // Save current as previous before restoring
+        $currentTheme = $config->selected_theme ?? 'default';
+
+        // Reset to defaults
+        $config->update([
+            'is_active'      => false,
+            'selected_theme' => 'default',
+            'previous_theme' => $currentTheme,
+        ]);
+
+        // Dispatch event for cache invalidation
+        Event::dispatch('theme.update.after', $config);
+
+        // Clear theme caches
+        if (class_exists(\App\Support\ThemeCache::class)) {
+            \App\Support\ThemeCache::flush();
+        }
+
+        session()->flash(
+            'success',
+            trans('theme-manager::app.settings.restore-success', [], 'Tema restaurado para o padrão com sucesso.'),
+        );
+
+        return redirect()->route('admin.settings.theme.index');
+    }
+
+    /**
+     * Rollback to previous theme.
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function rollback()
+    {
+        $config = $this->themeConfigRepository->get();
+
+        $previousTheme = $config->previous_theme ?? 'default';
+        $currentTheme = $config->selected_theme ?? 'default';
+
+        // Swap themes
+        $config->update([
+            'selected_theme' => $previousTheme,
+            'previous_theme' => $currentTheme,
+        ]);
+
+        // Dispatch event for cache invalidation
+        Event::dispatch('theme.update.after', $config);
+
+        // Clear theme caches
+        if (class_exists(\App\Support\ThemeCache::class)) {
+            \App\Support\ThemeCache::flush();
+        }
+
+        session()->flash(
+            'success',
+            trans('theme-manager::app.settings.rollback-success', [], 'Tema revertido para: '.$previousTheme),
+        );
+
+        return redirect()->route('admin.settings.theme.index');
+    }
 }

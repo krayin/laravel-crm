@@ -35,6 +35,7 @@ class ThemeBootProvider extends ServiceProvider
     {
         $this->registerViewOverrides();
         $this->registerViewComposers();
+        $this->registerThemeStylesInjection();
     }
 
     /**
@@ -66,6 +67,37 @@ class ThemeBootProvider extends ServiceProvider
         ) {
             $view->with('availableThemes', $this->getAvailableThemes());
         });
+    }
+
+    /**
+     * Injeta CSS do tema no <head> via view_render_event hooks.
+     * Usa os hooks 'admin.layout.head.after' e 'admin.layout.head' (anonymous layout).
+     */
+    private function registerThemeStylesInjection(): void
+    {
+        $injectStyles = function ($viewRenderEventManager) {
+            $themeContext = View::shared('themeContext');
+
+            if (! $themeContext || ! $themeContext->enabled) {
+                return;
+            }
+
+            try {
+                $html = view('vendor.admin.partials.theme-head', [
+                    'themeContext' => $themeContext,
+                ])->render();
+
+                $viewRenderEventManager->addTemplate($html);
+            } catch (\Exception $e) {
+                \Log::warning('[ThemeBootProvider] Failed to render theme styles: '.$e->getMessage());
+            }
+        };
+
+        // Hook para layout principal (admin autenticado)
+        \Illuminate\Support\Facades\Event::listen('admin.layout.head.after', $injectStyles);
+
+        // Hook para layout anonymous (login)
+        \Illuminate\Support\Facades\Event::listen('admin.layout.head', $injectStyles);
     }
 
     /**

@@ -22,6 +22,12 @@ class ThemeMiddleware
             return $response;
         }
 
+        // NÃO injetar na página de login - ela tem seu próprio CSS via theme-head.blade.php
+        // Isso evita conflitos com o seletor [class*="login"] que sobrescreve o card
+        if ($this->isLoginPage($request)) {
+            return $response;
+        }
+
         // Verificar se é uma resposta HTML
         if (! $response instanceof Response) {
             return $response;
@@ -43,5 +49,18 @@ class ThemeMiddleware
         $response->setContent($content);
 
         return $response;
+    }
+
+    /**
+     * Verifica se a requisição é para a página de login.
+     */
+    protected function isLoginPage(Request $request): bool
+    {
+        $path = $request->path();
+
+        // Verificar se é login ou session create
+        return str_contains($path, 'login')
+            || str_contains($path, 'session')
+            || $request->routeIs('admin.session.create');
     }
 }

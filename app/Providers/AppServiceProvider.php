@@ -20,6 +20,10 @@ class AppServiceProvider extends ServiceProvider
         $this->app->singleton(\App\Support\ThemeContextFactory::class);
         $this->app->singleton(\App\Repositories\BrandKitRepository::class);
 
+        // BrandKit Services
+        $this->app->singleton(\App\Services\BrandKitSnapshotService::class);
+        $this->app->singleton(\App\Services\BrandKitCacheInvalidator::class);
+
         // Override Webkul's ThemeConfig model with our extended version
         // that includes selected_theme in fillable
         $this->app->bind(

@@ -92,7 +92,7 @@ final class ThemeContext
         ];
 
         // Background de login
-        if ($this->login('bg_image')) {
+        if ($this->get('login_bg_image') || $this->get('login_bg_url')) {
             $classes[] = 'theme-login-bg';
         }
 
@@ -112,7 +112,7 @@ final class ThemeContext
         // suportar tanto login_bg_image quanto login_bg_url
         $bg = $this->get('login_bg_image') ?? $this->get('login_bg_url');
 
-        return $this->resolveAssetUrl($bg, "storage/themes/{$this->slug}");
+        return $this->resolveThemeAssetUrl($bg);
     }
 
     /**
@@ -137,7 +137,38 @@ final class ThemeContext
             $this->get('login_card_bg_image') ??
             $this->get('login_card_bg_url');
 
-        return $this->resolveAssetUrl($bg, "storage/themes/{$this->slug}");
+        return $this->resolveThemeAssetUrl($bg);
+    }
+
+    /**
+     * Resolve URL de asset do tema.
+     * Prioriza theme-manager/ (arquivos copiados) sobre themes/{slug}/ (originais)
+     */
+    private function resolveThemeAssetUrl(?string $value): ?string
+    {
+        if (! $value) {
+            return null;
+        }
+
+        $value = trim($value);
+
+        // URL absoluta - retorna direto
+        if (Str::startsWith($value, ['http://', 'https://'])) {
+            return $value;
+        }
+
+        // Path absoluto no site
+        if (Str::startsWith($value, ['/'])) {
+            return url($value);
+        }
+
+        // Se o valor parece ser um arquivo copiado (tem timestamp no nome), usa theme-manager/
+        if (preg_match('/^\d+_/', $value)) {
+            return asset("storage/theme-manager/{$value}");
+        }
+
+        // Fallback: arquivo original no tema
+        return asset("storage/themes/{$this->slug}/{$value}");
     }
 
     /**
@@ -273,7 +304,8 @@ final class ThemeContext
      */
     public function showPoweredBy(): bool
     {
-        $value = $this->get('show_powered_by', true);
+        // Tenta login_show_powered_by primeiro, depois show_powered_by para compatibilidade
+        $value = $this->get('login_show_powered_by') ?? $this->get('show_powered_by', true);
 
         // Handle various truthy/falsy values
         if (is_bool($value)) {
