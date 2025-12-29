@@ -16,6 +16,7 @@ Route::group([
             Route::post('theme', 'update')->name('admin.settings.theme.update');
             Route::post('theme/restore', 'restore')->name('admin.settings.theme.restore');
             Route::post('theme/rollback', 'rollback')->name('admin.settings.theme.rollback');
+            Route::post('theme/reset-field', 'resetField')->name('admin.settings.theme.reset-field');
         });
     });
 });

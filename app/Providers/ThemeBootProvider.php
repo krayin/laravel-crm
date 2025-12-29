@@ -59,14 +59,20 @@ class ThemeBootProvider extends ServiceProvider
 
     /**
      * Registra View Composers para injetar dados nas views.
+     *
+     * NOTA: NÃO sobrescrever $availableThemes aqui!
+     * O ThemeController já fornece essa variável com colors corretos.
+     * View Composer roda DEPOIS do controller e sobrescreveria os dados.
      */
     private function registerViewComposers(): void
     {
-        View::composer('theme-manager::admin.settings.theme.index', function (
-            $view,
-        ) {
-            $view->with('availableThemes', $this->getAvailableThemes());
-        });
+        // REMOVIDO: View Composer que sobrescrevia $availableThemes
+        // O ThemeController::getAvailableThemes() já fornece dados completos com cores.
+        // Manter uma única fonte de verdade evita bugs de sincronização.
+        //
+        // View::composer('theme-manager::admin.settings.theme.index', function ($view) {
+        //     $view->with('availableThemes', $this->getAvailableThemes());
+        // });
     }
 
     /**
@@ -145,7 +151,9 @@ class ThemeBootProvider extends ServiceProvider
             // Lê e parseia o theme.json
             $themeData = $this->readThemeJson($themeJsonPath);
 
-            // Monta array com dados completos do tema
+            // Monta array com dados do tema
+            // NOTA: Este método NÃO é mais usado para $availableThemes na view de temas.
+            // O ThemeController::getAvailableThemes() é a fonte de verdade (inclui colors).
             $themes[] = [
                 'slug'        => $slug,
                 'name'        => $themeData['name'] ?? ucfirst($slug),

@@ -4,6 +4,8 @@ namespace Webkul\ThemeManager\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Facades\File;
+use Illuminate\Validation\Rule;
 use Webkul\Admin\Http\Controllers\Controller;
 use Webkul\ThemeManager\Repositories\ThemeConfigRepository;
 
@@ -34,11 +36,93 @@ class ThemeController extends Controller
     public function index()
     {
         $config = $this->themeConfigRepository->get();
+        $availableThemes = $this->getAvailableThemes();
+
+        // Preparar dados para JavaScript com cores garantidas
+        $themesForJs = [];
+        foreach ($availableThemes as $theme) {
+            $themesForJs[$theme['slug']] = [
+                'slug' => $theme['slug'],
+                'name' => $theme['name'] ?? 'Unnamed',
+                'colors' => $theme['colors'] ?? [
+                    'primary' => '#1E40AF',
+                    'primary_dark' => '#1E3A8A',
+                    'primary_light' => '#3B82F6',
+                    'success' => '#10B981',
+                    'warning' => '#F59E0B',
+                    'danger' => '#EF4444'
+                ]
+            ];
+        }
 
         return view(
             'theme-manager::admin.settings.theme.index',
-            compact('config'),
+            compact('config', 'availableThemes', 'themesForJs'),
         );
+    }
+
+    /**
+     * Get available themes from storage.
+     *
+     * @return array
+     */
+    protected function getAvailableThemes(): array
+    {
+        $themesPath = storage_path('app/public/themes');
+        $themes = [];
+
+        // Always add 'default' theme first
+        $themes['default'] = [
+            'slug'        => 'default',
+            'name'        => 'Padrão Krayin',
+            'version'     => '1.0.0',
+            'description' => 'Tema padrão do sistema - visual limpo e moderno',
+            'colors'      => [
+                'primary'       => '#1E40AF',
+                'primary_dark'  => '#1E3A8A',
+                'primary_light' => '#3B82F6',
+                'success'       => '#10B981',
+                'warning'       => '#F59E0B',
+                'danger'        => '#EF4444',
+            ],
+        ];
+
+        if (! File::isDirectory($themesPath)) {
+            return $themes;
+        }
+
+        $directories = File::directories($themesPath);
+
+        foreach ($directories as $directory) {
+            $themeJsonPath = $directory.'/theme.json';
+            $slug = basename($directory);
+
+            // Skip 'default' folder if exists (we already added it)
+            if ($slug === 'default') {
+                continue;
+            }
+
+            if (File::exists($themeJsonPath)) {
+                $themeData = json_decode(File::get($themeJsonPath), true);
+
+                $themes[$slug] = [
+                    'slug'        => $slug,
+                    'name'        => $themeData['name'] ?? ucfirst($slug),
+                    'version'     => $themeData['version'] ?? '1.0.0',
+                    'description' => $themeData['description'] ?? '',
+                    'colors'      => [
+                        'primary'       => $themeData['color_primary'] ?? '#1E40AF',
+                        'primary_dark'  => $themeData['color_primary_dark'] ?? '#1E3A8A',
+                        'primary_light' => $themeData['color_primary_light'] ?? '#3B82F6',
+                        'success'       => $themeData['color_success'] ?? '#10B981',
+                        'warning'       => $themeData['color_warning'] ?? '#F59E0B',
+                        'danger'        => $themeData['color_danger'] ?? '#EF4444',
+                    ],
+                ];
+            }
+        }
+
+        return $themes;
     }
 
     /**
@@ -58,6 +142,9 @@ class ThemeController extends Controller
         $this->validate($request, [
             // Ativação
             'is_active' => 'nullable|in:0,1',
+
+            // Tema selecionado (slug sanitizado)
+            'selected_theme' => 'nullable|string|max:50|regex:/^[a-z0-9\-_]+$/',
 
             // Cores - validação com regex para prevenir CSS injection
             'color_primary'      => ['nullable', 'string', 'max:7', $hexColorRegex],
@@ -120,6 +207,9 @@ class ThemeController extends Controller
 
         // Event before update - allows other packages to react or modify data
         Event::dispatch('theme.update.before', $request->all());
+
+        // NOTA: A lógica de delete de imagens está no Repository (ThemeConfigRepository)
+        // nas linhas 148-154. O Repository processa campos *_delete automaticamente.
 
         // Merge request data with uploaded files and update
         $config = $this->themeConfigRepository->update(
@@ -204,5 +294,51 @@ class ThemeController extends Controller
         );
 
         return redirect()->route('admin.settings.theme.index');
+    }
+
+    /**
+     * Reset a specific field to theme default value.
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function resetField(Request $request)
+    {
+        // Validate field name - only allow specific image fields
+        $this->validate($request, [
+            'field_name' => [
+                'required',
+                'string',
+                Rule::in([
+                    'logo_main',
+                    'logo_light',
+                    'logo_icon',
+                    'favicon',
+                    'login_bg_image',
+                    'login_card_bg_image',
+                ]),
+            ],
+        ]);
+
+        $fieldName = $request->input('field_name');
+
+        // Reset field via Repository
+        $success = $this->themeConfigRepository->resetFieldToTheme($fieldName);
+
+        if ($success) {
+            session()->flash(
+                'success',
+                '✅ Campo restaurado para o tema com sucesso!'
+            );
+        } else {
+            session()->flash(
+                'warning',
+                '⚠️ O tema selecionado não possui valor para este campo. Campo foi limpo.'
+            );
+        }
+
+        // Dispatch event for cache invalidation
+        Event::dispatch('theme.field.reset', $fieldName);
+
+        return redirect()->back();
     }
 }

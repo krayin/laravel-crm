@@ -174,7 +174,7 @@
                     background-position: center;
                     transform: scale(var(--login-bg-zoom, 1));
                 @else
-                    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                    background: #f3f4f6; /* Cor neutra - sem imagem de fundo */
                 @endif
             }
 
@@ -224,6 +224,8 @@
                         background-image: url('{{ $loginConfig['card_bg_image'] }}');
                         background-size: cover;
                         background-position: center;
+                    @else
+                        background: white; /* Sem imagem quando NULL */
                     @endif
                 }
 
@@ -236,9 +238,11 @@
                     bottom: 0;
                     @if($loginConfig['card_bg_image'])
                         background-color: rgba(255, 255, 255, calc(1 - var(--card-bg-opacity, 0.62)));
-                    @endif
-                    @if($loginConfig['card_overlay_color'])
-                        background: {{ $loginConfig['card_overlay_color'] }};
+                        @if($loginConfig['card_overlay_color'])
+                            background: {{ $loginConfig['card_overlay_color'] }};
+                        @endif
+                    @else
+                        display: none; /* Sem overlay quando não há imagem */
                     @endif
                 }
 

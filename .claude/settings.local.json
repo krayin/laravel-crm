@@ -94,7 +94,23 @@
       "Bash(git reset:*)",
       "Bash(composer pint:*)",
       "Bash(./vendor/bin/pint:*)",
-      "Bash(git branch:*)"
+      "Bash(git branch:*)",
+      "Bash(gh pr view:*)",
+      "Bash(php -v:*)",
+      "Bash(git rev-list:*)",
+      "Bash(git -C \"c:\\\\Users\\\\Usuario\\\\Desktop\\\\Krayin-\\\\laravel-crm\" status --short)",
+      "Bash(del \"c:\\\\Users\\\\Usuario\\\\Desktop\\\\Krayin-\\\\laravel-crm\\\\resources\\\\views\\\\vendor\\\\theme-manager\\\\admin\\\\settings\\\\theme\\\\index.blade.php\")",
+      "Bash(Get-ChildItem -Path \"c:\\\\Users\\\\Usuario\\\\Desktop\\\\Krayin-\\\\laravel-crm\\\\resources\\\\views\\\\vendor\\\\theme-manager\" -Recurse -File)",
+      "Bash(Select-Object -ExpandProperty FullName)",
+      "Bash(Remove-Item storageframeworkviews* -Force -ErrorAction SilentlyContinue)",
+      "Bash(Get-Content \"c:\\\\Users\\\\Usuario\\\\Desktop\\\\Krayin-\\\\laravel-crm\\\\storage\\\\logs\\\\laravel.log\" -Tail 100)",
+      "Bash(Select-String -Pattern \"Theme\" -Context 0,2)",
+      "Bash(timeout:*)",
+      "Bash(php artisan view:clear:*)",
+      "Bash(taskkill:*)",
+      "Bash(php artisan cache:clear:*)",
+      "Bash(copy:*)",
+      "Bash(php artisan config:clear:*)"
     ]
   }
 }

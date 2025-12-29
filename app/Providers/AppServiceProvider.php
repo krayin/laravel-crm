@@ -50,14 +50,9 @@ class AppServiceProvider extends ServiceProvider
             \App\Models\ThemeConfig::class,
         );
 
-        // View Composer para injetar availableThemes na view do ThemeManager
-        View::composer('theme-manager::admin.settings.theme.index', function (
-            $view,
-        ) {
-            $resolver = app(\App\Support\BrandKitResolver::class);
-            $availableThemes = $this->getAvailableThemesWithMetadata($resolver);
-            $view->with('availableThemes', $availableThemes);
-        });
+        // REMOVIDO: View Composer que sobrescrevia $availableThemes
+        // O ThemeController já fornece $availableThemes com cores corretas
+        // View::composer('theme-manager::admin.settings.theme.index', ...);
     }
 
     /**
@@ -79,6 +74,16 @@ class AppServiceProvider extends ServiceProvider
                 'name'        => ucfirst($slug),
                 'description' => '',
                 'version'     => '1.0.0',
+                'author'      => '',
+                'preview'     => '',
+                'colors'      => [
+                    'primary'       => '#1E40AF',
+                    'primary_dark'  => '#1E3A8A',
+                    'primary_light' => '#3B82F6',
+                    'success'       => '#10B981',
+                    'warning'       => '#F59E0B',
+                    'danger'        => '#EF4444',
+                ],
             ];
 
             if (file_exists($themeJsonPath)) {
@@ -87,6 +92,17 @@ class AppServiceProvider extends ServiceProvider
                     $metadata['name'] = $json['name'] ?? $metadata['name'];
                     $metadata['description'] = $json['description'] ?? '';
                     $metadata['version'] = $json['version'] ?? '1.0.0';
+                    $metadata['author'] = $json['author'] ?? '';
+
+                    // Carregar cores do theme.json
+                    $metadata['colors'] = [
+                        'primary'       => $json['color_primary'] ?? '#1E40AF',
+                        'primary_dark'  => $json['color_primary_dark'] ?? '#1E3A8A',
+                        'primary_light' => $json['color_primary_light'] ?? '#3B82F6',
+                        'success'       => $json['color_success'] ?? '#10B981',
+                        'warning'       => $json['color_warning'] ?? '#F59E0B',
+                        'danger'        => $json['color_danger'] ?? '#EF4444',
+                    ];
                 }
             }
 

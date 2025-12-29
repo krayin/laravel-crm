@@ -474,15 +474,27 @@
         position: relative;
         z-index: 1;
     }
+    @else
+    /* REMOVER background quando NULL */
+    body,
+    .min-h-screen,
+    .flex.min-h-screen {
+        background-image: none !important;
+        background-color: #f3f4f6 !important; /* Cor padrão clara */
+    }
+
+    /* Remover overlay se existir */
+    body::before {
+        display: none !important;
+    }
     @endif
 
 </style>
 
 {{-- JAVASCRIPT PRINCIPAL - Substitui logos via JavaScript (MAIS CONFIÁVEL) --}}
-@if($themeConfig->logo_main || $themeConfig->logo_light || $themeConfig->logo_icon || $themeConfig->favicon)
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        console.log('🎨 ThemeManager: Iniciando troca de logos...');
+        console.log('🎨 ThemeManager: Iniciando processamento de logos...');
 
         @if($themeConfig->logo_main)
         // ==========================================
@@ -523,6 +535,18 @@
                 console.log('  ✓ Substituindo Vite logo #' + (index + 1) + ':', img.src, '→', logoMainUrl);
                 img.src = logoMainUrl;
             }
+        });
+        @else
+        // ==========================================
+        // LOGO NULL - ESCONDER LOGOS PADRÃO
+        // ==========================================
+        console.log('⚠️ Logo principal NULL - removendo logos padrão do Krayin');
+
+        var logosToHide = document.querySelectorAll('img[alt="Krayin CRM"], img.h-10[src*="logo"], img[src*="/admin/build/assets/logo-"]');
+        console.log('🔍 Logos padrão para esconder:', logosToHide.length);
+        logosToHide.forEach(function(img, index) {
+            console.log('  ✓ Escondendo logo padrão #' + (index + 1) + ':', img.src);
+            img.style.display = 'none';
         });
         @endif
 
@@ -583,6 +607,17 @@
             link.href = faviconUrl;
             document.head.appendChild(link);
         }
+        @else
+        // ==========================================
+        // FAVICON NULL - REMOVER FAVICON PADRÃO
+        // ==========================================
+        console.log('⚠️ Favicon NULL - removendo favicon padrão');
+
+        var faviconToRemove = document.querySelector('link[rel="icon"]') || document.querySelector('link[rel="shortcut icon"]');
+        if (faviconToRemove) {
+            console.log('  ✓ Substituindo favicon por vazio');
+            faviconToRemove.href = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg"%3E%3C/svg%3E';
+        }
         @endif
 
         @if($themeConfig->login_bg_image)
@@ -616,6 +651,26 @@
             }
 
             console.log('✅ ThemeManager: Background de login aplicado!', {url: bgUrl, zoom: bgZoom, opacity: bgOpacity});
+        }
+        @else
+        // ==========================================
+        // REMOVER LOGIN BACKGROUND QUANDO NULL
+        // ==========================================
+        if (window.location.pathname.includes('login') || window.location.pathname.includes('session')) {
+            console.log('⚠️ Login background está NULL - removendo');
+
+            // Remover background
+            document.body.style.backgroundImage = 'none';
+            document.body.style.backgroundColor = '#f3f4f6'; // Cor padrão
+
+            // Remover overlay se existir
+            var existingOverlay = document.querySelector('body > div[style*="position:fixed"][style*="pointer-events:none"]');
+            if (existingOverlay) {
+                existingOverlay.remove();
+                console.log('  ✓ Overlay removido');
+            }
+
+            console.log('✅ Background de login removido');
         }
         @endif
 
@@ -661,10 +716,9 @@
         }
         @endif
 
-        console.log('✅ ThemeManager: Logos atualizados com sucesso!');
+        console.log('✅ ThemeManager: Processamento de logos concluído!');
     });
 </script>
-@endif
 
 @if($themeConfig->login_card_enabled)
 {{-- ==========================================
@@ -725,6 +779,11 @@
             });
 
             console.log('✓ Background aplicado com overlay');
+        } else {
+            // REMOVER background quando NULL
+            console.log('⚠️ Login card background está NULL - removendo');
+            loginCard.style.backgroundImage = 'none';
+            loginCard.style.backgroundColor = ''; // Usar cor padrão do card
         }
 
         // 2. INJETAR TÍTULO E SUBTÍTULO CUSTOMIZADOS

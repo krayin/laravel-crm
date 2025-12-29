@@ -99,8 +99,15 @@ class ThemeConfigRepository
                 // Salva o tema anterior
                 $data['previous_theme'] = $currentTheme;
 
+                // Capturar campos de delete ANTES de carregar o novo tema
+                // Isso permite que o usuário delete uma imagem E mude de tema na mesma operação
+                $deleteFields = array_filter($data, function ($key) {
+                    return str_ends_with($key, '_delete');
+                }, ARRAY_FILTER_USE_KEY);
+
                 // Carrega as configurações do novo tema
-                $themeSettings = $this->loadThemeSettings($newTheme);
+                // Passa $data para que loadThemeSettings possa verificar flags de delete
+                $themeSettings = $this->loadThemeSettings($newTheme, $data);
 
                 // IMPORTANTE: Quando mudamos de tema, o theme.json tem prioridade
                 // sobre os valores do formulário (que são do tema antigo).
@@ -118,10 +125,16 @@ class ThemeConfigRepository
                 // Substitui $data pelos valores do tema + dados essenciais do form
                 $data = array_merge($themeSettings, $formDataToKeep);
 
+                // Restaurar os campos de delete para que sejam processados depois
+                // Isso garante que se o usuário marcou "remover" em uma imagem,
+                // ela será removida mesmo após carregar as configurações do novo tema
+                $data = array_merge($data, $deleteFields);
+
                 Log::info('[Theme] Loading theme settings from theme.json', [
                     'theme'           => $newTheme,
                     'loaded_settings' => array_keys($themeSettings),
                     'kept_from_form'  => array_keys($formDataToKeep),
+                    'delete_fields'   => array_keys($deleteFields),
                 ]);
             }
         }
@@ -148,6 +161,10 @@ class ThemeConfigRepository
         foreach ($fileFields as $field) {
             // Handle delete checkbox
             if (isset($data["{$field}_delete"]) && $data["{$field}_delete"]) {
+                Log::info('[Theme] DELETE checkbox detected', [
+                    'field' => $field,
+                    'current_value' => $config->$field,
+                ]);
                 $this->deleteFile($config->$field);
                 $data[$field] = null;
                 unset($data["{$field}_delete"]);
@@ -202,6 +219,11 @@ class ThemeConfigRepository
             elseif (isset($data[$field]) && is_string($data[$field]) && ! empty($data[$field])) {
                 // File was loaded from theme.json and already copied to theme-manager/
                 // Keep the value as-is, don't unset it
+            }
+            // Handle explicit null (from delete operation)
+            elseif (array_key_exists($field, $data) && $data[$field] === null) {
+                // Keep null to clear the field in database
+                // Don't unset - let the null value be saved
             } else {
                 // Keep existing value - remove from update data
                 unset($data[$field]);
@@ -343,8 +365,11 @@ class ThemeConfigRepository
     /**
      * Load theme settings from theme.json file.
      * Maps theme.json fields to database column names and copies theme assets.
+     *
+     * @param  string  $slug  Theme slug
+     * @param  array  $originalData  Original form data (used to check for delete flags)
      */
-    protected function loadThemeSettings(string $slug): array
+    protected function loadThemeSettings(string $slug, array $originalData = []): array
     {
         // Tema 'default' não tem theme.json - retorna valores padrão
         if ($slug === 'default') {
@@ -431,6 +456,14 @@ class ThemeConfigRepository
             ];
 
             foreach ($fileFields as $field) {
+                // Se o usuário marcou para deletar este campo, não copiar o asset do tema
+                if (! empty($originalData["{$field}_delete"])) {
+                    Log::info('[Theme] Skipping asset copy due to delete flag', ['field' => $field]);
+                    $settings[$field] = null; // Garantir que será null no banco
+
+                    continue;
+                }
+
                 if (! empty($themeData[$field])) {
                     $copied = $this->copyThemeAsset($themePath, $themeData[$field], $field);
                     if ($copied) {
@@ -448,6 +481,14 @@ class ThemeConfigRepository
             ];
 
             foreach ($loginFileFields as $jsonKey => $dbKey) {
+                // Se o usuário marcou para deletar este campo, não copiar o asset do tema
+                if (! empty($originalData["{$dbKey}_delete"])) {
+                    Log::info('[Theme] Skipping asset copy due to delete flag', ['field' => $dbKey]);
+                    $settings[$dbKey] = null; // Garantir que será null no banco
+
+                    continue;
+                }
+
                 $filename = $loginData[$jsonKey] ?? $themeData[$dbKey] ?? null;
 
                 if (! empty($filename)) {
@@ -605,5 +646,133 @@ class ThemeConfigRepository
             'errors'   => $this->assetValidator->getErrors(),
             'warnings' => $this->assetValidator->getWarnings(),
         ];
+    }
+
+    /**
+     * Reset a specific field to theme default value.
+     *
+     * @param  string  $fieldName  The field name to reset
+     * @return bool True if field was reset successfully, false otherwise
+     */
+    public function resetFieldToTheme(string $fieldName): bool
+    {
+        try {
+            $config = $this->get();
+            $themeSlug = $config->selected_theme ?? 'default';
+
+            // For default theme, just clear the field
+            if ($themeSlug === 'default') {
+                // Delete current file if exists
+                $this->deleteFile($config->$fieldName);
+
+                // Clear the field
+                $config->update([$fieldName => null]);
+
+                // Invalidate cache
+                $this->themeHelper->clearCache();
+
+                Log::info('[Theme] Field reset to default (null)', [
+                    'field' => $fieldName,
+                ]);
+
+                return false; // Return false because default has no value
+            }
+
+            // Load theme.json
+            $themePath = "themes/{$themeSlug}";
+            $jsonPath = "{$themePath}/theme.json";
+
+            if (! Storage::disk('public')->exists($jsonPath)) {
+                Log::warning('[Theme] theme.json not found for reset', ['slug' => $themeSlug]);
+
+                return false;
+            }
+
+            $contents = Storage::disk('public')->get($jsonPath);
+            $themeData = json_decode($contents, true);
+
+            if (! is_array($themeData)) {
+                Log::warning('[Theme] Invalid theme.json format for reset', ['slug' => $themeSlug]);
+
+                return false;
+            }
+
+            // Map field names to theme.json paths
+            $fieldMapping = [
+                'logo_main'           => 'logo_main',
+                'logo_light'          => 'logo_light',
+                'logo_icon'           => 'logo_icon',
+                'favicon'             => 'favicon',
+                'login_bg_image'      => ['login', 'bg_image'],
+                'login_card_bg_image' => ['login', 'card_bg_image'],
+            ];
+
+            // Get value from theme.json
+            $fieldValue = null;
+            $mapping = $fieldMapping[$fieldName] ?? null;
+
+            if (is_array($mapping)) {
+                // Nested field (login.bg_image)
+                $fieldValue = $themeData[$mapping[0]][$mapping[1]] ?? $themeData[$fieldName] ?? null;
+            } else {
+                // Direct field
+                $fieldValue = $themeData[$fieldName] ?? null;
+            }
+
+            // Delete current file
+            $this->deleteFile($config->$fieldName);
+
+            if (empty($fieldValue)) {
+                // Theme has no value for this field - clear it
+                $config->update([$fieldName => null]);
+
+                Log::info('[Theme] Field not found in theme.json, cleared', ['field' => $fieldName]);
+
+                // Invalidate cache
+                $this->themeHelper->clearCache();
+
+                return false;
+            }
+
+            // Copy asset from theme to theme-manager folder
+            $newFilename = $this->copyThemeAsset($themePath, $fieldValue, $fieldName);
+
+            if (! $newFilename) {
+                Log::error('[Theme] Failed to copy asset for reset', [
+                    'field' => $fieldName,
+                    'file'  => $fieldValue,
+                ]);
+
+                // Clear the field since we couldn't copy
+                $config->update([$fieldName => null]);
+
+                // Invalidate cache
+                $this->themeHelper->clearCache();
+
+                return false;
+            }
+
+            // Update only this field
+            $config->update([$fieldName => $newFilename]);
+
+            // Invalidate cache
+            $this->themeHelper->clearCache();
+
+            Log::info('[Theme] Field reset to theme value', [
+                'field'    => $fieldName,
+                'theme'    => $themeSlug,
+                'new_file' => $newFilename,
+            ]);
+
+            return true;
+
+        } catch (\Throwable $e) {
+            Log::error('[Theme] Error resetting field', [
+                'field' => $fieldName,
+                'error' => $e->getMessage(),
+            ]);
+
+            return false;
+        }
     }
 }

@@ -172,6 +172,20 @@ class ThemeHelper
             '--danger-rgb'   => $this->hexToRgb($colorDanger),
         ];
 
+        // Login background variables (only if image exists)
+        if (!empty($config->login_bg_image)) {
+            $variables['--theme-login-bg-url'] = "url('" . asset('storage/theme-manager/' . $config->login_bg_image) . "')";
+            $variables['--theme-login-bg-opacity'] = max(0, min(100, (int) $config->login_bg_opacity)) / 100;
+            $variables['--theme-login-bg-zoom'] = max(50, min(200, (int) $config->login_bg_zoom)) / 100;
+        }
+
+        // Login card background variables (only if image exists)
+        if (!empty($config->login_card_bg_image)) {
+            $variables['--theme-login-card-bg-url'] = "url('" . asset('storage/theme-manager/' . $config->login_card_bg_image) . "')";
+            $variables['--theme-login-card-bg-opacity'] = max(0, min(100, (int) $config->login_card_bg_opacity)) / 100;
+            $variables['--theme-login-card-overlay'] = $this->sanitizeRgbaColor($config->login_card_overlay_color, 'rgba(10, 45, 15, 0.78)');
+        }
+
         $css = ':root {'.PHP_EOL;
 
         foreach ($variables as $variable => $value) {
