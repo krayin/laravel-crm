@@ -1,7 +1,3 @@
-<div style="padding:6px;background:#111;color:#0f0;font-family:monospace;font-size:12px;">
-  OVERRIDE ACTIVE: {{ __FILE__ }}
-</div>
-
 <x-admin::layouts>
     <!-- Page Title -->
     <x-slot:title>
