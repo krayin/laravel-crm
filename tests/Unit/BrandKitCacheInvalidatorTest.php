@@ -37,6 +37,12 @@ class BrandKitCacheInvalidatorTest extends TestCase
         config()->set('cache.default', 'array');
         Cache::flush();
 
+        // Garante que o diretório base de temas exista (necessário no CI)
+        $themesPath = storage_path('app/public/themes');
+        if (!File::isDirectory($themesPath)) {
+            File::makeDirectory($themesPath, 0755, true);
+        }
+
         $this->resolver = app(BrandKitResolver::class);
         $this->invalidator = app(BrandKitCacheInvalidator::class);
     }
