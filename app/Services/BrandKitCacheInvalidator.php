@@ -31,8 +31,8 @@ class BrandKitCacheInvalidator
      * - theme_configs
      * - Restore de snapshot
      *
-     * @param string $scopeKey Escopo (ex: 'global')
-     * @param string $themeSlug Tema específico ou '*' para todos
+     * @param  string  $scopeKey  Escopo (ex: 'global')
+     * @param  string  $themeSlug  Tema específico ou '*' para todos
      */
     public function afterBrandKitChange(string $scopeKey, string $themeSlug): void
     {
@@ -48,7 +48,7 @@ class BrandKitCacheInvalidator
         ThemeCache::flush();
 
         Log::debug('[BrandKitCacheInvalidator] Cache invalidado', [
-            'scope_key' => $scopeKey,
+            'scope_key'  => $scopeKey,
             'theme_slug' => $themeSlug,
         ]);
     }
@@ -92,7 +92,7 @@ class BrandKitCacheInvalidator
         $this->invalidateAll();
 
         Log::info('[BrandKitCacheInvalidator] Cache invalidado após restore', [
-            'scope_key' => $scopeKey,
+            'scope_key'  => $scopeKey,
             'theme_slug' => $themeSlug,
         ]);
     }

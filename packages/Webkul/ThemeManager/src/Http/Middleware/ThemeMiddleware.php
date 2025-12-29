@@ -11,8 +11,6 @@ class ThemeMiddleware
     /**
      * Handle an incoming request.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure  $next
      * @return mixed
      */
     public function handle(Request $request, Closure $next)
@@ -40,7 +38,7 @@ class ThemeMiddleware
         $themeStyles = view('theme-manager::components.theme-styles')->render();
 
         // Injetar o CSS antes do </head>
-        $content = str_ireplace('</head>', $themeStyles . '</head>', $content);
+        $content = str_ireplace('</head>', $themeStyles.'</head>', $content);
 
         $response->setContent($content);
 

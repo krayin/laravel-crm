@@ -1,8 +1,8 @@
 <?php
 
-require __DIR__ . '/vendor/autoload.php';
+require __DIR__.'/vendor/autoload.php';
 
-$app = require_once __DIR__ . '/bootstrap/app.php';
+$app = require_once __DIR__.'/bootstrap/app.php';
 $app->make('Illuminate\Contracts\Console\Kernel')->bootstrap();
 
 use Webkul\ThemeManager\Models\ThemeConfig;
@@ -14,12 +14,12 @@ echo "========================================\n\n";
 $config = ThemeConfig::first();
 
 echo "Estado ATUAL:\n";
-echo "  login_card_enabled: " . ($config->login_card_enabled ? 'TRUE' : 'FALSE') . "\n";
-echo "  login_card_title: " . ($config->login_card_title ?? 'NULL') . "\n";
-echo "  login_card_subtitle: " . ($config->login_card_subtitle ?? 'NULL') . "\n";
-echo "  login_card_sparkles: " . ($config->login_card_sparkles ? 'TRUE' : 'FALSE') . "\n";
-echo "  login_card_help_link: " . ($config->login_card_help_link ? 'TRUE' : 'FALSE') . "\n";
-echo "  login_card_support_email: " . ($config->login_card_support_email ?? 'NULL') . "\n\n";
+echo '  login_card_enabled: '.($config->login_card_enabled ? 'TRUE' : 'FALSE')."\n";
+echo '  login_card_title: '.($config->login_card_title ?? 'NULL')."\n";
+echo '  login_card_subtitle: '.($config->login_card_subtitle ?? 'NULL')."\n";
+echo '  login_card_sparkles: '.($config->login_card_sparkles ? 'TRUE' : 'FALSE')."\n";
+echo '  login_card_help_link: '.($config->login_card_help_link ? 'TRUE' : 'FALSE')."\n";
+echo '  login_card_support_email: '.($config->login_card_support_email ?? 'NULL')."\n\n";
 
 echo "Ativando Login Card com valores de teste...\n";
 
@@ -36,13 +36,13 @@ $config->save();
 echo "✅ Login Card ativado!\n\n";
 
 echo "Valores ATUALIZADOS:\n";
-echo "  login_card_enabled: " . ($config->login_card_enabled ? 'TRUE ✅' : 'FALSE') . "\n";
-echo "  login_card_title: \"" . $config->login_card_title . "\"\n";
-echo "  login_card_subtitle: \"" . $config->login_card_subtitle . "\"\n";
-echo "  login_card_sparkles: " . ($config->login_card_sparkles ? 'TRUE ✨' : 'FALSE') . "\n";
-echo "  login_card_help_link: " . ($config->login_card_help_link ? 'TRUE' : 'FALSE') . "\n";
-echo "  login_card_support_email: \"" . $config->login_card_support_email . "\"\n";
-echo "  login_card_overlay_color: \"" . $config->login_card_overlay_color . "\"\n\n";
+echo '  login_card_enabled: '.($config->login_card_enabled ? 'TRUE ✅' : 'FALSE')."\n";
+echo '  login_card_title: "'.$config->login_card_title."\"\n";
+echo '  login_card_subtitle: "'.$config->login_card_subtitle."\"\n";
+echo '  login_card_sparkles: '.($config->login_card_sparkles ? 'TRUE ✨' : 'FALSE')."\n";
+echo '  login_card_help_link: '.($config->login_card_help_link ? 'TRUE' : 'FALSE')."\n";
+echo '  login_card_support_email: "'.$config->login_card_support_email."\"\n";
+echo '  login_card_overlay_color: "'.$config->login_card_overlay_color."\"\n\n";
 
 echo "========================================\n";
 echo "PRÓXIMO PASSO:\n";

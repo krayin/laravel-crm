@@ -28,13 +28,13 @@ final class ThemeContext
     {
         return new self(
             enabled: false,
-            slug: "default",
-            scopeKey: "global",
+            slug: 'default',
+            scopeKey: 'global',
             config: [],
             loginConfig: [],
             isPreview: false,
-            customCssAdmin: "",
-            customCssLogin: "",
+            customCssAdmin: '',
+            customCssLogin: '',
         );
     }
 
@@ -57,21 +57,21 @@ final class ThemeContext
     public function cssVariables(): string
     {
         $vars = [
-            "--color-primary" => $this->get("color_primary"),
-            "--color-primary-dark" => $this->get("color_primary_dark"),
-            "--color-primary-light" => $this->get("color_primary_light"),
-            "--color-success" => $this->get("color_success"),
-            "--color-warning" => $this->get("color_warning"),
-            "--color-danger" => $this->get("color_danger"),
+            '--color-primary'       => $this->get('color_primary'),
+            '--color-primary-dark'  => $this->get('color_primary_dark'),
+            '--color-primary-light' => $this->get('color_primary_light'),
+            '--color-success'       => $this->get('color_success'),
+            '--color-warning'       => $this->get('color_warning'),
+            '--color-danger'        => $this->get('color_danger'),
         ];
 
-        $css = ":root {";
+        $css = ':root {';
         foreach ($vars as $name => $value) {
-            if ($value !== null && $value !== "") {
+            if ($value !== null && $value !== '') {
                 $css .= " {$name}: {$value};";
             }
         }
-        $css .= " }";
+        $css .= ' }';
 
         return $css;
     }
@@ -81,27 +81,27 @@ final class ThemeContext
      */
     public function bodyClasses(): string
     {
-        if (!$this->enabled) {
-            return "";
+        if (! $this->enabled) {
+            return '';
         }
 
         $classes = [
-            "theme-enabled",
-            "theme-" . $this->slug,
-            $this->isPreview ? "theme-preview" : null,
+            'theme-enabled',
+            'theme-'.$this->slug,
+            $this->isPreview ? 'theme-preview' : null,
         ];
 
         // Background de login
-        if ($this->login("bg_image")) {
-            $classes[] = "theme-login-bg";
+        if ($this->login('bg_image')) {
+            $classes[] = 'theme-login-bg';
         }
 
         // Card customizado
         if ($this->hasCustomCard()) {
-            $classes[] = "theme-login-card-custom";
+            $classes[] = 'theme-login-card-custom';
         }
 
-        return trim(implode(" ", array_filter($classes)));
+        return trim(implode(' ', array_filter($classes)));
     }
 
     /**
@@ -110,7 +110,7 @@ final class ThemeContext
     public function loginBgUrl(): ?string
     {
         // suportar tanto login_bg_image quanto login_bg_url
-        $bg = $this->get("login_bg_image") ?? $this->get("login_bg_url");
+        $bg = $this->get('login_bg_image') ?? $this->get('login_bg_url');
 
         return $this->resolveAssetUrl($bg, "storage/themes/{$this->slug}");
     }
@@ -121,7 +121,7 @@ final class ThemeContext
     public function hasCustomCard(): bool
     {
         // seu plano usa login_card_enabled
-        $val = $this->get("login_card_enabled", false);
+        $val = $this->get('login_card_enabled', false);
 
         // garantir bool mesmo se vier string
         return filter_var($val, FILTER_VALIDATE_BOOLEAN);
@@ -134,8 +134,8 @@ final class ThemeContext
     {
         // Nem todo theme.json tem isso; deixamos opcional e seguro
         $bg =
-            $this->get("login_card_bg_image") ??
-            $this->get("login_card_bg_url");
+            $this->get('login_card_bg_image') ??
+            $this->get('login_card_bg_url');
 
         return $this->resolveAssetUrl($bg, "storage/themes/{$this->slug}");
     }
@@ -146,7 +146,7 @@ final class ThemeContext
     public function cssUrl(): ?string
     {
         // 1) se existir key explicita no config, usa ela
-        $css = $this->get("theme_css") ?? $this->get("css");
+        $css = $this->get('theme_css') ?? $this->get('css');
 
         $url = $this->resolveAssetUrl($css, "storage/themes/{$this->slug}");
         if ($url) {
@@ -169,24 +169,24 @@ final class ThemeContext
         ?string $value,
         string $basePublicPath,
     ): ?string {
-        if (!$value) {
+        if (! $value) {
             return null;
         }
 
         $value = trim($value);
 
         // URL absoluta
-        if (Str::startsWith($value, ["http://", "https://"])) {
+        if (Str::startsWith($value, ['http://', 'https://'])) {
             return $value;
         }
 
         // Path absoluto no site
-        if (Str::startsWith($value, ["/"])) {
+        if (Str::startsWith($value, ['/'])) {
             return url($value);
         }
 
         // Arquivo relativo ao tema
-        return asset($basePublicPath . "/" . ltrim($value, "/"));
+        return asset($basePublicPath.'/'.ltrim($value, '/'));
     }
 
     /**
@@ -194,7 +194,7 @@ final class ThemeContext
      */
     public function themeAsset(?string $relativePath): ?string
     {
-        if (!$relativePath) {
+        if (! $relativePath) {
             return null;
         }
 
@@ -205,26 +205,26 @@ final class ThemeContext
      * Get logo by type: main, light, icon
      * Used by views: $themeContext->logo('main')
      */
-    public function logo(string $type = "main"): ?string
+    public function logo(string $type = 'main'): ?string
     {
         $key = match ($type) {
-            "main" => "logo_main",
-            "light" => "logo_light",
-            "icon" => "logo_icon",
+            'main'  => 'logo_main',
+            'light' => 'logo_light',
+            'icon'  => 'logo_icon',
             default => "logo_{$type}",
         };
 
         $value = $this->get($key);
 
-        if (!$value) {
+        if (! $value) {
             return null;
         }
 
         // Se já é URL completa, retorna direto
         if (
-            str_starts_with($value, "http://") ||
-            str_starts_with($value, "https://") ||
-            str_starts_with($value, "/")
+            str_starts_with($value, 'http://') ||
+            str_starts_with($value, 'https://') ||
+            str_starts_with($value, '/')
         ) {
             return $value;
         }
@@ -235,31 +235,31 @@ final class ThemeContext
 
     public function logoMain(): ?string
     {
-        return $this->logo("main");
+        return $this->logo('main');
     }
 
     public function logoLight(): ?string
     {
-        return $this->logo("light");
+        return $this->logo('light');
     }
 
     public function logoIcon(): ?string
     {
-        return $this->logo("icon");
+        return $this->logo('icon');
     }
 
     public function favicon(): ?string
     {
-        $value = $this->get("favicon");
+        $value = $this->get('favicon');
 
-        if (!$value) {
+        if (! $value) {
             return null;
         }
 
         if (
-            str_starts_with($value, "http://") ||
-            str_starts_with($value, "https://") ||
-            str_starts_with($value, "/")
+            str_starts_with($value, 'http://') ||
+            str_starts_with($value, 'https://') ||
+            str_starts_with($value, '/')
         ) {
             return $value;
         }
@@ -273,7 +273,7 @@ final class ThemeContext
      */
     public function showPoweredBy(): bool
     {
-        $value = $this->get("show_powered_by", true);
+        $value = $this->get('show_powered_by', true);
 
         // Handle various truthy/falsy values
         if (is_bool($value)) {

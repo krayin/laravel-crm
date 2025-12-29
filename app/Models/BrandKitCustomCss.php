@@ -8,27 +8,27 @@ use Webkul\User\Models\User;
 
 class BrandKitCustomCss extends Model
 {
-    protected $table = "brand_kit_custom_css";
+    protected $table = 'brand_kit_custom_css';
 
     protected $fillable = [
-        "scope_key",
-        "theme_slug",
-        "name",
-        "css_content",
-        "target", // string: admin|login|both
-        "is_enabled",
-        "priority",
-        "created_by",
+        'scope_key',
+        'theme_slug',
+        'name',
+        'css_content',
+        'target', // string: admin|login|both
+        'is_enabled',
+        'priority',
+        'created_by',
     ];
 
     protected $casts = [
-        "is_enabled" => "boolean",
-        "priority" => "integer",
+        'is_enabled' => 'boolean',
+        'priority'   => 'integer',
     ];
 
     public function createdBy(): BelongsTo
     {
-        return $this->belongsTo(User::class, "created_by");
+        return $this->belongsTo(User::class, 'created_by');
     }
 
     /**
@@ -41,14 +41,14 @@ class BrandKitCustomCss extends Model
         string $target,
     ): string {
         return static::query()
-            ->where("scope_key", $scopeKey)
-            ->where("theme_slug", $themeSlug)
-            ->where("is_enabled", true)
+            ->where('scope_key', $scopeKey)
+            ->where('theme_slug', $themeSlug)
+            ->where('is_enabled', true)
             ->where(function ($q) use ($target) {
-                $q->where("target", $target)->orWhere("target", "both");
+                $q->where('target', $target)->orWhere('target', 'both');
             })
-            ->orderBy("priority")
-            ->pluck("css_content")
+            ->orderBy('priority')
+            ->pluck('css_content')
             ->implode("\n\n");
     }
 }

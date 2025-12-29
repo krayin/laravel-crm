@@ -23,6 +23,7 @@ class BrandKitResolverTest extends TestCase
     use BrandKitTestSchema;
 
     private BrandKitResolver $resolver;
+
     private array $createdThemes = [];
 
     protected function setUp(): void
@@ -38,11 +39,11 @@ class BrandKitResolverTest extends TestCase
 
         // Garante que o diretório base de temas exista (necessário no CI)
         $themesPath = storage_path('app/public/themes');
-        if (!File::isDirectory($themesPath)) {
+        if (! File::isDirectory($themesPath)) {
             File::makeDirectory($themesPath, 0755, true);
         }
 
-        $this->resolver = new BrandKitResolver(new CssValidator());
+        $this->resolver = new BrandKitResolver(new CssValidator);
     }
 
     protected function tearDown(): void
@@ -68,11 +69,11 @@ class BrandKitResolverTest extends TestCase
     private function createFakeTheme(string $slug, array $themeJson = []): void
     {
         $defaultJson = [
-            'name' => ucfirst($slug),
-            'version' => '1.0.0',
-            'color_primary' => '#FF0000',
+            'name'               => ucfirst($slug),
+            'version'            => '1.0.0',
+            'color_primary'      => '#FF0000',
             'color_primary_dark' => '#CC0000',
-            'login_bg_opacity' => 75,
+            'login_bg_opacity'   => 75,
         ];
 
         $path = storage_path("app/public/themes/{$slug}");
@@ -99,11 +100,11 @@ class BrandKitResolverTest extends TestCase
 
         // Arrange: override com CLEAR
         BrandKitOverride::create([
-            'scope_key' => 'global',
-            'theme_slug' => 'test-theme',
+            'scope_key'    => 'global',
+            'theme_slug'   => 'test-theme',
             'override_key' => 'color_primary',
-            'value' => null, // CLEAR
-            'is_active' => true,
+            'value'        => null, // CLEAR
+            'is_active'    => true,
         ]);
 
         // Act
@@ -123,11 +124,11 @@ class BrandKitResolverTest extends TestCase
 
         // Override com string vazia
         BrandKitOverride::create([
-            'scope_key' => 'global',
-            'theme_slug' => 'test-theme',
+            'scope_key'    => 'global',
+            'theme_slug'   => 'test-theme',
             'override_key' => 'color_primary',
-            'value' => '', // CLEAR via string vazia
-            'is_active' => true,
+            'value'        => '', // CLEAR via string vazia
+            'is_active'    => true,
         ]);
 
         // Act
@@ -147,11 +148,11 @@ class BrandKitResolverTest extends TestCase
 
         // Override inativo
         BrandKitOverride::create([
-            'scope_key' => 'global',
-            'theme_slug' => 'test-theme',
+            'scope_key'    => 'global',
+            'theme_slug'   => 'test-theme',
             'override_key' => 'color_primary',
-            'value' => '#00FF00',
-            'is_active' => false, // Inativo
+            'value'        => '#00FF00',
+            'is_active'    => false, // Inativo
         ]);
 
         // Act
@@ -171,11 +172,11 @@ class BrandKitResolverTest extends TestCase
 
         // Override ativo com valor
         BrandKitOverride::create([
-            'scope_key' => 'global',
-            'theme_slug' => 'test-theme',
+            'scope_key'    => 'global',
+            'theme_slug'   => 'test-theme',
             'override_key' => 'color_primary',
-            'value' => '#00FF00',
-            'is_active' => true,
+            'value'        => '#00FF00',
+            'is_active'    => true,
         ]);
 
         // Act
@@ -315,8 +316,8 @@ class BrandKitResolverTest extends TestCase
         // Arrange: valores que devem virar true
         $this->createFakeTheme('test-theme', [
             'login_show_powered_by' => '1',
-            'login_card_enabled' => 'true',
-            'login_card_sparkles' => 1,
+            'login_card_enabled'    => 'true',
+            'login_card_sparkles'   => 1,
         ]);
 
         // Act

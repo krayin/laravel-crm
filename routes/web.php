@@ -15,8 +15,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get("/", function () {
-    return view("welcome");
+Route::get('/', function () {
+    return view('welcome');
 });
 
 /*
@@ -29,24 +29,24 @@ Route::get("/", function () {
 | e permissão.
 |
 */
-Route::prefix(config("app.admin_path", "admin"))
-    ->middleware(["web", "user"])
+Route::prefix(config('app.admin_path', 'admin'))
+    ->middleware(['web', 'user'])
     ->group(function () {
-        Route::prefix("settings/theme")
-            ->name("admin.settings.theme.")
+        Route::prefix('settings/theme')
+            ->name('admin.settings.theme.')
             ->middleware(\App\Http\Middleware\ThemePermission::class)
             ->group(function () {
                 // Restaurar tema padrão
-                Route::post("/restore", [
+                Route::post('/restore', [
                     ThemeController::class,
-                    "restore",
-                ])->name("restore");
+                    'restore',
+                ])->name('restore');
 
                 // Rollback para tema anterior
-                Route::post("/rollback", [
+                Route::post('/rollback', [
                     ThemeController::class,
-                    "rollback",
-                ])->name("rollback");
+                    'rollback',
+                ])->name('rollback');
             });
 
         /*
@@ -58,56 +58,56 @@ Route::prefix(config("app.admin_path", "admin"))
         | Protegidas por middleware de autenticação do admin panel.
         |
         */
-        Route::prefix("settings/brand-kit")
-            ->name("admin.brandkit.")
+        Route::prefix('settings/brand-kit')
+            ->name('admin.brandkit.')
             // ->middleware(\App\Http\Middleware\BrandKitPermission::class) // MVP: desligado
             ->group(function () {
-                Route::get("/", [BrandKitController::class, "index"])->name(
-                    "index",
+                Route::get('/', [BrandKitController::class, 'index'])->name(
+                    'index',
                 );
 
                 // Overrides
-                Route::post("/override", [
+                Route::post('/override', [
                     BrandKitController::class,
-                    "setOverride",
-                ])->name("override.set");
-                Route::post("/override/reset", [
+                    'setOverride',
+                ])->name('override.set');
+                Route::post('/override/reset', [
                     BrandKitController::class,
-                    "resetOverride",
-                ])->name("override.reset");
-                Route::post("/override/reset-all", [
+                    'resetOverride',
+                ])->name('override.reset');
+                Route::post('/override/reset-all', [
                     BrandKitController::class,
-                    "resetAllOverrides",
-                ])->name("override.reset_all");
+                    'resetAllOverrides',
+                ])->name('override.reset_all');
 
                 // Custom CSS
-                Route::post("/css", [
+                Route::post('/css', [
                     BrandKitController::class,
-                    "addCustomCss",
-                ])->name("css.add");
-                Route::post("/css/{id}/toggle", [
+                    'addCustomCss',
+                ])->name('css.add');
+                Route::post('/css/{id}/toggle', [
                     BrandKitController::class,
-                    "toggleCustomCss",
+                    'toggleCustomCss',
                 ])
-                    ->whereNumber("id")
-                    ->name("css.toggle");
-                Route::delete("/css/{id}", [
+                    ->whereNumber('id')
+                    ->name('css.toggle');
+                Route::delete('/css/{id}', [
                     BrandKitController::class,
-                    "deleteCustomCss",
+                    'deleteCustomCss',
                 ])
-                    ->whereNumber("id")
-                    ->name("css.delete");
+                    ->whereNumber('id')
+                    ->name('css.delete');
 
                 // Snapshots
-                Route::post("/snapshots", [
+                Route::post('/snapshots', [
                     BrandKitController::class,
-                    "createSnapshot",
-                ])->name("snapshot.create");
-                Route::post("/snapshots/{id}/restore", [
+                    'createSnapshot',
+                ])->name('snapshot.create');
+                Route::post('/snapshots/{id}/restore', [
                     BrandKitController::class,
-                    "restoreSnapshot",
+                    'restoreSnapshot',
                 ])
-                    ->whereNumber("id")
-                    ->name("snapshot.restore");
+                    ->whereNumber('id')
+                    ->name('snapshot.restore');
             });
     });

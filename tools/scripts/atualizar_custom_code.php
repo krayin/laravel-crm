@@ -1,8 +1,8 @@
 <?php
 
-require __DIR__ . "/vendor/autoload.php";
+require __DIR__.'/vendor/autoload.php';
 
-$app = require_once __DIR__ . "/bootstrap/app.php";
+$app = require_once __DIR__.'/bootstrap/app.php';
 $kernel = $app->make(Illuminate\Contracts\Console\Kernel::class);
 $kernel->bootstrap();
 
@@ -240,7 +240,7 @@ $customCode = <<<'CODE'
 CODE;
 
 // Atualizar no banco
-$config = \Webkul\ThemeManager\Models\ThemeConfig::firstOrCreate(["id" => 1]);
+$config = \Webkul\ThemeManager\Models\ThemeConfig::firstOrCreate(['id' => 1]);
 $config->login_card_custom_code = $customCode;
 $config->save();
 
@@ -249,7 +249,7 @@ echo "  STELIUM v2 - Custom Code Atualizado\n";
 echo "============================================================\n";
 echo "\n";
 echo "✅ Código salvo com sucesso!\n";
-echo "📏 Tamanho: " . strlen($customCode) . " caracteres\n";
+echo '📏 Tamanho: '.strlen($customCode)." caracteres\n";
 echo "\n";
 echo "🔧 Correções aplicadas:\n";
 echo "   1. ID no card para máxima especificidade CSS\n";

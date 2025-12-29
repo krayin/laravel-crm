@@ -7,10 +7,10 @@ $app->make('Illuminate\Contracts\Console\Kernel')->bootstrap();
 $config = \Webkul\ThemeManager\Models\ThemeConfig::getInstance();
 
 echo "=== CONFIGURAÇÃO ATUAL DO TEMA ===\n\n";
-echo "Ativo: " . ($config->is_active ? "SIM" : "NÃO") . "\n";
-echo "Cor Primary: " . $config->color_primary . "\n";
-echo "Cor Primary Dark: " . $config->color_primary_dark . "\n";
-echo "Cor Primary Light: " . $config->color_primary_light . "\n\n";
+echo 'Ativo: '.($config->is_active ? 'SIM' : 'NÃO')."\n";
+echo 'Cor Primary: '.$config->color_primary."\n";
+echo 'Cor Primary Dark: '.$config->color_primary_dark."\n";
+echo 'Cor Primary Light: '.$config->color_primary_light."\n\n";
 
 echo "PROBLEMA IDENTIFICADO:\n";
 if ($config->color_primary === '#ffffff') {

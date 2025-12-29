@@ -13,11 +13,11 @@ final class BrandKitController extends Controller
         // Depois: render da view do Brand Kit.
         if ($request->expectsJson()) {
             return response()->json([
-                "ok" => true,
-                "message" => "Brand Kit UI wiring OK",
+                'ok'      => true,
+                'message' => 'Brand Kit UI wiring OK',
             ]);
         }
 
-        return view("admin::brandkit.index"); // ajuste quando você criar a view
+        return view('admin::brandkit.index'); // ajuste quando você criar a view
     }
 }

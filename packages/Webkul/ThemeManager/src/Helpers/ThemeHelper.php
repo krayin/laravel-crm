@@ -48,7 +48,7 @@ class ThemeHelper
         });
 
         // Hydrate the model from cached array
-        $config = new ThemeConfig();
+        $config = new ThemeConfig;
         $config->forceFill($configArray);
         $config->exists = true;
 
@@ -77,10 +77,6 @@ class ThemeHelper
 
     /**
      * Sanitize a hex color value to prevent CSS injection.
-     *
-     * @param  string|null  $color
-     * @param  string  $default
-     * @return string
      */
     public function sanitizeHexColor(?string $color, string $default = '#000000'): string
     {
@@ -90,7 +86,7 @@ class ThemeHelper
 
         // Ensure it starts with #
         if (! str_starts_with($color, '#')) {
-            $color = '#' . $color;
+            $color = '#'.$color;
         }
 
         // Validate hex format
@@ -103,10 +99,6 @@ class ThemeHelper
 
     /**
      * Sanitize an rgba color value to prevent CSS injection.
-     *
-     * @param  string|null  $color
-     * @param  string  $default
-     * @return string
      */
     public function sanitizeRgbaColor(?string $color, string $default = 'rgba(0, 0, 0, 0.5)'): string
     {
@@ -129,10 +121,6 @@ class ThemeHelper
 
     /**
      * Sanitize text for safe output in CSS/HTML.
-     *
-     * @param  string|null  $text
-     * @param  int  $maxLength
-     * @return string
      */
     public function sanitizeText(?string $text, int $maxLength = 200): string
     {
@@ -166,28 +154,28 @@ class ThemeHelper
 
         $variables = [
             // Primary colors
-            '--primary-color' => $colorPrimary,
-            '--primary-dark-color' => $colorPrimaryDark,
+            '--primary-color'       => $colorPrimary,
+            '--primary-dark-color'  => $colorPrimaryDark,
             '--primary-light-color' => $colorPrimaryLight,
-            '--primary-rgb' => $this->hexToRgb($colorPrimary),
+            '--primary-rgb'         => $this->hexToRgb($colorPrimary),
 
             // Success
             '--success-color' => $colorSuccess,
-            '--success-rgb' => $this->hexToRgb($colorSuccess),
+            '--success-rgb'   => $this->hexToRgb($colorSuccess),
 
             // Warning
             '--warning-color' => $colorWarning,
-            '--warning-rgb' => $this->hexToRgb($colorWarning),
+            '--warning-rgb'   => $this->hexToRgb($colorWarning),
 
             // Danger
             '--danger-color' => $colorDanger,
-            '--danger-rgb' => $this->hexToRgb($colorDanger),
+            '--danger-rgb'   => $this->hexToRgb($colorDanger),
         ];
 
-        $css = ':root {' . PHP_EOL;
+        $css = ':root {'.PHP_EOL;
 
         foreach ($variables as $variable => $value) {
-            $css .= "    {$variable}: {$value};" . PHP_EOL;
+            $css .= "    {$variable}: {$value};".PHP_EOL;
         }
 
         $css .= '}';
@@ -197,29 +185,26 @@ class ThemeHelper
 
     /**
      * Convert hex color to RGB values.
-     *
-     * @param  string  $hex
-     * @return string
      */
     protected function hexToRgb(string $hex): string
     {
         $hex = ltrim($hex, '#');
 
         if (strlen($hex) === 3) {
-            $hex = $hex[0] . $hex[0] . $hex[1] . $hex[1] . $hex[2] . $hex[2];
+            $hex = $hex[0].$hex[0].$hex[1].$hex[1].$hex[2].$hex[2];
         }
 
         return implode(', ', [
             hexdec(substr($hex, 0, 2)),
             hexdec(substr($hex, 2, 2)),
-            hexdec(substr($hex, 4, 2))
+            hexdec(substr($hex, 4, 2)),
         ]);
     }
 
     /**
      * Get logo URL by type.
      *
-     * @param  string  $type (main, light, icon, favicon)
+     * @param  string  $type  (main, light, icon, favicon)
      * @return string|null
      */
     public function getLogo(string $type)
@@ -228,7 +213,7 @@ class ThemeHelper
         $field = "logo_{$type}";
 
         if (! empty($config->$field)) {
-            return asset('storage/theme-manager/' . $config->$field);
+            return asset('storage/theme-manager/'.$config->$field);
         }
 
         return null;
@@ -236,15 +221,13 @@ class ThemeHelper
 
     /**
      * Get favicon URL with proper handling.
-     *
-     * @return string|null
      */
     public function getFavicon(): ?string
     {
         $config = $this->getConfig();
 
         if (! empty($config->favicon)) {
-            return asset('storage/theme-manager/' . $config->favicon);
+            return asset('storage/theme-manager/'.$config->favicon);
         }
 
         return null;
@@ -260,18 +243,18 @@ class ThemeHelper
         $config = $this->getConfig();
 
         return [
-            'bg_image' => $config->login_bg_image ? asset('storage/theme-manager/' . $config->login_bg_image) : null,
-            'bg_zoom' => max(50, min(200, (int) $config->login_bg_zoom)),
-            'bg_opacity' => max(0, min(100, (int) $config->login_bg_opacity)),
-            'show_powered_by' => (bool) $config->login_show_powered_by,
-            'card_enabled' => (bool) $config->login_card_enabled,
-            'card_bg_image' => $config->login_card_bg_image ? asset('storage/theme-manager/' . $config->login_card_bg_image) : null,
-            'card_bg_opacity' => max(0, min(100, (int) $config->login_card_bg_opacity)),
+            'bg_image'           => $config->login_bg_image ? asset('storage/theme-manager/'.$config->login_bg_image) : null,
+            'bg_zoom'            => max(50, min(200, (int) $config->login_bg_zoom)),
+            'bg_opacity'         => max(0, min(100, (int) $config->login_bg_opacity)),
+            'show_powered_by'    => (bool) $config->login_show_powered_by,
+            'card_enabled'       => (bool) $config->login_card_enabled,
+            'card_bg_image'      => $config->login_card_bg_image ? asset('storage/theme-manager/'.$config->login_card_bg_image) : null,
+            'card_bg_opacity'    => max(0, min(100, (int) $config->login_card_bg_opacity)),
             'card_overlay_color' => $this->sanitizeRgbaColor($config->login_card_overlay_color, 'rgba(10, 45, 15, 0.78)'),
-            'card_title' => $this->sanitizeText($config->login_card_title, 100),
-            'card_subtitle' => $this->sanitizeText($config->login_card_subtitle, 200),
-            'card_sparkles' => (bool) $config->login_card_sparkles,
-            'card_help_link' => (bool) $config->login_card_help_link,
+            'card_title'         => $this->sanitizeText($config->login_card_title, 100),
+            'card_subtitle'      => $this->sanitizeText($config->login_card_subtitle, 200),
+            'card_sparkles'      => (bool) $config->login_card_sparkles,
+            'card_help_link'     => (bool) $config->login_card_help_link,
             'card_support_email' => filter_var($config->login_card_support_email, FILTER_VALIDATE_EMAIL) ?: 'support@example.com',
         ];
     }
@@ -279,7 +262,6 @@ class ThemeHelper
     /**
      * Get empty state SVG path by type.
      *
-     * @param  string  $type
      * @return string|null
      */
     public function getEmptyState(string $type)
@@ -295,7 +277,7 @@ class ThemeHelper
         $field = "empty_state_{$type}";
 
         if (! empty($config->$field)) {
-            return asset('storage/theme-manager/' . $config->$field);
+            return asset('storage/theme-manager/'.$config->$field);
         }
 
         return null;
@@ -304,7 +286,6 @@ class ThemeHelper
     /**
      * Get a specific configuration value.
      *
-     * @param  string  $key
      * @param  mixed  $default
      * @return mixed
      */

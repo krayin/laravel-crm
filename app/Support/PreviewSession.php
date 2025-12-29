@@ -23,13 +23,19 @@ final class PreviewSession
 {
     private const PREFIX = 'brandkit.preview';
 
-    private const KEY_ENABLED = self::PREFIX . '.enabled';
-    private const KEY_SCOPE = self::PREFIX . '.scope_key';
-    private const KEY_THEME = self::PREFIX . '.theme_slug';
-    private const KEY_OVERRIDES = self::PREFIX . '.overrides';
-    private const KEY_CSS_ADMIN = self::PREFIX . '.css_admin';
-    private const KEY_CSS_LOGIN = self::PREFIX . '.css_login';
-    private const KEY_STARTED_AT = self::PREFIX . '.started_at';
+    private const KEY_ENABLED = self::PREFIX.'.enabled';
+
+    private const KEY_SCOPE = self::PREFIX.'.scope_key';
+
+    private const KEY_THEME = self::PREFIX.'.theme_slug';
+
+    private const KEY_OVERRIDES = self::PREFIX.'.overrides';
+
+    private const KEY_CSS_ADMIN = self::PREFIX.'.css_admin';
+
+    private const KEY_CSS_LOGIN = self::PREFIX.'.css_login';
+
+    private const KEY_STARTED_AT = self::PREFIX.'.started_at';
 
     /**
      * Verifica se preview está ativo.
@@ -92,11 +98,7 @@ final class PreviewSession
     /**
      * Inicia um preview completo.
      *
-     * @param string $scopeKey
-     * @param string $themeSlug
-     * @param array<string, mixed> $overrides
-     * @param string $cssAdmin
-     * @param string $cssLogin
+     * @param  array<string, mixed>  $overrides
      */
     public static function start(
         string $scopeKey,
@@ -106,12 +108,12 @@ final class PreviewSession
         string $cssLogin = '',
     ): void {
         Session::put([
-            self::KEY_ENABLED => true,
-            self::KEY_SCOPE => $scopeKey,
-            self::KEY_THEME => $themeSlug,
-            self::KEY_OVERRIDES => $overrides,
-            self::KEY_CSS_ADMIN => $cssAdmin,
-            self::KEY_CSS_LOGIN => $cssLogin,
+            self::KEY_ENABLED    => true,
+            self::KEY_SCOPE      => $scopeKey,
+            self::KEY_THEME      => $themeSlug,
+            self::KEY_OVERRIDES  => $overrides,
+            self::KEY_CSS_ADMIN  => $cssAdmin,
+            self::KEY_CSS_LOGIN  => $cssLogin,
             self::KEY_STARTED_AT => time(),
         ]);
     }
@@ -127,11 +129,11 @@ final class PreviewSession
     /**
      * Atualiza overrides do preview atual.
      *
-     * @param array<string, mixed> $overrides
+     * @param  array<string, mixed>  $overrides
      */
     public static function updateOverrides(array $overrides): void
     {
-        if (!self::isActive()) {
+        if (! self::isActive()) {
             return;
         }
 
@@ -146,7 +148,7 @@ final class PreviewSession
      */
     public static function removeOverride(string $key): void
     {
-        if (!self::isActive()) {
+        if (! self::isActive()) {
             return;
         }
 
@@ -161,7 +163,7 @@ final class PreviewSession
      */
     public static function updateCss(string $cssAdmin, string $cssLogin): void
     {
-        if (!self::isActive()) {
+        if (! self::isActive()) {
             return;
         }
 
@@ -201,12 +203,12 @@ final class PreviewSession
     public static function all(): array
     {
         return [
-            'enabled' => self::isActive(),
-            'scope_key' => self::getScopeKey(),
+            'enabled'    => self::isActive(),
+            'scope_key'  => self::getScopeKey(),
             'theme_slug' => self::getThemeSlug(),
-            'overrides' => self::getOverrides(),
-            'css_admin' => self::getCssAdmin(),
-            'css_login' => self::getCssLogin(),
+            'overrides'  => self::getOverrides(),
+            'css_admin'  => self::getCssAdmin(),
+            'css_login'  => self::getCssLogin(),
             'started_at' => self::getStartedAt(),
         ];
     }
@@ -235,6 +237,7 @@ final class PreviewSession
     {
         if (self::isActive() && self::isExpired($maxMinutes)) {
             self::clear();
+
             return true;
         }
 

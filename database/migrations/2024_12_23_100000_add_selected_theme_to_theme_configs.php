@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::table('theme_configs', function (Blueprint $table) {
             $table->string('selected_theme', 50)
-                  ->default('default')
-                  ->after('is_active')
-                  ->comment('Slug do tema selecionado');
+                ->default('default')
+                ->after('is_active')
+                ->comment('Slug do tema selecionado');
         });
     }
 

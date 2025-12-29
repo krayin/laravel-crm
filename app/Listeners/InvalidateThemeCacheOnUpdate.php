@@ -24,7 +24,7 @@ class InvalidateThemeCacheOnUpdate
     /**
      * Handle the event.
      *
-     * @param mixed $config ThemeConfig model ou array
+     * @param  mixed  $config  ThemeConfig model ou array
      */
     public function handle($config): void
     {

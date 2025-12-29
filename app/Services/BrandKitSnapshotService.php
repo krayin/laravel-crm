@@ -19,6 +19,7 @@ use Illuminate\Support\Facades\Log;
 class BrandKitSnapshotService
 {
     private const SNAPSHOT_VERSION = 1;
+
     private const MAX_AUTO_SNAPSHOTS = 10;
 
     /**
@@ -39,14 +40,14 @@ class BrandKitSnapshotService
             }
 
             $snapshot = BrandKitSnapshot::create([
-                'scope_key' => $scopeKey,
-                'theme_slug' => $themeSlug,
-                'name' => 'Auto: ' . now()->format('Y-m-d H:i:s'),
+                'scope_key'        => $scopeKey,
+                'theme_slug'       => $themeSlug,
+                'name'             => 'Auto: '.now()->format('Y-m-d H:i:s'),
                 'snapshot_version' => self::SNAPSHOT_VERSION,
-                'overrides_data' => $currentState['overrides'],
-                'custom_css_data' => $currentState['css'],
-                'is_auto' => true,
-                'created_by' => $userId,
+                'overrides_data'   => $currentState['overrides'],
+                'custom_css_data'  => $currentState['css'],
+                'is_auto'          => true,
+                'created_by'       => $userId,
             ]);
 
             // Limpa snapshots antigos (mantém últimos N automáticos)
@@ -55,10 +56,11 @@ class BrandKitSnapshotService
             return $snapshot;
         } catch (\Throwable $e) {
             Log::warning('BrandKitSnapshotService: Falha ao criar auto-snapshot', [
-                'scope_key' => $scopeKey,
+                'scope_key'  => $scopeKey,
                 'theme_slug' => $themeSlug,
-                'error' => $e->getMessage(),
+                'error'      => $e->getMessage(),
             ]);
+
             return null;
         }
     }
@@ -75,14 +77,14 @@ class BrandKitSnapshotService
         $currentState = $this->captureCurrentState($scopeKey, $themeSlug);
 
         return BrandKitSnapshot::create([
-            'scope_key' => $scopeKey,
-            'theme_slug' => $themeSlug,
-            'name' => $name,
+            'scope_key'        => $scopeKey,
+            'theme_slug'       => $themeSlug,
+            'name'             => $name,
             'snapshot_version' => self::SNAPSHOT_VERSION,
-            'overrides_data' => $currentState['overrides'],
-            'custom_css_data' => $currentState['css'],
-            'is_auto' => false,
-            'created_by' => $userId,
+            'overrides_data'   => $currentState['overrides'],
+            'custom_css_data'  => $currentState['css'],
+            'is_auto'          => false,
+            'created_by'       => $userId,
         ]);
     }
 
@@ -114,12 +116,12 @@ class BrandKitSnapshotService
             $overridesData = $snapshot->overrides_data ?? [];
             foreach ($overridesData as $item) {
                 BrandKitOverride::create([
-                    'scope_key' => $scopeKey,
-                    'theme_slug' => $themeSlug,
+                    'scope_key'    => $scopeKey,
+                    'theme_slug'   => $themeSlug,
                     'override_key' => $item['override_key'],
-                    'value' => $item['value'],
-                    'is_active' => $item['is_active'] ?? true,
-                    'updated_by' => $userId,
+                    'value'        => $item['value'],
+                    'is_active'    => $item['is_active'] ?? true,
+                    'updated_by'   => $userId,
                 ]);
             }
 
@@ -132,23 +134,23 @@ class BrandKitSnapshotService
             $cssData = $snapshot->custom_css_data ?? [];
             foreach ($cssData as $item) {
                 BrandKitCustomCss::create([
-                    'scope_key' => $scopeKey,
-                    'theme_slug' => $themeSlug,
-                    'name' => $item['name'],
+                    'scope_key'   => $scopeKey,
+                    'theme_slug'  => $themeSlug,
+                    'name'        => $item['name'],
                     'css_content' => $item['css_content'],
-                    'target' => $item['target'] ?? 'admin',
-                    'is_enabled' => $item['is_enabled'] ?? true,
-                    'priority' => $item['priority'] ?? 100,
-                    'created_by' => $userId,
+                    'target'      => $item['target'] ?? 'admin',
+                    'is_enabled'  => $item['is_enabled'] ?? true,
+                    'priority'    => $item['priority'] ?? 100,
+                    'created_by'  => $userId,
                 ]);
             }
 
             Log::info('BrandKitSnapshotService: Snapshot restaurado', [
-                'snapshot_id' => $snapshot->id,
-                'scope_key' => $scopeKey,
-                'theme_slug' => $themeSlug,
+                'snapshot_id'        => $snapshot->id,
+                'scope_key'          => $scopeKey,
+                'theme_slug'         => $themeSlug,
                 'restored_overrides' => count($overridesData),
-                'restored_css' => count($cssData),
+                'restored_css'       => count($cssData),
             ]);
 
             return true;
@@ -179,11 +181,11 @@ class BrandKitSnapshotService
     {
         $snapshot = BrandKitSnapshot::find($snapshotId);
 
-        if (!$snapshot) {
+        if (! $snapshot) {
             return false;
         }
 
-        if ($snapshot->is_auto && !$allowAutoDelete) {
+        if ($snapshot->is_auto && ! $allowAutoDelete) {
             return false;
         }
 
@@ -201,28 +203,28 @@ class BrandKitSnapshotService
             ->where('theme_slug', $themeSlug)
             ->where('is_active', true)
             ->get(['override_key', 'value', 'is_active'])
-            ->map(fn($o) => [
+            ->map(fn ($o) => [
                 'override_key' => $o->override_key,
-                'value' => $o->value,
-                'is_active' => $o->is_active,
+                'value'        => $o->value,
+                'is_active'    => $o->is_active,
             ])
             ->toArray();
 
         $css = BrandKitCustomCss::where('scope_key', $scopeKey)
             ->where('theme_slug', $themeSlug)
             ->get(['name', 'css_content', 'target', 'is_enabled', 'priority'])
-            ->map(fn($c) => [
-                'name' => $c->name,
+            ->map(fn ($c) => [
+                'name'        => $c->name,
                 'css_content' => $c->css_content,
-                'target' => $c->target,
-                'is_enabled' => $c->is_enabled,
-                'priority' => $c->priority,
+                'target'      => $c->target,
+                'is_enabled'  => $c->is_enabled,
+                'priority'    => $c->priority,
             ])
             ->toArray();
 
         return [
             'overrides' => $overrides,
-            'css' => $css,
+            'css'       => $css,
         ];
     }
 

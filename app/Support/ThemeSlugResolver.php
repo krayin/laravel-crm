@@ -62,6 +62,7 @@ final class ThemeSlugResolver
     {
         $v = strtolower(trim($value));
         $v = preg_replace('/[^a-z0-9_\-]/', '', $v);
+
         return $v ?: 'default';
     }
 }

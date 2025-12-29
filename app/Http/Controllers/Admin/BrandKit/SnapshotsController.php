@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\Admin\BrandKit;
 
-use App\Http\Controllers\Controller;
 use App\Http\Controllers\Admin\BrandKit\Concerns\BrandKitControllerHelpers;
+use App\Http\Controllers\Controller;
 use App\Repositories\BrandKitRepository;
 use Illuminate\Http\Request;
 
@@ -16,7 +16,7 @@ final class SnapshotsController extends Controller
     public function store(Request $request)
     {
         $data = $this->validateBase($request, [
-            'name' => ['required','string','max:120'],
+            'name' => ['required', 'string', 'max:120'],
         ]);
 
         $snapshot = $this->repo->createSnapshot(

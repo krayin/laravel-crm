@@ -10,8 +10,8 @@ trait BrandKitControllerHelpers
     private function validateBase(Request $request, array $extraRules = []): array
     {
         $rules = array_merge([
-            'scope_key'  => ['nullable','string','max:64'],
-            'theme_slug' => ['nullable','string','max:64'],
+            'scope_key'  => ['nullable', 'string', 'max:64'],
+            'theme_slug' => ['nullable', 'string', 'max:64'],
         ], $extraRules);
 
         $validated = $request->validate($rules);
@@ -44,7 +44,7 @@ trait BrandKitControllerHelpers
 
     private function autoSnapshot(string $scopeKey, string $themeSlug, Request $request, string $action): void
     {
-        $name = 'AUTO: ' . $action . ' @ ' . now()->format('Y-m-d H:i:s');
+        $name = 'AUTO: '.$action.' @ '.now()->format('Y-m-d H:i:s');
 
         $this->repo->createSnapshot(
             $scopeKey,

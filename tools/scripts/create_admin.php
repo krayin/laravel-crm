@@ -4,9 +4,9 @@
 $role = \Webkul\User\Models\Role::firstOrCreate(
     ['id' => 1],
     [
-        'name' => 'Administrator',
-        'description' => 'Admin Role',
-        'permission_type' => 'all'
+        'name'            => 'Administrator',
+        'description'     => 'Admin Role',
+        'permission_type' => 'all',
     ]
 );
 
@@ -16,11 +16,11 @@ echo "Role created: {$role->name}\n";
 $user = \Webkul\User\Models\User::firstOrCreate(
     ['email' => 'admin@admin.com'],
     [
-        'name' => 'Admin',
-        'password' => bcrypt('admin123'),
-        'role_id' => 1,
-        'status' => 1,
-        'view_permission' => 'global'
+        'name'            => 'Admin',
+        'password'        => bcrypt('admin123'),
+        'role_id'         => 1,
+        'status'          => 1,
+        'view_permission' => 'global',
     ]
 );
 

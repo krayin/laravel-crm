@@ -15,7 +15,7 @@ return [
     |
      */
 
-    "name" => env("APP_NAME", "Laravel"),
+    'name' => env('APP_NAME', 'Laravel'),
 
     /*
     |--------------------------------------------------------------------------
@@ -28,7 +28,7 @@ return [
     |
      */
 
-    "env" => env("APP_ENV", "production"),
+    'env' => env('APP_ENV', 'production'),
 
     /*
     |--------------------------------------------------------------------------
@@ -41,7 +41,7 @@ return [
     |
      */
 
-    "debug" => (bool) env("APP_DEBUG", false),
+    'debug' => (bool) env('APP_DEBUG', false),
 
     /*
     |--------------------------------------------------------------------------
@@ -54,7 +54,7 @@ return [
     |
      */
 
-    "url" => env("APP_URL", "http://localhost"),
+    'url' => env('APP_URL', 'http://localhost'),
 
     /*
     |--------------------------------------------------------------------------
@@ -66,9 +66,9 @@ return [
     |
      */
 
-    "admin_path" => env("APP_ADMIN_PATH", "admin"),
+    'admin_path' => env('APP_ADMIN_PATH', 'admin'),
 
-    "asset_url" => env("ASSET_URL", null),
+    'asset_url' => env('ASSET_URL', null),
 
     /*
     |--------------------------------------------------------------------------
@@ -81,7 +81,7 @@ return [
     |
      */
 
-    "timezone" => env("APP_TIMEZONE", "Asia/Kolkata"),
+    'timezone' => env('APP_TIMEZONE', 'Asia/Kolkata'),
 
     /*
     |--------------------------------------------------------------------------
@@ -94,7 +94,7 @@ return [
     |
      */
 
-    "locale" => env("APP_LOCALE", "en"),
+    'locale' => env('APP_LOCALE', 'en'),
 
     /*
     |--------------------------------------------------------------------------
@@ -106,14 +106,14 @@ return [
     |
      */
 
-    "available_locales" => [
-        "ar" => "Arabic",
-        "en" => "English",
-        "es" => "Español",
-        "fa" => "Persian",
-        "pt_BR" => "Portuguese",
-        "tr" => "Türkçe",
-        "vi" => "Vietnamese",
+    'available_locales' => [
+        'ar'    => 'Arabic',
+        'en'    => 'English',
+        'es'    => 'Español',
+        'fa'    => 'Persian',
+        'pt_BR' => 'Portuguese',
+        'tr'    => 'Türkçe',
+        'vi'    => 'Vietnamese',
     ],
 
     /*
@@ -127,7 +127,7 @@ return [
     |
      */
 
-    "fallback_locale" => "en",
+    'fallback_locale' => 'en',
 
     /*
     |--------------------------------------------------------------------------
@@ -140,7 +140,7 @@ return [
     |
      */
 
-    "faker_locale" => "en_US",
+    'faker_locale' => 'en_US',
 
     /*
     |--------------------------------------------------------------------------
@@ -151,7 +151,7 @@ return [
     |
      */
 
-    "currency" => env("APP_CURRENCY", "USD"),
+    'currency' => env('APP_CURRENCY', 'USD'),
 
     /*
     |--------------------------------------------------------------------------
@@ -164,9 +164,9 @@ return [
     |
      */
 
-    "key" => env("APP_KEY"),
+    'key' => env('APP_KEY'),
 
-    "cipher" => "AES-256-CBC",
+    'cipher' => 'AES-256-CBC',
 
     /*
     |--------------------------------------------------------------------------
@@ -179,7 +179,7 @@ return [
     |
      */
 
-    "providers" => ServiceProvider::defaultProviders()
+    'providers' => ServiceProvider::defaultProviders()
         ->merge([
             /*
              * Package Service Providers...
@@ -240,5 +240,5 @@ return [
     |
      */
 
-    "aliases" => Facade::defaultAliases()->merge([])->toArray(),
+    'aliases' => Facade::defaultAliases()->merge([])->toArray(),
 ];

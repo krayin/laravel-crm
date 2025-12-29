@@ -6,7 +6,6 @@ use App\Models\BrandKitCustomCss;
 use App\Models\BrandKitOverride;
 use App\Models\BrandKitSnapshot;
 use App\Services\BrandKitSnapshotService;
-use Illuminate\Support\Facades\DB;
 use Tests\TestCase;
 use Tests\Traits\BrandKitTestSchema;
 
@@ -52,19 +51,19 @@ class BrandKitSnapshotServiceTest extends TestCase
     {
         // Arrange: cria overrides
         BrandKitOverride::create([
-            'scope_key' => 'global',
-            'theme_slug' => 'test-theme',
+            'scope_key'    => 'global',
+            'theme_slug'   => 'test-theme',
             'override_key' => 'color_primary',
-            'value' => '#FF0000',
-            'is_active' => true,
+            'value'        => '#FF0000',
+            'is_active'    => true,
         ]);
 
         BrandKitOverride::create([
-            'scope_key' => 'global',
-            'theme_slug' => 'test-theme',
+            'scope_key'    => 'global',
+            'theme_slug'   => 'test-theme',
             'override_key' => 'color_success',
-            'value' => '#00FF00',
-            'is_active' => true,
+            'value'        => '#00FF00',
+            'is_active'    => true,
         ]);
 
         // Act
@@ -92,11 +91,11 @@ class BrandKitSnapshotServiceTest extends TestCase
     {
         // Arrange: cria um override para ter dados
         BrandKitOverride::create([
-            'scope_key' => 'global',
-            'theme_slug' => 'test-theme',
+            'scope_key'    => 'global',
+            'theme_slug'   => 'test-theme',
             'override_key' => 'color_primary',
-            'value' => '#FF0000',
-            'is_active' => true,
+            'value'        => '#FF0000',
+            'is_active'    => true,
         ]);
 
         // Act: cria 15 snapshots (mais que o limite de 10)
@@ -122,11 +121,11 @@ class BrandKitSnapshotServiceTest extends TestCase
     {
         // Arrange
         BrandKitOverride::create([
-            'scope_key' => 'global',
-            'theme_slug' => 'test-theme',
+            'scope_key'    => 'global',
+            'theme_slug'   => 'test-theme',
             'override_key' => 'color_primary',
-            'value' => '#FF0000',
-            'is_active' => true,
+            'value'        => '#FF0000',
+            'is_active'    => true,
         ]);
 
         // Act
@@ -147,13 +146,13 @@ class BrandKitSnapshotServiceTest extends TestCase
     {
         // Arrange
         BrandKitCustomCss::create([
-            'scope_key' => 'global',
-            'theme_slug' => 'test-theme',
-            'name' => 'Custom Styles',
+            'scope_key'   => 'global',
+            'theme_slug'  => 'test-theme',
+            'name'        => 'Custom Styles',
             'css_content' => '.test { color: red; }',
-            'target' => 'admin',
-            'is_enabled' => true,
-            'priority' => 100,
+            'target'      => 'admin',
+            'is_enabled'  => true,
+            'priority'    => 100,
         ]);
 
         // Act
@@ -174,11 +173,11 @@ class BrandKitSnapshotServiceTest extends TestCase
     {
         // Arrange: estado inicial
         BrandKitOverride::create([
-            'scope_key' => 'global',
-            'theme_slug' => 'test-theme',
+            'scope_key'    => 'global',
+            'theme_slug'   => 'test-theme',
             'override_key' => 'color_primary',
-            'value' => '#INITIAL',
-            'is_active' => true,
+            'value'        => '#INITIAL',
+            'is_active'    => true,
         ]);
 
         // Cria snapshot do estado inicial
@@ -202,22 +201,22 @@ class BrandKitSnapshotServiceTest extends TestCase
     {
         // Arrange: estado inicial com 1 override
         BrandKitOverride::create([
-            'scope_key' => 'global',
-            'theme_slug' => 'test-theme',
+            'scope_key'    => 'global',
+            'theme_slug'   => 'test-theme',
             'override_key' => 'color_primary',
-            'value' => '#INITIAL',
-            'is_active' => true,
+            'value'        => '#INITIAL',
+            'is_active'    => true,
         ]);
 
         $snapshot = $this->service->createManual('global', 'test-theme', 'Snapshot', 1);
 
         // Adiciona mais overrides
         BrandKitOverride::create([
-            'scope_key' => 'global',
-            'theme_slug' => 'test-theme',
+            'scope_key'    => 'global',
+            'theme_slug'   => 'test-theme',
             'override_key' => 'color_success',
-            'value' => '#EXTRA',
-            'is_active' => true,
+            'value'        => '#EXTRA',
+            'is_active'    => true,
         ]);
 
         // Confirma que temos 2 overrides
@@ -235,11 +234,11 @@ class BrandKitSnapshotServiceTest extends TestCase
     {
         // Arrange
         BrandKitOverride::create([
-            'scope_key' => 'global',
-            'theme_slug' => 'test-theme',
+            'scope_key'    => 'global',
+            'theme_slug'   => 'test-theme',
             'override_key' => 'color_primary',
-            'value' => '#BEFORE',
-            'is_active' => true,
+            'value'        => '#BEFORE',
+            'is_active'    => true,
         ]);
 
         $snapshot = $this->service->createManual('global', 'test-theme', 'Original', 1);
@@ -263,13 +262,13 @@ class BrandKitSnapshotServiceTest extends TestCase
     {
         // Arrange: snapshot com CSS
         BrandKitCustomCss::create([
-            'scope_key' => 'global',
-            'theme_slug' => 'test-theme',
-            'name' => 'Original CSS',
+            'scope_key'   => 'global',
+            'theme_slug'  => 'test-theme',
+            'name'        => 'Original CSS',
             'css_content' => '.original { color: blue; }',
-            'target' => 'admin',
-            'is_enabled' => true,
-            'priority' => 100,
+            'target'      => 'admin',
+            'is_enabled'  => true,
+            'priority'    => 100,
         ]);
 
         $snapshot = $this->service->createManual('global', 'test-theme', 'With CSS', 1);
@@ -277,13 +276,13 @@ class BrandKitSnapshotServiceTest extends TestCase
         // Muda CSS
         BrandKitCustomCss::truncate();
         BrandKitCustomCss::create([
-            'scope_key' => 'global',
-            'theme_slug' => 'test-theme',
-            'name' => 'New CSS',
+            'scope_key'   => 'global',
+            'theme_slug'  => 'test-theme',
+            'name'        => 'New CSS',
             'css_content' => '.new { color: red; }',
-            'target' => 'login',
-            'is_enabled' => false,
-            'priority' => 50,
+            'target'      => 'login',
+            'is_enabled'  => false,
+            'priority'    => 50,
         ]);
 
         // Act: restore
@@ -304,11 +303,11 @@ class BrandKitSnapshotServiceTest extends TestCase
     {
         // Arrange
         BrandKitOverride::create([
-            'scope_key' => 'global',
-            'theme_slug' => 'test-theme',
+            'scope_key'    => 'global',
+            'theme_slug'   => 'test-theme',
             'override_key' => 'color_primary',
-            'value' => '#FF0000',
-            'is_active' => true,
+            'value'        => '#FF0000',
+            'is_active'    => true,
         ]);
 
         // Cria snapshots com timestamps diferentes usando Carbon
@@ -337,11 +336,11 @@ class BrandKitSnapshotServiceTest extends TestCase
     {
         // Arrange
         BrandKitOverride::create([
-            'scope_key' => 'global',
-            'theme_slug' => 'test-theme',
+            'scope_key'    => 'global',
+            'theme_slug'   => 'test-theme',
             'override_key' => 'color_primary',
-            'value' => '#FF0000',
-            'is_active' => true,
+            'value'        => '#FF0000',
+            'is_active'    => true,
         ]);
 
         $snapshot = $this->service->createManual('global', 'test-theme', 'To Delete', 1);
@@ -359,11 +358,11 @@ class BrandKitSnapshotServiceTest extends TestCase
     {
         // Arrange
         BrandKitOverride::create([
-            'scope_key' => 'global',
-            'theme_slug' => 'test-theme',
+            'scope_key'    => 'global',
+            'theme_slug'   => 'test-theme',
             'override_key' => 'color_primary',
-            'value' => '#FF0000',
-            'is_active' => true,
+            'value'        => '#FF0000',
+            'is_active'    => true,
         ]);
 
         $snapshot = $this->service->createAutoBeforeChange('global', 'test-theme', 1);
@@ -381,11 +380,11 @@ class BrandKitSnapshotServiceTest extends TestCase
     {
         // Arrange
         BrandKitOverride::create([
-            'scope_key' => 'global',
-            'theme_slug' => 'test-theme',
+            'scope_key'    => 'global',
+            'theme_slug'   => 'test-theme',
             'override_key' => 'color_primary',
-            'value' => '#FF0000',
-            'is_active' => true,
+            'value'        => '#FF0000',
+            'is_active'    => true,
         ]);
 
         $snapshot = $this->service->createAutoBeforeChange('global', 'test-theme', 1);

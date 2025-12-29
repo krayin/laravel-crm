@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\Admin\BrandKit;
 
-use App\Http\Controllers\Controller;
 use App\Http\Controllers\Admin\BrandKit\Concerns\BrandKitControllerHelpers;
+use App\Http\Controllers\Controller;
 use App\Repositories\BrandKitRepository;
 use Illuminate\Http\Request;
 
@@ -16,7 +16,7 @@ final class OverridesController extends Controller
     public function set(Request $request)
     {
         $data = $this->validateBase($request, [
-            'override_key' => ['required','string','max:128'],
+            'override_key' => ['required', 'string', 'max:128'],
             'value'        => ['nullable'],
         ]);
 
@@ -36,7 +36,7 @@ final class OverridesController extends Controller
     public function reset(Request $request)
     {
         $data = $this->validateBase($request, [
-            'override_key' => ['required','string','max:128'],
+            'override_key' => ['required', 'string', 'max:128'],
         ]);
 
         $this->autoSnapshot($data['scope_key'], $data['theme_slug'], $request, "override:reset:{$data['override_key']}");
@@ -50,7 +50,7 @@ final class OverridesController extends Controller
     {
         $data = $this->validateBase($request);
 
-        $this->autoSnapshot($data['scope_key'], $data['theme_slug'], $request, "override:reset-all");
+        $this->autoSnapshot($data['scope_key'], $data['theme_slug'], $request, 'override:reset-all');
 
         $this->repo->resetAllOverrides($data['scope_key'], $data['theme_slug']);
 

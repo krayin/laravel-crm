@@ -21,7 +21,7 @@ class ThemeContextFactory
         $brandKit = $this->brandKitResolver->resolve($scopeKey, $themeSlug);
 
         // Config final (nesta fase: BrandKit e a fonte principal)
-        $config = $brandKit["config"] ?? [];
+        $config = $brandKit['config'] ?? [];
 
         // LoginConfig: filtra chaves login_ e remove o prefixo
         $loginConfig = $this->extractLoginConfig($config);
@@ -33,34 +33,34 @@ class ThemeContextFactory
             config: $config,
             loginConfig: $loginConfig,
             isPreview: $isPreview,
-            customCssAdmin: (string) ($brandKit["custom_css_admin"] ?? ""),
-            customCssLogin: (string) ($brandKit["custom_css_login"] ?? ""),
+            customCssAdmin: (string) ($brandKit['custom_css_admin'] ?? ''),
+            customCssLogin: (string) ($brandKit['custom_css_login'] ?? ''),
         );
     }
 
     private function resolveScopeKey(?Request $request): string
     {
         // Multi-tenant future-ready (por enquanto global)
-        return "global";
+        return 'global';
     }
 
     private function resolveThemeSlug(?Request $request): string
     {
         // Preview tem prioridade (por sessao)
-        if ($request && session()->has("theme_preview")) {
-            return $this->sanitizeSlug((string) session("theme_preview"));
+        if ($request && session()->has('theme_preview')) {
+            return $this->sanitizeSlug((string) session('theme_preview'));
         }
 
         // Tema persistido (DB/config)
         return $this->sanitizeSlug(
             $this->themeSelectionResolver->getSelectedThemeSlug(),
         ) ?:
-            "default";
+            'default';
     }
 
     private function isPreviewMode(?Request $request): bool
     {
-        return (bool) ($request && session()->has("theme_preview"));
+        return (bool) ($request && session()->has('theme_preview'));
     }
 
     /**
@@ -73,7 +73,7 @@ class ThemeContextFactory
         $out = [];
 
         foreach ($config as $key => $value) {
-            if (is_string($key) && str_starts_with($key, "login_")) {
+            if (is_string($key) && str_starts_with($key, 'login_')) {
                 $out[substr($key, 6)] = $value;
             }
         }
@@ -84,7 +84,8 @@ class ThemeContextFactory
     private function sanitizeSlug(string $value): string
     {
         $v = strtolower(trim($value));
-        $v = preg_replace("/[^a-z0-9_\-]/", "", $v);
-        return $v ?: "default";
+        $v = preg_replace("/[^a-z0-9_\-]/", '', $v);
+
+        return $v ?: 'default';
     }
 }

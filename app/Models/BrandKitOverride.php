@@ -9,24 +9,24 @@ use Webkul\User\Models\User;
 class BrandKitOverride extends Model
 {
     // tabela padrao seria brand_kit_overrides, entao e opcional declarar
-    protected $table = "brand_kit_overrides";
+    protected $table = 'brand_kit_overrides';
 
     protected $fillable = [
-        "scope_key",
-        "theme_slug",
-        "override_key", // <- IMPORTANTE (coluna renomeada)
-        "value",
-        "is_active",
-        "updated_by",
+        'scope_key',
+        'theme_slug',
+        'override_key', // <- IMPORTANTE (coluna renomeada)
+        'value',
+        'is_active',
+        'updated_by',
     ];
 
     protected $casts = [
-        "is_active" => "boolean",
+        'is_active' => 'boolean',
     ];
 
     public function updatedBy(): BelongsTo
     {
-        return $this->belongsTo(User::class, "updated_by");
+        return $this->belongsTo(User::class, 'updated_by');
     }
 
     /**
@@ -40,12 +40,12 @@ class BrandKitOverride extends Model
         string $themeSlug,
     ): array {
         return static::query()
-            ->where("scope_key", $scopeKey)
-            ->where("theme_slug", $themeSlug)
-            ->where("is_active", true)
-            ->whereNotNull("value")
-            ->where("value", "!=", "")
-            ->pluck("value", "override_key")
+            ->where('scope_key', $scopeKey)
+            ->where('theme_slug', $themeSlug)
+            ->where('is_active', true)
+            ->whereNotNull('value')
+            ->where('value', '!=', '')
+            ->pluck('value', 'override_key')
             ->toArray();
     }
 }

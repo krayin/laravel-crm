@@ -59,30 +59,28 @@ class ThemeConfig extends BaseThemeConfig
     /**
      * Get the singleton instance of ThemeConfig.
      * Returns the first record or creates it if it doesn't exist.
-     *
-     * @return self
      */
     public static function getInstance(): self
     {
         return static::firstOrCreate(['id' => 1], [
-            'is_active' => false,
-            'selected_theme' => 'default',
-            'color_primary' => '#1E40AF',
-            'color_primary_dark' => '#1E3A8A',
-            'color_primary_light' => '#3B82F6',
-            'color_success' => '#10B981',
-            'color_warning' => '#F59E0B',
-            'color_danger' => '#EF4444',
-            'login_bg_zoom' => 100,
-            'login_bg_opacity' => 50,
-            'login_show_powered_by' => true,
-            'login_card_enabled' => false,
-            'login_card_bg_opacity' => 62,
+            'is_active'                => false,
+            'selected_theme'           => 'default',
+            'color_primary'            => '#1E40AF',
+            'color_primary_dark'       => '#1E3A8A',
+            'color_primary_light'      => '#3B82F6',
+            'color_success'            => '#10B981',
+            'color_warning'            => '#F59E0B',
+            'color_danger'             => '#EF4444',
+            'login_bg_zoom'            => 100,
+            'login_bg_opacity'         => 50,
+            'login_show_powered_by'    => true,
+            'login_card_enabled'       => false,
+            'login_card_bg_opacity'    => 62,
             'login_card_overlay_color' => 'rgba(10, 45, 15, 0.78)',
-            'login_card_title' => 'Bem-vindo',
-            'login_card_subtitle' => 'Acesse sua conta para continuar',
-            'login_card_sparkles' => false,
-            'login_card_help_link' => true,
+            'login_card_title'         => 'Bem-vindo',
+            'login_card_subtitle'      => 'Acesse sua conta para continuar',
+            'login_card_sparkles'      => false,
+            'login_card_help_link'     => true,
             'login_card_support_email' => 'suporte@empresa.com.br',
         ]);
     }

@@ -1,8 +1,8 @@
 <?php
 
-require __DIR__ . '/vendor/autoload.php';
+require __DIR__.'/vendor/autoload.php';
 
-$app = require_once __DIR__ . '/bootstrap/app.php';
+$app = require_once __DIR__.'/bootstrap/app.php';
 $app->make('Illuminate\Contracts\Console\Kernel')->bootstrap();
 
 use Webkul\ThemeManager\Models\ThemeConfig;
@@ -13,7 +13,7 @@ echo "========================================\n";
 echo "TESTE: Salvamento Manual login_bg_image\n";
 echo "========================================\n\n";
 
-echo "Valor ANTES: " . ($config->login_bg_image ?? 'NULL') . "\n";
+echo 'Valor ANTES: '.($config->login_bg_image ?? 'NULL')."\n";
 
 // Simular salvamento direto
 $config->login_bg_image = 'test_manual_upload.jpg';
@@ -22,7 +22,7 @@ $config->save();
 // Recarregar do banco
 $config = ThemeConfig::first();
 
-echo "Valor DEPOIS: " . ($config->login_bg_image ?? 'NULL') . "\n";
+echo 'Valor DEPOIS: '.($config->login_bg_image ?? 'NULL')."\n";
 
 if ($config->login_bg_image === 'test_manual_upload.jpg') {
     echo "\n✅ SUCESSO: Salvamento manual funciona!\n";

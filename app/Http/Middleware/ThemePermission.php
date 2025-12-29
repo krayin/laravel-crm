@@ -24,9 +24,9 @@ class ThemePermission
      * Mapeamento de rotas para permissões.
      */
     private const ROUTE_PERMISSIONS = [
-        'admin.settings.theme.index' => 'settings.theme.view',
-        'admin.settings.theme.update' => 'settings.theme.edit',
-        'admin.settings.theme.restore' => 'settings.theme.restore',
+        'admin.settings.theme.index'    => 'settings.theme.view',
+        'admin.settings.theme.update'   => 'settings.theme.edit',
+        'admin.settings.theme.restore'  => 'settings.theme.restore',
         'admin.settings.theme.rollback' => 'settings.theme.restore',
     ];
 
@@ -43,22 +43,22 @@ class ThemePermission
         // Verifica se é uma rota de tema
         $routeName = $request->route()?->getName();
 
-        if (!$this->isThemeRoute($routeName)) {
+        if (! $this->isThemeRoute($routeName)) {
             return $next($request);
         }
 
         // Verifica autenticação
-        if (!$this->isAuthenticated()) {
+        if (! $this->isAuthenticated()) {
             return $this->denyAccess($request, 'not_authenticated');
         }
 
         // Verifica permissão específica da rota
         $permission = $this->getRequiredPermission($routeName);
 
-        if (!$this->hasPermission($permission)) {
+        if (! $this->hasPermission($permission)) {
             return $this->denyAccess($request, 'no_permission', [
                 'required' => $permission,
-                'route' => $routeName,
+                'route'    => $routeName,
             ]);
         }
 
@@ -85,7 +85,7 @@ class ThemePermission
         try {
             $guard = auth()->guard('user');
 
-            if (!$guard->check()) {
+            if (! $guard->check()) {
                 return false;
             }
 
@@ -127,7 +127,7 @@ class ThemePermission
             }
 
             // Verifica permissão específica via bouncer
-            if (!function_exists('bouncer')) {
+            if (! function_exists('bouncer')) {
                 // Se bouncer não existe, fallback para role check
                 return $user->role && $user->role->permission_type === 'all';
             }
@@ -136,8 +136,9 @@ class ThemePermission
         } catch (\Throwable $e) {
             Log::warning('[Theme] Permission check error', [
                 'permission' => $permission,
-                'error' => $e->getMessage(),
+                'error'      => $e->getMessage(),
             ]);
+
             return false;
         }
     }
@@ -148,9 +149,9 @@ class ThemePermission
     private function denyAccess(Request $request, string $reason, array $extra = []): Response
     {
         Log::warning('[Theme] Access denied to theme settings', array_merge([
-            'reason' => $reason,
-            'route' => $request->route()?->getName(),
-            'ip' => $request->ip(),
+            'reason'  => $reason,
+            'route'   => $request->route()?->getName(),
+            'ip'      => $request->ip(),
             'user_id' => auth()->guard('user')->id(),
         ], $extra));
 

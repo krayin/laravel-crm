@@ -36,34 +36,34 @@ final class ThemeConfigResolver
      * Configurações padrão (fallback final).
      */
     private const DEFAULTS = [
-        'color_primary' => '#1E40AF',
-        'color_primary_dark' => '#1E3A8A',
+        'color_primary'       => '#1E40AF',
+        'color_primary_dark'  => '#1E3A8A',
         'color_primary_light' => '#3B82F6',
-        'color_success' => '#10B981',
-        'color_warning' => '#F59E0B',
-        'color_danger' => '#EF4444',
-        'logo_main' => null,
-        'logo_light' => null,
-        'logo_icon' => null,
-        'favicon' => null,
+        'color_success'       => '#10B981',
+        'color_warning'       => '#F59E0B',
+        'color_danger'        => '#EF4444',
+        'logo_main'           => null,
+        'logo_light'          => null,
+        'logo_icon'           => null,
+        'favicon'             => null,
     ];
 
     /**
      * Configurações padrão de login.
      */
     private const LOGIN_DEFAULTS = [
-        'bg_image' => null,
-        'bg_zoom' => 100,
-        'bg_opacity' => 50,
-        'show_powered_by' => true,
-        'card_enabled' => false,
-        'card_bg_image' => null,
-        'card_bg_opacity' => 62,
+        'bg_image'           => null,
+        'bg_zoom'            => 100,
+        'bg_opacity'         => 50,
+        'show_powered_by'    => true,
+        'card_enabled'       => false,
+        'card_bg_image'      => null,
+        'card_bg_opacity'    => 62,
         'card_overlay_color' => 'rgba(10, 45, 15, 0.78)',
-        'card_title' => 'Bem-vindo',
-        'card_subtitle' => 'Acesse sua conta para continuar',
-        'card_sparkles' => false,
-        'card_help_link' => true,
+        'card_title'         => 'Bem-vindo',
+        'card_subtitle'      => 'Acesse sua conta para continuar',
+        'card_sparkles'      => false,
+        'card_help_link'     => true,
         'card_support_email' => 'suporte@empresa.com.br',
     ];
 
@@ -93,7 +93,7 @@ final class ThemeConfigResolver
     /**
      * Resolve o slug do tema a ser usado.
      *
-     * @param string|null $overrideSlug Slug de override (preview)
+     * @param  string|null  $overrideSlug  Slug de override (preview)
      * @return string Slug validado do tema
      */
     public static function resolveSlug(?string $overrideSlug = null): string
@@ -120,7 +120,7 @@ final class ThemeConfigResolver
         $sanitized = self::sanitizeSlug($dbSlug);
 
         // 3. Valida existência
-        if ($sanitized !== self::DEFAULT_SLUG && !self::themeExists($sanitized)) {
+        if ($sanitized !== self::DEFAULT_SLUG && ! self::themeExists($sanitized)) {
             Log::warning('[Theme] Selected theme not found', [
                 'selected' => $sanitized,
                 'fallback' => self::DEFAULT_SLUG,
@@ -141,7 +141,7 @@ final class ThemeConfigResolver
      * 2. theme.json
      * 3. defaults
      *
-     * @param string $slug Slug do tema
+     * @param  string  $slug  Slug do tema
      * @return array Configurações resolvidas
      */
     public static function resolveConfig(string $slug): array
@@ -168,7 +168,7 @@ final class ThemeConfigResolver
     /**
      * Resolve configurações de login com precedência.
      *
-     * @param string $slug Slug do tema
+     * @param  string  $slug  Slug do tema
      * @return array Configurações de login resolvidas
      */
     public static function resolveLoginConfig(string $slug): array
@@ -181,7 +181,7 @@ final class ThemeConfigResolver
 
         foreach (self::LOGIN_DEFAULTS as $key => $default) {
             // Mapeia keys de login (prefixo login_ no DB)
-            $dbKey = 'login_' . $key;
+            $dbKey = 'login_'.$key;
 
             $resolved[$key] = self::resolveValue(
                 key: $dbKey,
@@ -199,12 +199,12 @@ final class ThemeConfigResolver
     /**
      * Resolve um valor único com precedência.
      *
-     * @param string $key Chave no DB
-     * @param object|null $dbConfig Configuração do DB
-     * @param array $themeJson Dados do theme.json
-     * @param mixed $default Valor padrão
-     * @param bool $isActive Se o tema está ativo
-     * @param string|null $themeJsonKey Chave alternativa para theme.json
+     * @param  string  $key  Chave no DB
+     * @param  object|null  $dbConfig  Configuração do DB
+     * @param  array  $themeJson  Dados do theme.json
+     * @param  mixed  $default  Valor padrão
+     * @param  bool  $isActive  Se o tema está ativo
+     * @param  string|null  $themeJsonKey  Chave alternativa para theme.json
      * @return mixed Valor resolvido
      */
     private static function resolveValue(
@@ -238,7 +238,7 @@ final class ThemeConfigResolver
     /**
      * Verifica se um tema existe.
      *
-     * @param string $slug Slug do tema
+     * @param  string  $slug  Slug do tema
      * @return bool True se existe
      */
     public static function themeExists(string $slug): bool
@@ -249,14 +249,14 @@ final class ThemeConfigResolver
         }
 
         return Storage::disk('public')->exists(
-            self::THEMES_PATH . '/' . $slug . '/theme.json'
+            self::THEMES_PATH.'/'.$slug.'/theme.json'
         );
     }
 
     /**
      * Lê e parseia o theme.json de um tema.
      *
-     * @param string $slug Slug do tema
+     * @param  string  $slug  Slug do tema
      * @return array Dados do theme.json ou array vazio
      */
     public static function readThemeJson(string $slug): array
@@ -265,9 +265,9 @@ final class ThemeConfigResolver
             return [];
         }
 
-        $path = self::THEMES_PATH . '/' . $slug . '/theme.json';
+        $path = self::THEMES_PATH.'/'.$slug.'/theme.json';
 
-        if (!Storage::disk('public')->exists($path)) {
+        if (! Storage::disk('public')->exists($path)) {
             return [];
         }
 
@@ -275,15 +275,16 @@ final class ThemeConfigResolver
             $contents = Storage::disk('public')->get($path);
             $data = json_decode($contents, true);
 
-            if (!is_array($data)) {
+            if (! is_array($data)) {
                 Log::warning('[Theme] Invalid theme.json', ['slug' => $slug]);
+
                 return [];
             }
 
             return $data;
         } catch (\Throwable $e) {
             Log::warning('[Theme] Error reading theme.json', [
-                'slug' => $slug,
+                'slug'  => $slug,
                 'error' => $e->getMessage(),
             ]);
 
@@ -294,7 +295,7 @@ final class ThemeConfigResolver
     /**
      * Sanitiza o slug do tema.
      *
-     * @param string $value Valor a sanitizar
+     * @param  string  $value  Valor a sanitizar
      * @return string Slug sanitizado
      */
     public static function sanitizeSlug(string $value): string

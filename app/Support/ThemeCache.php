@@ -21,7 +21,9 @@ final class ThemeCache
      * Cache keys centralizadas.
      */
     public const KEY_CONTEXT = 'theme.context.v2';
+
     public const KEY_CONFIG = 'theme.config.v2';
+
     public const KEY_AVAILABLE = 'theme.available.v2';
 
     /**
@@ -161,8 +163,8 @@ final class ThemeCache
      * Executa callback com cache de contexto.
      * Se cache existe, retorna. Senão, executa callback e cacheia.
      *
-     * @param callable $resolver Função que retorna ThemeContext
-     * @param int|null $ttl TTL em segundos
+     * @param  callable  $resolver  Função que retorna ThemeContext
+     * @param  int|null  $ttl  TTL em segundos
      */
     public static function rememberContext(callable $resolver, ?int $ttl = null): ThemeContext
     {
@@ -182,8 +184,8 @@ final class ThemeCache
     /**
      * Executa callback com cache de config.
      *
-     * @param callable $resolver Função que retorna object
-     * @param int|null $ttl TTL em segundos
+     * @param  callable  $resolver  Função que retorna object
+     * @param  int|null  $ttl  TTL em segundos
      */
     public static function rememberConfig(callable $resolver, ?int $ttl = null): object
     {

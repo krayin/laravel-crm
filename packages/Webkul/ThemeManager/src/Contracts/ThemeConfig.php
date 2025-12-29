@@ -2,6 +2,4 @@
 
 namespace Webkul\ThemeManager\Contracts;
 
-interface ThemeConfig
-{
-}
+interface ThemeConfig {}

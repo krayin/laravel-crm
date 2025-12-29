@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 class ThemeSelectionResolver
 {
     private const CACHE_KEY = 'theme.selected_slug.v1';
+
     private const TTL = 300; // 5min (leve e seguro)
 
     public function getSelectedThemeSlug(): string
@@ -17,8 +18,8 @@ class ThemeSelectionResolver
             try {
                 $row = DB::table('theme_configs')->where('id', 1)->first();
 
-                if ($row && isset($row->is_active) && (int)$row->is_active === 1) {
-                    $slug = (string)($row->selected_theme ?? '');
+                if ($row && isset($row->is_active) && (int) $row->is_active === 1) {
+                    $slug = (string) ($row->selected_theme ?? '');
                     $slug = $this->sanitizeSlug($slug);
 
                     if ($slug !== '') {
@@ -49,6 +50,7 @@ class ThemeSelectionResolver
     {
         $v = strtolower(trim($value));
         $v = preg_replace('/[^a-z0-9_\-]/', '', $v);
+
         return $v ?? '';
     }
 }

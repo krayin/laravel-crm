@@ -2,9 +2,9 @@
 
 namespace Tests\Traits;
 
+use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 
 /**
  * Trait para criar schema mínimo do BrandKit em memória.
@@ -29,9 +29,9 @@ trait BrandKitTestSchema
         // Força SQLite em memória para este teste
         config(['database.default' => 'testing']);
         config(['database.connections.testing' => [
-            'driver' => 'sqlite',
+            'driver'   => 'sqlite',
             'database' => ':memory:',
-            'prefix' => '',
+            'prefix'   => '',
         ]]);
 
         // Reconecta ao banco de testes
@@ -176,11 +176,11 @@ trait BrandKitTestSchema
     private function insertDefaultThemeConfig(): void
     {
         DB::table('theme_configs')->insert([
-            'id' => 1,
-            'is_active' => false,
+            'id'             => 1,
+            'is_active'      => false,
             'selected_theme' => 'default',
-            'created_at' => now(),
-            'updated_at' => now(),
+            'created_at'     => now(),
+            'updated_at'     => now(),
         ]);
     }
 }

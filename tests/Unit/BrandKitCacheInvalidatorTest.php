@@ -23,7 +23,9 @@ class BrandKitCacheInvalidatorTest extends TestCase
     use BrandKitTestSchema;
 
     private BrandKitCacheInvalidator $invalidator;
+
     private BrandKitResolver $resolver;
+
     private array $createdThemes = [];
 
     protected function setUp(): void
@@ -39,7 +41,7 @@ class BrandKitCacheInvalidatorTest extends TestCase
 
         // Garante que o diretório base de temas exista (necessário no CI)
         $themesPath = storage_path('app/public/themes');
-        if (!File::isDirectory($themesPath)) {
+        if (! File::isDirectory($themesPath)) {
             File::makeDirectory($themesPath, 0755, true);
         }
 
@@ -73,8 +75,8 @@ class BrandKitCacheInvalidatorTest extends TestCase
         File::put(
             "{$path}/theme.json",
             json_encode([
-                'name' => ucfirst($slug),
-                'version' => '1.0.0',
+                'name'          => ucfirst($slug),
+                'version'       => '1.0.0',
                 'color_primary' => '#FF0000',
             ]),
         );

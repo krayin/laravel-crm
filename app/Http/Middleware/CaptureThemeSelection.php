@@ -2,7 +2,6 @@
 
 namespace App\Http\Middleware;
 
-use App\Http\Middleware\HandleThemePreview;
 use App\Support\ThemeCache;
 use App\Support\ThemeConfigResolver;
 use Closure;
@@ -27,7 +26,7 @@ class CaptureThemeSelection
     /**
      * Nome exato da rota do Theme Manager (do package).
      */
-    private const ROUTE_NAME = "admin.settings.theme.update";
+    private const ROUTE_NAME = 'admin.settings.theme.update';
 
     /**
      * Handle an incoming request.
@@ -38,7 +37,7 @@ class CaptureThemeSelection
         $response = $next($request);
 
         // Captura depois do controller (post-action)
-        if (!$this->shouldCapture($request)) {
+        if (! $this->shouldCapture($request)) {
             return $response;
         }
 
@@ -60,9 +59,9 @@ class CaptureThemeSelection
 
         // 2) Método permitido
         if (
-            !in_array(
+            ! in_array(
                 strtoupper($request->method()),
-                ["POST", "PUT", "PATCH"],
+                ['POST', 'PUT', 'PATCH'],
                 true,
             )
         ) {
@@ -71,47 +70,51 @@ class CaptureThemeSelection
 
         // 3) Auth + status + permissão (guard user)
         try {
-            $guard = auth()->guard("user");
+            $guard = auth()->guard('user');
 
-            if (!$guard->check()) {
-                $this->logDenied($request, "not_authenticated");
+            if (! $guard->check()) {
+                $this->logDenied($request, 'not_authenticated');
+
                 return false;
             }
 
             $user = $guard->user();
 
             // status === 1 (usuário ativo)
-            if (!isset($user->status) || (int) $user->status !== 1) {
-                $this->logDenied($request, "inactive_user", [
-                    "user_id" => $user->id ?? null,
+            if (! isset($user->status) || (int) $user->status !== 1) {
+                $this->logDenied($request, 'inactive_user', [
+                    'user_id' => $user->id ?? null,
                 ]);
+
                 return false;
             }
 
             // Bouncer permission (settings)
             if (
-                !function_exists("bouncer") ||
-                !bouncer()->hasPermission("settings")
+                ! function_exists('bouncer') ||
+                ! bouncer()->hasPermission('settings')
             ) {
-                $this->logDenied($request, "no_permission", [
-                    "user_id" => $user->id ?? null,
+                $this->logDenied($request, 'no_permission', [
+                    'user_id' => $user->id ?? null,
                 ]);
+
                 return false;
             }
         } catch (\Throwable $e) {
             // Falha inesperada em auth/bouncer => negar por segurança
             Log::warning(
-                "[Theme] CaptureThemeSelection denied due to auth/bouncer error",
+                '[Theme] CaptureThemeSelection denied due to auth/bouncer error',
                 [
-                    "error" => $e->getMessage(),
-                    "ip" => $request->ip(),
+                    'error' => $e->getMessage(),
+                    'ip'    => $request->ip(),
                 ],
             );
+
             return false;
         }
 
         // 4) Campo existe
-        if (!$request->has("selected_theme")) {
+        if (! $request->has('selected_theme')) {
             return false;
         }
 
@@ -123,18 +126,18 @@ class CaptureThemeSelection
      */
     private function saveThemeSelection(Request $request): void
     {
-        $raw = (string) $request->input("selected_theme", "");
+        $raw = (string) $request->input('selected_theme', '');
         $slug = ThemeConfigResolver::sanitizeSlug($raw);
 
         // Validar existência real do tema. Se inválido => fallback.
-        if (!ThemeConfigResolver::themeExists($slug)) {
+        if (! ThemeConfigResolver::themeExists($slug)) {
             Log::warning(
-                "[Theme] Invalid selected_theme slug. Falling back to default.",
+                '[Theme] Invalid selected_theme slug. Falling back to default.',
                 [
-                    "selected_theme" => $slug,
-                    "fallback" => ThemeConfigResolver::DEFAULT_SLUG,
-                    "ip" => $request->ip(),
-                    "user_id" => auth()->guard("user")->id(),
+                    'selected_theme' => $slug,
+                    'fallback'       => ThemeConfigResolver::DEFAULT_SLUG,
+                    'ip'             => $request->ip(),
+                    'user_id'        => auth()->guard('user')->id(),
                 ],
             );
             $slug = ThemeConfigResolver::DEFAULT_SLUG;
@@ -142,22 +145,22 @@ class CaptureThemeSelection
 
         // Busca o tema atual para salvar como previous_theme
         $currentTheme =
-            DB::table("theme_configs")
-                ->where("id", 1)
-                ->value("selected_theme") ?? ThemeConfigResolver::DEFAULT_SLUG;
+            DB::table('theme_configs')
+                ->where('id', 1)
+                ->value('selected_theme') ?? ThemeConfigResolver::DEFAULT_SLUG;
 
         // Só atualiza previous_theme se realmente mudou
         $updateData = [
-            "selected_theme" => $slug,
-            "updated_at" => now(),
+            'selected_theme' => $slug,
+            'updated_at'     => now(),
         ];
 
         if ($currentTheme !== $slug) {
-            $updateData["previous_theme"] = $currentTheme;
+            $updateData['previous_theme'] = $currentTheme;
         }
 
         // Persistir sem depender de Model/$fillable
-        DB::table("theme_configs")->where("id", 1)->update($updateData);
+        DB::table('theme_configs')->where('id', 1)->update($updateData);
 
         // Limpa TODO o cache de tema via helper centralizado
         ThemeCache::flush();
@@ -166,14 +169,14 @@ class CaptureThemeSelection
         session()->forget(HandleThemePreview::SESSION_KEY);
 
         // AUDITORIA: Log estruturado da mudança de tema
-        Log::info("theme.changed", [
-            "user_id" => auth()->guard("user")->id(),
-            "user_email" => auth()->guard("user")->user()?->email,
-            "old" => $currentTheme,
-            "new" => $slug,
-            "ip" => $request->ip(),
-            "user_agent" => $request->userAgent(),
-            "timestamp" => now()->toIso8601String(),
+        Log::info('theme.changed', [
+            'user_id'    => auth()->guard('user')->id(),
+            'user_email' => auth()->guard('user')->user()?->email,
+            'old'        => $currentTheme,
+            'new'        => $slug,
+            'ip'         => $request->ip(),
+            'user_agent' => $request->userAgent(),
+            'timestamp'  => now()->toIso8601String(),
         ]);
     }
 
@@ -186,14 +189,14 @@ class CaptureThemeSelection
         array $extra = [],
     ): void {
         Log::warning(
-            "[Theme] CaptureThemeSelection denied",
+            '[Theme] CaptureThemeSelection denied',
             array_merge(
                 [
-                    "reason" => $reason,
-                    "route" => $request->route()?->getName(),
-                    "method" => $request->method(),
-                    "ip" => $request->ip(),
-                    "user_id" => auth()->guard("user")->id() ?? null,
+                    'reason'  => $reason,
+                    'route'   => $request->route()?->getName(),
+                    'method'  => $request->method(),
+                    'ip'      => $request->ip(),
+                    'user_id' => auth()->guard('user')->id() ?? null,
                 ],
                 $extra,
             ),

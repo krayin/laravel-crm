@@ -1,8 +1,8 @@
 <?php
 
-require __DIR__ . '/vendor/autoload.php';
+require __DIR__.'/vendor/autoload.php';
 
-$app = require_once __DIR__ . '/bootstrap/app.php';
+$app = require_once __DIR__.'/bootstrap/app.php';
 $app->make('Illuminate\Contracts\Console\Kernel')->bootstrap();
 
 use Webkul\ThemeManager\Models\ThemeConfig;
@@ -13,7 +13,7 @@ echo "========================================\n";
 echo "TESTE MANUAL: Setando login_bg_image\n";
 echo "========================================\n\n";
 
-echo "Valor ANTES: " . ($config->login_bg_image ?? 'NULL') . "\n";
+echo 'Valor ANTES: '.($config->login_bg_image ?? 'NULL')."\n";
 
 // Usar arquivo que JÁ existe no storage (logo)
 $config->login_bg_image = '1766361510_logo_main_xpPo9ckg.png';
@@ -25,9 +25,9 @@ $config->save();
 $config = ThemeConfig::first();
 
 echo "Valor DEPOIS:\n";
-echo "  login_bg_image: " . ($config->login_bg_image ?? 'NULL') . "\n";
-echo "  login_bg_zoom: " . ($config->login_bg_zoom ?? 'NULL') . "\n";
-echo "  login_bg_opacity: " . ($config->login_bg_opacity ?? 'NULL') . "\n\n";
+echo '  login_bg_image: '.($config->login_bg_image ?? 'NULL')."\n";
+echo '  login_bg_zoom: '.($config->login_bg_zoom ?? 'NULL')."\n";
+echo '  login_bg_opacity: '.($config->login_bg_opacity ?? 'NULL')."\n\n";
 
 if ($config->login_bg_image === '1766361510_logo_main_xpPo9ckg.png') {
     echo "✅ SUCESSO: Valor salvo no banco!\n\n";

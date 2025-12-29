@@ -10,8 +10,6 @@ class AppServiceProvider extends ServiceProvider
 {
     /**
      * Register any application services.
-     *
-     * @return void
      */
     public function register(): void
     {
@@ -38,8 +36,6 @@ class AppServiceProvider extends ServiceProvider
 
     /**
      * Bootstrap any application services.
-     *
-     * @return void
      */
     public function boot(): void
     {
@@ -51,12 +47,12 @@ class AppServiceProvider extends ServiceProvider
         );
 
         // View Composer para injetar availableThemes na view do ThemeManager
-        View::composer("theme-manager::admin.settings.theme.index", function (
+        View::composer('theme-manager::admin.settings.theme.index', function (
             $view,
         ) {
             $resolver = app(\App\Support\BrandKitResolver::class);
             $availableThemes = $this->getAvailableThemesWithMetadata($resolver);
-            $view->with("availableThemes", $availableThemes);
+            $view->with('availableThemes', $availableThemes);
         });
     }
 
@@ -75,18 +71,18 @@ class AppServiceProvider extends ServiceProvider
             );
 
             $metadata = [
-                "slug" => $slug,
-                "name" => ucfirst($slug),
-                "description" => "",
-                "version" => "1.0.0",
+                'slug'        => $slug,
+                'name'        => ucfirst($slug),
+                'description' => '',
+                'version'     => '1.0.0',
             ];
 
             if (file_exists($themeJsonPath)) {
                 $json = json_decode(file_get_contents($themeJsonPath), true);
                 if (is_array($json)) {
-                    $metadata["name"] = $json["name"] ?? $metadata["name"];
-                    $metadata["description"] = $json["description"] ?? "";
-                    $metadata["version"] = $json["version"] ?? "1.0.0";
+                    $metadata['name'] = $json['name'] ?? $metadata['name'];
+                    $metadata['description'] = $json['description'] ?? '';
+                    $metadata['version'] = $json['version'] ?? '1.0.0';
                 }
             }
 

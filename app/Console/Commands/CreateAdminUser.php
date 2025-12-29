@@ -9,6 +9,7 @@ use Webkul\User\Models\User;
 class CreateAdminUser extends Command
 {
     protected $signature = 'admin:create';
+
     protected $description = 'Create admin user';
 
     public function handle()
@@ -17,9 +18,9 @@ class CreateAdminUser extends Command
         $role = Role::firstOrCreate(
             ['id' => 1],
             [
-                'name' => 'Administrator',
-                'description' => 'Admin Role',
-                'permission_type' => 'all'
+                'name'            => 'Administrator',
+                'description'     => 'Admin Role',
+                'permission_type' => 'all',
             ]
         );
 
@@ -29,18 +30,18 @@ class CreateAdminUser extends Command
         $user = User::firstOrCreate(
             ['email' => 'admin@admin.com'],
             [
-                'name' => 'Admin',
-                'password' => bcrypt('admin123'),
-                'role_id' => 1,
-                'status' => 1,
-                'view_permission' => 'global'
+                'name'            => 'Admin',
+                'password'        => bcrypt('admin123'),
+                'role_id'         => 1,
+                'status'          => 1,
+                'view_permission' => 'global',
             ]
         );
 
         $this->info("User created: {$user->email}");
-        $this->info("Login at: http://127.0.0.1:8000/admin/login");
-        $this->info("Email: admin@admin.com");
-        $this->info("Password: admin123");
+        $this->info('Login at: http://127.0.0.1:8000/admin/login');
+        $this->info('Email: admin@admin.com');
+        $this->info('Password: admin123');
 
         return 0;
     }

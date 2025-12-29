@@ -44,15 +44,15 @@ class ThemeBootProvider extends ServiceProvider
     private function registerViewOverrides(): void
     {
         // Override para namespace 'admin' (package Webkul/Admin)
-        $vendorAdminPath = resource_path("views/vendor/admin");
+        $vendorAdminPath = resource_path('views/vendor/admin');
         if (is_dir($vendorAdminPath)) {
-            View::prependNamespace("admin", $vendorAdminPath);
+            View::prependNamespace('admin', $vendorAdminPath);
         }
 
         // Override para namespace 'theme-manager' (package Webkul/ThemeManager)
-        $vendorThemeManagerPath = resource_path("views/vendor/theme-manager");
+        $vendorThemeManagerPath = resource_path('views/vendor/theme-manager');
         if (is_dir($vendorThemeManagerPath)) {
-            View::prependNamespace("theme-manager", $vendorThemeManagerPath);
+            View::prependNamespace('theme-manager', $vendorThemeManagerPath);
         }
     }
 
@@ -61,10 +61,10 @@ class ThemeBootProvider extends ServiceProvider
      */
     private function registerViewComposers(): void
     {
-        View::composer("theme-manager::admin.settings.theme.index", function (
+        View::composer('theme-manager::admin.settings.theme.index', function (
             $view,
         ) {
-            $view->with("availableThemes", $this->getAvailableThemes());
+            $view->with('availableThemes', $this->getAvailableThemes());
         });
     }
 
@@ -77,7 +77,7 @@ class ThemeBootProvider extends ServiceProvider
      */
     private function getAvailableThemes(): array
     {
-        return Cache::remember("theme.available.v1", 300, function () {
+        return Cache::remember('theme.available.v1', 300, function () {
             return $this->discoverThemes();
         });
     }
@@ -90,11 +90,11 @@ class ThemeBootProvider extends ServiceProvider
      */
     private function discoverThemes(): array
     {
-        $themesPath = storage_path("app/public/themes");
+        $themesPath = storage_path('app/public/themes');
         $themes = [];
 
         // Verifica se o diretório de temas existe
-        if (!File::isDirectory($themesPath)) {
+        if (! File::isDirectory($themesPath)) {
             return $themes;
         }
 
@@ -103,10 +103,10 @@ class ThemeBootProvider extends ServiceProvider
 
         foreach ($directories as $directory) {
             $slug = basename($directory);
-            $themeJsonPath = $directory . DIRECTORY_SEPARATOR . "theme.json";
+            $themeJsonPath = $directory.DIRECTORY_SEPARATOR.'theme.json';
 
             // Tema só é válido se tiver theme.json
-            if (!File::exists($themeJsonPath)) {
+            if (! File::exists($themeJsonPath)) {
                 continue;
             }
 
@@ -115,12 +115,12 @@ class ThemeBootProvider extends ServiceProvider
 
             // Monta array com dados completos do tema
             $themes[] = [
-                "slug" => $slug,
-                "name" => $themeData["name"] ?? ucfirst($slug),
-                "description" => $themeData["description"] ?? null,
-                "version" => $themeData["version"] ?? null,
-                "author" => $themeData["author"] ?? null,
-                "preview" => $themeData["preview"] ?? null,
+                'slug'        => $slug,
+                'name'        => $themeData['name'] ?? ucfirst($slug),
+                'description' => $themeData['description'] ?? null,
+                'version'     => $themeData['version'] ?? null,
+                'author'      => $themeData['author'] ?? null,
+                'preview'     => $themeData['preview'] ?? null,
             ];
         }
 
@@ -130,7 +130,7 @@ class ThemeBootProvider extends ServiceProvider
     /**
      * Lê e parseia um arquivo theme.json com tratamento de erros.
      *
-     * @param string $path Caminho absoluto para o theme.json
+     * @param  string  $path  Caminho absoluto para o theme.json
      * @return array Dados do tema ou array vazio em caso de erro
      */
     private function readThemeJson(string $path): array
@@ -140,7 +140,7 @@ class ThemeBootProvider extends ServiceProvider
             $data = json_decode($contents, true);
 
             // json_decode retorna null em caso de JSON inválido
-            if (!is_array($data)) {
+            if (! is_array($data)) {
                 return [];
             }
 

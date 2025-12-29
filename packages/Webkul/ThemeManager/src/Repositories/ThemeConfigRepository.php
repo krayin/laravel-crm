@@ -5,8 +5,8 @@ namespace Webkul\ThemeManager\Repositories;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
-use Webkul\ThemeManager\Models\ThemeConfig;
 use Webkul\ThemeManager\Helpers\ThemeHelper;
+use Webkul\ThemeManager\Models\ThemeConfig;
 
 class ThemeConfigRepository
 {
@@ -30,17 +30,15 @@ class ThemeConfigRepository
      * @var array
      */
     protected $allowedExtensions = [
-        'logo' => ['svg', 'png', 'jpg', 'jpeg', 'webp'],
-        'favicon' => ['ico', 'png', 'svg'],
-        'background' => ['jpg', 'jpeg', 'png', 'webp'],
+        'logo'        => ['svg', 'png', 'jpg', 'jpeg', 'webp'],
+        'favicon'     => ['ico', 'png', 'svg'],
+        'background'  => ['jpg', 'jpeg', 'png', 'webp'],
         'empty_state' => ['svg'],
     ];
 
     /**
      * Create a new repository instance.
      *
-     * @param  ThemeConfig  $themeConfig
-     * @param  ThemeHelper  $themeHelper
      * @return void
      */
     public function __construct(ThemeConfig $themeConfig, ThemeHelper $themeHelper)
@@ -62,7 +60,6 @@ class ThemeConfigRepository
     /**
      * Update the theme configuration.
      *
-     * @param  array  $data
      * @return ThemeConfig
      */
     public function update(array $data)
@@ -92,11 +89,11 @@ class ThemeConfigRepository
             // DEBUG - Remover depois
             if ($field === 'login_bg_image') {
                 \Log::info('🔍 DEBUG login_bg_image', [
-                    'field' => $field,
-                    'isset' => isset($data[$field]),
+                    'field'           => $field,
+                    'isset'           => isset($data[$field]),
                     'is_uploadedfile' => isset($data[$field]) && $data[$field] instanceof UploadedFile,
-                    'data_type' => isset($data[$field]) ? get_class($data[$field]) : 'not set',
-                    'all_data_keys' => array_keys($data),
+                    'data_type'       => isset($data[$field]) ? get_class($data[$field]) : 'not set',
+                    'all_data_keys'   => array_keys($data),
                 ]);
             }
 
@@ -130,7 +127,7 @@ class ThemeConfigRepository
                 // Sanitize SVG files to prevent XSS
                 if (strtolower($file->getClientOriginalExtension()) === 'svg') {
                     $content = $this->sanitizeSvg($file->get());
-                    Storage::disk('public')->put('theme-manager/' . $filename, $content);
+                    Storage::disk('public')->put('theme-manager/'.$filename, $content);
                 } else {
                     $file->storeAs('theme-manager', $filename, 'public');
                 }
@@ -166,8 +163,8 @@ class ThemeConfigRepository
 
         // Sanitize integer fields
         $integerFields = [
-            'login_bg_zoom' => [50, 200, 100],
-            'login_bg_opacity' => [0, 100, 50],
+            'login_bg_zoom'         => [50, 200, 100],
+            'login_bg_opacity'      => [0, 100, 50],
             'login_card_bg_opacity' => [0, 100, 62],
         ];
 
@@ -188,23 +185,16 @@ class ThemeConfigRepository
 
     /**
      * Delete a file from storage.
-     *
-     * @param  string|null  $filename
-     * @return void
      */
     protected function deleteFile(?string $filename): void
     {
         if ($filename) {
-            Storage::disk('public')->delete('theme-manager/' . $filename);
+            Storage::disk('public')->delete('theme-manager/'.$filename);
         }
     }
 
     /**
      * Generate a safe filename for uploaded file.
-     *
-     * @param  string  $field
-     * @param  UploadedFile  $file
-     * @return string
      */
     protected function generateSafeFilename(string $field, UploadedFile $file): string
     {
@@ -217,10 +207,6 @@ class ThemeConfigRepository
 
     /**
      * Check if file extension is allowed for the field type.
-     *
-     * @param  string  $field
-     * @param  string  $extension
-     * @return bool
      */
     protected function isAllowedExtension(string $field, string $extension): bool
     {
@@ -248,9 +234,6 @@ class ThemeConfigRepository
     /**
      * Sanitize SVG content to prevent XSS attacks.
      * Removes potentially dangerous elements and attributes.
-     *
-     * @param  string  $content
-     * @return string
      */
     protected function sanitizeSvg(string $content): string
     {

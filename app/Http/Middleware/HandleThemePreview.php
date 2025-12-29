@@ -60,7 +60,7 @@ class HandleThemePreview
     public function handle(Request $request, Closure $next): Response
     {
         // EARLY RETURN: Só processa rotas admin
-        if (!$this->isAdminRoute($request)) {
+        if (! $this->isAdminRoute($request)) {
             return $next($request);
         }
 
@@ -80,7 +80,7 @@ class HandleThemePreview
         $path = $request->path();
 
         return $path === $this->adminPrefix ||
-            str_starts_with($path, $this->adminPrefix . '/');
+            str_starts_with($path, $this->adminPrefix.'/');
     }
 
     /**
@@ -91,19 +91,19 @@ class HandleThemePreview
         try {
             $guard = auth()->guard('user');
 
-            if (!$guard->check()) {
+            if (! $guard->check()) {
                 return false;
             }
 
             $user = $guard->user();
 
             // Status ativo
-            if (!isset($user->status) || (int) $user->status !== 1) {
+            if (! isset($user->status) || (int) $user->status !== 1) {
                 return false;
             }
 
             // Permissão settings
-            if (!function_exists('bouncer') || !bouncer()->hasPermission('settings')) {
+            if (! function_exists('bouncer') || ! bouncer()->hasPermission('settings')) {
                 return false;
             }
 
@@ -121,6 +121,7 @@ class HandleThemePreview
         // Limpar preview
         if ($request->has(self::QUERY_PARAM_CLEAR)) {
             $this->clearPreview();
+
             return;
         }
 
@@ -143,19 +144,20 @@ class HandleThemePreview
         }
 
         // Valida existência do tema
-        if (!$this->themeExists($sanitized)) {
+        if (! $this->themeExists($sanitized)) {
             Log::warning('[Theme] Preview requested for non-existent theme', [
-                'slug' => $sanitized,
+                'slug'    => $sanitized,
                 'user_id' => auth()->guard('user')->id(),
-                'ip' => $request->ip(),
+                'ip'      => $request->ip(),
             ]);
+
             return;
         }
 
         session([self::SESSION_KEY => $sanitized]);
 
         Log::info('[Theme] Preview activated', [
-            'slug' => $sanitized,
+            'slug'    => $sanitized,
             'user_id' => auth()->guard('user')->id(),
         ]);
     }
@@ -172,7 +174,7 @@ class HandleThemePreview
         if ($previous) {
             Log::info('[Theme] Preview cleared', [
                 'previous_slug' => $previous,
-                'user_id' => auth()->guard('user')->id(),
+                'user_id'       => auth()->guard('user')->id(),
             ]);
         }
     }
@@ -199,6 +201,7 @@ class HandleThemePreview
         }
 
         $base = trim(self::THEMES_BASE_PATH, '/');
+
         return Storage::disk('public')->exists("{$base}/{$slug}/theme.json");
     }
 

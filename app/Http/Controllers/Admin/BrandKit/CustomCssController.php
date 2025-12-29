@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\Admin\BrandKit;
 
-use App\Http\Controllers\Controller;
 use App\Http\Controllers\Admin\BrandKit\Concerns\BrandKitControllerHelpers;
+use App\Http\Controllers\Controller;
 use App\Repositories\BrandKitRepository;
 use Illuminate\Http\Request;
 
@@ -16,9 +16,9 @@ final class CustomCssController extends Controller
     public function store(Request $request)
     {
         $data = $this->validateBase($request, [
-            'name'        => ['required','string','max:120'],
-            'css_content' => ['required','string','max:50000'],
-            'target'      => ['nullable','string','in:admin,login,both'],
+            'name'        => ['required', 'string', 'max:120'],
+            'css_content' => ['required', 'string', 'max:50000'],
+            'target'      => ['nullable', 'string', 'in:admin,login,both'],
         ]);
 
         $this->autoSnapshot($data['scope_key'], $data['theme_slug'], $request, "css:add:{$data['name']}");

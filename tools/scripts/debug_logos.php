@@ -9,12 +9,12 @@ echo "=== DEBUG DE LOGOS - INVESTIGAÇÃO COMPLETA ===\n\n";
 // 1. Verificar configuração no banco
 echo "1. CONFIGURAÇÃO NO BANCO DE DADOS:\n";
 $config = \Webkul\ThemeManager\Models\ThemeConfig::getInstance();
-echo "   ID: " . $config->id . "\n";
-echo "   Tema Ativo: " . ($config->is_active ? "SIM" : "NÃO") . "\n";
-echo "   Logo Main: " . ($config->logo_main ?: "NÃO CONFIGURADO") . "\n";
-echo "   Logo Light: " . ($config->logo_light ?: "NÃO CONFIGURADO") . "\n";
-echo "   Logo Icon: " . ($config->logo_icon ?: "NÃO CONFIGURADO") . "\n";
-echo "   Favicon: " . ($config->favicon ?: "NÃO CONFIGURADO") . "\n";
+echo '   ID: '.$config->id."\n";
+echo '   Tema Ativo: '.($config->is_active ? 'SIM' : 'NÃO')."\n";
+echo '   Logo Main: '.($config->logo_main ?: 'NÃO CONFIGURADO')."\n";
+echo '   Logo Light: '.($config->logo_light ?: 'NÃO CONFIGURADO')."\n";
+echo '   Logo Icon: '.($config->logo_icon ?: 'NÃO CONFIGURADO')."\n";
+echo '   Favicon: '.($config->favicon ?: 'NÃO CONFIGURADO')."\n";
 echo "\n";
 
 // 2. Verificar arquivos em storage
@@ -24,13 +24,13 @@ echo "   Path: $storagePath\n";
 
 if (is_dir($storagePath)) {
     $files = array_diff(scandir($storagePath), ['.', '..', '.gitkeep']);
-    echo "   Arquivos encontrados: " . count($files) . "\n";
+    echo '   Arquivos encontrados: '.count($files)."\n";
 
     if (count($files) > 0) {
         foreach ($files as $file) {
-            $fullPath = $storagePath . '/' . $file;
+            $fullPath = $storagePath.'/'.$file;
             $size = filesize($fullPath);
-            echo "     - $file (" . round($size/1024, 2) . " KB)\n";
+            echo "     - $file (".round($size / 1024, 2)." KB)\n";
         }
     } else {
         echo "     ⚠️  Nenhum arquivo encontrado!\n";
@@ -45,31 +45,31 @@ echo "3. SYMLINK public/storage:\n";
 $publicStorage = public_path('storage');
 if (is_link($publicStorage)) {
     echo "   É symlink: SIM ✓\n";
-    echo "   Aponta para: " . readlink($publicStorage) . "\n";
+    echo '   Aponta para: '.readlink($publicStorage)."\n";
 
     // Verificar se theme-manager existe via symlink
-    $themeManagerPublic = $publicStorage . '/theme-manager';
-    echo "   public/storage/theme-manager existe: " . (is_dir($themeManagerPublic) ? "SIM ✓" : "NÃO ✗") . "\n";
+    $themeManagerPublic = $publicStorage.'/theme-manager';
+    echo '   public/storage/theme-manager existe: '.(is_dir($themeManagerPublic) ? 'SIM ✓' : 'NÃO ✗')."\n";
 
     if (is_dir($themeManagerPublic)) {
         $publicFiles = array_diff(scandir($themeManagerPublic), ['.', '..', '.gitkeep']);
-        echo "   Arquivos acessíveis via web: " . count($publicFiles) . "\n";
+        echo '   Arquivos acessíveis via web: '.count($publicFiles)."\n";
     }
 } else {
     echo "   ❌ NÃO É SYMLINK!\n";
-    echo "   Tipo: " . (is_dir($publicStorage) ? "Diretório comum" : "Não existe") . "\n";
+    echo '   Tipo: '.(is_dir($publicStorage) ? 'Diretório comum' : 'Não existe')."\n";
 }
 echo "\n";
 
 // 4. Testar URLs de acesso
 echo "4. URLs DE ACESSO:\n";
 if ($config->logo_main) {
-    $url = asset('storage/theme-manager/' . $config->logo_main);
+    $url = asset('storage/theme-manager/'.$config->logo_main);
     echo "   Logo Main URL: $url\n";
 
     // Verificar se arquivo existe fisicamente
-    $publicPath = public_path('storage/theme-manager/' . $config->logo_main);
-    echo "   Arquivo existe: " . (file_exists($publicPath) ? "SIM ✓" : "NÃO ✗") . "\n";
+    $publicPath = public_path('storage/theme-manager/'.$config->logo_main);
+    echo '   Arquivo existe: '.(file_exists($publicPath) ? 'SIM ✓' : 'NÃO ✗')."\n";
 }
 echo "\n";
 
@@ -79,7 +79,7 @@ if ($config->is_active) {
     echo "   Tema está ATIVO - CSS será injetado ✓\n";
 
     if ($config->logo_main) {
-        $cssUrl = asset('storage/theme-manager/' . $config->logo_main);
+        $cssUrl = asset('storage/theme-manager/'.$config->logo_main);
         echo "   CSS para logo_main:\n";
         echo "   img[src*=\"logo.svg\"]:not([src*=\"dark-logo\"]):not([src*=\"mobile\"]) {\n";
         echo "       content: url('$cssUrl') !important;\n";
@@ -98,7 +98,7 @@ echo "   Procurando por imagens com 'logo' no src...\n";
 $adminPath = base_path('packages/Webkul/Admin/src/Resources/views');
 
 // Procurar por tags <img> com logo
-$grepCommand = "grep -r \"logo.svg\" " . escapeshellarg($adminPath) . " 2>/dev/null | head -5";
+$grepCommand = 'grep -r "logo.svg" '.escapeshellarg($adminPath).' 2>/dev/null | head -5';
 echo "   Comando: find logo.svg no Admin package\n";
 echo "   (Verificar manualmente se existe img[src*='logo.svg'] no HTML)\n";
 echo "\n";
@@ -115,7 +115,7 @@ if (isset($middlewareGroups['web'])) {
             break;
         }
     }
-    if (!$hasTheme) {
+    if (! $hasTheme) {
         echo "   ❌ ThemeMiddleware NÃO está no grupo 'web'\n";
     }
 } else {
@@ -128,16 +128,16 @@ echo "=== DIAGNÓSTICO ===\n\n";
 
 $issues = [];
 
-if (!$config->is_active) {
+if (! $config->is_active) {
     $issues[] = "⚠️  TEMA DESATIVADO - Ative em 'Theme Active' = Yes";
 }
 
-if (!$config->logo_main && !$config->logo_light && !$config->logo_icon) {
-    $issues[] = "⚠️  NENHUM LOGO CONFIGURADO - Faça upload de pelo menos um logo";
+if (! $config->logo_main && ! $config->logo_light && ! $config->logo_icon) {
+    $issues[] = '⚠️  NENHUM LOGO CONFIGURADO - Faça upload de pelo menos um logo';
 }
 
-if (!is_link(public_path('storage'))) {
-    $issues[] = "❌ SYMLINK AUSENTE - Execute: php artisan storage:link";
+if (! is_link(public_path('storage'))) {
+    $issues[] = '❌ SYMLINK AUSENTE - Execute: php artisan storage:link';
 }
 
 if (count($issues) > 0) {
