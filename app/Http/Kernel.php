@@ -37,6 +37,16 @@ class Kernel extends HttpKernel
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
             \App\Http\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
+
+            /*
+             * Theme Middlewares (upgrade-safe, com early-return interno):
+             * - HandleThemePreview: Captura ?theme_preview e gerencia session (DEVE VIR PRIMEIRO)
+             * - ShareThemeContext: Só processa rotas /admin/* (early-return para outras)
+             * - CaptureThemeSelection: Só processa rota admin.settings.theme.update + auth check
+             */
+            \App\Http\Middleware\HandleThemePreview::class,
+            \App\Http\Middleware\ShareThemeContext::class,
+            \App\Http\Middleware\CaptureThemeSelection::class,
         ],
 
         'api' => [

@@ -105,6 +105,15 @@
         ],
         "post-create-project-cmd": [
             "@php artisan key:generate --ansi"
+        ],
+        "test:brandkit": [
+            "@php vendor/bin/pest --filter \"BrandKit|PreviewSession|ThemeContextFactory\""
+        ],
+        "test:brandkit-coverage": [
+            "@php vendor/bin/pest --filter \"BrandKit|PreviewSession|ThemeContextFactory\" --coverage"
+        ],
+        "test:full": [
+            "@php vendor/bin/pest"
         ]
     }
 }

@@ -1,72 +1,40 @@
-# Guia de Instalação - ThemeManager
+# ThemeManager Installation Guide
 
-Este guia apresenta os comandos necessários para instalar e configurar o ThemeManager no Krayin CRM.
+Complete installation instructions for the ThemeManager package for Krayin CRM.
 
-## Pré-requisitos
+## Prerequisites
 
-Antes de começar, certifique-se de que:
+- Krayin CRM 2.0+ installed and working
+- PHP 8.1 or higher
+- Composer 2.x
+- Laravel 10+ or 11+
+- MySQL 8+ or SQLite
 
-- ✅ Krayin CRM está instalado e funcionando
-- ✅ PHP 8.2+ está instalado
-- ✅ MySQL 8.0+ está rodando
-- ✅ Composer está instalado
-- ✅ Extensões PHP necessárias estão habilitadas:
-  - gd
-  - mbstring
-  - openssl
-  - curl
-  - fileinfo
-  - pdo_mysql
+## Installation Steps
 
-## Verificação Prévia
+### Step 1: Copy Package Files
 
-### 1. Verificar versão do PHP
+Copy the entire `ThemeManager` folder to your Krayin installation:
 
 ```bash
-php -v
-# Deve retornar: PHP 8.2.x ou superior
+cp -r ThemeManager /path/to/krayin/packages/Webkul/
 ```
 
-### 2. Verificar extensões PHP
-
-```bash
-php -m | grep -E 'gd|mbstring|openssl|curl|fileinfo|pdo_mysql'
+Your structure should look like:
+```
+packages/
+└── Webkul/
+    ├── Admin/
+    ├── Core/
+    ├── ThemeManager/   <- New package
+    └── ...
 ```
 
-Todas as extensões listadas acima devem aparecer.
+### Step 2: Register Autoload
 
-### 3. Verificar MySQL
+Edit `composer.json` in the root of your Krayin installation.
 
-```bash
-# Windows (PowerShell)
-powershell -Command "Get-Service -Name MySQL* | Select-Object Status,Name"
-
-# Linux/Mac
-mysql --version
-```
-
-## Passo a Passo da Instalação
-
-### Passo 1: Verificar Estrutura do Package
-
-O package já deve estar em:
-```
-packages/Webkul/ThemeManager/
-```
-
-Verifique se todos os arquivos existem:
-
-```bash
-# Windows (PowerShell)
-powershell -Command "Test-Path packages/Webkul/ThemeManager/composer.json"
-
-# Linux/Mac
-ls -la packages/Webkul/ThemeManager/
-```
-
-### Passo 2: Atualizar Autoload do Composer
-
-Verifique se o autoload foi adicionado ao `composer.json` raiz:
+Find the `autoload.psr-4` section and add:
 
 ```json
 {
@@ -78,197 +46,152 @@ Verifique se o autoload foi adicionado ao `composer.json` raiz:
 }
 ```
 
-Execute:
+### Step 3: Register Service Provider
 
-```bash
-# Windows (PowerShell)
-powershell -Command "cd 'C:\Users\Usuario\Desktop\Krayin-\laravel-crm'; C:\php\php.exe C:\php\composer.phar dump-autoload"
+Edit `config/app.php` and add the provider to the `providers` array:
 
-# Linux/Mac
-composer dump-autoload
+```php
+'providers' => [
+    // ... other providers
+
+    // ThemeManager - Add at the END of the array
+    Webkul\ThemeManager\Providers\ThemeManagerServiceProvider::class,
+],
 ```
 
-**Saída esperada:**
-```
-Generated optimized autoload files containing 9241 classes
-```
+### Step 4: Register Concord Module
 
-### Passo 3: Registrar Módulo no Concord
-
-Verifique se o módulo foi adicionado ao `config/concord.php`:
+Edit `config/concord.php` and add the module:
 
 ```php
 'modules' => [
-    // ... outros módulos ...
+    // ... other modules
 
-    // ThemeManager - SEMPRE POR ÚLTIMO
+    // ThemeManager - Add at the END
     \Webkul\ThemeManager\Providers\ModuleServiceProvider::class,
 ],
 ```
 
-**IMPORTANTE:** O ThemeManager deve ser o último módulo registrado!
+### Step 5: Run Composer
 
-### Passo 4: Executar Migrations
-
-**ATENÇÃO:** Certifique-se de que o MySQL está rodando antes de executar este comando.
+Regenerate the autoloader:
 
 ```bash
-# Windows (PowerShell)
-powershell -Command "cd 'C:\Users\Usuario\Desktop\Krayin-\laravel-crm'; C:\php\php.exe artisan migrate"
+composer dump-autoload
+```
 
-# Linux/Mac
+### Step 6: Run Migrations
+
+Create the database table:
+
+```bash
 php artisan migrate
 ```
 
-**Saída esperada:**
-```
-Migrating: 2024_12_20_000001_create_theme_configs_table
-Migrated:  2024_12_20_000001_create_theme_configs_table (XX.XXms)
-```
+This creates the `theme_configs` table with all required fields.
 
-Este comando cria:
-- Tabela `theme_configs` com 38 campos
-- Registro padrão com configurações iniciais
+### Step 7: Create Storage Symlink
 
-### Passo 5: Criar Link Simbólico para Storage
-
-O ThemeManager armazena uploads em `storage/app/public/theme-manager/`.
-É necessário criar um link simbólico:
+Ensure the storage link exists for file uploads:
 
 ```bash
-# Windows (PowerShell como Administrador)
-powershell -Command "cd 'C:\Users\Usuario\Desktop\Krayin-\laravel-crm'; C:\php\php.exe artisan storage:link"
-
-# Linux/Mac
 php artisan storage:link
 ```
 
-**Saída esperada:**
-```
-The [public/storage] link has been connected to [storage/app/public].
-The links have been created.
-```
+### Step 8: Clear Cache
 
-### Passo 6: Configurar Permissões (Linux/Mac)
-
-**Apenas para Linux/Mac:**
+Clear all caches to load the new package:
 
 ```bash
-# Dar permissões de escrita ao storage
-chmod -R 775 storage/
-chown -R www-data:www-data storage/
-
-# Dar permissões ao diretório de uploads
-chmod -R 775 public/storage
-chown -R www-data:www-data public/storage
-```
-
-**Windows:** As permissões geralmente são automáticas. Se houver problemas, execute como Administrador.
-
-### Passo 7: Limpar Caches
-
-```bash
-# Windows (PowerShell)
-powershell -Command "cd 'C:\Users\Usuario\Desktop\Krayin-\laravel-crm'; C:\php\php.exe artisan optimize:clear"
-
-# Linux/Mac
 php artisan optimize:clear
 ```
 
-Este comando limpa:
-- Cache de configuração
-- Cache de rotas
-- Cache de views
-- Cache de eventos
-- Cache geral
-
-**Saída esperada:**
-```
-Configuration cache cleared successfully.
-Route cache cleared successfully.
-Compiled views cleared successfully.
-Application cache cleared successfully.
-Compiled services and packages files removed successfully.
+Or individually:
+```bash
+php artisan config:clear
+php artisan cache:clear
+php artisan view:clear
+php artisan route:clear
 ```
 
-### Passo 8: Verificar Instalação
+### Step 9: Set Permissions (Linux/Mac)
 
-#### 8.1. Verificar Rotas
+Ensure proper permissions for file uploads:
 
 ```bash
-# Windows (PowerShell)
-powershell -Command "cd 'C:\Users\Usuario\Desktop\Krayin-\laravel-crm'; C:\php\php.exe artisan route:list | Select-String 'theme'"
+chmod -R 775 storage/
+chmod -R 775 bootstrap/cache/
+chown -R www-data:www-data storage/
+```
 
-# Linux/Mac
+## Verification
+
+### Check Routes
+
+Verify the routes are registered:
+
+```bash
 php artisan route:list | grep theme
 ```
 
-**Saída esperada:**
+Expected output:
 ```
-GET|HEAD   admin/settings/theme ........ admin.settings.theme.index
-POST       admin/settings/theme ........ admin.settings.theme.update
+GET  admin/settings/theme    admin.settings.theme.index
+POST admin/settings/theme    admin.settings.theme.update
 ```
 
-#### 8.2. Testar Helper via Tinker
+### Check Provider
+
+Verify the provider is loaded:
 
 ```bash
-# Windows (PowerShell)
-powershell -Command "cd 'C:\Users\Usuario\Desktop\Krayin-\laravel-crm'; C:\php\php.exe artisan tinker"
-
-# Linux/Mac
 php artisan tinker
+>>> app('theme')
 ```
 
-Dentro do Tinker, execute:
+Expected: Returns a `ThemeHelper` instance.
 
-```php
-// Verificar se o helper existe
-app('theme')
+### Access Admin Panel
 
-// Verificar se está ativo (padrão: false)
-app('theme')->isActive()
-
-// Obter configuração
-app('theme')->getConfig()
-
-// Sair do Tinker
-exit
+Navigate to:
+```
+http://your-site.com/admin/settings/theme
 ```
 
-### Passo 9: Acessar Interface
+You should see the Theme Configuration page.
 
-1. Acesse o Krayin CRM no navegador
-2. Faça login como administrador
-3. No menu lateral, procure: **Configurações → Tema**
+## Uninstallation
 
-Se o menu aparecer, a instalação foi bem-sucedida!
+To remove the package:
 
-## Comandos de Manutenção
+### 1. Remove from config files
 
-### Limpar Cache do Tema
+Edit `config/app.php` - remove the provider line
+Edit `config/concord.php` - remove the module line
+
+### 2. Remove autoload
+
+Edit `composer.json` - remove the PSR-4 autoload line
+
+### 3. Drop database table
 
 ```bash
-# Via Artisan
-php artisan cache:clear
-
-# Via Tinker
-php artisan tinker
->>> app('theme')->clearCache()
->>> exit
+php artisan migrate:rollback --path=packages/Webkul/ThemeManager/Database/Migrations
 ```
 
-### Reexecutar Migrations (Reset)
+Or manually:
+```sql
+DROP TABLE IF EXISTS theme_configs;
+```
 
-**ATENÇÃO:** Isto apagará todos os dados de configuração do tema!
+### 4. Remove files
 
 ```bash
-php artisan migrate:rollback --step=1
-php artisan migrate
+rm -rf packages/Webkul/ThemeManager
+rm -rf storage/app/public/theme-manager
 ```
 
-### Atualizar Autoload
-
-Sempre que modificar arquivos PHP do package:
+### 5. Clear cache
 
 ```bash
 composer dump-autoload
@@ -277,104 +200,67 @@ php artisan optimize:clear
 
 ## Troubleshooting
 
-### Erro: "Class ThemeManager not found"
+### "Class not found" errors
 
-**Solução:**
 ```bash
 composer dump-autoload
 php artisan optimize:clear
 ```
 
-### Erro: "Table 'krayin.theme_configs' doesn't exist"
+### 404 on theme settings page
 
-**Solução:**
+1. Check routes: `php artisan route:list | grep theme`
+2. Check provider is registered in `config/app.php`
+3. Clear route cache: `php artisan route:clear`
+
+### Menu item not showing
+
+1. Check `packages/Webkul/ThemeManager/src/Config/menu.php` exists
+2. Clear cache: `php artisan optimize:clear`
+3. Check menu registration in ServiceProvider
+
+### Uploads not working
+
+1. Check symlink: `ls -la public/storage`
+2. If missing: `php artisan storage:link`
+3. Check permissions: `chmod -R 775 storage/`
+4. Check directory exists: `ls storage/app/public/theme-manager/`
+
+### CSS not applying
+
+1. Verify theme is set to "Active" in settings
+2. Check middleware is registered
+3. Inspect page source for `<style>` tag with theme variables
+4. Check browser console for JavaScript errors
+
+### Database migration fails
+
+1. Check database connection
+2. Verify table doesn't already exist
+3. Run: `php artisan migrate:status`
+
+## Docker Installation
+
+If using Docker:
+
 ```bash
-# Verificar se MySQL está rodando
-# Então executar:
+# Enter container
+docker exec -it krayin_app bash
+
+# Run installation commands inside container
+composer dump-autoload
 php artisan migrate
-```
-
-### Erro: "Permission denied" ao fazer upload
-
-**Linux/Mac:**
-```bash
-chmod -R 775 storage/
-chown -R www-data:www-data storage/
-```
-
-**Windows:**
-Execute o servidor como Administrador.
-
-### Menu "Tema" não aparece
-
-**Solução:**
-```bash
-composer dump-autoload
+php artisan storage:link
 php artisan optimize:clear
-# Recarregue a página com Ctrl+F5
+
+# Fix permissions
+chown -R www-data:www-data storage/
+chmod -R 775 storage/
 ```
 
-### CSS não está aplicando
+## Support
 
-**Solução:**
-```bash
-php artisan view:clear
-php artisan cache:clear
-# Limpe o cache do navegador (Ctrl+Shift+Del)
-```
-
-### Erro: "SQLSTATE[HY000] [2002] Connection refused"
-
-**Solução:**
-- Inicie o MySQL
-- Verifique credenciais no `.env`
-- Teste conexão:
-  ```bash
-  php artisan tinker
-  >>> DB::connection()->getPdo()
-  ```
-
-## Checklist de Instalação
-
-Marque cada item conforme concluir:
-
-- [ ] PHP 8.2+ instalado
-- [ ] MySQL rodando
-- [ ] Extensões PHP habilitadas
-- [ ] Package em `packages/Webkul/ThemeManager/`
-- [ ] Autoload adicionado ao `composer.json` raiz
-- [ ] Módulo registrado em `config/concord.php` (por último)
-- [ ] `composer dump-autoload` executado
-- [ ] `php artisan migrate` executado
-- [ ] `php artisan storage:link` executado
-- [ ] Permissões configuradas (Linux/Mac)
-- [ ] `php artisan optimize:clear` executado
-- [ ] Rotas verificadas (`route:list | grep theme`)
-- [ ] Helper testado via Tinker
-- [ ] Menu "Tema" visível na interface
-- [ ] Primeira configuração salva com sucesso
-
-## Próximos Passos
-
-Após instalação bem-sucedida:
-
-1. 📖 Leia o [README.md](README.md) para entender todas as funcionalidades
-2. 🎨 Configure suas cores de marca
-3. 🖼️ Faça upload dos seus logos
-4. 🔐 Customize a página de login
-5. 📦 Configure empty states (opcional)
-6. ✅ Ative o tema na interface
-
-## Suporte
-
-Se encontrar problemas:
-
-1. Verifique os logs: `tail -f storage/logs/laravel.log`
-2. Consulte a seção Troubleshooting do [README.md](README.md)
-3. Reporte issues no repositório
-
----
-
-**Instalação completa! 🎉**
-
-Agora você pode começar a personalizar a aparência do seu Krayin CRM.
+For issues or questions:
+- Check [README.md](README.md) for usage instructions
+- Review [CLAUDE.md](../../CLAUDE.md) for development guidelines
+- Check Laravel logs: `tail -f storage/logs/laravel.log`

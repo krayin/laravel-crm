@@ -2,8 +2,8 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
@@ -48,6 +48,7 @@ return new class extends Migration
             $table->boolean('login_card_sparkles')->default(false);
             $table->boolean('login_card_help_link')->default(true);
             $table->string('login_card_support_email', 100)->default('suporte@empresa.com.br');
+            $table->text('login_card_custom_code')->nullable();
 
             // Empty States
             $table->string('empty_state_activities', 500)->nullable();
@@ -65,27 +66,27 @@ return new class extends Migration
 
         // Inserir registro padrão
         DB::table('theme_configs')->insert([
-            'id' => 1,
-            'is_active' => false,
-            'color_primary' => '#1E40AF',
-            'color_primary_dark' => '#1E3A8A',
-            'color_primary_light' => '#3B82F6',
-            'color_success' => '#10B981',
-            'color_warning' => '#F59E0B',
-            'color_danger' => '#EF4444',
-            'login_bg_zoom' => 100,
-            'login_bg_opacity' => 50,
-            'login_show_powered_by' => true,
-            'login_card_enabled' => false,
-            'login_card_bg_opacity' => 62,
+            'id'                       => 1,
+            'is_active'                => false,
+            'color_primary'            => '#1E40AF',
+            'color_primary_dark'       => '#1E3A8A',
+            'color_primary_light'      => '#3B82F6',
+            'color_success'            => '#10B981',
+            'color_warning'            => '#F59E0B',
+            'color_danger'             => '#EF4444',
+            'login_bg_zoom'            => 100,
+            'login_bg_opacity'         => 50,
+            'login_show_powered_by'    => true,
+            'login_card_enabled'       => false,
+            'login_card_bg_opacity'    => 62,
             'login_card_overlay_color' => 'rgba(10, 45, 15, 0.78)',
-            'login_card_title' => 'Bem-vindo',
-            'login_card_subtitle' => 'Acesse sua conta para continuar',
-            'login_card_sparkles' => false,
-            'login_card_help_link' => true,
+            'login_card_title'         => 'Bem-vindo',
+            'login_card_subtitle'      => 'Acesse sua conta para continuar',
+            'login_card_sparkles'      => false,
+            'login_card_help_link'     => true,
             'login_card_support_email' => 'suporte@empresa.com.br',
-            'created_at' => now(),
-            'updated_at' => now(),
+            'created_at'               => now(),
+            'updated_at'               => now(),
         ]);
     }
 

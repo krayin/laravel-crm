@@ -2,8 +2,8 @@
 
 namespace Webkul\ThemeManager\Providers;
 
-use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\View;
+use Illuminate\Support\ServiceProvider;
 use Webkul\ThemeManager\Helpers\ThemeHelper;
 use Webkul\ThemeManager\Http\Middleware\ThemeMiddleware;
 
@@ -30,7 +30,7 @@ class ThemeManagerServiceProvider extends ServiceProvider
 
         // Register singleton for theme helper
         $this->app->singleton('theme', function ($app) {
-            return new ThemeHelper();
+            return new ThemeHelper;
         });
     }
 

@@ -52,10 +52,9 @@
                                 @lang('theme-manager::app.settings.activation.is-active')
                             </x-admin::form.control-group.label>
 
-                            <x-admin::form.control-group.control
-                                type="select"
+                            <select
                                 name="is_active"
-                                :value="old('is_active', $config->is_active)"
+                                class="block w-full rounded-md border border-gray-200 px-3 py-2.5 text-sm text-gray-600 transition-all hover:border-gray-400 focus:border-blue-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 dark:focus:border-blue-400"
                             >
                                 <option value="0" {{ old('is_active', $config->is_active) == 0 ? 'selected' : '' }}>
                                     @lang('theme-manager::app.settings.activation.no')
@@ -63,7 +62,7 @@
                                 <option value="1" {{ old('is_active', $config->is_active) == 1 ? 'selected' : '' }}>
                                     @lang('theme-manager::app.settings.activation.yes')
                                 </option>
-                            </x-admin::form.control-group.control>
+                            </select>
 
                             <x-admin::form.control-group.error control-name="is_active" />
                         </x-admin::form.control-group>
@@ -414,7 +413,7 @@
                         </p>
 
                         <div class="grid grid-cols-1 gap-6">
-                            <!-- Imagem de Fundo -->
+                            <!-- Background Image -->
                             <x-admin::form.control-group>
                                 <x-admin::form.control-group.label>
                                     @lang('theme-manager::app.settings.login.bg-image')
@@ -448,61 +447,86 @@
                                 <x-admin::form.control-group.error control-name="login_bg_image" />
                             </x-admin::form.control-group>
 
-                            <!-- Zoom da Imagem -->
+                            <!-- Background Zoom (Slider) -->
                             <x-admin::form.control-group>
                                 <x-admin::form.control-group.label>
                                     @lang('theme-manager::app.settings.login.bg-zoom')
+                                    <span id="login_bg_zoom_value" class="ml-2 text-blue-600 dark:text-blue-400">{{ old('login_bg_zoom', $config->login_bg_zoom ?? 100) }}%</span>
                                 </x-admin::form.control-group.label>
 
-                                <x-admin::form.control-group.control
-                                    type="select"
+                                <input
+                                    type="range"
                                     name="login_bg_zoom"
-                                    :value="old('login_bg_zoom', $config->login_bg_zoom)"
-                                >
-                                    <option value="50">50%</option>
-                                    <option value="75">75%</option>
-                                    <option value="100">100%</option>
-                                    <option value="125">125%</option>
-                                    <option value="150">150%</option>
-                                    <option value="200">200%</option>
-                                </x-admin::form.control-group.control>
+                                    id="login_bg_zoom"
+                                    min="50"
+                                    max="150"
+                                    step="5"
+                                    value="{{ old('login_bg_zoom', $config->login_bg_zoom ?? 100) }}"
+                                    class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700"
+                                    oninput="document.getElementById('login_bg_zoom_value').textContent = this.value + '%'"
+                                />
+
+                                <div class="flex justify-between text-xs text-gray-500 dark:text-gray-400 mt-1">
+                                    <span>50%</span>
+                                    <span>100%</span>
+                                    <span>150%</span>
+                                </div>
 
                                 <x-admin::form.control-group.error control-name="login_bg_zoom" />
                             </x-admin::form.control-group>
 
-                            <!-- Opacidade da Sobreposição -->
+                            <!-- Background Opacity (Slider) -->
                             <x-admin::form.control-group>
                                 <x-admin::form.control-group.label>
                                     @lang('theme-manager::app.settings.login.bg-opacity')
+                                    <span id="login_bg_opacity_value" class="ml-2 text-blue-600 dark:text-blue-400">{{ old('login_bg_opacity', $config->login_bg_opacity ?? 50) }}%</span>
                                 </x-admin::form.control-group.label>
 
-                                <x-admin::form.control-group.control
-                                    type="select"
+                                <input
+                                    type="range"
                                     name="login_bg_opacity"
-                                    :value="old('login_bg_opacity', $config->login_bg_opacity)"
-                                >
-                                    @for($i = 0; $i <= 100; $i += 10)
-                                        <option value="{{ $i }}">{{ $i }}%</option>
-                                    @endfor
-                                </x-admin::form.control-group.control>
+                                    id="login_bg_opacity"
+                                    min="0"
+                                    max="100"
+                                    step="5"
+                                    value="{{ old('login_bg_opacity', $config->login_bg_opacity ?? 50) }}"
+                                    class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700"
+                                    oninput="document.getElementById('login_bg_opacity_value').textContent = this.value + '%'"
+                                />
+
+                                <div class="flex justify-between text-xs text-gray-500 dark:text-gray-400 mt-1">
+                                    <span>0% (oculto)</span>
+                                    <span>50%</span>
+                                    <span>100% (visível)</span>
+                                </div>
 
                                 <x-admin::form.control-group.error control-name="login_bg_opacity" />
                             </x-admin::form.control-group>
 
-                            <!-- Mostrar "Powered By" -->
+                            <!-- Show Powered By -->
                             <x-admin::form.control-group>
                                 <x-admin::form.control-group.label>
                                     @lang('theme-manager::app.settings.login.show-powered-by')
                                 </x-admin::form.control-group.label>
 
-                                <x-admin::form.control-group.control
-                                    type="select"
-                                    name="login_show_powered_by"
-                                    :value="old('login_show_powered_by', $config->login_show_powered_by)"
-                                >
-                                    <option value="0">@lang('theme-manager::app.settings.activation.no')</option>
-                                    <option value="1">@lang('theme-manager::app.settings.activation.yes')</option>
-                                </x-admin::form.control-group.control>
+                                <label class="relative inline-flex items-center cursor-pointer">
+                                    <input
+                                        type="hidden"
+                                        name="login_show_powered_by"
+                                        value="0"
+                                    />
+                                    <input
+                                        type="checkbox"
+                                        name="login_show_powered_by"
+                                        value="1"
+                                        class="sr-only peer"
+                                        {{ old('login_show_powered_by', $config->login_show_powered_by ?? true) ? 'checked' : '' }}
+                                    />
+                                    <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
+                                    <span class="ml-3 text-sm font-medium text-gray-600 dark:text-gray-300">
+                                        Exibir "Powered by Krayin"
+                                    </span>
+                                </label>
 
                                 <x-admin::form.control-group.error control-name="login_show_powered_by" />
                             </x-admin::form.control-group>
@@ -519,28 +543,38 @@
                             @lang('theme-manager::app.settings.login-card.description')
                         </p>
 
-                        <!-- Toggle para habilitar -->
+                        <!-- Toggle Card Enabled -->
                         <x-admin::form.control-group class="mb-6">
                             <x-admin::form.control-group.label>
                                 @lang('theme-manager::app.settings.login-card.enabled')
                             </x-admin::form.control-group.label>
 
-                            <x-admin::form.control-group.control
-                                type="select"
-                                name="login_card_enabled"
-                                id="login_card_enabled"
-                                :value="old('login_card_enabled', $config->login_card_enabled)"
-                            >
-                                <option value="0">@lang('theme-manager::app.settings.activation.no')</option>
-                                <option value="1">@lang('theme-manager::app.settings.activation.yes')</option>
-                            </x-admin::form.control-group.control>
+                            <label class="relative inline-flex items-center cursor-pointer">
+                                <input
+                                    type="hidden"
+                                    name="login_card_enabled"
+                                    value="0"
+                                />
+                                <input
+                                    type="checkbox"
+                                    name="login_card_enabled"
+                                    id="login_card_enabled"
+                                    value="1"
+                                    class="sr-only peer"
+                                    {{ old('login_card_enabled', $config->login_card_enabled ?? false) ? 'checked' : '' }}
+                                    onchange="toggleLoginCardOptions()"
+                                />
+                                <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
+                                <span class="ml-3 text-sm font-medium text-gray-600 dark:text-gray-300">
+                                    Ativar card customizado no login
+                                </span>
+                            </label>
 
                             <x-admin::form.control-group.error control-name="login_card_enabled" />
                         </x-admin::form.control-group>
 
-                        <!-- Opções do Card (mostrado/escondido via JS) -->
-                        <div id="login-card-options" class="grid grid-cols-1 gap-6">
-                            <!-- Imagem de Fundo do Card -->
+                        <div id="login-card-options" class="grid grid-cols-1 gap-6" style="{{ old('login_card_enabled', $config->login_card_enabled ?? false) ? '' : 'display: none;' }}">
+                            <!-- Card Background Image -->
                             <x-admin::form.control-group>
                                 <x-admin::form.control-group.label>
                                     @lang('theme-manager::app.settings.login-card.bg-image')
@@ -574,37 +608,55 @@
                                 <x-admin::form.control-group.error control-name="login_card_bg_image" />
                             </x-admin::form.control-group>
 
-                            <!-- Opacidade da Imagem -->
+                            <!-- Card Background Opacity (Slider) -->
                             <x-admin::form.control-group>
                                 <x-admin::form.control-group.label>
                                     @lang('theme-manager::app.settings.login-card.bg-opacity')
+                                    <span id="login_card_bg_opacity_value" class="ml-2 text-blue-600 dark:text-blue-400">{{ old('login_card_bg_opacity', $config->login_card_bg_opacity ?? 62) }}%</span>
                                 </x-admin::form.control-group.label>
 
-                                <x-admin::form.control-group.control
-                                    type="select"
+                                <input
+                                    type="range"
                                     name="login_card_bg_opacity"
-                                    :value="old('login_card_bg_opacity', $config->login_card_bg_opacity)"
-                                >
-                                    @for($i = 0; $i <= 100; $i += 10)
-                                        <option value="{{ $i }}">{{ $i }}%</option>
-                                    @endfor
-                                </x-admin::form.control-group.control>
+                                    id="login_card_bg_opacity"
+                                    min="0"
+                                    max="100"
+                                    step="5"
+                                    value="{{ old('login_card_bg_opacity', $config->login_card_bg_opacity ?? 62) }}"
+                                    class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700"
+                                    oninput="document.getElementById('login_card_bg_opacity_value').textContent = this.value + '%'"
+                                />
+
+                                <div class="flex justify-between text-xs text-gray-500 dark:text-gray-400 mt-1">
+                                    <span>0%</span>
+                                    <span>50%</span>
+                                    <span>100%</span>
+                                </div>
 
                                 <x-admin::form.control-group.error control-name="login_card_bg_opacity" />
                             </x-admin::form.control-group>
 
-                            <!-- Cor do Overlay -->
+                            <!-- Overlay Color -->
                             <x-admin::form.control-group>
                                 <x-admin::form.control-group.label>
                                     @lang('theme-manager::app.settings.login-card.overlay-color')
                                 </x-admin::form.control-group.label>
 
-                                <x-admin::form.control-group.control
-                                    type="text"
-                                    name="login_card_overlay_color"
-                                    :value="old('login_card_overlay_color', $config->login_card_overlay_color)"
-                                    placeholder="rgba(10, 45, 15, 0.78)"
-                                />
+                                <div class="flex items-center gap-2">
+                                    <x-admin::form.control-group.control
+                                        type="text"
+                                        name="login_card_overlay_color"
+                                        id="login_card_overlay_color"
+                                        :value="old('login_card_overlay_color', $config->login_card_overlay_color ?? 'rgba(10, 45, 15, 0.78)')"
+                                        placeholder="rgba(10, 45, 15, 0.78)"
+                                        class="flex-1"
+                                    />
+                                    <div
+                                        id="overlay_color_preview"
+                                        class="w-10 h-10 rounded border border-gray-300 dark:border-gray-600"
+                                        style="background-color: {{ old('login_card_overlay_color', $config->login_card_overlay_color ?? 'rgba(10, 45, 15, 0.78)') }};"
+                                    ></div>
+                                </div>
 
                                 <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">
                                     @lang('theme-manager::app.settings.login-card.overlay-color-help')
@@ -613,77 +665,95 @@
                                 <x-admin::form.control-group.error control-name="login_card_overlay_color" />
                             </x-admin::form.control-group>
 
-                            <!-- Título de Boas-vindas -->
-                            <x-admin::form.control-group>
-                                <x-admin::form.control-group.label>
-                                    @lang('theme-manager::app.settings.login-card.welcome-title')
-                                </x-admin::form.control-group.label>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <!-- Title -->
+                                <x-admin::form.control-group>
+                                    <x-admin::form.control-group.label>
+                                        @lang('theme-manager::app.settings.login-card.welcome-title')
+                                    </x-admin::form.control-group.label>
 
-                                <x-admin::form.control-group.control
-                                    type="text"
-                                    name="login_card_title"
-                                    :value="old('login_card_title', $config->login_card_title)"
-                                />
+                                    <x-admin::form.control-group.control
+                                        type="text"
+                                        name="login_card_title"
+                                        :value="old('login_card_title', $config->login_card_title ?? 'Bem-vindo')"
+                                        placeholder="Bem-vindo"
+                                    />
 
-                                <x-admin::form.control-group.error control-name="login_card_title" />
-                            </x-admin::form.control-group>
+                                    <x-admin::form.control-group.error control-name="login_card_title" />
+                                </x-admin::form.control-group>
 
-                            <!-- Subtítulo -->
-                            <x-admin::form.control-group>
-                                <x-admin::form.control-group.label>
-                                    @lang('theme-manager::app.settings.login-card.subtitle')
-                                </x-admin::form.control-group.label>
+                                <!-- Subtitle -->
+                                <x-admin::form.control-group>
+                                    <x-admin::form.control-group.label>
+                                        @lang('theme-manager::app.settings.login-card.subtitle')
+                                    </x-admin::form.control-group.label>
 
-                                <x-admin::form.control-group.control
-                                    type="text"
-                                    name="login_card_subtitle"
-                                    :value="old('login_card_subtitle', $config->login_card_subtitle)"
-                                />
+                                    <x-admin::form.control-group.control
+                                        type="text"
+                                        name="login_card_subtitle"
+                                        :value="old('login_card_subtitle', $config->login_card_subtitle ?? 'Acesse sua conta para continuar')"
+                                        placeholder="Acesse sua conta para continuar"
+                                    />
 
-                                <x-admin::form.control-group.error control-name="login_card_subtitle" />
-                            </x-admin::form.control-group>
+                                    <x-admin::form.control-group.error control-name="login_card_subtitle" />
+                                </x-admin::form.control-group>
+                            </div>
 
-                            <!-- Efeito de Brilhos -->
-                            <x-admin::form.control-group>
-                                <x-admin::form.control-group.label>
-                                    @lang('theme-manager::app.settings.login-card.sparkles')
-                                </x-admin::form.control-group.label>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <!-- Sparkles Toggle -->
+                                <x-admin::form.control-group>
+                                    <x-admin::form.control-group.label>
+                                        @lang('theme-manager::app.settings.login-card.sparkles')
+                                    </x-admin::form.control-group.label>
 
-                                <x-admin::form.control-group.control
-                                    type="select"
-                                    name="login_card_sparkles"
-                                    :value="old('login_card_sparkles', $config->login_card_sparkles)"
-                                >
-                                    <option value="0">@lang('theme-manager::app.settings.activation.no')</option>
-                                    <option value="1">@lang('theme-manager::app.settings.activation.yes')</option>
-                                </x-admin::form.control-group.control>
+                                    <label class="relative inline-flex items-center cursor-pointer">
+                                        <input type="hidden" name="login_card_sparkles" value="0" />
+                                        <input
+                                            type="checkbox"
+                                            name="login_card_sparkles"
+                                            value="1"
+                                            class="sr-only peer"
+                                            {{ old('login_card_sparkles', $config->login_card_sparkles ?? false) ? 'checked' : '' }}
+                                        />
+                                        <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
+                                        <span class="ml-3 text-sm font-medium text-gray-600 dark:text-gray-300">
+                                            Efeito de partículas
+                                        </span>
+                                    </label>
 
-                                <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">
-                                    @lang('theme-manager::app.settings.login-card.sparkles-help')
-                                </p>
+                                    <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">
+                                        @lang('theme-manager::app.settings.login-card.sparkles-help')
+                                    </p>
 
-                                <x-admin::form.control-group.error control-name="login_card_sparkles" />
-                            </x-admin::form.control-group>
+                                    <x-admin::form.control-group.error control-name="login_card_sparkles" />
+                                </x-admin::form.control-group>
 
-                            <!-- Link de Ajuda -->
-                            <x-admin::form.control-group>
-                                <x-admin::form.control-group.label>
-                                    @lang('theme-manager::app.settings.login-card.help-link')
-                                </x-admin::form.control-group.label>
+                                <!-- Help Link Toggle -->
+                                <x-admin::form.control-group>
+                                    <x-admin::form.control-group.label>
+                                        @lang('theme-manager::app.settings.login-card.help-link')
+                                    </x-admin::form.control-group.label>
 
-                                <x-admin::form.control-group.control
-                                    type="select"
-                                    name="login_card_help_link"
-                                    :value="old('login_card_help_link', $config->login_card_help_link)"
-                                >
-                                    <option value="0">@lang('theme-manager::app.settings.activation.no')</option>
-                                    <option value="1">@lang('theme-manager::app.settings.activation.yes')</option>
-                                </x-admin::form.control-group.control>
+                                    <label class="relative inline-flex items-center cursor-pointer">
+                                        <input type="hidden" name="login_card_help_link" value="0" />
+                                        <input
+                                            type="checkbox"
+                                            name="login_card_help_link"
+                                            value="1"
+                                            class="sr-only peer"
+                                            {{ old('login_card_help_link', $config->login_card_help_link ?? true) ? 'checked' : '' }}
+                                        />
+                                        <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
+                                        <span class="ml-3 text-sm font-medium text-gray-600 dark:text-gray-300">
+                                            Exibir link de ajuda
+                                        </span>
+                                    </label>
 
-                                <x-admin::form.control-group.error control-name="login_card_help_link" />
-                            </x-admin::form.control-group>
+                                    <x-admin::form.control-group.error control-name="login_card_help_link" />
+                                </x-admin::form.control-group>
+                            </div>
 
-                            <!-- E-mail de Suporte -->
+                            <!-- Support Email -->
                             <x-admin::form.control-group>
                                 <x-admin::form.control-group.label>
                                     @lang('theme-manager::app.settings.login-card.support-email')
@@ -692,7 +762,8 @@
                                 <x-admin::form.control-group.control
                                     type="email"
                                     name="login_card_support_email"
-                                    :value="old('login_card_support_email', $config->login_card_support_email)"
+                                    :value="old('login_card_support_email', $config->login_card_support_email ?? 'suporte@empresa.com.br')"
+                                    placeholder="suporte@empresa.com.br"
                                 />
 
                                 <x-admin::form.control-group.error control-name="login_card_support_email" />
@@ -753,22 +824,61 @@
         <script>
             // Toggle login card options based on enabled status
             function toggleLoginCardOptions() {
-                const enabled = document.getElementById('login_card_enabled').value;
+                const checkbox = document.getElementById('login_card_enabled');
                 const options = document.getElementById('login-card-options');
 
-                if (enabled === '1' || enabled === 1 || enabled === true) {
-                    options.style.display = 'grid';
-                } else {
-                    options.style.display = 'none';
+                if (checkbox && options) {
+                    if (checkbox.checked) {
+                        options.style.display = 'grid';
+                    } else {
+                        options.style.display = 'none';
+                    }
+                }
+            }
+
+            // Update overlay color preview
+            function updateOverlayColorPreview() {
+                const input = document.getElementById('login_card_overlay_color');
+                const preview = document.getElementById('overlay_color_preview');
+
+                if (input && preview) {
+                    preview.style.backgroundColor = input.value;
                 }
             }
 
             // Execute on page load
             document.addEventListener('DOMContentLoaded', function() {
+                // Initialize login card options visibility
                 toggleLoginCardOptions();
 
-                // Listen for changes
-                document.getElementById('login_card_enabled').addEventListener('change', toggleLoginCardOptions);
+                // Listen for overlay color changes
+                const overlayInput = document.getElementById('login_card_overlay_color');
+                if (overlayInput) {
+                    overlayInput.addEventListener('input', updateOverlayColorPreview);
+                    overlayInput.addEventListener('change', updateOverlayColorPreview);
+                }
+
+                // Sync color inputs (picker and text)
+                document.querySelectorAll('input[type="color"]').forEach(function(colorInput) {
+                    const name = colorInput.getAttribute('name');
+                    const textInputs = document.querySelectorAll('input[type="text"][name="' + name + '"]');
+
+                    colorInput.addEventListener('input', function() {
+                        textInputs.forEach(function(textInput) {
+                            textInput.value = colorInput.value.toUpperCase();
+                        });
+                    });
+
+                    textInputs.forEach(function(textInput) {
+                        textInput.addEventListener('input', function() {
+                            // Validate hex color format
+                            let value = textInput.value.trim();
+                            if (value.match(/^#[0-9A-Fa-f]{6}$/)) {
+                                colorInput.value = value;
+                            }
+                        });
+                    });
+                });
             });
         </script>
     @endPushOnce
