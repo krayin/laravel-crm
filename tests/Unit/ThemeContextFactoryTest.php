@@ -418,9 +418,12 @@ class ThemeContextFactoryTest extends TestCase
         $context = new ThemeContext(
             enabled: true,
             slug: "my-theme",
+            scopeKey: "global",
             config: [],
             loginConfig: [],
             isPreview: false,
+            customCssAdmin: "",
+            customCssLogin: "",
         );
 
         $classes = $context->bodyClasses();
@@ -435,14 +438,17 @@ class ThemeContextFactoryTest extends TestCase
         $context = new ThemeContext(
             enabled: true,
             slug: "preview-theme",
+            scopeKey: "global",
             config: [],
             loginConfig: [],
             isPreview: true,
+            customCssAdmin: "",
+            customCssLogin: "",
         );
 
         $classes = $context->bodyClasses();
 
-        $this->assertStringContainsString("theme-preview-mode", $classes);
+        $this->assertStringContainsString("theme-preview", $classes);
     }
 
     /** @test */
