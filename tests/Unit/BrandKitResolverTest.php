@@ -110,7 +110,8 @@ class BrandKitResolverTest extends TestCase
         $result = $this->resolver->resolve('global', 'test-theme');
 
         // Assert: deve voltar para o default, não o theme.json
-        $this->assertEquals('#1E40AF', $result['config']['color_primary']);
+        // TESTE QUEBRADO DE PROPÓSITO - REMOVER APÓS VALIDAÇÃO
+        $this->assertEquals('#BROKEN', $result['config']['color_primary']);
     }
 
     /** @test */
