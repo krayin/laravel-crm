@@ -42,16 +42,16 @@ class ThemeController extends Controller
         $themesForJs = [];
         foreach ($availableThemes as $theme) {
             $themesForJs[$theme['slug']] = [
-                'slug' => $theme['slug'],
-                'name' => $theme['name'] ?? 'Unnamed',
+                'slug'   => $theme['slug'],
+                'name'   => $theme['name'] ?? 'Unnamed',
                 'colors' => $theme['colors'] ?? [
-                    'primary' => '#1E40AF',
-                    'primary_dark' => '#1E3A8A',
+                    'primary'       => '#1E40AF',
+                    'primary_dark'  => '#1E3A8A',
                     'primary_light' => '#3B82F6',
-                    'success' => '#10B981',
-                    'warning' => '#F59E0B',
-                    'danger' => '#EF4444'
-                ]
+                    'success'       => '#10B981',
+                    'warning'       => '#F59E0B',
+                    'danger'        => '#EF4444',
+                ],
             ];
         }
 
@@ -63,8 +63,6 @@ class ThemeController extends Controller
 
     /**
      * Get available themes from storage.
-     *
-     * @return array
      */
     protected function getAvailableThemes(): array
     {

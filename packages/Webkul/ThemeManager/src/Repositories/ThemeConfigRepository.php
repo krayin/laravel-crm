@@ -162,7 +162,7 @@ class ThemeConfigRepository
             // Handle delete checkbox
             if (isset($data["{$field}_delete"]) && $data["{$field}_delete"]) {
                 Log::info('[Theme] DELETE checkbox detected', [
-                    'field' => $field,
+                    'field'         => $field,
                     'current_value' => $config->$field,
                 ]);
                 $this->deleteFile($config->$field);
