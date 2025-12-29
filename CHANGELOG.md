@@ -1,3 +1,13 @@
+## **v2.1.6 (22 of Dec 2025)** - *Release*
+
+* #2377[fixed] Sale owner dropdown now displays values correctly for individual users
+
+* #2378[fixed] Pipeline stage name is now correctly reflected in activity.
+
+* #2302[fixed] Dashboard date picker placeholder translation now works correctly on backspace.
+
+* #2382[enhancement] Cross-Site Scripting (XSS) vulnerability fixed.
+
 ## **v2.1.5 (19 of Sep 2025)** - *Release*
 
 * #2355[fixed] db_prefix support — installation and dashboard now function as expected

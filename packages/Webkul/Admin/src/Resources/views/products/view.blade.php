@@ -1,6 +1,6 @@
 <x-admin::layouts>
     <x-slot:title>
-        @lang ($product->name)
+        {{ strip_tags($product->name) }}
     </x-slot>
 
     <!-- Content -->

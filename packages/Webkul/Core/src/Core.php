@@ -14,7 +14,7 @@ class Core
      *
      * @var string
      */
-    const KRAYIN_VERSION = '2.1.5';
+    const KRAYIN_VERSION = '2.1.6';
 
     /**
      * Create a new instance.

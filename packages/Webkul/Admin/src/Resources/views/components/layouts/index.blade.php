@@ -10,7 +10,7 @@
 
     {!! view_render_event('admin.layout.head.before') !!}
 
-    <title>{{ $title ?? '' }}</title>
+    <title>{{ $title }}</title>
 
     <meta charset="UTF-8">
 

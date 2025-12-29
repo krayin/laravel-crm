@@ -1,6 +1,6 @@
 <x-web_form::layouts>
     <x-slot:title>
-        {{ $webForm->title }}
+        {{ strip_tags($webForm->title) }}
     </x-slot>
 
     <!-- Web Form -->

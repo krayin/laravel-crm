@@ -1,6 +1,6 @@
 <x-admin::layouts>
     <x-slot:title>
-        @lang('admin::app.contacts.persons.view.title', ['name' => $person->name])
+        @lang('admin::app.contacts.persons.view.title', ['name' => strip_tags($person->name)])
     </x-slot>
 
     <!-- Content -->

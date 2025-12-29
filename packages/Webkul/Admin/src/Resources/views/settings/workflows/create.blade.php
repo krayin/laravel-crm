@@ -1233,7 +1233,6 @@
                             this.action.value = '';
                         }
 
-                        console.log("matchedAttribute", matchedAttribute);
                         return matchedAttribute;
                     },
                 },

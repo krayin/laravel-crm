@@ -1,10 +1,11 @@
 <x-admin::layouts>
     <x-slot:title>
-        @lang('admin::app.leads.view.title', ['title' => $lead->title])
+        @lang('admin::app.leads.view.title', ['title' => strip_tags($lead->title)])
     </x-slot>
 
     <!-- Content -->
     <div class="relative flex gap-4 max-lg:flex-wrap">
+
         <!-- Left Panel -->
         {!! view_render_event('admin.leads.view.left.before', ['lead' => $lead]) !!}
 

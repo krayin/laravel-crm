@@ -8,7 +8,7 @@
 
 <x-admin::layouts>
     <x-slot:title>
-        @lang('admin::app.mail.view.subject', ['subject' => $email->subject])
+        @lang('admin::app.mail.view.subject', ['subject' => strip_tags($email->subject)])
     </x-slot>
 
     <div class="flex flex-col gap-4">
@@ -1342,14 +1342,6 @@
                         }
 
                         if (this.getActionType == 'reply-all') {
-                            console.log(this.action.email);
-
-                            console.log([
-                                this.action.email.from,
-                                ...(this.action.email?.cc || []),
-                                ...(this.action.email?.bcc || []),
-                            ]);
-
                             return [
                                 this.action.email.from,
                                 ...(this.action.email?.cc || []),

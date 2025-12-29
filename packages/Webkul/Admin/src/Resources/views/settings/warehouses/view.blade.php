@@ -1,6 +1,6 @@
 <x-admin::layouts>
     <x-slot:title>
-        @lang ($warehouse->name)
+        {{ strip_tags($warehouse->name) }}
     </x-slot>
 
     <div class="flex gap-4 max-lg:flex-wrap">

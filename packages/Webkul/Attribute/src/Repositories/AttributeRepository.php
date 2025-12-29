@@ -137,7 +137,7 @@ class AttributeRepository extends Repository
                     ->when(! empty($query), fn ($queryBuilder) => $queryBuilder->where('users.name', 'like', "%{$query}%"))
                     ->get();
             } elseif ($currentUser?->view_permission === 'individual') {
-                return $userRepository->where('users.id', $currentUser->id);
+                return $userRepository->where('users.id', $currentUser->id)->get();
             }
 
             return $userRepository->where('users.name', 'like', '%'.urldecode($query).'%')->get();
