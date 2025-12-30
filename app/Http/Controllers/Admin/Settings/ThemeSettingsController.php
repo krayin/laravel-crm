@@ -135,6 +135,11 @@ class ThemeSettingsController extends Controller
         // Event after update
         Event::dispatch('theme.update.after', $config);
 
+        // Clear theme caches to ensure changes are visible immediately
+        if (class_exists(\App\Support\ThemeCache::class)) {
+            \App\Support\ThemeCache::flush();
+        }
+
         session()->flash(
             'success',
             __('theme-manager::app.settings.update-success') ?: 'Configurações do tema atualizadas com sucesso.',
@@ -254,6 +259,11 @@ class ThemeSettingsController extends Controller
 
         // Dispatch event for cache invalidation
         Event::dispatch('theme.field.reset', $fieldName);
+
+        // Clear theme caches
+        if (class_exists(\App\Support\ThemeCache::class)) {
+            \App\Support\ThemeCache::flush();
+        }
 
         return redirect()->back();
     }
