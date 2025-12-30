@@ -222,10 +222,16 @@ return [
             Webkul\ThemeManager\Providers\ThemeManagerServiceProvider::class,
 
             /*
-             * Theme Override Provider (upgrade-safe)
-             * Deve vir DEPOIS do ThemeManagerServiceProvider para ter prioridade
+             * Theme Override Providers (upgrade-safe)
+             * Devem vir DEPOIS do ThemeManagerServiceProvider para ter prioridade
              */
             App\Providers\ThemeBootProvider::class,
+
+            /*
+             * Theme Routes Override Provider
+             * DEVE ser o ÚLTIMO para que suas rotas prevaleçam sobre as do pacote
+             */
+            App\Providers\ThemeOverridesServiceProvider::class,
         ])
         ->toArray(),
 
