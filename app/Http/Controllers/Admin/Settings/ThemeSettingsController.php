@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Admin\Settings;
 
+use App\Repositories\ThemeConfigRepository;
 use App\Services\Theme\ThemeCatalog;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Validation\Rule;
 use Webkul\Admin\Http\Controllers\Controller;
-use Webkul\ThemeManager\Repositories\ThemeConfigRepository;
 
 /**
  * ThemeSettingsController - Controller upgrade-safe para Settings > Theme.
@@ -137,7 +137,7 @@ class ThemeSettingsController extends Controller
 
         session()->flash(
             'success',
-            trans('theme-manager::app.settings.update-success'),
+            __('theme-manager::app.settings.update-success') ?: 'Configurações do tema atualizadas com sucesso.',
         );
 
         return redirect()->back();
