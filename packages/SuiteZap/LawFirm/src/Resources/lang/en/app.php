@@ -1,0 +1,80 @@
+<?php
+
+return [
+    'admin' => [
+        'title' => 'Law Firm Management',
+        'menu' => [
+            'lawfirm' => 'Law Firm',
+            'cases' => 'Cases',
+            'hearings' => 'Hearings',
+            'documents' => 'Documents',
+        ],
+        'stats' => [
+            'total_cases' => 'Total Cases',
+            'active_cases' => 'Active Cases',
+            'upcoming_hearings' => 'Upcoming Hearings',
+            'total_clients' => 'Total Clients',
+        ],
+    ],
+    'cases' => [
+        'title' => 'Cases',
+        'create' => 'Create Case',
+        'edit' => 'Edit Case',
+        'delete' => 'Delete Case',
+        'fields' => [
+            'case_number' => 'Case Number',
+            'title' => 'Title',
+            'description' => 'Description',
+            'status' => 'Status',
+            'client' => 'Client',
+            'lawyer' => 'Lawyer',
+            'court' => 'Court',
+            'filing_date' => 'Filing Date',
+        ],
+    ],
+    'hearings' => [
+        'title' => 'Hearings',
+        'create' => 'Schedule Hearing',
+        'edit' => 'Edit Hearing',
+        'delete' => 'Delete Hearing',
+        'fields' => [
+            'case' => 'Case',
+            'date' => 'Date',
+            'time' => 'Time',
+            'location' => 'Location',
+            'type' => 'Type',
+            'notes' => 'Notes',
+        ],
+    ],
+    'menu' => [
+        'juridico' => 'Legal',
+        'processos' => 'Cases',
+    ],
+    'processos' => [
+        'title' => 'Legal Cases',
+        'create' => 'New Case',
+        'edit' => 'Edit Case',
+        'delete' => 'Delete Case',
+        'save_btn' => 'Save Case',
+        'confirm_delete' => 'Are you sure you want to delete this case?',
+        'no_records' => 'No cases found.',
+        'general_info' => 'General Information',
+        'select_status' => 'Select Status',
+        'select_cliente' => 'Select Client',
+        'select_lead' => 'Select Lead (Optional)',
+        'status' => [
+            'ativo' => 'Active',
+            'arquivado' => 'Archived',
+            'suspenso' => 'Suspended',
+        ],
+        'fields' => [
+            'numero' => 'Case Number',
+            'vara' => 'Court',
+            'status' => 'Status',
+            'descricao' => 'Description',
+            'cliente' => 'Client',
+            'lead' => 'Lead',
+            'data_protocolo' => 'Filing Date',
+        ],
+    ],
+];

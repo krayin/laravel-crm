@@ -1,0 +1,38 @@
+{
+    "name": "suitezap/laravel-lawfirm",
+    "description": "Law Firm Extension for Krayin CRM",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "SuiteZap",
+            "email": "sac@suitezap.com.br"
+        }
+    ],
+    "require": {
+        "php": "^8.2",
+        "krayin/laravel-activity": "^1.0",
+        "krayin/laravel-attribute": "^1.0",
+        "krayin/laravel-contact": "^1.0",
+        "krayin/laravel-core": "^1.0",
+        "krayin/laravel-email": "^1.0",
+        "krayin/laravel-lead": "^1.0",
+        "krayin/laravel-product": "^1.0",
+        "krayin/laravel-user": "^1.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "SuiteZap\\LawFirm\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "SuiteZap\\LawFirm\\Providers\\LawFirmServiceProvider"
+            ],
+            "aliases": {}
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}

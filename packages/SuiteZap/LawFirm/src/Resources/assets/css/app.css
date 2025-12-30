@@ -1,0 +1,28 @@
+/* LawFirm Module Styles */
+
+.lawfirm-dashboard {
+    padding: 20px;
+}
+
+.dashboard-stats .card {
+    margin-bottom: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.dashboard-stats .card-body {
+    padding: 20px;
+}
+
+.dashboard-stats h5 {
+    color: #666;
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+.dashboard-stats h2 {
+    color: #333;
+    font-size: 32px;
+    font-weight: bold;
+    margin: 0;
+}

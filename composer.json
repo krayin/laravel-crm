@@ -45,6 +45,12 @@
         "sort-packages": true,
         "allow-plugins": {
             "pestphp/pest-plugin": true
+        },
+        "audit": {
+            "ignore": [
+                "PKSA-4g5g-4rkv-myqs"
+            ],
+            "block-insecure": true
         }
     },
     "extra": {
@@ -75,12 +81,15 @@
             "Webkul\\User\\": "packages/Webkul/User/src",
             "Webkul\\Warehouse\\": "packages/Webkul/Warehouse/src",
             "Webkul\\WebForm\\": "packages/Webkul/WebForm/src",
-            "Webkul\\Automation\\": "packages/Webkul/Automation/src"
+            "Webkul\\Automation\\": "packages/Webkul/Automation/src",
+            "SuiteZap\\LawFirm\\": "packages/SuiteZap/LawFirm/src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Tests\\": "tests/"
+            "Tests\\": "tests/",
+            "App\\": "app/",
+            "Webkul\\": "packages/Webkul/"
         }
     },
     "repositories": [
