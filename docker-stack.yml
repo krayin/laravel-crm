@@ -311,10 +311,10 @@ services:
       - db_password
 
   # ---------------------------------------------------------------------------
-  # Traefik Reverse Proxy (Optional - if not using external)
+  # Traefik Reverse Proxy (Load Balancer + SSL)
   # ---------------------------------------------------------------------------
   traefik:
-    image: traefik:v2.10
+    image: traefik:v3.0
     deploy:
       mode: global
       placement:
@@ -322,26 +322,49 @@ services:
           - node.role == manager
       restart_policy:
         condition: on-failure
+        delay: 5s
+        max_attempts: 3
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 256M
+        reservations:
+          cpus: '0.1'
+          memory: 64M
       labels:
+        # Dashboard access
         - "traefik.enable=true"
-        - "traefik.http.routers.dashboard.rule=Host(`traefik.${APP_DOMAIN:-crm.example.com}`)"
-        - "traefik.http.routers.dashboard.service=api@internal"
-        - "traefik.http.routers.dashboard.middlewares=auth"
-        - "traefik.http.middlewares.auth.basicauth.users=${TRAEFIK_DASHBOARD_AUTH:-admin:$$apr1$$xyz}"
+        - "traefik.http.routers.traefik-dashboard.rule=Host(`traefik.${APP_DOMAIN:-crm.example.com}`)"
+        - "traefik.http.routers.traefik-dashboard.entrypoints=websecure"
+        - "traefik.http.routers.traefik-dashboard.tls=true"
+        - "traefik.http.routers.traefik-dashboard.tls.certresolver=letsencrypt"
+        - "traefik.http.routers.traefik-dashboard.service=api@internal"
+        - "traefik.http.routers.traefik-dashboard.middlewares=traefik-auth"
+        - "traefik.http.middlewares.traefik-auth.basicauth.users=${TRAEFIK_DASHBOARD_AUTH:-admin:$$apr1$$xyz}"
+        - "traefik.http.services.traefik-dashboard.loadbalancer.server.port=8080"
     command:
+      # API/Dashboard
       - "--api.dashboard=true"
+      - "--api.insecure=false"
+      - "--ping=true"
+      # Docker Swarm provider
       - "--providers.docker=true"
-      - "--providers.docker.swarmMode=true"
-      - "--providers.docker.exposedbydefault=false"
-      - "--providers.docker.network=traefik-public"
+      - "--providers.swarm=true"
+      - "--providers.swarm.exposedbydefault=false"
+      - "--providers.swarm.network=traefik-public"
+      # Entrypoints
       - "--entrypoints.web.address=:80"
       - "--entrypoints.web.http.redirections.entrypoint.to=websecure"
+      - "--entrypoints.web.http.redirections.entrypoint.scheme=https"
       - "--entrypoints.websecure.address=:443"
+      # Let's Encrypt SSL
       - "--certificatesresolvers.letsencrypt.acme.email=${ACME_EMAIL:-admin@example.com}"
       - "--certificatesresolvers.letsencrypt.acme.storage=/letsencrypt/acme.json"
       - "--certificatesresolvers.letsencrypt.acme.httpchallenge.entrypoint=web"
+      # Logging
       - "--log.level=INFO"
       - "--accesslog=true"
+      - "--accesslog.format=json"
     ports:
       - target: 80
         published: 80
@@ -356,8 +379,11 @@ services:
       - traefik-certs:/letsencrypt
     networks:
       - traefik-public
-    profiles:
-      - traefik
+    healthcheck:
+      test: ["CMD", "traefik", "healthcheck", "--ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
 
 # =============================================================================
 # Networks

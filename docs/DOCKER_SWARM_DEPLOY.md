@@ -1,19 +1,45 @@
 # Docker Swarm Deployment Guide
 
-This guide covers deploying Krayin CRM to a Docker Swarm cluster.
+Complete guide for deploying Krayin CRM to Docker Swarm with Traefik, MySQL, and Redis.
 
 ## Table of Contents
 
-- [Prerequisites](#prerequisites)
 - [Quick Start](#quick-start)
+- [Prerequisites](#prerequisites)
 - [Architecture](#architecture)
 - [Configuration](#configuration)
 - [Deployment](#deployment)
 - [Scaling](#scaling)
-- [Updates & Rollbacks](#updates--rollbacks)
+- [Updates and Rollbacks](#updates-and-rollbacks)
 - [Theme System in Swarm](#theme-system-in-swarm)
 - [Monitoring](#monitoring)
 - [Troubleshooting](#troubleshooting)
+
+---
+
+## Quick Start
+
+```bash
+# 1. Clone and enter directory
+cd laravel-crm
+
+# 2. Make scripts executable
+chmod +x docker/scripts/*.sh
+
+# 3. Run the installation wizard
+./docker/scripts/swarm-init.sh
+
+# 4. Access your CRM
+# https://your-domain.com/admin
+```
+
+The wizard will:
+- Initialize Docker Swarm (if needed)
+- Create secrets for passwords
+- Build the Docker image
+- Deploy all services
+- Run database migrations
+- Create admin user
 
 ---
 
