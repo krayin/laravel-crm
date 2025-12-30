@@ -172,7 +172,7 @@ class ThemeSettingsController extends Controller
 
         session()->flash(
             'success',
-            trans('theme-manager::app.settings.restore-success', [], 'Tema restaurado para o padrão com sucesso.'),
+            __('theme-manager::app.settings.restore-success') ?: 'Tema restaurado para o padrão com sucesso.',
         );
 
         return redirect()->route('admin.settings.theme.index');
@@ -206,7 +206,7 @@ class ThemeSettingsController extends Controller
 
         session()->flash(
             'success',
-            trans('theme-manager::app.settings.rollback-success', [], 'Tema revertido para: ' . $previousTheme),
+            __('theme-manager::app.settings.rollback-success') ?: "Tema revertido para: {$previousTheme}",
         );
 
         return redirect()->route('admin.settings.theme.index');
