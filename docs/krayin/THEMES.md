@@ -9,6 +9,10 @@ This document describes the theme preset system and how overrides work in Krayin
 - [Override Architecture](#override-architecture)
 - [Cache Commands](#cache-commands)
 - [Creating a New Theme](#creating-a-new-theme)
+- [Troubleshooting](#troubleshooting)
+- [Deploy Checklist](#deploy-checklist)
+- [Cache Invalidation](#cache-invalidation)
+- [Testing](#testing)
 
 ---
 
@@ -267,6 +271,113 @@ Navigate to **Settings > Theme** in the admin panel. Your new theme should appea
 1. Verify `ThemeOverridesServiceProvider` is **last** in providers list
 2. Clear route cache: `php artisan route:clear`
 3. Check with: `php artisan route:list --name=admin.settings.theme`
+
+---
+
+## Deploy Checklist
+
+When deploying theme system changes to production:
+
+### Pre-Deploy
+
+- [ ] All tests pass: `php artisan test tests/Unit/Services/Theme/ tests/Feature/Admin/Settings/`
+- [ ] Provider order verified in `config/app.php` (ThemeOverridesServiceProvider is LAST)
+- [ ] Theme presets have valid `theme.json` files
+- [ ] Override views exist in `resources/views/vendor/theme-manager/`
+
+### Deploy Steps
+
+```bash
+# 1. Pull latest code
+git pull origin main
+
+# 2. Install/update dependencies
+composer install --no-dev --optimize-autoloader
+
+# 3. Clear ALL caches
+php artisan optimize:clear
+
+# 4. Rebuild caches for production
+php artisan config:cache
+php artisan route:cache
+php artisan view:cache
+
+# 5. Verify routes point to correct controller
+php artisan route:list --name=admin.settings.theme
+# Should show: App\Http\Controllers\Admin\Settings\ThemeSettingsController
+```
+
+### Post-Deploy Verification
+
+- [ ] Access `/admin/settings/theme` - page loads without errors
+- [ ] Theme cards show colored circles (6 colors per card)
+- [ ] Selecting a theme updates the preview
+- [ ] Saving theme persists changes to database
+- [ ] Logout and verify login page reflects theme
+
+---
+
+## Cache Invalidation
+
+The theme system uses caching for performance. Here's when cache is automatically invalidated:
+
+### Automatic Invalidation
+
+| Action | Cache Cleared |
+|--------|---------------|
+| Save theme settings | `ThemeHelper::clearCache()` |
+| Delete logo/image | `ThemeHelper::clearCache()` |
+| Load theme preset | `ThemeHelper::clearCache()` |
+
+### Manual Invalidation Required
+
+These actions require manual cache clearing:
+
+| Action | Command |
+|--------|---------|
+| Add new theme preset | `php artisan cache:clear` |
+| Modify `theme.json` | `php artisan cache:clear` |
+| Change provider order | `php artisan optimize:clear` |
+| Modify blade views | `php artisan view:clear` |
+| Change routes | `php artisan route:clear` |
+
+### Cache Keys Used
+
+```php
+// Application cache (1 hour TTL)
+'theme.config'           // ThemeConfig singleton
+'theme.css_variables'    // Generated CSS variables
+'theme.login_config'     // Login page configuration
+
+// Cleared by ThemeHelper::clearCache()
+Cache::forget('theme.config');
+Cache::forget('theme.css_variables');
+Cache::forget('theme.login_config');
+```
+
+---
+
+## Testing
+
+### Running Tests
+
+```bash
+# All theme-related tests
+php artisan test tests/Unit/Services/Theme/ tests/Feature/Admin/Settings/ --no-coverage
+
+# Unit tests only (ThemeCatalog)
+php artisan test tests/Unit/Services/Theme/ThemeCatalogTest.php
+
+# Feature tests only (routes, controller)
+php artisan test tests/Feature/Admin/Settings/ThemeSettingsTest.php
+```
+
+### Test Coverage
+
+| Test File | Coverage |
+|-----------|----------|
+| `ThemeCatalogTest` | ThemeCatalog service (all, get, exists, slugs) |
+| `ThemeSettingsTest` | Route binding, controller resolution, theme structure |
 
 ---
 
