@@ -141,6 +141,59 @@
     .dark .theme-card-label input[type="radio"]:checked + .theme-card {
         background-color: rgba(30, 58, 138, 0.2) !important;
     }
+
+    /* ================================================================
+       THEME PREVIEW - Thumbnail no topo do card
+       ================================================================ */
+    .theme-preview {
+        width: 100%;
+        height: 96px;
+        overflow: hidden;
+        border-bottom: 1px solid #e5e7eb;
+    }
+
+    .dark .theme-preview {
+        border-bottom-color: #374151;
+    }
+
+    .theme-preview img,
+    .theme-preview .theme-preview-gradient {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+    }
+
+    /* ================================================================
+       THEME COLORS GRID - 3x2
+       ================================================================ */
+    .theme-colors-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 6px;
+        justify-items: center;
+        margin-bottom: 12px;
+    }
+
+    .theme-color-circle {
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        border: 2px solid #e5e7eb;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    }
+
+    .dark .theme-color-circle {
+        border-color: #374151;
+    }
+
+    /* ================================================================
+       ANIMAÇÃO PULSE PARA BADGE ATIVO
+       ================================================================ */
+    @keyframes pulse {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.8; }
+    }
     </style>
     @endPushOnce
 
@@ -243,13 +296,12 @@
                             Escolha um tema base. As cores e configurações do tema selecionado serão aplicadas automaticamente.
                         </p>
 
-                        <!-- Grid de Cards Compactos -->
-                        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mb-4" id="theme-selector-grid">
+                        <!-- Grid de Cards Premium (Formato 3:4 Compacto) -->
+                        <div class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-7 gap-3 mb-4" id="theme-selector-grid">
                             @foreach($availableThemes as $theme)
                                 @php
                                     $themeSlug = $theme['slug'] ?? 'default';
                                     $isSelected = old('selected_theme', $config->selected_theme ?? 'default') === $themeSlug;
-                                    // Suporte para ambas estruturas: colors.primary OU color_primary na raiz
                                     $colorPrimary = $theme['colors']['primary'] ?? $theme['color_primary'] ?? '#1E40AF';
                                     $colorPrimaryDark = $theme['colors']['primary_dark'] ?? $theme['color_primary_dark'] ?? '#1E3A8A';
                                     $colorPrimaryLight = $theme['colors']['primary_light'] ?? $theme['color_primary_light'] ?? '#3B82F6';
@@ -257,7 +309,7 @@
                                     $colorWarning = $theme['colors']['warning'] ?? $theme['color_warning'] ?? '#F59E0B';
                                     $colorDanger = $theme['colors']['danger'] ?? $theme['color_danger'] ?? '#EF4444';
                                 @endphp
-                                <label class="theme-card-label cursor-pointer block">
+                                <label class="theme-card-label group cursor-pointer block">
                                     <input type="radio"
                                            name="selected_theme"
                                            value="{{ $themeSlug }}"
@@ -266,55 +318,134 @@
                                            data-theme-slug="{{ $themeSlug }}"
                                            {{ $isSelected ? 'checked' : '' }}>
 
-                                    <div class="theme-card h-full border-2 border-gray-300 dark:border-gray-600 rounded-lg p-4 transition-all
-                                                hover:border-blue-400 hover:shadow-md
-                                                peer-checked:border-blue-600 peer-checked:shadow-lg peer-checked:bg-blue-50 dark:peer-checked:bg-blue-900/10
-                                                peer-checked:ring-2 peer-checked:ring-blue-200 dark:peer-checked:ring-blue-800"
-                                         data-theme="{{ $themeSlug }}">
+                                    {{-- CARD CONTAINER COM HOVER EFFECTS (super mini) --}}
+                                    <div class="theme-card relative flex flex-col h-full bg-white dark:bg-gray-900 overflow-hidden"
+                                         style="border-radius:8px; border:{{ $isSelected ? '2px solid #2563eb' : '1px solid #e5e7eb' }}; box-shadow:{{ $isSelected ? '0 2px 12px rgba(37,99,235,0.3)' : '0 1px 2px rgba(0,0,0,0.08)' }}; transition:all 0.2s ease;"
+                                         data-theme="{{ $themeSlug }}"
+                                         @if(!$isSelected)
+                                         onmouseenter="this.style.transform='translateY(-2px) scale(1.01)'; this.style.boxShadow='0 8px 16px -4px rgba(0,0,0,0.12)';"
+                                         onmouseleave="this.style.transform=''; this.style.boxShadow='0 1px 2px rgba(0,0,0,0.08)';"
+                                         @endif>
 
-                                        <!-- Nome do Tema -->
-                                        <div class="font-semibold text-gray-800 dark:text-white mb-3 text-center truncate"
-                                             title="{{ $theme['name'] }}">
-                                            {{ $theme['name'] }}
-                                        </div>
-
-                                        <!-- Versão (pequena) -->
-                                        <div class="text-xs text-gray-500 dark:text-gray-400 text-center mb-3">
-                                            v{{ $theme['version'] ?? '1.0.0' }}
-                                        </div>
-
-                                        <!-- 6 Círculos de Cores -->
-                                        <div class="flex justify-center gap-1.5 mb-3 flex-wrap">
-                                            <span class="w-5 h-5 rounded-full border-2 border-gray-200 dark:border-gray-700 shadow-sm"
-                                                  style="background: {{ $colorPrimary }}"
-                                                  title="Primary: {{ $colorPrimary }}"></span>
-                                            <span class="w-5 h-5 rounded-full border-2 border-gray-200 dark:border-gray-700 shadow-sm"
-                                                  style="background: {{ $colorPrimaryDark }}"
-                                                  title="Primary Dark: {{ $colorPrimaryDark }}"></span>
-                                            <span class="w-5 h-5 rounded-full border-2 border-gray-200 dark:border-gray-700 shadow-sm"
-                                                  style="background: {{ $colorPrimaryLight }}"
-                                                  title="Primary Light: {{ $colorPrimaryLight }}"></span>
-                                            <span class="w-5 h-5 rounded-full border-2 border-gray-200 dark:border-gray-700 shadow-sm"
-                                                  style="background: {{ $colorSuccess }}"
-                                                  title="Success: {{ $colorSuccess }}"></span>
-                                            <span class="w-5 h-5 rounded-full border-2 border-gray-200 dark:border-gray-700 shadow-sm"
-                                                  style="background: {{ $colorWarning }}"
-                                                  title="Warning: {{ $colorWarning }}"></span>
-                                            <span class="w-5 h-5 rounded-full border-2 border-gray-200 dark:border-gray-700 shadow-sm"
-                                                  style="background: {{ $colorDanger }}"
-                                                  title="Danger: {{ $colorDanger }}"></span>
-                                        </div>
-
-                                        <!-- Badge se é o tema ativo -->
+                                        {{-- INDICADORES DE TEMA ATIVO --}}
                                         @if($isSelected)
-                                            <div class="text-xs bg-blue-600 text-white px-2 py-1 rounded text-center font-semibold">
-                                                ✓ Ativo
+                                            {{-- RIBBON DIAGONAL "EM USO" (ultra mini) --}}
+                                            <div style="position:absolute; top:0; left:0; z-index:20; overflow:hidden; width:40px; height:40px; pointer-events:none;">
+                                                <div style="position:absolute; top:8px; left:-12px; width:56px; background:linear-gradient(90deg, #059669, #10b981); color:white; font-size:6px; font-weight:bold; padding:1px 0; text-align:center; box-shadow:0 1px 2px rgba(0,0,0,0.2); transform:rotate(-45deg);">
+                                                    EM USO
+                                                </div>
                                             </div>
-                                        @else
-                                            <div class="text-xs text-transparent px-2 py-1">
-                                                &nbsp;
+
+                                            {{-- BADGE "ATIVO" (ultra mini) --}}
+                                            <div style="position:absolute; top:2px; right:2px; z-index:20; background:#2563eb; color:white; font-size:6px; font-weight:bold; padding:1px 4px; border-radius:9999px; box-shadow:0 1px 3px rgba(37,99,235,0.35); display:flex; align-items:center; gap:1px; animation:pulse 2s infinite;">
+                                                <svg style="width:5px; height:5px;" fill="currentColor" viewBox="0 0 20 20">
+                                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                                                </svg>
+                                                Ativo
                                             </div>
                                         @endif
+
+                                        {{-- PREVIEW AREA (16:9 ultra compacto ~80px) --}}
+                                        <div style="position:relative; width:100%; padding-top:56.25%; max-height:80px; background:#f9fafb; overflow:hidden;">
+                                            @if(!empty($theme['preview']))
+                                                <img src="{{ asset('storage/themes/' . $themeSlug . '/' . $theme['preview']) }}"
+                                                     alt="Preview de {{ $theme['name'] ?? $themeSlug }}"
+                                                     loading="lazy"
+                                                     style="position:absolute; top:0; left:0; width:100%; height:100%; object-fit:cover;">
+                                            @else
+                                                @php
+                                                // Define padrão visual único para cada tema
+                                                $patterns = [
+                                                    'default' => 'circles',
+                                                    'azul-oceano' => 'waves',
+                                                    'roxo-moderno' => 'grid',
+                                                    'stelium-sanctuary' => 'hexagons',
+                                                    'verde-natureza' => 'leaves',
+                                                    'minimalista-cinza' => 'lines',
+                                                    'vermelho-corporativo' => 'squares',
+                                                ];
+                                                $pattern = $patterns[$themeSlug] ?? 'circles';
+                                                @endphp
+
+                                                {{-- Gradiente base --}}
+                                                <div style="position:absolute; inset:0; opacity:0.85; background:linear-gradient(135deg, {{ $colorPrimary }} 0%, {{ $colorPrimaryDark }} 50%, {{ $colorSuccess }} 100%);"></div>
+
+                                                {{-- Padrão único por tema --}}
+                                                @if($pattern === 'circles')
+                                                    <div style="position:absolute; inset:0; background-image:radial-gradient(circle, rgba(255,255,255,0.12) 2px, transparent 2px); background-size:16px 16px;"></div>
+                                                    <div style="position:absolute; top:6px; right:6px; width:20px; height:20px; border-radius:50%; border:2px solid rgba(255,255,255,0.25);"></div>
+                                                    <div style="position:absolute; bottom:6px; left:6px; width:12px; height:12px; border-radius:50%; border:2px solid rgba(255,255,255,0.2);"></div>
+                                                @elseif($pattern === 'waves')
+                                                    <svg style="position:absolute; inset:0; width:100%; height:100%; opacity:0.2;" preserveAspectRatio="none" viewBox="0 0 100 60">
+                                                        <path d="M0,15 Q15,5 30,15 T60,15 T90,15 T120,15" stroke="white" fill="none" stroke-width="1.5"/>
+                                                        <path d="M0,30 Q15,20 30,30 T60,30 T90,30 T120,30" stroke="white" fill="none" stroke-width="1.5"/>
+                                                        <path d="M0,45 Q15,35 30,45 T60,45 T90,45 T120,45" stroke="white" fill="none" stroke-width="1.5"/>
+                                                    </svg>
+                                                @elseif($pattern === 'grid')
+                                                    <div style="position:absolute; inset:0; background-image:linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px); background-size:12px 12px;"></div>
+                                                    <div style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%) rotate(45deg); width:16px; height:16px; border:2px solid rgba(255,255,255,0.3);"></div>
+                                                @elseif($pattern === 'hexagons')
+                                                    <div style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center; gap:4px;">
+                                                        <div style="width:12px; height:14px; background:rgba(255,255,255,0.1); clip-path:polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);"></div>
+                                                        <div style="width:12px; height:14px; background:rgba(255,255,255,0.2); clip-path:polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);"></div>
+                                                        <div style="width:12px; height:14px; background:rgba(255,255,255,0.1); clip-path:polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);"></div>
+                                                    </div>
+                                                @elseif($pattern === 'leaves')
+                                                    <div style="position:absolute; top:4px; right:6px; font-size:14px; opacity:0.25;">🌿</div>
+                                                    <div style="position:absolute; bottom:4px; left:6px; font-size:12px; opacity:0.2;">🍃</div>
+                                                @elseif($pattern === 'lines')
+                                                    <div style="position:absolute; top:12px; left:0; right:0; height:1px; background:rgba(255,255,255,0.2);"></div>
+                                                    <div style="position:absolute; top:50%; left:0; right:0; height:1px; background:rgba(255,255,255,0.25);"></div>
+                                                    <div style="position:absolute; bottom:12px; left:0; right:0; height:1px; background:rgba(255,255,255,0.2);"></div>
+                                                @else
+                                                    <div style="position:absolute; top:8px; left:8px; display:flex; flex-wrap:wrap; gap:3px;">
+                                                        <div style="width:8px; height:8px; background:rgba(255,255,255,0.15);"></div>
+                                                        <div style="width:8px; height:8px; background:rgba(255,255,255,0.1);"></div>
+                                                        <div style="width:8px; height:8px; background:rgba(255,255,255,0.2);"></div>
+                                                    </div>
+                                                @endif
+
+                                                {{-- Nome do tema (mini glass) --}}
+                                                <div style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center;">
+                                                    <div style="backdrop-filter:blur(2px); background:rgba(255,255,255,0.1); border-radius:3px; padding:2px 6px; border:1px solid rgba(255,255,255,0.2);">
+                                                        <div style="color:white; font-size:8px; font-weight:bold; text-shadow:0 1px 2px rgba(0,0,0,0.5); text-align:center;">
+                                                            {{ $theme['name'] }}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            @endif
+                                        </div>
+
+                                        {{-- CARD BODY (ultra mini) --}}
+                                        <div style="padding:5px; display:flex; flex-direction:column; gap:3px;">
+                                            {{-- Nome (versão apenas no title) --}}
+                                            <h3 class="font-semibold text-gray-900 dark:text-white truncate" style="font-size:9px; line-height:1.1;" title="{{ $theme['name'] }} v{{ $theme['version'] ?? '1.0' }}">
+                                                {{ $theme['name'] }}
+                                            </h3>
+
+                                            {{-- Cores (3 principais) --}}
+                                            <div style="display:flex; align-items:center; justify-content:space-between;">
+                                                <span class="text-gray-400" style="font-size:6px; text-transform:uppercase; letter-spacing:0.04em;">Cores</span>
+                                                <div style="display:flex; gap:2px;">
+                                                    <span style="width:7px; height:7px; border-radius:50%; border:1px solid rgba(0,0,0,0.08); background:{{ $colorPrimary }};"></span>
+                                                    <span style="width:7px; height:7px; border-radius:50%; border:1px solid rgba(0,0,0,0.08); background:{{ $colorSuccess }};"></span>
+                                                    <span style="width:7px; height:7px; border-radius:50%; border:1px solid rgba(0,0,0,0.08); background:{{ $colorDanger }};"></span>
+                                                </div>
+                                            </div>
+
+                                            {{-- Botão de Ação (ultra mini) --}}
+                                            @if($isSelected)
+                                                <div style="width:100%; padding:2px 3px; border-radius:2px; font-size:7px; font-weight:600; text-align:center; background:#2563eb; color:white;">
+                                                    ✓ Ativo
+                                                </div>
+                                            @else
+                                                <div style="width:100%; padding:2px 3px; border-radius:2px; font-size:7px; font-weight:500; text-align:center; background:#f3f4f6; color:#374151; transition:all 0.15s ease; cursor:pointer;"
+                                                     onmouseenter="this.style.background='#dbeafe'; this.style.color='#1d4ed8';"
+                                                     onmouseleave="this.style.background='#f3f4f6'; this.style.color='#374151';">
+                                                    Selecionar
+                                                </div>
+                                            @endif
+                                        </div>
                                     </div>
                                 </label>
                             @endforeach
