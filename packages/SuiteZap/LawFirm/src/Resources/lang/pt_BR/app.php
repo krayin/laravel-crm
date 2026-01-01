@@ -11,6 +11,7 @@ return [
         'create-success' => 'Processo criado com sucesso!',
         'update-success' => 'Processo atualizado com sucesso!',
         'delete-success' => 'Processo removido com sucesso!',
+        'delete-failed' => 'Erro ao remover processo.',
 
         'datagrid' => [
             'id' => 'ID',
@@ -37,6 +38,11 @@ return [
             'lead' => 'Lead de Origem',
             'person' => 'Cliente',
             'adversary' => 'Parte Contrária',
+            'advogado_adversary' => 'Advogado da Parte Contrária',
+            'area' => 'Área do Direito',
+            'probabilidade' => 'Probabilidade de Êxito',
+            'data_distribuicao' => 'Data da Distribuição',
+            'data_audiencia' => 'Data da Audiência',
             'select-lead' => 'Selecione um Lead...',
             'select-person' => 'Selecione um Cliente...',
         ]

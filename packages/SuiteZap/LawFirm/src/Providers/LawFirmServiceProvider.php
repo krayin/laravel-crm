@@ -44,6 +44,12 @@ class LawFirmServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        // Registrar o Repository
+        $this->app->bind(
+            \SuiteZap\LawFirm\Contracts\Processo::class,
+            \SuiteZap\LawFirm\Models\Processo::class
+        );
+
         // Fazer o merge da configuração do menu
         $this->mergeConfigFrom(
             __DIR__ . '/../Config/menu.php',

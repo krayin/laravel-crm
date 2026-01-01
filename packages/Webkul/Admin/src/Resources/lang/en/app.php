@@ -1943,6 +1943,16 @@ return [
             ],
 
             'kanban' => [
+                'stages' => [
+                    'won-lost' => 'Won / Lost',
+                    'won' => 'Won',
+                    'lost' => 'Lost',
+                    'need-more-info' => 'Needs more details',
+                    'won-value' => 'Won Value',
+                    'closed-at' => 'Closed At',
+                    'lost-reason' => 'Lost Reason',
+                    'save-btn' => 'Save',
+                ],
                 'rotten-days' => 'Lead is rotten for :days days',
                 'empty-list' => 'Your Leads List is Empty',
                 'empty-list-description' => 'Create a lead to organize your goals.',

@@ -1784,6 +1784,16 @@ return [
                 'mass-update' => 'Atualizar em Massa',
             ],
             'kanban' => [
+                'stages' => [
+                    'won-lost' => 'Ganho / Perdido',
+                    'won' => 'Ganho',
+                    'lost' => 'Perdido',
+                    'need-more-info' => 'Preciso de mais informações',
+                    'won-value' => 'Valor do Negócio',
+                    'closed-at' => 'Fechado em',
+                    'lost-reason' => 'Motivo da Perda',
+                    'save-btn' => 'Salvar',
+                ],
                 'rotten-days' => 'Negócio estagnado por :days dias',
                 'empty-list' => 'Sua lista de Negócios está vazia',
                 'empty-list-description' => 'Adicione um negócio para organizar seus objetivos.',
