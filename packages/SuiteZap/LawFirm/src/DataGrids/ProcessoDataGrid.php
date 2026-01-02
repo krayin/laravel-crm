@@ -47,6 +47,8 @@ class ProcessoDataGrid extends DataGrid
         $this->addFilter('area_direito', 'processos.area_direito');
         $this->addFilter('status', 'processos.status');
 
+        $this->setQueryBuilder($queryBuilder);
+
         return $queryBuilder;
     }
 

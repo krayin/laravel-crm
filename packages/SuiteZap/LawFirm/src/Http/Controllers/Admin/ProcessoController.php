@@ -2,10 +2,12 @@
 
 namespace SuiteZap\LawFirm\Http\Controllers\Admin;
 
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Event;
 use SuiteZap\LawFirm\DataGrids\ProcessoDataGrid;
 use SuiteZap\LawFirm\Models\Processo;
 use SuiteZap\LawFirm\Repositories\ProcessoRepository;
+use Webkul\Activity\Repositories\ActivityRepository;
 use Webkul\Admin\Http\Controllers\Controller;
 use Webkul\Contact\Repositories\PersonRepository;
 use Webkul\Lead\Repositories\LeadRepository;
@@ -34,21 +36,31 @@ class ProcessoController extends Controller
     protected $leadRepository;
 
     /**
+     * ActivityRepository object
+     * 
+     * @var \Webkul\Activity\Repositories\ActivityRepository
+     */
+    protected $activityRepository;
+
+    /**
      * Create a new controller instance.
      *
      * @param  \SuiteZap\LawFirm\Repositories\ProcessoRepository  $processoRepository
      * @param  \Webkul\Contact\Repositories\PersonRepository  $personRepository
      * @param  \Webkul\Lead\Repositories\LeadRepository  $leadRepository
+     * @param  \Webkul\Activity\Repositories\ActivityRepository  $activityRepository
      * @return void
      */
     public function __construct(
         ProcessoRepository $processoRepository,
         PersonRepository $personRepository,
-        LeadRepository $leadRepository
+        LeadRepository $leadRepository,
+        ActivityRepository $activityRepository
     ) {
         $this->processoRepository = $processoRepository;
         $this->personRepository = $personRepository;
         $this->leadRepository = $leadRepository;
+        $this->activityRepository = $activityRepository;
     }
 
     /**
@@ -60,7 +72,7 @@ class ProcessoController extends Controller
     {
         // Se a requisição for AJAX (vinda do componente DataGrid), retorna JSON
         if (request()->ajax()) {
-            return app(ProcessoDataGrid::class)->toJson();
+            return app(ProcessoDataGrid::class)->process();
         }
 
         // Se for acesso normal do navegador, retorna a View
@@ -142,6 +154,14 @@ class ProcessoController extends Controller
 
         $processo = $this->processoRepository->create($data);
 
+        // Automação: Criar atividade se houver data de audiência E status for ativo
+        $status = strtolower(trim(request('status')));
+        $ignorar = ['arquivado', 'suspenso'];
+
+        if (request('data_audiencia') && !in_array($status, $ignorar)) {
+            $this->createHearingActivity($processo, request('data_audiencia'));
+        }
+
         Event::dispatch('lawfirm.processo.create.after', $processo);
 
         session()->flash('success', trans('lawfirm::app.processos.create-success'));
@@ -221,6 +241,14 @@ class ProcessoController extends Controller
         // Atualizar o processo
         $processo = $this->processoRepository->update($data, $id);
 
+        // Automação: Criar atividade se houver data de audiência E status for ativo
+        $status = strtolower(trim(request('status')));
+        $ignorar = ['arquivado', 'suspenso'];
+
+        if (request('data_audiencia') && !in_array($status, $ignorar)) {
+            $this->createHearingActivity($processo, request('data_audiencia'));
+        }
+
         Event::dispatch('lawfirm.processo.update.after', $processo);
 
         session()->flash('success', trans('lawfirm::app.processos.update-success'));
@@ -251,5 +279,51 @@ class ProcessoController extends Controller
                 'message' => trans('lawfirm::app.processos.delete-failed'),
             ], 500);
         }
+    }
+
+    /**
+     * Helper to create hearing activity.
+     *
+     * @param Processo $processo
+     * @param string $dataAudiencia
+     * @return void
+     */
+    protected function createHearingActivity($processo, $dataAudiencia)
+    {
+        $from = Carbon::parse($dataAudiencia);
+        $to = $from->copy()->addHour();
+
+        $data = [
+            'type' => 'meeting',
+            'title' => 'Audiência: ' . $processo->titulo,
+            'comment' => 'Audiência gerada automaticamente pelo Processo Nº ' . $processo->numero_cnj,
+            'schedule_from' => $from,
+            'schedule_to' => $to,
+            'is_done' => 0,
+            'user_id' => auth()->guard('user')->id(),
+            'participants' => [
+                'users' => [auth()->guard('user')->id()],
+            ],
+        ];
+
+        // Adicionar Cliente se houver
+        if ($processo->person_id) {
+            $data['participants']['persons'] = [$processo->person_id];
+        }
+
+        // Adicionar Lead se houver (Krayin Activities geralmente vinculam a Leads via participants ou coluna direta?
+        // No Repo ActivityRepository:
+        // $activity->participants()->create(['user_id'...]) e ['person_id'...]
+        // Leads não são participantes diretos na tabela activity_participants padrão do Krayin v1/v2 geralmente, 
+        // mas activities podem ter 'lead_id' na tabela activities.
+        // Vamos verificar se Activity tem 'lead_id'.
+        // O user pediu: 'lead_id' => $processo->lead_id.
+        // Vou adicionar ao array principal.
+
+        if ($processo->lead_id) {
+            $data['lead_id'] = $processo->lead_id;
+        }
+
+        $this->activityRepository->create($data);
     }
 }
