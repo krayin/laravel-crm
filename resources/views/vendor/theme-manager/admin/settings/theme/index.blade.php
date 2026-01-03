@@ -124,6 +124,19 @@
         cursor: pointer;
         user-select: none;
         display: block;
+        outline: none;
+        border-radius: 8px;
+    }
+
+    /* Focus ring para A11y (navegação via Tab) */
+    .theme-card-label:focus {
+        outline: 2px solid #3b82f6;
+        outline-offset: 2px;
+    }
+
+    .theme-card-label:focus-visible {
+        outline: 2px solid #3b82f6;
+        outline-offset: 2px;
     }
 
     .theme-card-label .theme-card {
@@ -470,6 +483,379 @@
         background: var(--kr-preview-hover-bg, rgba(255, 255, 255, 0.15));
         color: var(--kr-preview-hover-fg, #f3f4f6);
     }
+
+    /* ================================================================
+       LAYOUT MELHORADO - Grid, Cards, Modal (Janeiro 2026)
+       Polimento v2: menos !important, dark mode completo, hover/focus refinado
+       ================================================================ */
+
+    /* Variáveis neutras para layout */
+    :root {
+        --kr-card-radius: 14px;
+        --kr-gap: 16px;
+        --kr-card-bg: #ffffff;
+        --kr-card-border: rgba(0,0,0,.08);
+        --kr-card-shadow: 0 4px 20px rgba(0,0,0,.06);
+        --kr-card-hover-shadow: 0 10px 30px rgba(0,0,0,.10);
+        --kr-card-hover-border: rgba(0,0,0,.12);
+
+        --kr-muted: #6b7280;
+        --kr-text: #111827;
+
+        --kr-badge-bg: rgba(16,185,129,.12);
+        --kr-badge-fg: #059669;
+
+        --kr-focus: rgba(99,102,241,.55);
+        --kr-selected-border: #2563eb;
+        --kr-selected-shadow: rgba(37,99,235,.18);
+    }
+
+    .dark {
+        --kr-card-bg: #1f2937;
+        --kr-card-border: rgba(255,255,255,.10);
+        --kr-card-shadow: 0 4px 20px rgba(0,0,0,.30);
+        --kr-card-hover-shadow: 0 10px 30px rgba(0,0,0,.40);
+        --kr-card-hover-border: rgba(255,255,255,.18);
+
+        --kr-muted: #9ca3af;
+        --kr-text: #f3f4f6;
+
+        --kr-badge-bg: rgba(16,185,129,.18);
+        --kr-badge-fg: #34d399;
+
+        --kr-focus: rgba(165,180,252,.65);
+        --kr-selected-shadow: rgba(59,130,246,.25);
+    }
+
+    /* ─────────────────────────────────────────────────────────────
+       GRID - responsivo, alinhado (mantém !important para override de Tailwind)
+       ───────────────────────────────────────────────────────────── */
+    #themeCardsGrid {
+        display: grid !important;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)) !important;
+        gap: var(--kr-gap) !important;
+        align-items: stretch !important;
+    }
+
+    @media (min-width: 1280px) {
+        #themeCardsGrid {
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)) !important;
+        }
+    }
+
+    /* ─────────────────────────────────────────────────────────────
+       CARD WRAPPER - altura completa, sem !important desnecessário
+       ───────────────────────────────────────────────────────────── */
+    #themeCardsGrid .theme-card-wrapper {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        border-radius: var(--kr-card-radius);
+    }
+
+    /* ─────────────────────────────────────────────────────────────
+       CARD LABEL (clicável) - focus ring e cursor
+       ───────────────────────────────────────────────────────────── */
+    #themeCardsGrid .theme-card-label {
+        cursor: pointer;
+        outline: none;
+        border-radius: var(--kr-card-radius);
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+    }
+
+    /* Focus ring no label (ao navegar com Tab) */
+    #themeCardsGrid .theme-card-label:focus-visible .theme-card {
+        box-shadow: 0 0 0 3px var(--kr-focus), var(--kr-card-shadow);
+    }
+
+    /* ─────────────────────────────────────────────────────────────
+       CARD - área visual principal
+       ───────────────────────────────────────────────────────────── */
+    #themeCardsGrid .theme-card {
+        border-radius: var(--kr-card-radius);
+        background: var(--kr-card-bg);
+        border: 1px solid var(--kr-card-border);
+        box-shadow: var(--kr-card-shadow);
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        transition: transform .15s ease, box-shadow .15s ease, border-color .15s ease;
+    }
+
+    /* Hover eleva levemente */
+    #themeCardsGrid .theme-card-label:hover .theme-card {
+        transform: translateY(-2px);
+        box-shadow: var(--kr-card-hover-shadow);
+        border-color: var(--kr-card-hover-border);
+    }
+
+    /* Card selecionado (tema atual) - via classe no .theme-card */
+    #themeCardsGrid .theme-card.kr-selected {
+        border: 2px solid var(--kr-selected-border);
+        box-shadow: 0 4px 20px var(--kr-selected-shadow);
+    }
+
+    /* Card selecionado - via classe no wrapper (mais específico, halo duplo) */
+    #themeCardsGrid .theme-card-wrapper.kr-is-selected .theme-card {
+        border-color: var(--kr-selected-border);
+        box-shadow: 0 0 0 1px var(--kr-selected-border), 0 8px 26px var(--kr-selected-shadow);
+    }
+
+    /* Hover no selecionado: manter destaque mas ainda ter feedback */
+    #themeCardsGrid .theme-card-wrapper.kr-is-selected .theme-card-label:hover .theme-card {
+        transform: translateY(-1px);
+        box-shadow: 0 0 0 1px var(--kr-selected-border), 0 12px 32px var(--kr-selected-shadow);
+    }
+
+    /* ─────────────────────────────────────────────────────────────
+       THUMBNAIL - 16:9 fixa, encaixa no card
+       ───────────────────────────────────────────────────────────── */
+    .kr-theme-thumb {
+        aspect-ratio: 16 / 9;
+        width: 100%;
+        overflow: hidden;
+        background: rgba(0,0,0,.04);
+        position: relative;
+    }
+    .dark .kr-theme-thumb {
+        background: rgba(255,255,255,.06);
+    }
+    .kr-theme-thumb img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+    }
+
+    /* ─────────────────────────────────────────────────────────────
+       CARD BODY - conteúdo com flex
+       ───────────────────────────────────────────────────────────── */
+    .kr-theme-card-body {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        padding: 14px;
+        flex: 1;
+    }
+
+    /* ─────────────────────────────────────────────────────────────
+       HEADER - nome + badge (ellipsis para nomes longos)
+       ───────────────────────────────────────────────────────────── */
+    .kr-theme-card-header {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 10px;
+    }
+
+    .kr-theme-title {
+        font-size: 15px;
+        font-weight: 650;
+        color: var(--kr-text);
+        line-height: 1.25;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .kr-theme-sub {
+        font-size: 12px;
+        color: var(--kr-muted);
+        margin-top: 3px;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .kr-theme-badge {
+        font-size: 11px;
+        padding: 4px 10px;
+        border-radius: 999px;
+        background: var(--kr-badge-bg);
+        color: var(--kr-badge-fg);
+        white-space: nowrap;
+        font-weight: 600;
+        flex-shrink: 0;
+    }
+
+    /* ─────────────────────────────────────────────────────────────
+       CORES - dots premium com borda sutil
+       ───────────────────────────────────────────────────────────── */
+    .kr-theme-colors {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        margin-top: auto;
+        padding-top: 4px;
+    }
+
+    .kr-theme-color-dot {
+        width: 16px;
+        height: 16px;
+        border-radius: 999px;
+        box-shadow: 0 1px 3px rgba(0,0,0,.18);
+        border: 1px solid rgba(0,0,0,.08);
+        transition: transform .1s ease;
+    }
+    .dark .kr-theme-color-dot {
+        border-color: rgba(255,255,255,.12);
+    }
+
+    .kr-theme-color-dot:hover {
+        transform: scale(1.15);
+    }
+
+    /* ─────────────────────────────────────────────────────────────
+       AÇÕES - sempre no rodapé
+       ───────────────────────────────────────────────────────────── */
+    #themeCardsGrid .theme-card-actions {
+        margin-top: auto;
+        display: flex;
+        gap: 8px;
+        padding: 0 14px 14px;
+        background: transparent;
+    }
+
+    /* Botões com proporção (especificidade via ID para evitar !important) */
+    #themeCardsGrid .kr-btn-preview {
+        flex: 1;
+        padding: 10px 12px;
+        font-size: 13px;
+        border-radius: 8px;
+    }
+
+    #themeCardsGrid .kr-btn-select {
+        flex: 2;
+        padding: 10px 12px;
+        font-size: 13px;
+        border-radius: 8px;
+    }
+
+    /* Botão selecionado fica visível */
+    #themeCardsGrid .kr-btn-select[disabled] {
+        opacity: 1;
+        cursor: default;
+    }
+
+    /* ─────────────────────────────────────────────────────────────
+       MODAL - imagem grande e centralizada
+       ───────────────────────────────────────────────────────────── */
+    #krThemePreviewPanel {
+        max-width: min(1280px, 96vw);
+    }
+    #krThemePreviewImg {
+        max-width: 100%;
+        max-height: 78vh;
+        object-fit: contain;
+        border-radius: 12px;
+    }
+
+    /* ─────────────────────────────────────────────────────────────
+       LIVE PREVIEW + DRAG HANDLE - ajustes para novo layout
+       ───────────────────────────────────────────────────────────── */
+    .kr-live-preview {
+        border-radius: var(--kr-card-radius);
+    }
+
+    .kr-drag-handle {
+        border-radius: 6px;
+        z-index: 30; /* acima do card mas abaixo do modal */
+    }
+
+    /* ─────────────────────────────────────────────────────────────
+       DENSIDADE DE GRID - breakpoints para diferentes telas
+       ───────────────────────────────────────────────────────────── */
+
+    /* Desktop médio (1024px+): cards um pouco maiores */
+    @media (min-width: 1024px) {
+        #themeCardsGrid {
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)) !important;
+        }
+    }
+
+    /* Desktop grande (1536px+): cards maiores ainda */
+    @media (min-width: 1536px) {
+        #themeCardsGrid {
+            grid-template-columns: repeat(auto-fill, minmax(360px, 1fr)) !important;
+        }
+    }
+
+    /* ─────────────────────────────────────────────────────────────
+       COMPACT MODE - densidade alta para ver mais temas
+       Ativado via body.kr-theme-compact (toggle JS)
+       ───────────────────────────────────────────────────────────── */
+    body.kr-theme-compact #themeCardsGrid {
+        grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)) !important;
+        gap: 12px !important;
+    }
+
+    body.kr-theme-compact .kr-theme-card-body {
+        padding: 10px;
+        gap: 8px;
+    }
+
+    body.kr-theme-compact .kr-theme-thumb {
+        aspect-ratio: 16 / 8; /* mais raso */
+    }
+
+    body.kr-theme-compact .kr-theme-title {
+        font-size: 13px;
+    }
+
+    body.kr-theme-compact .kr-theme-sub {
+        font-size: 11px;
+    }
+
+    body.kr-theme-compact .kr-theme-color-dot {
+        width: 12px;
+        height: 12px;
+    }
+
+    body.kr-theme-compact .theme-card-actions {
+        padding: 0 10px 10px;
+        gap: 6px;
+    }
+
+    body.kr-theme-compact .kr-btn-preview,
+    body.kr-theme-compact .kr-btn-select {
+        padding: 8px 10px;
+        font-size: 12px;
+    }
+
+    /* ─────────────────────────────────────────────────────────────
+       TOGGLE COMPACT - botão flutuante
+       ───────────────────────────────────────────────────────────── */
+    .kr-density-toggle {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 6px 12px;
+        border-radius: 8px;
+        border: 1px solid var(--kr-card-border);
+        background: var(--kr-card-bg);
+        color: var(--kr-muted);
+        font-size: 12px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.15s ease;
+    }
+
+    .kr-density-toggle:hover {
+        background: var(--kr-card-hover-border);
+        color: var(--kr-text);
+    }
+
+    .kr-density-toggle.kr-active {
+        background: var(--kr-selected-border);
+        color: #fff;
+        border-color: var(--kr-selected-border);
+    }
     </style>
     @endPushOnce
 
@@ -564,16 +950,32 @@
                     <!-- SEÇÃO 1.5 - SELEÇÃO DE TEMA PREDEFINIDO -->
                     @if(!empty($availableThemes))
                     <div class="box-shadow rounded-lg border border-gray-200 bg-white p-4 dark:border-gray-800 dark:bg-gray-900">
-                        <p class="mb-4 text-base font-semibold text-gray-800 dark:text-white">
-                            Tema Predefinido
-                        </p>
+                        {{-- Header com título e toggle de densidade --}}
+                        <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:16px;">
+                            <div>
+                                <p class="text-base font-semibold text-gray-800 dark:text-white" style="margin-bottom:4px;">
+                                    Tema Predefinido
+                                </p>
+                                <p class="text-sm text-gray-600 dark:text-gray-300" style="margin:0;">
+                                    Escolha um tema base. Clique no card para preview, use os botões para selecionar.
+                                </p>
+                            </div>
 
-                        <p class="mb-4 text-sm text-gray-600 dark:text-gray-300">
-                            Escolha um tema base. As cores e configurações do tema selecionado serão aplicadas automaticamente.
-                        </p>
+                            {{-- Toggle Compact/Normal --}}
+                            <button type="button"
+                                    id="krDensityToggle"
+                                    class="kr-density-toggle"
+                                    onclick="window.krToggleDensity(); return false;"
+                                    title="Alternar entre visualização normal e compacta">
+                                <svg style="width:14px; height:14px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"/>
+                                </svg>
+                                <span id="krDensityLabel">Compacto</span>
+                            </button>
+                        </div>
 
-                        <!-- Grid de Cards Premium (Formato 3:4 Compacto) -->
-                        <div class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-7 gap-3 mb-4" id="themeCardsGrid">
+                        <!-- Grid de Cards Premium (Layout responsivo via CSS) -->
+                        <div id="themeCardsGrid" class="mb-4">
                             @foreach($availableThemes as $theme)
                                 @php
                                     $themeSlug = $theme['slug'] ?? 'default';
@@ -599,7 +1001,7 @@
                                        {{ $isSelected ? 'checked' : '' }}>
 
                                 {{-- CARD WRAPPER (contém label + botões) --}}
-                                <div class="theme-card-wrapper"
+                                <div class="theme-card-wrapper {{ $isSelected ? 'kr-is-selected' : '' }}"
                                      id="theme-card-{{ $themeSlug }}"
                                      style="position:relative;"
                                      draggable="false"
@@ -640,162 +1042,115 @@
                                         </div>
                                     </div>
 
-                                    {{-- LABEL só para área clicável do card (thumbnail/nome) --}}
-                                    <label class="theme-card-label group cursor-pointer block" for="theme_{{ $themeSlug }}">
-                                        {{-- CARD CONTAINER COM HOVER EFFECTS (super mini) --}}
-                                        <div class="theme-card relative flex flex-col bg-white dark:bg-gray-900 overflow-hidden"
-                                             style="border-radius:8px; border:{{ $isSelected ? '2px solid #2563eb' : '1px solid #e5e7eb' }}; box-shadow:{{ $isSelected ? '0 2px 12px rgba(37,99,235,0.3)' : '0 1px 2px rgba(0,0,0,0.08)' }}; transition:all 0.2s ease;"
-                                             data-theme="{{ $themeSlug }}"
-                                             @if(!$isSelected)
-                                             onmouseenter="this.style.transform='translateY(-2px) scale(1.01)'; this.style.boxShadow='0 8px 16px -4px rgba(0,0,0,0.12)';"
-                                             onmouseleave="this.style.transform=''; this.style.boxShadow='0 1px 2px rgba(0,0,0,0.08)';"
-                                             @endif>
+                                    {{-- DIV clicável que abre PREVIEW (não seleciona) --}}
+                                    <div class="theme-card-label"
+                                         role="button"
+                                         tabindex="0"
+                                         aria-label="Abrir preview do tema {{ $theme['name'] ?? $themeSlug }}"
+                                         data-theme-slug="{{ $themeSlug }}"
+                                         data-theme-name="{{ $theme['name'] ?? $themeSlug }}"
+                                         data-radio-id="theme_{{ $themeSlug }}"
+                                         data-preview-url="{{ asset('storage/themes/' . $themeSlug . '/' . ($theme['preview'] ?? 'preview.png')) }}"
+                                         data-primary="{{ $colorPrimary }}"
+                                         data-success="{{ $colorSuccess }}"
+                                         data-warning="{{ $colorWarning }}"
+                                         data-danger="{{ $colorDanger }}"
+                                         onclick="event.preventDefault(); event.stopPropagation(); window.krOpenThemePreview(this); return false;"
+                                         onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault(); window.krOpenThemePreview(this);}">
 
-                                            {{-- INDICADORES DE TEMA ATIVO --}}
-                                            @if($isSelected)
-                                                {{-- RIBBON DIAGONAL "EM USO" (ultra mini) --}}
-                                                <div style="position:absolute; top:0; left:0; z-index:20; overflow:hidden; width:40px; height:40px; pointer-events:none;">
-                                                    <div style="position:absolute; top:8px; left:-12px; width:56px; background:linear-gradient(90deg, #059669, #10b981); color:white; font-size:6px; font-weight:bold; padding:1px 0; text-align:center; box-shadow:0 1px 2px rgba(0,0,0,0.2); transform:rotate(-45deg);">
-                                                        EM USO
-                                                    </div>
-                                                </div>
+                                        {{-- CARD CONTAINER --}}
+                                        <div class="theme-card {{ $isSelected ? 'kr-selected' : '' }}"
+                                             data-theme="{{ $themeSlug }}">
 
-                                                {{-- BADGE "ATIVO" (ultra mini) --}}
-                                                <div style="position:absolute; top:2px; right:2px; z-index:20; background:#2563eb; color:white; font-size:6px; font-weight:bold; padding:1px 4px; border-radius:9999px; box-shadow:0 1px 3px rgba(37,99,235,0.35); display:flex; align-items:center; gap:1px; animation:pulse 2s infinite;">
-                                                    <svg style="width:5px; height:5px;" fill="currentColor" viewBox="0 0 20 20">
-                                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
-                                                    </svg>
-                                                    Ativo
-                                                </div>
-                                            @endif
-
-                                            {{-- PREVIEW AREA (16:9 ultra compacto ~80px) --}}
-                                            <div style="position:relative; width:100%; padding-top:56.25%; max-height:80px; background:#f9fafb; overflow:hidden;">
+                                            {{-- THUMBNAIL 16:9 --}}
+                                            <div class="kr-theme-thumb">
                                                 @if(!empty($theme['preview']))
                                                     <img src="{{ asset('storage/themes/' . $themeSlug . '/' . $theme['preview']) }}"
                                                          alt="Preview de {{ $theme['name'] ?? $themeSlug }}"
-                                                         loading="lazy"
-                                                         style="position:absolute; top:0; left:0; width:100%; height:100%; object-fit:cover;">
+                                                         loading="lazy">
                                                 @else
-                                                    @php
-                                                    // Define padrão visual único para cada tema
-                                                    $patterns = [
-                                                        'default' => 'circles',
-                                                        'azul-oceano' => 'waves',
-                                                        'roxo-moderno' => 'grid',
-                                                        'stelium-sanctuary' => 'hexagons',
-                                                        'verde-natureza' => 'leaves',
-                                                        'minimalista-cinza' => 'lines',
-                                                        'vermelho-corporativo' => 'squares',
-                                                    ];
-                                                    $pattern = $patterns[$themeSlug] ?? 'circles';
-                                                    @endphp
-
-                                                    {{-- Gradiente base --}}
-                                                    <div style="position:absolute; inset:0; opacity:0.85; background:linear-gradient(135deg, {{ $colorPrimary }} 0%, {{ $colorPrimaryDark }} 50%, {{ $colorSuccess }} 100%);"></div>
-
-                                                    {{-- Padrão único por tema --}}
-                                                    @if($pattern === 'circles')
-                                                        <div style="position:absolute; inset:0; background-image:radial-gradient(circle, rgba(255,255,255,0.12) 2px, transparent 2px); background-size:16px 16px;"></div>
-                                                        <div style="position:absolute; top:6px; right:6px; width:20px; height:20px; border-radius:50%; border:2px solid rgba(255,255,255,0.25);"></div>
-                                                        <div style="position:absolute; bottom:6px; left:6px; width:12px; height:12px; border-radius:50%; border:2px solid rgba(255,255,255,0.2);"></div>
-                                                    @elseif($pattern === 'waves')
-                                                        <svg style="position:absolute; inset:0; width:100%; height:100%; opacity:0.2;" preserveAspectRatio="none" viewBox="0 0 100 60">
-                                                            <path d="M0,15 Q15,5 30,15 T60,15 T90,15 T120,15" stroke="white" fill="none" stroke-width="1.5"/>
-                                                            <path d="M0,30 Q15,20 30,30 T60,30 T90,30 T120,30" stroke="white" fill="none" stroke-width="1.5"/>
-                                                            <path d="M0,45 Q15,35 30,45 T60,45 T90,45 T120,45" stroke="white" fill="none" stroke-width="1.5"/>
-                                                        </svg>
-                                                    @elseif($pattern === 'grid')
-                                                        <div style="position:absolute; inset:0; background-image:linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px); background-size:12px 12px;"></div>
-                                                        <div style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%) rotate(45deg); width:16px; height:16px; border:2px solid rgba(255,255,255,0.3);"></div>
-                                                    @elseif($pattern === 'hexagons')
-                                                        <div style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center; gap:4px;">
-                                                            <div style="width:12px; height:14px; background:rgba(255,255,255,0.1); clip-path:polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);"></div>
-                                                            <div style="width:12px; height:14px; background:rgba(255,255,255,0.2); clip-path:polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);"></div>
-                                                            <div style="width:12px; height:14px; background:rgba(255,255,255,0.1); clip-path:polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);"></div>
-                                                        </div>
-                                                    @elseif($pattern === 'leaves')
-                                                        <div style="position:absolute; top:4px; right:6px; font-size:14px; opacity:0.25;">🌿</div>
-                                                        <div style="position:absolute; bottom:4px; left:6px; font-size:12px; opacity:0.2;">🍃</div>
-                                                    @elseif($pattern === 'lines')
-                                                        <div style="position:absolute; top:12px; left:0; right:0; height:1px; background:rgba(255,255,255,0.2);"></div>
-                                                        <div style="position:absolute; top:50%; left:0; right:0; height:1px; background:rgba(255,255,255,0.25);"></div>
-                                                        <div style="position:absolute; bottom:12px; left:0; right:0; height:1px; background:rgba(255,255,255,0.2);"></div>
-                                                    @else
-                                                        <div style="position:absolute; top:8px; left:8px; display:flex; flex-wrap:wrap; gap:3px;">
-                                                            <div style="width:8px; height:8px; background:rgba(255,255,255,0.15);"></div>
-                                                            <div style="width:8px; height:8px; background:rgba(255,255,255,0.1);"></div>
-                                                            <div style="width:8px; height:8px; background:rgba(255,255,255,0.2);"></div>
-                                                        </div>
-                                                    @endif
-
-                                                    {{-- Nome do tema (mini glass) --}}
-                                                    <div style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center;">
-                                                        <div style="backdrop-filter:blur(2px); background:rgba(255,255,255,0.1); border-radius:3px; padding:2px 6px; border:1px solid rgba(255,255,255,0.2);">
-                                                            <div style="color:white; font-size:8px; font-weight:bold; text-shadow:0 1px 2px rgba(0,0,0,0.5); text-align:center;">
-                                                                {{ $theme['name'] }}
+                                                    {{-- Gradiente fallback --}}
+                                                    <div style="position:absolute; inset:0; background:linear-gradient(135deg, {{ $colorPrimary }} 0%, {{ $colorPrimaryDark ?? $colorPrimary }} 50%, {{ $colorSuccess }} 100%);">
+                                                        {{-- Padrão decorativo --}}
+                                                        <div style="position:absolute; inset:0; background-image:radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px); background-size:12px 12px;"></div>
+                                                        {{-- Nome centralizado --}}
+                                                        <div style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center;">
+                                                            <div style="backdrop-filter:blur(4px); background:rgba(0,0,0,0.2); border-radius:8px; padding:8px 16px;">
+                                                                <div style="color:white; font-size:14px; font-weight:700; text-shadow:0 2px 4px rgba(0,0,0,0.3);">
+                                                                    {{ $theme['name'] }}
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 @endif
                                             </div>
 
-                                            {{-- CARD BODY (ultra mini) - SEM BOTÕES --}}
-                                            <div style="padding:5px; display:flex; flex-direction:column; gap:3px;">
-                                                {{-- Nome (versão apenas no title) --}}
-                                                <h3 class="font-semibold text-gray-900 dark:text-white truncate" style="font-size:9px; line-height:1.1;" title="{{ $theme['name'] }} v{{ $theme['version'] ?? '1.0' }}">
-                                                    {{ $theme['name'] }}
-                                                </h3>
-
-                                                {{-- Cores (3 principais) --}}
-                                                <div style="display:flex; align-items:center; justify-content:space-between;">
-                                                    <span class="text-gray-400" style="font-size:6px; text-transform:uppercase; letter-spacing:0.04em;">Cores</span>
-                                                    <div style="display:flex; gap:2px;">
-                                                        <span style="width:7px; height:7px; border-radius:50%; border:1px solid rgba(0,0,0,0.08); background:{{ $colorPrimary }};"></span>
-                                                        <span style="width:7px; height:7px; border-radius:50%; border:1px solid rgba(0,0,0,0.08); background:{{ $colorSuccess }};"></span>
-                                                        <span style="width:7px; height:7px; border-radius:50%; border:1px solid rgba(0,0,0,0.08); background:{{ $colorDanger }};"></span>
+                                            {{-- CARD BODY --}}
+                                            <div class="kr-theme-card-body">
+                                                {{-- Header: Título + Badge --}}
+                                                <div class="kr-theme-card-header">
+                                                    <div style="min-width:0; flex:1;">
+                                                        <div class="kr-theme-title" title="{{ $theme['name'] }} v{{ $theme['version'] ?? '1.0' }}">
+                                                            {{ $theme['name'] }}
+                                                        </div>
+                                                        <div class="kr-theme-sub">
+                                                            <span>v{{ $theme['version'] ?? '1.0' }}</span>
+                                                            <span style="opacity:0.5;">•</span>
+                                                            <span>{{ $themeSlug }}</span>
+                                                        </div>
                                                     </div>
+
+                                                    @if($isSelected)
+                                                        <span class="kr-theme-badge">✓ Tema Atual</span>
+                                                    @endif
+                                                </div>
+
+                                                {{-- Cores do tema --}}
+                                                <div class="kr-theme-colors">
+                                                    <span class="kr-theme-color-dot" style="background:{{ $colorPrimary }};" title="Primary"></span>
+                                                    <span class="kr-theme-color-dot" style="background:{{ $colorSuccess }};" title="Success"></span>
+                                                    <span class="kr-theme-color-dot" style="background:{{ $colorWarning }};" title="Warning"></span>
+                                                    <span class="kr-theme-color-dot" style="background:{{ $colorDanger }};" title="Danger"></span>
+                                                </div>
+
+                                                {{-- AÇÕES: PREVIEW + SELECIONAR --}}
+                                                <div class="theme-card-actions">
+                                                    {{-- Botão PREVIEW --}}
+                                                    <button type="button"
+                                                            class="kr-btn-preview"
+                                                            data-theme-slug="{{ $themeSlug }}"
+                                                            data-theme-name="{{ $theme['name'] ?? $themeSlug }}"
+                                                            data-radio-id="theme_{{ $themeSlug }}"
+                                                            data-preview-url="{{ asset('storage/themes/' . $themeSlug . '/' . ($theme['preview'] ?? 'preview.png')) }}"
+                                                            data-primary="{{ $colorPrimary }}"
+                                                            data-success="{{ $colorSuccess }}"
+                                                            data-warning="{{ $colorWarning }}"
+                                                            data-danger="{{ $colorDanger }}"
+                                                            onclick="event.preventDefault(); event.stopPropagation(); window.krOpenThemePreview(this); return false;"
+                                                            title="Ver preview ampliado">
+                                                        <svg style="width:14px; height:14px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                                                        </svg>
+                                                        <span>Preview</span>
+                                                    </button>
+
+                                                    {{-- Botão SELECIONAR --}}
+                                                    <button type="button"
+                                                            class="kr-btn-select"
+                                                            data-role="select-theme-btn"
+                                                            data-radio-id="theme_{{ $themeSlug }}"
+                                                            onclick="event.preventDefault(); event.stopPropagation(); window.krSelectTheme(this); return false;"
+                                                            title="Selecionar este tema"
+                                                            style="background:#3b82f6; color:#fff; border:none; cursor:pointer; transition:all 0.15s ease; display:flex; align-items:center; justify-content:center; gap:6px; font-weight:600;">
+                                                        <svg class="kr-btn-select-icon" style="width:14px; height:14px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                                                        </svg>
+                                                        <span class="kr-btn-select-text">Selecionar</span>
+                                                    </button>
                                                 </div>
                                             </div>
                                         </div>
-                                    </label>
-                                    {{-- FIM DO LABEL --}}
-
-                                    {{-- AÇÕES: PREVIEW + SELECIONAR --}}
-                                    <div class="theme-card-actions dark:bg-gray-900" style="display:flex; gap:4px; padding:0 5px 5px 5px; position:relative; z-index:50; background:white; margin-top:-1px; border-radius:0 0 8px 8px;">
-                                        {{-- Botão PREVIEW (abre modal fullscreen) --}}
-                                        <button type="button"
-                                                class="kr-btn-preview"
-                                                data-theme-slug="{{ $themeSlug }}"
-                                                data-theme-name="{{ $theme['name'] ?? $themeSlug }}"
-                                                data-radio-id="theme_{{ $themeSlug }}"
-                                                data-preview-url="{{ asset('storage/themes/' . $themeSlug . '/' . ($theme['preview'] ?? 'preview.png')) }}"
-                                                data-primary="{{ $colorPrimary }}"
-                                                data-success="{{ $colorSuccess }}"
-                                                data-warning="{{ $colorWarning }}"
-                                                data-danger="{{ $colorDanger }}"
-                                                onclick="event.preventDefault(); event.stopPropagation(); window.krOpenThemePreview(this); return false;"
-                                                title="Ver preview ampliado">
-                                            <svg style="width:10px; height:10px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
-                                            </svg>
-                                            <span>Preview</span>
-                                        </button>
-
-                                        {{-- Botão SELECIONAR (marca radio, NÃO submete) --}}
-                                        <button type="button"
-                                                class="kr-btn-select"
-                                                data-role="select-theme-btn"
-                                                data-radio-id="theme_{{ $themeSlug }}"
-                                                onclick="event.preventDefault(); event.stopPropagation(); window.krSelectTheme(this); return false;"
-                                                title="Selecionar este tema"
-                                                style="flex:1; padding:4px 6px; border-radius:3px; font-size:8px; font-weight:600; background:#3b82f6; color:#fff; border:none; cursor:pointer; transition:all 0.15s ease; display:flex; align-items:center; justify-content:center; gap:3px;">
-                                            <svg class="kr-btn-select-icon" style="width:10px; height:10px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
-                                            </svg>
-                                            <span class="kr-btn-select-text">Selecionar</span>
-                                        </button>
                                     </div>
                                 </div>
                                 {{-- FIM DO CARD WRAPPER --}}
@@ -837,210 +1192,1240 @@
                             </div>
                         </div>
 
-                    <!-- SUB-SEÇÃO: CORES DO TEMA -->
-                    <div class="box-shadow rounded-lg border border-gray-200 bg-white p-4 dark:border-gray-800 dark:bg-gray-900">
-                        <p class="mb-4 text-base font-semibold text-gray-800 dark:text-white">
-                            🎨 @lang('theme-manager::app.settings.colors.title')
-                        </p>
-
-                        <p class="mb-4 text-sm text-gray-600 dark:text-gray-300">
-                            @lang('theme-manager::app.settings.colors.description')
-                        </p>
-
-                        <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
-                            <!-- Cor Primária -->
-                            <x-admin::form.control-group>
-                                <x-admin::form.control-group.label>
-                                    @lang('theme-manager::app.settings.colors.primary')
-                                    <span class="theme-tooltip">
-                                        <span class="theme-tooltip-icon">i</span>
-                                        <span class="theme-tooltip-content">Cor principal da marca. Usada em botões, links e elementos de destaque em todo o sistema.</span>
-                                    </span>
-                                </x-admin::form.control-group.label>
-
-                                <div class="flex items-center gap-2">
-                                    <x-admin::form.control-group.control
-                                        type="color"
-                                        name="color_primary"
-                                        :value="old('color_primary', $config->color_primary)"
-                                        class="h-10 w-20"
-                                    />
-                                    <x-admin::form.control-group.control
-                                        type="text"
-                                        name="color_primary"
-                                        :value="old('color_primary', $config->color_primary)"
-                                        class="flex-1"
-                                    />
+                    <!-- ═══════════════════════════════════════════════════════════════════════════
+                         SUB-SEÇÃO: EDITOR DE TOKENS DE COR (Moderno)
+                         - Preview ao vivo com CSS vars
+                         - Validação hex/rgba
+                         - Undo (valor salvo) e Reset (defaults do sistema)
+                         Janeiro 2026
+                         ═══════════════════════════════════════════════════════════════════════════ -->
+                    <div id="krColorTokenEditor" class="box-shadow rounded-lg border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900 overflow-hidden">
+                        {{-- Header com título e ações globais --}}
+                        <div class="flex items-center justify-between px-5 py-4 border-b border-gray-100 dark:border-gray-800 bg-gradient-to-r from-gray-50 to-white dark:from-gray-900 dark:to-gray-800">
+                            <div class="flex items-center gap-3">
+                                <span class="text-2xl">🎨</span>
+                                <div>
+                                    <h3 class="text-base font-semibold text-gray-800 dark:text-white">
+                                        @lang('theme-manager::app.settings.colors.title')
+                                    </h3>
+                                    <p class="text-xs text-gray-500 dark:text-gray-400">
+                                        @lang('theme-manager::app.settings.colors.description')
+                                    </p>
                                 </div>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <button type="button"
+                                        onclick="krColorEditor.undoAll()"
+                                        class="kr-btn-ghost"
+                                        title="Desfazer todas as alterações para valores salvos">
+                                    <span>⏪</span> Undo All
+                                </button>
+                                <button type="button"
+                                        onclick="krColorEditor.resetAll()"
+                                        class="kr-btn-ghost"
+                                        title="Restaurar todos para defaults do sistema">
+                                    <span>🔄</span> Reset All
+                                </button>
+                            </div>
+                        </div>
 
-                                <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">
-                                    @lang('theme-manager::app.settings.colors.primary-help')
-                                </p>
-
-                                <x-admin::form.control-group.error control-name="color_primary" />
-                            </x-admin::form.control-group>
-
-                            <!-- Cor Primária Escura -->
-                            <x-admin::form.control-group>
-                                <x-admin::form.control-group.label>
-                                    @lang('theme-manager::app.settings.colors.primary-dark')
-                                    <span class="theme-tooltip">
-                                        <span class="theme-tooltip-icon">i</span>
-                                        <span class="theme-tooltip-content">Variação escura da cor primária. Usada em estados hover de botões e elementos interativos.</span>
+                        {{-- Preview ao vivo --}}
+                        <div id="krColorPreviewBar" class="px-5 py-3 bg-gray-50 dark:bg-gray-800/50 border-b border-gray-100 dark:border-gray-700">
+                            <div class="flex items-center gap-4 flex-wrap">
+                                <span class="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide">Preview:</span>
+                                <div class="flex items-center gap-3 flex-wrap">
+                                    {{-- Botão primário --}}
+                                    <button type="button" class="kr-preview-btn kr-preview-primary" style="background-color: var(--kr-preview-primary, #1E40AF);">
+                                        Primário
+                                    </button>
+                                    {{-- Botão sucesso --}}
+                                    <button type="button" class="kr-preview-btn kr-preview-success" style="background-color: var(--kr-preview-success, #10B981);">
+                                        Sucesso
+                                    </button>
+                                    {{-- Botão warning --}}
+                                    <button type="button" class="kr-preview-btn kr-preview-warning" style="background-color: var(--kr-preview-warning, #F59E0B);">
+                                        Alerta
+                                    </button>
+                                    {{-- Botão danger --}}
+                                    <button type="button" class="kr-preview-btn kr-preview-danger" style="background-color: var(--kr-preview-danger, #EF4444);">
+                                        Perigo
+                                    </button>
+                                    {{-- Badge exemplo --}}
+                                    <span class="kr-preview-badge" style="background-color: var(--kr-preview-primary-light, #3B82F6);">
+                                        Badge
                                     </span>
-                                </x-admin::form.control-group.label>
-
-                                <div class="flex items-center gap-2">
-                                    <x-admin::form.control-group.control
-                                        type="color"
-                                        name="color_primary_dark"
-                                        :value="old('color_primary_dark', $config->color_primary_dark)"
-                                        class="h-10 w-20"
-                                    />
-                                    <x-admin::form.control-group.control
-                                        type="text"
-                                        name="color_primary_dark"
-                                        :value="old('color_primary_dark', $config->color_primary_dark)"
-                                        class="flex-1"
-                                    />
+                                    {{-- Link exemplo --}}
+                                    <a href="javascript:void(0)" class="kr-preview-link" style="color: var(--kr-preview-primary, #1E40AF);">
+                                        Link de exemplo
+                                    </a>
                                 </div>
+                            </div>
+                        </div>
 
-                                <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">
-                                    @lang('theme-manager::app.settings.colors.primary-dark-help')
-                                </p>
+                        {{-- Grid de tokens de cor --}}
+                        <div class="p-5">
+                            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                                @php
+                                    $colorTokens = [
+                                        [
+                                            'name' => 'color_primary',
+                                            'label' => __('theme-manager::app.settings.colors.primary'),
+                                            'description' => 'Cor principal da marca. Botões, links e destaques.',
+                                            'cssVars' => ['--primary-color', '--primary-hover'],
+                                            'previewVar' => '--kr-preview-primary',
+                                            'type' => 'hex',
+                                        ],
+                                        [
+                                            'name' => 'color_primary_dark',
+                                            'label' => __('theme-manager::app.settings.colors.primary-dark'),
+                                            'description' => 'Variação escura. Estados hover e pressed.',
+                                            'cssVars' => ['--primary-dark'],
+                                            'previewVar' => '--kr-preview-primary-dark',
+                                            'type' => 'hex',
+                                        ],
+                                        [
+                                            'name' => 'color_primary_light',
+                                            'label' => __('theme-manager::app.settings.colors.primary-light'),
+                                            'description' => 'Variação clara. Backgrounds e bordas sutis.',
+                                            'cssVars' => ['--primary-light'],
+                                            'previewVar' => '--kr-preview-primary-light',
+                                            'type' => 'hex',
+                                        ],
+                                        [
+                                            'name' => 'color_success',
+                                            'label' => __('theme-manager::app.settings.colors.success'),
+                                            'description' => 'Sucesso e confirmações. Badges positivos.',
+                                            'cssVars' => ['--success-color'],
+                                            'previewVar' => '--kr-preview-success',
+                                            'type' => 'hex',
+                                        ],
+                                        [
+                                            'name' => 'color_warning',
+                                            'label' => __('theme-manager::app.settings.colors.warning'),
+                                            'description' => 'Alertas e avisos. Atenção do usuário.',
+                                            'cssVars' => ['--warning-color'],
+                                            'previewVar' => '--kr-preview-warning',
+                                            'type' => 'hex',
+                                        ],
+                                        [
+                                            'name' => 'color_danger',
+                                            'label' => __('theme-manager::app.settings.colors.danger'),
+                                            'description' => 'Erros e ações destrutivas. Exclusões.',
+                                            'cssVars' => ['--danger-color'],
+                                            'previewVar' => '--kr-preview-danger',
+                                            'type' => 'hex',
+                                        ],
+                                        [
+                                            'name' => 'login_card_overlay_color',
+                                            'label' => __('theme-manager::app.settings.login-card.overlay-color'),
+                                            'description' => 'Overlay do card de login. Formato rgba().',
+                                            'cssVars' => ['--login-card-overlay'],
+                                            'previewVar' => '--kr-preview-overlay',
+                                            'type' => 'rgba',
+                                        ],
+                                    ];
+                                @endphp
 
-                                <x-admin::form.control-group.error control-name="color_primary_dark" />
-                            </x-admin::form.control-group>
+                                @foreach($colorTokens as $token)
+                                    @php
+                                        $fieldName = $token['name'];
+                                        $currentValue = old($fieldName, $config->$fieldName ?? '');
+                                        $isRgba = $token['type'] === 'rgba';
+                                    @endphp
+                                    <div class="kr-color-token-card" data-token="{{ $fieldName }}" data-type="{{ $token['type'] }}">
+                                        {{-- Header do token --}}
+                                        <div class="flex items-start justify-between mb-2">
+                                            <div class="flex-1 min-w-0">
+                                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-200 truncate">
+                                                    {{ $token['label'] }}
+                                                </label>
+                                                <p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5 line-clamp-2">
+                                                    {{ $token['description'] }}
+                                                </p>
+                                            </div>
+                                            {{-- Chip de cor --}}
+                                            <div class="kr-color-chip-wrapper ml-2 flex-shrink-0">
+                                                <div class="kr-color-chip"
+                                                     id="chip_{{ $fieldName }}"
+                                                     style="background: {{ $currentValue ?: '#CCCCCC' }};"
+                                                     title="Clique para copiar">
+                                                </div>
+                                                <span class="kr-chip-copied" id="copied_{{ $fieldName }}">✓</span>
+                                            </div>
+                                        </div>
 
-                            <!-- Cor Primária Clara -->
-                            <x-admin::form.control-group>
-                                <x-admin::form.control-group.label>
-                                    @lang('theme-manager::app.settings.colors.primary-light')
-                                    <span class="theme-tooltip">
-                                        <span class="theme-tooltip-icon">i</span>
-                                        <span class="theme-tooltip-content">Variação clara da cor primária. Usada em backgrounds sutis, bordas e elementos secundários.</span>
-                                    </span>
-                                </x-admin::form.control-group.label>
+                                        {{-- Controles: Picker + Input + Ações --}}
+                                        <div class="flex items-center gap-2">
+                                            @if(!$isRgba)
+                                                {{-- Color picker (apenas para hex) --}}
+                                                <input type="color"
+                                                       id="picker_{{ $fieldName }}"
+                                                       value="{{ $currentValue ?: '#1E40AF' }}"
+                                                       class="kr-color-picker"
+                                                       data-target="{{ $fieldName }}">
+                                            @else
+                                                {{-- Placeholder para rgba (sem picker nativo) --}}
+                                                <div class="kr-rgba-indicator"
+                                                     id="picker_{{ $fieldName }}"
+                                                     style="background: {{ $currentValue ?: 'rgba(10,45,15,0.78)' }};"
+                                                     title="Edite o valor rgba no campo texto">
+                                                </div>
+                                            @endif
 
-                                <div class="flex items-center gap-2">
-                                    <x-admin::form.control-group.control
-                                        type="color"
-                                        name="color_primary_light"
-                                        :value="old('color_primary_light', $config->color_primary_light)"
-                                        class="h-10 w-20"
-                                    />
-                                    <x-admin::form.control-group.control
-                                        type="text"
-                                        name="color_primary_light"
-                                        :value="old('color_primary_light', $config->color_primary_light)"
-                                        class="flex-1"
-                                    />
-                                </div>
+                                            {{-- Input de texto --}}
+                                            <input type="text"
+                                                   id="text_{{ $fieldName }}"
+                                                   value="{{ $currentValue }}"
+                                                   placeholder="{{ $isRgba ? 'rgba(0,0,0,0.5)' : '#RRGGBB' }}"
+                                                   class="kr-color-text-input flex-1"
+                                                   data-target="{{ $fieldName }}"
+                                                   data-type="{{ $token['type'] }}"
+                                                   autocomplete="off"
+                                                   spellcheck="false">
 
-                                <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">
-                                    @lang('theme-manager::app.settings.colors.primary-light-help')
-                                </p>
+                                            {{-- Input hidden real (enviado no form) --}}
+                                            <input type="hidden"
+                                                   name="{{ $fieldName }}"
+                                                   id="real_{{ $fieldName }}"
+                                                   value="{{ $currentValue }}">
 
-                                <x-admin::form.control-group.error control-name="color_primary_light" />
-                            </x-admin::form.control-group>
+                                            {{-- Botões de ação --}}
+                                            <div class="flex items-center gap-1">
+                                                <button type="button"
+                                                        class="kr-token-action"
+                                                        onclick="krColorEditor.undo('{{ $fieldName }}')"
+                                                        title="Desfazer para valor salvo">
+                                                    ⏪
+                                                </button>
+                                                <button type="button"
+                                                        class="kr-token-action"
+                                                        onclick="krColorEditor.reset('{{ $fieldName }}')"
+                                                        title="Restaurar para default do sistema">
+                                                    🔄
+                                                </button>
+                                                <button type="button"
+                                                        class="kr-token-action"
+                                                        onclick="krColorEditor.copy('{{ $fieldName }}')"
+                                                        title="Copiar valor">
+                                                    📋
+                                                </button>
+                                            </div>
+                                        </div>
 
-                            <!-- Cor de Sucesso -->
-                            <x-admin::form.control-group>
-                                <x-admin::form.control-group.label>
-                                    @lang('theme-manager::app.settings.colors.success')
-                                    <span class="theme-tooltip">
-                                        <span class="theme-tooltip-icon">i</span>
-                                        <span class="theme-tooltip-content">Cor para indicar sucesso. Usada em mensagens de confirmação, badges de status positivo e ícones de check.</span>
-                                    </span>
-                                </x-admin::form.control-group.label>
+                                        {{-- Feedback de erro --}}
+                                        <div class="kr-token-error hidden" id="error_{{ $fieldName }}">
+                                            <span class="text-xs text-red-600 dark:text-red-400"></span>
+                                        </div>
 
-                                <div class="flex items-center gap-2">
-                                    <x-admin::form.control-group.control
-                                        type="color"
-                                        name="color_success"
-                                        :value="old('color_success', $config->color_success)"
-                                        class="h-10 w-20"
-                                    />
-                                    <x-admin::form.control-group.control
-                                        type="text"
-                                        name="color_success"
-                                        :value="old('color_success', $config->color_success)"
-                                        class="flex-1"
-                                    />
-                                </div>
-
-                                <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">
-                                    @lang('theme-manager::app.settings.colors.success-help')
-                                </p>
-
-                                <x-admin::form.control-group.error control-name="color_success" />
-                            </x-admin::form.control-group>
-
-                            <!-- Cor de Alerta -->
-                            <x-admin::form.control-group>
-                                <x-admin::form.control-group.label>
-                                    @lang('theme-manager::app.settings.colors.warning')
-                                    <span class="theme-tooltip">
-                                        <span class="theme-tooltip-icon">i</span>
-                                        <span class="theme-tooltip-content">Cor para alertas e avisos. Usada em mensagens de atenção, badges de pendência e notificações.</span>
-                                    </span>
-                                </x-admin::form.control-group.label>
-
-                                <div class="flex items-center gap-2">
-                                    <x-admin::form.control-group.control
-                                        type="color"
-                                        name="color_warning"
-                                        :value="old('color_warning', $config->color_warning)"
-                                        class="h-10 w-20"
-                                    />
-                                    <x-admin::form.control-group.control
-                                        type="text"
-                                        name="color_warning"
-                                        :value="old('color_warning', $config->color_warning)"
-                                        class="flex-1"
-                                    />
-                                </div>
-
-                                <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">
-                                    @lang('theme-manager::app.settings.colors.warning-help')
-                                </p>
-
-                                <x-admin::form.control-group.error control-name="color_warning" />
-                            </x-admin::form.control-group>
-
-                            <!-- Cor de Perigo -->
-                            <x-admin::form.control-group>
-                                <x-admin::form.control-group.label>
-                                    @lang('theme-manager::app.settings.colors.danger')
-                                    <span class="theme-tooltip">
-                                        <span class="theme-tooltip-icon">i</span>
-                                        <span class="theme-tooltip-content">Cor para erros e ações destrutivas. Usada em mensagens de erro, botões de exclusão e validações.</span>
-                                    </span>
-                                </x-admin::form.control-group.label>
-
-                                <div class="flex items-center gap-2">
-                                    <x-admin::form.control-group.control
-                                        type="color"
-                                        name="color_danger"
-                                        :value="old('color_danger', $config->color_danger)"
-                                        class="h-10 w-20"
-                                    />
-                                    <x-admin::form.control-group.control
-                                        type="text"
-                                        name="color_danger"
-                                        :value="old('color_danger', $config->color_danger)"
-                                        class="flex-1"
-                                    />
-                                </div>
-
-                                <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">
-                                    @lang('theme-manager::app.settings.colors.danger-help')
-                                </p>
-
-                                <x-admin::form.control-group.error control-name="color_danger" />
-                            </x-admin::form.control-group>
+                                        {{-- Erro do Laravel --}}
+                                        <x-admin::form.control-group.error control-name="{{ $fieldName }}" />
+                                    </div>
+                                @endforeach
+                            </div>
                         </div>
                     </div>
+
+                    {{-- ═══════════════════════════════════════════════════════════════════════════
+                         CSS do Editor de Tokens de Cor (inline, sem build)
+                         ═══════════════════════════════════════════════════════════════════════════ --}}
+                    <style>
+                    /* Card de token individual */
+                    .kr-color-token-card {
+                        background: #fff;
+                        border: 1px solid #e5e7eb;
+                        border-radius: 0.75rem;
+                        padding: 1rem;
+                        transition: all 0.2s ease;
+                    }
+                    .dark .kr-color-token-card {
+                        background: #1f2937;
+                        border-color: #374151;
+                    }
+                    .kr-color-token-card:hover {
+                        border-color: #3b82f6;
+                        box-shadow: 0 2px 8px rgba(59, 130, 246, 0.1);
+                    }
+                    .kr-color-token-card.is-invalid {
+                        border-color: #ef4444 !important;
+                        background: #fef2f2;
+                    }
+                    .dark .kr-color-token-card.is-invalid {
+                        background: rgba(239, 68, 68, 0.1);
+                    }
+
+                    /* Chip de cor */
+                    .kr-color-chip-wrapper {
+                        position: relative;
+                    }
+                    .kr-color-chip {
+                        width: 32px;
+                        height: 32px;
+                        border-radius: 50%;
+                        border: 2px solid #fff;
+                        box-shadow: 0 2px 4px rgba(0,0,0,0.15), inset 0 0 0 1px rgba(0,0,0,0.1);
+                        cursor: pointer;
+                        transition: transform 0.15s ease, box-shadow 0.15s ease;
+                    }
+                    .kr-color-chip:hover {
+                        transform: scale(1.1);
+                        box-shadow: 0 4px 8px rgba(0,0,0,0.2), inset 0 0 0 1px rgba(0,0,0,0.1);
+                    }
+                    .kr-chip-copied {
+                        position: absolute;
+                        top: 50%;
+                        left: 50%;
+                        transform: translate(-50%, -50%) scale(0);
+                        background: #10b981;
+                        color: #fff;
+                        width: 20px;
+                        height: 20px;
+                        border-radius: 50%;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        font-size: 10px;
+                        font-weight: bold;
+                        opacity: 0;
+                        transition: all 0.2s ease;
+                        pointer-events: none;
+                    }
+                    .kr-chip-copied.show {
+                        transform: translate(-50%, -50%) scale(1);
+                        opacity: 1;
+                    }
+
+                    /* Color picker */
+                    .kr-color-picker {
+                        width: 36px;
+                        height: 36px;
+                        padding: 0;
+                        border: 2px solid #e5e7eb;
+                        border-radius: 0.5rem;
+                        cursor: pointer;
+                        background: transparent;
+                        transition: border-color 0.15s ease;
+                    }
+                    .kr-color-picker:hover {
+                        border-color: #3b82f6;
+                    }
+                    .kr-color-picker::-webkit-color-swatch-wrapper {
+                        padding: 2px;
+                    }
+                    .kr-color-picker::-webkit-color-swatch {
+                        border: none;
+                        border-radius: 4px;
+                    }
+
+                    /* RGBA indicator (para campos rgba sem picker) */
+                    .kr-rgba-indicator {
+                        width: 36px;
+                        height: 36px;
+                        border: 2px solid #e5e7eb;
+                        border-radius: 0.5rem;
+                        background-image: linear-gradient(45deg, #ccc 25%, transparent 25%),
+                                          linear-gradient(-45deg, #ccc 25%, transparent 25%),
+                                          linear-gradient(45deg, transparent 75%, #ccc 75%),
+                                          linear-gradient(-45deg, transparent 75%, #ccc 75%);
+                        background-size: 8px 8px;
+                        background-position: 0 0, 0 4px, 4px -4px, -4px 0px;
+                        position: relative;
+                        overflow: hidden;
+                    }
+                    .kr-rgba-indicator::after {
+                        content: '';
+                        position: absolute;
+                        inset: 2px;
+                        border-radius: 4px;
+                        background: inherit;
+                    }
+
+                    /* Input de texto */
+                    .kr-color-text-input {
+                        height: 36px;
+                        padding: 0 0.75rem;
+                        border: 1px solid #e5e7eb;
+                        border-radius: 0.5rem;
+                        font-family: ui-monospace, SFMono-Regular, monospace;
+                        font-size: 0.875rem;
+                        text-transform: uppercase;
+                        background: #fff;
+                        color: #1f2937;
+                        transition: all 0.15s ease;
+                        min-width: 0;
+                    }
+                    .dark .kr-color-text-input {
+                        background: #374151;
+                        border-color: #4b5563;
+                        color: #f9fafb;
+                    }
+                    .kr-color-text-input:focus {
+                        outline: none;
+                        border-color: #3b82f6;
+                        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+                    }
+                    .kr-color-text-input.is-invalid {
+                        border-color: #ef4444 !important;
+                        background: #fef2f2;
+                    }
+                    .dark .kr-color-text-input.is-invalid {
+                        background: rgba(239, 68, 68, 0.15);
+                    }
+                    .kr-color-text-input[data-type="rgba"] {
+                        text-transform: none;
+                    }
+
+                    /* Botões de ação do token */
+                    .kr-token-action {
+                        width: 28px;
+                        height: 28px;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        border: none;
+                        background: #f3f4f6;
+                        border-radius: 0.375rem;
+                        cursor: pointer;
+                        font-size: 12px;
+                        transition: all 0.15s ease;
+                    }
+                    .dark .kr-token-action {
+                        background: #374151;
+                    }
+                    .kr-token-action:hover {
+                        background: #e5e7eb;
+                        transform: scale(1.05);
+                    }
+                    .dark .kr-token-action:hover {
+                        background: #4b5563;
+                    }
+
+                    /* Erro do token */
+                    .kr-token-error {
+                        margin-top: 0.5rem;
+                        padding: 0.25rem 0.5rem;
+                        background: #fef2f2;
+                        border-radius: 0.25rem;
+                        border-left: 3px solid #ef4444;
+                    }
+                    .dark .kr-token-error {
+                        background: rgba(239, 68, 68, 0.1);
+                    }
+
+                    /* Botões ghost do header */
+                    .kr-btn-ghost {
+                        display: inline-flex;
+                        align-items: center;
+                        gap: 0.375rem;
+                        padding: 0.5rem 0.75rem;
+                        font-size: 0.75rem;
+                        font-weight: 500;
+                        color: #6b7280;
+                        background: transparent;
+                        border: 1px solid #e5e7eb;
+                        border-radius: 0.5rem;
+                        cursor: pointer;
+                        transition: all 0.15s ease;
+                    }
+                    .dark .kr-btn-ghost {
+                        color: #9ca3af;
+                        border-color: #4b5563;
+                    }
+                    .kr-btn-ghost:hover {
+                        background: #f3f4f6;
+                        color: #374151;
+                        border-color: #d1d5db;
+                    }
+                    .dark .kr-btn-ghost:hover {
+                        background: #374151;
+                        color: #f9fafb;
+                    }
+
+                    /* Preview buttons */
+                    .kr-preview-btn {
+                        padding: 0.375rem 0.75rem;
+                        font-size: 0.75rem;
+                        font-weight: 500;
+                        color: #fff;
+                        border: none;
+                        border-radius: 0.375rem;
+                        cursor: default;
+                        transition: all 0.2s ease;
+                        text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+                    }
+                    .kr-preview-badge {
+                        padding: 0.25rem 0.625rem;
+                        font-size: 0.625rem;
+                        font-weight: 600;
+                        color: #fff;
+                        border-radius: 9999px;
+                        text-transform: uppercase;
+                        letter-spacing: 0.025em;
+                    }
+                    .kr-preview-link {
+                        font-size: 0.75rem;
+                        text-decoration: underline;
+                        text-underline-offset: 2px;
+                        transition: opacity 0.15s ease;
+                    }
+                    .kr-preview-link:hover {
+                        opacity: 0.8;
+                    }
+
+                    /* Line clamp utility */
+                    .line-clamp-2 {
+                        display: -webkit-box;
+                        -webkit-line-clamp: 2;
+                        -webkit-box-orient: vertical;
+                        overflow: hidden;
+                    }
+
+                    /* ═══════════════════════════════════════════════════════════════════════════
+                       LAYOUT COMPACTO: .kr-color-row
+                       Grid: [label/desc] [chip] [picker] [texto] [botões]
+                       ═══════════════════════════════════════════════════════════════════════════ */
+                    .kr-color-row {
+                        display: grid;
+                        grid-template-columns: 1fr auto auto 1fr auto;
+                        grid-template-areas: "label chip picker input actions";
+                        align-items: center;
+                        gap: 0.75rem;
+                        padding: 0.875rem 1rem;
+                        background: #fff;
+                        border: 1px solid #e5e7eb;
+                        border-radius: 0.5rem;
+                        transition: all 0.2s ease;
+                    }
+                    .dark .kr-color-row {
+                        background: rgba(31, 41, 55, 0.5);
+                        border-color: rgba(75, 85, 99, 0.5);
+                    }
+                    .kr-color-row:hover {
+                        border-color: #93c5fd;
+                        box-shadow: 0 1px 4px rgba(59, 130, 246, 0.08);
+                    }
+                    .dark .kr-color-row:hover {
+                        border-color: rgba(96, 165, 250, 0.4);
+                        box-shadow: 0 1px 4px rgba(59, 130, 246, 0.15);
+                    }
+
+                    /* Grid areas */
+                    .kr-color-row .kr-row-label { grid-area: label; }
+                    .kr-color-row .kr-row-chip { grid-area: chip; }
+                    .kr-color-row .kr-row-picker { grid-area: picker; }
+                    .kr-color-row .kr-row-input { grid-area: input; }
+                    .kr-color-row .kr-row-actions { grid-area: actions; }
+
+                    /* Label e descrição inline */
+                    .kr-row-label {
+                        display: flex;
+                        flex-direction: column;
+                        gap: 0.125rem;
+                        min-width: 0;
+                    }
+                    .kr-row-label-text {
+                        font-size: 0.8125rem;
+                        font-weight: 600;
+                        color: #374151;
+                        white-space: nowrap;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                    }
+                    .dark .kr-row-label-text {
+                        color: #e5e7eb;
+                    }
+                    .kr-row-label-desc {
+                        font-size: 0.6875rem;
+                        color: #9ca3af;
+                        white-space: nowrap;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                    }
+                    .dark .kr-row-label-desc {
+                        color: #6b7280;
+                    }
+
+                    /* Chip compacto na row */
+                    .kr-row-chip .kr-color-chip {
+                        width: 28px;
+                        height: 28px;
+                    }
+
+                    /* Picker compacto na row */
+                    .kr-row-picker .kr-color-picker,
+                    .kr-row-picker .kr-rgba-indicator {
+                        width: 32px;
+                        height: 32px;
+                    }
+
+                    /* Input compacto na row */
+                    .kr-row-input .kr-color-text-input {
+                        height: 32px;
+                        font-size: 0.8125rem;
+                        min-width: 100px;
+                        max-width: 140px;
+                    }
+
+                    /* Actions compacto */
+                    .kr-row-actions {
+                        display: flex;
+                        gap: 0.25rem;
+                    }
+                    .kr-row-actions .kr-token-action {
+                        width: 26px;
+                        height: 26px;
+                        font-size: 11px;
+                    }
+
+                    /* ═══════════════════════════════════════════════════════════════════════════
+                       ESTADO: .is-dirty (valor alterado, não salvo)
+                       ═══════════════════════════════════════════════════════════════════════════ */
+                    .kr-color-row.is-dirty,
+                    .kr-color-token-card.is-dirty {
+                        border-color: #f59e0b;
+                        background: linear-gradient(135deg, rgba(251, 191, 36, 0.04) 0%, rgba(251, 191, 36, 0.01) 100%);
+                        box-shadow: 0 0 0 1px rgba(245, 158, 11, 0.1);
+                    }
+                    .dark .kr-color-row.is-dirty,
+                    .dark .kr-color-token-card.is-dirty {
+                        border-color: rgba(251, 191, 36, 0.5);
+                        background: linear-gradient(135deg, rgba(251, 191, 36, 0.08) 0%, rgba(251, 191, 36, 0.02) 100%);
+                        box-shadow: 0 0 0 1px rgba(245, 158, 11, 0.15);
+                    }
+
+                    /* Indicador visual de dirty */
+                    .kr-color-row.is-dirty::before,
+                    .kr-color-token-card.is-dirty::before {
+                        content: '';
+                        position: absolute;
+                        top: 0.5rem;
+                        right: 0.5rem;
+                        width: 6px;
+                        height: 6px;
+                        background: #f59e0b;
+                        border-radius: 50%;
+                        animation: kr-pulse-dirty 1.5s ease-in-out infinite;
+                    }
+                    .kr-color-row,
+                    .kr-color-token-card {
+                        position: relative;
+                    }
+
+                    @keyframes kr-pulse-dirty {
+                        0%, 100% { opacity: 1; transform: scale(1); }
+                        50% { opacity: 0.5; transform: scale(0.85); }
+                    }
+
+                    /* ═══════════════════════════════════════════════════════════════════════════
+                       ESTADO: .is-invalid melhorado (borda/outline mais visível)
+                       ═══════════════════════════════════════════════════════════════════════════ */
+                    .kr-color-row.is-invalid,
+                    .kr-color-token-card.is-invalid {
+                        border-color: #ef4444 !important;
+                        background: linear-gradient(135deg, rgba(239, 68, 68, 0.06) 0%, rgba(239, 68, 68, 0.02) 100%);
+                        box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.15);
+                    }
+                    .dark .kr-color-row.is-invalid,
+                    .dark .kr-color-token-card.is-invalid {
+                        background: linear-gradient(135deg, rgba(239, 68, 68, 0.12) 0%, rgba(239, 68, 68, 0.04) 100%);
+                        box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.25);
+                    }
+
+                    .kr-color-text-input.is-invalid {
+                        border-color: #ef4444 !important;
+                        background: #fef2f2 !important;
+                        box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.2);
+                        outline: 2px solid transparent;
+                        outline-offset: 2px;
+                    }
+                    .dark .kr-color-text-input.is-invalid {
+                        background: rgba(239, 68, 68, 0.15) !important;
+                        box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.3);
+                    }
+                    .kr-color-text-input.is-invalid:focus {
+                        border-color: #dc2626 !important;
+                        box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.25);
+                    }
+
+                    /* ═══════════════════════════════════════════════════════════════════════════
+                       RESPONSIVO: <900px reorganiza para 2 linhas
+                       Linha 1: [label] [chip] [actions]
+                       Linha 2: [picker] [input]
+                       ═══════════════════════════════════════════════════════════════════════════ */
+                    @media (max-width: 899px) {
+                        .kr-color-row {
+                            grid-template-columns: 1fr auto auto;
+                            grid-template-areas:
+                                "label chip actions"
+                                "picker input input";
+                            row-gap: 0.625rem;
+                            padding: 0.75rem;
+                        }
+
+                        .kr-row-label {
+                            flex-direction: row;
+                            align-items: baseline;
+                            gap: 0.5rem;
+                        }
+                        .kr-row-label-text {
+                            flex-shrink: 0;
+                        }
+                        .kr-row-label-desc {
+                            flex: 1;
+                            min-width: 0;
+                        }
+
+                        .kr-row-input .kr-color-text-input {
+                            max-width: none;
+                            width: 100%;
+                        }
+
+                        /* Grid do editor também ajusta */
+                        #krColorTokenEditor .grid {
+                            grid-template-columns: 1fr !important;
+                        }
+                    }
+
+                    /* <600px: ainda mais compacto */
+                    @media (max-width: 599px) {
+                        .kr-color-row {
+                            grid-template-columns: 1fr auto;
+                            grid-template-areas:
+                                "label actions"
+                                "controls controls";
+                            padding: 0.625rem;
+                        }
+
+                        .kr-row-chip,
+                        .kr-row-picker,
+                        .kr-row-input {
+                            grid-area: controls;
+                        }
+
+                        /* Wrapper para controles em mobile */
+                        .kr-color-row .kr-mobile-controls {
+                            grid-area: controls;
+                            display: flex;
+                            align-items: center;
+                            gap: 0.5rem;
+                            width: 100%;
+                        }
+
+                        .kr-row-label-desc {
+                            display: none; /* Oculta descrição em mobile extremo */
+                        }
+
+                        .kr-row-input .kr-color-text-input {
+                            flex: 1;
+                            min-width: 0;
+                        }
+                    }
+
+                    /* ═══════════════════════════════════════════════════════════════════════════
+                       DARK MODE: Ajustes finos de opacidade
+                       ═══════════════════════════════════════════════════════════════════════════ */
+                    .dark .kr-color-row {
+                        background: rgba(17, 24, 39, 0.6);
+                        border-color: rgba(55, 65, 81, 0.6);
+                    }
+                    .dark .kr-color-row:hover {
+                        background: rgba(17, 24, 39, 0.8);
+                        border-color: rgba(96, 165, 250, 0.5);
+                    }
+
+                    .dark .kr-color-chip {
+                        border-color: rgba(255, 255, 255, 0.2);
+                        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3), inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+                    }
+
+                    .dark .kr-color-picker {
+                        border-color: rgba(75, 85, 99, 0.8);
+                    }
+                    .dark .kr-color-picker:hover {
+                        border-color: rgba(96, 165, 250, 0.6);
+                    }
+
+                    .dark .kr-rgba-indicator {
+                        border-color: rgba(75, 85, 99, 0.8);
+                        background-image: linear-gradient(45deg, rgba(75, 85, 99, 0.5) 25%, transparent 25%),
+                                          linear-gradient(-45deg, rgba(75, 85, 99, 0.5) 25%, transparent 25%),
+                                          linear-gradient(45deg, transparent 75%, rgba(75, 85, 99, 0.5) 75%),
+                                          linear-gradient(-45deg, transparent 75%, rgba(75, 85, 99, 0.5) 75%);
+                    }
+
+                    .dark .kr-token-action {
+                        background: rgba(55, 65, 81, 0.6);
+                        color: #d1d5db;
+                    }
+                    .dark .kr-token-action:hover {
+                        background: rgba(75, 85, 99, 0.8);
+                        color: #f9fafb;
+                    }
+
+                    .dark .kr-token-error {
+                        background: rgba(127, 29, 29, 0.2);
+                        border-left-color: #f87171;
+                    }
+
+                    .dark .kr-btn-ghost {
+                        color: rgba(156, 163, 175, 0.9);
+                        border-color: rgba(75, 85, 99, 0.6);
+                    }
+                    .dark .kr-btn-ghost:hover {
+                        background: rgba(55, 65, 81, 0.6);
+                        color: #f3f4f6;
+                        border-color: rgba(107, 114, 128, 0.6);
+                    }
+                    </style>
+
+                    {{-- ═══════════════════════════════════════════════════════════════════════════
+                         JS do Editor de Tokens de Cor (inline, sem build, DOMContentLoaded 1x)
+                         ═══════════════════════════════════════════════════════════════════════════ --}}
+                    <script>
+                    (function() {
+                        'use strict';
+
+                        // ═══════════════════════════════════════════════════════════════════════════
+                        // DEBUG GATE: Logs condicionais (silenciados em produção)
+                        // ═══════════════════════════════════════════════════════════════════════════
+                        window.__krColorEditorDebug = @json((bool) config('app.debug', false));
+
+                        function krLog() {
+                            if (!window.__krColorEditorDebug) return;
+                            console.log.apply(console, arguments);
+                        }
+                        function krLogWarn() {
+                            if (!window.__krColorEditorDebug) return;
+                            console.warn.apply(console, arguments);
+                        }
+                        function krLogInfo() {
+                            if (!window.__krColorEditorDebug) return;
+                            console.info.apply(console, arguments);
+                        }
+
+                        // ═══════════════════════════════════════════════════════════════════════════
+                        // BOOT: Normalizar defaults e saved para chaves flat (sem hardcode por token)
+                        // ═══════════════════════════════════════════════════════════════════════════
+
+                        // Raw config do Laravel (estrutura aninhada: colors.primary, login.card_overlay_color)
+                        // Guardamos imutável para debug
+                        var rawDefaults = @json(config('theme-manager.defaults', []));
+                        window.__krRawSystemDefaults = rawDefaults; // Debug: estrutura original
+
+                        // Normalizar para chaves flat (color_primary, login_card_overlay_color, etc.)
+                        function normalizeDefaults(raw) {
+                            var flat = {};
+                            var missing = [];
+
+                            // Cores: raw.colors.X -> color_X
+                            if (raw && raw.colors) {
+                                Object.keys(raw.colors).forEach(function(key) {
+                                    flat['color_' + key] = raw.colors[key];
+                                });
+                            } else {
+                                missing.push('colors.*');
+                            }
+
+                            // Login: raw.login.card_overlay_color -> login_card_overlay_color
+                            if (raw && raw.login) {
+                                if (raw.login.card_overlay_color !== undefined) {
+                                    flat['login_card_overlay_color'] = raw.login.card_overlay_color;
+                                } else {
+                                    missing.push('login.card_overlay_color');
+                                }
+                            } else {
+                                missing.push('login.*');
+                            }
+
+                            // Log de aviso se defaults estiverem ausentes (apenas em debug)
+                            if (missing.length > 0) {
+                                krLogWarn('[KR Color Editor] Defaults ausentes em config(theme-manager.defaults):', missing);
+                            }
+
+                            return flat;
+                        }
+
+                        // Defaults normalizados (chaves flat, sem hardcode)
+                        window.__krSystemDefaults = normalizeDefaults(rawDefaults);
+
+                        // Valores salvos (snapshot do DB no momento do load)
+                        window.__krSavedConfig = {
+                            color_primary: @json($config->color_primary ?? ''),
+                            color_primary_dark: @json($config->color_primary_dark ?? ''),
+                            color_primary_light: @json($config->color_primary_light ?? ''),
+                            color_success: @json($config->color_success ?? ''),
+                            color_warning: @json($config->color_warning ?? ''),
+                            color_danger: @json($config->color_danger ?? ''),
+                            login_card_overlay_color: @json($config->login_card_overlay_color ?? ''),
+                        };
+
+                        // Lista de todos os campos de cor (single source of truth)
+                        var COLOR_FIELDS = [
+                            'color_primary',
+                            'color_primary_dark',
+                            'color_primary_light',
+                            'color_success',
+                            'color_warning',
+                            'color_danger',
+                            'login_card_overlay_color'
+                        ];
+
+                        // Mapa de CSS vars para preview
+                        var CSS_VAR_MAP = {
+                            color_primary: ['--primary-color', '--primary-hover', '--kr-preview-primary'],
+                            color_primary_dark: ['--primary-dark', '--kr-preview-primary-dark'],
+                            color_primary_light: ['--primary-light', '--kr-preview-primary-light'],
+                            color_success: ['--success-color', '--kr-preview-success'],
+                            color_warning: ['--warning-color', '--kr-preview-warning'],
+                            color_danger: ['--danger-color', '--kr-preview-danger'],
+                            login_card_overlay_color: ['--login-card-overlay', '--kr-preview-overlay']
+                        };
+
+                        // ═══════════════════════════════════════════════════════════════════════════
+                        // VALIDADORES
+                        // ═══════════════════════════════════════════════════════════════════════════
+                        var HEX_REGEX = /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/;
+                        var RGBA_REGEX = /^rgba?\(\s*(\d{1,3})\s*,\s*(\d{1,3})\s*,\s*(\d{1,3})\s*(?:,\s*(0|1|0?\.\d+))?\s*\)$/i;
+
+                        function validateHex(value) {
+                            if (!value) return { valid: false, error: 'Valor obrigatório' };
+                            var normalized = value.trim().toUpperCase();
+                            if (!normalized.startsWith('#')) normalized = '#' + normalized;
+                            if (!HEX_REGEX.test(normalized)) {
+                                return { valid: false, error: 'Formato inválido. Use #RRGGBB' };
+                            }
+                            // Expandir formato curto (#ABC -> #AABBCC)
+                            if (normalized.length === 4) {
+                                normalized = '#' + normalized[1] + normalized[1] + normalized[2] + normalized[2] + normalized[3] + normalized[3];
+                            }
+                            return { valid: true, value: normalized };
+                        }
+
+                        function validateRgba(value) {
+                            if (!value) return { valid: false, error: 'Valor obrigatório' };
+                            var trimmed = value.trim();
+                            var match = trimmed.match(RGBA_REGEX);
+                            if (!match) {
+                                return { valid: false, error: 'Formato inválido. Use rgba(r,g,b,a)' };
+                            }
+                            var r = parseInt(match[1], 10);
+                            var g = parseInt(match[2], 10);
+                            var b = parseInt(match[3], 10);
+                            var a = match[4] !== undefined ? parseFloat(match[4]) : 1;
+
+                            if (r < 0 || r > 255 || g < 0 || g > 255 || b < 0 || b > 255) {
+                                return { valid: false, error: 'RGB deve estar entre 0-255' };
+                            }
+                            if (a < 0 || a > 1) {
+                                return { valid: false, error: 'Alpha deve estar entre 0-1' };
+                            }
+                            return { valid: true, value: 'rgba(' + r + ', ' + g + ', ' + b + ', ' + a + ')' };
+                        }
+
+                        // ═══════════════════════════════════════════════════════════════════════════
+                        // GETTERS (sem hardcode - usam chaves flat normalizadas)
+                        // ═══════════════════════════════════════════════════════════════════════════
+                        function getDefaultValue(fieldName) {
+                            var defaults = window.__krSystemDefaults || {};
+                            return defaults[fieldName] ?? '';
+                        }
+
+                        function getSavedValue(fieldName) {
+                            var saved = window.__krSavedConfig || {};
+                            return saved[fieldName] ?? '';
+                        }
+
+                        function applyLivePreview(fieldName, value) {
+                            var vars = CSS_VAR_MAP[fieldName] || [];
+                            var root = document.documentElement;
+                            vars.forEach(function(varName) {
+                                root.style.setProperty(varName, value);
+                            });
+                        }
+
+                        function updateUI(fieldName, value, isValid) {
+                            var picker = document.getElementById('picker_' + fieldName);
+                            var text = document.getElementById('text_' + fieldName);
+                            var real = document.getElementById('real_' + fieldName);
+                            var chip = document.getElementById('chip_' + fieldName);
+                            var card = text ? text.closest('.kr-color-token-card') : null;
+                            var errorDiv = document.getElementById('error_' + fieldName);
+
+                            if (isValid) {
+                                // Atualizar todos os elementos
+                                if (picker && picker.type === 'color') picker.value = value;
+                                if (picker && picker.classList.contains('kr-rgba-indicator')) picker.style.background = value;
+                                if (text) text.value = value;
+                                if (real) real.value = value;
+                                if (chip) chip.style.background = value;
+
+                                // Remover estado de erro
+                                if (text) text.classList.remove('is-invalid');
+                                if (card) card.classList.remove('is-invalid');
+                                if (errorDiv) {
+                                    errorDiv.classList.add('hidden');
+                                    errorDiv.querySelector('span').textContent = '';
+                                }
+
+                                // Gerenciar estado .is-dirty (valor diferente do salvo)
+                                var savedValue = getSavedValue(fieldName);
+                                var isDirty = value !== savedValue;
+                                if (card) {
+                                    if (isDirty) {
+                                        card.classList.add('is-dirty');
+                                    } else {
+                                        card.classList.remove('is-dirty');
+                                    }
+                                }
+
+                                // Aplicar preview ao vivo
+                                applyLivePreview(fieldName, value);
+                            } else {
+                                // Marcar erro (não propagar para input real)
+                                if (text) text.classList.add('is-invalid');
+                                if (card) card.classList.add('is-invalid');
+                            }
+                        }
+
+                        function showError(fieldName, message) {
+                            var errorDiv = document.getElementById('error_' + fieldName);
+                            if (errorDiv) {
+                                errorDiv.classList.remove('hidden');
+                                errorDiv.querySelector('span').textContent = message;
+                            }
+                        }
+
+                        function showCopiedFeedback(fieldName) {
+                            var copiedEl = document.getElementById('copied_' + fieldName);
+                            if (copiedEl) {
+                                copiedEl.classList.add('show');
+                                setTimeout(function() {
+                                    copiedEl.classList.remove('show');
+                                }, 1000);
+                            }
+                        }
+
+                        // API pública
+                        window.krColorEditor = {
+                            validate: function(fieldName, value) {
+                                var card = document.querySelector('[data-token="' + fieldName + '"]');
+                                var type = card ? card.dataset.type : 'hex';
+                                return type === 'rgba' ? validateRgba(value) : validateHex(value);
+                            },
+
+                            setValue: function(fieldName, value) {
+                                var result = this.validate(fieldName, value);
+                                if (result.valid) {
+                                    updateUI(fieldName, result.value, true);
+                                } else {
+                                    updateUI(fieldName, value, false);
+                                    showError(fieldName, result.error);
+                                }
+                                return result.valid;
+                            },
+
+                            undo: function(fieldName) {
+                                var saved = getSavedValue(fieldName);
+                                if (!saved) {
+                                    krLogWarn('[KR Color] Undo: nenhum valor salvo para', fieldName);
+                                    // Fallback: tenta usar default
+                                    saved = getDefaultValue(fieldName);
+                                }
+                                if (saved) {
+                                    this.setValue(fieldName, saved);
+                                    krLog('[KR Color] Undo:', fieldName, '->', saved);
+                                } else {
+                                    krLogWarn('[KR Color] Undo: sem valor para restaurar', fieldName);
+                                }
+                            },
+
+                            reset: function(fieldName) {
+                                var defaultVal = getDefaultValue(fieldName);
+                                if (!defaultVal) {
+                                    krLogWarn('[KR Color] Reset: nenhum default configurado para', fieldName);
+                                    krLogInfo('[KR Color] Verifique config(theme-manager.defaults) no Laravel');
+                                    // Não faz nada se não houver default
+                                    return;
+                                }
+                                this.setValue(fieldName, defaultVal);
+                                krLog('[KR Color] Reset:', fieldName, '->', defaultVal);
+                            },
+
+                            undoAll: function() {
+                                var self = this;
+                                Object.keys(window.__krSavedConfig).forEach(function(fieldName) {
+                                    self.undo(fieldName);
+                                });
+                            },
+
+                            resetAll: function() {
+                                if (!confirm('Restaurar TODAS as cores para os defaults do sistema?')) return;
+                                var self = this;
+                                Object.keys(CSS_VAR_MAP).forEach(function(fieldName) {
+                                    self.reset(fieldName);
+                                });
+                            },
+
+                            copy: function(fieldName) {
+                                var real = document.getElementById('real_' + fieldName);
+                                if (real && real.value) {
+                                    navigator.clipboard.writeText(real.value).then(function() {
+                                        showCopiedFeedback(fieldName);
+                                        krLog('[KR Color] Copied:', real.value);
+                                    }).catch(function(err) {
+                                        krLogWarn('[KR Color] Copy failed:', err);
+                                        // Fallback
+                                        var temp = document.createElement('input');
+                                        temp.value = real.value;
+                                        document.body.appendChild(temp);
+                                        temp.select();
+                                        document.execCommand('copy');
+                                        document.body.removeChild(temp);
+                                        showCopiedFeedback(fieldName);
+                                    });
+                                }
+                            }
+                        };
+
+                        // Inicializar quando DOM carregar
+                        function init() {
+                            krLog('[KR Color Editor] Initializing...');
+                            krLog('[KR Color Editor] System defaults:', window.__krSystemDefaults);
+                            krLog('[KR Color Editor] Saved config:', window.__krSavedConfig);
+
+                            // Bind eventos nos color pickers
+                            document.querySelectorAll('.kr-color-picker').forEach(function(picker) {
+                                var fieldName = picker.dataset.target;
+
+                                picker.addEventListener('input', function() {
+                                    krColorEditor.setValue(fieldName, picker.value);
+                                });
+
+                                picker.addEventListener('change', function() {
+                                    krColorEditor.setValue(fieldName, picker.value);
+                                });
+                            });
+
+                            // Bind eventos nos text inputs
+                            document.querySelectorAll('.kr-color-text-input').forEach(function(input) {
+                                var fieldName = input.dataset.target;
+
+                                input.addEventListener('input', function() {
+                                    // Validar mas não bloquear digitação
+                                    var result = krColorEditor.validate(fieldName, input.value);
+                                    if (result.valid) {
+                                        updateUI(fieldName, result.value, true);
+                                    } else {
+                                        // Mostrar erro visual sem bloquear
+                                        input.classList.add('is-invalid');
+                                    }
+                                });
+
+                                input.addEventListener('blur', function() {
+                                    // Validar e aplicar no blur
+                                    krColorEditor.setValue(fieldName, input.value);
+                                });
+
+                                input.addEventListener('keydown', function(e) {
+                                    if (e.key === 'Enter') {
+                                        e.preventDefault();
+                                        krColorEditor.setValue(fieldName, input.value);
+                                        input.blur();
+                                    }
+                                });
+                            });
+
+                            // Bind click nos chips para copiar
+                            document.querySelectorAll('.kr-color-chip').forEach(function(chip) {
+                                var fieldName = chip.id.replace('chip_', '');
+                                chip.addEventListener('click', function() {
+                                    krColorEditor.copy(fieldName);
+                                });
+                            });
+
+                            // Aplicar preview inicial
+                            Object.keys(CSS_VAR_MAP).forEach(function(fieldName) {
+                                var real = document.getElementById('real_' + fieldName);
+                                if (real && real.value) {
+                                    applyLivePreview(fieldName, real.value);
+                                }
+                            });
+
+                            // ═══════════════════════════════════════════════════════════════════════════
+                            // SUBMIT HOOK: Blindagem - commit de todos os campos antes de enviar
+                            // ═══════════════════════════════════════════════════════════════════════════
+                            var form = document.querySelector('form[action*="theme"]');
+                            if (form) {
+                                form.addEventListener('submit', function(e) {
+                                    krLog('[KR Color Editor] Submit intercepted, validating all fields...');
+
+                                    var hasInvalid = false;
+                                    var firstInvalid = null;
+
+                                    // Força commit de todos os campos de cor
+                                    COLOR_FIELDS.forEach(function(fieldName) {
+                                        var textInput = document.getElementById('text_' + fieldName);
+                                        if (!textInput) return;
+
+                                        var value = textInput.value;
+                                        var result = krColorEditor.validate(fieldName, value);
+
+                                        if (result.valid) {
+                                            // Commit: atualiza o input hidden real
+                                            var real = document.getElementById('real_' + fieldName);
+                                            if (real) real.value = result.value;
+                                            textInput.classList.remove('is-invalid');
+                                            var card = textInput.closest('.kr-color-token-card');
+                                            if (card) card.classList.remove('is-invalid');
+                                        } else {
+                                            // Marca como inválido
+                                            hasInvalid = true;
+                                            textInput.classList.add('is-invalid');
+                                            var card = textInput.closest('.kr-color-token-card');
+                                            if (card) card.classList.add('is-invalid');
+                                            showError(fieldName, result.error);
+                                            if (!firstInvalid) firstInvalid = textInput;
+                                        }
+                                    });
+
+                                    // Se houver algum inválido, bloqueia submit
+                                    if (hasInvalid) {
+                                        e.preventDefault();
+                                        e.stopPropagation();
+
+                                        krLogWarn('[KR Color Editor] Submit blocked: invalid fields found');
+
+                                        // Scroll até o primeiro inválido
+                                        if (firstInvalid) {
+                                            firstInvalid.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                                            firstInvalid.focus();
+                                        }
+
+                                        // Feedback visual
+                                        var editor = document.getElementById('krColorTokenEditor');
+                                        if (editor) {
+                                            editor.style.boxShadow = '0 0 0 3px rgba(239, 68, 68, 0.3)';
+                                            setTimeout(function() {
+                                                editor.style.boxShadow = '';
+                                            }, 2000);
+                                        }
+
+                                        return false;
+                                    }
+
+                                    krLog('[KR Color Editor] All fields valid, proceeding with submit');
+                                });
+                            }
+
+                            krLog('[KR Color Editor] Ready!');
+                        }
+
+                        if (document.readyState === 'loading') {
+                            document.addEventListener('DOMContentLoaded', init);
+                        } else {
+                            init();
+                        }
+                    })();
+                    </script>
 
                     <!-- SEÇÃO 3 - LOGOS E FAVICON -->
                     <div class="box-shadow rounded-lg border border-gray-200 bg-white p-4 dark:border-gray-800 dark:bg-gray-900">
@@ -1547,38 +2932,13 @@
                                 <x-admin::form.control-group.error control-name="login_card_bg_opacity" />
                             </x-admin::form.control-group>
 
-                            <!-- Overlay Color -->
-                            <x-admin::form.control-group>
-                                <x-admin::form.control-group.label>
-                                    @lang('theme-manager::app.settings.login-card.overlay-color')
-                                    <span class="theme-tooltip">
-                                        <span class="theme-tooltip-icon">i</span>
-                                        <span class="theme-tooltip-content">Cor de sobreposição sobre a imagem. Use formato rgba() para controlar transparência. Ex: rgba(10, 45, 15, 0.78)</span>
-                                    </span>
-                                </x-admin::form.control-group.label>
-
-                                <div class="flex items-center gap-2">
-                                    <x-admin::form.control-group.control
-                                        type="text"
-                                        name="login_card_overlay_color"
-                                        id="login_card_overlay_color"
-                                        :value="old('login_card_overlay_color', $config->login_card_overlay_color ?? 'rgba(10, 45, 15, 0.78)')"
-                                        placeholder="rgba(10, 45, 15, 0.78)"
-                                        class="flex-1"
-                                    />
-                                    <div
-                                        id="overlay_color_preview"
-                                        class="w-10 h-10 rounded border border-gray-300 dark:border-gray-600"
-                                        style="background-color: {{ old('login_card_overlay_color', $config->login_card_overlay_color ?? 'rgba(10, 45, 15, 0.78)') }};"
-                                    ></div>
-                                </div>
-
-                                <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">
-                                    @lang('theme-manager::app.settings.login-card.overlay-color-help')
+                            <!-- Overlay Color - Movido para Editor de Cores acima -->
+                            <div class="mb-4 p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-800">
+                                <p class="text-xs text-blue-700 dark:text-blue-300 flex items-center gap-2">
+                                    <span>💡</span>
+                                    <span>A cor de overlay do card agora é editada na seção <strong>"Cores do Tema"</strong> acima, junto com as outras cores do sistema.</span>
                                 </p>
-
-                                <x-admin::form.control-group.error control-name="login_card_overlay_color" />
-                            </x-admin::form.control-group>
+                            </div>
 
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <!-- Title -->
@@ -1759,6 +3119,51 @@
     </x-admin::form>
 
     {{-- ================================================================
+         BARRA STICKY: "Alterações pendentes" + Undo
+         Aparece quando o usuário seleciona um tema diferente do atual
+         ================================================================ --}}
+    <div id="krPendingBar"
+         role="alert"
+         aria-live="polite"
+         style="display:none; position:fixed; bottom:0; left:0; right:0; z-index:9999; background:linear-gradient(135deg, #f59e0b 0%, #d97706 100%); color:#fff; padding:12px 24px; box-shadow:0 -4px 20px rgba(0,0,0,0.15); align-items:center; justify-content:space-between; gap:16px;">
+
+        {{-- Indicador de alteração pendente --}}
+        <div style="display:flex; align-items:center; gap:12px;">
+            <span style="font-size:20px;">⚠️</span>
+            <span class="kr-pending-text" style="font-weight:600; font-size:14px;">
+                Alterações pendentes
+            </span>
+        </div>
+
+        {{-- Botões de ação --}}
+        <div style="display:flex; gap:10px; align-items:center;">
+            {{-- Botão Desfazer --}}
+            <button type="button"
+                    onclick="window.krUndoThemeSelection(); return false;"
+                    style="padding:8px 16px; border-radius:6px; border:2px solid rgba(255,255,255,0.4); background:transparent; color:#fff; font-weight:600; font-size:13px; cursor:pointer; transition:all 0.15s ease; display:flex; align-items:center; gap:6px;"
+                    onmouseenter="this.style.background='rgba(255,255,255,0.15)'"
+                    onmouseleave="this.style.background='transparent'">
+                <svg style="width:14px; height:14px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h10a8 8 0 018 8v2M3 10l6 6m-6-6l6-6"/>
+                </svg>
+                Desfazer
+            </button>
+
+            {{-- Botão Salvar Agora --}}
+            <button type="button"
+                    onclick="window.krSaveWithConfirm(); return false;"
+                    style="padding:8px 20px; border-radius:6px; border:none; background:#fff; color:#d97706; font-weight:700; font-size:13px; cursor:pointer; transition:all 0.15s ease; display:flex; align-items:center; gap:6px; box-shadow:0 2px 8px rgba(0,0,0,0.15);"
+                    onmouseenter="this.style.transform='scale(1.02)'"
+                    onmouseleave="this.style.transform='scale(1)'">
+                <svg style="width:14px; height:14px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                </svg>
+                Salvar Agora
+            </button>
+        </div>
+    </div>
+
+    {{-- ================================================================
          NOVO MODAL DE PREVIEW DO TEMA - #krThemePreviewModal
          Fullscreen, lazy-load de imagem, fallback robusto, zoom 1x/2x
          A11y: role="dialog", aria-modal, aria-labelledby, focus trap
@@ -1829,6 +3234,32 @@
 
             {{-- Body - Preview Area --}}
             <div id="krThemePreviewBody" style="position:relative; flex:1; overflow:auto; padding:20px; display:flex; align-items:center; justify-content:center; background:#0a0f1a;">
+
+                {{-- Botão ANTERIOR (← ) --}}
+                <button id="krThemePreviewPrevBtn"
+                        type="button"
+                        onclick="window.krNavigateTheme(-1); return false;"
+                        style="position:absolute; left:12px; top:50%; transform:translateY(-50%); z-index:100; width:48px; height:48px; border-radius:50%; border:1px solid rgba(255,255,255,0.2); background:rgba(0,0,0,0.5); color:#fff; font-size:20px; cursor:pointer; transition:all 0.2s ease; display:flex; align-items:center; justify-content:center; backdrop-filter:blur(4px);"
+                        onmouseenter="this.style.background='rgba(59,130,246,0.7)'; this.style.transform='translateY(-50%) scale(1.1)';"
+                        onmouseleave="this.style.background='rgba(0,0,0,0.5)'; this.style.transform='translateY(-50%) scale(1)';"
+                        title="Tema anterior (←)">
+                    <svg style="width:24px; height:24px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+                    </svg>
+                </button>
+
+                {{-- Botão PRÓXIMO (→) --}}
+                <button id="krThemePreviewNextBtn"
+                        type="button"
+                        onclick="window.krNavigateTheme(1); return false;"
+                        style="position:absolute; right:12px; top:50%; transform:translateY(-50%); z-index:100; width:48px; height:48px; border-radius:50%; border:1px solid rgba(255,255,255,0.2); background:rgba(0,0,0,0.5); color:#fff; font-size:20px; cursor:pointer; transition:all 0.2s ease; display:flex; align-items:center; justify-content:center; backdrop-filter:blur(4px);"
+                        onmouseenter="this.style.background='rgba(59,130,246,0.7)'; this.style.transform='translateY(-50%) scale(1.1)';"
+                        onmouseleave="this.style.background='rgba(0,0,0,0.5)'; this.style.transform='translateY(-50%) scale(1)';"
+                        title="Próximo tema (→)">
+                    <svg style="width:24px; height:24px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                    </svg>
+                </button>
 
                 {{-- Loading spinner (mostrado durante carregamento) --}}
                 <div id="krThemePreviewLoading" style="display:none; text-align:center;">
@@ -1907,11 +3338,7 @@
         if (checkbox && options) options.style.display = checkbox.checked ? 'grid' : 'none';
     };
 
-    window.updateOverlayColorPreview = function() {
-        const input = document.getElementById('login_card_overlay_color');
-        const preview = document.getElementById('overlay_color_preview');
-        if (input && preview) preview.style.backgroundColor = input.value;
-    };
+    // NOTA: updateOverlayColorPreview removida - agora gerenciada pelo krColorEditor
 
     // Reset individual field to theme default
     window.resetField = function(fieldName) {
@@ -1941,25 +3368,8 @@
 
     document.addEventListener('DOMContentLoaded', function() {
         toggleLoginCardOptions();
-        const overlayInput = document.getElementById('login_card_overlay_color');
-        if (overlayInput) {
-            overlayInput.addEventListener('input', updateOverlayColorPreview);
-            overlayInput.addEventListener('change', updateOverlayColorPreview);
-        }
-        document.querySelectorAll('input[type="color"]').forEach(function(picker) {
-            const name = picker.name;
-            const textInputs = document.querySelectorAll('input[type="text"][name="' + name + '"]');
-            picker.addEventListener('input', function() {
-                textInputs.forEach(function(txt) {txt.value = picker.value.toUpperCase();});
-            });
-            textInputs.forEach(function(txt) {
-                txt.addEventListener('input', function() {
-                    if (txt.value.match(/^#[0-9A-Fa-f]{6}$/)) picker.value = txt.value;
-                });
-            });
-        });
-
-        console.log('🎨 Color pickers initialized');
+        // NOTA: Sync de color pickers agora é gerenciado pelo krColorEditor (Editor de Tokens de Cor)
+        console.log('🎨 Legacy color picker init skipped - using krColorEditor');
     });
 })();
 </script>
@@ -1987,28 +3397,95 @@
             }
         });
 
-        // Confirmação ao trocar tema (via clique no card/label)
-        // NOTA: Não mostra confirm se mudança veio do modal (window.__krSkipConfirm)
+        // ═══════════════════════════════════════════════════════════
+        // ESTADO DIRTY: rastreia se há alteração pendente de save
+        // ═══════════════════════════════════════════════════════════
         var initialTheme = document.querySelector('input[type="radio"][name="selected_theme"]:checked');
-        var initialThemeValue = initialTheme ? initialTheme.value : 'default';
-        var initialThemeName = initialTheme ? (initialTheme.dataset.themeName || 'Default') : 'Default';
+        window.__krInitialThemeValue = initialTheme ? initialTheme.value : 'default';
+        window.__krInitialThemeName = initialTheme ? (initialTheme.dataset.themeName || 'Default') : 'Default';
+        window.__krDirtyThemeSelection = false;
 
+        // Detectar mudança de tema e marcar como dirty
         document.addEventListener('change', function(e) {
             if (e.target && e.target.matches('input[type="radio"][name="selected_theme"]')) {
-                // Skip confirm se veio do modal ou botão Selecionar
-                // NOTA: não alterar __krSkipConfirm aqui (try/finally cuida do reset)
-                if (window.__krSkipConfirm) {
-                    return;
+                var newValue = e.target.value;
+                var newName = e.target.dataset.themeName || 'Tema';
+
+                // Marcar dirty se diferente do inicial
+                if (newValue !== window.__krInitialThemeValue) {
+                    window.__krDirtyThemeSelection = true;
+                    window.__krPendingThemeValue = newValue;
+                    window.__krPendingThemeName = newName;
+                } else {
+                    window.__krDirtyThemeSelection = false;
+                    window.__krPendingThemeValue = null;
+                    window.__krPendingThemeName = null;
                 }
 
-                if (e.target.value !== initialThemeValue) {
-                    var newThemeName = e.target.dataset.themeName || 'Desconhecido';
+                // Atualizar barra sticky
+                krUpdatePendingBar();
+            }
+        });
+
+        // ═══════════════════════════════════════════════════════════
+        // BARRA STICKY: "Alterações pendentes" com Undo
+        // ═══════════════════════════════════════════════════════════
+        function krUpdatePendingBar() {
+            var bar = document.getElementById('krPendingBar');
+            if (!bar) return;
+
+            if (window.__krDirtyThemeSelection) {
+                var pendingName = window.__krPendingThemeName || 'Novo tema';
+                bar.querySelector('.kr-pending-text').textContent =
+                    'Tema selecionado: ' + pendingName + ' (não salvo)';
+                bar.style.display = 'flex';
+                bar.style.opacity = '0';
+                requestAnimationFrame(function() {
+                    bar.style.transition = 'opacity 0.3s ease';
+                    bar.style.opacity = '1';
+                });
+            } else {
+                bar.style.opacity = '0';
+                setTimeout(function() { bar.style.display = 'none'; }, 300);
+            }
+        }
+        window.krUpdatePendingBar = krUpdatePendingBar;
+
+        // Undo: volta para tema original
+        window.krUndoThemeSelection = function() {
+            var originalRadio = document.querySelector('input[type="radio"][name="selected_theme"][value="' + window.__krInitialThemeValue + '"]');
+            if (originalRadio) {
+                window.__krSkipConfirm = true;
+                try {
+                    originalRadio.checked = true;
+                    originalRadio.dispatchEvent(new Event('change', { bubbles: true }));
+                } finally {
+                    window.__krSkipConfirm = false;
+                }
+            }
+            window.__krDirtyThemeSelection = false;
+            krUpdatePendingBar();
+            if (typeof window.syncThemeButtonStates === 'function') {
+                window.syncThemeButtonStates();
+            }
+        };
+
+        // ═══════════════════════════════════════════════════════════
+        // CONFIRM NO SUBMIT DO FORM (blindagem contra Enter, etc)
+        // ═══════════════════════════════════════════════════════════
+        var themeForm = document.querySelector('form[action*="theme"]');
+        if (themeForm) {
+            themeForm.addEventListener('submit', function(e) {
+                // Só mostra confirm se tiver mudança de tema pendente
+                if (window.__krDirtyThemeSelection) {
+                    var pendingName = window.__krPendingThemeName || 'Novo tema';
+                    var initialName = window.__krInitialThemeName || 'Tema anterior';
 
                     var confirmMessage =
                         '⚠️ CONFIRMAR ALTERAÇÃO DE TEMA\n\n' +
                         '═══════════════════════════════════\n' +
-                        'Tema Atual:  ' + initialThemeName + '\n' +
-                        'Novo Tema:   ' + newThemeName + '\n' +
+                        'Tema Atual:    ' + initialName + '\n' +
+                        'Novo Tema:     ' + pendingName + '\n' +
                         '═══════════════════════════════════\n\n' +
                         '⚠️ ATENÇÃO:\n' +
                         '• Suas customizações atuais serão substituídas\n' +
@@ -2018,15 +3495,38 @@
 
                     if (!confirm(confirmMessage)) {
                         e.preventDefault();
-                        var originalRadio = document.querySelector('input[type="radio"][name="selected_theme"][value="' + initialThemeValue + '"]');
-                        if (originalRadio) {
-                            originalRadio.checked = true;
-                        }
-                        if (typeof window.syncThemeButtonStates === 'function') {
-                            window.syncThemeButtonStates();
-                        }
+                        return false;
                     }
+
+                    // Se confirmou, limpar dirty para não triggar beforeunload
+                    window.__krDirtyThemeSelection = false;
                 }
+                // Se não está dirty, submete normal
+            });
+        }
+
+        // Atalho: "Salvar Agora" da barra sticky apenas dispara submit
+        window.krSaveWithConfirm = function() {
+            var form = document.querySelector('form[action*="theme"]');
+            if (form) {
+                // requestSubmit dispara o evento submit (diferente de form.submit())
+                if (typeof form.requestSubmit === 'function') {
+                    form.requestSubmit();
+                } else {
+                    // Fallback para browsers antigos
+                    form.submit();
+                }
+            }
+        };
+
+        // ═══════════════════════════════════════════════════════════
+        // BEFOREUNLOAD: Aviso ao tentar sair com alterações pendentes
+        // ═══════════════════════════════════════════════════════════
+        window.addEventListener('beforeunload', function(e) {
+            if (window.__krDirtyThemeSelection) {
+                var msg = 'Você tem alterações de tema não salvas. Deseja realmente sair?';
+                e.returnValue = msg;
+                return msg;
             }
         });
 
@@ -2034,6 +3534,56 @@
         if (typeof window.syncThemeButtonStates === 'function') {
             window.syncThemeButtonStates();
         }
+
+        // ═══════════════════════════════════════════════════════════
+        // DENSIDADE DO GRID - Toggle Compact/Normal com persistência
+        // ═══════════════════════════════════════════════════════════
+        var DENSITY_KEY = 'kr_theme_grid_compact';
+
+        function krApplyDensity(compact) {
+            if (compact) {
+                document.body.classList.add('kr-theme-compact');
+            } else {
+                document.body.classList.remove('kr-theme-compact');
+            }
+
+            var btn = document.getElementById('krDensityToggle');
+            var label = document.getElementById('krDensityLabel');
+
+            if (btn) {
+                if (compact) {
+                    btn.classList.add('kr-active');
+                } else {
+                    btn.classList.remove('kr-active');
+                }
+            }
+
+            if (label) {
+                label.textContent = compact ? 'Normal' : 'Compacto';
+            }
+        }
+
+        // Restaurar preferência salva
+        var savedDensity = localStorage.getItem(DENSITY_KEY);
+        if (savedDensity === 'true') {
+            krApplyDensity(true);
+        }
+
+        window.krToggleDensity = function() {
+            var isCompact = document.body.classList.contains('kr-theme-compact');
+            var newState = !isCompact;
+
+            krApplyDensity(newState);
+
+            // Persistir
+            try {
+                localStorage.setItem(DENSITY_KEY, newState ? 'true' : 'false');
+            } catch(e) {
+                console.warn('⚠️ Não foi possível salvar preferência de densidade');
+            }
+
+            console.log('[KR] Densidade:', newState ? 'compact' : 'normal');
+        };
 
         console.log('✅ Theme Helpers Initialized');
     }
@@ -2417,23 +3967,36 @@
     window.krOpenThemePreview = function(btnOrEvent) {
         console.log('[KR] krOpenThemePreview chamado');
 
-        // Extrair o botão do evento ou usar diretamente
+        // Extrair o elemento com dados do tema
         var btn = btnOrEvent;
         if (btnOrEvent && btnOrEvent.target) {
-            btn = btnOrEvent.target.closest('.kr-btn-preview');
+            // Tentar encontrar o elemento com data-theme-slug
+            btn = btnOrEvent.target.closest('.kr-btn-preview') ||
+                  btnOrEvent.target.closest('.theme-card-label') ||
+                  btnOrEvent.target.closest('.theme-card-wrapper');
         }
 
         if (!btn || !btn.dataset) {
-            console.error('[KR] Botão inválido:', btn);
+            console.error('[KR] Elemento inválido:', btn);
             return;
         }
 
-        // Extrair dados do botão
+        // Se não tem previewUrl diretamente, tentar construir
+        var previewUrl = btn.dataset.previewUrl;
+        if (!previewUrl && btn.dataset.themeSlug) {
+            // Tentar pegar do botão preview dentro do card
+            var previewBtn = document.querySelector('.kr-btn-preview[data-theme-slug="' + btn.dataset.themeSlug + '"]');
+            if (previewBtn) {
+                previewUrl = previewBtn.dataset.previewUrl;
+            }
+        }
+
+        // Extrair dados do elemento (pode ser botão, div, ou card)
         currentTheme = {
             slug: btn.dataset.themeSlug || '',
             name: btn.dataset.themeName || 'Tema',
-            radioId: btn.dataset.radioId || '',
-            previewUrl: btn.dataset.previewUrl || '',
+            radioId: btn.dataset.radioId || 'theme_' + (btn.dataset.themeSlug || ''),
+            previewUrl: previewUrl || btn.dataset.previewUrl || '',
             primary: btn.dataset.primary || '#1E40AF',
             success: btn.dataset.success || '#10B981',
             warning: btn.dataset.warning || '#F59E0B',
@@ -2709,6 +4272,62 @@
     };
 
     // ═══════════════════════════════════════════════════════════
+    // NAVEGAR ENTRE TEMAS (← →) SEM FECHAR MODAL
+    // ═══════════════════════════════════════════════════════════
+    window.krNavigateTheme = function(direction) {
+        if (!currentTheme || !currentTheme.slug) {
+            console.warn('[KR] Nenhum tema ativo para navegar');
+            return;
+        }
+
+        // Obter lista de temas na ordem atual do grid
+        var themeCards = document.querySelectorAll('.theme-card-wrapper[data-theme-slug]');
+        var themeSlugs = [];
+        themeCards.forEach(function(card) {
+            themeSlugs.push(card.dataset.themeSlug);
+        });
+
+        if (themeSlugs.length === 0) {
+            console.warn('[KR] Nenhum tema encontrado');
+            return;
+        }
+
+        // Encontrar índice atual
+        var currentIndex = themeSlugs.indexOf(currentTheme.slug);
+        if (currentIndex === -1) {
+            console.warn('[KR] Tema atual não encontrado na lista');
+            return;
+        }
+
+        // Calcular novo índice (circular)
+        var newIndex = currentIndex + direction;
+        if (newIndex < 0) newIndex = themeSlugs.length - 1;
+        if (newIndex >= themeSlugs.length) newIndex = 0;
+
+        var newSlug = themeSlugs[newIndex];
+        console.log('[KR] Navegando:', currentTheme.slug, '->', newSlug);
+
+        // Encontrar o botão/div do novo tema para extrair dados
+        var newCard = document.querySelector('.theme-card-wrapper[data-theme-slug="' + newSlug + '"]');
+        if (!newCard) {
+            console.error('[KR] Card não encontrado para:', newSlug);
+            return;
+        }
+
+        // Encontrar o elemento clicável (div ou botão preview) com dados completos
+        var previewBtn = newCard.querySelector('.kr-btn-preview[data-theme-slug]') ||
+                         newCard.querySelector('.theme-card-label[data-theme-slug]');
+
+        if (!previewBtn) {
+            // Usar dados do card wrapper como fallback
+            previewBtn = newCard;
+        }
+
+        // Carregar o novo tema no modal (reutiliza krOpenThemePreview)
+        window.krOpenThemePreview(previewBtn);
+    };
+
+    // ═══════════════════════════════════════════════════════════
     // SELECIONAR TEMA (BOTÃO NO CARD) - com try/finally
     // ═══════════════════════════════════════════════════════════
     window.krSelectTheme = function(btn) {
@@ -2832,7 +4451,7 @@
     // EVENT LISTENERS
     // ═══════════════════════════════════════════════════════════
 
-    // ESC fecha modal + Focus trap com Tab
+    // ESC fecha modal + Focus trap com Tab + Setas navegam temas
     document.addEventListener('keydown', function(e) {
         var modal = document.getElementById('krThemePreviewModal');
         if (!modal || modal.style.display !== 'block') return;
@@ -2840,6 +4459,20 @@
         // ESC fecha modal
         if (e.key === 'Escape') {
             window.krCloseThemePreview();
+            return;
+        }
+
+        // ← Tema anterior
+        if (e.key === 'ArrowLeft') {
+            e.preventDefault();
+            window.krNavigateTheme(-1);
+            return;
+        }
+
+        // → Próximo tema
+        if (e.key === 'ArrowRight') {
+            e.preventDefault();
+            window.krNavigateTheme(1);
             return;
         }
 
