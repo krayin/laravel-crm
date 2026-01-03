@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Http\Controllers\Admin\Settings\ThemeSettingsController;
+use App\Observers\ThemeConfigObserver;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 
@@ -14,9 +15,17 @@ use Illuminate\Support\ServiceProvider;
  * quando há conflito de nome).
  *
  * IMPORTANTE: Registrar este provider no FINAL de config/app.php providers.
+ *
+ * Também registra o ThemeConfigObserver para garantir invalidação de cache
+ * em QUALQUER caminho de código (UI, CLI, API, scripts).
  */
 class ThemeOverridesServiceProvider extends ServiceProvider
 {
+    /**
+     * FQCN do Model ThemeConfig do pacote.
+     */
+    private const THEME_CONFIG_MODEL = \Webkul\ThemeManager\Models\ThemeConfig::class;
+
     /**
      * Register services.
      */
@@ -31,6 +40,27 @@ class ThemeOverridesServiceProvider extends ServiceProvider
     public function boot(): void
     {
         $this->registerThemeSettingsRoutes();
+        $this->registerThemeConfigObserver();
+    }
+
+    /**
+     * Registra o Observer para ThemeConfig (invalidação universal de cache).
+     *
+     * Safe para CLI: não quebra se a tabela não existir ainda.
+     */
+    protected function registerThemeConfigObserver(): void
+    {
+        // Só registra se a classe do Model existir (upgrade-safe)
+        if (! class_exists(self::THEME_CONFIG_MODEL)) {
+            return;
+        }
+
+        try {
+            self::THEME_CONFIG_MODEL::observe(ThemeConfigObserver::class);
+        } catch (\Throwable $e) {
+            // Falha silenciosa em CLI/migrations se tabela não existir
+            // O observer será registrado na próxima request após migrate
+        }
     }
 
     /**

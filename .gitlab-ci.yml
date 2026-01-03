@@ -1,4 +1,5 @@
 stages:
+  - check
   - test
 
 variables:
@@ -24,6 +25,44 @@ variables:
     key: ${CI_COMMIT_REF_SLUG}-composer
     paths:
       - vendor/
+
+# =============================================================================
+# UPGRADE-SAFE CHECK
+# Fails if any changes detected in vendor/ or packages/Webkul/
+# =============================================================================
+check:upgrade-safe:
+  <<: *php_base
+  stage: check
+  script:
+    - echo "Running upgrade-safe check..."
+    - chmod +x scripts/check-upgrade-safe.sh
+    - ./scripts/check-upgrade-safe.sh
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+    - if: $CI_COMMIT_BRANCH =~ /^(main|master|develop|2\.1)$/
+  allow_failure: false
+
+# =============================================================================
+# THEME DOCTOR DIAGNOSTICS
+# Generates theme health report as artifact
+# =============================================================================
+check:theme-doctor:
+  <<: *php_base
+  stage: check
+  script:
+    - echo "Running theme diagnostics..."
+    - php artisan -V
+    - php artisan theme:doctor --json=1 > theme-doctor-report.json
+    - cat theme-doctor-report.json
+  artifacts:
+    paths:
+      - theme-doctor-report.json
+    expire_in: 7 days
+    when: always
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+    - if: $CI_COMMIT_BRANCH =~ /^(main|master|develop|2\.1)$/
+  allow_failure: true
 
 # =============================================================================
 # PR/Push Gate: Roda apenas BrandKit (rápido, ~15s)

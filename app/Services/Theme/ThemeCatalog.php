@@ -126,9 +126,21 @@ class ThemeCatalog
 
     /**
      * Retorna o tema padrão do sistema.
+     * Tenta ler do disco primeiro, senão usa valores hardcoded.
+     *
+     * @return array
      */
     protected function getDefaultTheme(): array
     {
+        // Tentar ler do disco primeiro
+        $defaultDir = $this->themesPath . DIRECTORY_SEPARATOR . 'default';
+        $themeData = $this->readThemeJson($defaultDir);
+
+        if ($themeData !== null) {
+            return $this->normalizeThemeData('default', $themeData);
+        }
+
+        // Fallback hardcoded
         return [
             'slug'        => 'default',
             'name'        => 'Padrão Krayin',
@@ -136,6 +148,7 @@ class ThemeCatalog
             'description' => 'Tema padrão do sistema - visual limpo e moderno',
             'author'      => null,
             'preview'     => null,
+            'preview_url' => null,
             'colors'      => self::DEFAULT_COLORS,
         ];
     }
@@ -186,13 +199,16 @@ class ThemeCatalog
      */
     protected function normalizeThemeData(string $slug, array $themeData): array
     {
+        $preview = $themeData['preview'] ?? null;
+
         return [
             'slug'        => $slug,
             'name'        => $themeData['name'] ?? ucfirst($slug),
             'version'     => $themeData['version'] ?? '1.0.0',
             'description' => $themeData['description'] ?? '',
             'author'      => $themeData['author'] ?? null,
-            'preview'     => $themeData['preview'] ?? null,
+            'preview'     => $preview,
+            'preview_url' => $preview ? '/storage/themes/' . $slug . '/' . $preview : null,
             'colors'      => [
                 'primary'       => $themeData['color_primary'] ?? self::DEFAULT_COLORS['primary'],
                 'primary_dark'  => $themeData['color_primary_dark'] ?? self::DEFAULT_COLORS['primary_dark'],

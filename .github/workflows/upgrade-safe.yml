@@ -1,0 +1,102 @@
+# Upgrade-Safe Check Workflow
+#
+# Verifies that no changes were made to protected directories:
+# - vendor/
+# - packages/Webkul/
+#
+# Runs on pull requests and pushes to main branches.
+# Also runs theme:doctor for diagnostics.
+#
+# To disable this workflow, simply delete this file or rename to .disabled
+
+name: Upgrade-Safe Check
+
+on:
+  push:
+    branches: [main, master, develop, '2.1']
+  pull_request:
+    branches: [main, master, develop, '2.1']
+
+jobs:
+  upgrade-safe-check:
+    name: Check Upgrade-Safe Compliance
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          extensions: mbstring, xml, ctype, iconv, intl, pdo_sqlite, mysql, zip, gd, bcmath
+          coverage: none
+
+      - name: Get composer cache directory
+        id: composer-cache
+        run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
+
+      - name: Cache composer dependencies
+        uses: actions/cache@v4
+        with:
+          path: ${{ steps.composer-cache.outputs.dir }}
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+          restore-keys: ${{ runner.os }}-composer-
+
+      - name: Install dependencies
+        run: composer install --prefer-dist --no-interaction --no-progress
+
+      - name: Sanity check - Laravel version
+        run: php artisan -V
+
+      - name: Make upgrade-safe script executable
+        run: chmod +x scripts/check-upgrade-safe.sh
+
+      - name: Run upgrade-safe check
+        id: upgrade-safe
+        run: |
+          echo "## Upgrade-Safe Check Results" >> $GITHUB_STEP_SUMMARY
+          if ./scripts/check-upgrade-safe.sh; then
+            echo "### Status: PASS" >> $GITHUB_STEP_SUMMARY
+            echo "No changes detected in protected directories." >> $GITHUB_STEP_SUMMARY
+          else
+            echo "### Status: FAIL" >> $GITHUB_STEP_SUMMARY
+            echo "Changes detected in protected directories. See job output for details." >> $GITHUB_STEP_SUMMARY
+            exit 1
+          fi
+
+      - name: Run theme:doctor diagnostics
+        id: theme-doctor
+        continue-on-error: true
+        run: |
+          php artisan theme:doctor --json=1 > theme-doctor-report.json
+          echo "## Theme Doctor Report" >> $GITHUB_STEP_SUMMARY
+          echo '```json' >> $GITHUB_STEP_SUMMARY
+          cat theme-doctor-report.json >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY
+
+      - name: Upload theme doctor report
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: theme-doctor-report
+          path: theme-doctor-report.json
+          retention-days: 7
+
+  # Optional: Run on specific paths only
+  # paths-filter:
+  #   runs-on: ubuntu-latest
+  #   outputs:
+  #     theme-changes: ${{ steps.filter.outputs.theme }}
+  #   steps:
+  #     - uses: actions/checkout@v4
+  #     - uses: dorny/paths-filter@v3
+  #       id: filter
+  #       with:
+  #         filters: |
+  #           theme:
+  #             - 'app/Services/Theme/**'
+  #             - 'app/Http/Controllers/Admin/Settings/**'
+  #             - 'resources/views/vendor/theme-manager/**'
+  #             - 'storage/app/public/themes/**'
