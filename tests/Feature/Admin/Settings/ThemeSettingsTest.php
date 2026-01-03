@@ -23,10 +23,10 @@ class ThemeSettingsTest extends TestCase
         $mockConfig->shouldReceive('getAttribute')->with('selected_theme')->andReturn('default');
         $mockConfig->shouldReceive('getAttribute')->with('is_active')->andReturn(true);
         $mockConfig->shouldReceive('offsetGet')->andReturnUsing(function ($key) {
-            return match($key) {
+            return match ($key) {
                 'selected_theme' => 'default',
-                'is_active' => true,
-                default => null,
+                'is_active'      => true,
+                default          => null,
             };
         });
         $mockConfig->shouldReceive('offsetExists')->andReturn(true);
@@ -57,7 +57,7 @@ class ThemeSettingsTest extends TestCase
      */
     public function theme_catalog_returns_default_theme_with_colors(): void
     {
-        $catalog = new ThemeCatalog();
+        $catalog = new ThemeCatalog;
         $themes = $catalog->all();
 
         $this->assertArrayHasKey('default', $themes);
@@ -70,7 +70,7 @@ class ThemeSettingsTest extends TestCase
      */
     public function theme_catalog_all_themes_have_required_color_keys(): void
     {
-        $catalog = new ThemeCatalog();
+        $catalog = new ThemeCatalog;
         $themes = $catalog->all();
 
         $requiredColors = ['primary', 'primary_dark', 'primary_light', 'success', 'warning', 'danger'];
@@ -93,7 +93,7 @@ class ThemeSettingsTest extends TestCase
      */
     public function theme_catalog_colors_are_valid_hex(): void
     {
-        $catalog = new ThemeCatalog();
+        $catalog = new ThemeCatalog;
         $themes = $catalog->all();
 
         $hexPattern = '/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/';
@@ -114,7 +114,7 @@ class ThemeSettingsTest extends TestCase
      */
     public function theme_catalog_default_theme_has_correct_structure(): void
     {
-        $catalog = new ThemeCatalog();
+        $catalog = new ThemeCatalog;
         $default = $catalog->get('default');
 
         $this->assertNotNull($default);
@@ -130,7 +130,7 @@ class ThemeSettingsTest extends TestCase
      */
     public function theme_settings_controller_prepares_themes_for_js(): void
     {
-        $catalog = new ThemeCatalog();
+        $catalog = new ThemeCatalog;
         $availableThemes = $catalog->all();
 
         // Simulate what the controller does

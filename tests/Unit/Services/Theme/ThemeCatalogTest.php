@@ -3,7 +3,6 @@
 namespace Tests\Unit\Services\Theme;
 
 use App\Services\Theme\ThemeCatalog;
-use Illuminate\Support\Facades\File;
 use Tests\TestCase;
 
 class ThemeCatalogTest extends TestCase
@@ -13,7 +12,7 @@ class ThemeCatalogTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        $this->catalog = new ThemeCatalog();
+        $this->catalog = new ThemeCatalog;
     }
 
     /**

@@ -91,9 +91,6 @@ class ThemeCatalog
 
     /**
      * Retorna um tema específico pelo slug.
-     *
-     * @param string $slug
-     * @return array|null
      */
     public function get(string $slug): ?array
     {
@@ -104,9 +101,6 @@ class ThemeCatalog
 
     /**
      * Verifica se um tema existe.
-     *
-     * @param string $slug
-     * @return bool
      */
     public function exists(string $slug): bool
     {
@@ -114,8 +108,8 @@ class ThemeCatalog
             return true;
         }
 
-        $themeDir = $this->themesPath . DIRECTORY_SEPARATOR . $slug;
-        $themeJson = $themeDir . DIRECTORY_SEPARATOR . 'theme.json';
+        $themeDir = $this->themesPath.DIRECTORY_SEPARATOR.$slug;
+        $themeJson = $themeDir.DIRECTORY_SEPARATOR.'theme.json';
 
         return File::isDirectory($themeDir) && File::exists($themeJson);
     }
@@ -132,8 +126,6 @@ class ThemeCatalog
 
     /**
      * Retorna o tema padrão do sistema.
-     *
-     * @return array
      */
     protected function getDefaultTheme(): array
     {
@@ -151,12 +143,12 @@ class ThemeCatalog
     /**
      * Lê e parseia um arquivo theme.json com validação.
      *
-     * @param string $themeDirectory Caminho do diretório do tema
+     * @param  string  $themeDirectory  Caminho do diretório do tema
      * @return array|null Dados do tema ou null se inválido
      */
     protected function readThemeJson(string $themeDirectory): ?array
     {
-        $themeJsonPath = $themeDirectory . DIRECTORY_SEPARATOR . 'theme.json';
+        $themeJsonPath = $themeDirectory.DIRECTORY_SEPARATOR.'theme.json';
 
         if (! File::exists($themeJsonPath)) {
             return null;
@@ -168,18 +160,20 @@ class ThemeCatalog
 
             // json_decode retorna null em caso de JSON inválido
             if (! is_array($data)) {
-                \Log::warning("[ThemeCatalog] Invalid JSON in theme.json", [
+                \Log::warning('[ThemeCatalog] Invalid JSON in theme.json', [
                     'path' => $themeJsonPath,
                 ]);
+
                 return null;
             }
 
             return $data;
         } catch (\Exception $e) {
-            \Log::warning("[ThemeCatalog] Error reading theme.json", [
+            \Log::warning('[ThemeCatalog] Error reading theme.json', [
                 'path'  => $themeJsonPath,
                 'error' => $e->getMessage(),
             ]);
+
             return null;
         }
     }
@@ -187,8 +181,7 @@ class ThemeCatalog
     /**
      * Normaliza os dados do tema para o formato padrão.
      *
-     * @param string $slug
-     * @param array $themeData Dados brutos do theme.json
+     * @param  array  $themeData  Dados brutos do theme.json
      * @return array Dados normalizados
      */
     protected function normalizeThemeData(string $slug, array $themeData): array

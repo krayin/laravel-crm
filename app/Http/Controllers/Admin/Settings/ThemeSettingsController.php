@@ -23,8 +23,7 @@ class ThemeSettingsController extends Controller
     public function __construct(
         protected ThemeConfigRepository $themeConfigRepository,
         protected ThemeCatalog $themeCatalog
-    ) {
-    }
+    ) {}
 
     /**
      * Display the theme configuration form.
