@@ -194,12 +194,12 @@ class ThemeDoctorCommand extends Command
             }
 
             $themes[] = [
-                'slug'               => $slug,
-                'name'               => $themeData['name'] ?? $slug,
-                'has_preview'        => ! empty($previewFile),
-                'preview_file'       => $previewFile,
-                'preview_exists'     => $previewExists,
-                'preview_path'       => $previewPath,
+                'slug'                 => $slug,
+                'name'                 => $themeData['name'] ?? $slug,
+                'has_preview'          => ! empty($previewFile),
+                'preview_file'         => $previewFile,
+                'preview_exists'       => $previewExists,
+                'preview_path'         => $previewPath,
                 'preview_url_absolute' => $previewUrlAbsolute,
             ];
         }

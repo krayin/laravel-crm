@@ -127,13 +127,11 @@ class ThemeCatalog
     /**
      * Retorna o tema padrão do sistema.
      * Tenta ler do disco primeiro, senão usa valores hardcoded.
-     *
-     * @return array
      */
     protected function getDefaultTheme(): array
     {
         // Tentar ler do disco primeiro
-        $defaultDir = $this->themesPath . DIRECTORY_SEPARATOR . 'default';
+        $defaultDir = $this->themesPath.DIRECTORY_SEPARATOR.'default';
         $themeData = $this->readThemeJson($defaultDir);
 
         if ($themeData !== null) {
@@ -208,7 +206,7 @@ class ThemeCatalog
             'description' => $themeData['description'] ?? '',
             'author'      => $themeData['author'] ?? null,
             'preview'     => $preview,
-            'preview_url' => $preview ? '/storage/themes/' . $slug . '/' . $preview : null,
+            'preview_url' => $preview ? '/storage/themes/'.$slug.'/'.$preview : null,
             'colors'      => [
                 'primary'       => $themeData['color_primary'] ?? self::DEFAULT_COLORS['primary'],
                 'primary_dark'  => $themeData['color_primary_dark'] ?? self::DEFAULT_COLORS['primary_dark'],

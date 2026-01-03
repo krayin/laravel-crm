@@ -12,7 +12,6 @@
  *   php scripts/check-upgrade-safe.php --fix
  *   php scripts/check-upgrade-safe.php --verbose
  */
-
 $baseDir = dirname(__DIR__);
 $scriptsDir = __DIR__;
 
@@ -25,9 +24,9 @@ $isWindows = strtoupper(substr(PHP_OS, 0, 3)) === 'WIN';
 
 if ($isWindows) {
     // Windows: use PowerShell
-    $script = $scriptsDir . DIRECTORY_SEPARATOR . 'check-upgrade-safe.ps1';
+    $script = $scriptsDir.DIRECTORY_SEPARATOR.'check-upgrade-safe.ps1';
 
-    if (!file_exists($script)) {
+    if (! file_exists($script)) {
         fwrite(STDERR, "[ERROR] Script not found: {$script}\n");
         exit(1);
     }
@@ -44,15 +43,15 @@ if ($isWindows) {
     $command = "powershell -ExecutionPolicy Bypass -File \"{$script}\" {$argsStr}";
 } else {
     // Linux/macOS: use Bash
-    $script = $scriptsDir . DIRECTORY_SEPARATOR . 'check-upgrade-safe.sh';
+    $script = $scriptsDir.DIRECTORY_SEPARATOR.'check-upgrade-safe.sh';
 
-    if (!file_exists($script)) {
+    if (! file_exists($script)) {
         fwrite(STDERR, "[ERROR] Script not found: {$script}\n");
         exit(1);
     }
 
     // Make executable if not already
-    if (!is_executable($script)) {
+    if (! is_executable($script)) {
         chmod($script, 0755);
     }
 
@@ -73,7 +72,7 @@ chdir($baseDir);
 
 // Execute
 if ($verbose) {
-    echo "[DEBUG] OS: " . PHP_OS . "\n";
+    echo '[DEBUG] OS: '.PHP_OS."\n";
     echo "[DEBUG] Command: {$command}\n";
     echo "\n";
 }

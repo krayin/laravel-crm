@@ -164,7 +164,7 @@ class ThemePreviewGenerateCommand extends Command
             File::put($jsonPath, json_encode($themeData, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE));
 
             if (! $quiet) {
-                $this->line("        theme.json atualizado com preview: preview.svg");
+                $this->line('        theme.json atualizado com preview: preview.svg');
             }
         }
     }
