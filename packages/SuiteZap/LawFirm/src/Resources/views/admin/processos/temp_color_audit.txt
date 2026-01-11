@@ -1,0 +1,46 @@
+                <!-- DASHBOARD FINANCEIRO (Hybrid: Flexbox Layout + Clean Style + Custom Colors) -->
+                <div class="mt-6 w-full">
+                    <div class="flex flex-row flex-wrap gap-4 w-full items-stretch">
+                        
+                        <!-- 1. Receita (Verde) -->
+                        <div class="flex-1 min-w-[150px] flex flex-col justify-center rounded-lg border border-gray-200 bg-white p-3 shadow-sm dark:border-gray-800 dark:bg-gray-900">
+                            <span class="text-[11px] font-bold uppercase text-emerald-600 tracking-wider">Total Receitas</span>
+                            <span class="mt-1 text-lg font-bold text-emerald-600 dark:text-emerald-400">
+                                {{ core()->formatBasePrice($processo->receita_total) }}
+                            </span>
+                        </div>
+
+                        <!-- 2. Despesas (Vermelho Escuro) -->
+                        <div class="flex-1 min-w-[150px] flex flex-col justify-center rounded-lg border border-gray-200 bg-white p-3 shadow-sm dark:border-gray-800 dark:bg-gray-900">
+                            <span class="text-[11px] font-bold uppercase text-red-600 tracking-wider">Total Despesas</span>
+                            <span class="mt-1 text-lg font-bold text-red-800 dark:text-red-400">
+                                {{ core()->formatBasePrice($processo->despesas_totais) }}
+                            </span>
+                        </div>
+
+                        <!-- 3. Saldo Líquido (Azul Positivo / Vermelho Negativo) -->
+                        <div class="flex-1 min-w-[150px] flex flex-col justify-center rounded-lg border border-gray-200 bg-white p-3 shadow-sm dark:border-gray-800 dark:bg-gray-900">
+                            <span class="text-[11px] font-bold uppercase text-gray-500 dark:text-gray-400 tracking-wider">Saldo Líquido</span>
+                            <span class="mt-1 text-lg font-bold {{ $processo->lucro_liquido >= 0 ? 'text-blue-600 dark:text-blue-400' : 'text-red-600 dark:text-red-400' }}">
+                                {{ core()->formatBasePrice($processo->lucro_liquido) }}
+                            </span>
+                        </div>
+
+                        <!-- 4. Margem Lucratividade -->
+                        <div class="flex-1 min-w-[150px] flex flex-col justify-center rounded-lg border border-gray-200 bg-white p-3 shadow-sm dark:border-gray-800 dark:bg-gray-900">
+                            <span class="text-[11px] font-bold uppercase text-blue-600 tracking-wider" title="Lucro Líquido / Receita Total">Margem Lucro</span>
+                            <span class="mt-1 text-lg font-bold text-gray-600 dark:text-gray-300">
+                                {{ number_format($processo->margem_lucratividade, 2, ',', '.') }}%
+                            </span>
+                        </div>
+
+                        <!-- 5. Índice de Êxito -->
+                        <div class="flex-1 min-w-[150px] flex flex-col justify-center rounded-lg border border-gray-200 bg-white p-3 shadow-sm dark:border-gray-800 dark:bg-gray-900">
+                            <span class="text-[11px] font-bold uppercase text-indigo-600 tracking-wider" title="Receita / Valor Causa">Índice Êxito</span>
+                            <span class="mt-1 text-lg font-bold text-gray-600 dark:text-gray-300">
+                                {{ number_format($processo->indice_exito, 2, ',', '.') }}%
+                            </span>
+                        </div>
+
+                    </div>
+                </div>

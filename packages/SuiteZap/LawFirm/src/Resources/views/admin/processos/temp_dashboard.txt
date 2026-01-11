@@ -1,0 +1,47 @@
+                <!-- DASHBOARD FINANCEIRO (ESTILO CLEAN / BRANCO) -->
+                <div class="mt-6 w-full">
+                    <div class="grid grid-cols-1 md:grid-cols-5 gap-4 w-full">
+                        
+                        <!-- 1. Receita Total -->
+                        <div class="flex flex-col justify-center rounded-lg border border-gray-200 bg-white p-3 shadow-sm">
+                            <span class="text-[11px] font-bold uppercase text-emerald-600 tracking-wider">Total Receitas</span>
+                            <span class="mt-1 text-lg font-bold text-gray-800">
+                                {{ core()->formatBasePrice($processo->receita_total) }}
+                            </span>
+                        </div>
+
+                        <!-- 2. Despesas Totais -->
+                        <div class="flex flex-col justify-center rounded-lg border border-gray-200 bg-white p-3 shadow-sm">
+                            <span class="text-[11px] font-bold uppercase text-red-600 tracking-wider">Total Despesas</span>
+                            <span class="mt-1 text-lg font-bold text-gray-800">
+                                {{ core()->formatBasePrice($processo->despesas_totais) }}
+                            </span>
+                        </div>
+
+                        <!-- 3. Saldo Líquido -->
+                        <div class="flex flex-col justify-center rounded-lg border border-gray-200 bg-white p-3 shadow-sm">
+                            <span class="text-[11px] font-bold uppercase text-gray-500 tracking-wider">Saldo Líquido</span>
+                            <!-- Saldo mantém a cor no número para destaque -->
+                            <span class="mt-1 text-lg font-bold {{ $processo->lucro_liquido >= 0 ? 'text-emerald-600' : 'text-red-600' }}">
+                                {{ core()->formatBasePrice($processo->lucro_liquido) }}
+                            </span>
+                        </div>
+
+                        <!-- 4. Margem Lucratividade -->
+                        <div class="flex flex-col justify-center rounded-lg border border-gray-200 bg-white p-3 shadow-sm">
+                            <span class="text-[11px] font-bold uppercase text-blue-600 tracking-wider" title="Lucro Líquido / Receita Total">Margem Lucro</span>
+                            <span class="mt-1 text-lg font-bold text-gray-600">
+                                {{ number_format($processo->margem_lucratividade, 2, ',', '.') }}%
+                            </span>
+                        </div>
+
+                        <!-- 5. Índice de Êxito -->
+                        <div class="flex flex-col justify-center rounded-lg border border-gray-200 bg-white p-3 shadow-sm">
+                            <span class="text-[11px] font-bold uppercase text-indigo-600 tracking-wider" title="Receita / Valor Causa">Índice Êxito</span>
+                            <span class="mt-1 text-lg font-bold text-gray-600">
+                                {{ number_format($processo->indice_exito, 2, ',', '.') }}%
+                            </span>
+                        </div>
+
+                    </div>
+                </div>

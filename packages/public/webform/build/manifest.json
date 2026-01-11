@@ -1,0 +1,23 @@
+{
+  "src/Resources/assets/css/app.css": {
+    "file": "assets/app-499ae59b.css",
+    "isEntry": true,
+    "src": "src/Resources/assets/css/app.css"
+  },
+  "src/Resources/assets/fonts/icomoon.woff": {
+    "file": "assets/icomoon-8bbcff3c.woff",
+    "src": "src/Resources/assets/fonts/icomoon.woff"
+  },
+  "src/Resources/assets/js/app.css": {
+    "file": "assets/app-c04ede37.css",
+    "src": "src/Resources/assets/js/app.css"
+  },
+  "src/Resources/assets/js/app.js": {
+    "css": [
+      "assets/app-c04ede37.css"
+    ],
+    "file": "assets/app-8787c790.js",
+    "isEntry": true,
+    "src": "src/Resources/assets/js/app.js"
+  }
+}
