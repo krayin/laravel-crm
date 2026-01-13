@@ -261,14 +261,21 @@ class PrazoDataGrid extends DataGrid
                 }
 
                 $dueDate = null;
-                try {
-                    // Tenta parsing padrão (Y-m-d ou ISO)
-                    $dueDate = \Carbon\Carbon::parse($row->data_vencimento)->startOfDay();
-                } catch (\Exception $e) {
+                $rawDate = $row->data_vencimento;
+
+                // Tenta formato ISO (Y-m-d) do banco de dados
+                if (preg_match('/^\d{4}-\d{2}-\d{2}/', $rawDate)) {
+                    $dueDate = \Carbon\Carbon::createFromFormat('Y-m-d', substr($rawDate, 0, 10))->startOfDay();
+                }
+                // Tenta formato BR (d/m/Y)
+                elseif (preg_match('/^\d{2}\/\d{2}\/\d{4}$/', $rawDate)) {
+                    $dueDate = \Carbon\Carbon::createFromFormat('d/m/Y', $rawDate)->startOfDay();
+                }
+                // Fallback
+                else {
                     try {
-                        // Tenta formato BR (d/m/Y)
-                        $dueDate = \Carbon\Carbon::createFromFormat('d/m/Y', $row->data_vencimento)->startOfDay();
-                    } catch (\Exception $e2) {
+                        $dueDate = \Carbon\Carbon::parse($rawDate)->startOfDay();
+                    } catch (\Exception $e) {
                         return '<span class="badge badge-secondary">Data Inválida</span>';
                     }
                 }

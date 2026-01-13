@@ -31,6 +31,9 @@ Route::group(['prefix' => 'api/lawfirm', 'middleware' => ['api', 'auth:sanctum']
     // ===========================================
     // Deadlines API
     // ===========================================
+    // ===========================================
+    // Deadlines API
+    // ===========================================
     Route::controller(DeadlineApiController::class)->prefix('deadlines')->group(function () {
         Route::get('/', 'index');
         Route::post('/', 'store');
@@ -38,5 +41,11 @@ Route::group(['prefix' => 'api/lawfirm', 'middleware' => ['api', 'auth:sanctum']
         Route::put('{id}', 'update');
         Route::delete('{id}', 'destroy');
     });
+
+    // ===========================================
+    // Document Checklist API
+    // ===========================================
+    Route::get('documents/{processId}', [SuiteZap\LawFirm\Http\Controllers\Api\DocumentChecklistApiController::class, 'index']);
+    Route::put('documents/{id}', [SuiteZap\LawFirm\Http\Controllers\Api\DocumentChecklistApiController::class, 'update']);
 
 });

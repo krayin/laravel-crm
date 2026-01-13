@@ -90,6 +90,9 @@ Route::middleware(['web', 'admin_locale', 'user'])
         // -----------------------------------------------
         Route::get('documentos/procuracao/{processId}', [LegalDocumentController::class, 'downloadProcuration'])
             ->name('lawfirm.documents.procuration');
+
+        Route::get('documentos/contrato/{processId}', [LegalDocumentController::class, 'downloadContract'])
+            ->name('lawfirm.documents.contract');
     });
 
 // ============================================================================

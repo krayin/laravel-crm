@@ -1,7 +1,13 @@
 <x-admin::layouts>
     <x-slot:title>
         @lang('lawfirm::app.processos.view')
-        </x-slot>
+    </x-slot>
+
+    <style>
+        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 9999; align-items: center; justify-content: center; }
+        .modal-box { background: #fff; padding: 20px; width: 400px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .show-modal { display: flex !important; }
+    </style>
 
         <div class="flex flex-col gap-4">
 
@@ -20,6 +26,9 @@
                 <div class="flex items-center gap-x-2.5">
                     <a href="{{ route('lawfirm.documents.procuration', $processo->id) }}" class="secondary-button" target="_blank">
                         ⚖️ Gerar Procuração
+                    </a>
+                    <a href="{{ route('lawfirm.documents.contract', $processo->id) }}" class="secondary-button" target="_blank">
+                        📄 Gerar Contrato
                     </a>
                     <a href="{{ route('admin.processos.edit', $processo->id) }}" class="primary-button">
                         @lang('lawfirm::app.processos.edit')
@@ -245,22 +254,24 @@
                                 </td>
                                 <td class="px-6 py-4 text-gray-900 dark:text-white font-medium">{{ $doc->name }}</td>
                                 <td class="px-6 py-4 text-gray-600 dark:text-gray-300">{{ $doc->notes ?? '-' }}</td>
-                                <td class="px-6 py-4">
-                                    <div class="flex items-center gap-2">
-                                        @if($doc->status == 'pending')
-                                            <form action="{{ route('lawfirm.documents.update', $doc->id) }}" method="POST">
-                                                @csrf @method('PUT')
-                                                <input type="hidden" name="status" value="received">
-                                                <button class="text-green-600 hover:text-green-800" title="Marcar como Recebido">
-                                                    <span class="icon-done text-xl"></span>
-                                                </button>
-                                            </form>
-                                        @endif
-                                        
-                                        <form action="{{ route('lawfirm.documents.delete', $doc->id) }}" method="POST" onsubmit="return confirm('Remover este item?');">
-                                            @csrf @method('DELETE')
-                                            <button class="text-red-600 hover:text-red-800" title="Remover">
-                                                <span class="icon-delete text-xl"></span>
+                                <td class="actions" style="width: 100px; min-width: 100px;">
+                                    <div style="display: flex; align-items: center; gap: 5px;">
+                                        <!-- Botão Editar (Ícone Lápis) -->
+                                        <button type="button" class="transition text-blue-600 hover:text-blue-800" 
+                                            title="Analisar / Editar Nota"
+                                            data-id="{{ $doc->id }}"
+                                            data-status="{{ $doc->status }}"
+                                            data-notes="{{ $doc->notes ?? '' }}"
+                                            onclick="openDocModal(this)">
+                                            <span class="icon icon-edit text-2xl"></span>
+                                        </button>
+
+                                        <!-- Botão Excluir (Ícone Lixeira) -->
+                                        <form action="{{ route('lawfirm.documents.delete', $doc->id) }}" method="POST" style="margin:0;" onsubmit="return confirm('Remover este documento?');">
+                                            @csrf 
+                                            @method('DELETE')
+                                            <button type="button" class="transition flex items-center justify-center text-red-600 hover:text-red-800" title="Remover" onclick="if(confirm('Remover este documento?')) this.closest('form').submit();">
+                                                <span class="icon icon-delete text-2xl"></span>
                                             </button>
                                         </form>
                                     </div>
@@ -594,4 +605,66 @@
             </div>
 
         </div>
+
+    <!-- Modal HTML (Moved inside layout to ensure rendering) -->
+    <div id="docModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 99999; align-items: center; justify-content: center;">
+        <div class="bg-white dark:bg-gray-800" style="padding: 25px; width: 500px; border-radius: 8px; box-shadow: 0 5px 15px rgba(0,0,0,0.3);">
+            <h3 class="text-gray-800 dark:text-white" style="margin-top: 0; margin-bottom: 20px; border-bottom: 1px solid #eee; padding-bottom: 10px; font-weight: bold; font-size: 1.125rem;">
+                Analisar Documento
+            </h3>
+
+            <form id="docForm" method="POST" action="">
+                @csrf 
+                <input type="hidden" name="_method" value="PUT">
+                
+                <div class="form-group" style="margin-bottom: 15px;">
+                    <label class="text-gray-700 dark:text-gray-300" style="font-weight: bold; display: block; margin-bottom: 5px;">Status</label>
+                    <select name="status" id="modalStatus" class="rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white" style="width: 100%; height: 40px; padding: 0 10px;">
+                        <option value="pending">🟡 Pendente</option>
+                        <option value="received">🔵 Recebido</option>
+                        <option value="approved">🟢 Validado</option>
+                        <option value="rejected">🔴 Rejeitado</option>
+                    </select>
+                </div>
+                
+                <div class="form-group" style="margin-bottom: 20px;">
+                    <label class="text-gray-700 dark:text-gray-300" style="font-weight: bold; display: block; margin-bottom: 5px;">Observações</label>
+                    <textarea name="notes" id="modalNotes" class="rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white" rows="4" style="width: 100%; padding: 10px;"></textarea>
+                </div>
+
+                <div style="display: flex; justify-content: flex-end; gap: 10px;">
+                    <button type="button" class="secondary-button" onclick="closeDocModal()">Cancelar</button>
+                    <button type="submit" class="primary-button">Salvar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Função Global atrelada ao Window
+        window.openDocModal = function(button) {
+            // Pega os dados direto do botão clicado (Seguro contra aspas)
+            var id = button.getAttribute('data-id');
+            var status = button.getAttribute('data-status');
+            var notes = button.getAttribute('data-notes');
+
+            var modal = document.getElementById('docModal');
+            var form = document.getElementById('docForm');
+            var fieldStatus = document.getElementById('modalStatus');
+            var fieldNotes = document.getElementById('modalNotes');
+
+            // Define a rota
+            var baseUrl = "{{ route('lawfirm.documents.update', '') }}"; 
+            form.action = baseUrl + "/" + id;
+            
+            fieldStatus.value = status;
+            fieldNotes.value = notes;
+            
+            modal.style.display = 'flex';
+        }
+
+        window.closeDocModal = function() {
+            document.getElementById('docModal').style.display = 'none';
+        }
+    </script>
 </x-admin::layouts>

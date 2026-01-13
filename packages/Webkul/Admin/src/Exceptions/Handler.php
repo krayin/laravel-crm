@@ -45,7 +45,7 @@ class Handler extends AppExceptionHandler
      */
     public function render($request, Throwable $exception)
     {
-        if (! config('app.debug')) {
+        if (!config('app.debug')) {
             return $this->renderCustomResponse($exception);
         }
 
@@ -64,7 +64,7 @@ class Handler extends AppExceptionHandler
             return response()->json(['message' => $this->jsonErrorMessages[401]], 401);
         }
 
-        return redirect()->guest(route('customer.session.index'));
+        return redirect()->guest(route('admin.session.create'));
     }
 
     /**
