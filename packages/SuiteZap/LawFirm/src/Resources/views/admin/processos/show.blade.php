@@ -18,6 +18,9 @@
                     </div>
                 </div>
                 <div class="flex items-center gap-x-2.5">
+                    <a href="{{ route('lawfirm.documents.procuration', $processo->id) }}" class="secondary-button" target="_blank">
+                        ⚖️ Gerar Procuração
+                    </a>
                     <a href="{{ route('admin.processos.edit', $processo->id) }}" class="primary-button">
                         @lang('lawfirm::app.processos.edit')
                     </a>
@@ -189,6 +192,92 @@
                 @include('lawfirm::admin.processos.partials.anexos', ['readOnly' => true, 'anexos' => $processo->anexos])
             </div>
 
+            <!-- 4. Checklist de Documentos -->
+            <div class="rounded-lg border border-gray-200 bg-white p-4 dark:border-gray-800 dark:bg-gray-900">
+                <p class="mb-4 text-lg font-bold text-gray-800 dark:text-white flex items-center gap-2">
+                    <span class="icon-menu text-xl text-purple-600"></span>
+                    Checklist de Documentos
+                </p>
+
+                <!-- Barra de Ferramentas: Importar Template -->
+                <div class="mb-4 p-4 bg-gray-50 dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700">
+                    <form action="{{ route('lawfirm.documents.import', $processo->id) }}" method="POST" class="flex flex-wrap gap-3 items-center">
+                        @csrf
+                        <label class="text-sm font-semibold text-gray-700 dark:text-gray-300">Importar Kit:</label>
+                        <select name="template_id" class="rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white px-3 py-2 text-sm" style="min-width: 280px;">
+                            <option value="">Selecione um Modelo...</option>
+                            @foreach(\SuiteZap\LawFirm\Models\ChecklistTemplate::all() as $tpl)
+                                <option value="{{ $tpl->id }}">{{ $tpl->name }} ({{ $tpl->area }})</option>
+                            @endforeach
+                        </select>
+                        <button type="submit" class="primary-button">
+                            Importar Kit
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Lista de Documentos -->
+                <div class="relative overflow-x-auto rounded-lg border border-gray-200 dark:border-gray-800">
+                    <table class="min-w-full w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400 border-b dark:border-gray-800">
+                            <tr>
+                                <th scope="col" class="px-6 py-3 w-[120px]">Status</th>
+                                <th scope="col" class="px-6 py-3">Documento Necessário</th>
+                                <th scope="col" class="px-6 py-3">Observações</th>
+                                <th scope="col" class="px-6 py-3 w-[180px]">Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @php 
+                                $documents = \SuiteZap\LawFirm\Models\ProcessDocument::where('processo_id', $processo->id)->get(); 
+                            @endphp
+
+                            @forelse($documents as $doc)
+                            <tr class="bg-white border-b hover:bg-gray-50 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-600">
+                                <td class="px-6 py-4">
+                                    @if($doc->status == 'received')
+                                        <span class="inline-flex px-2 py-1 text-xs rounded-full bg-green-100 text-green-800">Recebido</span>
+                                    @elseif($doc->status == 'approved')
+                                        <span class="inline-flex px-2 py-1 text-xs rounded-full bg-blue-100 text-blue-800">Validado</span>
+                                    @else
+                                        <span class="inline-flex px-2 py-1 text-xs rounded-full bg-yellow-100 text-yellow-800">Pendente</span>
+                                    @endif
+                                </td>
+                                <td class="px-6 py-4 text-gray-900 dark:text-white font-medium">{{ $doc->name }}</td>
+                                <td class="px-6 py-4 text-gray-600 dark:text-gray-300">{{ $doc->notes ?? '-' }}</td>
+                                <td class="px-6 py-4">
+                                    <div class="flex items-center gap-2">
+                                        @if($doc->status == 'pending')
+                                            <form action="{{ route('lawfirm.documents.update', $doc->id) }}" method="POST">
+                                                @csrf @method('PUT')
+                                                <input type="hidden" name="status" value="received">
+                                                <button class="text-green-600 hover:text-green-800" title="Marcar como Recebido">
+                                                    <span class="icon-done text-xl"></span>
+                                                </button>
+                                            </form>
+                                        @endif
+                                        
+                                        <form action="{{ route('lawfirm.documents.delete', $doc->id) }}" method="POST" onsubmit="return confirm('Remover este item?');">
+                                            @csrf @method('DELETE')
+                                            <button class="text-red-600 hover:text-red-800" title="Remover">
+                                                <span class="icon-delete text-xl"></span>
+                                            </button>
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                            @empty
+                            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                                <td colspan="4" class="px-6 py-8 text-center text-gray-500 dark:text-gray-400">
+                                    Nenhum documento solicitado. Use a importação acima para adicionar um kit.
+                                </td>
+                            </tr>
+                            @endforelse
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
             <!-- 4. Identification & Process Details (2 Cols) -->
             <div class="flex gap-4">
                 <!-- Left: Basic Info -->
@@ -350,9 +439,23 @@
                     </div>
 
                     <div class="space-y-1">
-                        <p class="text-sm font-semibold text-gray-600 dark:text-gray-400">Advogado Responsável</p>
+                        <p class="text-sm font-semibold text-gray-600 dark:text-gray-400">Responsável Interno (CRM)</p>
                         <p class="text-base text-gray-900 dark:text-white">
                             {{ $processo->responsavel->name ?? $processo->user->name ?? '-' }}
+                        </p>
+                    </div>
+
+                    <div class="space-y-1">
+                        <p class="text-sm font-semibold text-gray-600 dark:text-gray-400">Advogado Responsável (Peça)</p>
+                        <p class="text-base text-gray-900 dark:text-white">
+                            {{ $processo->advogado_responsavel_nome ?: 'Não informado' }}
+                        </p>
+                    </div>
+
+                    <div class="space-y-1">
+                        <p class="text-sm font-semibold text-gray-600 dark:text-gray-400">OAB (Responsável)</p>
+                        <p class="text-base text-gray-900 dark:text-white">
+                            {{ $processo->advogado_responsavel_oab ?: '-' }}
                         </p>
                     </div>
 

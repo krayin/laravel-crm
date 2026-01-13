@@ -152,10 +152,14 @@ class PrazoDataGrid extends DataGrid
             'filterable' => false,
             'width' => '140px',
             'closure' => function ($row) {
-                $status = strtolower(trim($row->raw_status ?? ''));
+                // Normaliza o status do banco para minúsculo
+                $dbStatus = strtolower(trim($row->raw_status ?? ''));
+
+                // Lista de palavras que significam "Fim"
+                $finishedStates = ['concluido', 'concluído', 'finalizado', 'completed', 'done'];
 
                 // Se concluído, badge cinza
-                if ($status == 'concluido') {
+                if (in_array($dbStatus, $finishedStates)) {
                     return '<span class="px-2 py-1 rounded-full text-xs font-semibold bg-gray-200 text-gray-600">
                                 ✓ Concluído
                             </span>';
@@ -226,32 +230,70 @@ class PrazoDataGrid extends DataGrid
             },
         ]);
 
-        // Coluna: Status do Prazo
+        // Coluna: Status do Prazo (Soliciation)
         $this->addColumn([
             'index' => 'status',
-            'label' => 'Status',
+            'label' => trans('lawfirm::app.deadlines.status'),
             'type' => 'string',
             'sortable' => true,
-            'filterable' => true,
-            'filterable_type' => 'dropdown',
-            'filterable_options' => [
-                ['label' => 'Pendente', 'value' => 'pendente'],
-                ['label' => 'Concluído', 'value' => 'concluido'],
-            ],
-            'width' => '100px',
             'closure' => function ($row) {
-                $status = strtolower(trim($row->raw_status ?? ''));
+                // ---------------------------------------------------------
+                // 1. REGRA SUPREMA: Verifica se já acabou (Status Real)
+                // ---------------------------------------------------------
+                // Normaliza o status do banco para minúsculo.
+                $realStatus = strtolower(trim($row->status));
 
-                if ($status == 'concluido') {
-                    return '<span class="px-2 py-1 rounded-full text-xs font-semibold bg-green-100 text-green-800">
-                                Concluído
-                            </span>';
+                // Lista de palavras que significam "Fim"
+                $finishedStates = ['concluido', 'concluído', 'finalizado', 'completed', 'done'];
+
+                if (in_array($realStatus, $finishedStates)) {
+                    // ESTADO 1: Concluído (Ignora qualquer data)
+                    return '<span class="badge badge-success">Concluído</span>';
                 }
 
-                return '<span class="px-2 py-1 rounded-full text-xs font-semibold bg-yellow-100 text-yellow-800">
-                            Pendente
-                        </span>';
-            }
+                // ---------------------------------------------------------
+                // 2. Lógica Temporal (Só roda se NÃO estiver concluído)
+                // ---------------------------------------------------------
+    
+                // ESTADO 2: Sem Data
+                if (empty($row->data_vencimento)) {
+                    return '<span class="badge badge-secondary">Sem Data</span>';
+                }
+
+                $dueDate = null;
+                try {
+                    // Tenta parsing padrão (Y-m-d ou ISO)
+                    $dueDate = \Carbon\Carbon::parse($row->data_vencimento)->startOfDay();
+                } catch (\Exception $e) {
+                    try {
+                        // Tenta formato BR (d/m/Y)
+                        $dueDate = \Carbon\Carbon::createFromFormat('d/m/Y', $row->data_vencimento)->startOfDay();
+                    } catch (\Exception $e2) {
+                        return '<span class="badge badge-secondary">Data Inválida</span>';
+                    }
+                }
+
+                $now = \Carbon\Carbon::now()->startOfDay();
+                $diff = $now->diffInDays($dueDate, false); // false = permite negativos
+    
+                // ESTADO 3: Vencido (Passado e não é hoje)
+                if ($dueDate->isPast() && !$dueDate->isToday()) {
+                    return '<span class="badge badge-danger">Vencido</span>';
+                }
+
+                // ESTADO 4: Vence Hoje
+                if ($diff === 0) {
+                    return '<span class="badge badge-danger">Vence Hoje!</span>';
+                }
+
+                // ESTADO 5: Urgente (3 dias ou menos)
+                if ($diff <= 3 && $diff > 0) {
+                    return '<span class="badge badge-warning">Urgente ' . $diff . 'd</span>';
+                }
+
+                // ESTADO 6: No Prazo (Mais de 3 dias)
+                return '<span class="badge badge-primary">No Prazo</span>';
+            },
         ]);
     }
 

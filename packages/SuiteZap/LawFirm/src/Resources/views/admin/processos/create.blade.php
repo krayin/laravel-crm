@@ -352,6 +352,36 @@
                         </x-admin::form.control-group.control>
                          <x-admin::form.control-group.error control-name="user_id" />
                     </x-admin::form.control-group>
+
+                    <!-- Advogado Responsável Pela Peça (Nome e OAB) -->
+                    <div class="flex gap-4">
+                        <x-admin::form.control-group class="w-1/2">
+                            <x-admin::form.control-group.label>
+                                Advogado na Peça (Nome)
+                            </x-admin::form.control-group.label>
+                            <x-admin::form.control-group.control
+                                type="text"
+                                name="advogado_responsavel_nome"
+                                 :value="old('advogado_responsavel_nome')"
+                                label="Nome do Advogado"
+                                placeholder="Nome do Advogado"
+                            />
+                             <x-admin::form.control-group.error control-name="advogado_responsavel_nome" />
+                        </x-admin::form.control-group>
+                        <x-admin::form.control-group class="w-1/2">
+                            <x-admin::form.control-group.label>
+                                OAB (Peça)
+                            </x-admin::form.control-group.label>
+                            <x-admin::form.control-group.control
+                                type="text"
+                                name="advogado_responsavel_oab"
+                                 :value="old('advogado_responsavel_oab')"
+                                label="OAB"
+                                placeholder="123.456/UF"
+                            />
+                             <x-admin::form.control-group.error control-name="advogado_responsavel_oab" />
+                        </x-admin::form.control-group>
+                    </div>
                 </div>
 
                 <!-- COLUNA DIREITA: Parte Contrária (STRUCTURED) -->

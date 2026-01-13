@@ -25,4 +25,10 @@ return [
         'route' => 'admin.prazos.index',
         'sort' => 3,
     ],
+    [
+        'key' => 'lawfirm.settings',
+        'name' => 'Configurações Jurídicas',
+        'route' => 'admin.configuration.index',
+        'sort' => 20,
+    ],
 ];

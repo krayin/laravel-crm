@@ -134,6 +134,12 @@ class LawFirmServiceProvider extends ServiceProvider
             __DIR__ . '/../Config/acl.php',
             'acl'
         );
+
+        // Merge Config (System) - Configurações do Painel
+        $this->mergeConfigFrom(
+            __DIR__ . '/../Config/system.php',
+            'core_config'
+        );
     }
 
     /**

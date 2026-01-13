@@ -97,50 +97,34 @@ class FinancialController extends Controller
      */
     public function downloadReceipt($id)
     {
-        // 1. Buscar lançamento com relacionamentos
-        $recibo = \SuiteZap\LawFirm\Models\Financial::with('processo.person')->findOrFail($id);
+        $transaction = \SuiteZap\LawFirm\Models\Financial::with('processo.person')->findOrFail($id);
 
-        // 2. Validar status
-        if (strtolower($recibo->status) !== 'pago') {
-            return back()->with('error', 'Apenas lançamentos pagos podem gerar recibo.');
+        // 1. Busca as Configurações Globais do Escritório (definidas no system.php)
+        $companyName = core()->getConfigData('lawfirm.settings.general.company_name') ?? 'Escritório de Advocacia';
+        $logoPath = core()->getConfigData('lawfirm.settings.general.logo');
+        $whatsapp = core()->getConfigData('lawfirm.settings.general.contact_whatsapp');
+        $email = core()->getConfigData('lawfirm.settings.general.contact_email');
+        $address = core()->getConfigData('lawfirm.settings.general.address');
+        $website = core()->getConfigData('lawfirm.settings.general.website');
+
+        // 2. Tratamento da Logo para PDF (DomPDF precisa do caminho físico)
+        $realLogoPath = null;
+        if ($logoPath) {
+            $realLogoPath = public_path('storage/' . $logoPath);
         }
 
-        // 3. Preparar dados
-        $pagador = $recibo->processo?->person?->name ?? 'Ao Portador';
-        $processoTitulo = $recibo->processo?->titulo ?? 'N/A';
+        // 3. Envia tudo para a View
+        // Nota: A view correta baseada no sistema de arquivos é 'lawfirm::financial.pdf.receipt'
+        $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('lawfirm::financial.pdf.receipt', compact(
+            'transaction',
+            'companyName',
+            'realLogoPath',
+            'whatsapp',
+            'email',
+            'address',
+            'website'
+        ));
 
-        // Formata data por extenso em português
-        $dataExtenso = '';
-        if ($recibo->payment_date) {
-            $meses = [
-                1 => 'Janeiro',
-                2 => 'Fevereiro',
-                3 => 'Março',
-                4 => 'Abril',
-                5 => 'Maio',
-                6 => 'Junho',
-                7 => 'Julho',
-                8 => 'Agosto',
-                9 => 'Setembro',
-                10 => 'Outubro',
-                11 => 'Novembro',
-                12 => 'Dezembro'
-            ];
-            $date = \Carbon\Carbon::parse($recibo->payment_date);
-            $dataExtenso = $date->day . ' de ' . $meses[$date->month] . ' de ' . $date->year;
-        }
-
-        $data = [
-            'recibo' => $recibo,
-            'pagador' => $pagador,
-            'processoTitulo' => $processoTitulo,
-            'dataExtenso' => $dataExtenso,
-        ];
-
-        // 4. Gerar PDF
-        $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('lawfirm::financial.pdf.receipt', $data)
-            ->setPaper('a4', 'portrait');
-
-        return $pdf->stream("recibo-{$id}.pdf");
+        return $pdf->download('recibo_' . $transaction->id . '.pdf');
     }
 }

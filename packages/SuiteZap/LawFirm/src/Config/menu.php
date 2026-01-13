@@ -33,4 +33,12 @@ return [
         'icon-class' => 'icon-dashboard',
         'permission' => 'lawfirm.financial',
     ],
+    [
+        'key' => 'lawfirm.settings',
+        'name' => 'Configurações',
+        'route' => 'admin.configuration.index',
+        'params' => ['slug' => 'lawfirm', 'slug2' => 'settings'],
+        'sort' => 20,
+        'icon-class' => 'icon-setting',
+    ],
 ];

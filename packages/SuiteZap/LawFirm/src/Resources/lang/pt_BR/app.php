@@ -47,6 +47,13 @@ return [
         ],
     ],
 
+    'deadlines' => [
+        'title' => 'Prazos',
+        'status' => 'Status Real',
+        'due_date' => 'Data de Vencimento',
+        'name' => 'Nome do Prazo',
+    ],
+
     // --- 2. SEÇÃO PROCESSOS (Raiz) ---
     'processos' => [
         // Títulos de Página e Ações Principais

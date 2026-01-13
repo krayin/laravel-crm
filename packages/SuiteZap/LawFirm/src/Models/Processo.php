@@ -53,6 +53,8 @@ class Processo extends Model implements ProcessoContract
         'opposing_party_type',
         'opposing_party_document',
         'link_audiencia', // hearing_link identified in view
+        'advogado_responsavel_nome',
+        'advogado_responsavel_oab',
     ];
 
     /**

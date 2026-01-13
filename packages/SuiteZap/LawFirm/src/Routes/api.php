@@ -1,27 +1,42 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use SuiteZap\LawFirm\Http\Controllers\Api\ProcessApiController;
+use SuiteZap\LawFirm\Http\Controllers\Api\DeadlineApiController;
 
 /*
 |--------------------------------------------------------------------------
-| API Routes
+| LawFirm API Routes
 |--------------------------------------------------------------------------
 |
-| Here is where you can register API routes for the LawFirm module.
-| These routes are loaded by the LawFirmServiceProvider.
+| API Routes for LawFirm Package.
+| Base Prefix: /api/lawfirm
+| Middleware: api, auth:sanctum
 |
 */
 
-Route::group([
-    'prefix' => 'lawfirm',
-    'middleware' => ['api'],
-], function () {
+Route::group(['prefix' => 'api/lawfirm', 'middleware' => ['api', 'auth:sanctum']], function () {
 
-    // API endpoints will be defined here
-    // Example:
-    // Route::get('/cases', [Api\CaseController::class, 'index']);
-    // Route::post('/cases', [Api\CaseController::class, 'store']);
-    // Route::get('/cases/{id}', [Api\CaseController::class, 'show']);
-    // Route::put('/cases/{id}', [Api\CaseController::class, 'update']);
-    // Route::delete('/cases/{id}', [Api\CaseController::class, 'destroy']);
+    // ===========================================
+    // Processes API
+    // ===========================================
+    Route::controller(ProcessApiController::class)->prefix('processes')->group(function () {
+        Route::get('/', 'index');
+        Route::post('/', 'store');
+        Route::get('{id}', 'show');
+        Route::put('{id}', 'update');
+        Route::delete('{id}', 'destroy');
+    });
+
+    // ===========================================
+    // Deadlines API
+    // ===========================================
+    Route::controller(DeadlineApiController::class)->prefix('deadlines')->group(function () {
+        Route::get('/', 'index');
+        Route::post('/', 'store');
+        Route::get('{id}', 'show');
+        Route::put('{id}', 'update');
+        Route::delete('{id}', 'destroy');
+    });
+
 });

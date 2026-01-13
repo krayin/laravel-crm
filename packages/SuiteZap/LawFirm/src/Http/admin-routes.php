@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Log;
 use SuiteZap\LawFirm\Http\Controllers\Admin\ProcessoController;
 use SuiteZap\LawFirm\Http\Controllers\Admin\PrazoController;
 use SuiteZap\LawFirm\Http\Controllers\FinancialController;
+use SuiteZap\LawFirm\Http\Controllers\ProcessDocumentController;
+use SuiteZap\LawFirm\Http\Controllers\LegalDocumentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -73,6 +75,21 @@ Route::middleware(['web', 'admin_locale', 'user'])
             Route::put('{id}/concluir', 'concluir')->name('admin.prazos.concluir');
             Route::delete('{id}', 'destroy')->name('admin.prazos.destroy');
         });
+
+        // -----------------------------------------------
+        // Checklist de Documentos Routes
+        // -----------------------------------------------
+        Route::prefix('documentos')->controller(ProcessDocumentController::class)->group(function () {
+            Route::post('import/{processId}', 'importTemplate')->name('lawfirm.documents.import');
+            Route::put('update/{id}', 'updateStatus')->name('lawfirm.documents.update');
+            Route::delete('delete/{id}', 'destroy')->name('lawfirm.documents.delete');
+        });
+
+        // -----------------------------------------------
+        // Documentos Jurídicos (Procuração, Contratos, etc.)
+        // -----------------------------------------------
+        Route::get('documentos/procuracao/{processId}', [LegalDocumentController::class, 'downloadProcuration'])
+            ->name('lawfirm.documents.procuration');
     });
 
 // ============================================================================
