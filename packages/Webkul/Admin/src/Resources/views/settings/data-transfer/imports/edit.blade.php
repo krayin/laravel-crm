@@ -36,7 +36,7 @@
                 <div class="flex items-center gap-x-2.5">
                     {!! view_render_event('admin.settings.data_transfers.edit.save_button.before') !!}
 
-                    @if (bouncer()->hasPermission('settings.data_transfer.imports.edit'))
+                    @if (bouncer()->hasPermission('settings.automation.data_transfer.imports.edit'))
                         <!-- Save Button -->
                         <button
                             type="submit"

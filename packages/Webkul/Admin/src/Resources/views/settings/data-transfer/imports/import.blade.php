@@ -27,7 +27,7 @@
                 {!! view_render_event('admin.settings.data_transfers.import.edit_button.before') !!}
 
                 <!-- Edit Button -->
-                @if (bouncer()->hasPermission('settings.data_transfer.imports.edit'))
+                @if (bouncer()->hasPermission('settings.automation.data_transfer.imports.edit'))
                     <a
                         href="{{ route('admin.settings.data_transfer.imports.edit', $import->id) }}"
                         class="primary-button"
