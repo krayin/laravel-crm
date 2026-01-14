@@ -119,6 +119,18 @@
         Contratante
     </div>
 
+    <div class="signature-block">
+        <div class="line"></div>
+        @if($lawyerSpecificName)
+            <strong>{{ $lawyerSpecificName }}</strong><br>
+            OAB nº {{ $lawyerSpecificOAB }}<br>
+        @else
+            <strong>{{ $firmName }}</strong><br>
+            OAB nº {{ $firmOAB }}<br>
+        @endif
+        Contratado
+    </div>
+
     <div class="footer">
         {{ $firmName }} @if($firmOAB) | {{ $firmOAB }} @endif <br>
         {{ core()->getConfigData('lawfirm.settings.general.website') ?? '' }}

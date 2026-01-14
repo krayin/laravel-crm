@@ -3,6 +3,7 @@
 namespace SuiteZap\LawFirm\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use SuiteZap\LawFirm\DataGrids\FinancialDataGrid;
 use SuiteZap\LawFirm\Services\FinancialDashboardService;
 use Webkul\Admin\Http\Controllers\Controller;
@@ -91,6 +92,7 @@ class FinancialController extends Controller
 
     /**
      * Gera um recibo em PDF para um lançamento financeiro pago.
+     * S3 Compatible: Converte logo para base64 data URI.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
@@ -99,7 +101,7 @@ class FinancialController extends Controller
     {
         $transaction = \SuiteZap\LawFirm\Models\Financial::with('processo.person')->findOrFail($id);
 
-        // 1. Busca as Configurações Globais do Escritório (definidas no system.php)
+        // 1. Busca as Configurações Globais do Escritório
         $companyName = core()->getConfigData('lawfirm.settings.general.company_name') ?? 'Escritório de Advocacia';
         $logoPath = core()->getConfigData('lawfirm.settings.general.logo');
         $whatsapp = core()->getConfigData('lawfirm.settings.general.contact_whatsapp');
@@ -107,18 +109,19 @@ class FinancialController extends Controller
         $address = core()->getConfigData('lawfirm.settings.general.address');
         $website = core()->getConfigData('lawfirm.settings.general.website');
 
-        // 2. Tratamento da Logo para PDF (DomPDF precisa do caminho físico)
-        $realLogoPath = null;
-        if ($logoPath) {
-            $realLogoPath = public_path('storage/' . $logoPath);
+        // 2. Tratamento da Logo para PDF - S3 Compatible (Base64 Data URI)
+        $logoBase64 = null;
+        if ($logoPath && Storage::exists($logoPath)) {
+            $logoContents = Storage::get($logoPath);
+            $mimeType = Storage::mimeType($logoPath) ?: 'image/png';
+            $logoBase64 = 'data:' . $mimeType . ';base64,' . base64_encode($logoContents);
         }
 
         // 3. Envia tudo para a View
-        // Nota: A view correta baseada no sistema de arquivos é 'lawfirm::financial.pdf.receipt'
         $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('lawfirm::financial.pdf.receipt', compact(
             'transaction',
             'companyName',
-            'realLogoPath',
+            'logoBase64',
             'whatsapp',
             'email',
             'address',

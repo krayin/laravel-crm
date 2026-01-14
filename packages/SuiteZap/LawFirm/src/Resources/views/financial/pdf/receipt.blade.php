@@ -79,8 +79,8 @@
 <body>
 
     <div class="header-container">
-        @if(!empty($realLogoPath) && file_exists($realLogoPath))
-            <img src="{{ $realLogoPath }}" class="logo-img">
+        @if(!empty($logoBase64))
+            <img src="{{ $logoBase64 }}" class="logo-img">
         @endif
 
         <div class="company-info">

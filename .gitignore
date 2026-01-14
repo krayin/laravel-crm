@@ -35,3 +35,6 @@ node_modules/
 /playwright/.cache/
 
 /storage/framework/views/*
+
+# Pacote customizado
+!/packages/SuiteZap

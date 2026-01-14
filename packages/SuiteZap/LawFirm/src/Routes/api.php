@@ -47,5 +47,6 @@ Route::group(['prefix' => 'api/lawfirm', 'middleware' => ['api', 'auth:sanctum']
     // ===========================================
     Route::get('documents/{processId}', [SuiteZap\LawFirm\Http\Controllers\Api\DocumentChecklistApiController::class, 'index']);
     Route::put('documents/{id}', [SuiteZap\LawFirm\Http\Controllers\Api\DocumentChecklistApiController::class, 'update']);
+    Route::post('documents/{id}/upload', [SuiteZap\LawFirm\Http\Controllers\Api\DocumentChecklistApiController::class, 'uploadFile']);
 
 });

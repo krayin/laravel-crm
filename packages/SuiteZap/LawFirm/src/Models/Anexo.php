@@ -39,9 +39,8 @@ class Anexo extends Model
             $path = substr($path, 7);
         }
 
-        // Use url() helper which automatically handles subdirectory deployment (e.g. /public)
-        // unlike Storage::url() which relies on static APP_URL config.
-        return url('storage/' . $path);
+        // Use Storage::url() for S3 compatibility
+        return Storage::url($path);
     }
 
     /**

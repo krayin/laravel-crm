@@ -4,6 +4,7 @@ namespace SuiteZap\LawFirm\Http\Controllers\Admin;
 
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Facades\Storage;
 use SuiteZap\LawFirm\DataGrids\ProcessoDataGrid;
 use SuiteZap\LawFirm\Repositories\ProcessoRepository;
 use Webkul\Activity\Repositories\ActivityRepository;
@@ -285,8 +286,8 @@ class ProcessoController extends Controller
         // UPLOAD ANEXOS (GED)
         if (request()->hasFile('anexos')) {
             foreach (request()->file('anexos') as $file) {
-                // Store in 'public' disk so files are accessible via web
-                $path = $file->store('processos/' . $processo->id, 'public');
+                // Store using configurable disk (respects FILESYSTEM_DISK env)
+                $path = $file->store('processos/' . $processo->id, config('filesystems.default'));
 
                 $processo->anexos()->create([
                     'path' => $path,
@@ -542,10 +543,11 @@ class ProcessoController extends Controller
             }
         }
 
-        // UPLOAD ANEXOS (GED) - UPDATE
+        // UPLOAD ANEXOS (GED) - UPDATE - S3 Compatible
         if (request()->hasFile('anexos')) {
             foreach (request()->file('anexos') as $file) {
-                $path = $file->store('processos/' . $processo->id);
+                // Store using configurable disk (respects FILESYSTEM_DISK env)
+                $path = $file->store('processos/' . $processo->id, config('filesystems.default'));
 
                 $processo->anexos()->create([
                     'path' => $path,
@@ -654,9 +656,9 @@ class ProcessoController extends Controller
     {
         $anexo = \SuiteZap\LawFirm\Models\Anexo::findOrFail($id);
 
-        // Delete from Storage (use 'public' disk)
-        if (\Illuminate\Support\Facades\Storage::disk('public')->exists($anexo->path)) {
-            \Illuminate\Support\Facades\Storage::disk('public')->delete($anexo->path);
+        // Delete from Storage (S3 Compatible - uses default disk)
+        if (Storage::exists($anexo->path)) {
+            Storage::delete($anexo->path);
         }
 
         // Delete from DB
@@ -664,7 +666,7 @@ class ProcessoController extends Controller
 
         session()->flash('success', 'Anexo excluído com sucesso.');
 
-        return redirect()->back(); // Return to the same page (edit or view)
+        return redirect()->back();
     }
 
     /**
