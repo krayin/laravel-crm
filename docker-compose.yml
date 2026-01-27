@@ -1,0 +1,106 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: docker/php/Dockerfile
+    image: laravel-crm-app:latest
+    env_file:
+      - .env  # Injected into the environment, not mounted as a file
+    volumes:
+      # Named volumes for persistence (avoids host permission issues)
+      - crm_storage:/var/www/html/storage
+      - crm_cache:/var/www/html/bootstrap/cache
+    depends_on:
+      - db
+      - redis
+    networks:
+      - appnet
+
+  web:
+    image: nginx:1.25-alpine
+    ports:
+      - "80:80"
+    volumes:
+      # In production, code is usually baked into the image, 
+      # but for now, we only mount the public dir if needed.
+      - ./public:/var/www/html/public:ro
+      - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
+    depends_on:
+      - app
+    networks:
+      - appnet
+
+  db:
+    image: mysql:8.0
+    env_file:
+      - .env
+    volumes:
+      - db_data:/var/lib/mysql
+    networks:
+      - appnet
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    networks:
+      - appnet
+
+  node:
+    build:
+      context: .
+      dockerfile: docker/node/Dockerfile
+    env_file:
+      - .env
+    volumes:
+      # Mount only source files needed for vite dev (not node_modules - use image-built)
+      - ./resources:/app/resources:ro
+      - ./public:/app/public
+      - ./vite.config.js:/app/vite.config.js:ro
+      - ./package.json:/app/package.json:ro
+    ports:
+      - "5173:5173"
+    networks:
+      - appnet
+    command: ["npm", "run", "dev", "--", "--host", "0.0.0.0"]
+
+  worker:
+    build:
+      context: .
+      dockerfile: docker/php/Dockerfile
+    env_file:
+      - .env
+    volumes:
+      - crm_storage:/var/www/html/storage
+    command: ["php", "artisan", "queue:work", "--sleep=3", "--tries=3"]
+    networks:
+      - appnet
+
+  scheduler:
+    build:
+      context: .
+      dockerfile: docker/php/Dockerfile
+    env_file:
+      - .env
+    volumes:
+      - crm_storage:/var/www/html/storage
+    command: ["/bin/sh", "-c", "while true; do php artisan schedule:run; sleep 60; done"]
+    networks:
+      - appnet
+
+  mailhog:
+    image: mailhog/mailhog
+    ports:
+      - "1025:1025"
+      - "8025:8025"
+    networks:
+      - appnet
+
+volumes:
+  db_data:
+  crm_storage:
+  crm_cache:
+
+networks:
+  appnet:
+    driver: bridge
