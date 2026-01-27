@@ -64,6 +64,7 @@ class QuoteDataGrid extends DataGrid
             'index'      => 'subject',
             'label'      => trans('admin::app.quotes.index.datagrid.subject'),
             'type'       => 'string',
+            'searchable' => true,
             'filterable' => true,
             'sortable'   => true,
         ]);
