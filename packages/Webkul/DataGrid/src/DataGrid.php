@@ -327,6 +327,9 @@ abstract class DataGrid
      */
     protected function processRequestedFilters(array $requestedFilters)
     {
+        unset($requestedFilters['schedule_to']);
+        unset($requestedFilters['schedule_from']);
+
         foreach ($requestedFilters as $requestedColumn => $requestedValues) {
             if ($requestedColumn === 'all') {
                 $this->queryBuilder->where(function ($scopeQueryBuilder) use ($requestedValues) {
