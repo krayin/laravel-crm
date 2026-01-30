@@ -239,7 +239,7 @@
                         <!-- Header -->
                         <x-slot:header>
                             <h3 class="text-base font-semibold dark:text-white">
-                                @lang('admin::app.leads.index.kanban.stages.need-more-info')
+                                @lang('admin::app.leads.view.stages.need-more-info')
                             </h3>
                         </x-slot>
 
@@ -255,7 +255,7 @@
                             <template v-if="finalized.stage.code == 'won'">
                                 <x-admin::form.control-group>
                                     <x-admin::form.control-group.label>
-                                        @lang('admin::app.leads.index.kanban.stages.won-value')
+                                        @lang('admin::app.leads.view.stages.won-value')
                                     </x-admin::form.control-group.label>
 
                                     <x-admin::form.control-group.control
@@ -270,7 +270,7 @@
                             <template v-else>
                                 <x-admin::form.control-group>
                                     <x-admin::form.control-group.label>
-                                        @lang('admin::app.leads.index.kanban.stages.lost-reason')
+                                        @lang('admin::app.leads.view.stages.lost-reason')
                                     </x-admin::form.control-group.label>
 
                                     <x-admin::form.control-group.control
@@ -283,7 +283,7 @@
                             <!-- Closed At -->
                             <x-admin::form.control-group>
                                 <x-admin::form.control-group.label>
-                                    @lang('admin::app.leads.index.kanban.stages.closed-at')
+                                    @lang('admin::app.leads.view.stages.closed-at')
                                 </x-admin::form.control-group.label>
 
                                 <x-admin::form.control-group.control
@@ -300,7 +300,7 @@
                         <x-slot:footer>
                             <x-admin::button
                                 class="primary-button"
-                                :title="trans('admin::app.leads.index.kanban.stages.save-btn')"
+                                :title="trans('admin::app.leads.view.stages.save-btn')"
                                 ::loading="finalized.updating"
                                 ::disabled="finalized.updating"
                             />
