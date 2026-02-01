@@ -108,7 +108,6 @@
                 <div v-if="notAddedWarehouses.length">
                     <x-admin::dropdown
                         position="bottom-right"
-                        class="!static"
                     >
                         <x-slot:toggle>
                             <button
@@ -156,15 +155,15 @@
                     <!-- Edit Drawer -->
                     <x-admin::drawer
                         ref="assignLocationDrawer"
-                        width="500px"
+                        width="625px"
                         class="text-left"
                     >
                         <!-- Drawer Header -->
                         <x-slot:header>
                             {!! view_render_event('admin.products.view.inventory.form_controls.drawer.header.before', ['product' => $product]) !!}
 
-                            <div class="flex items-center justify-between">
-                                <p class="text-xl font-medium dark:text-white">
+                            <div class="flex items-center gap-4">
+                                <p class="flex-1 text-xl font-medium dark:text-white">
                                     @{{ selectedWarehouse.name }}
                                 </p>
 
@@ -205,7 +204,7 @@
     >
         <div class="flex flex-col gap-2">
             <!-- Add location header -->
-            <div class="block w-full overflow-x-auto">
+            <div class="block w-full">
                 <x-admin::table class="!min-w-[600px]">
                     <x-admin::table.thead>
                         <x-admin::table.thead.tr>
@@ -262,6 +261,7 @@
                     <x-admin::lookup
                         ::src="src"
                         ::name="`${inputName('warehouse_location_id')}`"
+                        :preload="true"
                         ::params="params"
                         v-model="location['id']"
                         rules="required"
@@ -467,14 +467,6 @@
             computed: {
                 src() {
                     return '{{ route('admin.settings.locations.search') }}';
-                },
-
-                params() {
-                    return {
-                        search: 'warehouse_id:' + this.warehouse.id + ';name:' + this.location.name,
-                        searchFields: 'warehouse_id:=;name:like',
-                        searchJoin: 'and'
-                    };
                 },
             },
 
