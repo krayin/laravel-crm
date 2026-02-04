@@ -51,20 +51,20 @@ class ActivityDataGrid extends DataGrid
 
         $filters = request()->get('filters', []);
 
-        $from = !empty($filters['schedule_from']) ? Carbon::parse($filters['schedule_from'])->startOfDay() : null;
-        $to   = !empty($filters['schedule_to'])   ? Carbon::parse($filters['schedule_to'])->endOfDay()   : null;
+        $from = ! empty($filters['schedule_from']) ? Carbon::parse($filters['schedule_from'])->startOfDay() : null;
+        $to = ! empty($filters['schedule_to']) ? Carbon::parse($filters['schedule_to'])->endOfDay() : null;
 
         if ($from || $to) {
             $queryBuilder->where(function ($query) use ($from, $to) {
                 if ($from && $to) {
                     // Activities overlapping the range
-                    $query->where(function($q) use ($from, $to){
+                    $query->where(function ($q) use ($from, $to) {
                         $q->whereBetween('activities.schedule_from', [$from, $to])
-                        ->orWhereBetween('activities.schedule_to', [$from, $to])
-                        ->orWhere(function($q2) use ($from, $to){
-                            $q2->where('activities.schedule_from', '<', $from)
-                                ->where('activities.schedule_to', '>', $to);
-                        });
+                            ->orWhereBetween('activities.schedule_to', [$from, $to])
+                            ->orWhere(function ($q2) use ($from, $to) {
+                                $q2->where('activities.schedule_from', '<', $from)
+                                    ->where('activities.schedule_to', '>', $to);
+                            });
                     });
                 } elseif ($from) {
                     $query->where('activities.schedule_to', '>=', $from);
@@ -73,6 +73,7 @@ class ActivityDataGrid extends DataGrid
                 }
             });
         }
+
         return $queryBuilder;
     }
 
