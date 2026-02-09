@@ -3,13 +3,12 @@
 namespace Webkul\Core\Repositories;
 
 use Illuminate\Support\Arr;
-use Illuminate\Support\Str;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Event;
-use Webkul\Core\Eloquent\Repository;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Webkul\Core\Contracts\CoreConfig;
+use Webkul\Core\Eloquent\Repository;
 use Webkul\Core\Traits\Sanitizer;
 
 class CoreConfigRepository extends Repository
@@ -135,7 +134,7 @@ class CoreConfigRepository extends Repository
                 if (is_array($value)) {
                     foreach ($value as $key => $val) {
                         $fieldNameWithKey = $fieldName.'.'.$key;
-                       
+
                         $coreConfigValues = $this->model->where('code', $fieldNameWithKey)->get();
                         if (request()->hasFile($fieldNameWithKey)) {
                             $val = request()->file($fieldNameWithKey)->store('configuration');
