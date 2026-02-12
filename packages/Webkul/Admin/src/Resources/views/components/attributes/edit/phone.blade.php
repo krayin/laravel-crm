@@ -150,7 +150,7 @@
                     if (phone) {
                         return phone.nationalNumber;
                     }
-                    return value;
+                    return value.replace(/\D/g, '');
                 },
 
                 extendValidations() {
