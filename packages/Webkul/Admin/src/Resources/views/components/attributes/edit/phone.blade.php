@@ -127,10 +127,7 @@
                         'label': 'work'
                     }];
                 }
-                 this.contactNumbers = this.contactNumbers.map(contactNumber => ({
-                    value: this.cleanPhone(contactNumber.value),
-                    label: (contactNumber.label || 'work').toLowerCase()
-                }));
+                 
             },
 
             methods: {
