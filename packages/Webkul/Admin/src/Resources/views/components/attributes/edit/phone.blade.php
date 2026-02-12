@@ -146,13 +146,10 @@
                 },
                 cleanPhone(value) {
                     if (!value) return value;
-
                     const phone = libphonenumber.parsePhoneNumberFromString(value);
-
                     if (phone) {
                         return phone.nationalNumber;
                     }
-
                     return value;
                 },
 
