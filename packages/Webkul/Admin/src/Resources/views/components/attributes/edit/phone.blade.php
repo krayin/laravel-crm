@@ -82,7 +82,7 @@
             @lang("admin::app.common.custom-attributes.add-more")
         </span>
     </script>
-
+    <script src="https://unpkg.com/libphonenumber-js/bundle/libphonenumber-max.js"></script>
     <script type="module">
         app.component('v-phone-component', {
             template: '#v-phone-component-template',
@@ -98,7 +98,12 @@
             watch: {
                 value(newValue, oldValue) {
                     if (JSON.stringify(newValue) !== JSON.stringify(oldValue)) {
-                        this.contactNumbers = newValue || [{'value': '', 'label': 'work'}];
+                        this.contactNumbers = (newValue || [{'value': '', 'label': 'work'}])
+                            .map(contactNumber => ({
+                                ...contactNumber,
+                                value: this.cleanPhone(contactNumber.value),
+                                label: (contactNumber.label || 'work').toLowerCase()
+                            }));
                     }
                 },
             },
@@ -122,6 +127,10 @@
                         'label': 'work'
                     }];
                 }
+                 this.contactNumbers = this.contactNumbers.map(contactNumber => ({
+                    value: this.cleanPhone(contactNumber.value),
+                    label: (contactNumber.label || 'work').toLowerCase()
+                }));
             },
 
             methods: {
@@ -134,6 +143,17 @@
 
                 remove(contactNumber) {
                     this.contactNumbers = this.contactNumbers.filter(number => number !== contactNumber);
+                },
+                cleanPhone(value) {
+                    if (!value) return value;
+
+                    const phone = libphonenumber.parsePhoneNumberFromString(value);
+
+                    if (phone) {
+                        return phone.nationalNumber;
+                    }
+
+                    return value;
                 },
 
                 extendValidations() {
