@@ -91,7 +91,7 @@ class Validator
         if (! isset($condition['operator'])) {
             return false;
         }
-        
+
         switch ($condition['operator']) {
             case '==': case '!=':
                 if (is_array($condition['value'])) {
