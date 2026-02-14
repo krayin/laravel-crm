@@ -493,6 +493,7 @@ return [
                 'create-btn'             => 'Adicionar Pessoa',
                 'create-success'         => 'Pessoa adicionada com sucesso.',
                 'update-success'         => 'Pessoa atualizada com sucesso.',
+                'delete-success'         => 'Pessoa excluída com sucesso.',
                 'all-delete-success'     => 'Todas as pessoas selecionadas foram excluídas com sucesso.',
                 'partial-delete-warning' => 'Algumas pessoas foram excluídas com sucesso. Outras não puderam ser excluídas porque estão vinculadas a leads.',
                 'none-delete-warning'    => 'Nenhuma das pessoas selecionadas pôde ser excluída porque estão vinculadas a leads.',

@@ -493,6 +493,7 @@ return [
                 'create-btn'             => 'Kişi Oluştur',
                 'create-success'         => 'Kişi başarıyla oluşturuldu.',
                 'update-success'         => 'Kişi başarıyla güncellendi.',
+                'delete-success'         => 'Kişi başarıyla silindi.',
                 'all-delete-success'     => 'Seçilen tüm kişiler başarıyla silindi.',
                 'partial-delete-warning' => 'Bazı kişiler başarıyla silindi. Diğerleri potansiyel müşterilerle bağlantılı olduğu için silinemedi.',
                 'none-delete-warning'    => 'Seçilen kişilerin hiçbiri potansiyel müşterilerle bağlantılı olduğu için silinemedi.',
