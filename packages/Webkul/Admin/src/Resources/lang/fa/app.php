@@ -423,6 +423,7 @@ return [
                 'subject'          => 'موضوع',
                 'tax'              => 'مالیات',
                 'title'            => 'نقل‌قول',
+                'description'      => 'توضیحات',
             ],
         ],
         'create' => [

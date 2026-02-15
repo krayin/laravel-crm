@@ -423,6 +423,7 @@ return [
                 'subject'          => 'Subject',
                 'tax'              => 'الضريبة',
                 'title'            => 'عرض السعر',
+                'description'      => 'الوصف',
             ],
         ],
         'create' => [

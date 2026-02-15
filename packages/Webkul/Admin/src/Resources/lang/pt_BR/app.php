@@ -423,6 +423,7 @@ return [
                 'subject'          => 'Assunto',
                 'tax'              => 'Imposto',
                 'title'            => 'Cotação',
+                'description'      => 'Descrição',
             ],
         ],
         'create' => [
