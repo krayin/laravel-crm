@@ -17,21 +17,22 @@ class EmailServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->loadMigrationsFrom(__DIR__.'/../Database/Migrations');
+        $this->loadMigrationsFrom(__DIR__ . '/../Database/Migrations');
 
-        $this->app->bind(InboundEmailProcessor::class, function ($app) {
-            $driver = config('mail-receiver.default');
+        // Tạm comment bind để chạy flow OAuth2 lần đầu (tránh error instantiable)
+        // $this->app->bind(InboundEmailProcessor::class, function ($app) {
+        //     $driver = config('mail-receiver.default');
 
-            if ($driver === 'sendgrid') {
-                return $app->make(SendgridEmailProcessor::class);
-            }
+        //     if ($driver === 'sendgrid') {
+        //         return $app->make(SendgridEmailProcessor::class);
+        //     }
 
-            if ($driver === 'webklex-imap') {
-                return $app->make(WebklexImapEmailProcessor::class);
-            }
+        //     if ($driver === 'webklex-imap') {
+        //         return $app->make(WebklexImapEmailProcessor::class);
+        //     }
 
-            throw new \Exception("Unsupported mail receiver driver [{$driver}].");
-        });
+        //     throw new \Exception("Unsupported mail receiver driver [{$driver}].");
+        // });
     }
 
     /**
@@ -49,10 +50,10 @@ class EmailServiceProvider extends ServiceProvider
      */
     protected function registerCommands(): void
     {
-        if ($this->app->runningInConsole()) {
-            $this->commands([
-                ProcessInboundEmails::class,
-            ]);
-        }
+        // if ($this->app->runningInConsole()) {
+        //     $this->commands([
+        //         ProcessInboundEmails::class,
+        //     ]);
+        // }
     }
 }

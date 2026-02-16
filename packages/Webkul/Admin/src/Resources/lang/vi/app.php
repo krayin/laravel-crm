@@ -52,6 +52,7 @@ return [
         'login'            => [
             'email'                => 'Địa chỉ Email',
             'forget-password-link' => 'Quên Mật khẩu?',
+            'sso-login-link'       => 'Đăng nhập group?',
             'password'             => 'Mật khẩu',
             'submit-btn'           => 'Đăng Nhập',
             'title'                => 'Đăng Nhập',
