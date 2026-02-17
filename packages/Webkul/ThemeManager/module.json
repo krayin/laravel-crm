@@ -1,0 +1,16 @@
+{
+    "name": "ThemeManager",
+    "alias": "theme-manager",
+    "description": "Visual customization package for Krayin CRM",
+    "version": "1.0.0",
+    "keywords": ["theme", "customization", "branding", "styling"],
+    "active": 1,
+    "order": 100,
+    "providers": [
+        "Webkul\\ThemeManager\\Providers\\ThemeManagerServiceProvider",
+        "Webkul\\ThemeManager\\Providers\\ModuleServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}

@@ -4,7 +4,6 @@ use Illuminate\Support\Facades\Facade;
 use Illuminate\Support\ServiceProvider;
 
 return [
-
     /*
     |--------------------------------------------------------------------------
     | Application Name
@@ -180,46 +179,61 @@ return [
     |
      */
 
-    'providers' => ServiceProvider::defaultProviders()->merge([
-        /*
-         * Package Service Providers...
-         */
-        Barryvdh\DomPDF\ServiceProvider::class,
-        Konekt\Concord\ConcordServiceProvider::class,
-        Prettus\Repository\Providers\RepositoryServiceProvider::class,
+    'providers' => ServiceProvider::defaultProviders()
+        ->merge([
+            /*
+             * Package Service Providers...
+             */
+            Barryvdh\DomPDF\ServiceProvider::class,
+            Konekt\Concord\ConcordServiceProvider::class,
+            Prettus\Repository\Providers\RepositoryServiceProvider::class,
 
-        /*
-         * Application Service Providers...
-         */
-        App\Providers\AppServiceProvider::class,
-        App\Providers\AuthServiceProvider::class,
-        // App\Providers\BroadcastServiceProvider::class,
-        App\Providers\EventServiceProvider::class,
-        App\Providers\RouteServiceProvider::class,
+            /*
+             * Application Service Providers...
+             */
+            App\Providers\AppServiceProvider::class,
+            App\Providers\AuthServiceProvider::class,
+            // App\Providers\BroadcastServiceProvider::class,
+            App\Providers\EventServiceProvider::class,
+            App\Providers\RouteServiceProvider::class,
 
-        /*
-         * Webkul Service Providers...
-         */
-        Webkul\Activity\Providers\ActivityServiceProvider::class,
-        Webkul\Admin\Providers\AdminServiceProvider::class,
-        Webkul\Attribute\Providers\AttributeServiceProvider::class,
-        Webkul\Automation\Providers\WorkflowServiceProvider::class,
-        Webkul\Contact\Providers\ContactServiceProvider::class,
-        Webkul\Core\Providers\CoreServiceProvider::class,
-        Webkul\DataGrid\Providers\DataGridServiceProvider::class,
-        Webkul\DataTransfer\Providers\DataTransferServiceProvider::class,
-        Webkul\EmailTemplate\Providers\EmailTemplateServiceProvider::class,
-        Webkul\Email\Providers\EmailServiceProvider::class,
-        Webkul\Marketing\Providers\MarketingServiceProvider::class,
-        Webkul\Installer\Providers\InstallerServiceProvider::class,
-        Webkul\Lead\Providers\LeadServiceProvider::class,
-        Webkul\Product\Providers\ProductServiceProvider::class,
-        Webkul\Quote\Providers\QuoteServiceProvider::class,
-        Webkul\Tag\Providers\TagServiceProvider::class,
-        Webkul\User\Providers\UserServiceProvider::class,
-        Webkul\Warehouse\Providers\WarehouseServiceProvider::class,
-        Webkul\WebForm\Providers\WebFormServiceProvider::class,
-    ])->toArray(),
+            /*
+             * Webkul Service Providers...
+             */
+            Webkul\Activity\Providers\ActivityServiceProvider::class,
+            Webkul\Admin\Providers\AdminServiceProvider::class,
+            Webkul\Attribute\Providers\AttributeServiceProvider::class,
+            Webkul\Automation\Providers\WorkflowServiceProvider::class,
+            Webkul\Contact\Providers\ContactServiceProvider::class,
+            Webkul\Core\Providers\CoreServiceProvider::class,
+            Webkul\DataGrid\Providers\DataGridServiceProvider::class,
+            Webkul\DataTransfer\Providers\DataTransferServiceProvider::class,
+            Webkul\EmailTemplate\Providers\EmailTemplateServiceProvider::class,
+            Webkul\Email\Providers\EmailServiceProvider::class,
+            Webkul\Marketing\Providers\MarketingServiceProvider::class,
+            Webkul\Installer\Providers\InstallerServiceProvider::class,
+            Webkul\Lead\Providers\LeadServiceProvider::class,
+            Webkul\Product\Providers\ProductServiceProvider::class,
+            Webkul\Quote\Providers\QuoteServiceProvider::class,
+            Webkul\Tag\Providers\TagServiceProvider::class,
+            Webkul\User\Providers\UserServiceProvider::class,
+            Webkul\Warehouse\Providers\WarehouseServiceProvider::class,
+            Webkul\WebForm\Providers\WebFormServiceProvider::class,
+            Webkul\ThemeManager\Providers\ThemeManagerServiceProvider::class,
+
+            /*
+             * Theme Override Providers (upgrade-safe)
+             * Devem vir DEPOIS do ThemeManagerServiceProvider para ter prioridade
+             */
+            App\Providers\ThemeBootProvider::class,
+
+            /*
+             * Theme Routes Override Provider
+             * DEVE ser o ÚLTIMO para que suas rotas prevaleçam sobre as do pacote
+             */
+            App\Providers\ThemeOverridesServiceProvider::class,
+        ])
+        ->toArray(),
 
     /*
     |--------------------------------------------------------------------------
@@ -233,5 +247,4 @@ return [
      */
 
     'aliases' => Facade::defaultAliases()->merge([])->toArray(),
-
 ];

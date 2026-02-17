@@ -1,0 +1,448 @@
+# =============================================================================
+# Krayin CRM - Docker Stack for Swarm Production Deployment
+# =============================================================================
+# Deploy:
+#   docker stack deploy -c docker-stack.yml krayin
+#
+# Scale:
+#   docker service scale krayin_app=3
+#
+# Update:
+#   docker service update --image krayin/crm:latest krayin_app
+#
+# Remove:
+#   docker stack rm krayin
+# =============================================================================
+
+version: '3.8'
+
+services:
+  # ---------------------------------------------------------------------------
+  # PHP-FPM Application (Scalable)
+  # ---------------------------------------------------------------------------
+  app:
+    image: ${DOCKER_REGISTRY:-}krayin/crm:${APP_VERSION:-latest}
+    deploy:
+      mode: replicated
+      replicas: 2
+      update_config:
+        parallelism: 1
+        delay: 30s
+        failure_action: rollback
+        order: start-first
+      rollback_config:
+        parallelism: 1
+        delay: 10s
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+        window: 120s
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 1G
+        reservations:
+          cpus: '0.25'
+          memory: 256M
+      labels:
+        - "traefik.enable=true"
+        - "traefik.http.routers.krayin.rule=Host(`${APP_DOMAIN:-crm.example.com}`)"
+        - "traefik.http.routers.krayin.entrypoints=websecure"
+        - "traefik.http.routers.krayin.tls=true"
+        - "traefik.http.routers.krayin.tls.certresolver=letsencrypt"
+        - "traefik.http.services.krayin.loadbalancer.server.port=9000"
+      placement:
+        constraints:
+          - node.role == worker
+    environment:
+      - APP_ENV=production
+      - APP_DEBUG=false
+      - APP_URL=https://${APP_DOMAIN:-crm.example.com}
+      - APP_KEY=${APP_KEY}
+      - DB_CONNECTION=mysql
+      - DB_HOST=mysql
+      - DB_PORT=3306
+      - DB_DATABASE=${DB_DATABASE:-krayin}
+      - DB_USERNAME=${DB_USERNAME:-krayin}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - CACHE_DRIVER=redis
+      - SESSION_DRIVER=redis
+      - QUEUE_CONNECTION=redis
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - REDIS_PASSWORD=${REDIS_PASSWORD:-null}
+      - LOG_CHANNEL=stderr
+    volumes:
+      - app-storage:/var/www/html/storage/app
+      - app-logs:/var/www/html/storage/logs
+    networks:
+      - krayin-internal
+      - traefik-public
+    healthcheck:
+      test: ["CMD", "/usr/local/bin/healthcheck.sh"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    secrets:
+      - app_key
+      - db_password
+
+  # ---------------------------------------------------------------------------
+  # Nginx Web Server (Scalable, tied to app replicas)
+  # ---------------------------------------------------------------------------
+  nginx:
+    image: nginx:1.25-alpine
+    deploy:
+      mode: replicated
+      replicas: 2
+      update_config:
+        parallelism: 1
+        delay: 10s
+        order: start-first
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 256M
+        reservations:
+          cpus: '0.1'
+          memory: 64M
+      labels:
+        - "traefik.enable=true"
+        - "traefik.http.routers.krayin-web.rule=Host(`${APP_DOMAIN:-crm.example.com}`)"
+        - "traefik.http.routers.krayin-web.entrypoints=websecure"
+        - "traefik.http.routers.krayin-web.tls=true"
+        - "traefik.http.routers.krayin-web.tls.certresolver=letsencrypt"
+        - "traefik.http.services.krayin-web.loadbalancer.server.port=80"
+        - "traefik.http.services.krayin-web.loadbalancer.sticky.cookie=true"
+        - "traefik.http.services.krayin-web.loadbalancer.sticky.cookie.name=krayin_sticky"
+      placement:
+        constraints:
+          - node.role == worker
+    configs:
+      - source: nginx_conf
+        target: /etc/nginx/nginx.conf
+      - source: nginx_default
+        target: /etc/nginx/conf.d/default.conf
+    volumes:
+      - app-storage:/var/www/html/storage/app:ro
+    networks:
+      - krayin-internal
+      - traefik-public
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://localhost/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # ---------------------------------------------------------------------------
+  # MySQL Database (Single instance with replication ready)
+  # ---------------------------------------------------------------------------
+  mysql:
+    image: mysql:8.0
+    deploy:
+      mode: replicated
+      replicas: 1
+      placement:
+        constraints:
+          - node.role == manager
+          - node.labels.db == true
+      restart_policy:
+        condition: on-failure
+        delay: 10s
+        max_attempts: 3
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 4G
+        reservations:
+          cpus: '0.5'
+          memory: 1G
+    environment:
+      - MYSQL_ROOT_PASSWORD_FILE=/run/secrets/db_root_password
+      - MYSQL_DATABASE=${DB_DATABASE:-krayin}
+      - MYSQL_USER=${DB_USERNAME:-krayin}
+      - MYSQL_PASSWORD_FILE=/run/secrets/db_password
+    command: >
+      --default-authentication-plugin=mysql_native_password
+      --character-set-server=utf8mb4
+      --collation-server=utf8mb4_unicode_ci
+      --max_allowed_packet=256M
+      --innodb_buffer_pool_size=2G
+      --innodb_log_file_size=512M
+      --innodb_flush_log_at_trx_commit=2
+      --slow_query_log=1
+      --long_query_time=2
+    volumes:
+      - mysql-data:/var/lib/mysql
+      - mysql-logs:/var/log/mysql
+    networks:
+      - krayin-internal
+    secrets:
+      - db_root_password
+      - db_password
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 60s
+
+  # ---------------------------------------------------------------------------
+  # Redis Cluster (Cache, Sessions, Queues)
+  # ---------------------------------------------------------------------------
+  redis:
+    image: redis:7-alpine
+    deploy:
+      mode: replicated
+      replicas: 1
+      placement:
+        constraints:
+          - node.role == manager
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 512M
+        reservations:
+          cpus: '0.1'
+          memory: 128M
+    command: >
+      redis-server
+      --appendonly yes
+      --maxmemory 384mb
+      --maxmemory-policy allkeys-lru
+      --tcp-keepalive 300
+    volumes:
+      - redis-data:/data
+    networks:
+      - krayin-internal
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+  # ---------------------------------------------------------------------------
+  # Queue Worker (Scalable)
+  # ---------------------------------------------------------------------------
+  queue:
+    image: ${DOCKER_REGISTRY:-}krayin/crm:${APP_VERSION:-latest}
+    deploy:
+      mode: replicated
+      replicas: 2
+      update_config:
+        parallelism: 1
+        delay: 30s
+        order: stop-first
+      restart_policy:
+        condition: on-failure
+        delay: 10s
+        max_attempts: 3
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 512M
+        reservations:
+          cpus: '0.1'
+          memory: 128M
+      placement:
+        constraints:
+          - node.role == worker
+    command: php artisan queue:work redis --sleep=3 --tries=3 --max-time=3600 --max-jobs=1000
+    environment:
+      - APP_ENV=production
+      - APP_DEBUG=false
+      - DB_HOST=mysql
+      - DB_DATABASE=${DB_DATABASE:-krayin}
+      - DB_USERNAME=${DB_USERNAME:-krayin}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - REDIS_HOST=redis
+      - QUEUE_CONNECTION=redis
+    volumes:
+      - app-storage:/var/www/html/storage/app
+    networks:
+      - krayin-internal
+    secrets:
+      - db_password
+
+  # ---------------------------------------------------------------------------
+  # Scheduler (Single instance)
+  # ---------------------------------------------------------------------------
+  scheduler:
+    image: ${DOCKER_REGISTRY:-}krayin/crm:${APP_VERSION:-latest}
+    deploy:
+      mode: replicated
+      replicas: 1
+      placement:
+        constraints:
+          - node.role == manager
+      restart_policy:
+        condition: on-failure
+        delay: 30s
+        max_attempts: 3
+      resources:
+        limits:
+          cpus: '0.25'
+          memory: 256M
+    command: >
+      sh -c "while true; do
+        php artisan schedule:run --verbose --no-interaction;
+        sleep 60;
+      done"
+    environment:
+      - APP_ENV=production
+      - DB_HOST=mysql
+      - DB_DATABASE=${DB_DATABASE:-krayin}
+      - DB_USERNAME=${DB_USERNAME:-krayin}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - REDIS_HOST=redis
+    networks:
+      - krayin-internal
+    secrets:
+      - db_password
+
+  # ---------------------------------------------------------------------------
+  # Traefik Reverse Proxy (Load Balancer + SSL)
+  # ---------------------------------------------------------------------------
+  traefik:
+    image: traefik:v3.0
+    deploy:
+      mode: global
+      placement:
+        constraints:
+          - node.role == manager
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 256M
+        reservations:
+          cpus: '0.1'
+          memory: 64M
+      labels:
+        # Dashboard access
+        - "traefik.enable=true"
+        - "traefik.http.routers.traefik-dashboard.rule=Host(`traefik.${APP_DOMAIN:-crm.example.com}`)"
+        - "traefik.http.routers.traefik-dashboard.entrypoints=websecure"
+        - "traefik.http.routers.traefik-dashboard.tls=true"
+        - "traefik.http.routers.traefik-dashboard.tls.certresolver=letsencrypt"
+        - "traefik.http.routers.traefik-dashboard.service=api@internal"
+        - "traefik.http.routers.traefik-dashboard.middlewares=traefik-auth"
+        - "traefik.http.middlewares.traefik-auth.basicauth.users=${TRAEFIK_DASHBOARD_AUTH:-admin:$$apr1$$xyz}"
+        - "traefik.http.services.traefik-dashboard.loadbalancer.server.port=8080"
+    command:
+      # API/Dashboard
+      - "--api.dashboard=true"
+      - "--api.insecure=false"
+      - "--ping=true"
+      # Docker Swarm provider
+      - "--providers.docker=true"
+      - "--providers.swarm=true"
+      - "--providers.swarm.exposedbydefault=false"
+      - "--providers.swarm.network=traefik-public"
+      # Entrypoints
+      - "--entrypoints.web.address=:80"
+      - "--entrypoints.web.http.redirections.entrypoint.to=websecure"
+      - "--entrypoints.web.http.redirections.entrypoint.scheme=https"
+      - "--entrypoints.websecure.address=:443"
+      # Let's Encrypt SSL
+      - "--certificatesresolvers.letsencrypt.acme.email=${ACME_EMAIL:-admin@example.com}"
+      - "--certificatesresolvers.letsencrypt.acme.storage=/letsencrypt/acme.json"
+      - "--certificatesresolvers.letsencrypt.acme.httpchallenge.entrypoint=web"
+      # Logging
+      - "--log.level=INFO"
+      - "--accesslog=true"
+      - "--accesslog.format=json"
+    ports:
+      - target: 80
+        published: 80
+        protocol: tcp
+        mode: host
+      - target: 443
+        published: 443
+        protocol: tcp
+        mode: host
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - traefik-certs:/letsencrypt
+    networks:
+      - traefik-public
+    healthcheck:
+      test: ["CMD", "traefik", "healthcheck", "--ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+# =============================================================================
+# Networks
+# =============================================================================
+networks:
+  krayin-internal:
+    driver: overlay
+    attachable: true
+    internal: true
+  traefik-public:
+    driver: overlay
+    attachable: true
+    external: true
+
+# =============================================================================
+# Volumes (Distributed storage recommended for production)
+# =============================================================================
+volumes:
+  mysql-data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /data/krayin/mysql
+  mysql-logs:
+    driver: local
+  redis-data:
+    driver: local
+  app-storage:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /data/krayin/storage
+  app-logs:
+    driver: local
+  traefik-certs:
+    driver: local
+
+# =============================================================================
+# Secrets (Create before deploying)
+# =============================================================================
+# docker secret create app_key app_key.txt
+# docker secret create db_password db_password.txt
+# docker secret create db_root_password db_root_password.txt
+# =============================================================================
+secrets:
+  app_key:
+    external: true
+  db_password:
+    external: true
+  db_root_password:
+    external: true
+
+# =============================================================================
+# Configs
+# =============================================================================
+configs:
+  nginx_conf:
+    file: ./docker/nginx/nginx.conf
+  nginx_default:
+    file: ./docker/nginx/default.conf

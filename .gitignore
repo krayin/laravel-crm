@@ -33,3 +33,34 @@ node_modules/
 /test-results/
 /blob-report/
 /playwright/.cache/
+_backup_theme_manager_package.patch
+
+# ========== Docs: Logs (nao versionar) ==========
+docs/logs/*.log
+docs/logs/*.txt
+docs/logs/*.md
+!docs/logs/.gitkeep
+
+# ========== Arquivos grandes ==========
+docs/_archive/*.zip
+docs/_archive/*.patch
+*.zip
+*.tar.gz
+*.rar
+
+# ========== Backups temporarios ==========
+*.patch.bak
+*.backup
+
+# ========== Arquivos Windows ==========
+desktop.ini
+Thumbs.db
+nul
+.phpunit.cache/
+laravel-crm.zip
+
+# ========== Claude Code (local) ==========
+.claude/settings.local.json
+
+# ========== Docs: Logs pessoais ==========
+docs/LOGS_*.md

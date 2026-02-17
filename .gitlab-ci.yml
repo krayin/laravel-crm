@@ -1,0 +1,90 @@
+stages:
+  - check
+  - test
+
+variables:
+  APP_ENV: testing
+  CACHE_DRIVER: array
+  SESSION_DRIVER: array
+  QUEUE_CONNECTION: sync
+  DB_CONNECTION: sqlite
+  DB_DATABASE: ":memory:"
+
+.php_base: &php_base
+  image: php:8.2-cli
+  before_script:
+    - apt-get update && apt-get install -y git unzip libzip-dev libsqlite3-dev
+    - docker-php-ext-install zip pdo_sqlite
+    - php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+    - php composer-setup.php --install-dir=/usr/local/bin --filename=composer
+    - rm composer-setup.php
+    - composer install --no-interaction --prefer-dist
+    - cp .env.example .env || true
+    - php artisan key:generate || true
+  cache:
+    key: ${CI_COMMIT_REF_SLUG}-composer
+    paths:
+      - vendor/
+
+# =============================================================================
+# UPGRADE-SAFE CHECK
+# Fails if any changes detected in vendor/ or packages/Webkul/
+# =============================================================================
+check:upgrade-safe:
+  <<: *php_base
+  stage: check
+  script:
+    - echo "Running upgrade-safe check..."
+    - chmod +x scripts/check-upgrade-safe.sh
+    - ./scripts/check-upgrade-safe.sh
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+    - if: $CI_COMMIT_BRANCH =~ /^(main|master|develop|2\.1)$/
+  allow_failure: false
+
+# =============================================================================
+# THEME DOCTOR DIAGNOSTICS
+# Generates theme health report as artifact
+# =============================================================================
+check:theme-doctor:
+  <<: *php_base
+  stage: check
+  script:
+    - echo "Running theme diagnostics..."
+    - php artisan -V
+    - php artisan theme:doctor --json=1 > theme-doctor-report.json
+    - cat theme-doctor-report.json
+  artifacts:
+    paths:
+      - theme-doctor-report.json
+    expire_in: 7 days
+    when: always
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+    - if: $CI_COMMIT_BRANCH =~ /^(main|master|develop|2\.1)$/
+  allow_failure: true
+
+# =============================================================================
+# PR/Push Gate: Roda apenas BrandKit (rápido, ~15s)
+# =============================================================================
+test:brandkit:
+  <<: *php_base
+  stage: test
+  script:
+    - php vendor/bin/pest --filter "BrandKit|PreviewSession|ThemeContextFactory"
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+    - if: $CI_COMMIT_BRANCH =~ /^(main|master|develop|2\.1)$/
+
+# =============================================================================
+# Nightly: Roda suite completa (pode demorar mais)
+# =============================================================================
+test:full:
+  <<: *php_base
+  stage: test
+  script:
+    - php vendor/bin/pest
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "schedule"
+    - if: $CI_PIPELINE_SOURCE == "web"
+  allow_failure: true

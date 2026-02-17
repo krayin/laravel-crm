@@ -1,0 +1,51 @@
+name: Tests (Full Suite)
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 3 * * *" # 03:00 UTC daily
+
+jobs:
+  test-full:
+    name: Pest (Full Suite)
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.2"
+          tools: composer:v2
+          extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite, mysql
+          coverage: none
+
+      - name: Cache Composer
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.composer/cache/files
+            vendor
+          key: ${{ runner.os }}-php82-${{ hashFiles('composer.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-php82-
+
+      - name: Install dependencies
+        run: composer install --no-interaction --prefer-dist
+
+      - name: Prepare env
+        run: |
+          cp .env.example .env || true
+          php artisan key:generate || true
+        env:
+          APP_ENV: testing
+
+      - name: Run tests (Full)
+        run: composer test:full
+        env:
+          APP_ENV: testing
+          CACHE_DRIVER: array
+          SESSION_DRIVER: array
+          QUEUE_CONNECTION: sync

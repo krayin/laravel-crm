@@ -75,7 +75,8 @@
             "Webkul\\User\\": "packages/Webkul/User/src",
             "Webkul\\Warehouse\\": "packages/Webkul/Warehouse/src",
             "Webkul\\WebForm\\": "packages/Webkul/WebForm/src",
-            "Webkul\\Automation\\": "packages/Webkul/Automation/src"
+            "Webkul\\Automation\\": "packages/Webkul/Automation/src",
+            "Webkul\\ThemeManager\\": "packages/Webkul/ThemeManager/src"
         }
     },
     "autoload-dev": {
@@ -104,6 +105,15 @@
         ],
         "post-create-project-cmd": [
             "@php artisan key:generate --ansi"
+        ],
+        "test:brandkit": [
+            "@php vendor/bin/pest --filter \"BrandKit|PreviewSession|ThemeContextFactory\""
+        ],
+        "test:brandkit-coverage": [
+            "@php vendor/bin/pest --filter \"BrandKit|PreviewSession|ThemeContextFactory\" --coverage"
+        ],
+        "test:full": [
+            "@php vendor/bin/pest"
         ]
     }
 }
