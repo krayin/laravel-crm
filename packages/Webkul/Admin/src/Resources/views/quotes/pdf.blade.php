@@ -253,15 +253,14 @@
                     <table class="{{ app()->getLocale() }}">
                         <tbody>
                             <tr>
-                                <td style="padding: 6px 18px; border: none;">
+                                <td style="width: 15%; padding: 2px 18px; border: none; vertical-align: top;">
                                     <b>
                                         @lang('admin::app.quotes.index.pdf.description'):
                                     </b>
                                 </td>
                             </tr>
-
                             <tr>
-                                <td style="padding: 6px 18px;">
+                                <td style="width: 85%; padding: 2px 18px; border: none;">
                                     {!! $quote->description !!}
                                 </td>
                             </tr>
