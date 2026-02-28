@@ -50,8 +50,8 @@ class WebFormController extends Controller
      */
     public function create(): View
     {
-        $tempAttributes = $this->attributeRepository->findWhereIn('entity_type', ['persons', 'leads']);
-
+        $tempAttributes = $this->attributeRepository->getWebformAttributes([]);
+        $pipelines = $this->pipelineRepository->all();
         $attributes = [];
 
         foreach ($tempAttributes as $attribute) {
@@ -65,7 +65,7 @@ class WebFormController extends Controller
             }
         }
 
-        return view('admin::settings.web-forms.create', compact('attributes'));
+        return view('admin::settings.web-forms.create', compact('attributes', 'pipelines'));
     }
 
     /**

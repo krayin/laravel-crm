@@ -70,12 +70,31 @@ class WebFormController extends Controller
 
             $data['entity_type'] = 'leads';
 
-            $data['person'] = request('persons');
+            $personData = request('persons');
+            if (! isset($personData['contact_numbers']) || ! is_array($personData['contact_numbers'])) {
+                $personData['contact_numbers'] = [];
+            }
+
+            if ($person) {
+                $personModel = $person;
+            } else {
+                request()->request->add(['entity_type' => 'persons']);
+                $personData['entity_type'] = 'persons';
+
+                $personModel = $this->personRepository->create($personData);
+            }
+
+            $data['person'] = $personModel->toArray();
 
             $data['status'] = 1;
 
-            $pipeline = $this->pipelineRepository->getDefaultPipeline();
+            $pipeline = $webForm->lead_pipeline_id
+                    ? $this->pipelineRepository->find($webForm->lead_pipeline_id)
+                    : null;
 
+            if (! $pipeline) {
+                $pipeline = $this->pipelineRepository->getDefaultPipeline();
+            }
             $stage = $pipeline->stages()->first();
 
             $data['lead_pipeline_id'] = $pipeline->id;

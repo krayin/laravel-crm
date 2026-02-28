@@ -176,4 +176,15 @@ class AttributeRepository extends Repository
             return app($lookup['repository'])->find($entityId, $columns);
         }
     }
+    public function getWebformAttributes(array $excludedAttributeIds = [])
+    {
+        return $this->model
+            ->whereIn('entity_type', ['persons', 'leads'])
+            ->whereNotIn('id', $excludedAttributeIds)
+            ->whereNotIn('code', [
+                'lead_pipeline_id',
+                'lead_pipeline_stage_id',
+            ])
+            ->get();
+    }
 }
