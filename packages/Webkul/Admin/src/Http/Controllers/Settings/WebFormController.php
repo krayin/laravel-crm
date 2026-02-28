@@ -100,12 +100,12 @@ class WebFormController extends Controller
     {
         $webForm = $this->webFormRepository->findOrFail($id);
 
-        $attributes = $this->attributeRepository->findWhere([
-            ['entity_type', 'IN', ['persons', 'leads']],
-            ['id', 'NOTIN', $webForm->attributes()->pluck('attribute_id')->toArray()],
-        ]);
+        $attributes = $this->attributeRepository->getWebformAttributes(
+            $webForm->attributes()->pluck('attribute_id')->toArray()
+        );
 
-        return view('admin::settings.web-forms.edit', compact('webForm', 'attributes'));
+        $pipelines = $this->pipelineRepository->all();
+        return view('admin::settings.web-forms.edit', compact('webForm', 'attributes', 'pipelines'));
     }
 
     /**

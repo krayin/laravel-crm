@@ -527,6 +527,27 @@
 
                                 <x-admin::form.control-group.error control-name="submit_button_label" />
                             </x-admin::form.control-group>
+                            <x-admin::form.control-group class="mt-4">
+                                <x-admin::form.control-group.label>
+                                    Pipeline
+                                </x-admin::form.control-group.label>
+
+                                <x-admin::form.control-group.control
+                                    type="select"
+                                    name="lead_pipeline_id"
+                                    :value="old('lead_pipeline_id') ?? $webForm->lead_pipeline_id"
+                                >
+                                    <option value="">Use Default Pipeline</option>
+
+                                    @foreach($pipelines as $pipeline)
+                                        <option value="{{ $pipeline->id }}">
+                                            {{ $pipeline->name }}
+                                        </option>
+                                    @endforeach
+                                </x-admin::form.control-group.control>
+
+                                <x-admin::form.control-group.error control-name="lead_pipeline_id" />
+                            </x-admin::form.control-group>
                         </x-slot>
                     </x-admin::accordion>
                 </div>
