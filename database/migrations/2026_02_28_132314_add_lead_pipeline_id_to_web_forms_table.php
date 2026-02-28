@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::table('web_forms', function (Blueprint $table) {
             $table->unsignedInteger('lead_pipeline_id')
-              ->nullable()
-              ->after('create_lead');
+                ->nullable()
+                ->after('create_lead');
         });
     }
 

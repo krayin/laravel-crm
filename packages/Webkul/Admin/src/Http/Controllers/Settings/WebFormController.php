@@ -105,6 +105,7 @@ class WebFormController extends Controller
         );
 
         $pipelines = $this->pipelineRepository->all();
+
         return view('admin::settings.web-forms.edit', compact('webForm', 'attributes', 'pipelines'));
     }
 
