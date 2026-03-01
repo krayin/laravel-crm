@@ -25,8 +25,13 @@ async function composeMail(adminPage, ccMail = false, bccMail = false) {
     /**
      * Sending mail and closing the modal.
      */
-    await adminPage.getByRole("button", { name: "Send" }).click();
-
+    await Promise.all([
+        adminPage.waitForResponse(response =>
+            response.url().includes('/admin/mail') && response.status() === 200
+        ),
+        adminPage.getByRole("button", { name: "Send" }).click(),
+    ]);
+    await expect(adminPage.getByRole("dialog")).not.toBeVisible();
     await expect(adminPage.getByText("Email sent successfully.")).toBeVisible();
 }
 
