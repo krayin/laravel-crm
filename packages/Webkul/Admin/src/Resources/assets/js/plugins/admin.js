@@ -8,15 +8,20 @@ export default {
              * @returns {string} - The formatted price string.
              */
             formatPrice: (price) => {
-                let locale = document.querySelector('meta[http-equiv="content-language"]').content;
+                let locale = document.querySelector(
+                    'meta[http-equiv="content-language"]'
+                ).content;
 
-                locale = locale.replace(/([a-z]{2})_([A-Z]{2})/g, '$1-$2');
+                locale = locale.replace(/([a-z]{2})_([A-Z]{2})/g, "$1-$2");
 
-                const currency = JSON.parse(document.querySelector('meta[name="currency"]').content);
+                const currency = JSON.parse(
+                    document.querySelector('meta[name="currency"]').content
+                );
 
-                const symbol = currency.symbol !== '' ? currency.symbol : currency.code;
+                const symbol =
+                    currency.symbol !== "" ? currency.symbol : currency.code;
 
-                if (! currency.currency_position) {
+                if (!currency.currency_position) {
                     return new Intl.NumberFormat(locale, {
                         style: "currency",
                         currency: currency.code,
@@ -24,24 +29,25 @@ export default {
                 }
 
                 const formatter = new Intl.NumberFormat(locale, {
-                    style: 'currency',
+                    style: "currency",
                     currency: currency.code,
-                    minimumFractionDigits: currency.decimal ?? 2
+                    minimumFractionDigits: currency.decimal ?? 2,
                 });
 
-                const formattedCurrency = formatter.formatToParts(price)
-                    .map(part => {
+                const formattedCurrency = formatter
+                    .formatToParts(price)
+                    .map((part) => {
                         switch (part.type) {
-                            case 'currency':
-                                return '';
+                            case "currency":
+                                return "";
 
-                            case 'group':
-                                return currency.group_separator === ''
+                            case "group":
+                                return currency.group_separator === ""
                                     ? part.value
                                     : currency.group_separator;
 
-                            case 'decimal':
-                                return currency.decimal_separator === ''
+                            case "decimal":
+                                return currency.decimal_separator === ""
                                     ? part.value
                                     : currency.decimal_separator;
 
@@ -49,20 +55,20 @@ export default {
                                 return part.value;
                         }
                     })
-                    .join('');
+                    .join("");
 
                 switch (currency.currency_position) {
-                    case 'left':
+                    case "left":
                         return symbol + formattedCurrency;
 
-                    case 'left_with_space':
-                        return symbol + ' ' + formattedCurrency;
+                    case "left_with_space":
+                        return symbol + " " + formattedCurrency;
 
-                    case 'right':
+                    case "right":
                         return formattedCurrency + symbol;
 
-                    case 'right_with_space':
-                        return formattedCurrency + ' ' + symbol;
+                    case "right_with_space":
+                        return formattedCurrency + " " + symbol;
 
                     default:
                         return formattedCurrency;
@@ -70,35 +76,73 @@ export default {
             },
 
             /**
-             * Generates a formatted date.
+             * Generates a formatted date based on specified timezone.
              *
              * @param {string} dateString - The date value to be formatted.
              * @param {string} format - The format to be used for formatting the date.
+             * @param {string} timezone - The timezone to use (e.g., 'America/New_York').
              * @returns {string} - The formatted date string.
              */
-            formatDate: (dateString, format) => {
+            formatDate: (dateString, format, timezone) => {
                 const date = new Date(dateString);
 
+                const options = { timeZone: timezone };
+
+                const formatter = new Intl.DateTimeFormat("en-US", {
+                    ...options,
+                    hour12: false,
+                    year: "numeric",
+                    month: "numeric",
+                    day: "numeric",
+                    hour: "numeric",
+                    minute: "numeric",
+                    second: "numeric",
+                });
+
+                const parts = formatter.formatToParts(date);
+                const dateParts = {};
+
+                parts.forEach((part) => {
+                    if (part.type !== "literal") {
+                        dateParts[part.type] = part.value;
+                    }
+                });
+
+                const tzDay = parseInt(dateParts.day, 10);
+                const tzMonth = parseInt(dateParts.month, 10);
+                const tzYear = parseInt(dateParts.year, 10);
+                const tzHour = parseInt(dateParts.hour, 10);
+                const tzMinute = parseInt(dateParts.minute, 10);
+
                 const formatters = {
-                    d: date.getUTCDate(),
-                    DD: date.getUTCDate().toString().padStart(2, '0'),
-                    M: date.getUTCMonth() + 1,
-                    MM: (date.getUTCMonth() + 1).toString().padStart(2, '0'),
-                    MMM: date.toLocaleString('en-US', { month: 'short' }),
-                    MMMM: date.toLocaleString('en-US', { month: 'long' }),
-                    yy: date.getUTCFullYear().toString().slice(-2),
-                    yyyy: date.getUTCFullYear(),
-                    H: date.getUTCHours(),
-                    HH: date.getUTCHours().toString().padStart(2, '0'),
-                    h: (date.getUTCHours() % 12 || 12),
-                    hh: (date.getUTCHours() % 12 || 12).toString().padStart(2, '0'),
-                    m: date.getUTCMinutes(),
-                    mm: date.getUTCMinutes().toString().padStart(2, '0'),
-                    A: date.getUTCHours() < 12 ? 'AM' : 'PM'
+                    d: tzDay,
+                    DD: tzDay.toString().padStart(2, "0"),
+                    M: tzMonth,
+                    MM: tzMonth.toString().padStart(2, "0"),
+                    MMM: new Date(tzYear, tzMonth - 1, 1).toLocaleString(
+                        "en-US",
+                        { month: "short" }
+                    ),
+                    MMMM: new Date(tzYear, tzMonth - 1, 1).toLocaleString(
+                        "en-US",
+                        { month: "long" }
+                    ),
+                    yy: tzYear.toString().slice(-2),
+                    yyyy: tzYear,
+                    H: tzHour,
+                    HH: tzHour.toString().padStart(2, "0"),
+                    h: tzHour % 12 || 12,
+                    hh: (tzHour % 12 || 12).toString().padStart(2, "0"),
+                    m: tzMinute,
+                    mm: tzMinute.toString().padStart(2, "0"),
+                    A: tzHour < 12 ? "AM" : "PM",
                 };
 
-                return format.replace(/\b(?:d|DD|M|MM|MMM|MMMM|yy|yyyy|H|HH|h|hh|m|mm|A)\b/g, match => formatters[match]);
-            }
+                return format.replace(
+                    /\b(?:d|DD|M|MM|MMM|MMMM|yy|yyyy|H|HH|h|hh|m|mm|A)\b/g,
+                    (match) => formatters[match]
+                );
+            },
         };
     },
 };

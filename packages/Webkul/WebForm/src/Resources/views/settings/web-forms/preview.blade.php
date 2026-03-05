@@ -17,7 +17,7 @@
             type="text/template"
             id="v-web-form-template"
         >
-            <div 
+            <div
                 class="flex h-[100vh] items-center justify-center"
                 style="background-color: {{ $webForm->background_color }}"
             >
@@ -33,19 +33,19 @@
 
                     <p>{{ $webForm->description }}</p>
 
-                    <div 
+                    <div
                         class="box-shadow flex min-w-[300px] flex-col rounded-lg border border-gray-200 bg-white p-4 dark:bg-gray-900"
                         style="background-color: {{ $webForm->form_background_color }}"
                     >
                         {!! view_render_event('web_forms.web_forms.form_controls.before', ['webForm' => $webForm]) !!}
-            
+
                         <!-- Webform Form -->
                         <x-web_form::form
                             v-slot="{ meta, values, errors, handleSubmit }"
                             as="div"
                             ref="modalForm"
                         >
-                            <form 
+                            <form
                                 @submit="handleSubmit($event, create)"
                                 ref="webForm"
                             >
@@ -84,12 +84,13 @@
                         this.isStoring = true;
 
                         const formData = new FormData(this.$refs.webForm);
-                        
-                        this.$axios.post('{{ route('admin.settings.web_forms.form_store', $webForm->id) }}', formData, {
-                            headers: {
-                                'Content-Type': 'multipart/form-data',
-                            },
-                        })
+
+                        this.$axios
+                            .post('{{ route('admin.settings.web_forms.form_store', $webForm->id) }}', formData, {
+                                headers: {
+                                    'Content-Type': 'multipart/form-data',
+                                },
+                            })
                             .then(response => {
                                 resetForm();
 
@@ -103,7 +104,7 @@
 
                                     return;
                                 }
-                                
+
                                 this.$emitter.emit('add-flash', { type: 'error', message: error.response.data.message });
                             })
                             .finally(() => {

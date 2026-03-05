@@ -66,7 +66,7 @@
                             <!-- Modal Header -->
                             <x-slot:header>
                                 <p class="text-lg font-bold text-gray-800 dark:text-white">
-                                    Update Contact Emails
+                                    @lang("admin::app.common.custom-attributes.update-emails-title")
                                 </p>
                             </x-slot>
 
@@ -81,6 +81,7 @@
                                             class="!rounded-r-none"
                                             ::rules="getValidation"
                                             v-model="email.value"
+                                            :label="trans('admin::app.common.custom-attributes.email')"
                                         />
 
                                         <div class="relative">
@@ -123,7 +124,7 @@
                                 <x-admin::button
                                     button-type="submit"
                                     class="primary-button justify-center"
-                                    :title="trans('Save')"
+                                    :title="trans('admin::app.common.custom-attributes.save')"
                                     ::loading="isProcessing"
                                     ::disabled="isProcessing"
                                 />
@@ -278,7 +279,7 @@
                         const emailOccurrences = emails.filter(email => email.value === value).length;
 
                         if (emailOccurrences > 1) {
-                            return 'This email email is already used';
+                            return 'This email is already used';
                         }
 
                         return true;

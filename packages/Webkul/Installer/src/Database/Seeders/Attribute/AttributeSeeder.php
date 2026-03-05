@@ -60,7 +60,7 @@ class AttributeSeeder extends Seeder
                 'type'            => 'price',
                 'entity_type'     => 'leads',
                 'lookup_type'     => null,
-                'validation'      => null,
+                'validation'      => 'decimal',
                 'sort_order'      => '3',
                 'is_required'     => '1',
                 'is_unique'       => '0',

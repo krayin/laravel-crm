@@ -153,30 +153,31 @@ return [
             ],
 
             'index' => [
-                'from'         => 'Từ',
-                'to'           => 'Đến',
-                'cc'           => 'Cc',
-                'bcc'          => 'Bcc',
                 'all'          => 'Tất cả',
-                'planned'      => 'Đã lên kế hoạch',
-                'calls'        => 'Cuộc gọi',
-                'meetings'     => 'Cuộc họp',
-                'lunches'      => 'Bữa trưa',
-                'files'        => 'Tệp tin',
-                'quotes'       => 'Báo giá',
-                'notes'        => 'Ghi chú',
-                'emails'       => 'Email',
-                'change-log'   => 'Nhật ký thay đổi',
+                'bcc'          => 'Bcc',
                 'by-user'      => 'Bởi :user',
-                'scheduled-on' => 'Lên lịch vào',
-                'location'     => 'Địa điểm',
-                'participants' => 'Người tham gia',
-                'mark-as-done' => 'Đánh dấu hoàn thành',
+                'calls'        => 'Cuộc gọi',
+                'cc'           => 'Cc',
+                'change-log'   => 'Nhật ký thay đổi',
                 'delete'       => 'Xóa',
                 'edit'         => 'Chỉnh sửa',
-                'view'         => 'Xem',
-                'unlink'       => 'Gỡ liên kết',
+                'emails'       => 'Email',
                 'empty'        => 'Trống',
+                'files'        => 'Tệp tin',
+                'from'         => 'Từ',
+                'location'     => 'Địa điểm',
+                'lunches'      => 'Bữa trưa',
+                'mark-as-done' => 'Đánh dấu hoàn thành',
+                'meetings'     => 'Cuộc họp',
+                'notes'        => 'Ghi chú',
+                'participants' => 'Người tham gia',
+                'planned'      => 'Đã lên kế hoạch',
+                'quotes'       => 'Báo giá',
+                'scheduled-on' => 'Lên lịch vào',
+                'system'       => 'Hệ thống',
+                'to'           => 'Đến',
+                'unlink'       => 'Gỡ liên kết',
+                'view'         => 'Xem',
 
                 'empty-placeholders' => [
                     'all' => [
@@ -1117,6 +1118,7 @@ return [
                         'name'        => 'Tên',
                         'date'        => 'Ngày',
                         'description' => 'Mô tả',
+                        'save-btn'    => 'Lưu Sự kiện',
                     ],
 
                     'edit' => [
@@ -1743,17 +1745,22 @@ return [
 
     'common' => [
         'custom-attributes' => [
-            'select-country' => 'Chọn Quốc Gia',
-            'select-state'   => 'Chọn Bang',
-            'state'          => 'Bang',
-            'city'           => 'Thành Phố',
-            'postcode'       => 'Mã Bưu Chính',
-            'work'           => 'Công Việc',
-            'home'           => 'Nhà',
-            'add-more'       => 'Thêm Nữa',
-            'select'         => 'Chọn',
-            'country'        => 'Quốc Gia',
-            'address'        => 'Địa Chỉ',
+            'add-more'             => 'Thêm Nữa',
+            'address'              => 'Địa Chỉ',
+            'city'                 => 'Thành Phố',
+            'contact'              => 'Số Liên Lạc',
+            'country'              => 'Quốc Gia',
+            'email'                => 'Email',
+            'home'                 => 'Nhà',
+            'postcode'             => 'Mã Bưu Chính',
+            'save'                 => 'Lưu',
+            'select'               => 'Chọn',
+            'select-country'       => 'Chọn Quốc Gia',
+            'select-state'         => 'Chọn Bang',
+            'state'                => 'Bang',
+            'update-contact-title' => 'Cập Nhật Số Liên Lạc',
+            'update-emails-title'  => 'Cập Nhật Email Liên Hệ',
+            'work'                 => 'Công Việc',
         ],
     ],
 
@@ -1762,6 +1769,20 @@ return [
         'update-success'    => 'Cập nhật khách hàng tiềm năng thành công.',
         'destroy-success'   => 'Xóa khách hàng tiềm năng thành công.',
         'destroy-failed'    => 'Không thể xóa khách hàng tiềm năng.',
+
+        'file' => [
+            'data-not-found'         => 'Không tìm thấy dữ liệu.',
+            'empty-content'          => 'Nội dung PDF trống hoặc không thể trích xuất.',
+            'failed-extract'         => 'Không thể trích xuất văn bản từ tệp.',
+            'insufficient-info'      => 'Do dữ liệu không đủ, chúng tôi không thể xử lý yêu cầu của bạn vào lúc này.',
+            'invalid-base64'         => 'Định dạng base64 không hợp lệ.',
+            'invalid-format'         => 'Định dạng JSON không hợp lệ.',
+            'invalid-response'       => 'Định dạng phản hồi AI không hợp lệ.',
+            'missing-api-key'        => 'Thiếu khóa API hoặc cấu hình mô hình.',
+            'not-found'              => 'Không tìm thấy tệp.',
+            'recursive-call'         => 'Phát hiện cuộc gọi đệ quy.',
+            'text-generation-failed' => 'Trích xuất văn bản thất bại. Tệp có thể trống hoặc không đọc được.',
+        ],
 
         'index' => [
             'title'      => 'Khách Hàng Tiềm Năng',
@@ -1826,6 +1847,16 @@ return [
             'view-switcher' => [
                 'all-pipelines'       => 'Tất Cả Các Quy Trình',
                 'create-new-pipeline' => 'Tạo Quy Trình Mới',
+            ],
+
+            'upload' => [
+                'create-lead'   => 'Tạo Khách Hàng Tiềm Năng Bằng AI',
+                'file'          => 'Tải tệp lên',
+                'file-info'     => 'Chỉ chấp nhận các tệp định dạng pdf, bmp, jpg, jpeg, png.',
+                'file-required' => 'Vui lòng chọn ít nhất một tệp hợp lệ để tiếp tục.',
+                'sample-pdf'    => 'PDF Mẫu',
+                'save-btn'      => 'Lưu',
+                'upload-file'   => 'Tải lên tệp',
             ],
         ],
 
@@ -1939,23 +1970,120 @@ return [
 
     'configuration' => [
         'index' => [
-            'back'         => 'Quay Lại',
-            'save-btn'     => 'Lưu Cấu Hình',
-            'save-success' => 'Lưu Cấu Hình Thành Công.',
-            'search'       => 'Tìm Kiếm',
-            'title'        => 'Cấu Hình',
+            'back'           => 'Quay lại',
+            'delete'         => 'Xóa',
+            'save-btn'       => 'Lưu Cấu hình',
+            'save-success'   => 'Cấu hình đã được lưu thành công.',
+            'search'         => 'Tìm kiếm',
+            'select-country' => 'Chọn Quốc gia',
+            'select-state'   => 'Chọn Bang',
+            'title'          => 'Cấu hình',
 
             'general'  => [
                 'title'   => 'Chung',
-                'info'    => 'Cấu Hình Chung',
+                'info'    => 'Cấu hình chung',
 
                 'general' => [
                     'title'           => 'Chung',
                     'info'            => 'Cập nhật cài đặt chung của bạn tại đây.',
                     'locale-settings' => [
-                        'title'       => 'Cài Đặt Ngôn Ngữ',
-                        'title-info'  => 'Định nghĩa ngôn ngữ sử dụng trong giao diện người dùng, chẳng hạn như tiếng Anh (en), tiếng Pháp (fr) hoặc tiếng Nhật (ja).',
+                        'title'       => 'Cài đặt ngôn ngữ',
+                        'title-info'  => 'Định nghĩa ngôn ngữ được sử dụng trong giao diện người dùng, như tiếng Ả Rập (ar), tiếng Anh (en), tiếng Tây Ban Nha (es), tiếng Ba Tư (fa) và tiếng Thổ Nhĩ Kỳ (tr).',
                     ],
+
+                    'admin-logo' => [
+                        'logo-image' => 'Hình ảnh Logo',
+                        'title'      => 'Logo Quản trị',
+                        'title-info' => 'Cấu hình hình ảnh logo cho bảng điều khiển quản trị của bạn.',
+                    ],
+                ],
+            ],
+
+            'email' => [
+                'title' => 'Cài đặt Email',
+                'info'  => 'Cấu hình email cho ứng dụng.',
+
+                'imap' => [
+                    'title' => 'Cài đặt IMAP',
+                    'info'  => 'Cấu hình email IMAP để nhận email.',
+
+                    'account' => [
+                        'title'         => 'Tài khoản IMAP',
+                        'title-info'    => 'Cấu hình cài đặt tài khoản IMAP của bạn tại đây.',
+                        'host'          => 'Máy chủ',
+                        'port'          => 'Cổng',
+                        'encryption'    => 'Loại mã hóa',
+                        'validate-cert' => 'Xác thực chứng chỉ SSL',
+                        'username'      => 'Tên người dùng IMAP',
+                        'password'      => 'Mật khẩu IMAP',
+                    ],
+                ],
+            ],
+
+            'magic-ai' => [
+                'title' => 'Magic AI',
+                'info'  => 'Cấu hình Magic AI cho ứng dụng.',
+
+                'settings' => [
+                    'api-key'             => 'Khóa API',
+                    'api-key-info'        => 'Nhớ sử dụng khóa API OpenRouter cho mỗi mô hình. Đây là một bước đơn giản để tăng cường bảo mật và hiệu suất.',
+                    'enable'              => 'Kích hoạt',
+                    'info'                => 'Nâng cao trải nghiệm Magic AI của bạn với Khóa API OpenRouter. Tích hợp ngay bây giờ để có một cuộc phiêu lưu AI liền mạch và cá nhân hóa chỉ dành cho bạn! Dễ dàng tùy chỉnh cài đặt và kiểm soát hành trình AI của bạn.',
+                    'other'               => 'Mô hình khác',
+                    'other-model'         => 'Đối với các mô hình khác, sử dụng ID Mô hình từ OpenRouter.',
+                    'pdf-generation'      => 'Tạo PDF',
+                    'pdf-generation-info' => 'Kích hoạt tính năng Tạo PDF để tự động trích xuất dữ liệu từ các tệp PDF và chuyển đổi chúng thành định dạng văn bản. Nâng cao năng suất và hiệu quả của bạn bằng cách kích hoạt tính năng này để tối ưu hóa quy trình làm việc của bạn.',
+                    'title'               => 'Cài đặt chung',
+
+                    'models'     => [
+                        'deepseek-r1'           => 'Deepseek R1 Distill-llama-8b',
+                        'gemini-2-0-flash-001'  => 'Gemini 2.0 flash-001',
+                        'gpt-4o'                => 'GPT-4.0',
+                        'gpt-4o-mini'           => 'GPT-4.0 mini',
+                        'grok-2-1212'           => 'Grok 2.12',
+                        'llama-3-2-3b-instruct' => 'Llama 3.2 3b Instruct',
+                        'title'                 => 'Mô hình',
+                    ],
+                ],
+            ],
+
+            'settings' => [
+                'title' => 'Cài đặt',
+                'info'  => 'Cập nhật cài đặt của bạn tại đây.',
+
+                'footer' => [
+                    'info'       => 'Chúng tôi có thể cấu hình phần powered by tại đây.',
+                    'powered-by' => 'Được hỗ trợ bởi trình chỉnh sửa văn bản',
+                    'title'      => 'Cấu hình Phần Powered by',
+                ],
+
+                'menu' => [
+                    'activities'     => 'Hoạt động',
+                    'configuration'  => 'Cấu hình',
+                    'contacts'       => 'Liên hệ',
+                    'dashboard'      => 'Bảng điều khiển',
+                    'draft'          => 'Thư nháp',
+                    'inbox'          => 'Hộp thư đến',
+                    'info'           => 'Chúng tôi có thể cấu hình tên các mục menu tại đây.',
+                    'leads'          => 'Khách hàng tiềm năng',
+                    'mail'           => 'Thư',
+                    'organizations'  => 'Tổ chức',
+                    'outbox'         => 'Hộp thư đi',
+                    'persons'        => 'Người',
+                    'products'       => 'Sản phẩm',
+                    'quotes'         => 'Báo giá',
+                    'sent'           => 'Đã gửi',
+                    'settings'       => 'Cài đặt',
+                    'title'          => 'Cấu hình Mục Menu',
+                    'trash'          => 'Thùng rác',
+                ],
+
+                'menu-color' => [
+                    'active-background-color' => 'Màu nền Hoạt động',
+                    'active-text-color'       => 'Màu chữ Hoạt động',
+                    'info'                    => 'Chúng tôi có thể thay đổi màu các mục menu tại đây.',
+                    'text-color'              => 'Màu chữ',
+                    'title'                   => 'Cấu hình Màu Mục Menu',
                 ],
             ],
         ],

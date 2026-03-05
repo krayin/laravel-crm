@@ -1,4 +1,4 @@
-var V=Object.defineProperty,S=(t,e,a)=>e in t?V(t,e,{enumerable:!0,configurable:!0,writable:!0,value:a}):t[e]=a,C=(t,e,a)=>S(t,typeof e!="symbol"?e+"":e,a);/**
+var V=Object.defineProperty,S=(t,e,a)=>e in t?V(t,e,{enumerable:!0,configurable:!0,writable:!0,value:a}):t[e]=a,C=(t,e,a)=>S(t,e+"",a);/**
   * vue-cal v4.10.2
   * (c) 2025 Antoni Andre <antoniandre.web@gmail.com>
   * @license MIT

@@ -15,13 +15,11 @@
         <div class="flex flex-col gap-4">
             <div class="flex items-center justify-between rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
                 <div class="flex flex-col gap-2">
-                    <div class="flex cursor-pointer items-center">
-                        <!-- Breadcrumbs -->
-                        <x-admin::breadcrumbs
-                            name="products.edit"
-                            :entity="$product"
-                        />
-                    </div>
+                    <!-- Breadcrumbs -->
+                    <x-admin::breadcrumbs
+                        name="products.edit"
+                        :entity="$product"
+                     />
 
                     <div class="text-xl font-bold dark:text-white">
                         @lang('admin::app.products.edit.title')
@@ -58,8 +56,7 @@
                         <x-admin::attributes
                             :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
                                 'entity_type' => 'products',
-                                ['code', 'NOTIN', ['price']],
-                                ['code' , '!=', 'quantity']
+                                ['code', 'NOTIN', ['price', 'quantity']],
                             ])"
                             :entity="$product"
                         />
@@ -91,8 +88,7 @@
                             <x-admin::attributes
                                 :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
                                     'entity_type' => 'products',
-                                    ['code', 'IN', ['price']],
-                                    ['code' , '!=', 'quantity']
+                                    ['code', 'IN', ['price', 'quantity']],
                                 ])"
                                 :entity="$product"
                             />

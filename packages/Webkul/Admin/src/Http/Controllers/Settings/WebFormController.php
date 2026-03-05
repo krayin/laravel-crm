@@ -55,12 +55,9 @@ class WebFormController extends Controller
         $attributes = [];
 
         foreach ($tempAttributes as $attribute) {
-            if ($attribute->entity_type == 'persons'
-                && (
-                    $attribute->code == 'name'
-                    || $attribute->code == 'emails'
-                    || $attribute->code == 'contact_numbers'
-                )
+            if (
+                $attribute->entity_type == 'persons'
+                && in_array($attribute->code, ['name', 'emails', 'contact_numbers'])
             ) {
                 $attributes['default'][] = $attribute;
             } else {
@@ -156,7 +153,7 @@ class WebFormController extends Controller
 
             return response()->json([
                 'message' => trans('admin::app.settings.webforms.index.delete-success'),
-            ], 200);
+            ]);
         } catch (\Exception $exception) {
             return response()->json([
                 'message' => trans('admin::app.settings.webforms.index.delete-failed'),

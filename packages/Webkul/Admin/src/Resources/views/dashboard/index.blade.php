@@ -50,7 +50,7 @@
             <!-- Total Leads Stats -->
             @include('admin::dashboard.index.total-leads')
 
-            <div class="flex gap-4 [&>*]:flex-1">
+            <div class="flex gap-4 max-lg:flex-wrap">
                 <!-- Total Products -->
                 @include('admin::dashboard.index.top-selling-products')
 
@@ -81,6 +81,7 @@
     {!! view_render_event('admin.dashboard.index.content.after') !!}
 
     @pushOnce('scripts')
+
         <script
             type="module"
             src="{{ vite()->asset('js/chart.js') }}"

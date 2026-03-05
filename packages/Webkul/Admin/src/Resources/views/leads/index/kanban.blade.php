@@ -1,7 +1,7 @@
 {!! view_render_event('admin.leads.index.kanban.before') !!}
 
 <!-- Kanban Vue Component -->
-<v-leads-kanban>
+<v-leads-kanban ref="leadsKanban">
     <div class="flex flex-col gap-4">
         <!-- Shimmer -->
         <x-admin::shimmer.leads.index.kanban />
@@ -230,7 +230,7 @@
         app.component('v-leads-kanban', {
             template: '#v-leads-kanban-template',
 
-            data: function () {
+            data() {
                 return {
                     available: {
                         columns: @json($columns),
@@ -271,7 +271,7 @@
                 }
             },
 
-            mounted: function () {
+            mounted () {
                 this.boot();
             },
 
@@ -302,7 +302,7 @@
                     }
 
                     this.get()
-                        .then(response => {                            
+                        .then(response => {
                             for (let [sortOrder, data] of Object.entries(response.data)) {
                                 this.stageLeads[sortOrder] = data;
                             }
@@ -434,7 +434,7 @@
                  * @param {object} event - The event object.
                  * @returns {void}
                  */
-                updateStage: function (stage, event) {
+                updateStage(stage, event) {
                     if (event.moved) {
                         return;
                     }
@@ -551,9 +551,9 @@
                 },
 
                 /**
-                 * Retrieves the kanbans stored in local storage.
+                 * Retrieves the kanban's stored in local storage.
                  *
-                 * @returns {Array} Kanbans stored in local storage.
+                 * @returns {Array} Kanban's stored in local storage.
                  */
                 getKanbans() {
                     let kanbans = localStorage.getItem(

@@ -154,30 +154,31 @@ return [
             ],
 
             'index' => [
-                'from'         => 'From',
-                'to'           => 'To',
-                'cc'           => 'Cc',
-                'bcc'          => 'Bcc',
                 'all'          => 'All',
-                'planned'      => 'Planned',
-                'calls'        => 'Calls',
-                'meetings'     => 'Meetings',
-                'lunches'      => 'Lunches',
-                'files'        => 'Files',
-                'quotes'       => 'Quotes',
-                'notes'        => 'Notes',
-                'emails'       => 'Emails',
-                'change-log'   => 'Changelogs',
+                'bcc'          => 'Bcc',
                 'by-user'      => 'By :user',
-                'scheduled-on' => 'Scheduled on',
-                'location'     => 'Location',
-                'participants' => 'Participants',
-                'mark-as-done' => 'Mark as Done',
+                'calls'        => 'Calls',
+                'cc'           => 'Cc',
+                'change-log'   => 'Changelogs',
                 'delete'       => 'Delete',
                 'edit'         => 'Edit',
-                'view'         => 'View',
-                'unlink'       => 'Unlink',
+                'emails'       => 'Emails',
                 'empty'        => 'Empty',
+                'files'        => 'Files',
+                'from'         => 'From',
+                'location'     => 'Location',
+                'lunches'      => 'Lunches',
+                'mark-as-done' => 'Mark as Done',
+                'meetings'     => 'Meetings',
+                'notes'        => 'Notes',
+                'participants' => 'Participants',
+                'planned'      => 'Planned',
+                'quotes'       => 'Quotes',
+                'scheduled-on' => 'Scheduled on',
+                'system'       => 'System',
+                'to'           => 'To',
+                'unlink'       => 'Unlink',
+                'view'         => 'View',
 
                 'empty-placeholders' => [
                     'all' => [
@@ -1119,6 +1120,7 @@ return [
                         'name'        => 'Name',
                         'date'        => 'Date',
                         'description' => 'Description',
+                        'save-btn'    => 'Save Event',
                     ],
 
                     'edit' => [
@@ -1847,17 +1849,22 @@ return [
 
     'common' => [
         'custom-attributes' => [
-            'select-country' => 'Select Country',
-            'select-state'   => 'Select State',
-            'state'          => 'State',
-            'city'           => 'City',
-            'postcode'       => 'Postcode',
-            'work'           => 'Work',
-            'home'           => 'Home',
-            'add-more'       => 'Add More',
-            'select'         => 'Select',
-            'country'        => 'Country',
-            'address'        => 'Address',
+            'add-more'             => 'Add More',
+            'address'              => 'Address',
+            'city'                 => 'City',
+            'contact'              => 'Contact Numbers',
+            'country'              => 'Country',
+            'email'                => 'Email',
+            'home'                 => 'Home',
+            'postcode'             => 'Postcode',
+            'save'                 => 'Save',
+            'select'               => 'Select',
+            'select-country'       => 'Select Country',
+            'select-state'         => 'Select State',
+            'state'                => 'State',
+            'update-contact-title' => 'Update Contact Numbers',
+            'update-emails-title'  => 'Update Contact Emails',
+            'work'                 => 'Work',
         ],
     ],
 
@@ -1867,6 +1874,20 @@ return [
         'update-failed'     => 'Leads can not be deleted.',
         'destroy-success'   => 'Lead deleted successfully.',
         'destroy-failed'    => 'Lead can not be deleted.',
+
+        'file' => [
+            'data-not-found'         => 'Data not found.',
+            'empty-content'          => 'PDF content is empty or could not be extracted.',
+            'failed-extract'         => 'Failed to extract text from file.',
+            'insufficient-info'      => 'Due to insufficient data, we are unable to process your request at the moment.',
+            'invalid-base64'         => 'Invalid base64 format.',
+            'invalid-format'         => 'Invalid JSON format.',
+            'invalid-response'       => 'Invalid AI response format.',
+            'missing-api-key'        => 'Missing API key or model configuration.',
+            'not-found'              => 'File not found.',
+            'recursive-call'         => 'Recursive call detected.',
+            'text-generation-failed' => 'Text extraction failed. The file might be empty or unreadable.',
+        ],
 
         'index' => [
             'title'      => 'Leads',
@@ -1931,6 +1952,16 @@ return [
             'view-switcher' => [
                 'all-pipelines'       => 'All Pipelines',
                 'create-new-pipeline' => 'Create New Pipeline',
+            ],
+
+            'upload' => [
+                'create-lead'   => 'Create Lead Using AI',
+                'file'          => 'File Upload',
+                'file-info'     => 'Only pdf,bmp,jpg,jpeg,png format files are accepted.',
+                'file-required' => 'Please select at least one valid file to proceed.',
+                'sample-pdf'    => 'Sample PDF',
+                'save-btn'      => 'Save',
+                'upload-file'   => 'Upload File',
             ],
         ],
 
@@ -2044,11 +2075,14 @@ return [
 
     'configuration' => [
         'index' => [
-            'back'         => 'Back',
-            'save-btn'     => 'Save Configuration',
-            'save-success' => 'Configuration Saved Successfully.',
-            'search'       => 'Search',
-            'title'        => 'Configuration',
+            'back'           => 'Back',
+            'delete'         => 'Delete',
+            'save-btn'       => 'Save Configuration',
+            'save-success'   => 'Configuration Saved Successfully.',
+            'search'         => 'Search',
+            'select-country' => 'Select Country',
+            'select-state'   => 'Select State',
+            'title'          => 'Configuration',
 
             'general'  => [
                 'title'   => 'General',
@@ -2060,6 +2094,50 @@ return [
                     'locale-settings' => [
                         'title'       => 'Locale Settings',
                         'title-info'  => 'Defines the language used in the user interface, such as Arabic (ar), English (en), Spanish (es), Persian(fa) and Turkish (tr).',
+                    ],
+
+                    'admin-logo' => [
+                        'logo-image' => 'Logo Image',
+                        'title'      => 'Admin Logo',
+                        'title-info' => 'Configure logo image for your admin panel.',
+                    ],
+                ],
+
+                'settings' => [
+                    'title' => 'Settings',
+                    'info'  => 'Update your settings here.',
+
+                    'footer' => [
+                        'info'       => 'We can configure the powered by section here.',
+                        'powered-by' => 'Powered by text editor',
+                        'title'      => 'Powered by Section Configurations',
+                    ],
+
+                    'menu' => [
+                        'activities'     => 'Activities',
+                        'configuration'  => 'Configuration',
+                        'contacts'       => 'Contacts',
+                        'dashboard'      => 'Dashboard',
+                        'draft'          => 'Draft',
+                        'inbox'          => 'Inbox',
+                        'info'           => 'We can configure the menu items name here.',
+                        'leads'          => 'Leads',
+                        'mail'           => 'Mail',
+                        'organizations'  => 'Organizations',
+                        'outbox'         => 'Outbox',
+                        'persons'        => 'Persons',
+                        'products'       => 'Products',
+                        'quotes'         => 'Quotes',
+                        'sent'           => 'Sent',
+                        'settings'       => 'Settings',
+                        'title'          => 'Menu Item Configurations',
+                        'trash'          => 'Trash',
+                    ],
+
+                    'menu-color' => [
+                        'brand-color' => 'Brand Color',
+                        'info'        => 'We can change the menu items colors here.',
+                        'title'       => 'Menu Item Color Configurations',
                     ],
                 ],
             ],
@@ -2081,6 +2159,33 @@ return [
                         'validate-cert' => 'Validate SSL Certificate',
                         'username'      => 'IMAP Username',
                         'password'      => 'IMAP Password',
+                    ],
+                ],
+            ],
+
+            'magic-ai' => [
+                'title' => 'Magic AI',
+                'info'  => 'Magic AI configuration for the application.',
+
+                'settings' => [
+                    'api-key'             => 'API Key',
+                    'api-key-info'        => 'Remember to use a OpenRouter API key for each model. It\'s a simple step to enhance security and performance.',
+                    'enable'              => 'Enable',
+                    'info'                => 'Enhance your Magic AI experience with your OpenRouter API Key. Integrate it now for a seamless, personalized AI adventure tailored just for you! Effortlessly customize settings and take control of your AI journey.',
+                    'other'               => 'Other Model',
+                    'other-model'         => 'For other models, use the Model ID from OpenRouter.',
+                    'pdf-generation'      => 'PDF Generation',
+                    'pdf-generation-info' => 'Enable the PDF Generation feature to automatically extract data from PDF files and convert them into text format. Enhance your productivity and efficiency by enabling this feature to streamline your workflow.',
+                    'title'               => 'General Settings',
+
+                    'models'     => [
+                        'deepseek-r1'           => 'Deepseek R1 Distill-llama-8b',
+                        'gemini-2-0-flash-001'  => 'Gemini 2.0 flash-001',
+                        'gpt-4o'                => 'GPT-4.0',
+                        'gpt-4o-mini'           => 'GPT-4.0 mini',
+                        'grok-2-1212'           => 'Grok 2.12',
+                        'llama-3-2-3b-instruct' => 'Llama 3.2 3b Instruct',
+                        'title'                 => 'Models',
                     ],
                 ],
             ],

@@ -55,6 +55,7 @@ class Item
                 channel_based: $field['channel_based'] ?? null,
                 locale_based: $field['locale_based'] ?? null,
                 options: $this->formatOptions($field['options'] ?? null),
+                tinymce: $field['tinymce'] ?? false,
                 is_visible: true,
             );
         });

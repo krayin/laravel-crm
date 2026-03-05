@@ -209,6 +209,8 @@ Route::prefix('settings')->group(function () {
     Route::controller(AttributeController::class)->prefix('attributes')->group(function () {
         Route::get('', 'index')->name('admin.settings.attributes.index');
 
+        Route::get('check-unique-validation', 'checkUniqueValidation')->name('admin.settings.attributes.check_unique_validation');
+
         Route::get('create', 'create')->name('admin.settings.attributes.create');
 
         Route::post('create', 'store')->name('admin.settings.attributes.store');

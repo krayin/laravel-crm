@@ -1,17 +1,20 @@
 {
     "private": true,
+    "type": "module",
     "scripts": {
         "dev": "vite",
         "build": "vite build"
     },
     "devDependencies": {
+        "@playwright/test": "^1.50.1",
+        "@types/node": "^22.7.8",
         "autoprefixer": "^10.4.16",
-        "axios": "^1.6.4",
-        "laravel-vite-plugin": "^0.7.2",
+        "axios": "^1.7.4",
+        "laravel-vite-plugin": "^1.0",
         "postcss": "^8.4.23",
         "tailwindcss": "^3.3.2",
-        "vite": "^4.0.0",
-        "vue": "^3.4.19"
+        "vite": "^5.4.12",
+        "vue": "^3.4.21"
     },
     "dependencies": {
         "@vee-validate/i18n": "^4.9.1",
@@ -19,8 +22,11 @@
         "@vitejs/plugin-vue": "^4.2.3",
         "chartjs-chart-funnel": "^4.2.1",
         "dompurify": "^3.1.7",
+        "dotenv": "^16.4.7",
         "flatpickr": "^4.6.13",
         "mitt": "^3.0.1",
+        "playwright": "^1.48.1",
+        "readline-sync": "^1.4.10",
         "vee-validate": "^4.9.1",
         "vue-cal": "^4.9.0",
         "vue-flatpickr": "^2.3.0",

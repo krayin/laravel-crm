@@ -1,11 +1,19 @@
-**BUGS:**
+## Issue Reference
+<!--- Please mention issue #id or use a comma if your pull request solves multiple issues. -->
 
->Please describe the issue that you solved if it's not filed.
+## Description
+<!--- Please describe your changes in detail. -->
 
->Otherwise please mention issue #id and use a comma if your PR
->solves multiple issues.
+## How To Test This?
+<!--- Please describe in detail how to test the changes made in this pull request. -->
 
-**For things other than bugs:**
+## Documentation
+- [ ] My pull request requires an update on the documentation repository.
+<!--- Please describe in detail what needs to be changed. --->
 
-> Describe that thing in a very short line, the word limit is 200.
-> Otherwise use **issue #id** if the issue was filed as **feature** request.
+## Branch Selection
+<!--- Please specify the target branch for this pull request. -->
+- [ ] Target Branch: master 
+
+## Tailwind Reordering
+<!--- Please make sure all the Tailwind classes are reordered. -->

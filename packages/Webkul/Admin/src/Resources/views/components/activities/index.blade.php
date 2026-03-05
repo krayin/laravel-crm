@@ -40,7 +40,7 @@
             {!! view_render_event('admin.components.activities.content.before') !!}
 
             <div class="w-full rounded-md border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900">
-                <div class="flex gap-2 border-b border-gray-200 dark:border-gray-800">
+                <div class="flex gap-2 overflow-x-auto border-b border-gray-200 dark:border-gray-800">
                     {!! view_render_event('admin.components.activities.content.types.before') !!}
 
                     <div
@@ -95,23 +95,23 @@
                                             class="flex flex-col gap-1"
                                             v-if="activity.title"
                                         >
-                                            <p class="flex items-center gap-1 font-medium dark:text-white">
+                                            <p class="flex flex-wrap items-center gap-1 font-medium dark:text-white">
                                                 @{{ activity.title }}
 
                                                 <template v-if="activity.type == 'system' && activity.additional">
-                                                    <div class="flex items-center gap-1">
+                                                    <p class="flex items-center gap-1">
                                                         <span>:</span>
 
-                                                        <span>
+                                                        <span class="break-words">
                                                             @{{ (activity.additional.old.label ? String(activity.additional.old.label).replaceAll('<br>', ' ') : "@lang('admin::app.components.activities.index.empty')") }}
                                                         </span>
 
                                                         <span class="icon-stats-up rotate-90 text-xl"></span>
 
-                                                        <span>
+                                                        <span class="break-words">
                                                             @{{ (activity.additional.new.label ? String(activity.additional.new.label).replaceAll('<br>', ' ') : "@lang('admin::app.components.activities.index.empty')") }}
                                                         </span>
-                                                    </div>
+                                                    </p>
                                                 </template>
                                             </p>
 
@@ -155,7 +155,7 @@
                                                 >
                                                     @lang('admin::app.components.activities.index.scheduled-on'):
 
-                                                    @{{ $admin.formatDate(activity.schedule_from, 'd MMM yyyy, h:mm A') + ' - ' + $admin.formatDate(activity.schedule_from, 'd MMM yyyy, h:mm A') }}
+                                                    @{{ $admin.formatDate(activity.schedule_from, 'd MMM yyyy, h:mm A', timezone) + ' - ' + $admin.formatDate(activity.schedule_to, 'd MMM yyyy, h:mm A', timezone) }}
                                                 </p>
 
                                                 <!-- Activity Participants -->
@@ -226,9 +226,9 @@
 
                                         <!-- Activity Time and User -->
                                         <div class="text-gray-500 dark:text-gray-300">
-                                            @{{ $admin.formatDate(activity.created_at, 'd MMM yyyy, h:mm A') }},
+                                            @{{ $admin.formatDate(activity.created_at, 'd MMM yyyy, h:mm A', timezone) }},
 
-                                            @{{ "@lang('admin::app.components.activities.index.by-user', ['user' => 'replace'])".replace('replace', activity.user.name) }}
+                                            @{{ "@lang('admin::app.components.activities.index.by-user', ['user' => 'replace'])".replace('replace', activity.user?.name ?? '@lang('admin::app.components.activities.index.system')') }}
                                         </div>
 
                                         {!! view_render_event('admin.components.activities.content.activity.item.time_and_user.after') !!}
@@ -263,7 +263,7 @@
                                                 <template v-if="activity.type != 'email'">
                                                     @if (bouncer()->hasPermission('activities.edit'))
                                                         <x-admin::dropdown.menu.item
-                                                            v-if="! activity.is_done"
+                                                            v-if="! activity.is_done && ['call', 'meeting', 'lunch'].includes(activity.type)"
                                                             @click="markAsDone(activity)"
                                                         >
                                                             <div class="flex items-center gap-2">
@@ -273,7 +273,7 @@
                                                             </div>
                                                         </x-admin::dropdown.menu.item>
 
-                                                        <x-admin::dropdown.menu.item>
+                                                        <x-admin::dropdown.menu.item v-if="['call', 'meeting', 'lunch'].includes(activity.type)">
                                                             <a
                                                                 class="flex items-center gap-2"
                                                                 :href="'{{ route('admin.activities.edit', 'replaceId') }}'.replace('replaceId', activity.id)"
@@ -515,6 +515,8 @@
                             description: "{{ trans('admin::app.components.activities.index.empty-placeholders.system.description') }}",
                         }
                     },
+
+                    timezone: "{{ config('app.timezone') }}",
                 }
             },
 

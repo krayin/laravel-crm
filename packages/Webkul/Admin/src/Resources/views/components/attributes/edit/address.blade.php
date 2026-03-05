@@ -14,7 +14,7 @@
         type="text/x-template"
         id="v-address-component-template"
     >
-        <div class="flex gap-4">
+        <div class="flex gap-4 max-md:flex-wrap">
             <div class="w-full">
                 <!-- Address (Textarea field) -->
                 <x-admin::form.control-group>
@@ -123,7 +123,7 @@
                         ::value="data &&  data['postcode'] ? data['postcode'] : ''"
                         :placeholder="trans('admin::app.common.custom-attributes.postcode')"
                         :label="trans('admin::app.common.custom-attributes.postcode')"
-                        ::rules="attribute.is_required ? 'required|min:5|max:10' : 'min:5|max:10'"
+                        ::rules="attribute.is_required ? 'required|postcode' : 'postcode'"
                     />
 
                     <x-admin::form.control-group.error ::name="attribute['code'] + '[postcode]'" />

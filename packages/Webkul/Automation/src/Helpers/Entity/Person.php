@@ -95,10 +95,14 @@ class Person extends AbstractEntity
                     $leads = $this->leadRepository->findByField('person_id', $person->id);
 
                     foreach ($leads as $lead) {
-                        $this->leadRepository->update([
-                            'entity_type'        => 'leads',
-                            $action['attribute'] => $action['value'],
-                        ], $lead->id);
+                        $this->leadRepository->update(
+                            [
+                                'entity_type'        => 'leads',
+                                $action['attribute'] => $action['value'],
+                            ],
+                            $lead->id,
+                            [$action['attribute']]
+                        );
                     }
 
                     break;

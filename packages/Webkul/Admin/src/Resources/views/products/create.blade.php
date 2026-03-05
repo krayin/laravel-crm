@@ -14,15 +14,13 @@
         <div class="flex flex-col gap-4">
             <div class="flex items-center justify-between rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
                 <div class="flex flex-col gap-2">
-                    <div class="flex cursor-pointer items-center">
-                        {!! view_render_event('admin.products.create.breadcrumbs.before') !!}
+                    {!! view_render_event('admin.products.create.breadcrumbs.before') !!}
 
-                        <!-- Breadcrumbs -->
-                        <x-admin::breadcrumbs name="products.create" />
+                    <!-- Breadcrumbs -->
+                    <x-admin::breadcrumbs name="products.create" />
 
-                        {!! view_render_event('admin.products.create.breadcrumbs.after') !!}
-                    </div>
-
+                    {!! view_render_event('admin.products.create.breadcrumbs.after') !!}
+                    
                     <div class="text-xl font-bold dark:text-white">
                         @lang('admin::app.products.create.title')
                     </div>
@@ -60,8 +58,7 @@
                         <x-admin::attributes
                             :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
                                 'entity_type' => 'products',
-                                ['code', 'NOTIN', ['price']],
-                                ['code' , '!=', 'quantity']
+                                ['code', 'NOTIN', ['price', 'quantity']],
                             ])"
                         />
 
@@ -92,8 +89,7 @@
                             <x-admin::attributes
                                 :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
                                     'entity_type' => 'products',
-                                    ['code', 'IN', ['price']],
-                                    ['code' , '!=', 'quantity']
+                                    ['code', 'IN', ['price', 'quantity']],
                                 ])"
                             />
 

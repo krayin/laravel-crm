@@ -5,6 +5,7 @@ namespace Webkul\WebForm\Repositories;
 use Illuminate\Container\Container;
 use Illuminate\Support\Str;
 use Webkul\Core\Eloquent\Repository;
+use Webkul\WebForm\Contracts\WebForm;
 
 class WebFormRepository extends Repository
 {
@@ -21,13 +22,13 @@ class WebFormRepository extends Repository
     }
 
     /**
-     * Specify Model class name
+     * Specify model class name.
      *
      * @return mixed
      */
     public function model()
     {
-        return 'Webkul\WebForm\Contracts\WebForm';
+        return WebForm::class;
     }
 
     /**

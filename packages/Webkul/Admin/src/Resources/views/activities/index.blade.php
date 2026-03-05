@@ -10,9 +10,7 @@
         <div class="flex flex-col gap-4">
             <div class="flex items-center justify-between rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
                 <div class="flex flex-col gap-2">
-                    <div class="flex cursor-pointer items-center">
-                        <x-admin::breadcrumbs name="activities" />
-                    </div>
+                    <x-admin::breadcrumbs name="activities" />
         
                     <div class="text-xl font-bold dark:text-white">
                         @lang('admin::app.activities.index.title')
@@ -20,7 +18,7 @@
                 </div>
 
                 <div class="flex gap-2">
-                    <i class="icon-kanban cursor-pointer rounded p-2 text-2xl"></i>
+                    <i class="icon-list cursor-pointer rounded p-2 text-2xl"></i>
         
                     <i class="icon-calendar cursor-pointe rounded p-2 text-2xl"></i>
                 </div>
@@ -46,9 +44,7 @@
             <div class="flex flex-col gap-4">
                 <div class="flex items-center justify-between rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
                     <div class="flex flex-col gap-2">
-                        <div class="flex cursor-pointer items-center">
-                            <x-admin::breadcrumbs name="activities" />
-                        </div>
+                        <x-admin::breadcrumbs name="activities" />
             
                         <div class="text-xl font-bold dark:text-white">
                             @lang('admin::app.activities.index.title')
@@ -59,7 +55,7 @@
 
                     <div class="flex">
                         <i
-                            class="icon-kanban cursor-pointer rounded-md p-2 text-2xl"
+                            class="icon-list cursor-pointer rounded-md p-2 text-2xl"
                             :class="{'bg-gray-200 dark:bg-gray-800 text-gray-800 dark:text-white': viewType == 'table'}"
                             @click="toggleView('table')"
                         ></i>
@@ -97,7 +93,7 @@
                                 </template>
                     
                                 <template v-else>
-                                    <div class="row grid grid-cols-[.3fr_.1fr_.3fr_.5fr] grid-rows-1 items-center gap-x-2.5 border-b px-4 py-2.5 dark:border-gray-800">
+                                    <div class="row grid grid-cols-[.3fr_.1fr_.3fr_.5fr] grid-rows-1 items-center gap-x-2.5 border-b px-4 py-2.5 dark:border-gray-800 max-lg:hidden">
                                         <div
                                             class="flex select-none items-center gap-2.5"
                                             v-for="(columnGroup, index) in [['id', 'title', 'created_by_id'], ['is_done'], ['comment', 'lead_title', 'type'], ['schedule_from', 'schedule_to', 'created_at']]"
@@ -153,6 +149,74 @@
                                             </p>
                                         </div>
                                     </div>
+
+                                    <!-- Mobile Sort/Filter Header -->
+                                    <div class="hidden border-b bg-gray-50 px-4 py-3 text-black dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 max-lg:block">
+                                        <div class="flex items-center justify-between">
+                                            <!-- Mass Actions for Mobile -->
+                                            <div v-if="available.massActions.length">
+                                                <label
+                                                    class="flex w-max cursor-pointer select-none items-center gap-1"
+                                                    for="mass_action_select_all_records"
+                                                >
+                                                    <input
+                                                        type="checkbox"
+                                                        name="mass_action_select_all_records"
+                                                        id="mass_action_select_all_records"
+                                                        class="peer hidden"
+                                                        :checked="['all', 'partial'].includes(applied.massActions.meta.mode)"
+                                                        @change="selectAll"
+                                                    >
+
+                                                    <span
+                                                        class="icon-checkbox-outline cursor-pointer rounded-md text-2xl text-gray-600 dark:text-gray-300"
+                                                        :class="[
+                                                            applied.massActions.meta.mode === 'all' ? 'peer-checked:icon-checkbox-select peer-checked:text-brandColor' : (
+                                                                applied.massActions.meta.mode === 'partial' ? 'peer-checked:icon-checkbox-multiple peer-checked:text-brandColor' : ''
+                                                            ),
+                                                        ]"
+                                                    >
+                                                    </span>
+                                                </label>
+                                            </div>
+                                            
+                                            <!-- Mobile Sort Dropdown -->
+                                            <div v-if="available.columns.some(column => column.sortable)">
+                                                <x-admin::dropdown position="bottom-{{ in_array(app()->getLocale(), ['fa', 'ar']) ? 'left' : 'right' }}">
+                                                    <x-slot:toggle>
+                                                        <div class="flex items-center gap-1">
+                                                            <button
+                                                                type="button"
+                                                                class="inline-flex w-full max-w-max cursor-pointer appearance-none items-center justify-between gap-x-2 rounded-md border bg-white px-2.5 py-1.5 text-center leading-6 text-gray-600 transition-all marker:shadow hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 dark:focus:border-gray-400"
+                                                            >
+                                                                <span>
+                                                                    Sort
+                                                                </span>
+                                
+                                                                <span class="icon-down-arrow text-2xl"></span>
+                                                            </button>
+                                                        </div>
+                                                    </x-slot>
+                            
+                                                    <x-slot:menu>
+                                                        <x-admin::dropdown.menu.item
+                                                            v-for="column in available.columns.filter(column => column.sortable && column.visibility)"
+                                                            @click="sort(column)"
+                                                        >
+                                                            <div class="flex items-center gap-2">
+                                                                <span v-html="column.label"></span>
+                                                                <i
+                                                                    class="align-text-bottom text-base text-gray-600 dark:text-gray-300"
+                                                                    :class="[applied.sort.order === 'asc' ? 'icon-stats-down': 'icon-stats-up']"
+                                                                    v-if="column.index == applied.sort.column"
+                                                                ></i>
+                                                            </div>
+                                                        </x-admin::dropdown.menu.item>
+                                                    </x-slot>
+                                                </x-admin::dropdown>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </template>
                             </template>
 
@@ -170,7 +234,7 @@
                     
                                 <template v-else>
                                     <div
-                                        class="row grid grid-cols-[.3fr_.1fr_.3fr_.5fr] grid-rows-1 gap-x-2.5 border-b px-4 py-2.5 transition-all hover:bg-gray-50 dark:border-gray-800 dark:hover:bg-gray-950"
+                                        class="row grid grid-cols-[.3fr_.1fr_.3fr_.5fr] grid-rows-1 gap-x-2.5 border-b px-4 py-2.5 transition-all hover:bg-gray-50 dark:border-gray-800 dark:hover:bg-gray-950 max-lg:hidden"
                                         v-for="record in available.records"
                                     >
                                         <!-- Mass Actions, Title and Created By -->
@@ -263,6 +327,58 @@
                                                 </p>
                                             </div>
                                         </div> 
+                                    </div>
+
+                                    <!-- Mobile Card View -->
+                                    <div
+                                        class="hidden border-b px-4 py-4 text-black dark:border-gray-800 dark:text-gray-300 max-lg:block"
+                                        v-for="record in available.records"
+                                    >
+                                        <div class="mb-2 flex items-center justify-between">
+                                            <!-- Mass Actions for Mobile Cards -->
+                                            <div class="flex w-full items-center justify-between gap-2">
+                                                <p v-if="available.massActions.length">
+                                                    <label :for="`mass_action_select_record_${record[available.meta.primary_column]}`">
+                                                        <input
+                                                            type="checkbox"
+                                                            :name="`mass_action_select_record_${record[available.meta.primary_column]}`"
+                                                            :value="record[available.meta.primary_column]"
+                                                            :id="`mass_action_select_record_${record[available.meta.primary_column]}`"
+                                                            class="peer hidden"
+                                                            v-model="applied.massActions.indices"
+                                                        >
+                
+                                                        <span class="icon-checkbox-outline peer-checked:icon-checkbox-select cursor-pointer rounded-md text-2xl text-gray-500 peer-checked:text-brandColor">
+                                                        </span>
+                                                    </label>
+                                                </p>
+
+                                                <!-- Actions for Mobile -->
+                                                <div
+                                                    class="flex w-full items-center justify-end"
+                                                    v-if="available.actions.length"
+                                                >
+                                                    <span
+                                                        class="dark:hover:bg-gray-80 cursor-pointer rounded-md p-1.5 text-2xl transition-all hover:bg-gray-200"
+                                                        :class="action.icon"
+                                                        v-text="! action.icon ? action.title : ''"
+                                                        v-for="action in record.actions"
+                                                        @click="performAction(action)"
+                                                    >
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Card Content -->
+                                        <div class="grid gap-2">
+                                            <template v-for="column in available.columns">
+                                                <div class="flex flex-wrap items-baseline gap-x-2">
+                                                    <span class="text-slate-600 dark:text-gray-300" v-html="column.label + ':'"></span>
+                                                    <span class="break-words font-medium text-slate-900 dark:text-white" v-html="record[column.index]"></span>
+                                                </div>
+                                            </template>
+                                        </div>
                                     </div>
                                 </template>
                             </template>

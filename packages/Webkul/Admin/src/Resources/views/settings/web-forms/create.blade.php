@@ -8,14 +8,12 @@
         <div class="flex flex-col gap-4">
             <div class="flex items-center justify-between rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
                 <div class="flex flex-col gap-2">
-                    <div class="flex cursor-pointer items-center">
-                        {!! view_render_event('admin.settings.webform.create.breadcrumbs.before') !!}
+                    {!! view_render_event('admin.settings.webform.create.breadcrumbs.before') !!}
 
-                        <!-- Breadcrumbs -->
-                        <x-admin::breadcrumbs name="settings.web_forms.create" />
+                    <!-- Breadcrumbs -->
+                    <x-admin::breadcrumbs name="settings.web_forms.create" />
 
-                        {!! view_render_event('admin.settings.webform.create.breadcrumbs.after') !!}
-                    </div>
+                    {!! view_render_event('admin.settings.webform.create.breadcrumbs.after') !!}
 
                     <div class="text-xl font-bold dark:text-white">
                         @lang('admin::app.settings.webforms.create.title')
@@ -26,7 +24,7 @@
                     <div class="flex items-center gap-x-2.5">
                         {!! view_render_event('admin.settings.webform.create.save_button.before') !!}
 
-                        <!-- Create button for person -->
+                        <!-- Create Button -->
                         <button
                             type="submit"
                             class="primary-button"
@@ -51,7 +49,7 @@
             <div class="flex gap-2.5 max-xl:flex-wrap">
                 {!! view_render_event('admin.settings.webform.create.left.before') !!}
 
-                <!-- Left sub-component -->
+                <!-- Left Sub Component -->
                 <div class="flex flex-1 flex-col gap-2 max-xl:flex-auto">
                     <div class="box-shadow rounded-lg border border-gray-200 bg-white p-4 dark:border-gray-800 dark:bg-gray-900">
                         <div class="mb-4 flex items-center justify-between gap-4">
@@ -64,7 +62,7 @@
 
                         {!! view_render_event('admin.settings.webform.create.form_controls.before') !!}
 
-                        <!-- Submit success actions -->
+                        <!-- Submit Success Actions -->
                         <x-admin::form.control-group>
                             <x-admin::form.control-group.label class="required">
                                 @lang('admin::app.settings.webforms.create.submit-success-action')
@@ -107,25 +105,27 @@
 
                         <!-- Create Leads -->
                         <x-admin::form.control-group>
-                            <x-admin::form.control-group.label class="required">
+                            <x-admin::form.control-group.label for="create_lead">
                                 @lang('admin::app.settings.webforms.create.create-lead')
                             </x-admin::form.control-group.label>
 
-                            <label class="relative inline-flex cursor-pointer items-center">
-                                <input
-                                    type="checkbox"
-                                    name="create_lead"
-                                    :value="1"
-                                    id="create_lead"
-                                    class="peer sr-only"
-                                    v-model="createLead"
-                                >
+                            <input
+                                type="hidden"
+                                name="create_lead"
+                                :value="0"
+                            />
 
-                                <div class="peer h-5 w-9 cursor-pointer rounded-full bg-gray-200 after:absolute after:top-0.5 after:h-4 after:w-4 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-blue-600 peer-checked:after:border-white peer-focus:outline-none peer-focus:ring-blue-300 dark:bg-gray-800 dark:after:border-white dark:after:bg-white dark:peer-checked:bg-gray-950 after:ltr:left-0.5 peer-checked:after:ltr:translate-x-full after:rtl:right-0.5 peer-checked:after:rtl:-translate-x-full"></div>
-                            </label>
+                            <x-admin::form.control-group.control
+                                type="switch"
+                                name="create_lead"
+                                value="1"
+                                :label="trans('admin::app.settings.webforms.create.create-lead')"
+                                v-model="createLead"
+                            />
+
                         </x-admin::form.control-group>
 
-                        <!-- Customize webform -->
+                        <!-- Customize Web-form -->
                         <div class="mb-4 flex items-center justify-between gap-4">
                             <div class="flex flex-col gap-1">
                                 <p class="text-base font-semibold text-gray-800 dark:text-white">
@@ -138,7 +138,7 @@
                             </div>
                         </div>
 
-                        <!-- Backgroud Color Picker -->
+                        <!-- Background Color Picker -->
                         <v-color-picker
                             name="background_color"
                             title="@lang('admin::app.settings.webforms.create.background-color')"
@@ -160,7 +160,7 @@
                             </x-admin::form.control-group>
                         </v-color-picker>
 
-                        <!-- Backgroud Color Picker -->
+                        <!-- Background Color Picker -->
                         <v-color-picker
                             name="form_background_color"
                             title="@lang('admin::app.settings.webforms.create.form-background-color')"
@@ -184,7 +184,7 @@
                             </x-admin::form.control-group>
                         </v-color-picker>
 
-                        <!-- Backgroud Color Picker -->
+                        <!-- Background Color Picker -->
                         <v-color-picker
                             name="form_title_color"
                             title="@lang('admin::app.settings.webforms.create.form-title-color')"
@@ -367,10 +367,25 @@
                                             </x-admin::form.control-group>
                                         </x-admin::table.td>
 
-                                        <!-- Required or Not -->
+                                        <!-- Required Or Not -->
                                         <x-admin::table.td>
                                             <x-admin::form.control-group class="!mt-6">
                                                 <label :for="'attributes[' + element.id + '][is_required]'">
+                                                    <!--
+                                                        When the checkbox is disabled for name and email, we will set a hidden value
+                                                        because the form will not send the value of disabled input fields.
+                                                    -->
+                                                    <input
+                                                        type="hidden"
+                                                        :name="'attributes[' + element.id + '][is_required]'"
+                                                        :value="1"
+                                                        v-if="['name', 'emails'].includes(element['attribute']['code'])"
+                                                    >
+
+                                                    <!--
+                                                        Only the name and email fields are required, so we will disable the checkbox and
+                                                        force the user to provide them.
+                                                    -->
                                                     <input
                                                         type="checkbox"
                                                         :name="'attributes[' + element.id + '][is_required]'"
@@ -378,12 +393,15 @@
                                                         :value="1"
                                                         class="peer hidden"
                                                         :checked="element.is_required"
-                                                        :disabled="element.attribute.is_required ? true : false"
+                                                        :disabled="['name', 'emails'].includes(element['attribute']['code'])"
                                                     >
 
+                                                    <!--
+                                                        We will display a disabled checkbox for the name and email fields.
+                                                    -->
                                                     <span
                                                         class='icon-checkbox-outline peer-checked:icon-checkbox-select cursor-pointer rounded-md text-2xl peer-checked:text-brandColor'
-                                                        :class="{'opacity-50' : element.attribute.is_required}"
+                                                        :class="{'opacity-50' : ['name', 'emails'].includes(element['attribute']['code'])}"
                                                     ></span>
                                                 </label>
                                             </x-admin::form.control-group>
@@ -394,7 +412,7 @@
                                             <x-admin::form.control-group class="!mt-6">
                                                 <i
                                                     class="icon-delete cursor-pointer text-2xl"
-                                                    v-if="element['attribute']['code'] != 'name' && element['attribute']['code'] != 'emails'"
+                                                    v-if="! ['name', 'emails'].includes(element['attribute']['code'])"
                                                     @click="removeAttribute(element)"
                                                 ></i>
                                             </x-admin::form.control-group>
@@ -412,7 +430,7 @@
 
                 {!! view_render_event('admin.settings.webform.create.right.before') !!}
 
-                <!-- Right sub-component -->
+                <!-- Right Sub Component -->
                 <div class="flex w-[360px] max-w-full flex-col gap-2 max-sm:w-full">
                     <x-admin::accordion class="rounded-lg">
                         <x-slot:header>
@@ -461,7 +479,7 @@
                                 <x-admin::form.control-group.error control-name="description" />
                             </x-admin::form.control-group>
 
-                            <!-- Submit button label -->
+                            <!-- Submit Button Label -->
                             <x-admin::form.control-group class="!mb-0">
                                 <x-admin::form.control-group.label class="required">
                                     @lang('admin::app.settings.webforms.create.submit-button-label')

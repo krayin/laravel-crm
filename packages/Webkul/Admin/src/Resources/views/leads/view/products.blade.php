@@ -13,52 +13,54 @@
             {!! view_render_event('admin.leads.view.products.table.before', ['lead' => $lead]) !!}
 
             <!-- Table -->
-            <x-admin::table>
-                {!! view_render_event('admin.leads.view.products.table.table_head.before', ['lead' => $lead]) !!}
+            <div class="block w-full overflow-x-auto">
+                <x-admin::table>
+                    {!! view_render_event('admin.leads.view.products.table.table_head.before', ['lead' => $lead]) !!}
 
-                <!-- Table Head -->
-                <x-admin::table.thead>
-                    <x-admin::table.thead.tr>
-                        <x-admin::table.th>
-                            @lang('admin::app.leads.view.products.product-name')
-                        </x-admin::table.th>
+                    <!-- Table Head -->
+                    <x-admin::table.thead>
+                        <x-admin::table.thead.tr>
+                            <x-admin::table.th>
+                                @lang('admin::app.leads.view.products.product-name')
+                            </x-admin::table.th>
 
-                        <x-admin::table.th class="ltr:text-left rtl:text-right">
-                            @lang('admin::app.leads.view.products.quantity')
-                        </x-admin::table.th>
+                            <x-admin::table.th class="ltr:text-left rtl:text-right">
+                                @lang('admin::app.leads.view.products.quantity')
+                            </x-admin::table.th>
 
-                        <x-admin::table.th class="ltr:text-left rtl:text-right">
-                            @lang('admin::app.leads.view.products.price')
-                        </x-admin::table.th>
+                            <x-admin::table.th class="ltr:text-left rtl:text-right">
+                                @lang('admin::app.leads.view.products.price')
+                            </x-admin::table.th>
 
-                        <x-admin::table.th class="ltr:text-left rtl:text-right">
-                            @lang('admin::app.leads.view.products.amount')
-                        </x-admin::table.th>
+                            <x-admin::table.th class="ltr:text-left rtl:text-right">
+                                @lang('admin::app.leads.view.products.amount')
+                            </x-admin::table.th>
 
-                        <x-admin::table.th class="ltr:text-right rtl:text-left">
-                            @lang('admin::app.leads.view.products.action')
-                        </x-admin::table.th>
-                    </x-admin::table.thead.tr>
-                </x-admin::table.thead>
+                            <x-admin::table.th class="ltr:text-right rtl:text-left">
+                                @lang('admin::app.leads.view.products.action')
+                            </x-admin::table.th>
+                        </x-admin::table.thead.tr>
+                    </x-admin::table.thead>
 
-                {!! view_render_event('admin.leads.view.products.table.table_head.after', ['lead' => $lead]) !!}
+                    {!! view_render_event('admin.leads.view.products.table.table_head.after', ['lead' => $lead]) !!}
 
-                {!! view_render_event('admin.leads.view.products.table.table_body.before', ['lead' => $lead]) !!}
+                    {!! view_render_event('admin.leads.view.products.table.table_body.before', ['lead' => $lead]) !!}
 
-                <!-- Table Body -->
-                <x-admin::table.tbody>
-                    <!-- Product Item Vue Component -->
-                    <v-product-item
-                        v-for='(product, index) in products'
-                        :product="product"
-                        :key="index"
-                        :index="index"
-                        @onRemoveProduct="removeProduct($event)"
-                    ></v-product-item>
-                </x-admin::table.tbody>
-                {!! view_render_event('admin.leads.view.products.table.table_body.after', ['lead' => $lead]) !!}
-            </x-admin::table>
-
+                    <!-- Table Body -->
+                    <x-admin::table.tbody>
+                        <!-- Product Item Vue Component -->
+                        <v-product-item
+                            v-for='(product, index) in products'
+                            :product="product"
+                            :key="index"
+                            :index="index"
+                            @onRemoveProduct="removeProduct($event)"
+                        ></v-product-item>
+                    </x-admin::table.tbody>
+                    {!! view_render_event('admin.leads.view.products.table.table_body.after', ['lead' => $lead]) !!}
+                </x-admin::table>
+            </div>
+            
             {!! view_render_event('admin.leads.view.products.table.after', ['lead' => $lead]) !!}
 
             {!! view_render_event('admin.leads.view.products.table.add_more.before', ['lead' => $lead]) !!}
@@ -113,9 +115,10 @@
         <x-admin::table.tbody.tr class="border-b border-gray-200 align-top dark:border-gray-800">
             <!-- Product Name -->
             <x-admin::table.td class="!px-4">
-                <v-form v-slot="{ errors }">
+                <v-form v-slot="{ errors }" @keydown.enter.prevent>
                     <x-admin::form.control-group class="!mb-0">
-                        <x-admin::lookup 
+                        <x-admin::lookup
+                            ::key="product.product_id"
                             ::src="src"
                             name="name"
                             ::params="params"
@@ -133,7 +136,7 @@
                             :placeholder="trans('admin::app.leads.view.products.product-name')"
                             ::url="url(product)"
                         />
-                
+
                         <x-admin::form.control-group.error ::name="`${inputName}[product_id]`" />
                     </x-admin::form.control-group>
                 </v-form>
@@ -141,7 +144,7 @@
 
             <!-- Product Quantity -->
             <x-admin::table.td class="!px-4 ltr:text-right rtl:text-left">
-                <v-form v-slot="{ errors }">
+                <v-form v-slot="{ errors }" @keydown.enter.prevent>
                     <x-admin::form.control-group class="!mb-0">
                         <x-admin::form.control-group.control
                             type="inline"
@@ -162,7 +165,7 @@
 
             <!-- Price -->
             <x-admin::table.td class="!px-4 ltr:text-right rtl:text-left">
-                <v-form v-slot="{ errors }">
+                <v-form v-slot="{ errors }" @keydown.enter.prevent>
                     <x-admin::form.control-group class="!mb-0">
                         <x-admin::form.control-group.control
                             type="inline"
@@ -184,7 +187,7 @@
 
             <!-- Total -->
             <x-admin::table.td class="!px-4 ltr:text-right rtl:text-left">
-                <v-form v-slot="{ errors }">
+                <v-form v-slot="{ errors }" @keydown.enter.prevent>
                     <x-admin::form.control-group class="!mb-0">
                         <x-admin::form.control-group.control
                             type="inline"
@@ -193,7 +196,7 @@
                             rules="required|decimal:4"
                             :label="trans('admin::app.leads.view.products.total')"
                             :placeholder="trans('admin::app.leads.view.products.total')"
-                            ::allowEdit="false"
+                            :allowEdit="false"
                             ::url="url(product)"
                             position="left"
                             ::value-label="$admin.formatPrice(product.price * product.quantity)"

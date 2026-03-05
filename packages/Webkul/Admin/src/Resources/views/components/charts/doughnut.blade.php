@@ -8,7 +8,7 @@
     >
         <canvas
             :id="$.uid + '_chart'"
-            class="flex w-full items-end"
+            class="flex w-full max-w-full items-end"
         ></canvas>
     </script>
 

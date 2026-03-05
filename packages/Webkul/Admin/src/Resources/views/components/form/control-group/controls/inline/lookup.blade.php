@@ -39,7 +39,13 @@
                     :style="{ 'text-align': position }"
                 >
                     <span class="cursor-pointer truncate rounded">
-                        @{{ valueLabel ? valueLabel : inputValue.length > 20 ? inputValue.substring(0, 20) + '...' : inputValue }}
+                        <template v-if="isDirty">
+                            @{{ inputValue.length > 20 ? inputValue.substring(0, 20) + '...' : inputValue }}
+                        </template>
+
+                        <template v-else>
+                            @{{ valueLabel ? valueLabel : inputValue.length > 20 ? inputValue.substring(0, 20) + '...' : inputValue }}
+                        </template>
                     </span>
 
                     <!-- Tooltip -->
@@ -62,7 +68,7 @@
                     ></i>
                 </template>
             </div>
-        
+
             <!-- Editing view -->
             <div
                 class="relative flex w-full flex-col"
@@ -75,7 +81,7 @@
                     class="!h-[34px] w-full cursor-pointer !py-0 text-gray-800 dark:text-white ltr:pr-20 rtl:pl-20"
                     ::placeholder="placeholder"
                     v-model="selectedItem.name"
-                    @click="toggleEditor"   
+                    @click="toggleEditor"
                     readonly
                 />
 
@@ -87,17 +93,17 @@
                         >
                             <x-admin::spinner />
                         </div>
-                        
-                        <i 
+
+                        <i
                             class="text-2xl"
                             :class="showPopup ? 'icon-up-arrow': 'icon-down-arrow'"
                         ></i>
                     </div>
                 </span>
-    
+
                 <!-- Popup Box -->
-                <div 
-                    v-if="showPopup" 
+                <div
+                    v-if="showPopup"
                     class="absolute z-10 mt-1 w-full origin-top transform rounded-lg border border-gray-200 bg-white p-2 shadow-lg transition-transform dark:border-gray-800 dark:bg-gray-800"
                     :class="dropdownPosition === 'bottom' ? 'top-full mt-1' : 'bottom-full mb-1'"
                 >
@@ -110,24 +116,24 @@
                         placeholder="@lang('admin::app.components.lookup.search')"
                         ref="searchInput"
                     />
-            
+
                     <!-- Results List -->
                     <ul class="max-h-40 divide-y divide-gray-100 overflow-y-auto">
-                        <li 
-                            v-for="item in filteredResults" 
+                        <li
+                            v-for="item in filteredResults"
                             :key="item.id"
                             class="cursor-pointer px-4 py-2 text-gray-800 transition-colors hover:bg-blue-100 dark:text-white dark:hover:bg-gray-950"
                             @click="selectItem(item)"
                         >
                             @{{ item.name }}
                         </li>
-    
+
                         <li v-if="filteredResults.length === 0" class="px-4 py-2 text-center text-gray-500 dark:text-gray-300">
                             @lang('admin::app.components.lookup.no-results')
                         </li>
                     </ul>
                 </div>
-                    
+
                 <!-- Action Buttons -->
                 <div class="absolute top-1/2 flex -translate-y-1/2 transform gap-0.5 bg-white dark:bg-gray-900 ltr:right-2 rtl:left-2">
                     <button
@@ -137,7 +143,7 @@
                     >
                         <i class="icon-tick text-md cursor-pointer font-bold text-green-600 dark:!text-green-600" />
                     </button>
-                
+
                     <button
                         type="button"
                         class="item-center flex justify-center bg-red-100 p-1 hover:bg-red-200 ltr:rounded-r-md rtl:rounded-l-md"
@@ -197,7 +203,7 @@
                     type: String,
                     default: '',
                 },
-                
+
                 valueLabel: {
                     type: String,
                     default: '',
@@ -209,6 +215,8 @@
                     inputValue: this.value ?? '',
 
                     isEditing: false,
+
+                    isDirty: false,
 
                     showPopup: false,
 
@@ -233,8 +241,8 @@
             watch: {
                 /**
                  * Watch the value prop.
-                 * 
-                 * @param {String} newValue 
+                 *
+                 * @param {String} newValue
                  */
                 value(newValue) {
                     this.inputValue = newValue;
@@ -256,11 +264,11 @@
 
                 /**
                  * Filter the searchedResults based on the search query.
-                 * 
+                 *
                  * @return {Array}
                  */
                 filteredResults() {
-                    return this.searchedResults.filter(item => 
+                    return this.searchedResults.filter(item =>
                         item.name.toLowerCase().includes(this.searchTerm.toLowerCase())
                     );
                 },
@@ -269,7 +277,7 @@
             methods: {
                 /**
                  * Toggle the input.
-                 * 
+                 *
                  * @return {void}
                  */
                 toggle() {
@@ -296,7 +304,7 @@
 
                 /**
                  * Save the input value.
-                 * 
+                 *
                  * @return {void}
                  */
                 save() {
@@ -310,6 +318,8 @@
                         return;
                     }
 
+                    this.isDirty = true;
+
                     this.inputValue = this.selectedItem.name;
 
                     if (this.url) {
@@ -320,10 +330,12 @@
                                 this.$emitter.emit('add-flash', { type: 'success', message: response.data.message });
                             })
                             .catch((error) => {
+                                this.isDirty = false;
+                                
                                 this.inputValue = this.value;
 
                                 this.$emitter.emit('add-flash', { type: 'error', message: error.response.data.message });
-                            });                        
+                            });
                     }
 
                     this.$emit('on-change', {
@@ -334,9 +346,9 @@
 
                 /**
                  * Select an item from the list.
-                 * 
+                 *
                  * @param {Object} item
-                 * 
+                 *
                  * @return {void}
                  */
                 selectItem(item) {
@@ -349,7 +361,7 @@
 
                 /**
                  * Cancel the input value.
-                 * 
+                 *
                  * @return {void}
                  */
                 cancel() {
@@ -364,7 +376,7 @@
 
                 /**
                  * Initialize the items.
-                 * 
+                 *
                  * @return {void}
                  */
                 search() {
@@ -385,11 +397,11 @@
                     this.cancelToken = this.$axios.CancelToken.source();
 
                     this.$axios.get(this.src, {
-                            params: { 
+                            params: {
                                 ...this.params,
                                 query: this.searchTerm
                             },
-                            cancelToken: this.cancelToken.token, 
+                            cancelToken: this.cancelToken.token,
                         })
                         .then(response => {
                             this.searchedResults = response.data;
@@ -409,7 +421,7 @@
                         const dropdownContainer = this.$refs.dropdownContainer;
 
                         if (! dropdownContainer) {
-                            return;     
+                            return;
                         }
 
                         const dropdownRect = dropdownContainer.getBoundingClientRect();

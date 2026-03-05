@@ -4,7 +4,7 @@ return [
     'acl' => [
         'title'  => 'Formulários Web',
         'view'   => 'Visualizar',
-        'create' => 'Criar',
+        'create' => 'Adicionar',
         'edit'   => 'Editar',
         'delete' => 'Excluir',
     ],

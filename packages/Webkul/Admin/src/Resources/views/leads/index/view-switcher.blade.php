@@ -1,6 +1,6 @@
 {!! view_render_event('admin.leads.index.view_switcher.before') !!}
 
-<div class="flex gap-4">
+<div class="flex items-center gap-4 max-md:w-full max-md:!justify-between">
     <x-admin::dropdown>
         <x-slot:toggle>
             {!! view_render_event('admin.leads.index.view_switcher.pipeline.button.before') !!}

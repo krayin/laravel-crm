@@ -10,7 +10,7 @@
     {!! view_render_event('admin.configuration.index.header.before') !!}
 
     <!-- Heading of the page -->
-    <div class="mb-7 flex items-center justify-between">
+    <div class="mb-7 flex flex-wrap items-center justify-between">
         <p class="py-3 text-xl font-bold text-gray-800 dark:text-white">
             @lang('admin::app.configuration.index.title')
         </p>
@@ -19,7 +19,7 @@
 
         <!-- Configuration Search Bar Vue Component -->
         <v-configuration-search>
-            <div class="relative flex w-[525px] max-w-[525px] items-center max-lg:w-[400px] ltr:ml-2.5 rtl:mr-2.5">
+            <div class="relative flex w-[525px] max-w-[525px] items-center max-lg:w-[400px]">
                 <i class="icon-search absolute top-1.5 flex items-center text-2xl ltr:left-3 rtl:right-3"></i>
 
                 <input 
@@ -53,7 +53,7 @@
                     </p>
                 </div>
 
-                <div class="box-shadow max-1580:grid-cols-3 mt-2 grid grid-cols-4 flex-wrap justify-between gap-12 rounded bg-white p-4 dark:bg-gray-900 max-xl:grid-cols-2 max-sm:grid-cols-1">
+                <div class="box-shadow max-1580:grid-cols-3 mt-2 grid grid-cols-4 flex-wrap justify-between gap-x-12 gap-y-6 rounded bg-white p-4 dark:bg-gray-900 max-xl:grid-cols-2 max-lg:gap-y-4 max-sm:grid-cols-1">
                     <!-- Menus cards -->
                     @foreach ($item->getChildren() as $key => $child)
                         <a 
@@ -86,7 +86,7 @@
 
     @pushOnce('scripts')
         <script type="text/x-template" id="v-configuration-search-template">
-            <div class="relative flex w-[525px] max-w-[525px] items-center max-lg:w-[400px] ltr:ml-2.5 rtl:mr-2.5">
+            <div class="relative flex w-[525px] max-w-[525px] items-center max-lg:w-[400px]">
                 <i class="icon-search absolute top-1.5 flex items-center text-2xl ltr:left-3 rtl:right-3"></i>
 
                 <input 

@@ -16,7 +16,7 @@
                 <div class="shimmer h-[17px] w-64"></div>
             </div>
 
-            <div class="w-1/2">
+            <div class="w-1/2 max-md:w-full">
                 <!-- Title -->
                 <div class="mb-4 w-full">
                     <div class="shimmer mb-1.5 h-4 w-16"></div>
@@ -79,7 +79,7 @@
                 <div class="shimmer h-[17px] w-80"></div>
             </div>
 
-            <div class="w-1/2">
+            <div class="w-1/2 max-md:w-full">
                 <!-- Name -->
                 <div class="mb-4 w-full">
                     <div class="shimmer mb-1.5 h-5 w-16"></div>

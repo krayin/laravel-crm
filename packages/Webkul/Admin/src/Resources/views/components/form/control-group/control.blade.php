@@ -95,18 +95,32 @@
             {{ $attributes->only(['name', ':name', 'value', ':value', 'v-model', 'rules', ':rules', 'label', ':label']) }}
             name="{{ $name }}"
         >
+            @php
+                $defaultAttributes = [
+                    'class' => 'w-full rounded border border-gray-200 px-2.5 py-2 text-sm font-normal text-gray-800 transition-all hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 dark:focus:border-gray-400'
+                ];
+
+                if ($attributes->get('tinymce', false) || $attributes->get(':tinymce', false)) {
+                    $defaultAttributes['id'] = $attributes->get(':id', 'id');
+                }
+            @endphp
+
             <textarea
                 type="{{ $type }}"
                 name="{{ $name }}"
                 v-bind="field"
                 :class="[errors.length ? 'border !border-red-600 hover:border-red-600' : '']"
-                {{ $attributes->except(['value', ':value', 'v-model', 'rules', ':rules', 'label', ':label'])->merge(['class' => 'w-full rounded border border-gray-200 px-2.5 py-2 text-sm font-normal text-gray-800 transition-all hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 dark:focus:border-gray-400']) }}
+                {{
+                    $attributes
+                        ->except(['value', ':value', 'v-model', 'rules', ':rules', 'label', ':label'])
+                        ->merge($defaultAttributes)
+                }}
             >
             </textarea>
 
             @if ($attributes->get('tinymce', false) || $attributes->get(':tinymce', false))
-                <x-admin::tinymce 
-                    :selector="'textarea#' . $attributes->get('id')"
+                <x-admin::tinymce
+                    :selector="'textarea#' . $attributes->get(':id', 'id')"
                     ::field="field"
                 />
             @endif
@@ -207,7 +221,7 @@
         </v-field>
 
         <label
-             {{ 
+             {{
                 $attributes
                     ->except(['value', ':value', 'v-model', 'rules', ':rules', 'label', ':label', 'key', ':key'])
                     ->merge(['class' => 'text-gray-500 icon-checkbox-outline peer-checked:icon-checkbox-select text-2xl peer-checked:text-brandColor'])
@@ -219,7 +233,7 @@
         @break
 
     @case('radio')
-        <v-fields
+        <v-field
             type="radio"
             class="hidden"
             v-slot="{ field }"
@@ -232,7 +246,7 @@
                 v-bind="field"
                 {{ $attributes->except(['rules', 'label', ':label', 'key', ':key'])->merge(['class' => 'peer sr-only']) }}
             />
-                
+
             <v-checked-handler
                 class="hidden"
                 :field="field"
@@ -265,7 +279,7 @@
                     v-bind="field"
                     {{ $attributes->except(['v-model', 'rules', ':rules', 'label', ':label', 'key', ':key']) }}
                 />
-                
+
                 <v-checked-handler
                     class="hidden"
                     :field="field"
@@ -290,9 +304,9 @@
         />
 
         @break
-    
+
     @case('inline')
-        <x-admin::form.control-group.controls.inline.text {{ $attributes }}/>
+        <x-admin::form.control-group.controls.inline.text {{ $attributes }} />
 
         @break
 

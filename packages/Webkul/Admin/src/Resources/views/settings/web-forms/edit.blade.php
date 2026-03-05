@@ -11,28 +11,26 @@
         <div class="flex flex-col gap-4">
             <div class="flex items-center justify-between rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
                 <div class="flex flex-col gap-2">
-                    <div class="flex cursor-pointer items-center">
-                        {!! view_render_event('admin.settings.webform.edit.breadcrumbs.before', ['webform' => $webForm]) !!}
+                    {!! view_render_event('admin.settings.webform.edit.breadcrumbs.before', ['webform' => $webForm]) !!}
 
-                        <!-- Breadcurmbs -->
-                        <x-admin::breadcrumbs
-                            name="settings.web_forms.edit" 
-                            :entity="$webForm"
-                        />
+                    <!-- Breadcurmbs -->
+                    <x-admin::breadcrumbs
+                        name="settings.web_forms.edit"
+                        :entity="$webForm"
+                    />
 
-                        {!! view_render_event('admin.settings.webform.edit.breadcrumbs.after', ['webform' => $webForm]) !!}
-                    </div>
-        
+                    {!! view_render_event('admin.settings.webform.edit.breadcrumbs.after', ['webform' => $webForm]) !!}
+
                     <div class="text-xl font-bold dark:text-white">
                         @lang('admin::app.settings.webforms.edit.title')
                     </div>
                 </div>
-        
+
                 <div class="flex items-center gap-x-2.5">
                     <div class="flex items-center gap-x-2.5">
                         {!! view_render_event('admin.settings.webform.edit.embed_button.before', ['webform' => $webForm]) !!}
 
-                        <!-- Edit button for person -->
+                        <!-- Edit Button For Person -->
                         <button
                             type="button"
                             class="secondary-button"
@@ -69,13 +67,13 @@
                 </div>
             </div>
 
-            <!-- Webform view component -->
+            <!-- Webform View Component -->
             <v-webform ref="embed"></v-webform>
         </div>
     </x-admin::form>
 
     @pushOnce('scripts')
-        <script 
+        <script
             type="text/x-template"
             id="v-webform-template"
         >
@@ -95,7 +93,7 @@
 
                         {!! view_render_event('admin.settings.webform.edit.form_controls.before', ['webform' => $webForm]) !!}
 
-                        <!-- Submit success actions -->
+                        <!-- Submit Success Actions -->
                         <x-admin::form.control-group>
                             <x-admin::form.control-group.label class="required">
                                 @lang('admin::app.settings.webforms.edit.submit-success-action')
@@ -133,28 +131,32 @@
                                     ::placeholder="placeholder"
                                 />
                             </div>
-                            
+
                             <x-admin::form.control-group.error control-name="submit_success_content"/>
                         </x-admin::form.control-group>
 
                         <!-- Create Leads -->
                         <x-admin::form.control-group>
-                            <x-admin::form.control-group.label class="required">
+                            <x-admin::form.control-group.label
+                                class="required"
+                                for="create_lead"
+                            >
                                 @lang('admin::app.settings.webforms.edit.create-lead')
                             </x-admin::form.control-group.label>
 
-                            <label class="relative inline-flex cursor-pointer items-center">
-                                
-                                <input  
-                                    type="checkbox"
-                                    name="create_lead"
-                                    id="create_lead"
-                                    class="peer sr-only"
-                                    v-model="createLead"
-                                >
-            
-                                <div class="peer h-5 w-9 cursor-pointer rounded-full bg-gray-200 after:absolute after:top-0.5 after:h-4 after:w-4 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-blue-600 peer-checked:after:border-white peer-focus:outline-none peer-focus:ring-blue-300 dark:bg-gray-800 dark:after:border-white dark:after:bg-white dark:peer-checked:bg-gray-950 after:ltr:left-0.5 peer-checked:after:ltr:translate-x-full after:rtl:right-0.5 peer-checked:after:rtl:-translate-x-full"></div>
-                            </label>
+                            <input
+                                type="hidden"
+                                name="create_lead"
+                                :value="0"
+                            />
+
+                            <x-admin::form.control-group.control
+                                type="switch"
+                                name="create_lead"
+                                value="1"
+                                :label="trans('admin::app.settings.webforms.edit.create-lead')"
+                                v-model="createLead"
+                            />
                         </x-admin::form.control-group>
 
                         <!-- Customize webform -->
@@ -170,7 +172,7 @@
                             </div>
                         </div>
 
-                        <!-- Backgroud Color Picker -->
+                        <!-- Background Color Picker -->
                         <v-color-picker
                             name="background_color"
                             title="@lang('admin::app.settings.webforms.edit.background-color')"
@@ -303,15 +305,15 @@
                                         @lang('admin::app.settings.webforms.edit.add-attribute-btn')
                                     </button>
                                 </x-slot>
-            
+
                                 <x-slot:menu class="max-h-80 overflow-y-auto !p-0 dark:border-gray-800">
                                     <template v-if="createLead">
                                         <div class="m-2 text-lg font-bold">
-                                            @lang('admin::app.settings.webforms.edit.person')
+                                            @lang('admin::app.settings.webforms.edit.leads')
                                         </div>
 
                                         <span
-                                            v-for="attribute in groupedAttributes.persons"
+                                            v-for="attribute in groupedAttributes.leads"
                                             class="whitespace-no-wrap flex cursor-pointer items-center justify-between gap-1.5 rounded-t px-2 py-2 text-sm text-gray-600 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-950"
                                             @click="addAttribute(attribute)"
                                         >
@@ -323,11 +325,11 @@
 
                                     <template v-else>
                                         <div class="m-2 text-lg font-bold">
-                                            @lang('admin::app.settings.webforms.edit.leads')
+                                            @lang('admin::app.settings.webforms.edit.person')
                                         </div>
 
                                         <span
-                                            v-for="attribute in groupedAttributes.leads"
+                                            v-for="attribute in groupedAttributes.persons"
                                             class="whitespace-no-wrap flex cursor-pointer items-center justify-between gap-1.5 rounded-t px-2 py-2 text-sm text-gray-600 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-950"
                                             @click="addAttribute(attribute)"
                                         >
@@ -376,7 +378,6 @@
 
                                                 <x-admin::form.control-group.error ::name="'attributes[' + element.id + '][name]'"/>
                                             </x-admin::form.control-group>
-        
                                         </x-admin::table.td>
 
                                         <!-- Placeholder -->
@@ -395,10 +396,25 @@
                                             </x-admin::form.control-group>
                                         </x-admin::table.td>
 
-                                        <!-- Required or Not -->
+                                        <!-- Required Or Not -->
                                         <x-admin::table.td>
                                             <x-admin::form.control-group class="!mt-6">
                                                 <label :for="'attributes[' + element.id + '][is_required]'">
+                                                    <!--
+                                                        When the checkbox is disabled for name and email, we will set a hidden value
+                                                        because the form will not send the value of disabled input fields.
+                                                    -->
+                                                    <input
+                                                        type="hidden"
+                                                        :name="'attributes[' + element.id + '][is_required]'"
+                                                        :value="1"
+                                                        v-if="['name', 'emails'].includes(element['attribute']['code'])"
+                                                    >
+
+                                                    <!--
+                                                        Only the name and email fields are required, so we will disable the checkbox and
+                                                        force the user to provide them.
+                                                    -->
                                                     <input
                                                         type="checkbox"
                                                         :name="'attributes[' + element.id + '][is_required]'"
@@ -406,12 +422,15 @@
                                                         :value="1"
                                                         class="peer hidden"
                                                         :checked="element.is_required"
-                                                        :disabled="element.attribute.is_required ? true : false"
+                                                        :disabled="['name', 'emails'].includes(element['attribute']['code'])"
                                                     >
 
+                                                    <!--
+                                                        We will display a disabled checkbox for the name and email fields.
+                                                    -->
                                                     <span
                                                         class='icon-checkbox-outline peer-checked:icon-checkbox-select cursor-pointer rounded-md text-2xl peer-checked:text-brandColor'
-                                                        :class="{'opacity-50' : element.attribute.is_required}"
+                                                        :class="{'opacity-50' : ['name', 'emails'].includes(element['attribute']['code'])}"
                                                     ></span>
                                                 </label>
                                             </x-admin::form.control-group>
@@ -422,7 +441,7 @@
                                             <x-admin::form.control-group class="!mt-6">
                                                 <i
                                                     class="icon-delete cursor-pointer text-2xl"
-                                                    v-if="element['attribute']['code'] != 'name' && element['attribute']['code'] != 'emails'"
+                                                    v-if="! ['name', 'emails'].includes(element['attribute']['code'])"
                                                     @click="removeAttribute(element)"
                                                 ></i>
                                             </x-admin::form.control-group>
@@ -440,7 +459,7 @@
 
                 {!! view_render_event('admin.settings.webform.edit.right.before', ['webform' => $webForm]) !!}
 
-                <!-- Right sub-component -->
+                <!-- Right Sub Component -->
                 <div class="flex w-[360px] max-w-full flex-col gap-2 max-sm:w-full">
                     <x-admin::accordion>
                         <x-slot:header>
@@ -489,7 +508,7 @@
                                 <x-admin::form.control-group.error control-name="description" />
                             </x-admin::form.control-group>
 
-                            <!-- Submit button label -->
+                            <!-- Submit Button Label -->
                             <x-admin::form.control-group class="!mb-0">
                                 <x-admin::form.control-group.label class="required">
                                     @lang('admin::app.settings.webforms.edit.submit-button-label')
@@ -606,7 +625,7 @@
                         @input="color = $event.target.value"
                     />
                 </div>
-                
+
                 <x-admin::form.control-group.error ::name="name"/>
             </x-admin::form.control-group>
         </script>
@@ -639,10 +658,10 @@
                 watch: {
                     /**
                      * Watch for the createLead value and remove the added attributes if the value is true.
-                     * 
+                     *
                      * @param {Boolean} newValue
                      * @param {Boolean} oldValue
-                     * 
+                     *
                      * @return {void}
                      */
                     createLead(newValue, oldValue) {
@@ -657,7 +676,7 @@
                 computed:{
                     /**
                      * Get the placeholder value based on the submit success action value.
-                     * 
+                     *
                      * @return {String}
                      */
                     placeholder() {
@@ -666,7 +685,7 @@
 
                     /**
                      * Get the grouped attributes based on the entity type.
-                     * 
+                     *
                      * @return {Object}
                      */
                     groupedAttributes() {
@@ -680,10 +699,10 @@
                 methods: {
                     /**
                      * Copy the value to the clipboard.
-                     * 
+                     *
                      * @param {String} ref
                      * @param {String} btn
-                     * 
+                     *
                      * @return {void}
                      */
                     copyToClipboard(ref, btn) {
@@ -702,9 +721,9 @@
 
                     /**
                      * Open the modal based on the type.
-                     * 
+                     *
                      * @param {String} type
-                     * 
+                     *
                      * @return {void}
                      */
                     openModal() {
@@ -713,9 +732,9 @@
 
                     /**
                      * Add the attribute to the added attributes list.
-                     * 
+                     *
                      * @param {Object} attribute
-                     * 
+                     *
                      * @return {void}
                      */
                     addAttribute(attribute) {
@@ -727,7 +746,7 @@
                         });
 
                         const index = this.attributes.indexOf(attribute);
-                        
+
                         if (index > -1) {
                             this.attributes.splice(index, 1);
                         }
@@ -735,9 +754,9 @@
 
                     /**
                      * Remove the attribute from the added attributes list.
-                     * 
+                     *
                      * @param {Object} attribute
-                     * 
+                     *
                      * @return {void}
                      */
                     removeAttribute(attribute) {
@@ -752,9 +771,9 @@
 
                     /**
                      * Get the placeholder value based on the attribute type.
-                     * 
+                     *
                      * @param {Object} attribute
-                     * 
+                     *
                      * @return {String}
                      */
                     getPlaceholderValue(attribute) {

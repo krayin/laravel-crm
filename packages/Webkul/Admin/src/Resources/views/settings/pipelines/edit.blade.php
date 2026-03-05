@@ -14,17 +14,15 @@
         <div class="flex flex-col gap-2 rounded-lg border border-gray-200 bg-white text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
             <div class="flex items-center justify-between px-4 py-2">
                 <div class="flex flex-col gap-2">
-                    <div class="flex cursor-pointer items-center">
-                        {!! view_render_event('admin.settings.pipelines.edit.breadcrumbs.before', ['pipeline' => $pipeline]) !!}
+                    {!! view_render_event('admin.settings.pipelines.edit.breadcrumbs.before', ['pipeline' => $pipeline]) !!}
 
-                        <!-- Breadcrumbs -->
-                        <x-admin::breadcrumbs 
-                            name="settings.pipelines.edit"
-                            :entity="$pipeline"
-                        />
+                    <!-- Breadcrumbs -->
+                    <x-admin::breadcrumbs 
+                        name="settings.pipelines.edit"
+                        :entity="$pipeline"
+                    />
 
-                        {!! view_render_event('admin.settings.pipelines.edit.breadcrumbs.after', ['pipeline' => $pipeline]) !!}
-                    </div>
+                    {!! view_render_event('admin.settings.pipelines.edit.breadcrumbs.after', ['pipeline' => $pipeline]) !!}
 
                     <!-- Title -->
                     <div class="text-xl font-bold dark:text-white">

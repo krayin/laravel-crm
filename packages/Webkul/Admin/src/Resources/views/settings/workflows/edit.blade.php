@@ -12,17 +12,15 @@
         <div class="flex flex-col gap-4">
             <div class="flex items-center justify-between rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
                 <div class="flex flex-col gap-2">
-                    <div class="flex cursor-pointer items-center">
-                        {!! view_render_event('admin.settings.workflows.edit.breadcrumbs.before', ['workflow' => $workflow]) !!}
+                    {!! view_render_event('admin.settings.workflows.edit.breadcrumbs.before', ['workflow' => $workflow]) !!}
 
-                        <x-admin::breadcrumbs
-                            name="settings.workflows.edit"
-                            :entity="$workflow"
-                        />
+                    <x-admin::breadcrumbs
+                        name="settings.workflows.edit"
+                        :entity="$workflow"
+                    />
 
-                        {!! view_render_event('admin.settings.workflows.edit.breadcrumbs.after', ['workflow' => $workflow]) !!}
-                    </div>
-
+                    {!! view_render_event('admin.settings.workflows.edit.breadcrumbs.after', ['workflow' => $workflow]) !!}
+                    
                     <div class="text-xl font-bold dark:text-white">
                         @lang('admin::app.settings.workflows.edit.title')
                     </div>
@@ -57,11 +55,11 @@
             type="text/x-template"
             id="v-workflow-template"
         >
-            <div class="box-shadow flex flex-col gap-4 rounded-lg border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900 max-xl:flex-wrap">
+            <div class="box-shadow flex flex-col gap-4 rounded-lg border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900">
                 {!! view_render_event('admin.settings.workflows.edit.form_controls.before') !!}
                 
                 <!-- Tab Switcher -->
-                <div class="flex gap-2 border-b border-gray-200 dark:border-gray-800">
+                <div class="flex w-full gap-2 border-b border-gray-200 dark:border-gray-800">
                     <!-- Tabs -->
                     <template 
                         v-for="tab in tabs"
@@ -99,7 +97,7 @@
                             </p>
                         </div>
 
-                        <div class="w-1/2">
+                        <div class="w-1/2 max-md:w-full">
                             <x-admin::form.control-group>
                                 <x-admin::form.control-group.label class="required">
                                     @lang('admin::app.settings.workflows.edit.name')
@@ -163,7 +161,7 @@
                             :value="entityType"
                         />
 
-                        <div class="w-1/2">
+                        <div class="w-1/2 max-md:w-full">
                             <!-- Event -->
                             <x-admin::form.control-group>
                                 <x-admin::form.control-group.label class="required">
@@ -216,7 +214,7 @@
                             </p>
                         </div>
 
-                        <div class="flex w-1/2 flex-col gap-2">
+                        <div class="flex w-1/2 flex-col gap-2 max-md:w-full">
                             <!-- Condition Type -->
                             <x-admin::form.control-group>
                                 <x-admin::form.control-group.label>
@@ -289,42 +287,46 @@
                             </p>
                         </div>
 
-                        <x-admin::table class="!w-1/2">
-                            <!-- Table Head -->
-                            <x-admin::table.thead>
-                                <x-admin::table.thead.tr>
-                                    <x-admin::table.th>
-                                        @lang('admin::app.settings.workflows.edit.type')
-                                    </x-admin::table.th>
-                        
-                                    <x-admin::table.th>
-                                        @lang('admin::app.settings.workflows.edit.name')
-                                    </x-admin::table.th>
-                                </x-admin::table.thead.tr>
-                            </x-admin::table.thead>
+                        <div class="block w-full overflow-x-auto">
+                            <x-admin::table class="!w-1/2">
+                                <!-- Table Head -->
+                                <x-admin::table.thead>
+                                    <x-admin::table.thead.tr>
+                                        <x-admin::table.th class="text-center">
+                                            @lang('admin::app.settings.workflows.edit.type')
+                                        </x-admin::table.th>
+                            
+                                        <x-admin::table.th class="text-center">
+                                            @lang('admin::app.settings.workflows.edit.name')
+                                        </x-admin::table.th>
 
-                            <!-- Table Body -->
-                            <x-admin::table.tbody>
-                                <template
-                                    v-for='(action, index) in actions'
-                                    :key="index"
-                                >
-                                    <v-workflow-action-item
-                                        :entityType="entityType"
-                                        :action="action"
-                                        :index="index"
-                                        @onRemoveAction="removeAction($event)"
-                                    ></v-workflow-action-item>
-                                </template>
-                            </x-admin::table.tbody>
-                        </x-admin::table>
+                                        <x-admin::table.th></x-admin::table.th>
+                                    </x-admin::table.thead.tr>
+                                </x-admin::table.thead>
+
+                                <!-- Table Body -->
+                                <x-admin::table.tbody>
+                                    <template
+                                        v-for='(action, index) in actions'
+                                        :key="index"
+                                    >
+                                        <v-workflow-action-item
+                                            :entityType="entityType"
+                                            :action="action"
+                                            :index="index"
+                                            @onRemoveAction="removeAction($event)"
+                                        ></v-workflow-action-item>
+                                    </template>
+                                </x-admin::table.tbody>
+                            </x-admin::table>
+                        </div>
 
                         <button
                             type="button"
-                            class="flex max-w-max items-center gap-2 text-brandColor"
+                            class="first-line:text-md flex max-w-max items-center gap-2 text-brandColor"
                             @click="addAction"
                         >
-                            <i class="icon-add text-md !text-brandColor"></i>
+                            <i class="icon-add"></i>
 
                             @lang('admin::app.settings.workflows.edit.add-action')
                         </button>
@@ -341,8 +343,8 @@
             type="text/x-template"
             id="v-workflow-condition-item-template"
         >
-            <div class="flex justify-between gap-4">
-                <div class="flex flex-1 gap-4 max-sm:flex-1 max-sm:flex-wrap">
+            <div class="flex items-center justify-between gap-4">
+                <div class="flex flex-wrap gap-4">
                     <!-- Select main condition. -->
                     <select
                         :name="['conditions[' + index + '][attribute]']"
@@ -495,6 +497,7 @@
                                         :attribute="{'code': 'conditions[' + index + '][value]', 'name': 'Email', 'lookup_type': matchedAttribute.lookup_type}"
                                         validations="required|email"
                                         :data="condition.value"
+                                        can-add-new="true"
                                     ></v-lookup-component>
                                 </div>
                             </template>
@@ -544,7 +547,7 @@
             id="v-workflow-action-item-template"
         >   
             <!-- Table Body -->
-            <x-admin::table.thead.tr class="align-top">
+            <x-admin::table.thead.tr>
                 <x-admin::table.td>
                     <select
                         :name="['actions[' + index + '][id]']"
@@ -731,6 +734,7 @@
                                                     :attribute="{'code': 'actions[' + index + '][value]', 'name': 'Email', 'lookup_type': matchedAttribute.lookup_type}"
                                                     validations="required|email"
                                                     :data="action.value"
+                                                    can-add-new="true"
                                                 ></v-lookup-component>
                                             </div>
                                         </template>
@@ -799,12 +803,14 @@
                                 </v-error-message>
                             </template>
                         </div>
-    
-                        <span
-                            class="icon-delete max-h-9 max-w-9 cursor-pointer rounded-md p-1.5 text-2xl transition-all hover:bg-gray-100 dark:hover:bg-gray-950 max-sm:place-self-center"
-                            @click="removeAction"
-                        ></span>
                     </div>
+                </x-admin::table.td>
+                
+                <x-admin::table.td class="text-right">
+                    <span
+                        class="icon-delete cursor-pointer rounded-md p-1.5 text-2xl transition-all hover:bg-gray-100 dark:hover:bg-gray-950"
+                        @click="removeAction"
+                    ></span>
                 </x-admin::table.td>
             </x-admin::table.thead.tr>
         </script>

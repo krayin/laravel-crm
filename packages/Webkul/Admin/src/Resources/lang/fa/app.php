@@ -156,30 +156,31 @@ return [
             ],
 
             'index' => [
-                'from'         => 'از',
-                'to'           => 'تا',
-                'cc'           => 'کپی',
-                'bcc'          => 'کپی مخفی',
                 'all'          => 'همه',
-                'planned'      => 'برنامه‌ریزی شده',
-                'calls'        => 'تماس‌ها',
-                'meetings'     => 'جلسات',
-                'lunches'      => 'ناهارها',
-                'files'        => 'فایل‌ها',
-                'quotes'       => 'نقل قول‌ها',
-                'notes'        => 'یادداشت‌ها',
-                'emails'       => 'ایمیل‌ها',
-                'change-log'   => 'تغییرات',
+                'bcc'          => 'کپی مخفی',
                 'by-user'      => 'توسط :user',
-                'scheduled-on' => 'برنامه‌ریزی شده در',
-                'location'     => 'محل',
-                'participants' => 'شرکت‌کنندگان',
-                'mark-as-done' => 'علامت زدن به عنوان انجام شده',
+                'calls'        => 'تماس‌ها',
+                'cc'           => 'کپی',
+                'change-log'   => 'تغییرات',
                 'delete'       => 'حذف',
                 'edit'         => 'ویرایش',
-                'view'         => 'مشاهده',
-                'unlink'       => 'لغو پیوند',
+                'emails'       => 'ایمیل‌ها',
                 'empty'        => 'خالی',
+                'files'        => 'فایل‌ها',
+                'from'         => 'از',
+                'location'     => 'محل',
+                'lunches'      => 'ناهارها',
+                'mark-as-done' => 'علامت زدن به عنوان انجام شده',
+                'meetings'     => 'جلسات',
+                'notes'        => 'یادداشت‌ها',
+                'participants' => 'شرکت‌کنندگان',
+                'planned'      => 'برنامه‌ریزی شده',
+                'quotes'       => 'نقل قول‌ها',
+                'scheduled-on' => 'برنامه‌ریزی شده در',
+                'system'       => 'سیستم',
+                'to'           => 'تا',
+                'unlink'       => 'لغو پیوند',
+                'view'         => 'مشاهده',
 
                 'empty-placeholders' => [
                     'all' => [
@@ -1121,6 +1122,7 @@ return [
                         'name'        => 'نام',
                         'date'        => 'تاریخ',
                         'description' => 'توضیحات',
+                        'save-btn'    => 'ذخیره رویداد',
                     ],
 
                     'edit' => [
@@ -1849,17 +1851,22 @@ return [
 
     'common' => [
         'custom-attributes' => [
-            'select-country' => 'انتخاب کشور',
-            'select-state'   => 'انتخاب ایالت',
-            'state'          => 'ایالت',
-            'city'           => 'شهر',
-            'postcode'       => 'کد پستی',
-            'work'           => 'محل کار',
-            'home'           => 'خانه',
-            'add-more'       => 'افزودن بیشتر',
-            'select'         => 'انتخاب',
-            'country'        => 'کشور',
-            'address'        => 'آدرس',
+            'add-more'             => 'افزودن بیشتر',
+            'address'              => 'آدرس',
+            'city'                 => 'شهر',
+            'contact'              => 'شماره‌های تماس',
+            'country'              => 'کشور',
+            'email'                => 'ایمیل',
+            'home'                 => 'خانه',
+            'postcode'             => 'کد پستی',
+            'save'                 => 'ذخیره',
+            'select'               => 'انتخاب',
+            'select-country'       => 'انتخاب کشور',
+            'select-state'         => 'انتخاب ایالت',
+            'state'                => 'ایالت',
+            'update-contact-title' => 'به‌روزرسانی شماره‌های تماس',
+            'update-emails-title'  => 'به‌روزرسانی ایمیل‌های تماس',
+            'work'                 => 'محل کار',
         ],
     ],
 
@@ -1869,6 +1876,20 @@ return [
         'update-failed'     => 'سرنخ‌ها قابل حذف نیستند.',
         'destroy-success'   => 'سرنخ با موفقیت حذف شد.',
         'destroy-failed'    => 'سرنخ قابل حذف نیست.',
+
+        'file' => [
+            'data-not-found'         => 'داده‌ای یافت نشد.',
+            'empty-content'          => 'محتوای PDF خالی است یا نمی‌توان آن را استخراج کرد.',
+            'failed-extract'         => 'استخراج متن از فایل ناموفق بود.',
+            'insufficient-info'      => 'به دلیل اطلاعات ناکافی، در حال حاضر نمی‌توانیم درخواست شما را پردازش کنیم.',
+            'invalid-base64'         => 'فرمت base64 نامعتبر است.',
+            'invalid-format'         => 'فرمت JSON نامعتبر است.',
+            'invalid-response'       => 'فرمت پاسخ هوش مصنوعی نامعتبر است.',
+            'missing-api-key'        => 'کلید API یا پیکربندی مدل مفقود است.',
+            'not-found'              => 'فایل یافت نشد.',
+            'recursive-call'         => 'تماس بازگشتی شناسایی شد.',
+            'text-generation-failed' => 'استخراج متن ناموفق بود. فایل ممکن است خالی یا غیرقابل خواندن باشد.',
+        ],
 
         'index' => [
             'title'      => 'سرنخ‌ها',
@@ -1933,6 +1954,16 @@ return [
             'view-switcher' => [
                 'all-pipelines'       => 'تمام خطوط تولید',
                 'create-new-pipeline' => 'ایجاد خط تولید جدید',
+            ],
+
+            'upload' => [
+                'create-lead'   => 'ایجاد سرنخ با استفاده از هوش مصنوعی',
+                'file'          => 'آپلود فایل',
+                'file-info'     => 'فقط فایل‌های با فرمت pdf, bmp, jpg, jpeg, png پذیرفته می‌شوند.',
+                'file-required' => 'لطفاً حداقل یک فایل معتبر برای ادامه انتخاب کنید.',
+                'sample-pdf'    => 'نمونه PDF',
+                'save-btn'      => 'ذخیره',
+                'upload-file'   => 'بارگذاری فایل',
             ],
         ],
 
@@ -2046,11 +2077,14 @@ return [
 
     'configuration' => [
         'index' => [
-            'back'         => 'بازگشت',
-            'save-btn'     => 'ذخیره پیکربندی',
-            'save-success' => 'پیکربندی با موفقیت ذخیره شد.',
-            'search'       => 'جستجو',
-            'title'        => 'پیکربندی',
+            'back'           => 'بازگشت',
+            'delete'         => 'حذف',
+            'save-btn'       => 'ذخیره پیکربندی',
+            'save-success'   => 'پیکربندی با موفقیت ذخیره شد.',
+            'search'         => 'جستجو',
+            'select-country' => 'انتخاب کشور',
+            'select-state'   => 'انتخاب ایالت',
+            'title'          => 'پیکربندی',
 
             'general'  => [
                 'title'   => 'عمومی',
@@ -2061,28 +2095,101 @@ return [
                     'info'            => 'تنظیمات عمومی خود را اینجا به‌روزرسانی کنید.',
                     'locale-settings' => [
                         'title'       => 'تنظیمات محلی',
-                        'title-info'  => 'زبان استفاده‌شده در رابط کاربری را تعریف می‌کند، مانند عربی (ar)، انگلیسی (en)، اسپانیایی (es)، فارسی (fa) و ترکی (tr).',
+                        'title-info'  => 'زبان مورد استفاده در رابط کاربری را تعریف می‌کند، مانند عربی (ar)، انگلیسی (en)، اسپانیایی (es)، فارسی (fa) و ترکی (tr).',
+                    ],
+
+                    'admin-logo' => [
+                        'logo-image' => 'تصویر لوگو',
+                        'title'      => 'لوگوی مدیر',
+                        'title-info' => 'تصویر لوگو برای پنل مدیریت خود را پیکربندی کنید.',
+                    ],
+                ],
+
+                'settings' => [
+                    'title' => 'تنظیمات',
+                    'info'  => 'تنظیمات خود را اینجا به‌روزرسانی کنید.',
+
+                    'footer' => [
+                        'info'       => 'ما می‌توانیم بخش "توسعه یافته توسط" را اینجا پیکربندی کنیم.',
+                        'powered-by' => 'توسعه یافته توسط ویرایشگر متن',
+                        'title'      => 'پیکربندی بخش "توسعه یافته توسط"',
+                    ],
+
+                    'menu' => [
+                        'activities'     => 'فعالیت‌ها',
+                        'configuration'  => 'پیکربندی',
+                        'contacts'       => 'مخاطبین',
+                        'dashboard'      => 'داشبورد',
+                        'draft'          => 'پیش‌نویس',
+                        'inbox'          => 'صندوق ورودی',
+                        'info'           => 'ما می‌توانیم نام آیتم‌های منو را اینجا پیکربندی کنیم.',
+                        'leads'          => 'سرنخ‌ها',
+                        'mail'           => 'ایمیل',
+                        'organizations'  => 'سازمان‌ها',
+                        'outbox'         => 'صندوق خروجی',
+                        'persons'        => 'افراد',
+                        'products'       => 'محصولات',
+                        'quotes'         => 'نقل‌قول‌ها',
+                        'sent'           => 'ارسال شده',
+                        'settings'       => 'تنظیمات',
+                        'title'          => 'پیکربندی آیتم‌های منو',
+                        'trash'          => 'زباله‌دان',
+                    ],
+
+                    'menu-color' => [
+                        'active-background-color' => 'رنگ پس‌زمینه فعال',
+                        'active-text-color'       => 'رنگ متن فعال',
+                        'info'                    => 'ما می‌توانیم رنگ آیتم‌های منو را اینجا تغییر دهیم.',
+                        'text-color'              => 'رنگ متن',
+                        'title'                   => 'پیکربندی رنگ آیتم‌های منو',
                     ],
                 ],
             ],
 
             'email' => [
-                'title' => 'Email Settings',
-                'info'  => 'Email configuration for the application.',
+                'title' => 'تنظیمات ایمیل',
+                'info'  => 'پیکربندی ایمیل برای برنامه.',
 
                 'imap' => [
-                    'title' => 'IMAP Settings',
-                    'info'  => 'IMAP email configuration for receiving emails.',
+                    'title' => 'تنظیمات IMAP',
+                    'info'  => 'پیکربندی ایمیل IMAP برای دریافت ایمیل‌ها.',
 
                     'account' => [
-                        'title'         => 'IMAP Account',
-                        'title-info'    => 'Configure your IMAP account settings here.',
-                        'host'          => 'Host',
-                        'port'          => 'Port',
-                        'encryption'    => 'Encryption Type',
-                        'validate-cert' => 'Validate SSL Certificate',
-                        'username'      => 'IMAP Username',
-                        'password'      => 'IMAP Password',
+                        'title'         => 'حساب IMAP',
+                        'title-info'    => 'تنظیمات حساب IMAP خود را اینجا پیکربندی کنید.',
+                        'host'          => 'میزبان',
+                        'port'          => 'پورت',
+                        'encryption'    => 'نوع رمزگذاری',
+                        'validate-cert' => 'اعتبارسنجی گواهی SSL',
+                        'username'      => 'نام کاربری IMAP',
+                        'password'      => 'رمز عبور IMAP',
+                    ],
+                ],
+            ],
+
+            'magic-ai' => [
+                'title' => 'هوش مصنوعی جادویی',
+                'info'  => 'پیکربندی هوش مصنوعی جادویی برای برنامه.',
+
+                'settings' => [
+                    'api-key'             => 'کلید API',
+                    'api-key-info'        => 'به یاد داشته باشید که برای هر مدل از کلید API OpenRouter استفاده کنید. این یک گام ساده برای افزایش امنیت و عملکرد است.',
+                    'enable'              => 'فعال کردن',
+                    'info'                => 'تجربه هوش مصنوعی جادویی خود را با کلید API OpenRouter خود بهبود بخشید. اکنون آن را یکپارچه کنید تا یک ماجراجویی هوش مصنوعی شخصی‌سازی شده و بدون درز برای شما فراهم شود! به راحتی تنظیمات را سفارشی کنید و کنترل سفر هوش مصنوعی خود را به دست بگیرید.',
+                    'other'               => 'مدل دیگر',
+                    'other-model'         => 'برای مدل‌های دیگر، از شناسه مدل از OpenRouter استفاده کنید.',
+                    'pdf-generation'      => 'تولید PDF',
+                    'pdf-generation-info' => 'ویژگی تولید PDF را فعال کنید تا به طور خودکار داده‌ها را از فایل‌های PDF استخراج کرده و به فرمت متنی تبدیل کنید. با فعال کردن این ویژگی، بهره‌وری و کارایی خود را افزایش دهید و جریان کاری خود را ساده کنید.',
+                    'title'               => 'تنظیمات عمومی',
+
+                    'models'     => [
+                        'deepseek-r1'           => 'Deepseek R1 Distill-llama-8b',
+                        'gemini-2-0-flash-001'  => 'Gemini 2.0 flash-001',
+                        'gpt-4o'                => 'GPT-4.0',
+                        'gpt-4o-mini'           => 'GPT-4.0 mini',
+                        'grok-2-1212'           => 'Grok 2.12',
+                        'llama-3-2-3b-instruct' => 'Llama 3.2 3b Instruct',
+                        'title'                 => 'مدل‌ها',
                     ],
                 ],
             ],

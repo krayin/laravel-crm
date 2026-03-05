@@ -70,7 +70,7 @@ Take advantage of two of the hottest frameworks used in this project -- Laravel 
 ##### Execute these commands below, in order
 
 ```
-composer create-project krayin/laravel-crm
+composer create-project
 ```
 
 -   Find **.env** file in root directory and change the **APP_URL** param to your **domain**.
@@ -124,7 +124,7 @@ password:admin123
 
 ### License
 
-Krayin CRM is a truly opensource CRM framework which will always be free under the [OSL-3.0 License](https://github.com/krayin/laravel-crm/blob/master/LICENSE.txt).
+Krayin CRM is a truly opensource CRM framework which will always be free under the [OSL-3.0 License](https://github.com/krayin/laravel-crm/blob/master/LICENSE).
 
 ### Security Vulnerabilities
 

@@ -6,21 +6,21 @@ return [
             'leads' => [
                 'description'         => 'Descrição',
                 'expected-close-date' => 'Data de Fechamento Esperada',
-                'lead-value'          => 'Valor do Lead',
+                'lead-value'          => 'Valor da Oportunidade',
                 'sales-owner'         => 'Responsável pela Venda',
-                'source'              => 'Fonte',
+                'source'              => 'Origem',
                 'title'               => 'Título',
                 'type'                => 'Tipo',
-                'pipeline'            => 'Pipeline',
+                'pipeline'            => 'Funil',
                 'stage'               => 'Estágio',
             ],
 
             'persons' => [
                 'contact-numbers' => 'Números de Contato',
-                'emails'          => 'Emails',
+                'emails'          => 'E-mails',
                 'job-title'       => 'Cargo',
                 'name'            => 'Nome',
-                'organization'    => 'Organização',
+                'organization'    => 'Empresa',
                 'sales-owner'     => 'Responsável pela Venda',
             ],
 
@@ -35,7 +35,7 @@ return [
                 'name'        => 'Nome',
                 'price'       => 'Preço',
                 'quantity'    => 'Quantidade',
-                'sku'         => 'SKU',
+                'sku'         => 'Código',
             ],
 
             'quotes' => [
@@ -65,7 +65,7 @@ return [
         ],
 
         'email' => [
-            'activity-created'      => 'Atividade criada',
+            'activity-created'      => 'Atividade Adicionada',
             'activity-modified'     => 'Atividade modificada',
             'date'                  => 'Data',
             'new-activity'          => 'Você tem uma nova atividade, veja os detalhes abaixo',
@@ -77,21 +77,21 @@ return [
 
         'lead' => [
             'pipeline' => [
-                'default' => 'Pipeline Padrão',
+                'default' => 'Funil Padrão',
 
                 'pipeline-stages' => [
                     'follow-up'   => 'Acompanhamento',
                     'lost'        => 'Perdido',
                     'negotiation' => 'Negociação',
                     'new'         => 'Novo',
-                    'prospect'    => 'Prospecto',
+                    'prospect'    => 'Qualificado',
                     'won'         => 'Ganho',
                 ],
             ],
 
             'source' => [
                 'direct'   => 'Direto',
-                'email'    => 'Email',
+                'email'    => 'E-mail',
                 'phone'    => 'Telefone',
                 'web'      => 'Web',
                 'web-form' => 'Formulário Web',
@@ -111,8 +111,8 @@ return [
         ],
 
         'workflow' => [
-            'email-to-participants-after-activity-updation' => 'Emails para participantes após atualização de atividade',
-            'email-to-participants-after-activity-creation' => 'Emails para participantes após criação de atividade',
+            'email-to-participants-after-activity-updation' => 'E-mails para participantes após atualização de atividade',
+            'email-to-participants-after-activity-creation' => 'E-mails para participantes após adicionar atividade',
         ],
     ],
 
@@ -125,7 +125,7 @@ return [
                 'email'            => 'E-mail',
                 'email-address'    => 'admin@example.com',
                 'password'         => 'Senha',
-                'title'            => 'Criar Administrador',
+                'title'            => 'Adicionar Administrador',
             ],
 
             'environment-configuration' => [
@@ -183,7 +183,7 @@ return [
             ],
 
             'ready-for-installation' => [
-                'create-databsae-table'   => 'Criar tabela do banco de dados',
+                'create-databsae-table'   => 'Adicionar tabela do banco de dados',
                 'install'                 => 'Instalação',
                 'start-installation'      => 'Iniciar Instalação',
                 'title'                   => 'Pronto para Instalação',
