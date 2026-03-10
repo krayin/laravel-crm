@@ -17,6 +17,7 @@ use Webkul\Admin\Http\Requests\MassDestroyRequest;
 use Webkul\Admin\Http\Requests\MassUpdateRequest;
 use Webkul\Admin\Http\Resources\LeadResource;
 use Webkul\Admin\Http\Resources\StageResource;
+use Webkul\Admin\Traits\AuthorizesUserResource;
 use Webkul\Attribute\Repositories\AttributeRepository;
 use Webkul\Contact\Repositories\PersonRepository;
 use Webkul\Lead\Helpers\MagicAI;
@@ -32,6 +33,7 @@ use Webkul\User\Repositories\UserRepository;
 
 class LeadController extends Controller
 {
+    use AuthorizesUserResource;
     /**
      * Const variable for supported types.
      */
@@ -473,7 +475,7 @@ class LeadController extends Controller
         $lead = $this->leadRepository->findOrFail($id);
 
         $this->authorizeUserResource($lead);
-        
+
         try {
             Event::dispatch('lead.product.delete.before', $id);
 
@@ -745,17 +747,5 @@ class LeadController extends Controller
         }
 
         return $leads;
-    }
-
-    /**
-     * Authorize user for the resource.
-     */
-    protected function authorizeUserResource($resource)
-    {
-        $userIds = bouncer()->getAuthorizedUserIds();
-
-        if ($userIds && ! in_array($resource->user_id, $userIds)) {
-            abort(403);
-        }
     }
 }
