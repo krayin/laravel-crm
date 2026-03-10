@@ -34,6 +34,7 @@ use Webkul\User\Repositories\UserRepository;
 class LeadController extends Controller
 {
     use AuthorizesUserResource;
+
     /**
      * Const variable for supported types.
      */

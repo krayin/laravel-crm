@@ -22,6 +22,7 @@ use Webkul\Attribute\Repositories\AttributeRepository;
 class ActivityController extends Controller
 {
     use AuthorizesUserResource;
+
     /**
      * Create a new controller instance.
      *

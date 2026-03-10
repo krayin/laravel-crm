@@ -22,7 +22,7 @@ use Webkul\Quote\Repositories\QuoteRepository;
 
 class QuoteController extends Controller
 {
-    use PDFHandler, AuthorizesUserResource;
+    use AuthorizesUserResource, PDFHandler;
 
     /**
      * Create a new controller instance.

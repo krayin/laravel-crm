@@ -20,6 +20,7 @@ use Webkul\Contact\Repositories\PersonRepository;
 class PersonController extends Controller
 {
     use AuthorizesUserResource;
+
     /**
      * Create a new class instance.
      *
