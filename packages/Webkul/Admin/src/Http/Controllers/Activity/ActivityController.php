@@ -16,10 +16,12 @@ use Webkul\Admin\Http\Controllers\Controller;
 use Webkul\Admin\Http\Requests\MassDestroyRequest;
 use Webkul\Admin\Http\Requests\MassUpdateRequest;
 use Webkul\Admin\Http\Resources\ActivityResource;
+use Webkul\Admin\Traits\AuthorizesUserResource;
 use Webkul\Attribute\Repositories\AttributeRepository;
 
 class ActivityController extends Controller
 {
+    use AuthorizesUserResource;
     /**
      * Create a new controller instance.
      *
@@ -128,6 +130,8 @@ class ActivityController extends Controller
     {
         $activity = $this->activityRepository->findOrFail($id);
 
+        $this->authorizeUserResource($activity);
+
         $leadId = old('lead_id') ?? optional($activity->leads()->first())->id;
 
         $lookUpEntityData = $this->attributeRepository->getLookUpEntity('leads', $leadId);
@@ -140,6 +144,10 @@ class ActivityController extends Controller
      */
     public function update($id): RedirectResponse|JsonResponse
     {
+        $activity = $this->activityRepository->findOrFail($id);
+
+        $this->authorizeUserResource($activity);
+
         Event::dispatch('activity.update.before', $id);
 
         $data = request()->all();
@@ -203,6 +211,8 @@ class ActivityController extends Controller
         try {
             $file = $this->fileRepository->findOrFail($id);
 
+            $this->authorizeUserResource($file->activity);
+
             return Storage::download($file->path);
         } catch (\Exception $exception) {
             abort(404);
@@ -215,6 +225,8 @@ class ActivityController extends Controller
     public function destroy(int $id): JsonResponse
     {
         $activity = $this->activityRepository->findOrFail($id);
+
+        $this->authorizeUserResource($activity);
 
         try {
             Event::dispatch('activity.delete.before', $id);
