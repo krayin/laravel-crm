@@ -15,13 +15,14 @@ use Webkul\Admin\Http\Controllers\Controller;
 use Webkul\Admin\Http\Requests\AttributeForm;
 use Webkul\Admin\Http\Requests\MassDestroyRequest;
 use Webkul\Admin\Http\Resources\QuoteResource;
+use Webkul\Admin\Traits\AuthorizesUserResource;
 use Webkul\Core\Traits\PDFHandler;
 use Webkul\Lead\Repositories\LeadRepository;
 use Webkul\Quote\Repositories\QuoteRepository;
 
 class QuoteController extends Controller
 {
-    use PDFHandler;
+    use AuthorizesUserResource, PDFHandler;
 
     /**
      * Create a new controller instance.
@@ -90,6 +91,8 @@ class QuoteController extends Controller
     {
         $quote = $this->quoteRepository->findOrFail($id);
 
+        $this->authorizeUserResource($quote);
+
         return view('admin::quotes.edit', compact('quote'));
     }
 
@@ -98,6 +101,10 @@ class QuoteController extends Controller
      */
     public function update(AttributeForm $request, int $id): RedirectResponse
     {
+        $quote = $this->quoteRepository->findOrFail($id);
+
+        $this->authorizeUserResource($quote);
+
         Event::dispatch('quote.update.before', $id);
 
         $quote = $this->quoteRepository->update($request->all(), $id);
@@ -138,7 +145,9 @@ class QuoteController extends Controller
      */
     public function destroy(int $id): JsonResponse
     {
-        $this->quoteRepository->findOrFail($id);
+        $quote = $this->quoteRepository->findOrFail($id);
+
+        $this->authorizeUserResource($quote);
 
         try {
             Event::dispatch('quote.delete.before', $id);
@@ -189,6 +198,8 @@ class QuoteController extends Controller
     public function print($id): Response|StreamedResponse
     {
         $quote = $this->quoteRepository->findOrFail($id);
+
+        $this->authorizeUserResource($quote);
 
         return $this->downloadPDF(
             view('admin::quotes.pdf', compact('quote'))->render(),

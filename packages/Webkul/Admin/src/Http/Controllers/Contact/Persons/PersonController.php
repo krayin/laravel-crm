@@ -14,10 +14,13 @@ use Webkul\Admin\Http\Controllers\Controller;
 use Webkul\Admin\Http\Requests\AttributeForm;
 use Webkul\Admin\Http\Requests\MassDestroyRequest;
 use Webkul\Admin\Http\Resources\PersonResource;
+use Webkul\Admin\Traits\AuthorizesUserResource;
 use Webkul\Contact\Repositories\PersonRepository;
 
 class PersonController extends Controller
 {
+    use AuthorizesUserResource;
+
     /**
      * Create a new class instance.
      *
@@ -78,6 +81,8 @@ class PersonController extends Controller
     {
         $person = $this->personRepository->findOrFail($id);
 
+        $this->authorizeUserResource($person);
+
         return view('admin::contacts.persons.view', compact('person'));
     }
 
@@ -88,6 +93,8 @@ class PersonController extends Controller
     {
         $person = $this->personRepository->findOrFail($id);
 
+        $this->authorizeUserResource($person);
+
         return view('admin::contacts.persons.edit', compact('person'));
     }
 
@@ -96,6 +103,10 @@ class PersonController extends Controller
      */
     public function update(AttributeForm $request, int $id): RedirectResponse|JsonResponse
     {
+        $person = $this->personRepository->findOrFail($id);
+
+        $this->authorizeUserResource($person);
+
         Event::dispatch('contacts.person.update.before', $id);
 
         $person = $this->personRepository->update($request->all(), $id);
@@ -138,6 +149,8 @@ class PersonController extends Controller
     public function destroy(int $id): JsonResponse
     {
         $person = $this->personRepository->findOrFail($id);
+
+        $this->authorizeUserResource($person);
 
         if (
             $person->leads

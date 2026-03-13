@@ -17,6 +17,7 @@ use Webkul\Admin\Http\Requests\MassDestroyRequest;
 use Webkul\Admin\Http\Requests\MassUpdateRequest;
 use Webkul\Admin\Http\Resources\LeadResource;
 use Webkul\Admin\Http\Resources\StageResource;
+use Webkul\Admin\Traits\AuthorizesUserResource;
 use Webkul\Attribute\Repositories\AttributeRepository;
 use Webkul\Contact\Repositories\PersonRepository;
 use Webkul\Lead\Helpers\MagicAI;
@@ -32,6 +33,8 @@ use Webkul\User\Repositories\UserRepository;
 
 class LeadController extends Controller
 {
+    use AuthorizesUserResource;
+
     /**
      * Const variable for supported types.
      */
@@ -210,6 +213,8 @@ class LeadController extends Controller
     {
         $lead = $this->leadRepository->findOrFail($id);
 
+        $this->authorizeUserResource($lead);
+
         return view('admin::leads.edit', compact('lead'));
     }
 
@@ -220,14 +225,7 @@ class LeadController extends Controller
     {
         $lead = $this->leadRepository->findOrFail($id);
 
-        $userIds = bouncer()->getAuthorizedUserIds();
-
-        if (
-            $userIds
-            && ! in_array($lead->user_id, $userIds)
-        ) {
-            return redirect()->route('admin.leads.index');
-        }
+        $this->authorizeUserResource($lead);
 
         return view('admin::leads.view', compact('lead'));
     }
@@ -237,6 +235,10 @@ class LeadController extends Controller
      */
     public function update(LeadForm $request, int $id): RedirectResponse|JsonResponse
     {
+        $lead = $this->leadRepository->findOrFail($id);
+
+        $this->authorizeUserResource($lead);
+
         Event::dispatch('lead.update.before', $id);
 
         $data = $request->all();
@@ -279,6 +281,10 @@ class LeadController extends Controller
      */
     public function updateAttributes(int $id)
     {
+        $lead = $this->leadRepository->findOrFail($id);
+
+        $this->authorizeUserResource($lead);
+
         $data = request()->all();
 
         $attributes = $this->attributeRepository->findWhere([
@@ -307,6 +313,8 @@ class LeadController extends Controller
         ]);
 
         $lead = $this->leadRepository->findOrFail($id);
+
+        $this->authorizeUserResource($lead);
 
         $stage = $lead->pipeline->stages()
             ->where('id', request()->input('lead_pipeline_stage_id'))
@@ -356,7 +364,9 @@ class LeadController extends Controller
      */
     public function destroy(int $id): JsonResponse
     {
-        $this->leadRepository->findOrFail($id);
+        $lead = $this->leadRepository->findOrFail($id);
+
+        $this->authorizeUserResource($lead);
 
         try {
             Event::dispatch('lead.delete.before', $id);
@@ -434,6 +444,10 @@ class LeadController extends Controller
      */
     public function addProduct(int $leadId): JsonResponse
     {
+        $lead = $this->leadRepository->findOrFail($leadId);
+
+        $this->authorizeUserResource($lead);
+
         $product = $this->productRepository->updateOrCreate(
             [
                 'lead_id'    => $leadId,
@@ -459,6 +473,10 @@ class LeadController extends Controller
      */
     public function removeProduct(int $id): JsonResponse
     {
+        $lead = $this->leadRepository->findOrFail($id);
+
+        $this->authorizeUserResource($lead);
+
         try {
             Event::dispatch('lead.product.delete.before', $id);
 
