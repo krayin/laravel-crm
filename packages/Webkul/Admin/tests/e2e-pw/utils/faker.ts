@@ -448,8 +448,34 @@ function getRandomDateTime() {
   
     return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
   }
+/* 
+
+*/
+
+function generateCampaignName() {
+    const adjectives = [
+        "Innovative", "Dynamic", "Strategic", "Creative", "Impactful", 
+        "Engaging", "Transformative", "Visionary", "Empowering", "Synergistic"
+    ];
+    
+    const nouns = [
+        "Campaign", "Initiative", "Project", "Program", "Drive", 
+        "Movement", "Mission", "Operation", "Plan", "Strategy"
+    ];
+
+    return `${randomElement(adjectives)} ${randomElement(nouns)}`;
+}      
+
+/* Generate a random webhook URL */
+ function generateUniqueWebhookUrl(): string {
+  const timestamp = Date.now();
+  const random = Math.floor(Math.random() * 1000);
+  return `https://webhook.test/${timestamp}-${random}`;
+}
+
 
 export {
+    generateUniqueWebhookUrl,
     generateName,
     generateFirstName,
     generateLastName,
@@ -467,5 +493,6 @@ export {
     createOrganization,
     generateCompanyName,
     createPerson,
-    getRandomDateTime
+    getRandomDateTime,
+    generateCampaignName
 };
