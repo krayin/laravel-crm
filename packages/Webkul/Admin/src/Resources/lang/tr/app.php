@@ -914,7 +914,7 @@ return [
             ],
             'create' => [
                 'title'                    => 'Web Formu Oluştur',
-                'add-attribute-btn'        => 'Öznitelik Düğmesi Ekle',
+                'add-attribute-btn'        => 'Öznitelik Ekle',
                 'attribute-label-color'    => 'Öznitelik Etiketi Rengi',
                 'attributes'               => 'Öznitelikler',
                 'attributes-info'          => 'Forma özel öznitelikler ekleyin.',
@@ -941,7 +941,7 @@ return [
                 'enter-value'              => 'Değer Gir',
             ],
             'edit' => [
-                'add-attribute-btn'        => 'Öznitelik Düğmesi Ekle',
+                'add-attribute-btn'        => 'Öznitelik Ekle',
                 'attribute-label-color'    => 'Öznitelik Etiketi Rengi',
                 'attributes'               => 'Öznitelikler',
                 'attributes-info'          => 'Forma özel öznitelikler ekleyin.',

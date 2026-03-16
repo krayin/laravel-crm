@@ -914,7 +914,7 @@ return [
             ],
             'create' => [
                 'title'                    => 'Adicionar Webform',
-                'add-attribute-btn'        => 'Adicionar Botão de Atributo',
+                'add-attribute-btn'        => 'Adicionar Atributo',
                 'attribute-label-color'    => 'Cor do Rótulo do Atributo',
                 'attributes'               => 'Atributos',
                 'attributes-info'          => 'Adicione atributos personalizados ao formulário.',
@@ -941,7 +941,7 @@ return [
                 'enter-value'              => 'Inserir Valor',
             ],
             'edit' => [
-                'add-attribute-btn'        => 'Adicionar Botão de Atributo',
+                'add-attribute-btn'        => 'Adicionar Atributo',
                 'attribute-label-color'    => 'Cor do Rótulo do Atributo',
                 'attributes'               => 'Atributos',
                 'attributes-info'          => 'Adicione atributos personalizados ao formulário.',

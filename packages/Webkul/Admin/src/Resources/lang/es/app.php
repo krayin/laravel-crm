@@ -914,7 +914,7 @@ return [
             ],
             'create' => [
                 'title'                    => 'Crear formulario web',
-                'add-attribute-btn'        => 'Agregar Botón de Atributo',
+                'add-attribute-btn'        => 'Agregar Atributo',
                 'attribute-label-color'    => 'Color de Etiqueta del Atributo',
                 'attributes'               => 'Atributos',
                 'attributes-info'          => 'Agregue atributos personalizados al formulario.',
@@ -941,7 +941,7 @@ return [
                 'enter-value'              => 'Introducir valor',
             ],
             'edit' => [
-                'add-attribute-btn'        => 'Agregar Botón de Atributo',
+                'add-attribute-btn'        => 'Agregar Atributo',
                 'attribute-label-color'    => 'Color de Etiqueta del Atributo',
                 'attributes'               => 'Atributos',
                 'attributes-info'          => 'Agregue atributos personalizados al formulario.',

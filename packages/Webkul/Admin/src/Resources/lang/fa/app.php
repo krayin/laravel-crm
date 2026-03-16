@@ -914,7 +914,7 @@ return [
             ],
             'create' => [
                 'title'                    => 'ایجاد فرم وب',
-                'add-attribute-btn'        => 'افزودن دکمه ویژگی',
+                'add-attribute-btn'        => 'افزودن ویژگی',
                 'attribute-label-color'    => 'رنگ برچسب ویژگی',
                 'attributes'               => 'ویژگی‌ها',
                 'attributes-info'          => 'ویژگی‌های سفارشی را به فرم اضافه کنید.',
@@ -941,7 +941,7 @@ return [
                 'enter-value'              => 'مقدار را وارد کنید',
             ],
             'edit' => [
-                'add-attribute-btn'        => 'افزودن دکمه ویژگی',
+                'add-attribute-btn'        => 'افزودن ویژگی',
                 'attribute-label-color'    => 'رنگ برچسب ویژگی',
                 'attributes'               => 'ویژگی‌ها',
                 'attributes-info'          => 'ویژگی‌های سفارشی را به فرم اضافه کنید.',

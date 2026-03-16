@@ -914,7 +914,7 @@ return [
             ],
             'create' => [
                 'title'                    => 'Tạo Biểu mẫu Web',
-                'add-attribute-btn'        => 'Thêm Nút Thuộc Tính',
+                'add-attribute-btn'        => 'Thêm Thuộc Tính',
                 'attribute-label-color'    => 'Màu Nhãn Thuộc Tính',
                 'attributes'               => 'Thuộc Tính',
                 'attributes-info'          => 'Thêm các thuộc tính tùy chỉnh vào biểu mẫu.',
@@ -941,7 +941,7 @@ return [
                 'enter-value'              => 'Nhập Giá Trị',
             ],
             'edit' => [
-                'add-attribute-btn'        => 'Thêm Nút Thuộc Tính',
+                'add-attribute-btn'        => 'Thêm Thuộc Tính',
                 'attribute-label-color'    => 'Màu Nhãn Thuộc Tính',
                 'attributes'               => 'Thuộc Tính',
                 'attributes-info'          => 'Thêm các thuộc tính tùy chỉnh vào biểu mẫu.',

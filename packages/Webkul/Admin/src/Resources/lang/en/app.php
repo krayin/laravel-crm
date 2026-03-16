@@ -1011,7 +1011,7 @@ return [
 
             'create' => [
                 'title'                    => 'Create Webform',
-                'add-attribute-btn'        => 'Add Attribute Button',
+                'add-attribute-btn'        => 'Add Attribute',
                 'attribute-label-color'    => 'Attribute Label Color',
                 'attributes'               => 'Attributes',
                 'attributes-info'          => 'Add custom attributes to the form.',
@@ -1039,7 +1039,7 @@ return [
             ],
 
             'edit' => [
-                'add-attribute-btn'         => 'Add Attribute Button',
+                'add-attribute-btn'         => 'Add Attribute',
                 'attribute-label-color'     => 'Attribute Label Color',
                 'attributes'                => 'Attributes',
                 'attributes-info'           => 'Add custom attributes to the form.',

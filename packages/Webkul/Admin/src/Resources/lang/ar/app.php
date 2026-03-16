@@ -914,7 +914,7 @@ return [
             ],
             'create' => [
                 'title'                    => 'إنشاء استمارة ويب',
-                'add-attribute-btn'        => 'زر إضافة سمة',
+                'add-attribute-btn'        => 'إضافة سمة',
                 'attribute-label-color'    => 'لون تسمية السمة',
                 'attributes'               => 'السمات',
                 'attributes-info'          => 'أضف سمات مخصصة إلى النموذج.',
@@ -941,7 +941,7 @@ return [
                 'enter-value'              => 'أدخل القيمة',
             ],
             'edit' => [
-                'add-attribute-btn'        => 'زر إضافة سمة',
+                'add-attribute-btn'        => 'إضافة سمة',
                 'attribute-label-color'    => 'لون تسمية السمة',
                 'attributes'               => 'السمات',
                 'attributes-info'          => 'أضف سمات مخصصة إلى النموذج.',
