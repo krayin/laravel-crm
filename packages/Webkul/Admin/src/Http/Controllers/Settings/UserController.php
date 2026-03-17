@@ -197,18 +197,18 @@ class UserController extends Controller
 
         $users = $this->userRepository->findWhereIn('id', $massDestroyRequest->input('indices'));
 
-        foreach ($users as $users) {
-            if (auth()->guard('user')->user()->id == $users->id) {
+        foreach ($users as $user) {
+            if (auth()->guard('user')->user()->id == $user->id) {
                 continue;
             }
 
-            Event::dispatch('settings.user.update.before', $users->id);
+            Event::dispatch('settings.user.update.before', $user->id);
 
             $this->userRepository->update([
                 'status' => $massDestroyRequest->input('value'),
-            ], $users->id);
+            ], $user->id);
 
-            Event::dispatch('settings.user.update.after', $users->id);
+            Event::dispatch('settings.user.update.after', $user->id);
 
             $count++;
         }
