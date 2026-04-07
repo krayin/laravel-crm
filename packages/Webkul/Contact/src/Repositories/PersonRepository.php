@@ -176,7 +176,9 @@ class PersonRepository extends Repository
         if (isset($data['contact_numbers'])) {
             $data['contact_numbers'] = collect($data['contact_numbers'])->filter(fn ($number) => ! is_null($number['value']))->toArray();
 
-            $data['unique_id'] .= '|'.$data['contact_numbers'][0]['value'];
+            if (! empty($data['contact_numbers'])) {
+                $data['unique_id'] .= '|'.$data['contact_numbers'][0]['value'];
+            }
         }
 
         return $data;
