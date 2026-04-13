@@ -1893,6 +1893,8 @@ return [
             'select' => 'Select',
             'select-country' => 'Select Country',
             'select-state' => 'Select State',
+            'sales-owner' => 'Sales Owner',
+            'type' => 'Type',
             'state' => 'State',
             'update-contact-title' => 'Update Contact Numbers',
             'update-emails-title' => 'Update Contact Emails',

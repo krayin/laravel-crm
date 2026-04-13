@@ -9,7 +9,33 @@
     @foreach ($customAttributes as $attribute)
         @if (view()->exists($typeView = 'admin::components.attributes.view.' . $attribute->type))
             <div class="grid grid-cols-[1fr_2fr] items-center gap-1">
-                <div class="label dark:text-white">{{ $attribute->name }}</div>
+                <div class="label dark:text-white">
+                    @php
+                        $code = $attribute->code;
+                        $kebabCode = str_replace('_', '-', $code);
+                        
+                        $keyMappings = [
+                            'lead-source-id' => 'source',
+                            'lead-type-id' => 'type',
+                            'sales-owner' => 'sales-owner',
+                            'expected-close-date' => 'expected-close-date',
+                            'lead-value' => 'lead-value',
+                        ];
+                        
+                        $mappedCode = $keyMappings[$kebabCode] ?? $kebabCode;
+                        
+                        $translated = trans('admin::app.leads.index.kanban.columns.' . $mappedCode);
+                        
+                        if ($translated === 'admin::app.leads.index.kanban.columns.' . $mappedCode) {
+                            $translated = trans('admin::app.leads.index.datagrid.' . $mappedCode);
+                        }
+                        
+                        if ($translated === 'admin::app.leads.index.datagrid.' . $mappedCode) {
+                            $translated = $attribute->name;
+                        }
+                    @endphp
+                    {{ $translated }}
+                </div>
 
                 <div class="font-medium dark:text-white">
                     @include ($typeView, [
