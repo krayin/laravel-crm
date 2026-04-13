@@ -382,7 +382,8 @@ return [
                         'persons' => 'Persons',
                         'products' => 'Products',
                     ],
-
+                    'explore-all-settings' => 'Explore all Settings',
+                    'explore-all-configurations' => 'Explore all Configurations',
                     'explore-all-products' => 'Explore all Products',
                     'explore-all-leads' => 'Explore all Leads',
                     'explore-all-contacts' => 'Explore all Contacts',
