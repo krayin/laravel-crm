@@ -73,18 +73,13 @@ class MagicAIService
                 $pdfParser = (new Parser)->parseFile($tempFile);
 
                 $data['text'] = $pdfParser->getText();
-
-                $data['images'][] = '';
-
-                $images = $pdfParser->getObjectsByType('XObject', 'Image');
-
-                foreach ($images as $image) {
-                    $data['images'][] = self::handleBase64($image->getContent());
-                }
+                $data['images'] = [];
             } else {
                 $data['text'] = '';
-
-                $data['images'][] = self::handleBase64(self::handleBase64($base64File, 'decode'));
+                $data['images'][] = [
+                    'mime_type' => $mimeType,
+                    'data'      => $base64File,
+                ];
             }
 
             if (empty($data)) {
@@ -112,15 +107,45 @@ class MagicAIService
             return ['error' => trans('admin::app.leads.file.missing-api-key')];
         }
 
+        $content = [];
+
         $promptText = self::truncatePrompt($prompt['text'] ?? '');
 
-        $promptImages = $prompt['images'] ?? [];
+        if (! empty($promptText)) {
+            $content[] = [
+                'type' => 'text',
+                'text' => "Extract the lead details from this file content:\n\n".$promptText,
+            ];
+        }
 
-        $prompt = array_filter(array_merge([$promptText], $promptImages), function ($value) {
-            return ! empty($value);
-        });
+        foreach ($prompt['images'] ?? [] as $image) {
+            if (
+                empty($image['mime_type'])
+                || empty($image['data'])
+            ) {
+                continue;
+            }
 
-        return self::ask(array_values($prompt), $model, $apiKey);
+            $content[] = [
+                'type'      => 'image_url',
+                'image_url' => [
+                    'url' => 'data:'.$image['mime_type'].';base64,'.$image['data'],
+                ],
+            ];
+        }
+
+        if (empty($content)) {
+            return ['error' => trans('admin::app.leads.file.failed-extract')];
+        }
+
+        if (! empty($prompt['images']) && empty($promptText)) {
+            array_unshift($content, [
+                'type' => 'text',
+                'text' => 'Extract all visible lead details from this image, including title, person name, email, contact number, and lead value. Return only the requested JSON.',
+            ]);
+        }
+
+        return self::ask($content, $model, $apiKey);
     }
 
     /**
@@ -146,22 +171,17 @@ class MagicAIService
     {
         try {
             $response = \Http::withHeaders([
-                'Content-Type' => 'application/json',
+                'Content-Type'  => 'application/json',
                 'Authorization' => 'Bearer '.$apiKey,
             ])->post(self::OPEN_ROUTER_URL, [
-                'model' => $model,
+                'model'    => $model,
                 'messages' => [
                     [
-                        'role' => 'system',
+                        'role'    => 'system',
                         'content' => self::getSystemPrompt(),
                     ], [
-                        'role' => 'user',
-                        'content' => [
-                            [
-                                'type' => 'text',
-                                'text' => $prompt[0],
-                            ],
-                        ],
+                        'role'    => 'user',
+                        'content' => $prompt,
                     ],
                 ],
             ]);
@@ -190,8 +210,8 @@ class MagicAIService
     private static function getSystemPrompt()
     {
         return <<<'PROMPT'
-            You are an AI assistant specialized in extracting structured data from text.  
-            The user will provide text extracted from a file (in Base64 or plain text).  
+            You are an AI assistant specialized in extracting structured data from text and images.
+            The user will provide text extracted from a file, an image, or both.
             Your task is to accurately extract the following fields. If the value is not available, use the default values provided:  
 
             ### **Output Format:** 
@@ -221,6 +241,7 @@ class MagicAIService
             - **Person Email Label:** Label for the email. Default: null
             - **Person Contact Number:** Contact number of the person. Default: null
             - **Person Contact Number Label:** Label for the contact number. Default: null
+            Return only valid JSON with no explanation or markdown.
         PROMPT;
     }
 
