@@ -1798,6 +1798,8 @@ return [
                     'source' => 'منبع',
                     'title' => 'عنوان',
                     'tags' => 'برچسب‌ها',
+                    'sales-owner' => 'مسئول فروش',
+                    'type' => 'نوع',
                     'expected-close-date' => 'تاریخ بسته شدن مورد انتظار',
                     'created-at' => 'تاریخ ایجاد',
                 ],

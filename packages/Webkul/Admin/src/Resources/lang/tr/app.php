@@ -1800,6 +1800,9 @@ return [
                     'sales-person' => 'Satış Temsilcisi',
                     'source' => 'Kaynak',
                     'title' => 'Başlık',
+                    'sales-owner' => 'Satış sorumlusu',
+                    'type' => 'Tür',
+
                     'tags' => 'Etiketler',
                     'expected-close-date' => 'Beklenen Kapanış Tarihi',
                     'created-at' => 'Oluşturulma Tarihi',

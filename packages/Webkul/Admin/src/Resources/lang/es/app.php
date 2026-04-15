@@ -1799,6 +1799,8 @@ return [
                     'sales-person' => 'Persona de Ventas',
                     'source' => 'Fuente',
                     'title' => 'Título',
+                    'sales-owner' => 'Responsable de ventas',
+                    'type' => 'Tipo',
                     'tags' => 'Etiquetas',
                     'expected-close-date' => 'Fecha de Cierre Esperada',
                     'created-at' => 'Creado En',

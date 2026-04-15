@@ -1800,6 +1800,8 @@ return [
                     'source' => 'Nguồn',
                     'title' => 'Tiêu Đề',
                     'tags' => 'Thẻ',
+                    'sales-owner' => 'Người phụ trách bán hàng',
+                    'type' => 'Loại',
                     'expected-close-date' => 'Ngày Dự Kiến Đóng',
                     'created-at' => 'Tạo Vào Lúc',
                 ],
