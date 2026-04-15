@@ -25,7 +25,7 @@
                     <!-- Logo -->
                     <img
                         class="w-max"
-                        src="{{ vite()->asset('images/logo.svg') }}"
+                        src="{{ core()->getConfigData('general.general.admin_logo.logo_image') ? Storage::url(core()->getConfigData('general.general.admin_logo.logo_image')) : vite()->asset('images/logo.svg') }}"
                         alt="{{ config('app.name') }}"
                     />
 
