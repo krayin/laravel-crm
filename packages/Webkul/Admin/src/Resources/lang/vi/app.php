@@ -343,6 +343,8 @@ return [
                         'persons' => 'Người',
                         'products' => 'Sản phẩm',
                     ],
+                    'explore-all-settings' => 'Khám phá tất cả cài đặt', 
+                    'explore-all-configurations' => 'Khám phá tất cả cấu hình',
                     'explore-all-products' => 'Khám phá tất cả Sản phẩm',
                     'explore-all-leads' => 'Khám phá tất cả Khách hàng tiềm năng',
                     'explore-all-contacts' => 'Khám phá tất cả Liên hệ',

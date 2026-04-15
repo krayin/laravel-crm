@@ -343,6 +343,8 @@ return [
                         'persons' => 'Personas',
                         'products' => 'Productos',
                     ],
+                    'explore-all-settings' => 'Explorar todas las configuraciones',  
+                    'explore-all-configurations' => 'Explorar todas las configuraciones',
                     'explore-all-products' => 'Explorar todos los Productos',
                     'explore-all-leads' => 'Explorar todas las Oportunidades',
                     'explore-all-contacts' => 'Explorar todos los Contactos',

@@ -343,6 +343,8 @@ return [
                         'persons' => 'Kişiler',
                         'products' => 'Ürünler',
                     ],
+                    'explore-all-settings' => 'Tüm Ayarları Keşfet',  
+                    'explore-all-configurations' => 'Tüm Yapılandırmaları Keşfet',
                     'explore-all-products' => 'Tüm Ürünleri Keşfet',
                     'explore-all-leads' => 'Tüm Müşterileri Keşfet',
                     'explore-all-contacts' => 'Tüm İletişimleri Keşfet',

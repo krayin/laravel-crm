@@ -343,6 +343,8 @@ return [
                         'persons' => 'افراد',
                         'products' => 'محصولات',
                     ],
+                    'explore-all-settings' => 'کاوش همه تنظیمات', 
+                    'explore-all-configurations' => 'کاوش همه پیکربندی‌ها',
                     'explore-all-products' => 'کاوش در تمامی محصولات',
                     'explore-all-leads' => 'کاوش در تمامی سرنخ‌ها',
                     'explore-all-contacts' => 'کاوش در تمامی مخاطبین',
