@@ -1798,9 +1798,6 @@ return [
                     'sales-person' => 'Satış Temsilcisi',
                     'source' => 'Kaynak',
                     'title' => 'Başlık',
-                    'sales-owner' => 'Satış sorumlusu',
-                    'type' => 'Tür',
-
                     'tags' => 'Etiketler',
                     'sales-owner' => 'Satış sorumlusu',
                     'type' => 'Tür',
