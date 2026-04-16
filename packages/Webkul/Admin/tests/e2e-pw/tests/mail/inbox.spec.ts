@@ -13,6 +13,7 @@ async function composeMail(adminPage, ccMail = false, bccMail = false) {
     await adminPage.getByRole('button', { name: 'Compose Mail' }).click();
     await adminPage.fill('input[name="temp-reply_to"]', generateEmail());
     await adminPage.fill('input[name="subject"]', generateEmailSubject());
+
     const frameElementHandle = await adminPage.waitForSelector(
         "iframe.tox-edit-area__iframe"
     );

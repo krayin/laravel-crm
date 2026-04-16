@@ -1,15 +1,3 @@
-@php
-    $quote = app('\Webkul\Quote\Repositories\QuoteRepository')->getModel();
-
-    if (isset($lead)) {
-        $quote->fill([
-            'person_id' => $lead->person_id,
-            'user_id' => $lead->user_id,
-            'billing_address' => $lead->person->organization ? $lead->person->organization->address : null
-        ]);
-    }
-@endphp
-
 <x-admin::layouts>
     <x-slot:title>
         @lang('admin::app.quotes.create.title')
@@ -24,7 +12,7 @@
         ))"
     >
         <div class="flex flex-col gap-4">
-            <div class="flex items-center justify-between rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
+            <div class="scroll-reactive-sticky scroll-reactive-sticky sticky top-[60px] z-[1000] flex items-center justify-between rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm shadow-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
                 <div class="flex flex-col gap-2">
                     <x-admin::breadcrumbs
                         name="quotes.create"
@@ -65,8 +53,8 @@
             type="text/x-template"
             id="v-quote-template"
         >
-            <div class="box-shadow flex flex-col gap-4 rounded-lg border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900">
-                <div class="flex w-full gap-2 border-b border-gray-200 dark:border-gray-800">
+            <div class="box-shadow flex flex-col gap-4 rounded-lg border border-gray-300 bg-white dark:border-gray-800 dark:bg-gray-900">
+                <div class="flex w-full gap-2 border-b border-gray-300 dark:border-gray-800">
                     {!! view_render_event('admin.contacts.quotes.create.tabs.before') !!}
 
                     <template
@@ -174,19 +162,18 @@
 
                                 <x-admin::attributes.edit.lookup />
 
-                                @php
-                                    $lookUpEntityData = app('Webkul\Attribute\Repositories\AttributeRepository')->getLookUpEntity('leads', request('lead_id'));
-                                @endphp
-
                                 <x-admin::form.control-group class="w-full">
                                     <x-admin::form.control-group.label>
                                         @lang('admin::app.quotes.create.link-to-lead')
                                     </x-admin::form.control-group.label>
 
                                     <v-lookup-component
+                                        :key="leadEntity.id"
                                         :attribute="{'code': 'lead_id', 'name': 'Lead', 'lookup_type': 'leads'}"
-                                        :value='@json($lookUpEntityData)'
+                                        :value="leadEntity"
                                         can-add-new="true"
+                                        @lookup-added="setLeadEntity"
+                                        @lookup-removed="setLeadEntity"
                                     ></v-lookup-component>
                                 </x-admin::form.control-group>
                             </div>
@@ -219,7 +206,7 @@
                     <div
                         id="address-info"
                         class="flex flex-col gap-4"
-                    >
+                        >
                         <div class="flex flex-col gap-1">
                             <p class="text-base font-semibold text-gray-800 dark:text-white">
                                 @lang('admin::app.quotes.create.address-info')
@@ -259,7 +246,7 @@
                     <div
                         id="quote-items"
                         class="flex flex-col gap-4"
-                    >
+                        >
                         <div class="flex flex-col gap-1">
                             <p class="text-base font-semibold text-gray-800 dark:text-white">
                                 @lang('admin::app.quotes.create.quote-items')
@@ -271,7 +258,10 @@
                         </div>
 
                         <!-- Quote Item List Vue Component -->
-                        <v-quote-item-list :errors="errors"></v-quote-item-list>
+                        <v-quote-item-list
+                            :errors="errors"
+                            :lead-entity="leadEntity"
+                        ></v-quote-item-list>
                     </div>
 
                     {!! view_render_event('admin.contacts.quotes.create.quote_items.after') !!}
@@ -408,7 +398,7 @@
                                 ::errors="errors"
                                 :label="trans('admin::app.quotes.create.adjustment-amount')"
                                 :placeholder="trans('admin::app.quotes.create.adjustment-amount')"
-                                @on-change="(event) => adjustmentAmount = event.value"
+                                @on-change="handleAdjustmentAmountChange"
                             />
                         </div>
 
@@ -431,7 +421,7 @@
         <script
             type="text/x-template"
             id="v-quote-item-template"
-        >
+            >
             <x-admin::table.thead.tr>
                 <!-- Quote Product Name -->
                 <x-admin::table.td>
@@ -440,6 +430,7 @@
                             ::src="src"
                             ::name="`${inputName}[product_id]`"
                             :preload="true"
+                            ::value="{ id: product.product_id, name: product.name }"
                             :placeholder="trans('admin::app.quotes.create.search-products')"
                             @on-selected="(product) => addProduct(product)"
                             rules="required"
@@ -567,7 +558,7 @@
                 <x-admin::table.td
                     v-if="$parent.products.length > 1"
                     class="!px-2 ltr:text-right rtl:text-left"
-                >
+                    >
                     <x-admin::form.control-group class="!mb-0">
                         <i
                             @click="removeProduct"
@@ -589,10 +580,12 @@
                         activeTab: 'quote-info',
 
                         tabs: [
-                            { id: 'quote-info', label: '@lang('admin::app.quotes.create.quote-info')' },
-                            { id: 'address-info', label: '@lang('admin::app.quotes.create.address-info')' },
-                            { id: 'quote-items', label: '@lang('admin::app.quotes.create.quote-items')' }
+                            { id: 'quote-info', label: "@lang('admin::app.quotes.create.quote-info')" },
+                            { id: 'address-info', label: "@lang('admin::app.quotes.create.address-info')" },
+                            { id: 'quote-items', label: "@lang('admin::app.quotes.create.quote-items')" }
                         ],
+
+                        leadEntity: @json($lookUpEntityData ?? []),
                     };
                 },
 
@@ -611,28 +604,46 @@
                             section.scrollIntoView({ behavior: 'smooth' });
                         }
                     },
+
+                    setLeadEntity($event) {
+                        this.leadEntity = $event ?? { id: '', name: '' };
+                    },
                 },
             });
 
             app.component('v-quote-item-list', {
                 template: '#v-quote-item-list-template',
 
-                props: ['data', 'errors'],
+                props: ['data', 'errors', 'leadEntity'],
 
                 data() {
                     return {
-                        adjustmentAmount: 0,
+                        adjustmentAmount: '0.0000',
 
-                        products: [{
-                            'id': null,
-                            'product_id': null,
-                            'name': '',
-                            'quantity': 0,
-                            'price': 0,
-                            'discount_amount': 0,
-                            'tax_amount': 0,
-                        }],
+                        products: @json($leadProducts ?? []),
                     }
+                },
+
+                created() {
+                    if(this.products.length <= 0) {
+                        this.addProduct();
+                    }
+                },
+
+                watch: {
+                    'leadEntity.id': function(newLeadId, oldLeadId) {
+                        if (newLeadId === oldLeadId) {
+                            return;
+                        }
+
+                        if (! newLeadId) {
+                            this.products = [];
+
+                            return;
+                        }
+
+                        this.fetchLeadProducts(newLeadId);
+                    },
                 },
 
                 computed: {
@@ -642,13 +653,11 @@
                      * @returns {Number}
                      */
                     subTotal() {
-                        let total = 0;
+                        const total = this.products.reduce((carry, product) => {
+                            return carry + this.getProductBaseTotal(product);
+                        }, 0);
 
-                        this.products.forEach(product => {
-                            total += parseFloat(product.price * product.quantity);
-                        });
-
-                        return total;
+                        return this.formatDecimal(total);
                     },
 
                     /**
@@ -657,11 +666,11 @@
                      * @returns {Number}
                      */
                     discountAmount() {
-                        let total = 0;
+                        const total = this.products.reduce((carry, product) => {
+                            return carry + this.parseDecimal(product.discount_amount);
+                        }, 0);
 
-                        this.products.forEach(product => total += parseFloat(product.discount_amount));
-
-                        return total;
+                        return this.formatDecimal(total);
                     },
 
                     /**
@@ -670,11 +679,11 @@
                      * @returns {Number}
                      */
                     taxAmount() {
-                        let total = 0;
+                        const total = this.products.reduce((carry, product) => {
+                            return carry + this.parseDecimal(product.tax_amount);
+                        }, 0);
 
-                        this.products.forEach(product => total += parseFloat(product.tax_amount));
-
-                        return total;
+                        return this.formatDecimal(total);
                     },
 
                     /**
@@ -683,17 +692,94 @@
                      * @returns {Number}
                      */
                     grandTotal() {
-                        let total = 0;
+                        const itemsTotal = this.products.reduce((carry, product) => {
+                            return carry
+                                + this.getProductBaseTotal(product)
+                                + this.parseDecimal(product.tax_amount)
+                                - this.parseDecimal(product.discount_amount);
+                        }, 0);
 
-                        this.products.forEach(product => {
-                            total += parseFloat(product.price * product.quantity) + parseFloat(product.tax_amount) - parseFloat(product.discount_amount) + parseFloat(this.adjustmentAmount);
-                        });
-
-                        return total;
+                        return this.formatDecimal(itemsTotal + this.parseDecimal(this.adjustmentAmount));
                     },
                 },
 
                 methods: {
+                    /**
+                     * Parse decimal-like values safely.
+                     *
+                     * @param {Number|String|null} value
+                     *
+                     * @returns {Number}
+                     */
+                    parseDecimal(value) {
+                        const parsedValue = Number.parseFloat(value);
+
+                        return Number.isFinite(parsedValue) ? parsedValue : 0;
+                    },
+
+                    /**
+                     * Format numeric values as fixed decimals.
+                     *
+                     * @param {Number|String|null} value
+                     *
+                     * @returns {String}
+                     */
+                    formatDecimal(value) {
+                        return this.parseDecimal(value).toFixed(4);
+                    },
+
+                    /**
+                     * Calculate product line subtotal.
+                     *
+                     * @param {Object} product
+                     *
+                     * @returns {Number}
+                     */
+                    getProductBaseTotal(product) {
+                        return this.parseDecimal(product.price) * this.parseDecimal(product.quantity);
+                    },
+
+                    /**
+                     * Keep adjustment amount stored as a fixed decimal string.
+                     *
+                     * @param {Object} event
+                     *
+                     * @returns {void}
+                     */
+                    handleAdjustmentAmountChange(event) {
+                        this.adjustmentAmount = this.formatDecimal(event.value);
+                    },
+
+                    /**
+                     * Fetch and replace items with selected lead products.
+                     *
+                     * @param {Number|String} leadId
+                     *
+                     * @returns {void}
+                     */
+                    fetchLeadProducts(leadId) {
+                        this.$axios
+                            .get("{{ route('admin.quotes.lead_products', '__LEAD_ID__') }}".replace('__LEAD_ID__', leadId))
+                            .then((response) => {
+                                const leadProducts = response.data?.data ?? [];
+
+                                this.products = leadProducts;
+
+                                this.$emitter.emit('add-flash', {
+                                    type: leadProducts.length ? 'success' : 'info',
+                                    message: leadProducts.length
+                                        ? 'Lead products assigned to quote. See items section.'
+                                        : 'No products found for selected lead.',
+                                });
+                            })
+                            .catch((error) => {
+                                this.$emitter.emit('add-flash', {
+                                    type: 'error',
+                                    message: error?.response?.data?.message || 'Unable to fetch lead products.',
+                                });
+                            });
+                    },
+
                     /**
                      * Add a new product.
                      *
@@ -704,11 +790,11 @@
                             id: null,
                             product_id: null,
                             name: '',
-                            quantity: 1,
-                            total: 0,
-                            price: 0,
-                            discount_amount: 0,
-                            tax_amount: 0,
+                            quantity: 0,
+                            total: '0.0000',
+                            price: '0.0000',
+                            discount_amount: '0.0000',
+                            tax_amount: '0.0000',
                         });
                     },
 
@@ -805,7 +891,7 @@
                         this.$emit('onRemoveProduct', this.product);
                     },
                 },
-            });
+            });        
         </script>
     @endPushOnce
 

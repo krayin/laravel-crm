@@ -367,7 +367,8 @@ function generateProductName() {
     return (
         adjectives[Math.floor(Math.random() * adjectives.length)] +
         ' ' +
-        items[Math.floor(Math.random() * items.length)]
+        items[Math.floor(Math.random() * items.length)] +
+        '-' + Date.now()
     );
 }
 
@@ -393,7 +394,7 @@ async function createOrganization(page) {
     /**
      * Fill in organization details
      */
-    await page.getByRole('textbox', { name: 'Name *' }).fill(companyName);
+    await page.locator('input[name="name"]').fill(companyName);
     await page.locator('textarea[name="address\\[address\\]"]').fill('ARV Park');
     await page.getByRole('combobox').selectOption('IN');
     await page.locator('select[name="address\\[state\\]"]').selectOption('DL');
@@ -404,14 +405,14 @@ async function createOrganization(page) {
      * Click to add extra details
      */
     await page.locator('div').filter({ hasText: /^Click to add$/ }).nth(2).click();
-    await page.getByRole('textbox', { name: 'Search...' }).fill('exampl');
-    await page.getByRole('listitem').filter({ hasText: 'Example' }).click();
+    await page.getByRole('textbox', { name: 'Search...' }).fill('admin');
+    await page.getByRole('listitem').filter({ hasText: /admin/i }).first().click();
 
     /**
      * Click on "Save Organization"
      */
     await page.getByRole('button', { name: 'Save Organization' }).click();
-    // await expect(page.getByText(companyName)).toBeVisible();
+    await page.waitForURL(/\/admin\/contacts\/organizations(?:\?.*)?$/);
     return companyName;
 }
 
@@ -440,18 +441,14 @@ async function createPerson(page) {
 
     await page.getByRole('link', { name: 'Create Person' }).click();
 
-    await page.getByRole('textbox', { name: 'Name *' }).fill(Name);
-    await page.getByRole('textbox', { name: 'Emails *' }).fill(email);
-    await page.getByRole('textbox', { name: 'Contact Numbers' }).fill(phone);
-    await page.getByRole('textbox', { name: 'Job Title' }).fill(Job);
-
-    // Select an organization
-    await page.locator('.relative > div > .relative').first().click();
-    await page.getByRole('textbox', { name: 'Search...' }).fill('examp');
-    await page.getByRole('listitem').filter({ hasText: 'Example' }).click();
+    await page.locator('input[name="name"]').fill(Name);
+    await page.locator('input[name="emails[0][value]"]').fill(email);
+    await page.locator('input[name="contact_numbers[0][value]"]').fill(phone);
+    await page.locator('input[name="job_title"]').fill(Job);
 
     // Save person
     await page.getByRole('button', { name: 'Save Person' }).click();
+    await page.waitForURL(/\/admin\/contacts\/persons(?:\?.*)?$/);
 
     return { Name, email, phone };
 }
@@ -463,14 +460,16 @@ async function createProduct(page) {
     const price = generatePrice();
     const quantity = generateQuantity();
 
+    await page.goto('admin/products');
     await page.getByRole('link', { name: 'Create Product' }).click();
 
-    await page.getByRole('textbox', { name: 'Name *' }).fill(name);
-    await page.getByRole('textbox', { name: 'Description' }).fill(description);
-    await page.getByRole('textbox', { name: 'SKU *' }).fill(sku);
-    await page.getByRole('textbox', { name: /price/i }).fill(price);
-    await page.getByRole('textbox', { name: 'Quantity *' }).fill(quantity);
+    await page.locator('input[name="name"]').fill(name);
+    await page.locator('textarea[name="description"]').fill(description);
+    await page.locator('input[name="sku"]').fill(sku);
+    await page.locator('input[name="price"]').fill(price);
+    await page.locator('input[name="quantity"]').fill(quantity);
     await page.getByRole('button', { name: 'Save Products' }).click();
+    await page.waitForURL(/\/admin\/products(?:\?.*)?$/);
 
     return { name };
 }

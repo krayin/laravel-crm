@@ -9,7 +9,7 @@
         method="PUT"
     >
         <div class="flex flex-col gap-4">
-            <div class="flex items-center justify-between rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
+            <div class="scroll-reactive-sticky sticky top-[60px] z-[1000] flex items-center justify-between rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm shadow-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
                 <div class="flex flex-col gap-2">
                     {!! view_render_event('admin.settings.webform.edit.breadcrumbs.before', ['webform' => $webForm]) !!}
 
@@ -82,7 +82,7 @@
 
                 <!-- Left sub-component -->
                 <div class="flex flex-1 flex-col gap-2 max-xl:flex-auto">
-                    <div class="box-shadow rounded-lg border border-gray-200 bg-white p-4 dark:border-gray-800 dark:bg-gray-900">
+                    <div class="box-shadow rounded-lg border border-gray-300 bg-white p-4 dark:border-gray-800 dark:bg-gray-900">
                         <div class="mb-4 flex items-center justify-between gap-4">
                             <div class="flex flex-col gap-1">
                                 <p class="text-base font-semibold text-gray-800 dark:text-white">
@@ -156,6 +156,7 @@
                                 value="1"
                                 :label="trans('admin::app.settings.webforms.edit.create-lead')"
                                 :checked="(bool) $webForm->create_lead"
+                                @change="onCreateLeadChange"
                             />
 
                         </x-admin::form.control-group>
@@ -578,7 +579,7 @@
                                 type="text"
                                 id="codeSnippet"
                                 name="codeSnippet"
-                                class="w-full rounded border border-gray-200 px-2.5 py-2 text-sm font-normal text-gray-800 transition-all hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 dark:focus:border-gray-400"
+                                class="w-full rounded border border-gray-300 px-2.5 py-2 text-sm font-normal text-gray-800 transition-all hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 dark:focus:border-gray-400"
                                 value="{{ '<script src="'.route('admin.settings.web_forms.form_js', $webForm->form_id).'"></script>' }}"
                             />
 
@@ -698,6 +699,16 @@
                 },
 
                 methods: {
+                    /**
+                     * Update createLead value from create_lead switch.
+                     *
+                     * @param {Event} event
+                     * @return {void}
+                     */
+                    onCreateLeadChange(event) {
+                        this.createLead = event.target.checked;
+                    },
+
                     /**
                      * Copy the value to the clipboard.
                      *

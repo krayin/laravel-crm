@@ -75,7 +75,7 @@
                                 </x-admin::table.tbody.tr>
 
                                 <template v-for="location in warehouse.locations">
-                                    <x-admin::table.tbody.tr class="border-b border-gray-200 hover:bg-gray-50 dark:border-gray-800 dark:hover:bg-gray-950">
+                                    <x-admin::table.tbody.tr class="border-b border-gray-300 hover:bg-gray-50 dark:border-gray-800 dark:hover:bg-gray-950">
                                         <x-admin::table.td class="dark:text-white">
                                             @{{ location.name }}
                                         </x-admin::table.td>

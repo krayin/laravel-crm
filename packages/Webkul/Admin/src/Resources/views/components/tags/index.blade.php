@@ -47,7 +47,7 @@
 
                             <!-- Search Button -->
                             <div class="relative">
-                                <div class="relative rounded border border-gray-200 p-2 hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:hover:border-gray-400 dark:focus:border-gray-400" role="button">
+                                <div class="relative rounded border border-gray-300 p-2 hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:hover:border-gray-400 dark:focus:border-gray-400" role="button">
                                     <input
                                         type="text"
                                         class="w-full cursor-pointer pr-6 dark:bg-gray-900 dark:text-gray-300"
@@ -129,7 +129,7 @@
                                             @if (bouncer()->hasPermission('settings.other_settings.tags.edit'))
                                                 <x-admin::dropdown position="bottom-right">
                                                     <x-slot:toggle>
-                                                        <button class="flex cursor-pointer items-center gap-1 rounded border border-gray-200 px-2 py-0.5 transition-all hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:hover:border-gray-400 dark:focus:border-gray-400">
+                                                        <button class="flex cursor-pointer items-center gap-1 rounded border border-gray-300 px-2 py-0.5 transition-all hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:hover:border-gray-400 dark:focus:border-gray-400">
                                                             <span
                                                                 class="h-4 w-4 break-all rounded-full"
                                                                 :style="'background-color: ' + (tag.color ? tag.color : '#546E7A')"

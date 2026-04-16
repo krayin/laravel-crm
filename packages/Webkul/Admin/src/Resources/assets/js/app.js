@@ -17,15 +17,31 @@ window.app = createApp({
             isMenuActive: false,
 
             hoveringMenu: '',
+
+            lastScrollY: 0,
         };
     },
 
     created() {
         window.addEventListener('click', this.handleFocusOut);
+        this.lastScrollY = Math.max((window.scrollY ?? window.pageYOffset ?? 0), 0);
+        document.body.classList.remove('is-scrolling-down');
+        window.addEventListener('scroll', this.handleScrollDirection, { passive: true });
+
+        // Keep initial load in normal state when page is at/near top.
+        this.handleScrollDirection();
     },
 
     beforeDestroy() {
         window.removeEventListener('click', this.handleFocusOut);
+        window.removeEventListener('scroll', this.handleScrollDirection);
+        document.body.classList.remove('is-scrolling-down');
+    },
+
+    beforeUnmount() {
+        window.removeEventListener('click', this.handleFocusOut);
+        window.removeEventListener('scroll', this.handleScrollDirection);
+        document.body.classList.remove('is-scrolling-down');
     },
 
     methods: {
@@ -92,6 +108,29 @@ window.app = createApp({
                     parentElement.classList.add('sidebar-collapsed');
                 }
             }
+        },
+
+        handleScrollDirection() {
+            const topThreshold = 0;
+            const currentScrollY = Math.max((window.scrollY ?? window.pageYOffset ?? 0), 0);
+            const scrollDelta = currentScrollY - this.lastScrollY;
+
+            if (currentScrollY == topThreshold) {
+                document.body.classList.remove('is-scrolling-down');
+                this.lastScrollY = currentScrollY;
+
+                return;
+            }
+
+            if (Math.abs(scrollDelta) < 2) {
+                return;
+            }
+
+            if (scrollDelta > 0) {
+                document.body.classList.add('is-scrolling-down');
+            }
+
+            this.lastScrollY = currentScrollY;
         },
     },
 });

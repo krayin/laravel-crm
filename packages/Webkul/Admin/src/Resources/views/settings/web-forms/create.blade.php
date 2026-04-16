@@ -6,7 +6,7 @@
 
     <x-admin::form :action="route('admin.settings.web_forms.store')">
         <div class="flex flex-col gap-4">
-            <div class="flex items-center justify-between rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
+            <div class="scroll-reactive-sticky sticky top-[60px] z-[1000] flex items-center justify-between rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm shadow-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
                 <div class="flex flex-col gap-2">
                     {!! view_render_event('admin.settings.webform.create.breadcrumbs.before') !!}
 
@@ -51,7 +51,7 @@
 
                 <!-- Left Sub Component -->
                 <div class="flex flex-1 flex-col gap-2 max-xl:flex-auto">
-                    <div class="box-shadow rounded-lg border border-gray-200 bg-white p-4 dark:border-gray-800 dark:bg-gray-900">
+                    <div class="box-shadow rounded-lg border border-gray-300 bg-white p-4 dark:border-gray-800 dark:bg-gray-900">
                         <div class="mb-4 flex items-center justify-between gap-4">
                             <div class="flex flex-col gap-1">
                                 <p class="text-base font-semibold text-gray-800 dark:text-white">
@@ -122,6 +122,7 @@
                                 value="1"
                                 :label="trans('admin::app.settings.webforms.create.create-lead')"
                                 :checked="false"
+                                @change="onCreateLeadChange"
                             />
 
                         </x-admin::form.control-group>
@@ -257,7 +258,6 @@
                             </x-admin::form.control-group>
                         </v-color-picker>
 
-
                          <!-- Attributes -->
                         <div class="mb-4 flex items-center justify-between gap-4">
                             <div class="flex flex-col gap-1">
@@ -297,19 +297,17 @@
                                         </span>
                                     </template>
 
-                                    <template v-else>
-                                        <div class="m-2 text-lg font-bold">@lang('admin::app.settings.webforms.create.person')</div>
+                                    <div class="m-2 text-lg font-bold">@lang('admin::app.settings.webforms.create.person')</div>
 
-                                        <span
-                                            v-for="attribute in groupedAttributes.persons"
-                                            class="whitespace-no-wrap flex cursor-pointer items-center justify-between gap-1.5 rounded-t px-2 py-2 text-sm text-gray-600 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-950"
-                                            @click="addAttribute(attribute)"
-                                        >
-                                            <div class="items flex items-center gap-1.5">
-                                                @{{ attribute.name }}
-                                            </div>
-                                        </span>
-                                    </template>
+                                    <span
+                                        v-for="attribute in groupedAttributes.persons"
+                                        class="whitespace-no-wrap flex cursor-pointer items-center justify-between gap-1.5 rounded-t px-2 py-2 text-sm text-gray-600 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-950"
+                                        @click="addAttribute(attribute)"
+                                    >
+                                        <div class="items flex items-center gap-1.5">
+                                            @{{ attribute.name }}
+                                        </div>
+                                    </span>
                                 </x-slot>
                             </x-admin::dropdown>
 
@@ -320,7 +318,7 @@
                                 handle=".icon-move"
                                 v-bind="{animation: 200}"
                                 item-key="id"
-                                :list="addedAttributes"z
+                                :list="addedAttributes"
                             >
                                 <template #item="{ element, index }">
                                     <x-admin::table.thead.tr class="hover:bg-gray-50 dark:hover:bg-gray-950">
@@ -565,24 +563,6 @@
                     }
                 },
 
-                watch: {
-                    /**
-                     * Watch for the createLead value and remove the added attributes if the value is true.
-                     *
-                     * @param {Boolean} newValue
-                     * @param {Boolean} oldValue
-                     *
-                     * @return {void}
-                     */
-                    createLead(newValue, oldValue) {
-                        if (newValue) {
-                            return;
-                        }
-
-                        this.addedAttributes = this.addedAttributes.filter(attribute => attribute.attribute.entity_type != 'leads');
-                    },
-                },
-
                 computed:{
                     /**
                      * Get the placeholder value based on the submit success action value.
@@ -619,6 +599,16 @@
 
                 methods: {
                     /**
+                     * Update createLead value from create_lead switch.
+                     *
+                     * @param {Event} event
+                     * @return {void}
+                     */
+                    onCreateLeadChange(event) {
+                        this.createLead = event.target.checked;
+                    },
+
+                    /**
                      * Add the attribute to the added attributes list.
                      *
                      * @param {Object} attribute
@@ -650,6 +640,7 @@
                         this.attributes.push(attribute.attribute);
 
                         const index = this.addedAttributes.indexOf(attribute);
+
                         if (index > -1) {
                             this.addedAttributes.splice(index, 1);
                         }

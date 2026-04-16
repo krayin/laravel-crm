@@ -201,6 +201,16 @@ class QuoteDataGrid extends DataGrid
             ]);
         }
 
+        if (bouncer()->hasPermission('quotes.mail')) {
+            $this->addAction([
+                'index' => 'mail',
+                'icon' => 'icon-mail',
+                'title' => trans('admin::app.quotes.index.datagrid.mail'),
+                'method' => 'POST',
+                'url' => fn ($row) => route('admin.leads.quotes.mail', ['quote_id' => $row->id]),
+            ]);
+        }
+
         if (bouncer()->hasPermission('quotes.delete')) {
             $this->addAction([
                 'index' => 'delete',

@@ -152,10 +152,21 @@ class ProductController extends Controller
      */
     public function search(): JsonResource
     {
-        $products = $this->productRepository
+        $query = $this->productRepository
             ->pushCriteria(app(RequestCriteria::class))
-            ->orderBy('created_at', 'desc')
-            ->get();
+            ->orderBy('created_at', 'desc');
+
+        $excludedIds = request()->input('exclude_ids', []);
+
+        if (is_string($excludedIds)) {
+            $excludedIds = array_filter(array_map('trim', explode(',', $excludedIds)));
+        }
+
+        if (! empty($excludedIds)) {
+            $query->whereNotIn('products.id', $excludedIds);
+        }
+
+        $products = $query->get();
 
         return ProductResource::collection($products);
     }

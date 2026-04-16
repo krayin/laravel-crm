@@ -37,10 +37,15 @@ test("should be able to assign a company to person", async ({ adminPage }) => {
 
 test("should be able to delete person", async ({ adminPage }) => {
     /**
-     * Delete person.
+     * Create a person first so there is one to delete.
      */
     await adminPage.goto("admin/contacts/persons");
-    await adminPage.locator("span.icon-delete").nth(1).click();
+    await createPerson(adminPage);
+
+    /**
+     * Delete person.
+     */
+    await adminPage.locator("span.icon-delete").first().click();
     await adminPage.getByRole("button", { name: "Agree", exact: true }).click();
     await expect(adminPage.locator("#app")).toContainText("Success", { timeout: 10000 });
 });

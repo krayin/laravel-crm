@@ -42,6 +42,11 @@ return [
         'route' => ['admin.quotes.create', 'admin.quotes.store'],
         'sort' => 1,
     ], [
+        'key' => 'quotes.mail',
+        'name' => 'admin::app.acl.mail',
+        'route' => ['admin.quotes.mail', 'admin.leads.quotes.mail'],
+        'sort' => 2,
+    ], [
         'key' => 'quotes.edit',
         'name' => 'admin::app.acl.edit',
         'route' => ['admin.quotes.edit', 'admin.quotes.update'],
