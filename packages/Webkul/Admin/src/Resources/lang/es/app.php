@@ -1676,7 +1676,6 @@ return [
                 'delete' => 'Eliminar',
             ],
         ],
-
         'create-success' => 'Correo enviado con éxito.',
         'update-success' => 'Correo actualizado con éxito.',
         'mass-update-success' => 'Correos actualizados con éxito.',
@@ -1802,6 +1801,8 @@ return [
                     'sales-owner' => 'Responsable de ventas',
                     'type' => 'Tipo',
                     'tags' => 'Etiquetas',
+                    'sales-owner' => 'Responsable de ventas',
+                    'type' => 'Tipo',
                     'expected-close-date' => 'Fecha de Cierre Esperada',
                     'created-at' => 'Creado En',
                 ],

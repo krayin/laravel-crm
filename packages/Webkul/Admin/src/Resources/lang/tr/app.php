@@ -1052,7 +1052,6 @@ return [
                     'delete-success' => 'Kampanya başarıyla silindi.',
                     'delete-failed' => 'Kampanya silinemedi.',
                     'mass-delete-success' => 'Kampanyalar başarıyla silindi',
-
                     'datagrid' => [
                         'id' => 'ID',
                         'name' => 'Ad',
@@ -1677,7 +1676,6 @@ return [
                 'delete' => 'Sil',
             ],
         ],
-
         'create-success' => 'E-posta başarıyla gönderildi.',
         'update-success' => 'E-posta başarıyla güncellendi.',
         'mass-update-success' => 'E-postalar başarıyla güncellendi.',
@@ -1804,6 +1802,8 @@ return [
                     'type' => 'Tür',
 
                     'tags' => 'Etiketler',
+                    'sales-owner' => 'Satış sorumlusu',
+                    'type' => 'Tür',
                     'expected-close-date' => 'Beklenen Kapanış Tarihi',
                     'created-at' => 'Oluşturulma Tarihi',
                 ],

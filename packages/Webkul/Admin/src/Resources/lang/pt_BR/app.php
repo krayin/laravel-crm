@@ -1676,7 +1676,6 @@ return [
                 'delete' => 'Excluir',
             ],
         ],
-
         'create-success' => 'E-mail enviado com sucesso.',
         'update-success' => 'E-mail atualizado com sucesso.',
         'mass-update-success' => 'E-mails atualizados com sucesso.',
@@ -1684,7 +1683,6 @@ return [
         'delete-failed' => 'E-mail não pode ser excluído.',
         'invalid-route' => 'Rota inválida para o e-mail.',
         'unauthorized' => 'Esta ação não está autorizada.',
-
         'view' => [
             'title' => 'E-mails',
             'subject' => ':subject',
@@ -1802,6 +1800,8 @@ return [
                     'sales-owner' => 'Responsável de vendas',
                     'type' => 'Tipo',
                     'tags' => 'Tags',
+                    'sales-owner' => 'Responsável de vendas',
+                    'type' => 'Tipo',
                     'expected-close-date' => 'Data Esperada de Fechamento',
                     'created-at' => 'Criado em',
                 ],
@@ -2150,6 +2150,7 @@ return [
         'back' => 'Voltar',
         'name' => 'Nome',
         'configuration' => 'Configuração',
+        'activities' => 'Atividades',
         'howdy' => 'Olá!',
         'warehouses' => 'Depósitos',
         'warehouse' => 'Depósito',

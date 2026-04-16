@@ -2148,6 +2148,7 @@ return [
         'back' => 'برگشت',
         'name' => 'نام',
         'configuration' => 'پیکربندی',
+        'activities' => 'فعالیت‌ها',
         'howdy' => 'سلام!',
         'warehouses' => 'انبارها',
         'warehouse' => 'انبار',
