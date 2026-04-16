@@ -1801,8 +1801,6 @@ return [
                     'sales-owner' => 'Responsable de ventas',
                     'type' => 'Tipo',
                     'tags' => 'Etiquetas',
-                    'sales-owner' => 'Responsable de ventas',
-                    'type' => 'Tipo',
                     'expected-close-date' => 'Fecha de Cierre Esperada',
                     'created-at' => 'Creado En',
                 ],
