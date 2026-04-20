@@ -104,6 +104,26 @@
 
                         {!! view_render_event('admin.settings.attributes.edit.form_controls.name.after', ['attribute' => $attribute]) !!}
 
+                        {!! view_render_event('admin.settings.attributes.edit.form_controls.quick_add.before') !!}
+  
+                        <!-- Quick Add --> 
+                        <x-admin::form.control-group>
+                            <x-admin::form.control-group.label for="quick_add" class="mb-0">
+                                @lang('admin::app.settings.attributes.edit.quick_add')
+                            </x-admin::form.control-group.label>
+
+                            <x-admin::form.control-group.control
+                                type="switch"
+                                name="quick_add"
+                                value="1"
+                                :label="trans('admin::app.settings.attributes.edit.quick_add')"
+                                :checked="(boolean) $attribute->quick_add"
+                            />
+
+                        </x-admin::form.control-group>
+
+                        {!! view_render_event('admin.settings.attributes.edit.form_controls.quick_add.after') !!}
+
                         <!-- Options -->
                         <div
                             class=" {{ in_array($attribute->type, ['select', 'multiselect', 'checkbox', 'lookup']) ?: 'hidden' }}"

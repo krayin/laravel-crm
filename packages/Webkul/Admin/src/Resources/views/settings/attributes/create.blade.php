@@ -101,6 +101,32 @@
 
                         {!! view_render_event('admin.settings.attributes.create.form_controls.name.after') !!}
 
+                        {!! view_render_event('admin.settings.attributes.create.form_controls.quick_add.before') !!}
+                        
+                        <!-- Quick Add --> 
+                        <x-admin::form.control-group>
+                            <x-admin::form.control-group.label for="quick_add" class="mb-0">
+                                @lang('admin::app.settings.attributes.create.quick_add')
+                            </x-admin::form.control-group.label>
+
+                            <input
+                                type="hidden"
+                                name="quick_add"
+                                :value="0"
+                            />
+
+                            <x-admin::form.control-group.control
+                                type="switch"
+                                name="quick_add"
+                                value="1"
+                                :label="trans('admin::app.settings.attributes.create.quick_add')"
+                                :checked="false"
+                            />
+
+                        </x-admin::form.control-group>
+
+                        {!! view_render_event('admin.settings.attributes.create.form_controls.quick_add.after') !!}
+
                         <!-- Options -->
                         <div
                             v-if="swatchAttribute && (

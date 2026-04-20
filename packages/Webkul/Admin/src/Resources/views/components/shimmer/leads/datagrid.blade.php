@@ -17,18 +17,20 @@
             </div>
 
             <div class="w-1/2 max-md:w-full">
-                <!-- Title -->
-                <div class="mb-4 w-full">
-                    <div class="shimmer mb-1.5 h-4 w-16"></div>
+                <div class="flex gap-4 max-sm:flex-wrap">
+                    <!-- Title -->
+                    <div class="mb-4 w-full">
+                        <div class="shimmer mb-1.5 h-4 w-16"></div>
 
-                    <div class="shimmer h-[42px] w-full"></div>
-                </div>
+                        <div class="shimmer h-[42px] w-full"></div>
+                    </div>
 
-                <!-- Description -->
-                <div class="mb-4 w-full">
-                    <div class="shimmer mb-1.5 h-5 w-20"></div>
+                    <!-- Description -->
+                    <div class="mb-4 w-full">
+                        <div class="shimmer mb-1.5 h-5 w-20"></div>
 
-                    <div class="shimmer h-[59px] w-full"></div>
+                        <div class="shimmer h-[59px] w-full"></div>
+                    </div>
                 </div>
 
                 <div class="flex gap-4 max-sm:flex-wrap">

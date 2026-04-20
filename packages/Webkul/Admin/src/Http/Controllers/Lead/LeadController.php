@@ -151,7 +151,19 @@ class LeadController extends Controller
      */
     public function create(): View
     {
-        return view('admin::leads.create');
+        $attributes = $this->attributeRepository
+            ->whereIn('code', ['description', 'title', 'lead_value', 'lead_type_id', 'lead_source_id', 'expected_close_date', 'user_id'])
+            ->where('entity_type', 'leads')
+            ->orderBy('sort_order', 'asc')
+            ->get();
+
+        
+
+        // if(request()->has('quick_add') && request()->get('quick_add') === 'lead') {
+        //     return view('admin::leads.create', ['quick_add' => 1]);
+        // }
+
+        return view('admin::leads.create', compact('attributes'));
     }
 
     /**
@@ -212,9 +224,15 @@ class LeadController extends Controller
      */
     public function edit(int $id): View
     {
+        $attributes = $this->attributeRepository
+            ->whereIn('code', ['description', 'title', 'lead_value', 'lead_type_id', 'lead_source_id', 'expected_close_date', 'user_id'])
+            ->where('entity_type', 'leads')
+            ->orderBy('sort_order', 'asc')
+            ->get();
+
         $lead = $this->leadRepository->findOrFail($id);
 
-        return view('admin::leads.edit', compact('lead'));
+        return view('admin::leads.edit', compact('lead', 'attributes'));
     }
 
     /**

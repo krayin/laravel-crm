@@ -24,7 +24,7 @@
                         <!-- Link to create new Lead -->
                         @if (bouncer()->hasPermission('leads.create'))
                             <div class="rounded-lg bg-white p-2 hover:bg-gray-100 dark:bg-gray-800 dark:hover:bg-gray-950">
-                                <a href="{{ route('admin.leads.create') }}">
+                                <a href="{{ route('admin.leads.create', ['quick_add' => 'lead']) }}">
                                     <div class="flex flex-col gap-1">
                                         <i class="icon-leads text-2xl text-gray-600"></i>
 
