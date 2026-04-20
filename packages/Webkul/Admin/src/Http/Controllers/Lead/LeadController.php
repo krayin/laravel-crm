@@ -157,12 +157,6 @@ class LeadController extends Controller
             ->orderBy('sort_order', 'asc')
             ->get();
 
-        
-
-        // if(request()->has('quick_add') && request()->get('quick_add') === 'lead') {
-        //     return view('admin::leads.create', ['quick_add' => 1]);
-        // }
-
         return view('admin::leads.create', compact('attributes'));
     }
 
