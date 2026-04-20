@@ -499,7 +499,8 @@ return [
                 'partial-delete-warning' => 'Bazı kişiler başarıyla silindi. Diğerleri potansiyel müşterilerle bağlantılı olduğu için silinemedi.',
                 'none-delete-warning' => 'Seçilen kişilerin hiçbiri potansiyel müşterilerle bağlantılı olduğu için silinemedi.',
                 'no-selection' => 'Silinecek kişi seçilmedi.',
-                'delete-failed' => 'Seçilen kişiler silinemedi.',
+                'delete-failed' => "Bu kişiyi silemezsiniz çünkü bir potansiyel müşteriyle ilişkilidir.",
+                'delete-success' => 'Kişi başarıyla silindi.',
                 'datagrid' => [
                     'contact-numbers' => 'İletişim Numaraları',
                     'delete' => 'Sil',

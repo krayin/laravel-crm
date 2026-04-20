@@ -551,7 +551,8 @@ return [
                 'partial-delete-warning' => 'Some persons were deleted successfully. Others could not be deleted because they are linked to leads.',
                 'none-delete-warning' => 'None of the selected persons could be deleted because they are linked to leads.',
                 'no-selection' => 'No persons were selected for deletion.',
-                'delete-failed' => 'Failed to delete selected persons.',
+                'delete-success' => 'Person deleted successfully.',
+                'delete-failed' => "You can't delete this person because it is associated with a lead.",
 
                 'datagrid' => [
                     'contact-numbers' => 'Contact Numbers',
