@@ -25,7 +25,12 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
+        with:
+           fetch-depth: 0
+
+      - name: Fetch all branches
+        run: git fetch --all
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
