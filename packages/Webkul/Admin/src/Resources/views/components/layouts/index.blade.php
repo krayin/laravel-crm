@@ -113,6 +113,7 @@
             class="group/container sidebar-collapsed flex gap-4"
             ref="appLayout"
         >
+
             <!-- Page Sidebar Blade Component -->
             <x-admin::layouts.sidebar.desktop />
 
