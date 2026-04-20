@@ -2138,6 +2138,8 @@ return [
                         'logo-image' => 'Logo Image',
                         'title' => 'Admin Logo',
                         'title-info' => 'Configure logo image for your admin panel.',
+                        'favicon-image' => 'Favicon Image',
+                        'favicon-image-info' => 'Configure favicon image for your admin panel.',
                     ],
                 ],
 

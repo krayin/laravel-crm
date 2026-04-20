@@ -1959,6 +1959,8 @@ return [
                         'logo-image' => 'Logo Resmi',
                         'title' => 'Yönetici Logosu',
                         'title-info' => 'Yönetici paneliniz için logo resmini yapılandırın.',
+                        'favicon-image' => 'Favicon Resmi',
+                        'favicon-image-info' => 'Yönetici paneliniz için favicon resmini yapılandırın.',
                     ],
                 ],
                 'settings' => [

@@ -1956,6 +1956,8 @@ return [
                         'logo-image' => 'تصویر لوگو',
                         'title' => 'لوگوی مدیر',
                         'title-info' => 'تصویر لوگو برای پنل مدیریت خود را پیکربندی کنید.',
+                        'favicon-image' => 'تصویر Favicon',
+                        'favicon-image-info' => 'تصویر Favicon برای پنل مدیریت خود را پیکربندی کنید.',
                     ],
                 ],
                 'settings' => [

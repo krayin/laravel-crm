@@ -1958,6 +1958,8 @@ return [
                         'logo-image' => 'Imagen del Logo',
                         'title' => 'Logo del Administrador',
                         'title-info' => 'Configura la imagen del logo para tu panel de administración.',
+                        'favicon-image' => 'Imagen del Favicon',
+                        'favicon-image-info' => 'Configura la imagen del favicon para tu panel de administración.',
                     ],
                 ],
                 'settings' => [

@@ -58,18 +58,18 @@
         href="{{ url('cache/logo/bagisto.png') }}"
     >
 
-    @if ($favicon = core()->getConfigData('general.design.admin_logo.favicon'))
+    @if ($favicon = core()->getConfigData('general.general.admin_logo.favicon_image'))
         <link
             type="image/x-icon"
             href="{{ Storage::url($favicon) }}"
-            rel="shortcut icon"
+            rel="favicon"
             sizes="16x16"
         >
     @else
         <link
             type="image/x-icon"
             href="{{ vite()->asset('images/favicon.ico') }}"
-            rel="shortcut icon"
+            rel="favicon"
             sizes="16x16"
         />
     @endif
@@ -113,6 +113,7 @@
             class="group/container sidebar-collapsed flex gap-4"
             ref="appLayout"
         >
+
             <!-- Page Sidebar Blade Component -->
             <x-admin::layouts.sidebar.desktop />
 
