@@ -15,7 +15,7 @@
             {!! view_render_event('admin.settings.attributes.edit.form_controls.before', ['attribute' => $attribute]) !!}
 
             <!-- actions buttons -->
-            <div class="flex items-center justify-between rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
+            <div class="scroll-reactive-sticky sticky top-[60px] z-[1000] flex items-center justify-between rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm shadow-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
                 <div class="flex flex-col gap-2">
                     {!! view_render_event('admin.settings.attributes.edit.breadcrumbs.before', ['attribute' => $attribute]) !!}
 
@@ -77,7 +77,7 @@
                 {!! view_render_event('admin.catalog.attributes.edit.card.label.before', ['attribute' => $attribute]) !!}
                 
                 <div class="flex flex-1 flex-col gap-2 max-xl:flex-auto">
-                    <div class="box-shadow rounded-lg border border-gray-200 bg-white p-4 dark:border-gray-800 dark:bg-gray-900">
+                    <div class="box-shadow rounded-lg border border-gray-300 bg-white p-4 dark:border-gray-800 dark:bg-gray-900">
                         <p class="mb-4 text-base font-semibold text-gray-800 dark:text-white">
                             @lang('admin::app.settings.attributes.edit.labels')
                         </p>

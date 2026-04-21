@@ -1,4 +1,4 @@
-<header class="sticky top-0 z-[10001] flex items-center justify-between gap-1 border-b border-gray-200 bg-white px-4 py-2.5 transition-all dark:border-gray-800 dark:bg-gray-900">  
+<header class="sticky top-0 z-[10001] flex items-center justify-between gap-1 border-b border-gray-300 bg-white px-4 py-2.5 transition-all dark:border-gray-800 dark:bg-gray-900">  
     <!-- logo -->
     <div class="flex items-center gap-1.5">
         <!-- Sidebar Menu -->

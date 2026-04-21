@@ -301,6 +301,28 @@
                     </tbody>
                 </table>
 
+                <!-- Description -->
+                @if ($quote->description)
+                    <table class="{{ $locale }}">
+                        <thead>
+                            <tr>
+                                <th>
+                                    <b>
+                                        @lang('admin::app.quotes.index.pdf.description')
+                                    </b>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td style="padding: 9px 18px;">
+                                    {{ $quote->description }}
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                @endif
+
                 <!-- Items -->
                 <div class="items">
                     <table class="{{ app()->getLocale   () }}">

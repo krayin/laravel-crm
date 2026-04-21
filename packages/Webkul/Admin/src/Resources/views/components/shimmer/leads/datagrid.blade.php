@@ -1,6 +1,6 @@
-<div class="box-shadow flex flex-col gap-4 rounded-lg border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900 max-xl:flex-wrap">
+<div class="box-shadow flex flex-col gap-4 rounded-lg border border-gray-300 bg-white dark:border-gray-800 dark:bg-gray-900 max-xl:flex-wrap">
     <!-- Tabs -->
-    <div class="flex gap-2 border-b border-gray-200 py-2.5 dark:border-gray-800">
+    <div class="flex gap-2 border-b border-gray-300 py-2.5 dark:border-gray-800">
         <div class="shimmer mx-3 h-[21px] w-[50px]"></div>
         <div class="shimmer mx-3 h-[21px] w-[100px]"></div>
         <div class="shimmer mx-3 h-[21px] w-16"></div>
@@ -124,7 +124,7 @@
 
             <div class="flex flex-col gap-4">
                 <!-- Table Section -->
-                <div class="w-full min-w-[800px] table-fixed border border-gray-200 text-left text-sm dark:border-gray-800">
+                <div class="w-full min-w-[800px] table-fixed border border-gray-300 text-left text-sm dark:border-gray-800">
                     <div class="bg-gray-50 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
                         <div class="flex">
                             <div class="shimmer mx-6 my-4 h-5 w-full whitespace-nowrap font-semibold"></div>

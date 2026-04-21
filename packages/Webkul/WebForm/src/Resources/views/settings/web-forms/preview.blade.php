@@ -39,7 +39,7 @@
                     <p class="mt-2 text-base text-gray-600">{{ $webForm->description }}</p>
 
                     <div
-                        class="box-shadow flex min-w-[300px] flex-col rounded-lg border border-gray-200 bg-white p-4 dark:bg-gray-900"
+                        class="box-shadow flex min-w-[300px] flex-col rounded-lg border border-gray-300 bg-white p-4 dark:bg-gray-900"
                         style="background-color: {{ $webForm->form_background_color }}"
                     >
                         {!! view_render_event('web_forms.web_forms.form_controls.before', ['webForm' => $webForm]) !!}

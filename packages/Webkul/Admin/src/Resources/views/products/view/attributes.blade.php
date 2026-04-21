@@ -1,6 +1,6 @@
 {!! view_render_event('admin.products.view.attributes.before', ['product' => $product]) !!}
 
-<div class="flex w-full flex-col gap-4 border-b border-gray-200 p-4 dark:border-gray-800 dark:text-white">
+<div class="flex w-full flex-col gap-4 border-b border-gray-300 p-4 dark:border-gray-800 dark:text-white">
     <x-admin::accordion  class="select-none !border-none">
         <x-slot:header class="!p-0">
             <h4 class="font-semibold dark:text-white">

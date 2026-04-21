@@ -13,7 +13,7 @@
             {!! view_render_event('admin.leads.view.products.table.before', ['lead' => $lead]) !!}
 
             <!-- Table -->
-            <div class="block w-full overflow-x-auto">
+            <div class="block w-full">
                 <x-admin::table>
                     {!! view_render_event('admin.leads.view.products.table.table_head.before', ['lead' => $lead]) !!}
 
@@ -54,6 +54,7 @@
                             :product="product"
                             :key="index"
                             :index="index"
+                            :selected-product-ids="selectedProductIds"
                             @onRemoveProduct="removeProduct($event)"
                         ></v-product-item>
                     </x-admin::table.tbody>
@@ -112,7 +113,7 @@
         type="text/x-template"
         id="v-product-item-template"
     >
-        <x-admin::table.tbody.tr class="border-b border-gray-200 align-top dark:border-gray-800">
+        <x-admin::table.tbody.tr class="border-b border-gray-300 align-top dark:border-gray-800">
             <!-- Product Name -->
             <x-admin::table.td class="!px-4">
                 <v-form v-slot="{ errors }" @keydown.enter.prevent>
@@ -153,9 +154,9 @@
                             rules="required|decimal:4"
                             :label="trans('admin::app.leads.view.products.quantity')"
                             :placeholder="trans('admin::app.leads.view.products.quantity')"
-                            @on-change="(event) => product.quantity = event.value"
+                            @on-change="handleQuantityChange"
                             ::url="url(product)"
-                            ::params="{product_id: product.product_id}"
+                            ::params="{product_id: product.product_id, price: product.price}"
                             position="left"
                             ::errors="errors"
                         />
@@ -174,9 +175,9 @@
                             rules="required|decimal:4"
                             :label="trans('admin::app.leads.view.products.price')"
                             :placeholder="trans('admin::app.leads.view.products.price')"
-                            @on-change="(event) => product.price = event.value"
+                            @on-change="handlePriceChange"
                             ::url="url(product)"
-                            ::params="{product_id: product.product_id}"
+                            ::params="{product_id: product.product_id, quantity: product.quantity}"
                             position="left"
                             ::value-label="$admin.formatPrice(product.price)"
                             ::errors="errors"
@@ -208,30 +209,12 @@
 
             <!-- Action -->
             <x-admin::table.td class="ltr:text-right rtl:text-left">
-                <template v-if="product.is_new">
-                    <x-admin::form.control-group class="!mb-0">
-                        <div class="flex items-center justify-center gap-4">
-                            <i
-                                @click="attachProduct(product)"
-                                class="icon-enter cursor-pointer text-2xl text-black"
-                            ></i>
-
-                            <i
-                                @click="removeProduct"
-                                class="icon-cross-large cursor-pointer text-2xl text-black"
-                            ></i>
-                        </div>
-                    </x-admin::form.control-group>
-                </template>
-
-                <template v-else>
-                    <x-admin::form.control-group class="!mb-0">
-                        <i
-                            @click="removeProduct"
-                            class="icon-delete cursor-pointer text-2xl"
-                        ></i>
-                    </x-admin::form.control-group>
-                </template>
+                <x-admin::form.control-group class="!mb-0">
+                    <i
+                        @click="removeProduct"
+                        class="cursor-pointer icon-delete text-black text-2xl"
+                    ></i>
+                </x-admin::form.control-group>
             </x-admin::table.td>
         </x-admin::table.tbody.tr>
     </script>
@@ -248,6 +231,20 @@
                 }
             },
 
+            created() {
+                if(this.products.length <= 0) {
+                    this.addProduct();
+                }
+            },
+
+            computed: {
+                selectedProductIds() {
+                    return this.products
+                        .map((product) => product.product_id)
+                        .filter((productId) => !! productId);
+                },
+            },
+
             methods: {
                 addProduct() {
                     this.products.push({
@@ -257,7 +254,7 @@
                         name: '',
                         quantity: 0,
                         price: 0,
-                        amount: null,
+                        amount: 0,
                     })
                 },
 
@@ -271,7 +268,7 @@
         app.component('v-product-item', {
             template: '#v-product-item-template',
 
-            props: ['index', 'product'],
+            props: ['index', 'product', 'selectedProductIds'],
 
             data() {
                 return {
@@ -294,9 +291,9 @@
 
                 params() {
                     return {
-                        params: {
-                            query: this.product.name
-                        },
+                        exclude_ids: this.selectedProductIds
+                            .filter((productId) => productId !== this.product.product_id)
+                            .join(','),
                     };
                 },
             },
@@ -314,9 +311,51 @@
 
                     this.product.name = result.name;
 
-                    this.product.price = result.price;
+                    this.product.price = parseFloat(result.price ?? 0);
 
-                    this.product.quantity = result.quantity ?? 0;
+                    this.product.quantity = 1;
+
+                    this.setProductAmount();
+
+                    if (this.product.is_new) {
+                        this.attachProduct(this.product);
+                    }
+                },
+
+                /**
+                 * Handle quantity updates and keep amount in sync.
+                 *
+                 * @param {Object} event
+                 * @return {void}
+                 */
+                handleQuantityChange(event) {
+                    this.product.quantity = event.value;
+
+                    this.setProductAmount();
+                },
+
+                /**
+                 * Handle price updates and keep amount in sync.
+                 *
+                 * @param {Object} event
+                 * @return {void}
+                 */
+                handlePriceChange(event) {
+                    this.product.price = event.value;
+
+                    this.setProductAmount();
+                },
+
+                /**
+                 * Recalculate amount from price and quantity.
+                 *
+                 * @return {void}
+                 */
+                setProductAmount() {
+                    const price = parseFloat(this.product.price) || 0;
+                    const quantity = parseFloat(this.product.quantity) || 0;
+
+                    this.product.amount = price * quantity;
                 },
 
                 /**
@@ -325,11 +364,32 @@
                  * @return {void}
                  */
                 attachProduct(product) {
+                    if (! product.product_id) {
+                        return;
+                    }
+
+                    const price = parseFloat(product.price) || 0;
+
+                    const quantity = parseFloat(product.quantity) || 1;
+
+                    const amount = price * quantity;
+
                     this.$axios.post('{{ route('admin.leads.product.add', $lead->id) }}', {
                         _method: 'PUT',
                         ...product,
+                        price,
+                        quantity,
+                        amount,
                     })
                         .then(response => {
+                            this.product.id = response.data.data.id;
+
+                            this.product.quantity = quantity;
+
+                            this.product.price = price;
+
+                            this.product.amount = parseFloat(response.data.data.amount ?? amount);
+
                             this.product.is_new = false;
 
                             this.$emitter.emit('add-flash', { type: 'success', message: response.data.message });
@@ -343,6 +403,12 @@
                  * @return {void}
                  */
                 removeProduct() {
+                    if (this.product.is_new) {
+                        this.$emit('onRemoveProduct', this.product);
+
+                        return;
+                    }
+
                     this.$emitter.emit('open-confirm-modal', {
                         agree: () => {
                             this.$axios.post('{{ route('admin.leads.product.remove', $lead->id) }}', {
