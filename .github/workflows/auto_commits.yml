@@ -15,7 +15,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-          ref: ${{ github.head_ref }}
+          ref: ${{ github.head_ref || github.ref_name }}
           token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Setup PHP
@@ -33,11 +33,11 @@ jobs:
         run: ${{ runner.temp }}/composer/vendor/bin/pint
 
       - name: Pull latest remote changes
-        run: git pull origin ${{ github.head_ref }} --rebase
+        run: git pull origin ${{ github.head_ref || github.ref_name }} --rebase
         continue-on-error: true
 
       - name: Commit Linted Files
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: "chore: applied pint changes"
-          branch: ${{ github.head_ref }}
+          branch: ${{ github.head_ref || github.ref_name }}
