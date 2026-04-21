@@ -62,14 +62,14 @@
         <link
             type="image/x-icon"
             href="{{ Storage::url($favicon) }}"
-            rel="favicon"
+            rel="shortcut icon"
             sizes="16x16"
         >
     @else
         <link
             type="image/x-icon"
             href="{{ vite()->asset('images/favicon.ico') }}"
-            rel="favicon"
+            rel="shortcut icon"
             sizes="16x16"
         />
     @endif
@@ -113,7 +113,6 @@
             class="group/container sidebar-collapsed flex gap-4"
             ref="appLayout"
         >
-
             <!-- Page Sidebar Blade Component -->
             <x-admin::layouts.sidebar.desktop />
 
