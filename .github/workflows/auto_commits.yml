@@ -1,24 +1,22 @@
 name: Linting Tests
-
 on: [push, pull_request]
-
 permissions:
   contents: write
-
 jobs:
   linting_tests:
     runs-on: ${{ matrix.operating-systems }}
-
     strategy:
       matrix:
         operating-systems: [ubuntu-latest]
         php-versions: ['8.3']
-
     name: PHP ${{ matrix.php-versions }} test on ${{ matrix.operating-systems }}
-
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: ${{ github.head_ref }}
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
@@ -34,7 +32,12 @@ jobs:
       - name: Run Pint
         run: ${{ runner.temp }}/composer/vendor/bin/pint
 
+      - name: Pull latest remote changes
+        run: git pull origin ${{ github.head_ref }} --rebase
+        continue-on-error: true
+
       - name: Commit Linted Files
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: "chore: applied pint changes"
+          branch: ${{ github.head_ref }}
