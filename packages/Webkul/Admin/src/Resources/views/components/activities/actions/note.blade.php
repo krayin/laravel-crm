@@ -66,12 +66,20 @@
                                 name="type"
                                 value="note"
                             />
-                            
+
                             <!-- Id -->
                             <x-admin::form.control-group.control
                                 type="hidden"
                                 ::name="entityControlName"
                                 ::value="entity.id"
+                            />
+
+                            <!-- Parent Activity Id -->
+                            <x-admin::form.control-group.control
+                                v-if="parentActivityId"
+                                type="hidden"
+                                name="parent_activity_id"
+                                ::value="parentActivityId"
                             />
 
                             <!-- Comment -->
@@ -136,11 +144,20 @@
             data: function () {
                 return {
                     isStoring: false,
+                    parentActivityId: null,
                 }
+            },
+
+            mounted() {
+                this.$emitter.on('open-note-for-activity', ({ activityId }) => {
+                    this.parentActivityId = activityId;
+                    this.$refs.noteActivityModal.open();
+                });
             },
 
             methods: {
                 openModal(type) {
+                    this.parentActivityId = null;
                     this.$refs.noteActivityModal.open();
                 },
 
@@ -155,6 +172,8 @@
 
                             this.$emitter.emit('on-activity-added', response.data.data);
 
+                            this.parentActivityId = null;
+
                             this.$refs.noteActivityModal.close();
                         })
                         .catch (error => {
@@ -164,6 +183,8 @@
                                 setErrors(error.response.data.errors);
                             } else {
                                 this.$emitter.emit('add-flash', { type: 'error', message: error.response.data.message });
+
+                                this.parentActivityId = null;
 
                                 this.$refs.noteActivityModal.close();
                             }

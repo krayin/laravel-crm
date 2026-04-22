@@ -158,6 +158,7 @@ return [
             ],
 
             'index' => [
+                'add-note' => 'Add Note',
                 'all' => 'All',
                 'bcc' => 'Bcc',
                 'by-user' => 'By :user',

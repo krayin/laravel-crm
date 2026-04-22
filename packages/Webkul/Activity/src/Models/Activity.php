@@ -51,6 +51,7 @@ class Activity extends Model implements ActivityContract
         'schedule_to',
         'is_done',
         'user_id',
+        'parent_activity_id',
     ];
 
     /**
@@ -107,5 +108,21 @@ class Activity extends Model implements ActivityContract
     public function warehouses()
     {
         return $this->belongsToMany(WarehouseProxy::modelClass(), 'warehouse_activities');
+    }
+
+    /**
+     * Get notes associated with this activity.
+     */
+    public function notes()
+    {
+        return $this->hasMany(static::class, 'parent_activity_id')->where('type', 'note');
+    }
+
+    /**
+     * Get the parent activity this note belongs to.
+     */
+    public function parentActivity()
+    {
+        return $this->belongsTo(static::class, 'parent_activity_id');
     }
 }

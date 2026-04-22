@@ -147,6 +147,7 @@ return [
                 ],
             ],
             'index' => [
+                'add-note' => 'Adicionar nota',
                 'all' => 'Todos',
                 'bcc' => 'Cópia oculta',
                 'by-user' => 'Por usuário',

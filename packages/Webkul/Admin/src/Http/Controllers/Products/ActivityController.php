@@ -33,6 +33,8 @@ class ActivityController extends Controller
             ->where('product_activities.product_id', $id)
             ->get();
 
+        $activities->loadCount('notes')->load('notes');
+
         return ActivityResource::collection($this->concatEmail($activities));
     }
 

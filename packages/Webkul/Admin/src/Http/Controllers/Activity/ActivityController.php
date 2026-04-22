@@ -69,11 +69,12 @@ class ActivityController extends Controller
     public function store(): RedirectResponse|JsonResponse
     {
         $this->validate(request(), [
-            'type' => 'required',
-            'comment' => 'required_if:type,note',
-            'schedule_from' => 'required_unless:type,note,file',
-            'schedule_to' => 'required_unless:type,note,file',
-            'file' => 'required_if:type,file',
+            'type'               => 'required',
+            'comment'            => 'required_if:type,note',
+            'schedule_from'      => 'required_unless:type,note,file',
+            'schedule_to'        => 'required_unless:type,note,file',
+            'file'               => 'required_if:type,file',
+            'parent_activity_id' => 'nullable|exists:activities,id',
         ]);
 
         if (request('type') === 'meeting') {

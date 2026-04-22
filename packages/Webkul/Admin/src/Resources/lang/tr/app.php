@@ -147,6 +147,7 @@ return [
                 ],
             ],
             'index' => [
+                'add-note' => 'Not ekle',
                 'all' => 'All',
                 'bcc' => 'Bcc',
                 'by-user' => 'By :user',

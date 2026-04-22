@@ -147,6 +147,7 @@ return [
                 ],
             ],
             'index' => [
+                'add-note' => 'Thêm ghi chú',
                 'all' => 'Tất cả',
                 'bcc' => 'Bcc',
                 'by-user' => 'Bởi :user',
