@@ -25,6 +25,7 @@
     <php>
         <env name="APP_ENV" value="testing" />
         <env name="APP_MAINTENANCE_DRIVER" value="file" />
+        <env name="APP_URL" value="http://localhost" />
         <env name="BCRYPT_ROUNDS" value="4" />
         <env name="CACHE_STORE" value="array" />
         <env name="MAIL_MAILER" value="array" />
