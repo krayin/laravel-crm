@@ -3,7 +3,8 @@
     "allow": [
       "Bash(find:*)",
       "Bash(xargs grep:*)",
-      "Bash(php artisan:*)"
+      "Bash(php artisan:*)",
+      "Bash(grep:*)"
     ]
   }
 }

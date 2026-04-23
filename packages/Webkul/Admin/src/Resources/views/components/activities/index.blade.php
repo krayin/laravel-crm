@@ -214,10 +214,28 @@
                                                     class="flex flex-col gap-1 border-t border-orange-200 pt-1 dark:border-orange-700"
                                                     v-for="note in activity.notes"
                                                 >
-                                                    <p
-                                                        class="text-sm text-gray-700 dark:text-white"
-                                                        v-safe-html="note.comment"
-                                                    ></p>
+                                                    <div class="flex items-start justify-between gap-2">
+                                                        <p
+                                                            class="text-sm text-gray-700 dark:text-white"
+                                                            v-safe-html="note.comment"
+                                                        ></p>
+
+                                                        <div class="flex shrink-0 gap-1">
+                                                            @if (bouncer()->hasPermission('activities.edit'))
+                                                                <button
+                                                                    class="icon-edit cursor-pointer text-lg text-gray-400 transition hover:text-gray-600 dark:text-gray-500 dark:hover:text-gray-300"
+                                                                    @click="editNote(note)"
+                                                                ></button>
+                                                            @endif
+
+                                                            @if (bouncer()->hasPermission('activities.delete'))
+                                                                <button
+                                                                    class="icon-delete cursor-pointer text-lg text-gray-400 transition hover:text-red-500 dark:text-gray-500 dark:hover:text-red-400"
+                                                                    @click="removeNote(note, activity)"
+                                                                ></button>
+                                                            @endif
+                                                        </div>
+                                                    </div>
 
                                                     <p class="text-xs text-gray-500 dark:text-gray-400">
                                                         @{{ $admin.formatDate(note.created_at, 'd MMM yyyy, h:mm A', timezone) }}
@@ -328,6 +346,17 @@
 
                                                                 @lang('admin::app.components.activities.index.edit')
                                                             </a>
+                                                        </x-admin::dropdown.menu.item>
+
+                                                        <x-admin::dropdown.menu.item
+                                                            v-if="activity.type == 'note'"
+                                                            @click="editNote(activity)"
+                                                        >
+                                                            <div class="flex items-center gap-2">
+                                                                <span class="icon-edit text-2xl"></span>
+
+                                                                @lang('admin::app.components.activities.index.edit')
+                                                            </div>
                                                         </x-admin::dropdown.menu.item>
                                                     @endif
 
@@ -604,6 +633,28 @@
                         }
                     }
                 });
+
+                this.$emitter.on('on-note-updated', (updatedNote) => {
+                    // Update standalone note in activities list
+                    const actIndex = this.activities.findIndex(a => a.id === updatedNote.id);
+
+                    if (actIndex !== -1) {
+                        this.activities[actIndex].comment = updatedNote.comment;
+                    }
+
+                    // Update note inside parent's notes array
+                    if (updatedNote.parent_activity_id) {
+                        const parent = this.activities.find(a => a.id === updatedNote.parent_activity_id);
+
+                        if (parent && parent.notes) {
+                            const noteIndex = parent.notes.findIndex(n => n.id === updatedNote.id);
+
+                            if (noteIndex !== -1) {
+                                parent.notes[noteIndex].comment = updatedNote.comment;
+                            }
+                        }
+                    }
+                });
             },
 
             methods: {
@@ -678,6 +729,39 @@
 
                 addNoteToActivity(activity) {
                     this.$emitter.emit('open-note-for-activity', { activityId: activity.id });
+                },
+
+                editNote(note) {
+                    this.$emitter.emit('open-edit-note', note);
+                },
+
+                removeNote(note, parentActivity) {
+                    this.$emitter.emit('open-confirm-modal', {
+                        agree: () => {
+                            this.$axios.delete("{{ route('admin.activities.delete', 'replaceId') }}".replace('replaceId', note.id))
+                                .then((response) => {
+                                    // Remove from parent's notes array
+                                    const noteIndex = parentActivity.notes.findIndex(n => n.id === note.id);
+
+                                    if (noteIndex !== -1) {
+                                        parentActivity.notes.splice(noteIndex, 1);
+                                        parentActivity.notes_count = Math.max((parentActivity.notes_count || 1) - 1, 0);
+                                    }
+
+                                    // Also remove from main activities list if present
+                                    const actIndex = this.activities.findIndex(a => a.id === note.id);
+
+                                    if (actIndex !== -1) {
+                                        this.activities.splice(actIndex, 1);
+                                    }
+
+                                    this.$emitter.emit('add-flash', { type: 'success', message: response.data.message });
+                                })
+                                .catch((error) => {
+                                    this.$emitter.emit('add-flash', { type: 'error', message: error.response.data.message });
+                                });
+                        },
+                    });
                 },
 
                 unlinkEmail(activity) {

@@ -51,7 +51,8 @@
                             {!! view_render_event('admin.components.activities.actions.note.form_controls.modal.header.title.before') !!}
 
                             <h3 class="text-base font-semibold dark:text-white">
-                                @lang('admin::app.components.activities.actions.note.title')
+                                <template v-if="editingNote">@lang('admin::app.components.activities.index.edit') @lang('admin::app.components.activities.actions.note.btn')</template>
+                                <template v-else>@lang('admin::app.components.activities.actions.note.title')</template>
                             </h3>
 
                             {!! view_render_event('admin.components.activities.actions.note.form_controls.modal.header.title.after') !!}
@@ -145,38 +146,61 @@
                 return {
                     isStoring: false,
                     parentActivityId: null,
+                    editingNote: null,
                 }
             },
 
             mounted() {
                 this.$emitter.on('open-note-for-activity', ({ activityId }) => {
+                    this.editingNote = null;
                     this.parentActivityId = activityId;
                     this.$refs.noteActivityModal.open();
+                    this.$nextTick(() => this.$refs.modalForm.resetForm());
+                });
+
+                this.$emitter.on('open-edit-note', (note) => {
+                    this.editingNote = note;
+                    this.parentActivityId = null;
+                    this.$refs.noteActivityModal.open();
+                    this.$nextTick(() => this.$refs.modalForm.setFieldValue('comment', note.comment));
                 });
             },
 
             methods: {
                 openModal(type) {
+                    this.editingNote = null;
                     this.parentActivityId = null;
                     this.$refs.noteActivityModal.open();
+                    this.$nextTick(() => this.$refs.modalForm.resetForm());
                 },
 
                 save(params) {
                     this.isStoring = true;
 
-                    this.$axios.post("{{ route('admin.activities.store') }}", params)
-                        .then (response => {
+                    const isEditing = !! this.editingNote;
+
+                    const request = isEditing
+                        ? this.$axios.put("{{ route('admin.activities.update', 'replaceId') }}".replace('replaceId', this.editingNote.id), { comment: params.comment, type: 'note' })
+                        : this.$axios.post("{{ route('admin.activities.store') }}", params);
+
+                    request
+                        .then(response => {
                             this.isStoring = false;
 
                             this.$emitter.emit('add-flash', { type: 'success', message: response.data.message });
 
-                            this.$emitter.emit('on-activity-added', response.data.data);
+                            if (isEditing) {
+                                this.$emitter.emit('on-note-updated', response.data.data);
+                            } else {
+                                this.$emitter.emit('on-activity-added', response.data.data);
+                            }
 
+                            this.editingNote = null;
                             this.parentActivityId = null;
 
                             this.$refs.noteActivityModal.close();
                         })
-                        .catch (error => {
+                        .catch(error => {
                             this.isStoring = false;
 
                             if (error.response.status == 422) {
@@ -184,6 +208,7 @@
                             } else {
                                 this.$emitter.emit('add-flash', { type: 'error', message: error.response.data.message });
 
+                                this.editingNote = null;
                                 this.parentActivityId = null;
 
                                 this.$refs.noteActivityModal.close();
