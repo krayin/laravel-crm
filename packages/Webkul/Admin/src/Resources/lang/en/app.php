@@ -1505,6 +1505,7 @@ return [
                     'is-default' => 'Is Default',
                     'edit' => 'Edit',
                     'delete' => 'Delete',
+                    'quick-add' => 'Quick Add',
 
                     'entity-types' => [
                         'leads' => 'Leads',
@@ -2330,6 +2331,13 @@ return [
         'users-info' => 'Add, edit or delete users from CRM',
         'lead' => 'Lead',
         'lead-info' => 'Manage all your leads related settings in the CRM',
+        'quick-add' => [
+            'title' => 'Quick Add',
+            'save' => 'Save',
+            'to' => 'To',
+            'subject' => 'Subject',
+            'message' => 'Message',
+        ],
         'pipelines' => 'Pipelines',
         'pipelines-info' => 'Add, edit or delete pipelines from CRM',
         'sources' => 'Sources',

@@ -79,9 +79,11 @@ class QuoteController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(AttributeForm $request): RedirectResponse
+    public function store(AttributeForm $request): RedirectResponse|JsonResponse
     {
-        $this->additionalValidation();
+        if (! request()->has('quick_add')) {
+            $this->additionalValidation();
+        }
 
         Event::dispatch('quote.create.before');
 
@@ -96,6 +98,13 @@ class QuoteController extends Controller
         }
 
         Event::dispatch('quote.create.after', $quote);
+
+        if (request()->ajax()) {
+            return response()->json([
+                'data' => $quote,
+                'message' => trans('admin::app.quotes.index.create-success'),
+            ]);
+        }
 
         session()->flash('success', trans('admin::app.quotes.index.create-success'));
 

@@ -47,13 +47,20 @@ class OrganizationController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(AttributeForm $request): RedirectResponse
+    public function store(AttributeForm $request): RedirectResponse|JsonResponse
     {
         Event::dispatch('contacts.organization.create.before');
 
         $organization = $this->organizationRepository->create(request()->all());
 
         Event::dispatch('contacts.organization.create.after', $organization);
+
+        if (request()->ajax()) {
+            return response()->json([
+                'data' => $organization,
+                'message' => trans('admin::app.contacts.organizations.index.create-success'),
+            ]);
+        }
 
         session()->flash('success', trans('admin::app.contacts.organizations.index.create-success'));
 
