@@ -1921,6 +1921,12 @@ return [
             'persons' => [
                 'title' => 'Kişiler Hakkında',
                 'job-title' => ':job_title @ :organization',
+                'no-person' => 'Bu potansiyel müşteriye atanmış bir iletişim kişisi yok.',
+                'attach-btn' => 'İletişim Kişisi Ekle',
+                'change-btn' => 'Değiştir',
+                'change-title' => 'İletişim Kişisini Değiştir',
+                'save-btn' => 'Kaydet',
+                'cancel-btn' => 'İptal',
             ],
             'stages' => [
                 'won' => 'Kazandı',

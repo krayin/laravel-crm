@@ -2095,6 +2095,12 @@ return [
             'persons' => [
                 'title' => 'About Persons',
                 'job-title' => ':job_title at :organization',
+                'no-person' => 'No contact person is allocated to this lead.',
+                'attach-btn' => 'Attach Contact Person',
+                'change-btn' => 'Change',
+                'change-title' => 'Change Contact Person',
+                'save-btn' => 'Save',
+                'cancel-btn' => 'Cancel',
             ],
 
             'stages' => [

@@ -1918,6 +1918,12 @@ return [
             'persons' => [
                 'title' => 'درباره افراد',
                 'job-title' => ':job_title در :organization',
+                'no-person' => 'هیچ شخص تماسی به این سرنخ اختصاص داده نشده است.',
+                'attach-btn' => 'پیوست کردن شخص تماس',
+                'change-btn' => 'تغییر',
+                'change-title' => 'تغییر شخص تماس',
+                'save-btn' => 'ذخیره',
+                'cancel-btn' => 'لغو',
             ],
             'stages' => [
                 'won' => 'برد',

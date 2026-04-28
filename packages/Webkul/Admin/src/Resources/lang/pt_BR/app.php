@@ -1920,6 +1920,12 @@ return [
             'persons' => [
                 'title' => 'Sobre as Pessoas',
                 'job-title' => ':job_title em :organization',
+                'no-person' => 'Nenhum contato foi atribuído a este lead.',
+                'attach-btn' => 'Anexar Pessoa de Contato',
+                'change-btn' => 'Alterar',
+                'change-title' => 'Alterar Pessoa de Contato',
+                'save-btn' => 'Salvar',
+                'cancel-btn' => 'Cancelar',
             ],
             'stages' => [
                 'won' => 'Ganho',

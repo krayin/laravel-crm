@@ -1920,6 +1920,12 @@ return [
             'persons' => [
                 'title' => 'Về Người Liên Hệ',
                 'job-title' => ':job_title tại :organization',
+                'no-person' => 'Chưa có người liên hệ nào được gán cho lead này.',
+                'attach-btn' => 'Gắn Người Liên Hệ',
+                'change-btn' => 'Thay Đổi',
+                'change-title' => 'Thay Đổi Người Liên Hệ',
+                'save-btn' => 'Lưu',
+                'cancel-btn' => 'Hủy',
             ],
             'stages' => [
                 'won' => 'Thắng',

@@ -1920,6 +1920,12 @@ return [
             'persons' => [
                 'title' => 'حول الأشخاص',
                 'job-title' => ':job_title في :organization',
+                'no-person' => 'لم يتم تعيين جهة اتصال لهذه الفرصة.',
+                'attach-btn' => 'إرفاق جهة اتصال',
+                'change-btn' => 'تغيير',
+                'change-title' => 'تغيير جهة الاتصال',
+                'save-btn' => 'حفظ',
+                'cancel-btn' => 'إلغاء',
             ],
             'stages' => [
                 'won' => 'ربحت',

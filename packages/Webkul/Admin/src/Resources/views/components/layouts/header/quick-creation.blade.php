@@ -1,27 +1,17 @@
 @php
     $canCreateLead = bouncer()->hasPermission('leads.create');
-    $canCreateQuote = bouncer()->hasPermission('quotes.create');
     $canCreateMail = bouncer()->hasPermission('mail.create');
     $canCreatePerson = bouncer()->hasPermission('contacts.persons.create');
     $canCreateOrganization = bouncer()->hasPermission('contacts.organizations.create');
     $canCreateProduct = bouncer()->hasPermission('products.create');
     $canCreateAttribute = bouncer()->hasPermission('settings.automation.attributes.create');
-    $canCreateRole = bouncer()->hasPermission('settings.user.roles.create');
-    $canCreateUser = bouncer()->hasPermission('settings.user.users.create');
 
     $hasAnyQuickAddPermission = $canCreateLead
-        || $canCreateQuote
         || $canCreateMail
         || $canCreatePerson
         || $canCreateOrganization
         || $canCreateProduct
-        || $canCreateAttribute
-        || $canCreateRole
-        || $canCreateUser;
-
-    $rolesForQuickAdd = $canCreateUser
-        ? app(\Webkul\User\Repositories\RoleRepository::class)->all(['id', 'name'])
-        : collect();
+        || $canCreateAttribute;
 
     $attributeTypesForQuickAdd = ['text', 'textarea', 'price', 'boolean', 'select', 'multiselect', 'checkbox', 'email', 'address', 'phone', 'lookup', 'datetime', 'date', 'image', 'file'];
 
@@ -32,11 +22,8 @@
         $canCreatePerson => 'person',
         $canCreateOrganization => 'organization',
         $canCreateProduct => 'product',
-        $canCreateQuote => 'quote',
         $canCreateMail => 'mail',
         $canCreateAttribute => 'attribute',
-        $canCreateRole => 'role',
-        $canCreateUser => 'user',
         default => '',
     };
 @endphp
@@ -291,31 +278,6 @@
                                     </div>
                                 @endif
 
-                                @if ($canCreateQuote)
-                                    <div v-show="selectedType == 'quote'">
-                                        <x-admin::form
-                                            v-slot="{ meta, errors, handleSubmit }"
-                                            as="div"
-                                            ref="quoteFormWrapper"
-                                        >
-                                            <form
-                                                @submit="handleSubmit($event, createQuote)"
-                                                ref="quoteForm"
-                                            >
-                                                <input type="hidden" name="quick_add" value="quote" />
-                                                <input type="hidden" name="entity_type" value="quotes" />
-
-                                                <x-admin::attributes
-                                                    :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
-                                                        'entity_type' => 'quotes',
-                                                        'quick_add' => 1,
-                                                    ])"
-                                                />
-                                            </form>
-                                        </x-admin::form>
-                                    </div>
-                                @endif
-
                                 @if ($canCreateMail)
                                     <div v-show="selectedType == 'mail'">
                                         <x-admin::form
@@ -329,23 +291,81 @@
                                             >
                                                 <input type="hidden" name="is_draft" value="0" />
 
+                                                <!-- To -->
                                                 <x-admin::form.control-group>
                                                     <x-admin::form.control-group.label class="required">
-                                                        @lang('admin::app.layouts.quick-add.to')
+                                                        @lang('admin::app.components.activities.actions.mail.to')
                                                     </x-admin::form.control-group.label>
 
-                                                    <x-admin::form.control-group.control
-                                                        type="tag"
-                                                        id="reply_to"
-                                                        name="reply_to[]"
-                                                        rules="required"
-                                                        :label="trans('admin::app.layouts.quick-add.to')"
-                                                        :placeholder="trans('admin::app.layouts.quick-add.to')"
-                                                    />
+                                                    <div class="relative">
+                                                        <x-admin::form.control-group.control
+                                                            type="tags"
+                                                            name="reply_to"
+                                                            rules="required"
+                                                            input-rules="email"
+                                                            :label="trans('admin::app.components.activities.actions.mail.to')"
+                                                            :placeholder="trans('admin::app.components.activities.actions.mail.enter-emails')"
+                                                        />
 
-                                                    <x-admin::form.control-group.error control-name="reply_to[]" />
+                                                        <div class="absolute top-[9px] flex items-center gap-2 ltr:right-2 rtl:left-2">
+                                                            <span
+                                                                class="cursor-pointer font-medium hover:underline dark:text-white"
+                                                                @click="showCC = ! showCC"
+                                                            >
+                                                                @lang('admin::app.components.activities.actions.mail.cc')
+                                                            </span>
+
+                                                            <span
+                                                                class="cursor-pointer font-medium hover:underline dark:text-white"
+                                                                @click="showBCC = ! showBCC"
+                                                            >
+                                                                @lang('admin::app.components.activities.actions.mail.bcc')
+                                                            </span>
+                                                        </div>
+                                                    </div>
+
+                                                    <x-admin::form.control-group.error control-name="reply_to" />
                                                 </x-admin::form.control-group>
 
+                                                <template v-if="showCC">
+                                                    <!-- Cc -->
+                                                    <x-admin::form.control-group>
+                                                        <x-admin::form.control-group.label>
+                                                            @lang('admin::app.components.activities.actions.mail.cc')
+                                                        </x-admin::form.control-group.label>
+
+                                                        <x-admin::form.control-group.control
+                                                            type="tags"
+                                                            name="cc"
+                                                            input-rules="email"
+                                                            :label="trans('admin::app.components.activities.actions.mail.cc')"
+                                                            :placeholder="trans('admin::app.components.activities.actions.mail.enter-emails')"
+                                                        />
+
+                                                        <x-admin::form.control-group.error control-name="cc" />
+                                                    </x-admin::form.control-group>
+                                                </template>
+
+                                                <template v-if="showBCC">
+                                                    <!-- Cc -->
+                                                    <x-admin::form.control-group>
+                                                        <x-admin::form.control-group.label>
+                                                            @lang('admin::app.components.activities.actions.mail.bcc')
+                                                        </x-admin::form.control-group.label>
+
+                                                        <x-admin::form.control-group.control
+                                                            type="tags"
+                                                            name="bcc"
+                                                            input-rules="email"
+                                                            :label="trans('admin::app.components.activities.actions.mail.bcc')"
+                                                            :placeholder="trans('admin::app.components.activities.actions.mail.enter-emails')"
+                                                        />
+
+                                                        <x-admin::form.control-group.error control-name="bcc" />
+                                                    </x-admin::form.control-group>
+                                                </template>
+
+                                                <!-- Subject -->
                                                 <x-admin::form.control-group>
                                                     <x-admin::form.control-group.label>
                                                         @lang('admin::app.layouts.quick-add.subject')
@@ -353,7 +373,7 @@
 
                                                     <x-admin::form.control-group.control
                                                         type="text"
-                                                        id="subject"
+                                                        id="quick-mail-subject"
                                                         name="subject"
                                                         :label="trans('admin::app.layouts.quick-add.subject')"
                                                         :placeholder="trans('admin::app.layouts.quick-add.subject')"
@@ -362,6 +382,7 @@
                                                     <x-admin::form.control-group.error control-name="subject" />
                                                 </x-admin::form.control-group>
 
+                                                <!-- Content (with TinyMCE editor) -->
                                                 <x-admin::form.control-group>
                                                     <x-admin::form.control-group.label class="required">
                                                         @lang('admin::app.layouts.quick-add.message')
@@ -369,15 +390,24 @@
 
                                                     <x-admin::form.control-group.control
                                                         type="textarea"
-                                                        id="reply"
+                                                        id="quick-mail-reply"
                                                         name="reply"
                                                         rules="required"
-                                                        rows="6"
+                                                        rows="2"
+                                                        :tinymce="true"
                                                         :label="trans('admin::app.layouts.quick-add.message')"
                                                         :placeholder="trans('admin::app.layouts.quick-add.message')"
                                                     />
 
                                                     <x-admin::form.control-group.error control-name="reply" />
+                                                </x-admin::form.control-group>
+
+                                                <!-- Attachments -->
+                                                <x-admin::form.control-group class="!mb-0">
+                                                    <x-admin::attachments
+                                                        name="attachments"
+                                                        allow-multiple="true"
+                                                    />
                                                 </x-admin::form.control-group>
                                             </form>
                                         </x-admin::form>
@@ -514,170 +544,6 @@
                                         </x-admin::form>
                                     </div>
                                 @endif
-
-                                @if ($canCreateRole)
-                                    <div v-show="selectedType == 'role'">
-                                        <x-admin::form
-                                            v-slot="{ meta, errors, handleSubmit }"
-                                            as="div"
-                                            ref="roleFormWrapper"
-                                        >
-                                            <form
-                                                @submit="handleSubmit($event, createRole)"
-                                                ref="roleForm"
-                                            >
-                                                <input type="hidden" name="permission_type" value="all" />
-
-                                                <x-admin::form.control-group>
-                                                    <x-admin::form.control-group.label class="required">
-                                                        @lang('admin::app.settings.roles.create.name')
-                                                    </x-admin::form.control-group.label>
-
-                                                    <x-admin::form.control-group.control
-                                                        type="text"
-                                                        id="quick-role-name"
-                                                        name="name"
-                                                        rules="required"
-                                                        :label="trans('admin::app.settings.roles.create.name')"
-                                                        :placeholder="trans('admin::app.settings.roles.create.name')"
-                                                    />
-
-                                                    <x-admin::form.control-group.error control-name="name" />
-                                                </x-admin::form.control-group>
-
-                                                <x-admin::form.control-group>
-                                                    <x-admin::form.control-group.label class="required">
-                                                        @lang('admin::app.settings.roles.create.description')
-                                                    </x-admin::form.control-group.label>
-
-                                                    <x-admin::form.control-group.control
-                                                        type="textarea"
-                                                        id="quick-role-description"
-                                                        name="description"
-                                                        rules="required"
-                                                        rows="3"
-                                                        :label="trans('admin::app.settings.roles.create.description')"
-                                                        :placeholder="trans('admin::app.settings.roles.create.description')"
-                                                    />
-
-                                                    <x-admin::form.control-group.error control-name="description" />
-                                                </x-admin::form.control-group>
-                                            </form>
-                                        </x-admin::form>
-                                    </div>
-                                @endif
-
-                                @if ($canCreateUser)
-                                    <div v-show="selectedType == 'user'">
-                                        <x-admin::form
-                                            v-slot="{ meta, errors, handleSubmit }"
-                                            as="div"
-                                            ref="userFormWrapper"
-                                        >
-                                            <form
-                                                @submit="handleSubmit($event, createUser)"
-                                                ref="userForm"
-                                            >
-                                                <input type="hidden" name="status" value="1" />
-                                                <input type="hidden" name="view_permission" value="global" />
-
-                                                <div class="flex gap-4 max-sm:flex-wrap">
-                                                    <x-admin::form.control-group class="w-1/2">
-                                                        <x-admin::form.control-group.label class="required">
-                                                            @lang('admin::app.settings.users.index.create.name')
-                                                        </x-admin::form.control-group.label>
-
-                                                        <x-admin::form.control-group.control
-                                                            type="text"
-                                                            id="quick-user-name"
-                                                            name="name"
-                                                            rules="required"
-                                                            :label="trans('admin::app.settings.users.index.create.name')"
-                                                            :placeholder="trans('admin::app.settings.users.index.create.name')"
-                                                        />
-
-                                                        <x-admin::form.control-group.error control-name="name" />
-                                                    </x-admin::form.control-group>
-
-                                                    <x-admin::form.control-group class="w-1/2">
-                                                        <x-admin::form.control-group.label class="required">
-                                                            @lang('admin::app.settings.users.index.create.email')
-                                                        </x-admin::form.control-group.label>
-
-                                                        <x-admin::form.control-group.control
-                                                            type="email"
-                                                            id="quick-user-email"
-                                                            name="email"
-                                                            rules="required|email"
-                                                            :label="trans('admin::app.settings.users.index.create.email')"
-                                                            :placeholder="trans('admin::app.settings.users.index.create.email')"
-                                                        />
-
-                                                        <x-admin::form.control-group.error control-name="email" />
-                                                    </x-admin::form.control-group>
-                                                </div>
-
-                                                <div class="flex gap-4 max-sm:flex-wrap">
-                                                    <x-admin::form.control-group class="w-1/2">
-                                                        <x-admin::form.control-group.label>
-                                                            @lang('admin::app.settings.users.index.create.password')
-                                                        </x-admin::form.control-group.label>
-
-                                                        <x-admin::form.control-group.control
-                                                            type="password"
-                                                            id="quick-user-password"
-                                                            name="password"
-                                                            :label="trans('admin::app.settings.users.index.create.password')"
-                                                            :placeholder="trans('admin::app.settings.users.index.create.password')"
-                                                        />
-
-                                                        <x-admin::form.control-group.error control-name="password" />
-                                                    </x-admin::form.control-group>
-
-                                                    <x-admin::form.control-group class="w-1/2">
-                                                        <x-admin::form.control-group.label>
-                                                            @lang('admin::app.settings.users.index.create.confirm-password')
-                                                        </x-admin::form.control-group.label>
-
-                                                        <x-admin::form.control-group.control
-                                                            type="password"
-                                                            id="quick-user-confirm-password"
-                                                            name="confirm_password"
-                                                            :label="trans('admin::app.settings.users.index.create.confirm-password')"
-                                                            :placeholder="trans('admin::app.settings.users.index.create.confirm-password')"
-                                                        />
-
-                                                        <x-admin::form.control-group.error control-name="confirm_password" />
-                                                    </x-admin::form.control-group>
-                                                </div>
-
-                                                <x-admin::form.control-group>
-                                                    <x-admin::form.control-group.label class="required">
-                                                        @lang('admin::app.settings.users.index.create.role')
-                                                    </x-admin::form.control-group.label>
-
-                                                    <x-admin::form.control-group.control
-                                                        type="select"
-                                                        id="quick-user-role"
-                                                        name="role_id"
-                                                        rules="required"
-                                                        :label="trans('admin::app.settings.users.index.create.role')"
-                                                    >
-                                                        <option value="">
-                                                            @lang('admin::app.common.custom-attributes.select')
-                                                        </option>
-
-                                                        @foreach ($rolesForQuickAdd as $role)
-                                                            <option value="{{ $role->id }}">{{ $role->name }}</option>
-                                                        @endforeach
-                                                    </x-admin::form.control-group.control>
-
-                                                    <x-admin::form.control-group.error control-name="role_id" />
-                                                </x-admin::form.control-group>
-                                            </form>
-                                        </x-admin::form>
-                                    </div>
-                                @endif
                             </div>
                         </div>
                     </x-slot>
@@ -718,20 +584,11 @@
                             @if ($canCreateProduct)
                                 { name: 'product',      label: "@lang('admin::app.layouts.product')" },
                             @endif
-                            @if ($canCreateQuote)
-                                { name: 'quote',        label: "@lang('admin::app.layouts.quote')" },
-                            @endif
                             @if ($canCreateMail)
                                 { name: 'mail',         label: "@lang('admin::app.layouts.email')" },
                             @endif
                             @if ($canCreateAttribute)
                                 { name: 'attribute',    label: "@lang('admin::app.layouts.attribute')" },
-                            @endif
-                            @if ($canCreateRole)
-                                { name: 'role',         label: "@lang('admin::app.layouts.role')" },
-                            @endif
-                            @if ($canCreateUser)
-                                { name: 'user',         label: "@lang('admin::app.layouts.user')" },
                             @endif
                         ],
 
@@ -740,7 +597,6 @@
                             person:       "{{ route('admin.contacts.persons.store') }}",
                             organization: "{{ route('admin.contacts.organizations.store') }}",
                             product:      "{{ route('admin.products.store') }}",
-                            quote:        "{{ route('admin.quotes.store') }}",
                             mail:         "{{ route('admin.mail.store') }}",
                             attribute:    "{{ route('admin.settings.attributes.store') }}",
                             role:         "{{ route('admin.settings.roles.store') }}",
@@ -776,7 +632,6 @@
                     createPerson(params, { setErrors })       { this.store('person', setErrors); },
                     createOrganization(params, { setErrors }) { this.store('organization', setErrors); },
                     createProduct(params, { setErrors })      { this.store('product', setErrors); },
-                    createQuote(params, { setErrors })        { this.store('quote', setErrors); },
                     createMail(params, { setErrors })         { this.store('mail', setErrors); },
                     createAttribute(params, { setErrors })    { this.store('attribute', setErrors); },
                     createRole(params, { setErrors })         { this.store('role', setErrors); },
