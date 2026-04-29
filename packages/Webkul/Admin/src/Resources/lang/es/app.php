@@ -2135,6 +2135,13 @@ return [
         'users-info' => 'Agregar, editar o eliminar usuarios del CRM',
         'lead' => 'Lead',
         'lead-info' => 'Administra todas las configuraciones relacionadas con los leads en el CRM',
+        'quick-add' => [
+            'title' => 'Añadir rápido',
+            'save' => 'Guardar',
+            'to' => 'Para',
+            'subject' => 'Asunto',
+            'message' => 'Mensaje',
+        ],
         'pipelines' => 'Pipelines',
         'pipelines-info' => 'Agregar, editar o eliminar pipelines del CRM',
         'sources' => 'Fuentes',

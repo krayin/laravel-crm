@@ -2135,6 +2135,13 @@ return [
         'users-info' => 'Adicionar, editar ou excluir usuários do CRM',
         'lead' => 'Negócio',
         'lead-info' => 'Gerencie todas as configurações relacionadas aos Negócios no CRM',
+        'quick-add' => [
+            'title' => 'Adição rápida',
+            'save' => 'Salvar',
+            'to' => 'Para',
+            'subject' => 'Assunto',
+            'message' => 'Mensagem',
+        ],
         'pipelines' => 'Funis',
         'pipelines-info' => 'Adicionar, editar ou excluir funis do CRM',
         'sources' => 'Origens',

@@ -2135,6 +2135,13 @@ return [
         'users-info' => 'Thêm, chỉnh sửa hoặc xóa người dùng khỏi CRM',
         'lead' => 'Lead',
         'lead-info' => 'Quản lý tất cả các cài đặt liên quan đến leads trong CRM',
+        'quick-add' => [
+            'title' => 'Thêm nhanh',
+            'save' => 'Lưu',
+            'to' => 'Đến',
+            'subject' => 'Tiêu đề',
+            'message' => 'Tin nhắn',
+        ],
         'pipelines' => 'Pipelines',
         'pipelines-info' => 'Thêm, chỉnh sửa hoặc xóa pipelines khỏi CRM',
         'sources' => 'Nguồn',
