@@ -504,5 +504,8 @@ export {
     generateCompanyName,
     createPerson,
     getRandomDateTime,
-    createProduct
+    createProduct,
+    generateProductName,
+    generatePrice,
+    generateQuantity
 };

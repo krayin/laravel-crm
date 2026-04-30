@@ -1,21 +1,15 @@
 @php
-    $canCreateLead = bouncer()->hasPermission('leads.create');
-    $canCreateMail = bouncer()->hasPermission('mail.create');
-    $canCreatePerson = bouncer()->hasPermission('contacts.persons.create');
-    $canCreateOrganization = bouncer()->hasPermission('contacts.organizations.create');
-    $canCreateProduct = bouncer()->hasPermission('products.create');
-    $canCreateAttribute = bouncer()->hasPermission('settings.automation.attributes.create');
+    $canCreateLead = bouncer()->hasPermission('leads.create.quick-create');
+    $canCreateMail = bouncer()->hasPermission('mail.compose.quick-create');
+    $canCreatePerson = bouncer()->hasPermission('contacts.persons.create.quick-create');
+    $canCreateOrganization = bouncer()->hasPermission('contacts.organizations.create.quick-create');
+    $canCreateProduct = bouncer()->hasPermission('products.create.quick-create');
 
     $hasAnyQuickAddPermission = $canCreateLead
         || $canCreateMail
         || $canCreatePerson
         || $canCreateOrganization
-        || $canCreateProduct
-        || $canCreateAttribute;
-
-    $attributeTypesForQuickAdd = ['text', 'textarea', 'price', 'boolean', 'select', 'multiselect', 'checkbox', 'email', 'address', 'phone', 'lookup', 'datetime', 'date', 'image', 'file'];
-
-    $attributeEntityTypesForQuickAdd = config('attribute_entity_types');
+        || $canCreateProduct;
 
     $defaultQuickAddTab = match (true) {
         $canCreateLead => 'lead',
@@ -23,7 +17,6 @@
         $canCreateOrganization => 'organization',
         $canCreateProduct => 'product',
         $canCreateMail => 'mail',
-        $canCreateAttribute => 'attribute',
         default => '',
     };
 @endphp
@@ -97,106 +90,13 @@
                                             >
                                                 <input type="hidden" name="quick_add" value="lead" />
 
-                                                <div class="flex gap-4 max-sm:flex-wrap">
-                                                    <div class="w-1/2">
-                                                        <x-admin::attributes
-                                                            :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
-                                                                ['code', 'IN', ['title']],
-                                                                'entity_type' => 'leads',
-                                                                'quick_add' => 1,
-                                                            ])"
-                                                        />
-                                                    </div>
-
-                                                    <div class="w-1/2">
-                                                        <x-admin::attributes
-                                                            :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
-                                                                ['code', 'IN', ['lead_value']],
-                                                                'entity_type' => 'leads',
-                                                                'quick_add' => 1,
-                                                            ])"
-                                                        />
-                                                    </div>
-                                                </div>
-
-                                                <x-admin::attributes
-                                                    :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
-                                                        ['code', 'IN', ['description']],
-                                                        'entity_type' => 'leads',
-                                                        'quick_add' => 1,
-                                                    ])"
-                                                />
-
-                                                <div class="flex gap-4 max-sm:flex-wrap">
-                                                    <div class="w-1/2">
-                                                        <x-admin::attributes
-                                                            :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
-                                                                ['code', 'IN', ['lead_pipeline_id']],
-                                                                'entity_type' => 'leads',
-                                                                'quick_add' => 1,
-                                                            ])"
-                                                        />
-                                                    </div>
-
-                                                    <div class="w-1/2">
-                                                        <x-admin::attributes
-                                                            :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
-                                                                ['code', 'IN', ['lead_pipeline_stage_id']],
-                                                                'entity_type' => 'leads',
-                                                                'quick_add' => 1,
-                                                            ])"
-                                                        />
-                                                    </div>
-                                                </div>
-
-                                                <div class="flex gap-4 max-sm:flex-wrap">
-                                                    <div class="w-1/2">
-                                                        <x-admin::attributes
-                                                            :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
-                                                                ['code', 'IN', ['lead_type_id']],
-                                                                'entity_type' => 'leads',
-                                                                'quick_add' => 1,
-                                                            ])"
-                                                        />
-                                                    </div>
-
-                                                    <div class="w-1/2">
-                                                        <x-admin::attributes
-                                                            :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
-                                                                ['code', 'IN', ['lead_source_id']],
-                                                                'entity_type' => 'leads',
-                                                                'quick_add' => 1,
-                                                            ])"
-                                                        />
-                                                    </div>
-                                                </div>
-
-                                                <div class="flex gap-4 max-sm:flex-wrap">
-                                                    <div class="w-1/2">
-                                                        <x-admin::attributes
-                                                            :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
-                                                                ['code', 'IN', ['user_id']],
-                                                                'entity_type' => 'leads',
-                                                                'quick_add' => 1,
-                                                            ])"
-                                                        />
-                                                    </div>
-
-                                                    <div class="w-1/2">
-                                                        <x-admin::attributes
-                                                            :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
-                                                                ['code', 'IN', ['expected_close_date']],
-                                                                'entity_type' => 'leads',
-                                                                'quick_add' => 1,
-                                                            ])"
-                                                            :custom-validations="[
-                                                                'expected_close_date' => [
-                                                                    'date_format:yyyy-MM-dd',
-                                                                    'after:' .  \Carbon\Carbon::yesterday()->format('Y-m-d'),
-                                                                ],
-                                                            ]"
-                                                        />
-                                                    </div>
+                                                <div class="grid gap-4 max-sm:flex-wrap">
+                                                    <x-admin::attributes
+                                                        :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
+                                                            'entity_type' => 'leads',
+                                                            'quick_add' => 1,
+                                                        ])"
+                                                    />
                                                 </div>
                                             </form>
                                         </x-admin::form>
@@ -413,137 +313,6 @@
                                         </x-admin::form>
                                     </div>
                                 @endif
-
-                                @if ($canCreateAttribute)
-                                    <div v-show="selectedType == 'attribute'">
-                                        <x-admin::form
-                                            v-slot="{ meta, errors, handleSubmit }"
-                                            as="div"
-                                            ref="attributeFormWrapper"
-                                        >
-                                            <form
-                                                @submit="handleSubmit($event, createAttribute)"
-                                                ref="attributeForm"
-                                            >
-                                                <div class="flex gap-4 max-sm:flex-wrap">
-                                                    <x-admin::form.control-group class="w-1/2">
-                                                        <x-admin::form.control-group.label class="required">
-                                                            @lang('admin::app.settings.attributes.create.name')
-                                                        </x-admin::form.control-group.label>
-
-                                                        <x-admin::form.control-group.control
-                                                            type="text"
-                                                            id="quick-attribute-name"
-                                                            name="name"
-                                                            rules="required"
-                                                            :label="trans('admin::app.settings.attributes.create.name')"
-                                                            :placeholder="trans('admin::app.settings.attributes.create.name')"
-                                                        />
-
-                                                        <x-admin::form.control-group.error control-name="name" />
-                                                    </x-admin::form.control-group>
-
-                                                    <x-admin::form.control-group class="w-1/2">
-                                                        <x-admin::form.control-group.label class="required">
-                                                            @lang('admin::app.settings.attributes.create.code')
-                                                        </x-admin::form.control-group.label>
-
-                                                        <x-admin::form.control-group.control
-                                                            type="text"
-                                                            id="quick-attribute-code"
-                                                            name="code"
-                                                            rules="required"
-                                                            :label="trans('admin::app.settings.attributes.create.code')"
-                                                            :placeholder="trans('admin::app.settings.attributes.create.code')"
-                                                        />
-
-                                                        <x-admin::form.control-group.error control-name="code" />
-                                                    </x-admin::form.control-group>
-                                                </div>
-
-                                                <div class="flex gap-4 max-sm:flex-wrap">
-                                                    <x-admin::form.control-group class="w-1/2">
-                                                        <x-admin::form.control-group.label class="required">
-                                                            @lang('admin::app.settings.attributes.create.type')
-                                                        </x-admin::form.control-group.label>
-
-                                                        <x-admin::form.control-group.control
-                                                            type="select"
-                                                            id="quick-attribute-type"
-                                                            name="type"
-                                                            rules="required"
-                                                            :label="trans('admin::app.settings.attributes.create.type')"
-                                                        >
-                                                            @foreach ($attributeTypesForQuickAdd as $type)
-                                                                <option value="{{ $type }}" @selected($type === 'text')>
-                                                                    @lang('admin::app.settings.attributes.create.'.$type)
-                                                                </option>
-                                                            @endforeach
-                                                        </x-admin::form.control-group.control>
-
-                                                        <x-admin::form.control-group.error control-name="type" />
-                                                    </x-admin::form.control-group>
-
-                                                    <x-admin::form.control-group class="w-1/2">
-                                                        <x-admin::form.control-group.label class="required">
-                                                            @lang('admin::app.settings.attributes.create.entity-type')
-                                                        </x-admin::form.control-group.label>
-
-                                                        <x-admin::form.control-group.control
-                                                            type="select"
-                                                            id="quick-attribute-entity-type"
-                                                            name="entity_type"
-                                                            rules="required"
-                                                            :label="trans('admin::app.settings.attributes.create.entity-type')"
-                                                        >
-                                                            @foreach ($attributeEntityTypesForQuickAdd as $key => $entityType)
-                                                                <option value="{{ $key }}">
-                                                                    {{ trans($entityType['name']) }}
-                                                                </option>
-                                                            @endforeach
-                                                        </x-admin::form.control-group.control>
-
-                                                        <x-admin::form.control-group.error control-name="entity_type" />
-                                                    </x-admin::form.control-group>
-                                                </div>
-
-                                                <x-admin::form.control-group class="!mb-2 flex items-center gap-2.5">
-                                                    <x-admin::form.control-group.control
-                                                        type="checkbox"
-                                                        id="quick-attribute-is-required"
-                                                        name="is_required"
-                                                        value="1"
-                                                        for="quick-attribute-is-required"
-                                                    />
-
-                                                    <label
-                                                        class="cursor-pointer text-xs font-medium text-gray-600 dark:text-gray-300"
-                                                        for="quick-attribute-is-required"
-                                                    >
-                                                        @lang('admin::app.settings.attributes.create.is-required')
-                                                    </label>
-                                                </x-admin::form.control-group>
-
-                                                <x-admin::form.control-group class="flex items-center gap-2.5">
-                                                    <x-admin::form.control-group.control
-                                                        type="checkbox"
-                                                        id="quick-attribute-quick-add"
-                                                        name="quick_add"
-                                                        value="1"
-                                                        for="quick-attribute-quick-add"
-                                                    />
-
-                                                    <label
-                                                        class="cursor-pointer text-xs font-medium text-gray-600 dark:text-gray-300"
-                                                        for="quick-attribute-quick-add"
-                                                    >
-                                                        @lang('admin::app.settings.attributes.create.quick_add')
-                                                    </label>
-                                                </x-admin::form.control-group>
-                                            </form>
-                                        </x-admin::form>
-                                    </div>
-                                @endif
                             </div>
                         </div>
                     </x-slot>
@@ -586,9 +355,6 @@
                             @endif
                             @if ($canCreateMail)
                                 { name: 'mail',         label: "@lang('admin::app.layouts.email')" },
-                            @endif
-                            @if ($canCreateAttribute)
-                                { name: 'attribute',    label: "@lang('admin::app.layouts.attribute')" },
                             @endif
                         ],
 

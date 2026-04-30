@@ -33,6 +33,7 @@ return [
         'tags' => 'Tags',
         'configuration' => 'Configuration',
         'create' => 'Create',
+        'quick_add' => 'Quick Add',
         'edit' => 'Edit',
         'view' => 'View',
         'print' => 'Print',

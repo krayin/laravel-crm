@@ -210,7 +210,7 @@ class LeadDataGrid extends DataGrid
                 ],
             ],
             'closure' => function ($row) {
-                if(empty($row->person_id)) {
+                if (! $row->person_id) {
                     return '--';
                 }
 
