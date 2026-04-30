@@ -33,6 +33,7 @@ return [
         'tags' => 'Thẻ',
         'configuration' => 'Cấu hình',
         'create' => 'Tạo mới',
+        'quick_add' => 'Thêm Nhanh',
         'edit' => 'Chỉnh sửa',
         'view' => 'Xem',
         'print' => 'In',
@@ -1369,6 +1370,7 @@ return [
                     'is-default' => 'Mặc Định',
                     'edit' => 'Chỉnh sửa',
                     'delete' => 'Xóa',
+                    'quick-add' => 'Thêm Nhanh',
                     'entity-types' => [
                         'leads' => 'Khách hàng tiềm năng',
                         'organizations' => 'Tổ chức',
@@ -1679,7 +1681,6 @@ return [
                 'delete' => 'Xóa',
             ],
         ],
-
         'create-success' => 'Email đã được gửi thành công.',
         'update-success' => 'Email đã được cập nhật thành công.',
         'mass-update-success' => 'Các email đã được cập nhật thành công.',
@@ -1687,7 +1688,6 @@ return [
         'delete-failed' => 'Email không thể bị xóa.',
         'invalid-route' => 'Đường dẫn không hợp lệ cho email.',
         'unauthorized' => 'Hành động này không được phép.',
-
         'view' => [
             'title' => 'Thư',
             'subject' => ':subject',

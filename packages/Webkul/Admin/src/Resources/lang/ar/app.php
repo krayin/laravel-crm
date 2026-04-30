@@ -33,6 +33,7 @@ return [
         'tags' => 'الوسوم',
         'configuration' => 'التهيئة',
         'create' => 'إنشاء',
+        'quick_add' => 'إضافة سريعة',
         'edit' => 'تعديل',
         'view' => 'عرض',
         'print' => 'طباعة',
@@ -1369,6 +1370,7 @@ return [
                     'is-default' => 'افتراضي',
                     'edit' => 'تعديل',
                     'delete' => 'حذف',
+                    'quick-add' => 'إضافة سريعة',
                     'entity-types' => [
                         'leads' => 'العملاء المحتملين',
                         'organizations' => 'المنظمات',
@@ -1679,7 +1681,6 @@ return [
                 'delete' => 'حذف',
             ],
         ],
-
         'create-success' => 'تم إرسال البريد الإلكتروني بنجاح.',
         'update-success' => 'تم تحديث البريد الإلكتروني بنجاح.',
         'mass-update-success' => 'تم تحديث البريد الإلكتروني بنجاح.',
@@ -1687,7 +1688,6 @@ return [
         'delete-failed' => 'لا يمكن حذف البريد الإلكتروني.',
         'invalid-route' => 'مسار غير صالح للبريد.',
         'unauthorized' => 'هذا الإجراء غير مصرح به.',
-
         'view' => [
             'title' => 'الرسائل',
             'subject' => ':الموضوع',

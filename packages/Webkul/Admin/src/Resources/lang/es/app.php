@@ -33,6 +33,7 @@ return [
         'tags' => 'Etiquetas',
         'configuration' => 'Configuración',
         'create' => 'Crear',
+        'quick_add' => 'Agregar Rápido',
         'edit' => 'Editar',
         'view' => 'Ver',
         'print' => 'Imprimir',
@@ -1369,6 +1370,7 @@ return [
                     'is-default' => 'Es Predeterminado',
                     'edit' => 'Editar',
                     'delete' => 'Eliminar',
+                    'quick-add' => 'Agregar Rápido',
                     'entity-types' => [
                         'leads' => 'Clientes potenciales',
                         'organizations' => 'Organizaciones',
@@ -1679,7 +1681,6 @@ return [
                 'delete' => 'Eliminar',
             ],
         ],
-
         'create-success' => 'Correo enviado con éxito.',
         'update-success' => 'Correo actualizado con éxito.',
         'mass-update-success' => 'Correos actualizados con éxito.',
@@ -1687,7 +1688,6 @@ return [
         'delete-failed' => 'No se puede eliminar el correo.',
         'invalid-route' => 'Ruta inválida para el correo.',
         'unauthorized' => 'Esta acción no está autorizada.',
-
         'view' => [
             'title' => 'Correos',
             'subject' => ':subject',

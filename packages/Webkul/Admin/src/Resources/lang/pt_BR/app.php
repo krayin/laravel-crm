@@ -33,6 +33,7 @@ return [
         'tags' => 'Tags',
         'configuration' => 'Configuração',
         'create' => 'Adicionar',
+        'quick_add' => 'Adicionar Rápido',
         'edit' => 'Editar',
         'view' => 'Visualizar',
         'print' => 'Imprimir',
@@ -1369,6 +1370,7 @@ return [
                     'is-default' => 'É Padrão',
                     'edit' => 'Editar',
                     'delete' => 'Deletar',
+                    'quick-add' => 'Adicionar Rápido',
                     'entity-types' => [
                         'leads' => 'Oportunidades',
                         'organizations' => 'Empresas',
@@ -1679,7 +1681,6 @@ return [
                 'delete' => 'Excluir',
             ],
         ],
-
         'create-success' => 'E-mail enviado com sucesso.',
         'update-success' => 'E-mail atualizado com sucesso.',
         'mass-update-success' => 'E-mails atualizados com sucesso.',
@@ -1687,7 +1688,6 @@ return [
         'delete-failed' => 'E-mail não pode ser excluído.',
         'invalid-route' => 'Rota inválida para o e-mail.',
         'unauthorized' => 'Esta ação não está autorizada.',
-
         'view' => [
             'title' => 'E-mails',
             'subject' => ':subject',

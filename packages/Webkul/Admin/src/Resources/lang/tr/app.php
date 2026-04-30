@@ -33,6 +33,7 @@ return [
         'tags' => 'Etiketler',
         'configuration' => 'Yapılandırma',
         'create' => 'Oluştur',
+        'quick_add' => 'Hızlı Ekle',
         'edit' => 'Düzenle',
         'view' => 'Görüntüle',
         'print' => 'Yazdır',
@@ -1053,7 +1054,6 @@ return [
                     'delete-success' => 'Kampanya başarıyla silindi.',
                     'delete-failed' => 'Kampanya silinemedi.',
                     'mass-delete-success' => 'Kampanyalar başarıyla silindi',
-
                     'datagrid' => [
                         'id' => 'ID',
                         'name' => 'Ad',
@@ -1370,6 +1370,7 @@ return [
                     'is-default' => 'Varsayılan mı',
                     'edit' => 'Düzenle',
                     'delete' => 'Sil',
+                    'quick-add' => 'Hızlı Ekle',
                     'entity-types' => [
                         'leads' => 'Potansiyeller',
                         'organizations' => 'Organizasyonlar',
@@ -1680,7 +1681,6 @@ return [
                 'delete' => 'Sil',
             ],
         ],
-
         'create-success' => 'E-posta başarıyla gönderildi.',
         'update-success' => 'E-posta başarıyla güncellendi.',
         'mass-update-success' => 'E-postalar başarıyla güncellendi.',
@@ -1688,7 +1688,6 @@ return [
         'delete-failed' => 'E-posta silinemedi.',
         'invalid-route' => 'Geçersiz rota için mail.',
         'unauthorized' => 'Bu işlem yetkilendirilmemiştir.',
-
         'view' => [
             'title' => 'Mails',
             'subject' => ':subject',

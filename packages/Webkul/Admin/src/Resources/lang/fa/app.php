@@ -33,6 +33,7 @@ return [
         'tags' => 'برچسب‌ها',
         'configuration' => 'پیکربندی',
         'create' => 'ایجاد',
+        'quick_add' => 'افزودن سریع',
         'edit' => 'ویرایش',
         'view' => 'نمایش',
         'print' => 'چاپ',
@@ -1369,6 +1370,7 @@ return [
                     'is-default' => 'پیش‌فرض است',
                     'edit' => 'ویرایش',
                     'delete' => 'حذف',
+                    'quick-add' => 'افزودن سریع',
                     'entity-types' => [
                         'leads' => 'سرنخ‌ها',
                         'organizations' => 'سازمان‌ها',
