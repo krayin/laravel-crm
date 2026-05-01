@@ -1425,7 +1425,7 @@
             </x-slot>
 
             <!-- Dropdown Content -->
-            <x-slot:menu class="mt-1 rounded-md border border-gray-200 dark:border-gray-800">
+            <x-slot:menu class="mt-1 rounded-md border border-gray-300 dark:border-gray-800">
                 <div class="relative">
                     <div class="relative rounded">
                         <ul class="list-reset">

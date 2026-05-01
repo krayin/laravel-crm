@@ -45,7 +45,11 @@
         rel="stylesheet"
     />
 
+<<<<<<< fix/issue-2507-update-all-logos
     @if ($favicon = core()->getConfigData('general.general.admin_logo.logo_image'))
+=======
+    @if ($favicon = core()->getConfigData('general.general.admin_logo.favicon_image'))
+>>>>>>> 2.2
         <link
             type="image/x-icon"
             href="{{ Storage::url($favicon) }}"

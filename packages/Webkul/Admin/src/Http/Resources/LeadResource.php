@@ -26,12 +26,12 @@ class LeadResource extends JsonResource
             'closed_at' => $this->closed_at,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
-            'person' => new PersonResource($this->person),
-            'user' => new UserResource($this->user),
-            'type' => new TypeResource($this->type),
-            'source' => new SourceResource($this->source),
-            'pipeline' => new PipelineResource($this->pipeline),
-            'stage' => new StageResource($this->stage),
+            'person' => $this->person ? new PersonResource($this->person) : null,
+            'user' => $this->user ? new UserResource($this->user) : null,
+            'type' => $this->type ? new TypeResource($this->type) : null,
+            'source' => $this->source ? new SourceResource($this->source) : null,
+            'pipeline' => $this->pipeline ? new PipelineResource($this->pipeline) : null,
+            'stage' => $this->stage ? new StageResource($this->stage) : null,
             'tags' => TagResource::collection($this->tags),
         ];
     }

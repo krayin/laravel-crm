@@ -6,7 +6,7 @@ return [
             'leads' => [
                 'description' => 'توضیحات',
                 'expected-close-date' => 'تاریخ بسته شدن مورد انتظار',
-                'lead-value' => 'ارزش سرنخ',
+                'lead-value' => 'ارزش تخمینی سرنخ',
                 'sales-owner' => 'مالک فروش',
                 'source' => 'منبع',
                 'title' => 'عنوان',

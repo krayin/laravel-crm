@@ -6,7 +6,7 @@ return [
             'leads' => [
                 'description' => 'Descripción',
                 'expected-close-date' => 'Fecha de Cierre Esperada',
-                'lead-value' => 'Valor del Prospecto',
+                'lead-value' => 'Valor Estimado del Prospecto',
                 'sales-owner' => 'Propietario de Ventas',
                 'source' => 'Fuente',
                 'title' => 'Título',

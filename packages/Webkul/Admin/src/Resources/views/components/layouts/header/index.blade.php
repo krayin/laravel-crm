@@ -1,4 +1,4 @@
-<header class="sticky top-0 z-[10001] flex items-center justify-between gap-1 border-b border-gray-200 bg-white px-4 py-2.5 transition-all dark:border-gray-800 dark:bg-gray-900">  
+<header class="sticky top-0 z-[10001] flex items-center justify-between gap-1 border-b border-gray-300 bg-white px-4 py-2.5 transition-all dark:border-gray-800 dark:bg-gray-900">  
     <!-- logo -->
     <div class="flex items-center gap-1.5">
         <!-- Sidebar Menu -->
@@ -82,12 +82,22 @@
                     @if ($logo = core()->getConfigData('general.general.admin_logo.logo_image'))
                         <img
                             src="{{ Storage::url($logo) }}"
+<<<<<<< fix/issue-2507-update-all-logos
+=======
+                            alt="{{ config('app.name') }}"
+>>>>>>> 2.2
                             width="24"
                             height="24"
                         />
                     @else
                         <img
+<<<<<<< fix/issue-2507-update-all-logos
                             src="{{ url('cache/logo.png') }}"
+=======
+                            src="{{ request()->cookie('dark_mode') ? vite()->asset('images/dark-logo.svg') : vite()->asset('images/logo.svg') }}"
+                            id="logo-image"
+                            alt="{{ config('app.name') }}"
+>>>>>>> 2.2
                             width="24"
                             height="24"
                         />

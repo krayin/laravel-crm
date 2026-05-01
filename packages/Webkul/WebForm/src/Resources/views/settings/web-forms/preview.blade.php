@@ -23,11 +23,20 @@
             >
                 <div class="flex flex-col items-center gap-5">
                     <!-- Logo -->
-                    <img
-                        class="max-h-16 max-w-[180px] w-auto object-contain"
-                        src="{{ core()->getConfigData('general.general.admin_logo.logo_image') ? Storage::url(core()->getConfigData('general.general.admin_logo.logo_image')) : vite()->asset('images/logo.svg') }}"
-                        alt="{{ config('app.name') }}"
-                    />
+
+                    @if ($logo = core()->getConfigData('general.general.admin_logo.logo_image'))
+                        <img
+                            class="w-max"
+                            src="{{ Storage::url($logo) }}"
+                            alt="{{ config('app.name') }}"
+                        />
+                    @else
+                        <img
+                            class="w-max"
+                            src="{{ vite()->asset('images/logo.svg') }}"
+                            alt="{{ config('app.name') }}"
+                        />
+                    @endif
 
                     <h1
                         class="text-2xl font-bold"
@@ -39,7 +48,7 @@
                     <p class="mt-2 text-base text-gray-600">{{ $webForm->description }}</p>
 
                     <div
-                        class="box-shadow flex min-w-[300px] flex-col rounded-lg border border-gray-200 bg-white p-4 dark:bg-gray-900"
+                        class="box-shadow flex min-w-[300px] flex-col rounded-lg border border-gray-300 bg-white p-4 dark:bg-gray-900"
                         style="background-color: {{ $webForm->form_background_color }}"
                     >
                         {!! view_render_event('web_forms.web_forms.form_controls.before', ['webForm' => $webForm]) !!}

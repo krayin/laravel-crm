@@ -627,6 +627,15 @@
     .required:after {
         @apply content-['*'];
     }
+
+    body.is-scrolling-down .scroll-reactive-sticky {
+        width: calc(100% + 2rem);
+        margin-left: -1rem;
+        border-radius: 0px;
+        padding-left: 2rem;
+        padding-right: 2rem;
+        border-right: none !important;
+    }
 }
 
 .tox .tox-toolbar__group:last-child button {

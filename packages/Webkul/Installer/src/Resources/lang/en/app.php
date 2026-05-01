@@ -6,7 +6,7 @@ return [
             'leads' => [
                 'description' => 'Description',
                 'expected-close-date' => 'Expected Close Date',
-                'lead-value' => 'Lead Value',
+                'lead-value' => 'Estimated Lead Value',
                 'sales-owner' => 'Sales Owner',
                 'source' => 'Source',
                 'title' => 'Title',

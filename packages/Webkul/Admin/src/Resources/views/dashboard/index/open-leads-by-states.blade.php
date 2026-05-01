@@ -20,7 +20,7 @@
 
         <!-- Total Sales Section -->
         <template v-else>
-            <div class="grid gap-4 rounded-lg border border-gray-200 bg-white p-4 dark:border-gray-800 dark:bg-gray-900">
+            <div class="grid gap-4 rounded-lg border border-gray-300 bg-white p-4 dark:border-gray-800 dark:bg-gray-900">
                 <div class="flex flex-col justify-between gap-1">
                     <p class="text-base font-semibold dark:text-gray-300">
                         @lang('admin::app.dashboard.index.open-leads-by-states.title')
@@ -40,7 +40,7 @@
 
                     <ul class="absolute flex w-full flex-col">
                         <li
-                            class="flex w-full flex-col border-b border-gray-200 pb-[9px] pt-2.5 last:border-none dark:border-gray-800"
+                            class="flex w-full flex-col border-b border-gray-300 pb-[9px] pt-2.5 last:border-none dark:border-gray-800"
                             v-for="(stat, index) in report.statistics"
                         >
                             <span class="text-sm font-semibold dark:text-gray-100">
