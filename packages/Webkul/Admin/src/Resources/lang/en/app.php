@@ -554,7 +554,6 @@ return [
                 'no-selection' => 'No persons were selected for deletion.',
                 'delete-success' => 'Person deleted successfully.',
                 'delete-failed' => "You can't delete this person because it is associated with a lead.",
-
                 'datagrid' => [
                     'contact-numbers' => 'Contact Numbers',
                     'delete' => 'Delete',
@@ -2358,7 +2357,6 @@ return [
         'back' => 'Back',
         'name' => 'Name',
         'configuration' => 'Configuration',
-        'activities' => 'Activities',
         'howdy' => 'Howdy!',
         'warehouses' => 'Warehouses',
         'warehouse' => 'Warehouse',
