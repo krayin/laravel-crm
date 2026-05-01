@@ -24,7 +24,7 @@
                 <div class="flex flex-col items-center gap-5">
                     <!-- Logo -->
                     <img
-                        class="w-max"
+                        class="max-h-16 max-w-[180px] w-auto object-contain"
                         src="{{ core()->getConfigData('general.general.admin_logo.logo_image') ? Storage::url(core()->getConfigData('general.general.admin_logo.logo_image')) : vite()->asset('images/logo.svg') }}"
                         alt="{{ config('app.name') }}"
                     />
