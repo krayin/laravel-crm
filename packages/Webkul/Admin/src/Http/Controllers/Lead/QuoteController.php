@@ -89,14 +89,14 @@ class QuoteController extends Controller
             ], 404);
         }
 
-        $to = []; 
+        $to = [];
 
-        if($lead) {
+        if ($lead) {
             $to[] = data_get($lead->person?->emails, '0.value');
 
         }
 
-        if($quote->person) {
+        if ($quote->person) {
             $to[] = data_get($quote->person?->emails, '0.value');
         }
 
