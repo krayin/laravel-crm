@@ -526,20 +526,29 @@
         Análisis técnico del patrón arquitectónico y la comunicación entre las tecnologías principales.
       </div>
 
-      <div class="arch-block">
+     <div class="arch-block">
         <div class="arch-layer">
           <span class="layer-tag frontend-tag">FRONTEND</span>
-          <p><strong style="color:var(--text);">Vue.js</strong> — <em style="color:var(--accent);">[Plantilla — contenido pendiente]</em> Explicar cómo Vue.js gestiona la interfaz de usuario: componentes reactivos, SPA y comunicación con el backend vía API REST.</p>
+          <p><strong style="color:var(--text);">Vue.js & Blade</strong> — Gestiona la interfaz de usuario mediante componentes reactivos. Se integra con el motor de plantillas Blade para crear una experiencia dinámica, comunicándose de forma asíncrona con el servidor vía peticiones HTTP (Axios/API REST) para actualizar la vista sin recargar la página.</p>
         </div>
         <div class="arch-arrow">↕</div>
         <div class="arch-layer">
           <span class="layer-tag backend-tag">BACKEND</span>
-          <p><strong style="color:var(--text);">PHP / Laravel (MVC)</strong> — <em style="color:var(--accent);">[Plantilla — contenido pendiente]</em> Describir la capa de lógica de negocio: Modelos, Vistas (Blade/API), Controladores y su rol en el patrón MVC.</p>
+          <p><strong style="color:var(--text);">PHP / Laravel (MVC)</strong> — Centraliza la lógica de negocio. Los Controladores interceptan las peticiones, aplican reglas comerciales y utilizan los Modelos (Eloquent ORM) para el manejo de datos. Retornan respuestas JSON para Vue.js o renderizan las Vistas iniciales.</p>
         </div>
         <div class="arch-arrow">↕</div>
         <div class="arch-layer">
           <span class="layer-tag db-tag">BASE DE DATOS</span>
-          <p><strong style="color:var(--text);">MySQL</strong> — <em style="color:var(--accent);">[Plantilla — contenido pendiente]</em> Describir el modelo de persistencia, las migraciones de Laravel y la estructura relacional de la base de datos.</p>
+          <p><strong style="color:var(--text);">MySQL</strong> — Actúa como la capa de persistencia estructurada. El sistema utiliza migraciones nativas de Laravel para definir y versionar el esquema relacional, garantizando la integridad referencial entre entidades como leads, contactos y actividades.</p>
+        </div>
+      </div>
+
+      <div style="margin-top:32px;">
+        <div class="content-block" style="max-width:700px;">
+          <p><strong style="color:var(--text);">Arquitectura Basada en Paquetes y Flujo MVC:</strong><br>
+          Krayin opera bajo un patrón MVC estricto, pero potenciado por una arquitectura modular. En lugar de un sistema monolítico, la lógica se divide en paquetes independientes (Packages) dentro del directorio <code>packages/Webkul/</code>. Cada módulo funciona con su propio <i>ServiceProvider</i>.</p>
+          <p>
+          <strong>El ciclo de comunicación:</strong> Cuando un usuario realiza una acción en la interfaz (Vista - Vue.js), se emite una petición al Router de Laravel. Este delega la tarea al <strong>Controlador</strong> específico del paquete correspondiente. El Controlador invoca al <strong>Modelo</strong> para consultar o escribir en MySQL. Una vez que la base de datos responde, el Controlador empaqueta los datos y los envía de vuelta al Frontend, donde Vue actualiza reactivamente la pantalla del usuario, completando así el ciclo MVC sin interrupciones.</p>
         </div>
       </div>
 
