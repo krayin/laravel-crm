@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proyecto IPS - Krayin CRM (Grupo)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .gradient-bg { background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%); }
+        .card { background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); }
+    </style>
+</head>
+<body class="bg-slate-900 text-slate-200 font-sans leading-relaxed">
+
+    <header class="gradient-bg py-16 px-6 text-center border-b border-slate-700">
+        <h1 class="text-4xl md:text-5xl font-extrabold text-white mb-4">Krayin CRM - Proyecto Final IPS</h1>
+        <p class="text-xl text-slate-400 max-w-3xl mx-auto">Implementación de Scrum y DevOps aplicada a un producto de software Open Source.</p>
+        <div class="mt-8 flex justify-center gap-4">
+            <span class="bg-blue-600 text-white px-4 py-2 rounded-full text-sm font-semibold">Sprint 0: Planificación</span>
+            <span class="bg-slate-700 text-slate-300 px-4 py-2 rounded-full text-sm font-semibold text-xs">Semestre 2026-A</span>
+        </div>
+    </header>
+
+    <main class="max-w-6xl mx-auto px-6 py-12 space-y-16">
+
+        <section>
+            <h2 class="text-2xl font-bold text-white mb-6 border-l-4 border-blue-500 pl-4">Equipo de Trabajo</h2>
+            <div class="grid grid-cols-1 md:grid-cols-5 gap-4">
+                
+                <div class="card p-4 rounded-xl text-center">
+                    <p class="font-bold text-white">Ronald Camani Chambi</p>
+                    <p class="text-xs text-slate-400 italic">Ingeniería de Sistemas</p>
+                </div>
+                
+                <div class="card p-4 rounded-xl text-center">
+                    <p class="font-bold text-white">Rodrigo Estefanero Palma</p>
+                    <p class="text-xs text-slate-400 italic">Ingeniería de Sistemas</p>
+                </div>
+
+                <div class="card p-4 rounded-xl text-center">
+                    <p class="font-bold text-white">Diego Schreiber Landeo</p>
+                    <p class="text-xs text-slate-400 italic">Ingeniería de Sistemas</p>
+                </div>
+
+                <div class="card p-4 rounded-xl text-center">
+                    <p class="font-bold text-white">Fernando Solsol Choque</p>
+                    <p class="text-xs text-slate-400 italic">Ingeniería de Sistemas</p>
+                </div>
+
+                <div class="card p-4 rounded-xl text-center">
+                    <p class="font-bold text-white">Rodolfo Soria Soncco</p>
+                    <p class="text-xs text-slate-400 italic">Ingeniería de Sistemas</p>
+                </div>
+
+            </div>
+        </section>
+
+        <section id="software" class="grid md:grid-cols-2 gap-12 items-center">
+            <div>
+                <h2 class="text-2xl font-bold text-white mb-6 border-l-4 border-blue-500 pl-4">Producto Seleccionado: Krayin CRM</h2>
+                <p class="mb-4">Krayin CRM es una plataforma empresarial diseñada para optimizar la gestión de ventas y clientes. Cumple con los requisitos académicos estrictos:</p>
+                <ul class="space-y-3 text-slate-300">
+                    <li class="flex items-center gap-2">✅ <strong>Licencia MIT:</strong> Permite fork y modificación libre.</li>
+                    <li class="flex items-center gap-2">✅ <strong>Complejidad:</strong> >10,000 líneas de código y arquitectura robusta.</li>
+                    <li class="flex items-center gap-2">✅ <strong>Stack:</strong> Laravel (PHP) y Vue.js.</li>
+                    <li class="flex items-center gap-2">✅ <strong>DevOps:</strong> Incluye Docker Compose nativo.</li>
+                </ul>
+            </div>
+            <div class="card p-6 rounded-2xl">
+                <h3 class="text-lg font-bold text-white mb-4 italic text-center text-blue-400">"Análisis del Estado Actual y Arquitectura"</h3>
+                <p class="text-sm leading-relaxed">[TEXTO DE LA TAREA 2 Y 3 ]</p>
+            </div>
+        </section>
+
+        <section id="cronograma">
+            <h2 class="text-2xl font-bold text-white mb-8 border-l-4 border-blue-500 pl-4 text-center">Cronograma de Sprints (Ciclos de 15 días)</h2>
+            <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse">
+                    <thead>
+                        <tr class="border-b border-slate-700 text-blue-400">
+                            <th class="py-4 px-4 uppercase text-xs tracking-wider">Iteración</th>
+                            <th class="py-4 px-4 uppercase text-xs tracking-wider">Entregable</th>
+                            <th class="py-4 px-4 uppercase text-xs tracking-wider">Fecha de Entrega</th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-sm">
+                        <tr class="border-b border-slate-800 hover:bg-slate-800/50 transition">
+                            <td class="py-4 px-4 font-semibold">Sprint 0</td>
+                            <td class="py-4 px-4 text-slate-400">Plan de proyecto y configuración de herramientas.</td>
+                            <td class="py-4 px-4 text-white">13 de Mayo, 2026</td>
+                        </tr>
+                        <tr class="border-b border-slate-800 hover:bg-slate-800/50 transition">
+                            <td class="py-4 px-4 font-semibold text-blue-300">Sprint 1-2</td>
+                            <td class="py-4 px-4 text-slate-400">Software funcional con Integración CI/CD y Scrum completo.</td>
+                            <td class="py-4 px-4 text-white">10 de Junio, 2026</td>
+                        </tr>
+                        <tr class="hover:bg-slate-800/50 transition">
+                            <td class="py-4 px-4 font-semibold text-blue-300">Sprint 3-4</td>
+                            <td class="py-4 px-4 text-slate-400">Mejoras, despliegue automatizado e informe final IEEE.</td>
+                            <td class="py-4 px-4 text-white">13 de Julio, 2026</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <p class="mt-4 text-xs text-slate-500 text-center italic">* Duración estricta de 15 días calendario por Sprint.</p>
+        </section>
+
+        <section class="card p-8 rounded-3xl border-blue-500/30">
+            <h2 class="text-2xl font-bold text-white mb-4">Alcance de Mejora Sugerido</h2>
+            <p class="text-slate-300">[LA TAREA 4]</p>
+        </section>
+
+    </main>
+
+    <footer class="py-12 border-t border-slate-800 text-center text-slate-500 text-sm">
+        <p>EPIS - UNSA | Ingeniería y Procesos de Software</p>
+        <p class="mt-2 text-blue-500 font-mono">https://github.com/-----/krayin-ips-2026A</p>
+    </footer>
+
+</body>
+</html>
