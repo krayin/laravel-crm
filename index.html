@@ -21,7 +21,11 @@
       --gold:      #f6ad55;
     }
 
-    html { scroll-behavior: smooth; }
+    /* ── SCROLL SNAPPING APLICADO ── */
+    html { 
+      scroll-behavior: smooth; 
+      scroll-snap-type: y mandatory; /* Obliga al auto-encuadre vertical */
+    }
 
     body {
       font-family: 'Outfit', sans-serif;
@@ -39,6 +43,13 @@
       pointer-events: none;
     }
 
+    /* ── CONTENEDOR PARA CENTRAR (Fix margen izquierdo) ── */
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
     /* ── LAYOUT ── */
     .layer { position: relative; z-index: 1; }
 
@@ -47,11 +58,15 @@
       display: flex;
       flex-direction: column;
       justify-content: center;
-      padding: 80px 5vw;
+      padding: 60px 5vw;
+      scroll-snap-align: start; /* El punto donde se detiene el scroll */
+      scroll-snap-stop: always; /* Evita pasarse de largo al hacer scroll rápido */
     }
 
     /* ── HERO ── */
-    #hero {
+    #hero .container {
+      display: flex;
+      flex-direction: column;
       align-items: center;
       text-align: center;
       gap: 32px;
@@ -118,17 +133,8 @@
       transform: translateY(-4px);
     }
 
-    .team-card .name {
-      font-weight: 600;
-      font-size: 0.95rem;
-    }
-
-    .team-card .role {
-      font-size: 0.75rem;
-      color: var(--muted);
-      font-family: 'DM Mono', monospace;
-      margin-top: 2px;
-    }
+    .team-card .name { font-weight: 600; font-size: 0.95rem; }
+    .team-card .role { font-size: 0.75rem; color: var(--muted); font-family: 'DM Mono', monospace; margin-top: 2px; }
 
     /* ── SECTION HEADERS ── */
     .section-label {
@@ -174,13 +180,7 @@
     }
 
     .content-block:hover { border-color: rgba(99,179,237,0.3); }
-
-    .content-block p {
-      color: #a0aec0;
-      font-size: 0.97rem;
-      margin-bottom: 16px;
-    }
-
+    .content-block p { color: #a0aec0; font-size: 0.97rem; margin-bottom: 16px; }
     .content-block p:last-child { margin-bottom: 0; }
 
     /* chips for criteria */
@@ -201,23 +201,9 @@
       align-items: flex-start;
     }
 
-    .criterion .icon {
-      font-size: 1.1rem;
-      margin-top: 2px;
-      flex-shrink: 0;
-    }
-
-    .criterion .label {
-      font-weight: 600;
-      font-size: 0.88rem;
-      color: var(--accent);
-      margin-bottom: 2px;
-    }
-
-    .criterion .desc {
-      font-size: 0.8rem;
-      color: var(--muted);
-    }
+    .criterion .icon { font-size: 1.1rem; margin-top: 2px; flex-shrink: 0; }
+    .criterion .label { font-weight: 600; font-size: 0.88rem; color: var(--accent); margin-bottom: 2px; }
+    .criterion .desc { font-size: 0.8rem; color: var(--muted); }
 
     /* module cards */
     .modules-grid {
@@ -235,35 +221,13 @@
       transition: border-color 0.3s, transform 0.3s;
     }
 
-    .module-card:hover {
-      border-color: var(--accent2);
-      transform: translateY(-4px);
-    }
-
-    .module-card .mod-icon {
-      font-size: 1.8rem;
-      margin-bottom: 12px;
-    }
-
-    .module-card h3 {
-      font-family: 'DM Serif Display', serif;
-      font-size: 1.2rem;
-      margin-bottom: 8px;
-    }
-
-    .module-card p {
-      font-size: 0.85rem;
-      color: var(--muted);
-    }
+    .module-card:hover { border-color: var(--accent2); transform: translateY(-4px); }
+    .module-card .mod-icon { font-size: 1.8rem; margin-bottom: 12px; }
+    .module-card h3 { font-family: 'DM Serif Display', serif; font-size: 1.2rem; margin-bottom: 8px; }
+    .module-card p { font-size: 0.85rem; color: var(--muted); }
 
     /* arch diagram */
-    .arch-block {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      max-width: 700px;
-    }
-
+    .arch-block { display: flex; flex-direction: column; gap: 12px; max-width: 700px; }
     .arch-layer {
       background: var(--card);
       border: 1px solid var(--border);
@@ -289,21 +253,10 @@
     .db-tag       { background: rgba(104,211,145,0.12); color: var(--accent3); border: 1px solid rgba(104,211,145,0.25); }
 
     .arch-layer p { font-size: 0.88rem; color: #a0aec0; }
-
-    .arch-arrow {
-      text-align: center;
-      color: var(--muted);
-      font-size: 1.2rem;
-    }
+    .arch-arrow { text-align: center; color: var(--muted); font-size: 1.2rem; }
 
     /* scope */
-    .scope-list {
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-      max-width: 800px;
-    }
-
+    .scope-list { display: flex; flex-direction: column; gap: 16px; max-width: 800px; }
     .scope-item {
       background: var(--card);
       border: 1px solid var(--border);
@@ -314,30 +267,12 @@
     }
 
     .scope-item:hover { border-color: var(--gold); }
-
-    .scope-item h3 {
-      font-weight: 600;
-      font-size: 1rem;
-      color: var(--gold);
-      margin-bottom: 6px;
-    }
-
-    .scope-item p {
-      font-size: 0.88rem;
-      color: var(--muted);
-    }
+    .scope-item h3 { font-weight: 600; font-size: 1rem; color: var(--gold); margin-bottom: 6px; }
+    .scope-item p { font-size: 0.88rem; color: var(--muted); }
 
     /* ── SCHEDULE ── */
-    #schedule {
-      align-items: flex-start;
-    }
-
-    .timeline {
-      position: relative;
-      max-width: 820px;
-      padding-left: 32px;
-    }
-
+    #schedule { align-items: flex-start; }
+    .timeline { position: relative; max-width: 820px; padding-left: 32px; }
     .timeline::before {
       content: '';
       position: absolute;
@@ -349,11 +284,7 @@
       border-radius: 2px;
     }
 
-    .timeline-item {
-      position: relative;
-      margin-bottom: 30px;
-    }
-
+    .timeline-item { position: relative; margin-bottom: 30px; }
     .timeline-dot {
       position: absolute;
       left: -39px;
@@ -367,7 +298,6 @@
     }
 
     .timeline-item:hover .timeline-dot { background: var(--accent); }
-
     .sprint-card {
       background: var(--card);
       border: 1px solid var(--border);
@@ -376,25 +306,9 @@
       transition: border-color 0.3s, transform 0.3s;
     }
 
-    .sprint-card:hover {
-      border-color: var(--accent);
-      transform: translateX(6px);
-    }
-
-    .sprint-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-bottom: 6px;
-    }
-
-    .sprint-name {
-      font-weight: 600;
-      font-size: 1rem;
-    }
-
+    .sprint-card:hover { border-color: var(--accent); transform: translateX(6px); }
+    .sprint-header { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px; margin-bottom: 6px; }
+    .sprint-name { font-weight: 600; font-size: 1rem; }
     .sprint-date {
       font-family: 'DM Mono', monospace;
       font-size: 0.73rem;
@@ -405,18 +319,8 @@
       border-radius: 100px;
     }
 
-    .sprint-desc {
-      font-size: 0.85rem;
-      color: var(--muted);
-    }
-
-    .sprint-milestone {
-      display: inline-block;
-      margin-top: 8px;
-      font-size: 0.75rem;
-      color: var(--gold);
-      font-family: 'DM Mono', monospace;
-    }
+    .sprint-desc { font-size: 0.85rem; color: var(--muted); }
+    .sprint-milestone { display: inline-block; margin-top: 8px; font-size: 0.75rem; color: var(--gold); font-family: 'DM Mono', monospace; }
 
     /* ── ASCII ELLIPSOID ── */
     #ascii-wrap {
@@ -441,6 +345,7 @@
       border-top: 1px solid var(--border);
       color: var(--muted);
       font-size: 0.82rem;
+      scroll-snap-align: end;
     }
 
     footer a { color: var(--accent); text-decoration: none; }
@@ -452,10 +357,7 @@
       transform: translateY(30px);
       transition: opacity 0.7s ease, transform 0.7s ease;
     }
-    .reveal.visible {
-      opacity: 1;
-      transform: none;
-    }
+    .reveal.visible { opacity: 1; transform: none; }
 
     /* ── ANIMATIONS ── */
     @keyframes fadeUp {
@@ -471,301 +373,287 @@
 </head>
 <body>
 
-<!-- ANIMATED BACKGROUND -->
 <canvas id="bg-canvas"></canvas>
 
-<!-- ═══════════════════════════════════════════
-     HERO
-═══════════════════════════════════════════ -->
 <section id="hero" class="layer">
-  <div class="badge">EPIS · UNSA · Semestre 2026-A</div>
+  <div class="container">
+    <div class="badge">EPIS · UNSA · Semestre 2026-A</div>
 
-  <h1>Krayin <em>CRM</em></h1>
+    <h1>Krayin <em>CRM</em></h1>
 
-  <p class="hero-sub">
-    Implementación de Scrum y DevOps aplicada a un producto de software Open Source.<br>
-    <strong style="color:var(--text);">Sprint 0 — Planificación</strong>
-  </p>
+    <p class="hero-sub">
+      Implementación de Scrum y DevOps aplicada a un producto de software Open Source.<br>
+      <strong style="color:var(--text);">Sprint 0 — Planificación</strong>
+    </p>
 
-  <!-- TEAM -->
-  <div class="team-grid">
-    <div class="team-card"><div class="name">Ronald Camani Chambi</div><div class="role">Ing. de Sistemas</div></div>
-    <div class="team-card"><div class="name">Rodrigo Estefanero Palma</div><div class="role">Ing. de Sistemas</div></div>
-    <div class="team-card"><div class="name">Diego Schreiber Landeo</div><div class="role">Ing. de Sistemas</div></div>
-    <div class="team-card"><div class="name">Fernando Solsol Choque</div><div class="role">Ing. de Sistemas</div></div>
-    <div class="team-card"><div class="name">Rodolfo Soria Soncco</div><div class="role">Ing. de Sistemas</div></div>
+    <div class="team-grid">
+      <div class="team-card"><div class="name">Ronald Camani Chambi</div><div class="role">Ing. de Sistemas</div></div>
+      <div class="team-card"><div class="name">Rodrigo Estefanero Palma</div><div class="role">Ing. de Sistemas</div></div>
+      <div class="team-card"><div class="name">Diego Schreiber Landeo</div><div class="role">Ing. de Sistemas</div></div>
+      <div class="team-card"><div class="name">Fernando Solsol Choque</div><div class="role">Ing. de Sistemas</div></div>
+      <div class="team-card"><div class="name">Rodolfo Soria Soncco</div><div class="role">Ing. de Sistemas</div></div>
+    </div>
+
+    <div id="ascii-wrap"></div>
   </div>
-
-  <!-- ASCII ELLIPSOID -->
-  <div id="ascii-wrap"></div>
 </section>
 
-<!-- ═══════════════════════════════════════════
-     TAREA 1 — Parte A: Presentación
-═══════════════════════════════════════════ -->
 <section id="tarea1a" class="layer">
-  <div class="reveal">
-    <div class="section-label">Tarea 1 · Parte A</div>
-    <h2 class="section-title">Presentación de Krayin CRM</h2>
-    <div class="divider"></div>
-    <div class="section-desc">
-      Resumen general del software seleccionado, su origen y contexto de uso empresarial.
-    </div>
-    <div class="content-block">
-      <p>
-        <em style="color:var(--accent);">[Plantilla — contenido pendiente]</em><br>
-        Redactar aquí: qué es Krayin CRM, su historia como herramienta open source creada por Webkul, y qué tipo de empresas lo utilizan (PYMES enfocadas en ventas B2B/B2C).
-      </p>
-      <p>
-        Incluir contexto sobre su posicionamiento en el ecosistema de CRMs de código abierto y su relevancia para proyectos académicos de esta naturaleza.
-      </p>
+  <div class="container">
+    <div class="reveal">
+      <div class="section-label">Tarea 1 · Parte A</div>
+      <h2 class="section-title">Presentación de Krayin CRM</h2>
+      <div class="divider"></div>
+      <div class="section-desc">
+        Resumen general del software seleccionado, su origen y contexto de uso empresarial.
+      </div>
+      <div class="content-block">
+        <p>
+          <em style="color:var(--accent);">[Plantilla — contenido pendiente]</em><br>
+          Redactar aquí: qué es Krayin CRM, su historia como herramienta open source creada por Webkul, y qué tipo de empresas lo utilizan (PYMES enfocadas en ventas B2B/B2C).
+        </p>
+        <p>
+          Incluir contexto sobre su posicionamiento en el ecosistema de CRMs de código abierto y su relevancia para proyectos académicos de esta naturaleza.
+        </p>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- ═══════════════════════════════════════════
-     TAREA 1 — Parte B: Criterios de Selección
-═══════════════════════════════════════════ -->
 <section id="tarea1b" class="layer">
-  <div class="reveal">
-    <div class="section-label">Tarea 1 · Parte B</div>
-    <h2 class="section-title">Criterios de Selección</h2>
-    <div class="divider"></div>
-    <div class="section-desc">
-      Justificación formal del cumplimiento de los criterios establecidos en la rúbrica académica.
-    </div>
-    <div class="criteria-grid">
-      <div class="criterion">
-        <div class="icon">✅</div>
-        <div>
-          <div class="label">Licencia MIT</div>
-          <div class="desc">Permite fork y modificación libre del código fuente sin restricciones comerciales.</div>
-        </div>
+  <div class="container">
+    <div class="reveal">
+      <div class="section-label">Tarea 1 · Parte B</div>
+      <h2 class="section-title">Criterios de Selección</h2>
+      <div class="divider"></div>
+      <div class="section-desc">
+        Justificación formal del cumplimiento de los criterios establecidos en la rúbrica académica.
       </div>
-      <div class="criterion">
-        <div class="icon">✅</div>
-        <div>
-          <div class="label">Dominio Empresarial</div>
-          <div class="desc">Pertenece al dominio CRM — gestión de relaciones con clientes, área de alto impacto en ventas.</div>
+      <div class="criteria-grid">
+        <div class="criterion">
+          <div class="icon">✅</div>
+          <div>
+            <div class="label">Licencia MIT</div>
+            <div class="desc">Permite fork y modificación libre del código fuente sin restricciones comerciales.</div>
+          </div>
         </div>
-      </div>
-      <div class="criterion">
-        <div class="icon">✅</div>
-        <div>
-          <div class="label">Stack Moderno</div>
-          <div class="desc">Laravel (PHP) en backend + Vue.js en frontend. Tecnologías vigentes en la industria.</div>
+        <div class="criterion">
+          <div class="icon">✅</div>
+          <div>
+            <div class="label">Dominio Empresarial</div>
+            <div class="desc">Pertenece al dominio CRM — gestión de relaciones con clientes, área de alto impacto en ventas.</div>
+          </div>
         </div>
-      </div>
-      <div class="criterion">
-        <div class="icon">✅</div>
-        <div>
-          <div class="label">Complejidad Mediana</div>
-          <div class="desc">Supera las 10 000 líneas de código con arquitectura MVC robusta y bien estructurada.</div>
+        <div class="criterion">
+          <div class="icon">✅</div>
+          <div>
+            <div class="label">Stack Moderno</div>
+            <div class="desc">Laravel (PHP) en backend + Vue.js en frontend. Tecnologías vigentes en la industria.</div>
+          </div>
         </div>
-      </div>
-      <div class="criterion">
-        <div class="icon">✅</div>
-        <div>
-          <div class="label">Docker Compose Nativo</div>
-          <div class="desc">Entorno de desarrollo contenedorizado incluido, listo para flujos CI/CD y DevOps.</div>
+        <div class="criterion">
+          <div class="icon">✅</div>
+          <div>
+            <div class="label">Complejidad Mediana</div>
+            <div class="desc">Supera las 10 000 líneas de código con arquitectura MVC robusta y bien estructurada.</div>
+          </div>
+        </div>
+        <div class="criterion">
+          <div class="icon">✅</div>
+          <div>
+            <div class="label">Docker Compose Nativo</div>
+            <div class="desc">Entorno de desarrollo contenedorizado incluido, listo para flujos CI/CD y DevOps.</div>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ═══════════════════════════════════════════
-     TAREA 2 — Funcionalidades Principales
-═══════════════════════════════════════════ -->
 <section id="tarea2" class="layer">
-  <div class="reveal">
-    <div class="section-label">Tarea 2</div>
-    <h2 class="section-title">Funcionalidades Principales</h2>
-    <div class="divider"></div>
-    <div class="section-desc">
-      Identificación y descripción de los módulos clave del sistema y los procesos de negocio que resuelven.
-    </div>
-    <div class="modules-grid">
-      <div class="module-card">
-        <div class="mod-icon">🎯</div>
-        <h3>Módulo de Leads</h3>
-        <p><em style="color:var(--accent);">[Plantilla — contenido pendiente]</em><br>Describir el módulo de prospectos: qué proceso de negocio resuelve y cómo gestiona el flujo de captación de clientes potenciales.</p>
+  <div class="container">
+    <div class="reveal">
+      <div class="section-label">Tarea 2</div>
+      <h2 class="section-title">Funcionalidades Principales</h2>
+      <div class="divider"></div>
+      <div class="section-desc">
+        Identificación y descripción de los módulos clave del sistema y los procesos de negocio que resuelven.
       </div>
-      <div class="module-card">
-        <div class="mod-icon">👥</div>
-        <h3>Módulo de Clientes</h3>
-        <p><em style="color:var(--accent);">[Plantilla — contenido pendiente]</em><br>Describir el módulo de gestión de clientes, contactos y cuentas empresariales.</p>
-      </div>
-      <div class="module-card">
-        <div class="mod-icon">📅</div>
-        <h3>Módulo de Actividades</h3>
-        <p><em style="color:var(--accent);">[Plantilla — contenido pendiente]</em><br>Describir el calendario de actividades, seguimiento de tareas y recordatorios comerciales.</p>
-      </div>
-      <div class="module-card">
-        <div class="mod-icon">📦</div>
-        <h3>Módulo de Productos</h3>
-        <p><em style="color:var(--accent);">[Plantilla — contenido pendiente]</em><br>Describir la gestión de catálogo de productos y su integración con el flujo de ventas.</p>
-      </div>
-      <div class="module-card">
-        <div class="mod-icon">📊</div>
-        <h3>Módulo Adicional</h3>
-        <p><em style="color:var(--accent);">[Plantilla — contenido pendiente]</em><br>Identificar un quinto módulo relevante del repositorio y describir su función dentro del sistema.</p>
+      <div class="modules-grid">
+        <div class="module-card">
+          <div class="mod-icon">🎯</div>
+          <h3>Módulo de Leads</h3>
+          <p><em style="color:var(--accent);">[Plantilla — contenido pendiente]</em><br>Describir el módulo de prospectos: qué proceso de negocio resuelve y cómo gestiona el flujo de captación de clientes potenciales.</p>
+        </div>
+        <div class="module-card">
+          <div class="mod-icon">👥</div>
+          <h3>Módulo de Clientes</h3>
+          <p><em style="color:var(--accent);">[Plantilla — contenido pendiente]</em><br>Describir el módulo de gestión de clientes, contactos y cuentas empresariales.</p>
+        </div>
+        <div class="module-card">
+          <div class="mod-icon">📅</div>
+          <h3>Módulo de Actividades</h3>
+          <p><em style="color:var(--accent);">[Plantilla — contenido pendiente]</em><br>Describir el calendario de actividades, seguimiento de tareas y recordatorios comerciales.</p>
+        </div>
+        <div class="module-card">
+          <div class="mod-icon">📦</div>
+          <h3>Módulo de Productos</h3>
+          <p><em style="color:var(--accent);">[Plantilla — contenido pendiente]</em><br>Describir la gestión de catálogo de productos y su integración con el flujo de ventas.</p>
+        </div>
+        <div class="module-card">
+          <div class="mod-icon">📊</div>
+          <h3>Módulo Adicional</h3>
+          <p><em style="color:var(--accent);">[Plantilla — contenido pendiente]</em><br>Identificar un quinto módulo relevante del repositorio y describir su función dentro del sistema.</p>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ═══════════════════════════════════════════
-     TAREA 3 — Arquitectura del Sistema
-═══════════════════════════════════════════ -->
 <section id="tarea3" class="layer">
-  <div class="reveal">
-    <div class="section-label">Tarea 3</div>
-    <h2 class="section-title">Arquitectura del Sistema</h2>
-    <div class="divider"></div>
-    <div class="section-desc">
-      Análisis técnico del patrón arquitectónico y la comunicación entre las tecnologías principales.
-    </div>
+  <div class="container">
+    <div class="reveal">
+      <div class="section-label">Tarea 3</div>
+      <h2 class="section-title">Arquitectura del Sistema</h2>
+      <div class="divider"></div>
+      <div class="section-desc">
+        Análisis técnico del patrón arquitectónico y la comunicación entre las tecnologías principales.
+      </div>
 
-    <div class="arch-block">
-      <div class="arch-layer">
-        <span class="layer-tag frontend-tag">FRONTEND</span>
-        <p><strong style="color:var(--text);">Vue.js</strong> — <em style="color:var(--accent);">[Plantilla — contenido pendiente]</em> Explicar cómo Vue.js gestiona la interfaz de usuario: componentes reactivos, SPA y comunicación con el backend vía API REST.</p>
+      <div class="arch-block">
+        <div class="arch-layer">
+          <span class="layer-tag frontend-tag">FRONTEND</span>
+          <p><strong style="color:var(--text);">Vue.js</strong> — <em style="color:var(--accent);">[Plantilla — contenido pendiente]</em> Explicar cómo Vue.js gestiona la interfaz de usuario: componentes reactivos, SPA y comunicación con el backend vía API REST.</p>
+        </div>
+        <div class="arch-arrow">↕</div>
+        <div class="arch-layer">
+          <span class="layer-tag backend-tag">BACKEND</span>
+          <p><strong style="color:var(--text);">PHP / Laravel (MVC)</strong> — <em style="color:var(--accent);">[Plantilla — contenido pendiente]</em> Describir la capa de lógica de negocio: Modelos, Vistas (Blade/API), Controladores y su rol en el patrón MVC.</p>
+        </div>
+        <div class="arch-arrow">↕</div>
+        <div class="arch-layer">
+          <span class="layer-tag db-tag">BASE DE DATOS</span>
+          <p><strong style="color:var(--text);">MySQL</strong> — <em style="color:var(--accent);">[Plantilla — contenido pendiente]</em> Describir el modelo de persistencia, las migraciones de Laravel y la estructura relacional de la base de datos.</p>
+        </div>
       </div>
-      <div class="arch-arrow">↕</div>
-      <div class="arch-layer">
-        <span class="layer-tag backend-tag">BACKEND</span>
-        <p><strong style="color:var(--text);">PHP / Laravel (MVC)</strong> — <em style="color:var(--accent);">[Plantilla — contenido pendiente]</em> Describir la capa de lógica de negocio: Modelos, Vistas (Blade/API), Controladores y su rol en el patrón MVC.</p>
-      </div>
-      <div class="arch-arrow">↕</div>
-      <div class="arch-layer">
-        <span class="layer-tag db-tag">BASE DE DATOS</span>
-        <p><strong style="color:var(--text);">MySQL</strong> — <em style="color:var(--accent);">[Plantilla — contenido pendiente]</em> Describir el modelo de persistencia, las migraciones de Laravel y la estructura relacional de la base de datos.</p>
-      </div>
-    </div>
 
-    <div style="margin-top:32px;">
-      <div class="content-block" style="max-width:700px;">
-        <p><em style="color:var(--accent);">[Plantilla — contenido pendiente]</em><br>
-        Redactar aquí el análisis conceptual completo del patrón MVC aplicado en Krayin CRM: cómo fluye una petición del usuario desde el navegador hasta la base de datos y viceversa, sin necesidad de incluir código.</p>
+      <div style="margin-top:32px;">
+        <div class="content-block" style="max-width:700px;">
+          <p><em style="color:var(--accent);">[Plantilla — contenido pendiente]</em><br>
+          Redactar aquí el análisis conceptual completo del patrón MVC aplicado en Krayin CRM: cómo fluye una petición del usuario desde el navegador hasta la base de datos y viceversa, sin necesidad de incluir código.</p>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ═══════════════════════════════════════════
-     TAREA 4 — Alcance de Mejora
-═══════════════════════════════════════════ -->
 <section id="tarea4" class="layer">
-  <div class="reveal">
-    <div class="section-label">Tarea 4</div>
-    <h2 class="section-title">Alcance de Mejora</h2>
-    <div class="divider"></div>
-    <div class="section-desc">
-      Propuesta concreta de mejoras y refactorizaciones a implementar durante los próximos Sprints.
-    </div>
-    <div class="scope-list">
-      <div class="scope-item">
-        <h3>Mejora 1 — [Título pendiente]</h3>
-        <p><em style="color:var(--accent);">[Plantilla — contenido pendiente]</em> Describir la primera mejora propuesta: puede ser optimización de una vista del frontend, traducción de secciones al español, u otra acción concreta y medible para los Sprints.</p>
+  <div class="container">
+    <div class="reveal">
+      <div class="section-label">Tarea 4</div>
+      <h2 class="section-title">Alcance de Mejora</h2>
+      <div class="divider"></div>
+      <div class="section-desc">
+        Propuesta concreta de mejoras y refactorizaciones a implementar durante los próximos Sprints.
       </div>
-      <div class="scope-item">
-        <h3>Mejora 2 — [Título pendiente]</h3>
-        <p><em style="color:var(--accent);">[Plantilla — contenido pendiente]</em> Describir la segunda mejora: refactorización de controladores pesados, separación de responsabilidades, o mejora en la organización del código backend.</p>
-      </div>
-      <div class="scope-item">
-        <h3>Mejora 3 — [Título pendiente]</h3>
-        <p><em style="color:var(--accent);">[Plantilla — contenido pendiente]</em> Describir la tercera mejora: por ejemplo, agregar una funcionalidad de reportes básica, un dashboard de métricas, o mejoras en el sistema de notificaciones.</p>
+      <div class="scope-list">
+        <div class="scope-item">
+          <h3>Mejora 1 — [Título pendiente]</h3>
+          <p><em style="color:var(--accent);">[Plantilla — contenido pendiente]</em> Describir la primera mejora propuesta: puede ser optimización de una vista del frontend, traducción de secciones al español, u otra acción concreta y medible para los Sprints.</p>
+        </div>
+        <div class="scope-item">
+          <h3>Mejora 2 — [Título pendiente]</h3>
+          <p><em style="color:var(--accent);">[Plantilla — contenido pendiente]</em> Describir la segunda mejora: refactorización de controladores pesados, separación de responsabilidades, o mejora en la organización del código backend.</p>
+        </div>
+        <div class="scope-item">
+          <h3>Mejora 3 — [Título pendiente]</h3>
+          <p><em style="color:var(--accent);">[Plantilla — contenido pendiente]</em> Describir la tercera mejora: por ejemplo, agregar una funcionalidad de reportes básica, un dashboard de métricas, o mejoras en el sistema de notificaciones.</p>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ═══════════════════════════════════════════
-     CRONOGRAMA
-═══════════════════════════════════════════ -->
 <section id="schedule" class="layer">
-  <div class="reveal">
-    <div class="section-label">Planificación</div>
-    <h2 class="section-title">Cronograma de Sprints</h2>
-    <div class="divider"></div>
-    <div class="section-desc">
-      Ciclos de 15 días calendario. Cada Sprint tiene un entregable concreto y una fecha de cierre estricta.
-    </div>
-
-    <div class="timeline">
-      <div class="timeline-item">
-        <div class="timeline-dot"></div>
-        <div class="sprint-card">
-          <div class="sprint-header">
-            <span class="sprint-name">Sprint 0 — Planificación</span>
-            <span class="sprint-date">Entrega: 13 may 2026</span>
-          </div>
-          <p class="sprint-desc">Plan de proyecto, configuración de herramientas, análisis inicial del repositorio y definición del alcance de mejora. <strong style="color:var(--gold);">(15% de la nota final)</strong></p>
-          <span class="sprint-milestone">🏁 Hito 1</span>
-        </div>
+  <div class="container">
+    <div class="reveal">
+      <div class="section-label">Planificación</div>
+      <h2 class="section-title">Cronograma de Sprints</h2>
+      <div class="divider"></div>
+      <div class="section-desc">
+        Ciclos de 15 días calendario. Cada Sprint tiene un entregable concreto y una fecha de cierre estricta.
       </div>
 
-      <div class="timeline-item">
-        <div class="timeline-dot" style="border-color:var(--accent2);"></div>
-        <div class="sprint-card">
-          <div class="sprint-header">
-            <span class="sprint-name">Sprint 1 — Desarrollo Inicial</span>
-            <span class="sprint-date">14 may → 28 may 2026</span>
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="sprint-card">
+            <div class="sprint-header">
+              <span class="sprint-name">Sprint 0 — Planificación</span>
+              <span class="sprint-date">Entrega: 13 may 2026</span>
+            </div>
+            <p class="sprint-desc">Plan de proyecto, configuración de herramientas, análisis inicial del repositorio y definición del alcance de mejora. <strong style="color:var(--gold);">(15% de la nota final)</strong></p>
+            <span class="sprint-milestone">🏁 Hito 1</span>
           </div>
-          <p class="sprint-desc">Primera iteración de desarrollo: configuración del entorno Docker, primeras User Stories implementadas y pipeline CI/CD inicial en GitHub Actions.</p>
         </div>
-      </div>
 
-      <div class="timeline-item">
-        <div class="timeline-dot" style="border-color:var(--accent2);"></div>
-        <div class="sprint-card">
-          <div class="sprint-header">
-            <span class="sprint-name">Sprint 2 — CI/CD y Scrum Completo</span>
-            <span class="sprint-date">29 may → 12 jun 2026</span>
+        <div class="timeline-item">
+          <div class="timeline-dot" style="border-color:var(--accent2);"></div>
+          <div class="sprint-card">
+            <div class="sprint-header">
+              <span class="sprint-name">Sprint 1 — Desarrollo Inicial</span>
+              <span class="sprint-date">14 may → 28 may 2026</span>
+            </div>
+            <p class="sprint-desc">Primera iteración de desarrollo: configuración del entorno Docker, primeras User Stories implementadas y pipeline CI/CD inicial en GitHub Actions.</p>
           </div>
-          <p class="sprint-desc">Software funcional con integración CI/CD completa, flujo Scrum documentado (Daily Scrum, Sprint Review, Retrospectiva) y despliegue automático.</p>
-          <span class="sprint-milestone">🏁 Hito 2 — Entrega: 10 jun 2026</span>
         </div>
-      </div>
 
-      <div class="timeline-item">
-        <div class="timeline-dot" style="border-color:var(--accent3);"></div>
-        <div class="sprint-card">
-          <div class="sprint-header">
-            <span class="sprint-name">Sprint 3 — Mejoras y Automatización</span>
-            <span class="sprint-date">13 jun → 27 jun 2026</span>
+        <div class="timeline-item">
+          <div class="timeline-dot" style="border-color:var(--accent2);"></div>
+          <div class="sprint-card">
+            <div class="sprint-header">
+              <span class="sprint-name">Sprint 2 — CI/CD y Scrum Completo</span>
+              <span class="sprint-date">29 may → 12 jun 2026</span>
+            </div>
+            <p class="sprint-desc">Software funcional con integración CI/CD completa, flujo Scrum documentado (Daily Scrum, Sprint Review, Retrospectiva) y despliegue automático.</p>
+            <span class="sprint-milestone">🏁 Hito 2 — Entrega: 10 jun 2026</span>
           </div>
-          <p class="sprint-desc">Implementación de las mejoras propuestas, refactorizaciones planificadas y automatización avanzada del despliegue.</p>
         </div>
-      </div>
 
-      <div class="timeline-item">
-        <div class="timeline-dot" style="border-color:var(--accent3);"></div>
-        <div class="sprint-card">
-          <div class="sprint-header">
-            <span class="sprint-name">Sprint 4 — Documentación e Informe IEEE</span>
-            <span class="sprint-date">28 jun → 12 jul 2026</span>
+        <div class="timeline-item">
+          <div class="timeline-dot" style="border-color:var(--accent3);"></div>
+          <div class="sprint-card">
+            <div class="sprint-header">
+              <span class="sprint-name">Sprint 3 — Mejoras y Automatización</span>
+              <span class="sprint-date">13 jun → 27 jun 2026</span>
+            </div>
+            <p class="sprint-desc">Implementación de las mejoras propuestas, refactorizaciones planificadas y automatización avanzada del despliegue.</p>
           </div>
-          <p class="sprint-desc">Redacción del informe final en formato IEEE, retrospectiva general del proyecto, métricas de DevOps y presentación ejecutiva al equipo docente.</p>
-          <span class="sprint-milestone">🏁 Hito 3 — Entrega: 13 jul 2026</span>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-dot" style="border-color:var(--accent3);"></div>
+          <div class="sprint-card">
+            <div class="sprint-header">
+              <span class="sprint-name">Sprint 4 — Documentación e Informe IEEE</span>
+              <span class="sprint-date">28 jun → 12 jul 2026</span>
+            </div>
+            <p class="sprint-desc">Redacción del informe final en formato IEEE, retrospectiva general del proyecto, métricas de DevOps y presentación ejecutiva al equipo docente.</p>
+            <span class="sprint-milestone">🏁 Hito 3 — Entrega: 13 jul 2026</span>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- FOOTER -->
 <footer>
   <p>EPIS — UNSA &nbsp;|&nbsp; Ingeniería y Procesos de Software &nbsp;|&nbsp; 2026-A</p>
   <p style="margin-top:6px;">
-    <a href="https://github.com/-----/krayin-ips-2026A" target="_blank">github.com/krayin-ips-2026A</a>
+    <a href="https://github.com/rodepx/krayin-ips-2026A" target="_blank">github.com/rodepx/krayin-ips-2026A</a>
   </p>
 </footer>
 
-<!-- ═══════════════════════════════════════════
-     SCRIPTS
-═══════════════════════════════════════════ -->
 <script>
 /* ── ANIMATED BACKGROUND (particle mesh + glow) ── */
 (function() {
