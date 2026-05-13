@@ -479,31 +479,36 @@
       <div class="section-desc">
         Identificación y descripción de los módulos clave del sistema y los procesos de negocio que resuelven.
       </div>
-      <div class="modules-grid">
+        <div class="modules-grid">
+        
         <div class="module-card">
           <div class="mod-icon">🎯</div>
-          <h3>Módulo de Leads</h3>
-          <p><em style="color:var(--accent);">[Plantilla — contenido pendiente]</em><br>Describir el módulo de prospectos: qué proceso de negocio resuelve y cómo gestiona el flujo de captación de clientes potenciales.</p>
+          <h3>Módulo: Lead</h3>
+          <p><strong style="color:var(--text);">Núcleo del sistema.</strong> Gestiona el pipeline comercial desde la captura hasta el cierre. Incluye tablero Kanban personalizable y creación automática desde PDF/imagen mediante Magic AI.</p>
         </div>
+
         <div class="module-card">
           <div class="mod-icon">👥</div>
-          <h3>Módulo de Clientes</h3>
-          <p><em style="color:var(--accent);">[Plantilla — contenido pendiente]</em><br>Describir el módulo de gestión de clientes, contactos y cuentas empresariales.</p>
+          <h3>Módulo: Contact</h3>
+          <p><strong style="color:var(--text);">Directorio maestro.</strong> Subdividido en Person (individuo) y Organization (empresa). Evita duplicar información y garantiza que cada prospecto se asocie a una entidad real.</p>
         </div>
+
         <div class="module-card">
           <div class="mod-icon">📅</div>
-          <h3>Módulo de Actividades</h3>
-          <p><em style="color:var(--accent);">[Plantilla — contenido pendiente]</em><br>Describir el calendario de actividades, seguimiento de tareas y recordatorios comerciales.</p>
+          <h3>Módulo: Activity</h3>
+          <p><strong style="color:var(--text);">Seguimiento comercial.</strong> Registra interacciones (Llamada, Reunión, Almuerzo) vinculadas a los leads. Ofrece vista de calendario, asignación de participantes y filtros.</p>
         </div>
+
         <div class="module-card">
           <div class="mod-icon">📦</div>
-          <h3>Módulo de Productos</h3>
-          <p><em style="color:var(--accent);">[Plantilla — contenido pendiente]</em><br>Describir la gestión de catálogo de productos y su integración con el flujo de ventas.</p>
+          <h3>Módulos: Quote / Product</h3>
+          <p><strong style="color:var(--text);">Propuestas formales.</strong> Paquetes integrados en <code>packages/Webkul/</code> que permiten gestionar el catálogo y crear cotizaciones formales para cerrar el proceso de ventas.</p>
         </div>
+
         <div class="module-card">
-          <div class="mod-icon">📊</div>
-          <h3>Módulo Adicional</h3>
-          <p><em style="color:var(--accent);">[Plantilla — contenido pendiente]</em><br>Identificar un quinto módulo relevante del repositorio y describir su función dentro del sistema.</p>
+          <div class="mod-icon">🔄</div>
+          <h3>Flujo Integrado</h3>
+          <p><strong style="color:var(--text);">Ciclo de negocio:</strong><br>1. <strong>Contact</strong> (se crea primero)<br>2. <strong>Lead</strong> (entra al pipeline)<br>3. <strong>Activity</strong> (seguimiento)<br>4. <strong>Quote</strong> (propuesta con productos)</p>
         </div>
       </div>
     </div>
