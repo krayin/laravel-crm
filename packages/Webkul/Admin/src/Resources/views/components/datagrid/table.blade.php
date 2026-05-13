@@ -69,8 +69,8 @@
                                     :class="{'cursor-pointer select-none hover:text-gray-800 dark:hover:text-white': column.sortable}"
                                     @click="sort(column)"
                                     v-if="column.visibility"
-                                > 
-                                    <p v-html="column.label"></p>
+                                >
+                                    <span>@{{ column.label }}</span>
 
                                     <i
                                         class="align-text-bottom text-base text-gray-600 dark:text-gray-300"
@@ -88,7 +88,7 @@
                                 @lang('admin::app.components.datagrid.table.actions')
                             </p>
                         </div>
-                        
+
                         <!-- Mobile Sort/Filter Header -->
                         <div class="hidden border-b bg-gray-50 px-4 py-3 text-black dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 max-lg:block">
                             <div class="flex items-center justify-between">
@@ -103,7 +103,7 @@
                                             :checked="['all', 'partial'].includes(applied.massActions.meta.mode)"
                                             @change="selectAll"
                                         >
-    
+
                                         <span
                                             class="icon-checkbox-outline cursor-pointer rounded-md text-2xl text-gray-500 peer-checked:text-brandColor"
                                             :class="[
@@ -115,7 +115,7 @@
                                         </span>
                                     </label>
                                 </div>
-                                
+
                                 <!-- Mobile Sort Dropdown -->
                                 <div class="flex w-full justify-end" v-if="available.columns.some(column => column.sortable)">
                                     <x-admin::dropdown position="bottom-{{ in_array(app()->getLocale(), ['fa', 'ar']) ? 'left' : 'right' }}">
@@ -128,12 +128,12 @@
                                                     <span>
                                                         Sort
                                                     </span>
-                    
+
                                                     <span class="icon-down-arrow text-2xl"></span>
                                                 </button>
                                             </div>
                                         </x-slot>
-                
+
                                         <x-slot:menu>
                                             <x-admin::dropdown.menu.item
                                                 v-for="column in available.columns.filter(column => column.sortable && column.visibility)"
@@ -198,9 +198,9 @@
                                 <template v-for="column in available.columns">
                                     <p
                                         class="break-words"
-                                        v-html="record[column.index]"
                                         v-if="column.visibility"
                                     >
+                                    @{{record[column.index]}}
                                     </p>
                                 </template>
 
@@ -219,7 +219,7 @@
                                     </span>
                                 </p>
                             </div>
-                            
+
                             <!-- Mobile Card View -->
                             <div
                                 class="hidden border-b px-4 py-4 text-black dark:border-gray-800 dark:text-gray-300 max-lg:block"
@@ -238,7 +238,7 @@
                                                     class="peer hidden"
                                                     v-model="applied.massActions.indices"
                                                 >
-        
+
                                                 <span class="icon-checkbox-outline peer-checked:icon-checkbox-select cursor-pointer rounded-md text-2xl text-gray-500 peer-checked:text-brandColor">
                                                 </span>
                                             </label>
@@ -266,7 +266,7 @@
                                     <template v-for="column in available.columns">
                                         <div class="flex flex-wrap items-baseline gap-x-2">
                                             <span class="text-slate-600 dark:text-gray-300" v-html="column.label + ':'"></span>
-                                            <span class="break-words font-medium text-slate-900 dark:text-white" v-html="record[column.index]"></span>
+                                            <span class="break-words font-medium text-slate-900 dark:text-white">@{{record[column.index]}}</span>
                                         </div>
                                     </template>
                                 </div>
@@ -291,7 +291,7 @@
             template: '#v-datagrid-table-template',
 
             props: ['isLoading', 'available', 'applied'],
-            
+
             computed: {
                 gridsCount() {
                     let count = this.available.columns.filter((column) => column.visibility).length;
