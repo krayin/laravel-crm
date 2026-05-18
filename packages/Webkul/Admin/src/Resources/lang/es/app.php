@@ -495,6 +495,7 @@ return [
                 'create-btn'             => 'Crear Persona',
                 'create-success'         => 'Persona creada con éxito.',
                 'update-success'         => 'Persona actualizada con éxito.',
+                'delete-success'         => 'Persona eliminada con éxito.',
                 'all-delete-success'     => 'Todas las personas seleccionadas fueron eliminadas exitosamente.',
                 'partial-delete-warning' => 'Algunas personas fueron eliminadas con éxito. Otras no se pudieron eliminar porque están vinculadas a clientes potenciales.',
                 'none-delete-warning'    => 'Ninguna de las personas seleccionadas pudo ser eliminada porque están vinculadas a clientes potenciales.',
