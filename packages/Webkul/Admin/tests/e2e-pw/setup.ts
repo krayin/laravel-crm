@@ -18,6 +18,15 @@ export const test = base.extend<AdminFixtures>({
 
         await page.waitForURL("**/admin/dashboard");
 
+        // Hide phpdebugbar to prevent it from intercepting pointer events on dropdowns.
+        await page.addInitScript(() => {
+            document.addEventListener('DOMContentLoaded', () => {
+                const style = document.createElement('style');
+                style.textContent = '.phpdebugbar { display: none !important; }';
+                document.head.appendChild(style);
+            });
+        });
+
         await use(page);
     },
 });

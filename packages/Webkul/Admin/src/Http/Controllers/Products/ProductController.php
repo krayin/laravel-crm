@@ -4,7 +4,6 @@ namespace Webkul\Admin\Http\Controllers\Products;
 
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\JsonResource;
-use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Event;
 use Illuminate\View\View;
 use Prettus\Repository\Criteria\RequestCriteria;
@@ -49,8 +48,6 @@ class ProductController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @return Response
      */
     public function store(AttributeForm $request)
     {
@@ -59,6 +56,13 @@ class ProductController extends Controller
         $product = $this->productRepository->create($request->all());
 
         Event::dispatch('product.create.after', $product);
+
+        if (request()->ajax()) {
+            return response()->json([
+                'data' => $product,
+                'message' => trans('admin::app.products.index.create-success'),
+            ]);
+        }
 
         session()->flash('success', trans('admin::app.products.index.create-success'));
 
@@ -152,10 +156,21 @@ class ProductController extends Controller
      */
     public function search(): JsonResource
     {
-        $products = $this->productRepository
+        $query = $this->productRepository
             ->pushCriteria(app(RequestCriteria::class))
-            ->orderBy('created_at', 'desc')
-            ->get();
+            ->orderBy('created_at', 'desc');
+
+        $excludedIds = request()->input('exclude_ids', []);
+
+        if (is_string($excludedIds)) {
+            $excludedIds = array_filter(array_map('trim', explode(',', $excludedIds)));
+        }
+
+        if (! empty($excludedIds)) {
+            $query->whereNotIn('products.id', $excludedIds);
+        }
+
+        $products = $query->get();
 
         return ProductResource::collection($products);
     }

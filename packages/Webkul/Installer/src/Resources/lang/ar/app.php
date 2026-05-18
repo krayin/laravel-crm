@@ -6,7 +6,7 @@ return [
             'leads' => [
                 'description' => 'الوصف',
                 'expected-close-date' => 'تاريخ الإغلاق المتوقع',
-                'lead-value' => 'قيمة العميل المحتمل',
+                'lead-value' => 'القيمة التقديرية للعميل المحتمل',
                 'sales-owner' => 'مالك المبيعات',
                 'source' => 'المصدر',
                 'title' => 'العنوان',

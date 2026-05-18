@@ -27,6 +27,8 @@ use Webkul\Lead\Repositories\SourceRepository;
 use Webkul\Lead\Repositories\StageRepository;
 use Webkul\Lead\Repositories\TypeRepository;
 use Webkul\Lead\Services\MagicAIService;
+use Webkul\Quote\Repositories\QuoteItemRepository;
+use Webkul\Quote\Repositories\QuoteRepository;
 use Webkul\Tag\Repositories\TagRepository;
 use Webkul\User\Repositories\UserRepository;
 
@@ -51,6 +53,8 @@ class LeadController extends Controller
         protected StageRepository $stageRepository,
         protected LeadRepository $leadRepository,
         protected ProductRepository $productRepository,
+        protected QuoteItemRepository $quoteItemRepository,
+        protected QuoteRepository $quoteRepository,
         protected PersonRepository $personRepository
     ) {
         request()->request->add(['entity_type' => 'leads']);
@@ -88,7 +92,7 @@ class LeadController extends Controller
             $pipeline = $this->pipelineRepository->getDefaultPipeline();
         }
 
-        if ($stageId = request()->query('pipeline_stage_id')) {
+        if (request()->query('pipeline_stage_id')) {
             $stages = $pipeline->stages->where('id', request()->query('pipeline_stage_id'));
         } else {
             $stages = $pipeline->stages;
@@ -126,7 +130,7 @@ class LeadController extends Controller
                     'pipeline.stages',
                     'stage',
                     'attribute_values',
-                ])->paginate(10)),
+                ])->orderBy('updated_at', 'desc')->paginate(10)),
 
                 'meta' => [
                     'current_page' => $paginator->currentPage(),
@@ -147,7 +151,13 @@ class LeadController extends Controller
      */
     public function create(): View
     {
-        return view('admin::leads.create');
+        $attributes = $this->attributeRepository
+            ->whereIn('code', ['description', 'title', 'lead_value', 'lead_type_id', 'lead_source_id', 'expected_close_date', 'user_id'])
+            ->where('entity_type', 'leads')
+            ->orderBy('sort_order', 'asc')
+            ->get();
+
+        return view('admin::leads.create', compact('attributes'));
     }
 
     /**
@@ -157,7 +167,7 @@ class LeadController extends Controller
     {
         Event::dispatch('lead.create.before');
 
-        $data = request()->all();
+        $data = $request->all();
 
         $data['status'] = 1;
 
@@ -208,9 +218,15 @@ class LeadController extends Controller
      */
     public function edit(int $id): View
     {
+        $attributes = $this->attributeRepository
+            ->whereIn('code', ['description', 'title', 'lead_value', 'lead_type_id', 'lead_source_id', 'expected_close_date', 'user_id'])
+            ->where('entity_type', 'leads')
+            ->orderBy('sort_order', 'asc')
+            ->get();
+
         $lead = $this->leadRepository->findOrFail($id);
 
-        return view('admin::leads.edit', compact('lead'));
+        return view('admin::leads.edit', compact('lead', 'attributes'));
     }
 
     /**

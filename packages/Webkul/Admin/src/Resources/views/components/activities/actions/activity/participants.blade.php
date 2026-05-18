@@ -10,7 +10,7 @@
         <!-- Search Button -->
         <div class="relative">
             <div 
-                class="relative rounded border border-gray-200 px-2 py-1 hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:hover:border-gray-400" 
+                class="relative rounded border border-gray-300 px-2 py-1 hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:hover:border-gray-400" 
                 role="button"
             >
                 <ul class="flex flex-wrap items-center gap-1">

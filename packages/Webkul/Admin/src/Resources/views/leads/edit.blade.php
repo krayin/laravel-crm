@@ -12,7 +12,7 @@
         method="PUT"
     >
         <div class="flex flex-col gap-4">
-            <div class="flex items-center justify-between rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
+            <div class="scroll-reactive-sticky sticky top-[60px] z-[1000] flex items-center justify-between rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm shadow-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
                 <div class="flex flex-col gap-2">
                     <x-admin::breadcrumbs 
                         name="leads.edit" 
@@ -61,8 +61,8 @@
             type="text/x-template"
             id="v-lead-edit-template"
         >
-            <div class="box-shadow flex flex-col gap-4 rounded-lg border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900">
-                <div class="flex gap-2 border-b border-gray-200 dark:border-gray-800">
+            <div class="box-shadow flex flex-col gap-4 rounded-lg border border-gray-300 bg-white dark:border-gray-800 dark:bg-gray-900">
+                <div class="flex gap-2 border-b border-gray-300 dark:border-gray-800">
                     <!-- Tabs -->
                     <template v-for="tab in tabs" :key="tab.id">
                         {!! view_render_event('admin.leads.edit.tabs.before', ['lead' => $lead]) !!}
@@ -104,57 +104,18 @@
                         <div class="w-1/2 max-md:w-full">
                             {!! view_render_event('admin.leads.edit.lead_details.attributes.before', ['lead' => $lead]) !!}
 
-                            <!-- Lead Details Title and Description -->
-                            <x-admin::attributes
-                                :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
-                                    ['code', 'NOTIN', ['lead_value', 'lead_type_id', 'lead_source_id', 'expected_close_date', 'user_id', 'lead_pipeline_id', 'lead_pipeline_stage_id']],
-                                    'entity_type' => 'leads',
-                                    'quick_add' => 1
-                                ])"
-                                :custom-validations="[
-                                    'expected_close_date' => [
-                                        'date_format:yyyy-MM-dd',
-                                        'after:' .  \Carbon\Carbon::yesterday()->format('Y-m-d')
-                                    ],
-                                ]"
-                                :entity="$lead"
-                            />
-
-                            <!-- Lead Details Other input fields -->
-                            <div class="flex gap-4 max-sm:flex-wrap">
-                                <div class="w-full">
-                                    <x-admin::attributes
-                                        :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
-                                            ['code', 'IN', ['lead_value', 'lead_type_id', 'lead_source_id']],
-                                            'entity_type' => 'leads',
-                                            'quick_add' => 1
-                                        ])"
-                                        :custom-validations="[
-                                            'expected_close_date' => [
-                                                'date_format:yyyy-MM-dd',
-                                                'after:' .  \Carbon\Carbon::yesterday()->format('Y-m-d')
-                                            ],
-                                        ]"
-                                        :entity="$lead"
-                                    />
-                                </div>
-                                    
-                                <div class="w-full">
-                                    <x-admin::attributes
-                                        :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
-                                            ['code', 'IN', ['expected_close_date', 'user_id']],
-                                            'entity_type' => 'leads',
-                                            'quick_add' => 1
-                                        ])"
-                                        :custom-validations="[
-                                            'expected_close_date' => [
-                                                'date_format:yyyy-MM-dd',
-                                                'after:' .  \Carbon\Carbon::yesterday()->format('Y-m-d')
-                                            ],
-                                        ]"
-                                        :entity="$lead"
-                                        />
-                                </div>
+                            <!-- Lead Attributes -->
+                            <div class="grid grid-cols-2 gap-4">
+                                <x-admin::attributes
+                                    :custom-attributes="$attributes"
+                                    :custom-validations="[
+                                        'expected_close_date' => [
+                                            'date_format:yyyy-MM-dd',
+                                            'after:' .  \Carbon\Carbon::yesterday()->format('Y-m-d')
+                                        ],
+                                    ]"
+                                    :entity="$lead"
+                                />
                             </div>
 
                             {!! view_render_event('admin.leads.edit.lead_details.attributes.after', ['lead' => $lead]) !!}
@@ -230,12 +191,10 @@
 
                         person:  @json($lead->person),  
 
-                        products: @json($lead->products),
-
                         tabs: [
-                            { id: 'lead-details', label: '@lang('admin::app.leads.edit.details')' },
-                            { id: 'contact-person', label: '@lang('admin::app.leads.edit.contact-person')' },
-                            { id: 'products', label: '@lang('admin::app.leads.edit.products')' }
+                            { id: 'lead-details', label: "@lang('admin::app.leads.edit.details')" },
+                            { id: 'contact-person', label: "@lang('admin::app.leads.edit.contact-person')" },
+                            { id: 'products', label: "@lang('admin::app.leads.edit.products')" }
                         ],
                     };
                 },

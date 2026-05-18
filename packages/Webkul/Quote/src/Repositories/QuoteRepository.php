@@ -7,6 +7,7 @@ use Illuminate\Support\Str;
 use Webkul\Attribute\Repositories\AttributeRepository;
 use Webkul\Attribute\Repositories\AttributeValueRepository;
 use Webkul\Core\Eloquent\Repository;
+use Webkul\Lead\Repositories\ProductRepository;
 use Webkul\Quote\Contracts\Quote;
 
 class QuoteRepository extends Repository
@@ -32,6 +33,7 @@ class QuoteRepository extends Repository
         protected AttributeRepository $attributeRepository,
         protected AttributeValueRepository $attributeValueRepository,
         protected QuoteItemRepository $quoteItemRepository,
+        protected ProductRepository $productRepository,
         Container $container
     ) {
         parent::__construct($container);
@@ -80,6 +82,8 @@ class QuoteRepository extends Repository
     {
         $quote = $this->find($id);
 
+        $originalLeadId = $quote->lead_id;
+
         parent::update($data, $id);
 
         /**
@@ -115,6 +119,21 @@ class QuoteRepository extends Repository
                     $this->quoteItemRepository->create(array_merge($itemData, [
                         'quote_id' => $id,
                     ]));
+
+                    if (! empty($data['lead_id'])) {
+                        $this->productRepository->updateOrCreate(
+                            [
+                                'lead_id' => $data['lead_id'],
+                                'product_id' => $itemData['product_id'],
+                            ],
+                            [
+                                'lead_id' => $data['lead_id'],
+                                'amount' => $itemData['price'] * $itemData['quantity'],
+                                'quantity' => $itemData['quantity'],
+                                'price' => $itemData['price'],
+                            ]
+                        );
+                    }
                 } else {
                     if (is_numeric($index = $previousItemIds->search($itemId))) {
                         $previousItemIds->forget($index);
@@ -126,6 +145,17 @@ class QuoteRepository extends Repository
         }
 
         foreach ($previousItemIds as $itemId) {
+            if (! empty($originalLeadId)) {
+                $deletedItem = $quote->items->firstWhere('id', $itemId);
+
+                if ($deletedItem?->product_id) {
+                    $this->productRepository->deleteWhere([
+                        'lead_id' => $originalLeadId,
+                        'product_id' => $deletedItem->product_id,
+                    ]);
+                }
+            }
+
             $this->quoteItemRepository->delete($itemId);
         }
 

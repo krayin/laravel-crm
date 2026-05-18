@@ -17,7 +17,7 @@
             </x-slot>
 
             <x-slot:header>
-                @if ($logo = core()->getConfigData('general.design.admin_logo.logo_image'))
+                @if ($logo = core()->getConfigData('general.general.admin_logo.logo_image'))
                     <img
                         class="h-10"
                         src="{{ Storage::url($logo) }}"
