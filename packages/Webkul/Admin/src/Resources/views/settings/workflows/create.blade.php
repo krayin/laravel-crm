@@ -7,7 +7,7 @@
 
     <x-admin::form :action="route('admin.settings.workflows.store')">
         <div class="flex flex-col gap-4">
-            <div class="flex items-center justify-between rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
+            <div class="scroll-reactive-sticky sticky top-[60px] z-[1000] flex items-center justify-between rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm shadow-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
                 <div class="flex flex-col gap-2">
                     {!! view_render_event('admin.settings.workflow.breadcrumbs.before') !!}
 
@@ -51,11 +51,11 @@
             type="text/x-template"
             id="v-workflow-template"
         >
-            <div class="box-shadow flex flex-col gap-4 rounded-lg border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900">
+            <div class="box-shadow flex flex-col gap-4 rounded-lg border border-gray-300 bg-white dark:border-gray-800 dark:bg-gray-900">
                 {!! view_render_event('admin.settings.workflows.create.form_controls.before') !!}
 
                 <!-- Tab Switcher -->
-                <div class="flex w-full gap-2 border-b border-gray-200 dark:border-gray-800">
+                <div class="flex w-full gap-2 border-b border-gray-300 dark:border-gray-800">
                     <!-- Tabs -->
                     <template
                         v-for="tab in tabs"

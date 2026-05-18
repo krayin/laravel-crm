@@ -1,8 +1,8 @@
-<div class="box-shadow rounded-lg border border-gray-200 bg-white p-4 dark:border-gray-800 dark:bg-gray-900">
+<div class="box-shadow rounded-lg border border-gray-300 bg-white p-4 dark:border-gray-800 dark:bg-gray-900">
     <div class="flex gap-4 max-md:flex-wrap">
         <!-- Total Revenue -->
         <div class="flex gap-2 max-md:flex-wrap md:flex-col">
-            <div class="flex min-w-[177px] flex-col gap-2 rounded-lg border border-gray-200 bg-white px-4 py-5 dark:border-gray-800 dark:bg-gray-900">
+            <div class="flex min-w-[177px] flex-col gap-2 rounded-lg border border-gray-300 bg-white px-4 py-5 dark:border-gray-800 dark:bg-gray-900">
                 <div class="shimmer h-[17px] w-20"></div>
 
                 <div class="flex gap-2">
@@ -12,7 +12,7 @@
                 </div>
             </div>
             
-            <div class="flex min-w-[177px] flex-col gap-2 rounded-lg border border-gray-200 bg-white px-4 py-5 dark:border-gray-800 dark:bg-gray-900">
+            <div class="flex min-w-[177px] flex-col gap-2 rounded-lg border border-gray-300 bg-white px-4 py-5 dark:border-gray-800 dark:bg-gray-900">
                 <div class="shimmer h-[17px] w-20"></div>
 
                 <div class="flex gap-2">

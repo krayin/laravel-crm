@@ -14,11 +14,13 @@ test.describe("quotes management", () => {
          */
         await adminPage.goto("admin/contacts/persons");
         const Person = await createPerson(adminPage);
+
         /**
          * Create Product.
          */
         await adminPage.goto("admin/products");
         const Product = await createProduct(adminPage);
+
         /**
          * Create quote.
          */
@@ -45,6 +47,7 @@ test.describe("quotes management", () => {
         await adminPage
             .getByRole("listitem")
             .filter({ hasText: Person.Name })
+            .first()
             .click();
 
         /**

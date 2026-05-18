@@ -6,7 +6,7 @@ return [
             'leads' => [
                 'description' => 'Mô tả',
                 'expected-close-date' => 'Ngày dự kiến đóng',
-                'lead-value' => 'Giá trị cơ hội',
+                'lead-value' => 'Giá trị ước tính của khách hàng tiềm năng',
                 'sales-owner' => 'Chủ sở hữu bán hàng',
                 'source' => 'Nguồn',
                 'title' => 'Tiêu đề',

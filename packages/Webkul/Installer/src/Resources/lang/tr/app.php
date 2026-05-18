@@ -6,7 +6,7 @@ return [
             'leads' => [
                 'description' => 'Açıklama',
                 'expected-close-date' => 'Beklenen Kapanış Tarihi',
-                'lead-value' => 'Potansiyel Değeri',
+                'lead-value' => 'Tahmini Lead Değeri',
                 'sales-owner' => 'Satış Sahibi',
                 'source' => 'Kaynak',
                 'title' => 'Başlık',
