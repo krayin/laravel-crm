@@ -1808,7 +1808,7 @@ return [
                     'source' => 'Source',
                     'title' => 'Title',
                     'tags' => 'Tags',
-                    'sales-owner' => 'Sales Owner', 
+                    'sales-owner' => 'Sales Owner',
                     'type' => 'Type',
                     'expected-close-date' => 'Expected Close Date',
                     'created-at' => 'Created At',
