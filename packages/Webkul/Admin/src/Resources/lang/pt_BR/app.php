@@ -505,7 +505,7 @@ return [
                 'partial-delete-warning' => 'Algumas pessoas foram excluídas com sucesso. Outras não puderam ser excluídas porque estão vinculadas a leads.',
                 'none-delete-warning' => 'Nenhuma das pessoas selecionadas pôde ser excluída porque estão vinculadas a leads.',
                 'no-selection' => 'Nenhuma pessoa foi selecionada para exclusão.',
-                'delete-failed' => "Você não pode excluir esta pessoa porque ela está associada a um lead.",
+                'delete-failed' => 'Você não pode excluir esta pessoa porque ela está associada a um lead.',
                 'delete-success' => 'Pessoa excluída com sucesso.',
                 'datagrid' => [
                     'contact-numbers' => 'Números de Contato',

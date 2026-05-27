@@ -504,7 +504,6 @@ return [
                 'all-delete-success' => 'Todas las personas seleccionadas fueron eliminadas exitosamente.',
                 'partial-delete-warning' => 'Algunas personas fueron eliminadas con éxito. Otras no se pudieron eliminar porque están vinculadas a clientes potenciales.',
                 'none-delete-warning' => 'Ninguna de las personas seleccionadas pudo ser eliminada porque están vinculadas a clientes potenciales.',
-                
                 'no-selection' => 'No se seleccionaron personas para eliminar.',
                 'delete-failed' => "No puedes eliminar a esta persona porque está asociada a un cliente potencial.",
                 'delete-success' => 'Persona eliminada con éxito.',
