@@ -17,7 +17,7 @@
                         $keyMappings = [
                             'lead-source-id' => 'source',
                             'lead-type-id' => 'type',
-                            'sales-owner' => 'sales-owner',
+                            'user-id' => 'sales-owner',
                             'expected-close-date' => 'expected-close-date',
                             'lead-value' => 'lead-value',
                         ];
