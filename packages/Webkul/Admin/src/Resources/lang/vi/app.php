@@ -505,7 +505,7 @@ return [
                 'partial-delete-warning' => 'Một số người đã được xóa thành công. Những người khác không thể xóa vì có liên kết với khách hàng tiềm năng.',
                 'none-delete-warning' => 'Không thể xóa bất kỳ người nào được chọn vì họ có liên kết với khách hàng tiềm năng.',
                 'no-selection' => 'Chưa chọn người nào để xóa.',
-                'delete-failed' =>  "Bạn không thể xóa người này vì nó được liên kết với một khách hàng tiềm năng.",
+                'delete-failed' => 'Bạn không thể xóa người này vì nó được liên kết với một khách hàng tiềm năng.',
                 'delete-success' => 'Người đã được xóa thành công.',
                 'datagrid' => [
                     'contact-numbers' => 'Số Liên hệ',
