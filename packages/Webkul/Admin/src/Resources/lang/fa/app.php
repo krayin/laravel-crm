@@ -352,8 +352,6 @@ return [
                     'explore-all-leads' => 'کاوش در تمامی سرنخ‌ها',
                     'explore-all-contacts' => 'کاوش در تمامی مخاطبین',
                     'explore-all-quotes' => 'کاوش در تمامی پیشنهادات',
-                    'explore-all-settings' => 'کاوش در تمامی تنظیمات',
-                    'explore-all-configurations' => 'کاوش در تمامی پیکربندی‌ها',
                     'explore-all-matching-products' => 'کاوش در تمامی محصولات مطابق ":query" (:count)',
                     'explore-all-matching-leads' => 'کاوش در تمامی سرنخ‌های مطابق ":query" (:count)',
                     'explore-all-matching-contacts' => 'کاوش در تمامی مخاطبین مطابق ":query" (:count)',

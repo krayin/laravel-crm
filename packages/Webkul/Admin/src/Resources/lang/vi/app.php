@@ -352,8 +352,6 @@ return [
                     'explore-all-leads' => 'Khám phá tất cả Khách hàng tiềm năng',
                     'explore-all-contacts' => 'Khám phá tất cả Liên hệ',
                     'explore-all-quotes' => 'Khám phá tất cả Báo giá',
-                    'explore-all-settings' => 'Khám phá tất cả Cài đặt',
-                    'explore-all-configurations' => 'Khám phá tất cả Cấu hình',
                     'explore-all-matching-products' => 'Khám phá tất cả sản phẩm khớp với ":query" (:count)',
                     'explore-all-matching-leads' => 'Khám phá tất cả khách hàng tiềm năng khớp với ":query" (:count)',
                     'explore-all-matching-contacts' => 'Khám phá tất cả liên hệ khớp với ":query" (:count)',

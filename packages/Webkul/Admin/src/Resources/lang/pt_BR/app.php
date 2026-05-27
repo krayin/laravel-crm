@@ -352,8 +352,6 @@ return [
                     'explore-all-leads' => 'Explorar todos as Oportunidades',
                     'explore-all-contacts' => 'Explorar todos os Contatos',
                     'explore-all-quotes' => 'Explorar todas as Cotações',
-                    'explore-all-settings' => 'Explorar todas as Configurações',
-                    'explore-all-configurations' => 'Explorar todas as Configurações',
                     'explore-all-matching-products' => 'Explorar todos os produtos correspondentes a ":query" (:count)',
                     'explore-all-matching-leads' => 'Explorar todos os negócios correspondentes a ":query" (:count)',
                     'explore-all-matching-contacts' => 'Explorar todos os contatos correspondentes a ":query" (:count)',

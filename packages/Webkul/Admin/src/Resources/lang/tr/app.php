@@ -352,8 +352,6 @@ return [
                     'explore-all-leads' => 'Tüm Müşterileri Keşfet',
                     'explore-all-contacts' => 'Tüm İletişimleri Keşfet',
                     'explore-all-quotes' => 'Tüm Teklifleri Keşfet',
-                    'explore-all-settings' => 'Tüm Ayarları Keşfet',
-                    'explore-all-configurations' => 'Tüm Yapılandırmaları Keşfet',
                     'explore-all-matching-products' => '":query" (:count) ile eşleşen tüm ürünleri keşfet',
                     'explore-all-matching-leads' => '":query" (:count) ile eşleşen tüm müşterileri keşfet',
                     'explore-all-matching-contacts' => '":query" (:count) ile eşleşen tüm iletişimleri keşfet',

@@ -352,8 +352,6 @@ return [
                     'explore-all-leads' => 'Explore all Leads',
                     'explore-all-contacts' => 'Explore all Contacts',
                     'explore-all-quotes' => 'Explore all Quotes',
-                    'explore-all-settings' => 'Explore all Settings',
-                    'explore-all-configurations' => 'Explore all Configurations',
                     'explore-all-matching-products' => 'Explore all products matching ":query" (:count)',
                     'explore-all-matching-leads' => 'Explore all leads matching ":query" (:count)',
                     'explore-all-matching-contacts' => 'Explore all contacts matching ":query" (:count)',

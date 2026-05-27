@@ -352,8 +352,6 @@ return [
                     'explore-all-leads' => 'استكشاف جميع العملاء المحتملين',
                     'explore-all-contacts' => 'استكشاف جميع جهات الاتصال',
                     'explore-all-quotes' => 'استكشاف جميع عروض الأسعار',
-                    'explore-all-settings' => 'استكشاف جميع الإعدادات',
-                    'explore-all-configurations' => 'استكشاف جميع التكوينات',
                     'explore-all-matching-products' => 'استكشاف جميع المنتجات المطابقة لـ ":query" (:count)',
                     'explore-all-matching-leads' => 'استكشاف جميع العملاء المحتملين المطابقين لـ ":query" (:count)',
                     'explore-all-matching-contacts' => 'استكشاف جميع جهات الاتصال المطابقة لـ ":query" (:count)',
