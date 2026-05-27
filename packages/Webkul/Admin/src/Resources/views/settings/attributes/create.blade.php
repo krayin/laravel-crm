@@ -14,7 +14,7 @@
             {!! view_render_event('admin.settings.attributes.create.form_controls.before') !!}
 
             <!-- actions buttons -->
-            <div class="flex items-center justify-between rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
+            <div class="scroll-reactive-sticky sticky top-[60px] z-[1000] flex items-center justify-between rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm shadow-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
                 <div class="flex flex-col gap-2">
                     {!! view_render_event('admin.settings.attributes.create.breadcrumbs.before') !!}
 
@@ -73,7 +73,7 @@
             <div class="flex gap-2.5 max-xl:flex-wrap">
                 <!-- Left sub Component -->
                 <div class="flex flex-1 flex-col gap-2 max-xl:flex-auto">
-                    <div class="box-shadow rounded-lg border border-gray-200 bg-white p-4 dark:border-gray-800 dark:bg-gray-900">
+                    <div class="box-shadow rounded-lg border border-gray-300 bg-white p-4 dark:border-gray-800 dark:bg-gray-900">
                         <p class="mb-4 text-base font-semibold text-gray-800 dark:text-white">
                             @lang('admin::app.settings.attributes.create.labels')
                         </p>
@@ -100,6 +100,32 @@
                         </x-admin::form.control-group>
 
                         {!! view_render_event('admin.settings.attributes.create.form_controls.name.after') !!}
+
+                        {!! view_render_event('admin.settings.attributes.create.form_controls.quick_add.before') !!}
+                        
+                        <!-- Quick Add --> 
+                        <x-admin::form.control-group>
+                            <x-admin::form.control-group.label for="quick_add" class="mb-0">
+                                @lang('admin::app.settings.attributes.create.quick_add')
+                            </x-admin::form.control-group.label>
+
+                            <input
+                                type="hidden"
+                                name="quick_add"
+                                :value="0"
+                            />
+
+                            <x-admin::form.control-group.control
+                                type="switch"
+                                name="quick_add"
+                                value="1"
+                                :label="trans('admin::app.settings.attributes.create.quick_add')"
+                                :checked="false"
+                            />
+
+                        </x-admin::form.control-group>
+
+                        {!! view_render_event('admin.settings.attributes.create.form_controls.quick_add.after') !!}
 
                         <!-- Options -->
                         <div

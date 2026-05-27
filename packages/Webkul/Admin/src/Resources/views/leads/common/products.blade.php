@@ -1,8 +1,4 @@
-{!! view_render_event('admin.leads.create.products.form_controls.before') !!}
-
 <v-product-list :data="products"></v-product-list>
-
-{!! view_render_event('admin.leads.create.products.form_controls.after') !!}
 
 @pushOnce('scripts')
     <script
@@ -184,13 +180,20 @@
                 }
             },
 
+
+            created() {
+                if (! this.data) {
+                    this.addProduct();
+                }
+            },
+
             methods: {
                 addProduct() {
                     this.products.push({
                         id: null,
                         product_id: null,
                         name: '',
-                        quantity: 1,
+                        quantity: 0,
                         price: 0,
                         amount: null,
                     })
@@ -224,7 +227,7 @@
                 },
 
                 src() {
-                    return '{{ route('admin.products.search') }}';
+                    return "{{ route('admin.products.search') }}";
                 },
 
                 params() {

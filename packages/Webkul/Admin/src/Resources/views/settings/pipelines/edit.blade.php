@@ -11,7 +11,7 @@
         method="POST"
     >
         <!-- Header section -->
-        <div class="flex flex-col gap-2 rounded-lg border border-gray-200 bg-white text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
+        <div class="flex flex-col gap-2 rounded-lg border border-gray-300 bg-white text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
             <div class="flex items-center justify-between px-4 py-2">
                 <div class="flex flex-col gap-2">
                     {!! view_render_event('admin.settings.pipelines.edit.breadcrumbs.before', ['pipeline' => $pipeline]) !!}
@@ -47,7 +47,7 @@
                 </div>
             </div>
 
-            <div class="flex gap-4 border-t border-gray-200 px-4 py-2 align-top dark:border-gray-800 max-sm:flex-wrap">
+            <div class="flex gap-4 border-t border-gray-300 px-4 py-2 align-top dark:border-gray-800 max-sm:flex-wrap">
                 {!! view_render_event('admin.settings.pipelines.edit.form.name.before', ['pipeline' => $pipeline]) !!}
 
                 <!-- Pipeline Name -->
@@ -147,7 +147,7 @@
                 >
                     <template #item="{ element, index }">
                         <div ::class="{ draggable: isDragable(element) }" class="flex gap-4 overflow-x-auto">
-                            <div class="flex min-w-[275px] max-w-[275px] flex-col justify-between rounded-lg border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900">
+                            <div class="flex min-w-[275px] max-w-[275px] flex-col justify-between rounded-lg border border-gray-300 bg-white dark:border-gray-800 dark:bg-gray-900">
                                 <div class="flex flex-col gap-6 px-4 py-3">
                                     <!-- Stage Title and Action -->
                                     <div class="flex items-center justify-between">
@@ -227,7 +227,7 @@
 
                                 <!-- Remove Stage -->
                                 <div
-                                    class="flex cursor-pointer items-center gap-2 border-t border-gray-200 p-2 text-red-600 dark:border-gray-800" 
+                                    class="flex cursor-pointer items-center gap-2 border-t border-gray-300 p-2 text-red-600 dark:border-gray-800" 
                                     @click="remove(element)"
                                     v-if="isDragable(element)"
                                 >
@@ -243,7 +243,7 @@
                 </draggable>
 
                 <!-- Add New Stage Card -->
-                <div class="flex min-h-[400px] min-w-[275px] max-w-[275px] flex-col items-center justify-center gap-1 rounded-lg border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900">
+                <div class="flex min-h-[400px] min-w-[275px] max-w-[275px] flex-col items-center justify-center gap-1 rounded-lg border border-gray-300 bg-white dark:border-gray-800 dark:bg-gray-900">
                     <div class="flex flex-col items-center justify-center gap-6 px-4 py-3">
                         <div class="grid justify-center justify-items-center gap-3.5 text-center">
                             <div class="flex flex-col items-center gap-2">

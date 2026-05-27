@@ -72,7 +72,7 @@
             ref="dropdownContainer"
             v-if="isEditing"
         >
-            <div class="flex min-h-[38px] w-full items-center rounded border border-gray-200 px-2.5 py-1.5 text-sm font-normal text-gray-800 transition-all hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 dark:focus:border-gray-400 ltr:pr-16 rtl:pl-16">
+            <div class="flex min-h-[38px] w-full items-center rounded border border-gray-300 px-2.5 py-1.5 text-sm font-normal text-gray-800 transition-all hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 dark:focus:border-gray-400 ltr:pr-16 rtl:pl-16">
                 <ul class="flex flex-wrap items-center gap-1">
                     <li
                         v-for="option in tempOptions"

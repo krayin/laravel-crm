@@ -20,7 +20,7 @@
                         <x-admin::table.thead>
                             <x-admin::table.thead.tr>
                                 <x-admin::table.th>
-                                    @lang('admin::app.products.view.inventory.source')
+                                    @lang('admin::app.products.view.inventory.warehouse')
                                 </x-admin::table.th>
 
                                 <x-admin::table.th >
@@ -75,7 +75,7 @@
                                 </x-admin::table.tbody.tr>
 
                                 <template v-for="location in warehouse.locations">
-                                    <x-admin::table.tbody.tr class="border-b border-gray-200 hover:bg-gray-50 dark:border-gray-800 dark:hover:bg-gray-950">
+                                    <x-admin::table.tbody.tr class="border-b border-gray-300 hover:bg-gray-50 dark:border-gray-800 dark:hover:bg-gray-950">
                                         <x-admin::table.td class="dark:text-white">
                                             @{{ location.name }}
                                         </x-admin::table.td>
@@ -105,10 +105,9 @@
                 {!! view_render_event('admin.products.view.inventory.source.before', ['product' => $product]) !!}
 
                 <!-- Add Source dropdown -->
-                <div v-if="notAddedWarehouses.length">
+                <div v-if="notAddedWarehouses.length" class="relative">
                     <x-admin::dropdown
                         position="bottom-right"
-                        class="!static"
                     >
                         <x-slot:toggle>
                             <button
@@ -117,11 +116,10 @@
                             >
                                 <i class="icon-add text-md !text-brandColor"></i>
 
-                                @lang('admin::app.products.view.inventory.add-source')
+                                @lang('admin::app.products.view.inventory.add-warehouse')
                             </button>
-                        </x-slot>
-
-                        <x-slot:menu class="!top-[30px] max-h-[200px] overflow-auto">
+                        </x-slot:toggle>
+                        <x-slot:menu class="max-h-[200px] overflow-auto">
                             {!! view_render_event('admin.products.view.inventory.source.menu.item.before', ['product' => $product]) !!}
 
                             <x-admin::dropdown.menu.item

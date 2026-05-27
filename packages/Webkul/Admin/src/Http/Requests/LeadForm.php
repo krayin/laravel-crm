@@ -2,7 +2,6 @@
 
 namespace Webkul\Admin\Http\Requests;
 
-use Carbon\Carbon;
 use Illuminate\Foundation\Http\FormRequest;
 use Webkul\Attribute\Repositories\AttributeRepository;
 use Webkul\Attribute\Repositories\AttributeValueRepository;
@@ -127,11 +126,6 @@ class LeadForm extends FormRequest
                 $this->rules = array_merge($this->rules, $validations);
             }
         }
-
-        $this->rules['expected_close_date'] = [
-            'date_format:Y-m-d',
-            'after:'.Carbon::yesterday()->format('Y-m-d'),
-        ];
 
         return [
             ...$this->rules,

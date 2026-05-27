@@ -18,7 +18,7 @@
     >
         <div class="w-full">
             <!-- Table view for larger screens, Card view for mobile -->
-            <div class="table-responsive box-shadow rounded-t-0 grid w-full overflow-hidden border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900">
+            <div class="table-responsive box-shadow rounded-t-0 grid w-full overflow-hidden border border-gray-300 bg-white dark:border-gray-800 dark:bg-gray-900">
                 <!-- Table Header - Always visible on all screens -->
                 <slot
                     name="header"
