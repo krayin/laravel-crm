@@ -2188,7 +2188,6 @@ return [
         'back' => 'Voltar',
         'name' => 'Nome',
         'configuration' => 'Configuração',
-        'activities' => 'Atividades',
         'howdy' => 'Olá!',
         'warehouses' => 'Depósitos',
         'warehouse' => 'Depósito',
