@@ -210,6 +210,10 @@ class LeadDataGrid extends DataGrid
                 ],
             ],
             'closure' => function ($row) {
+                if (! $row->person_id) {
+                    return '--';
+                }
+
                 $route = route('admin.contacts.persons.view', $row->person_id);
 
                 return "<a class=\"text-brandColor transition-all hover:underline\" href='".$route."'>".$row->person_name.'</a>';

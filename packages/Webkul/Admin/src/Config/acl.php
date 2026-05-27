@@ -17,6 +17,11 @@ return [
         'route' => ['admin.leads.create', 'admin.leads.store'],
         'sort' => 1,
     ], [
+        'key' => 'leads.create.quick-create',
+        'name' => 'admin::app.acl.quick_add',
+        'route' => ['admin.leads.create', 'admin.leads.store'],
+        'sort' => 1,
+    ], [
         'key' => 'leads.view',
         'name' => 'admin::app.acl.view',
         'route' => 'admin.leads.view',
@@ -97,6 +102,11 @@ return [
         'route' => ['admin.mail.store'],
         'sort' => 6,
     ], [
+        'key' => 'mail.compose.quick-create',
+        'name' => 'admin::app.acl.quick_add',
+        'route' => ['admin.mail.store'],
+        'sort' => 6,
+    ], [
         'key' => 'mail.view',
         'name' => 'admin::app.acl.view',
         'route' => 'admin.mail.view',
@@ -147,6 +157,11 @@ return [
         'route' => ['admin.contacts.persons.create', 'admin.contacts.persons.store'],
         'sort' => 2,
     ], [
+        'key' => 'contacts.persons.create.quick-create',
+        'name' => 'admin::app.acl.quick_add',
+        'route' => ['admin.contacts.persons.create', 'admin.contacts.persons.store'],
+        'sort' => 2,
+    ], [
         'key' => 'contacts.persons.edit',
         'name' => 'admin::app.acl.edit',
         'route' => ['admin.contacts.persons.edit', 'admin.contacts.persons.update'],
@@ -172,6 +187,11 @@ return [
         'route' => ['admin.contacts.organizations.create', 'admin.contacts.organizations.store'],
         'sort' => 1,
     ], [
+        'key' => 'contacts.organizations.create.quick-create',
+        'name' => 'admin::app.acl.quick_add',
+        'route' => ['admin.contacts.organizations.create', 'admin.contacts.organizations.store'],
+        'sort' => 1,
+    ], [
         'key' => 'contacts.organizations.edit',
         'name' => 'admin::app.acl.edit',
         'route' => ['admin.contacts.organizations.edit', 'admin.contacts.organizations.update'],
@@ -189,6 +209,11 @@ return [
     ], [
         'key' => 'products.create',
         'name' => 'admin::app.acl.create',
+        'route' => ['admin.products.create', 'admin.products.store'],
+        'sort' => 1,
+    ], [
+        'key' => 'products.create.quick-create',
+        'name' => 'admin::app.acl.quick_add',
         'route' => ['admin.products.create', 'admin.products.store'],
         'sort' => 1,
     ], [

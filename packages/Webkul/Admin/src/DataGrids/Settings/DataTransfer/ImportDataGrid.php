@@ -35,6 +35,7 @@ class ImportDataGrid extends DataGrid
             'index' => 'id',
             'label' => trans('admin::app.settings.data-transfer.imports.index.datagrid.id'),
             'type' => 'integer',
+            'searchable' => true,
             'filterable' => true,
             'sortable' => true,
         ]);
@@ -43,6 +44,7 @@ class ImportDataGrid extends DataGrid
             'index' => 'type',
             'label' => trans('admin::app.settings.data-transfer.imports.index.datagrid.type'),
             'type' => 'string',
+            'searchable' => true,
             'filterable' => true,
             'sortable' => true,
         ]);
@@ -51,6 +53,7 @@ class ImportDataGrid extends DataGrid
             'index' => 'state',
             'label' => trans('admin::app.settings.data-transfer.imports.index.datagrid.state'),
             'type' => 'string',
+            'searchable' => true,
             'filterable' => true,
             'sortable' => true,
         ]);
@@ -81,6 +84,7 @@ class ImportDataGrid extends DataGrid
             'index' => 'started_at',
             'label' => trans('admin::app.settings.data-transfer.imports.index.datagrid.started-at'),
             'type' => 'date',
+            'searchable' => true,
             'filterable' => true,
             'filterable_type' => 'date_range',
             'sortable' => true,
@@ -90,6 +94,7 @@ class ImportDataGrid extends DataGrid
             'index' => 'completed_at',
             'label' => trans('admin::app.settings.data-transfer.imports.index.datagrid.completed-at'),
             'type' => 'date',
+            'searchable' => true,
             'filterable' => true,
             'filterable_type' => 'date_range',
             'sortable' => true,

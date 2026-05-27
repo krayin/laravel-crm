@@ -42,7 +42,7 @@ class RoleController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(): RedirectResponse
+    public function store(): RedirectResponse|JsonResponse
     {
         $this->validate(request(), [
             'name' => 'required',
@@ -68,6 +68,13 @@ class RoleController extends Controller
         $role = $this->roleRepository->create($data);
 
         Event::dispatch('settings.role.create.after', $role);
+
+        if (request()->ajax()) {
+            return response()->json([
+                'data' => $role,
+                'message' => trans('admin::app.settings.roles.index.create-success'),
+            ]);
+        }
 
         session()->flash('success', trans('admin::app.settings.roles.index.create-success'));
 

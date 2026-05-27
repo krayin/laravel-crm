@@ -89,9 +89,17 @@ class QuoteController extends Controller
             ], 404);
         }
 
-        $to = data_get($lead->person?->emails, '0.value');
+        $to = [];
 
-        if (! $to) {
+        if ($lead) {
+            $to[] = data_get($lead->person?->emails, '0.value');
+        }
+
+        if ($quote->person) {
+            $to[] = data_get($quote->person?->emails, '0.value');
+        }
+
+        if (empty($to)) {
             return response()->json([
                 'message' => trans('admin::app.leads.view.quotes.person-email-unavailable'),
             ], 422);
@@ -101,7 +109,7 @@ class QuoteController extends Controller
             $pdfContent = $this->renderQuotePdfContent($quote);
 
             Mail::send(new Common([
-                'to' => [$to],
+                'to' => $to,
                 'subject' => trans('admin::app.leads.view.quotes.mail-subject', ['subject' => $quote->subject]),
                 'body' => trans('admin::app.leads.view.quotes.mail-body'),
                 'attachments' => [[

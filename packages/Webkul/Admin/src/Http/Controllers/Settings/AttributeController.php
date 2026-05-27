@@ -49,7 +49,7 @@ class AttributeController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(): RedirectResponse
+    public function store(): RedirectResponse|JsonResponse
     {
         $this->validate(request(), [
             'code' => ['required', 'unique:attributes,code,NULL,NULL,entity_type,'.request('entity_type'), new Code],
@@ -59,11 +59,16 @@ class AttributeController extends Controller
 
         Event::dispatch('settings.attribute.create.before');
 
-        request()->request->add(['quick_add' => 1]);
-
         $attribute = $this->attributeRepository->create(request()->all());
 
         Event::dispatch('settings.attribute.create.after', $attribute);
+
+        if (request()->ajax()) {
+            return response()->json([
+                'data' => $attribute,
+                'message' => trans('admin::app.settings.attributes.index.create-success'),
+            ]);
+        }
 
         session()->flash('success', trans('admin::app.settings.attributes.index.create-success'));
 
@@ -92,6 +97,10 @@ class AttributeController extends Controller
         ]);
 
         Event::dispatch('settings.attribute.update.before', $id);
+
+        $quickAdd = request()->has('quick_add') ? 1 : 0;
+
+        request()->merge(['quick_add' => $quickAdd]);
 
         $attribute = $this->attributeRepository->update(request()->all(), $id);
 

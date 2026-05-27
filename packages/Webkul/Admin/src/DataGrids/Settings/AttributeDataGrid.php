@@ -21,6 +21,7 @@ class AttributeDataGrid extends DataGrid
                 'attributes.name',
                 'attributes.type',
                 'attributes.entity_type',
+                'attributes.quick_add',
                 'attributes.is_user_defined as attribute_type'
             )
             ->where('entity_type', '<>', 'locations');
@@ -28,6 +29,7 @@ class AttributeDataGrid extends DataGrid
         $this->addFilter('id', 'attributes.id');
         $this->addFilter('type', 'attributes.type');
         $this->addFilter('attribute_type', 'attributes.is_user_defined');
+        $this->addFilter('quick_add', 'attributes.quick_add');
 
         return $queryBuilder;
     }
@@ -61,6 +63,16 @@ class AttributeDataGrid extends DataGrid
             'sortable' => true,
             'searchable' => true,
             'filterable' => true,
+        ]);
+
+        $this->addColumn([
+            'index' => 'quick_add',
+            'label' => trans('admin::app.settings.attributes.index.datagrid.quick-add'),
+            'type' => 'boolean',
+            'sortable' => true,
+            'searchable' => true,
+            'filterable' => true,
+            'closure' => fn ($value) => trans('admin::app.settings.attributes.index.datagrid.'.($value->quick_add ? 'yes' : 'no')),
         ]);
 
         $this->addColumn([
