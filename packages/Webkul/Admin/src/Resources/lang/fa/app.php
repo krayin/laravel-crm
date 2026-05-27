@@ -346,7 +346,7 @@ return [
                         'settings' => 'تنظیمات',
                         'configurations' => 'پیکربندی‌ها',
                     ],
-                    'explore-all-settings' => 'کاوش همه تنظیمات', 
+                    'explore-all-settings' => 'کاوش همه تنظیمات',
                     'explore-all-configurations' => 'کاوش همه پیکربندی‌ها',
                     'explore-all-products' => 'کاوش در تمامی محصولات',
                     'explore-all-leads' => 'کاوش در تمامی سرنخ‌ها',

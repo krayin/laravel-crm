@@ -346,7 +346,7 @@ return [
                         'settings' => 'الإعدادات',
                         'configurations' => 'التهيئة',
                     ],
-                    'explore-all-settings' => 'استكشاف جميع الإعدادات',  
+                    'explore-all-settings' => 'استكشاف جميع الإعدادات',
                     'explore-all-configurations' => 'استكشاف جميع التكوينات',
                     'explore-all-products' => 'استكشاف جميع المنتجات',
                     'explore-all-leads' => 'استكشاف جميع العملاء المحتملين',

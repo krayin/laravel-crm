@@ -346,7 +346,7 @@ return [
                         'settings' => 'Configurações',
                         'configurations' => 'Configurações',
                     ],
-                    'explore-all-settings' => 'Explorar todas as configurações',  
+                    'explore-all-settings' => 'Explorar todas as configurações',
                     'explore-all-configurations' => 'Explorar todas as configurações',
                     'explore-all-products' => 'Explorar todos os Produtos',
                     'explore-all-leads' => 'Explorar todos as Oportunidades',

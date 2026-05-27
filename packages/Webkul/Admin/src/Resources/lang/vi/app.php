@@ -346,7 +346,7 @@ return [
                         'settings' => 'Cài đặt',
                         'configurations' => 'Cấu hình',
                     ],
-                    'explore-all-settings' => 'Khám phá tất cả cài đặt', 
+                    'explore-all-settings' => 'Khám phá tất cả cài đặt',
                     'explore-all-configurations' => 'Khám phá tất cả cấu hình',
                     'explore-all-products' => 'Khám phá tất cả Sản phẩm',
                     'explore-all-leads' => 'Khám phá tất cả Khách hàng tiềm năng',
