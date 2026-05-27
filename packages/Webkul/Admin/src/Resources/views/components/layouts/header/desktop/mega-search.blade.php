@@ -451,7 +451,7 @@
 
                         settings: {
                             key: 'settings',
-                            title: "@lang('Settings')",
+                            title: "@lang('admin::app.components.layouts.header.mega-search.tabs.settings')",
                             is_active: false,
                             endpoint: "{{ route('admin.settings.search') }}",
                             query: '',
@@ -459,7 +459,7 @@
 
                         configurations: {
                             key: 'configurations',
-                            title: "@lang('Configurations')",
+                            title: "@lang('admin::app.components.layouts.header.mega-search.tabs.configurations')",
                             is_active: false,
                             endpoint: "{{ route('admin.configuration.search') }}",
                             query: '',
