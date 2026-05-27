@@ -78,7 +78,7 @@ class MagicAIService
                 $data['text'] = '';
                 $data['images'][] = [
                     'mime_type' => $mimeType,
-                    'data'      => $base64File,
+                    'data' => $base64File,
                 ];
             }
 
@@ -127,7 +127,7 @@ class MagicAIService
             }
 
             $content[] = [
-                'type'      => 'image_url',
+                'type' => 'image_url',
                 'image_url' => [
                     'url' => 'data:'.$image['mime_type'].';base64,'.$image['data'],
                 ],
@@ -171,16 +171,16 @@ class MagicAIService
     {
         try {
             $response = \Http::withHeaders([
-                'Content-Type'  => 'application/json',
+                'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer '.$apiKey,
             ])->post(self::OPEN_ROUTER_URL, [
-                'model'    => $model,
+                'model' => $model,
                 'messages' => [
                     [
-                        'role'    => 'system',
+                        'role' => 'system',
                         'content' => self::getSystemPrompt(),
                     ], [
-                        'role'    => 'user',
+                        'role' => 'user',
                         'content' => $prompt,
                     ],
                 ],
