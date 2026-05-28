@@ -11,26 +11,10 @@
             <div class="grid grid-cols-[1fr_2fr] items-center gap-1">
                 <div class="label dark:text-white">
                     @php
-                        $code = $attribute->code;
-                        $kebabCode = str_replace('_', '-', $code);
-                        
-                        $keyMappings = [
-                            'lead-source-id' => 'source',
-                            'lead-type-id' => 'type',
-                            'user-id' => 'sales-owner',
-                            'expected-close-date' => 'expected-close-date',
-                            'lead-value' => 'lead-value',
-                        ];
-                        
-                        $mappedCode = $keyMappings[$kebabCode] ?? $kebabCode;
-                        
-                        $translated = trans('admin::app.leads.index.kanban.columns.' . $mappedCode);
-                        
-                        if ($translated === 'admin::app.leads.index.kanban.columns.' . $mappedCode) {
-                            $translated = trans('admin::app.leads.index.datagrid.' . $mappedCode);
-                        }
-                        
-                        if ($translated === 'admin::app.leads.index.datagrid.' . $mappedCode) {
+                        $labelKey = 'admin::app.components.attributes.labels.'.str_replace('_', '-', $attribute->code);
+                        $translated = trans($labelKey);
+
+                        if ($translated === $labelKey) {
                             $translated = $attribute->name;
                         }
                     @endphp
