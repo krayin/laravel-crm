@@ -13,9 +13,9 @@
     ::value="'{{ $value }}'"
     rules="required"
     position="left"
-    :label="$attribute->name"
+    :label="$label ?? $attribute->name"
     ::errors="errors"
-    :placeholder="$attribute->name"
+    :placeholder="$label ?? $attribute->name"
     :url="$url"
     :allow-edit="$allowEdit"
 />
