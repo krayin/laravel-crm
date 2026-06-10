@@ -1811,6 +1811,13 @@ return [
                     'expected-close-date' => 'Data esperada de fechamento',
                     'created-at' => 'Criado em',
                 ],
+                'stages' =>[
+                    'won-value' => 'Valor Ganho',
+                    'need-more-info' => 'Detalhamento',
+                    'closed-at' => 'Encerrado em:',
+                    'save-btn' => 'Salvar',
+                    'lost-reason' => 'Motivo da Perda', 
+                    ],
                 'toolbar' => [
                     'search' => [
                         'title' => 'Buscar por título',
