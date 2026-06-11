@@ -16,3 +16,10 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+// Test route for Google Drive
+Route::get('/test-drive/{id?}', function ($id = 1) {
+    $lead = \Webkul\Lead\Repositories\LeadRepository::class;
+    $lead = app($lead)->findOrFail($id);
+    return view('test-drive', compact('lead'));
+});
