@@ -108,7 +108,6 @@
                 <div v-if="notAddedWarehouses.length">
                     <x-admin::dropdown
                         position="bottom-right"
-                        class="!static"
                     >
                         <x-slot:toggle>
                             <button
