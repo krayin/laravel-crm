@@ -15,6 +15,7 @@ test("should be able to assign a company to person", async ({ adminPage }) => {
      */
     await adminPage.goto("admin/contacts/persons");
     await createPerson(adminPage);
+    await expect(adminPage.locator("span.icon-edit")).toBeVisible();
     await adminPage.locator("span.icon-edit").first().click();
     await adminPage
         .locator("div")
