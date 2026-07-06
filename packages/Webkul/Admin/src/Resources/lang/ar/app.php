@@ -855,6 +855,8 @@ return [
                 'any-condition-are-true' => 'أي شرط صحيح',
                 'add-condition' => 'إضافة شرط',
                 'add-action' => 'إضافة إجراء',
+                'no-webhook-found' => 'لم يتم العثور على أي webhook.',
+                'create-webhook' => 'إنشاء webhook جديد.',
                 'yes' => 'نعم',
                 'no' => 'لا',
                 'email' => 'البريد الإلكتروني',

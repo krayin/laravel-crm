@@ -855,6 +855,8 @@ return [
                 'any-condition-are-true' => 'Cualquiera de las condiciones es verdadera',
                 'add-condition' => 'Agregar Condición',
                 'add-action' => 'Agregar Acción',
+                'no-webhook-found' => 'No se encontraron webhooks.',
+                'create-webhook' => 'Crear un nuevo webhook.',
                 'yes' => 'Sí',
                 'no' => 'No',
                 'email' => 'Correo Electrónico',

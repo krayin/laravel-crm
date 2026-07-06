@@ -855,6 +855,8 @@ return [
                 'any-condition-are-true' => 'Bất kỳ điều kiện nào cũng đúng',
                 'add-condition' => 'Thêm Điều kiện',
                 'add-action' => 'Thêm Hành động',
+                'no-webhook-found' => 'Không tìm thấy webhook.',
+                'create-webhook' => 'Tạo webhook mới.',
                 'yes' => 'Có',
                 'no' => 'Không',
                 'email' => 'Email',
