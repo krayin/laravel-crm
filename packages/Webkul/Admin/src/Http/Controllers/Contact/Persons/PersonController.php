@@ -88,6 +88,8 @@ class PersonController extends Controller
     {
         $person = $this->personRepository->findOrFail($id);
 
+        $this->preventUnauthorizedAccess($person->user_id);
+
         return view('admin::contacts.persons.edit', compact('person'));
     }
 
@@ -96,6 +98,8 @@ class PersonController extends Controller
      */
     public function update(AttributeForm $request, int $id): RedirectResponse|JsonResponse
     {
+        $this->preventUnauthorizedAccess($this->personRepository->findOrFail($id)->user_id);
+
         Event::dispatch('contacts.person.update.before', $id);
 
         $person = $this->personRepository->update($request->all(), $id);
@@ -148,6 +152,8 @@ class PersonController extends Controller
     {
         $person = $this->personRepository->findOrFail($id);
 
+        $this->preventUnauthorizedAccess($person->user_id);
+
         if (
             $person->leads
             && $person->leads->count() > 0
@@ -181,7 +187,9 @@ class PersonController extends Controller
     public function massDestroy(MassDestroyRequest $request): JsonResponse
     {
         try {
-            $persons = $this->personRepository->findWhereIn('id', $request->input('indices', []));
+            $persons = $this->filterAuthorizedRecords(
+                $this->personRepository->findWhereIn('id', $request->input('indices', []))
+            );
 
             $deletedCount = 0;
 
