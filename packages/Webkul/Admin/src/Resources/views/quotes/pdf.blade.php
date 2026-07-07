@@ -161,6 +161,17 @@
 
     <body dir="{{ $locale }}">
         <div class="page">
+            @if (! empty($logo))
+                <!-- Logo -->
+                <div class="logo-container {{ in_array($locale, ['ar', 'fa']) ? 'rtl' : '' }}">
+                    <img
+                        src="{{ $logo }}"
+                        style="max-width: 150px; max-height: 50px;"
+                        alt="@lang('admin::app.quotes.index.pdf.title')"
+                    />
+                </div>
+            @endif
+
             <!-- Header -->
             <div class="page-header">
                 <b>@lang('admin::app.quotes.index.pdf.title')</b>
