@@ -441,6 +441,7 @@ return [
             'quote-info-info' => 'Nhập thông tin cơ bản của báo giá.',
             'address-info' => 'Thông tin Địa chỉ',
             'address-info-info' => 'Thông tin về địa chỉ liên quan đến báo giá.',
+            'same-as-billing' => 'Địa chỉ giao hàng giống địa chỉ thanh toán',
             'quote-items' => 'Mục Báo giá',
             'search-products' => 'Tìm kiếm Sản phẩm',
             'link-to-lead' => 'Liên kết tới lead',

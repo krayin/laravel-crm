@@ -85,6 +85,8 @@ class QuoteController extends Controller
             $this->additionalValidation();
         }
 
+        $this->syncShippingAddressWithBilling($request);
+
         Event::dispatch('quote.create.before');
 
         $quote = $this->quoteRepository->create($request->all());
@@ -141,6 +143,8 @@ class QuoteController extends Controller
     public function update(AttributeForm $request, int $id): RedirectResponse
     {
         $this->additionalValidation();
+
+        $this->syncShippingAddressWithBilling($request);
 
         Event::dispatch('quote.update.before', $id);
 
@@ -250,6 +254,18 @@ class QuoteController extends Controller
             view('admin::quotes.pdf', compact('quote'))->render(),
             'Quote_'.$quote->subject.'_'.$quote->created_at->format('d-m-Y')
         );
+    }
+
+    /**
+     * Mirror the billing address into the shipping address when "same as billing" is enabled.
+     */
+    private function syncShippingAddressWithBilling(AttributeForm $request): void
+    {
+        if ($request->boolean('shipping_address_same_as_billing')) {
+            $request->merge([
+                'shipping_address' => $request->input('billing_address'),
+            ]);
+        }
     }
 
     /**

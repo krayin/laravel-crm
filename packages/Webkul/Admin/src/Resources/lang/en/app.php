@@ -442,6 +442,7 @@ return [
             'quote-info-info' => 'Put the basic information of the quote.',
             'address-info' => 'Address Information',
             'address-info-info' => 'Information about the address related to quote.',
+            'same-as-billing' => 'Shipping address same as billing address',
             'quote-items' => 'Quote Items',
             'search-products' => 'Search Products',
             'link-to-lead' => 'Link to lead',
