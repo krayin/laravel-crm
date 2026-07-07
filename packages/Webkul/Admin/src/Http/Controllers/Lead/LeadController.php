@@ -114,6 +114,13 @@ class LeadController extends Controller
                 $query->whereIn('leads.user_id', $userIds);
             }
 
+            if (($createdAt = request('created_at')) && ! empty($createdAt[0]) && ! empty($createdAt[1])) {
+                $query->whereBetween('leads.created_at', [
+                    $createdAt[0].' 00:00:01',
+                    $createdAt[1].' 23:59:59',
+                ]);
+            }
+
             $stage->lead_value = (clone $query)->sum('lead_value');
 
             $data[$stage->sort_order] = (new StageResource($stage))->jsonSerialize();
@@ -585,7 +592,6 @@ class LeadController extends Controller
                 'searchable' => false,
                 'search_field' => 'in',
                 'filterable' => true,
-                'filterable_options' => [],
                 'allow_multiple_values' => true,
                 'sortable' => true,
                 'visibility' => true,
@@ -631,7 +637,6 @@ class LeadController extends Controller
                 'searchable' => false,
                 'search_field' => 'in',
                 'filterable' => true,
-                'filterable_options' => [],
                 'allow_multiple_values' => true,
                 'sortable' => true,
                 'visibility' => true,
@@ -643,6 +648,19 @@ class LeadController extends Controller
                         'value' => 'name',
                     ],
                 ],
+            ],
+            [
+                'index' => 'created_at',
+                'label' => trans('admin::app.leads.index.kanban.columns.created-at'),
+                'type' => 'date',
+                'searchable' => false,
+                'search_field' => 'between',
+                'filterable' => true,
+                'filterable_type' => 'date_range',
+                'filterable_options' => [],
+                'allow_multiple_values' => true,
+                'sortable' => true,
+                'visibility' => true,
             ],
         ];
     }

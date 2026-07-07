@@ -438,6 +438,20 @@
                         }
 
                         /**
+                         * Date range filters are sent as a dedicated parameter (not through the
+                         * search string) so the server can include the start/end of day boundaries.
+                         */
+                        if (column.type === 'date' || column.type === 'datetime') {
+                            const [from, to] = column.value[0] ?? [];
+
+                            if (from && to) {
+                                params[column.index] = [from, to];
+                            }
+
+                            return;
+                        }
+
+                        /**
                          * If the column is a searchable dropdown, then we need to append the column value
                          * with the column label. Otherwise, we can directly append the column value.
                          */
