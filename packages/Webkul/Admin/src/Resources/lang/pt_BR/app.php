@@ -516,6 +516,7 @@ return [
                     'view' => 'Visualizar',
                     'name' => 'Nome',
                     'organization-name' => 'Nome da Empresa',
+                    'tag-name' => 'Nome da Tag',
                 ],
             ],
             'view' => [

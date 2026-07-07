@@ -516,6 +516,7 @@ return [
                     'view' => 'Xem',
                     'name' => 'Tên',
                     'organization-name' => 'Tên Tổ chức',
+                    'tag-name' => 'Tên thẻ',
                 ],
             ],
             'view' => [

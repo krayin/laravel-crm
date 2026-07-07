@@ -516,6 +516,7 @@ return [
                     'view' => 'مشاهده',
                     'name' => 'نام',
                     'organization-name' => 'نام سازمان',
+                    'tag-name' => 'نام برچسب',
                 ],
             ],
             'view' => [

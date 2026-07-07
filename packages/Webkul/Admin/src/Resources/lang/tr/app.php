@@ -516,6 +516,7 @@ return [
                     'view' => 'Görüntüle',
                     'name' => 'Ad',
                     'organization-name' => 'Kuruluş Adı',
+                    'tag-name' => 'Etiket Adı',
                 ],
             ],
             'view' => [

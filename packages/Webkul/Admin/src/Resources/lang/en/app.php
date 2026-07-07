@@ -517,6 +517,7 @@ return [
                     'view' => 'View',
                     'name' => 'Name',
                     'organization-name' => 'Organization Name',
+                    'tag-name' => 'Tag Name',
                 ],
             ],
             'view' => [
