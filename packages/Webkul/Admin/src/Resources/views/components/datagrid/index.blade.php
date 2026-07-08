@@ -183,7 +183,7 @@
                         searchAppliedColumn.value = [urlParams.get('search')];
                     }
 
-                    if (datagrids?.length) {
+                    if (this.shouldRestoreAppliedState() && datagrids?.length) {
                         const currentDatagrid = datagrids.find(({ src }) => src === this.src);
 
                         if (currentDatagrid) {
@@ -208,6 +208,29 @@
                     }
 
                     this.get();
+                },
+
+                /**
+                 * Determines whether the previously applied state (pagination, sort and filters) should be
+                 * restored from local storage. It is only restored when the user returns to the page through
+                 * browser back/forward navigation or a reload. A fresh navigation, such as clicking a sidebar
+                 * link, should present the default unfiltered list instead of the last used filters.
+                 *
+                 * @returns {boolean}
+                 */
+                shouldRestoreAppliedState() {
+                    const navigationType = window.performance
+                        ?.getEntriesByType?.('navigation')?.[0]?.type;
+
+                    /**
+                     * When the Navigation Timing API is unavailable, we fall back to restoring the state to
+                     * preserve the previous behaviour.
+                     */
+                    if (! navigationType) {
+                        return true;
+                    }
+
+                    return ['back_forward', 'reload'].includes(navigationType);
                 },
 
                 /**
