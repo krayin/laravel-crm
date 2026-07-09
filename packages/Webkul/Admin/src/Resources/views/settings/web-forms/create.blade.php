@@ -496,6 +496,33 @@
 
                                 <x-admin::form.control-group.error control-name="submit_button_label" />
                             </x-admin::form.control-group>
+
+                            <!-- Pipeline -->
+                            <x-admin::form.control-group class="!mt-6">
+                                <x-admin::form.control-group.label>
+                                    @lang('admin::app.settings.webforms.create.pipeline')
+                                </x-admin::form.control-group.label>
+
+                                <x-admin::form.control-group.control
+                                    type="select"
+                                    name="lead_pipeline_id"
+                                    id="lead_pipeline_id"
+                                    :value="old('lead_pipeline_id')"
+                                    :label="trans('admin::app.settings.webforms.create.pipeline')"
+                                >
+                                    <option value="">
+                                        @lang('admin::app.settings.webforms.create.use-default-pipeline')
+                                    </option>
+
+                                    @foreach ($pipelines as $pipeline)
+                                        <option value="{{ $pipeline->id }}">
+                                            {{ $pipeline->name }}
+                                        </option>
+                                    @endforeach
+                                </x-admin::form.control-group.control>
+
+                                <x-admin::form.control-group.error control-name="lead_pipeline_id" />
+                            </x-admin::form.control-group>
                         </x-slot>
                     </x-admin::accordion>
                 </div>
