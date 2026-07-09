@@ -1809,6 +1809,7 @@ return [
                     'title' => 'Título',
                     'tags' => 'Tags',
                     'expected-close-date' => 'Data esperada de fechamento',
+                    'date-to' => 'Data esperada de fechamento',
                     'created-at' => 'Criado em',
                 ],
                 'toolbar' => [

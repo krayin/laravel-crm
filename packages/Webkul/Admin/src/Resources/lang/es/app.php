@@ -1809,6 +1809,7 @@ return [
                     'title' => 'Título',
                     'tags' => 'Etiquetas',
                     'expected-close-date' => 'Fecha de Cierre Esperada',
+                    'date-to' => 'Fecha Hasta',
                     'created-at' => 'Creado En',
                 ],
                 'toolbar' => [

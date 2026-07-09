@@ -1810,6 +1810,7 @@ return [
                     'title' => 'Title',
                     'tags' => 'Tags',
                     'expected-close-date' => 'Expected Close Date',
+                    'date-to' => 'Date To',
                     'created-at' => 'Created At',
                 ],
                 'toolbar' => [

@@ -1809,6 +1809,7 @@ return [
                     'title' => 'عنوان',
                     'tags' => 'برچسب‌ها',
                     'expected-close-date' => 'تاریخ بسته شدن مورد انتظار',
+                    'date-to' => 'تاریخ تا',
                     'created-at' => 'تاریخ ایجاد',
                 ],
                 'toolbar' => [

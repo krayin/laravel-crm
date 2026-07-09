@@ -1809,6 +1809,7 @@ return [
                     'title' => 'Başlık',
                     'tags' => 'Etiketler',
                     'expected-close-date' => 'Beklenen Kapanış Tarihi',
+                    'date-to' => 'Bitiş Tarihi',
                     'created-at' => 'Oluşturulma Tarihi',
                 ],
                 'toolbar' => [

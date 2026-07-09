@@ -438,14 +438,14 @@
                         }
 
                         /**
-                         * Date range filters are sent as a dedicated parameter (not through the
-                         * search string) so the server can include the start/end of day boundaries.
+                         * Date range filters are sent as a dedicated parameter, not through the search
+                         * string, so the server can resolve them the same way the datagrid does. A quick
+                         * filter, such as `last_month`, is applied as a plain string, whereas a custom
+                         * range is applied as a `[[from, to]]` pair.
                          */
                         if (column.type === 'date' || column.type === 'datetime') {
-                            const [from, to] = column.value[0] ?? [];
-
-                            if (from && to) {
-                                params[column.index] = [from, to];
+                            if (column.value.length) {
+                                params[column.index] = column.value;
                             }
 
                             return;

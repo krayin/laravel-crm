@@ -1809,6 +1809,7 @@ return [
                     'title' => 'Tiêu Đề',
                     'tags' => 'Thẻ',
                     'expected-close-date' => 'Ngày Dự Kiến Đóng',
+                    'date-to' => 'Ngày Đến',
                     'created-at' => 'Tạo Vào Lúc',
                 ],
                 'toolbar' => [
