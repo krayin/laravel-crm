@@ -33,9 +33,11 @@ class QuoteController extends Controller
      */
     public function store($id)
     {
-        Event::dispatch('leads.quote.create.before');
+        $lead = $this->leadRepository->findOrFail($id);
 
-        $lead = $this->leadRepository->find($id);
+        $this->preventUnauthorizedAccess($lead->user_id);
+
+        Event::dispatch('leads.quote.create.before');
 
         if (! $lead->quotes->contains(request('id'))) {
             $lead->quotes()->attach(request('id'));
@@ -57,9 +59,11 @@ class QuoteController extends Controller
      */
     public function delete($leadId)
     {
-        Event::dispatch('leads.quote.delete.before', $leadId);
+        $lead = $this->leadRepository->findOrFail($leadId);
 
-        $lead = $this->leadRepository->find($leadId);
+        $this->preventUnauthorizedAccess($lead->user_id);
+
+        Event::dispatch('leads.quote.delete.before', $leadId);
 
         $lead->quotes()->detach(request('quote_id'));
 
@@ -80,6 +84,8 @@ class QuoteController extends Controller
     public function mail($quoteId)
     {
         $quote = $this->quoteRepository->findOrFail($quoteId);
+
+        $this->preventUnauthorizedAccess($quote->user_id);
 
         $lead = $quote->leads->first();
 

@@ -218,9 +218,11 @@ class ActivityController extends Controller
      */
     public function download(int $id): StreamedResponse
     {
-        try {
-            $file = $this->fileRepository->findOrFail($id);
+        $file = $this->fileRepository->findOrFail($id);
 
+        $this->preventUnauthorizedAccess($this->activityOwnerIds($file->activity));
+
+        try {
             return Storage::download($file->path);
         } catch (\Exception $exception) {
             abort(404);

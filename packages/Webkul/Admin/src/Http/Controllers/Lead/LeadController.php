@@ -468,6 +468,8 @@ class LeadController extends Controller
      */
     public function addProduct(int $leadId): JsonResponse
     {
+        $this->preventUnauthorizedAccess($this->leadRepository->findOrFail($leadId)->user_id);
+
         $product = $this->productRepository->updateOrCreate(
             [
                 'lead_id' => $leadId,
@@ -493,6 +495,8 @@ class LeadController extends Controller
      */
     public function removeProduct(int $id): JsonResponse
     {
+        $this->preventUnauthorizedAccess($this->leadRepository->findOrFail($id)->user_id);
+
         try {
             Event::dispatch('lead.product.delete.before', $id);
 

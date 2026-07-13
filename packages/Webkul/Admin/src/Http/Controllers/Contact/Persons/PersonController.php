@@ -78,6 +78,8 @@ class PersonController extends Controller
     {
         $person = $this->personRepository->findOrFail($id);
 
+        $this->preventUnauthorizedAccess($person->user_id);
+
         return view('admin::contacts.persons.view', compact('person'));
     }
 

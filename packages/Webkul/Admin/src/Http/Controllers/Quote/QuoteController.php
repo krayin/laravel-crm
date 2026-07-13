@@ -252,6 +252,8 @@ class QuoteController extends Controller
     {
         $quote = $this->quoteRepository->findOrFail($id);
 
+        $this->preventUnauthorizedAccess($quote->user_id);
+
         return $this->downloadPDF(
             view('admin::quotes.pdf', compact('quote'))->render(),
             'Quote_'.$quote->subject.'_'.$quote->created_at->format('d-m-Y')
