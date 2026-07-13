@@ -539,13 +539,9 @@
                                     type="select"
                                     name="lead_pipeline_id"
                                     id="lead_pipeline_id"
-                                    :value="old('lead_pipeline_id') ?? $webForm->lead_pipeline_id"
+                                    :value="old('lead_pipeline_id') ?? $webForm->lead_pipeline_id ?? $defaultPipelineId"
                                     :label="trans('admin::app.settings.webforms.edit.pipeline')"
                                 >
-                                    <option value="">
-                                        @lang('admin::app.settings.webforms.edit.use-default-pipeline')
-                                    </option>
-
                                     @foreach ($pipelines as $pipeline)
                                         <option value="{{ $pipeline->id }}">
                                             {{ $pipeline->name }}

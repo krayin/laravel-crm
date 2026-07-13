@@ -941,7 +941,6 @@ return [
                 'pipeline' => 'پایپ‌لاین',
                 'save-btn' => 'ذخیره فرم وب',
                 'submit-button-label' => 'برچسب دکمه ارسال',
-                'use-default-pipeline' => 'استفاده از پایپ‌لاین پیش‌فرض',
                 'submit-success-action' => 'عملکرد موفقیت آمیز ارسال',
                 'redirect-to-url' => 'انتقال به آدرس',
                 'choose-value' => 'انتخاب مقدار',
@@ -983,7 +982,6 @@ return [
                 'submit-button-label' => 'برچسب دکمه ارسال',
                 'submit-success-action' => 'عملکرد موفقیت آمیز ارسال',
                 'title' => 'ویرایش فرم وب',
-                'use-default-pipeline' => 'استفاده از پایپ‌لاین پیش‌فرض',
             ],
         ],
         'email-template' => [

@@ -941,7 +941,6 @@ return [
                 'pipeline' => 'Canal',
                 'save-btn' => 'Guardar Webform',
                 'submit-button-label' => 'Etiqueta del Botón de Enviar',
-                'use-default-pipeline' => 'Usar canal predeterminado',
                 'submit-success-action' => 'Acción en caso de éxito de envío',
                 'redirect-to-url' => 'Redirigir a la URL',
                 'choose-value' => 'Elige un valor',
@@ -983,7 +982,6 @@ return [
                 'submit-button-label' => 'Etiqueta del Botón de Enviar',
                 'submit-success-action' => 'Acción en caso de éxito de envío',
                 'title' => 'Editar formulario web',
-                'use-default-pipeline' => 'Usar canal predeterminado',
             ],
         ],
         'email-template' => [

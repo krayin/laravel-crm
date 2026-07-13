@@ -941,7 +941,6 @@ return [
                 'pipeline' => 'Pipeline',
                 'save-btn' => 'Web Formunu Kaydet',
                 'submit-button-label' => 'Gönderim Düğmesi Etiketi',
-                'use-default-pipeline' => 'Varsayılan Pipeline\'ı Kullan',
                 'submit-success-action' => 'Gönderim Başarı Eylemi',
                 'redirect-to-url' => 'URL\'ye Yönlendir',
                 'choose-value' => 'Değer Seç',
@@ -983,7 +982,6 @@ return [
                 'submit-button-label' => 'Gönderim Düğmesi Etiketi',
                 'submit-success-action' => 'Gönderim Başarı Eylemi',
                 'title' => 'Web Formunu Düzenle',
-                'use-default-pipeline' => 'Varsayılan Pipeline\'ı Kullan',
             ],
         ],
         'email-template' => [

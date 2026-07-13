@@ -941,7 +941,6 @@ return [
                 'pipeline' => 'Quy Trình',
                 'save-btn' => 'Lưu Biểu Mẫu Web',
                 'submit-button-label' => 'Nhãn Nút Gửi',
-                'use-default-pipeline' => 'Sử dụng quy trình mặc định',
                 'submit-success-action' => 'Hành Động Thành Công Khi Gửi',
                 'redirect-to-url' => 'Chuyển Hướng Đến URL',
                 'choose-value' => 'Chọn Giá Trị',
@@ -983,7 +982,6 @@ return [
                 'submit-button-label' => 'Nhãn Nút Gửi',
                 'submit-success-action' => 'Hành Động Thành Công Khi Gửi',
                 'title' => 'Chỉnh Sửa Biểu Mẫu Web',
-                'use-default-pipeline' => 'Sử dụng quy trình mặc định',
             ],
         ],
         'email-template' => [

@@ -941,7 +941,6 @@ return [
                 'pipeline' => 'خط الأنابيب',
                 'save-btn' => 'حفظ نموذج الويب',
                 'submit-button-label' => 'تسمية زر الإرسال',
-                'use-default-pipeline' => 'استخدام خط الأنابيب الافتراضي',
                 'submit-success-action' => 'إجراء نجاح الإرسال',
                 'redirect-to-url' => 'إعادة التوجيه إلى الرابط',
                 'choose-value' => 'اختر قيمة',
@@ -983,7 +982,6 @@ return [
                 'submit-button-label' => 'تسمية زر الإرسال',
                 'submit-success-action' => 'إجراء نجاح الإرسال',
                 'title' => 'تعديل استمارة ويب',
-                'use-default-pipeline' => 'استخدام خط الأنابيب الافتراضي',
             ],
         ],
         'email-template' => [

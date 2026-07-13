@@ -942,7 +942,6 @@ return [
                 'pipeline' => 'Pipeline',
                 'save-btn' => 'Save Webform',
                 'submit-button-label' => 'Submit Button Label',
-                'use-default-pipeline' => 'Use Default Pipeline',
                 'submit-success-action' => 'Submit Success Action',
                 'redirect-to-url' => 'Redirect To Url',
                 'choose-value' => 'Choose Value',
@@ -984,7 +983,6 @@ return [
                 'submit-button-label' => 'Submit Button Label',
                 'submit-success-action' => 'Submit Success Action',
                 'title' => 'Edit Webform',
-                'use-default-pipeline' => 'Use Default Pipeline',
             ],
         ],
         'email-template' => [

@@ -54,6 +54,8 @@ class WebFormController extends Controller
 
         $pipelines = $this->pipelineRepository->all();
 
+        $defaultPipelineId = $this->pipelineRepository->getDefaultPipeline()?->id;
+
         $attributes = [];
 
         foreach ($tempAttributes as $attribute) {
@@ -67,7 +69,7 @@ class WebFormController extends Controller
             }
         }
 
-        return view('admin::settings.web-forms.create', compact('attributes', 'pipelines'));
+        return view('admin::settings.web-forms.create', compact('attributes', 'pipelines', 'defaultPipelineId'));
     }
 
     /**
@@ -109,7 +111,9 @@ class WebFormController extends Controller
 
         $pipelines = $this->pipelineRepository->all();
 
-        return view('admin::settings.web-forms.edit', compact('webForm', 'attributes', 'pipelines'));
+        $defaultPipelineId = $this->pipelineRepository->getDefaultPipeline()?->id;
+
+        return view('admin::settings.web-forms.edit', compact('webForm', 'attributes', 'pipelines', 'defaultPipelineId'));
     }
 
     /**

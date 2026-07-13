@@ -941,7 +941,6 @@ return [
                 'pipeline' => 'Funil',
                 'save-btn' => 'Salvar Webform',
                 'submit-button-label' => 'Rótulo do Botão de Envio',
-                'use-default-pipeline' => 'Usar funil padrão',
                 'submit-success-action' => 'Ação de Sucesso ao Enviar',
                 'redirect-to-url' => 'Redirecionar Para URL',
                 'choose-value' => 'Escolher Valor',
@@ -983,7 +982,6 @@ return [
                 'submit-button-label' => 'Rótulo do Botão de Envio',
                 'submit-success-action' => 'Ação de Sucesso ao Enviar',
                 'title' => 'Editar Webform',
-                'use-default-pipeline' => 'Usar funil padrão',
             ],
         ],
         'email-template' => [
