@@ -55,7 +55,13 @@ class PersonController extends Controller
     {
         Event::dispatch('contacts.person.create.before');
 
-        $person = $this->personRepository->create($request->all());
+        $data = $request->all();
+
+        if (request()->has('quick_add') && empty($data['user_id'])) {
+            $data['user_id'] = auth()->guard('user')->user()->id;
+        }
+
+        $person = $this->personRepository->create($data);
 
         Event::dispatch('contacts.person.create.after', $person);
 
