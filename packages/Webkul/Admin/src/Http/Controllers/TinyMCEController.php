@@ -27,7 +27,7 @@ class TinyMCEController extends Controller
     public function upload(): JsonResponse
     {
         $this->validate(request(), [
-            'file' => 'required|file|mimes:'.$this->allowedExtensions.'|max:2048',
+            'file' => 'required|file|mimes:'.$this->allowedExtensions.'|max:8192',
         ]);
 
         $media = $this->storeMedia();
