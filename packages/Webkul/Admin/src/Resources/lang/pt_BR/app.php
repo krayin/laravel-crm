@@ -441,6 +441,7 @@ return [
             'quote-info-info' => 'Informe as informações básicas da cotação.',
             'address-info' => 'Informações de Endereço',
             'address-info-info' => 'Informações sobre o endereço relacionado à cotação.',
+            'same-as-billing' => 'Endereço de entrega igual ao endereço de cobrança',
             'quote-items' => 'Itens da Cotação',
             'search-products' => 'Pesquisar Produtos',
             'link-to-lead' => 'Vincular a um negócio',

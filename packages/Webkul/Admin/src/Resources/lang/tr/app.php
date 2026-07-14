@@ -441,6 +441,7 @@ return [
             'quote-info-info' => 'Teklifin temel bilgilerini girin.',
             'address-info' => 'Adres Bilgileri',
             'address-info-info' => 'Teklif ile ilgili adres bilgileri.',
+            'same-as-billing' => 'Teslimat adresi fatura adresi ile aynı',
             'quote-items' => 'Teklif Kalemleri',
             'search-products' => 'Ürünleri Ara',
             'link-to-lead' => 'Potansiyele Bağla',
