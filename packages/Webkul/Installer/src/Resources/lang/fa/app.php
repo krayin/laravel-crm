@@ -13,6 +13,11 @@ return [
                 'type' => 'نوع',
                 'pipeline' => 'پایپ لاین',
                 'stage' => 'مرحله',
+                'lead-source-id' => 'منبع',
+                'lead-type-id' => 'نوع',
+                'user-id' => 'مالک فروش',
+                'lead-pipeline-id' => 'پایپ لاین',
+                'lead-pipeline-stage-id' => 'مرحله',
             ],
 
             'persons' => [
@@ -22,12 +27,15 @@ return [
                 'name' => 'نام',
                 'organization' => 'سازمان',
                 'sales-owner' => 'مالک فروش',
+                'user-id' => 'مالک فروش',
+                'organization-id' => 'سازمان',
             ],
 
             'organizations' => [
                 'address' => 'آدرس',
                 'name' => 'نام',
                 'sales-owner' => 'مالک فروش',
+                'user-id' => 'مالک فروش',
             ],
 
             'products' => [
@@ -52,6 +60,8 @@ return [
                 'sub-total' => 'جمع جزئی',
                 'subject' => 'موضوع',
                 'tax-amount' => 'مقدار مالیات',
+                'user-id' => 'مالک فروش',
+                'person-id' => 'شخص',
             ],
 
             'warehouses' => [

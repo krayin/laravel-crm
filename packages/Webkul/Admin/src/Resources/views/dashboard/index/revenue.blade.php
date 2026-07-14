@@ -63,15 +63,9 @@
                                 </p>
 
                                 <div class="flex items-center gap-0.5">
-                                    <span
-                                        class="text-base !font-semibold text-green-500"
-                                        :class="[report.statistics.total_lost_revenue.progress < 0 ? 'icon-stats-down text-red-500 dark:!text-red-500' : 'icon-stats-up text-green-500 dark:!text-green-500']"
-                                    ></span>
+                                    <span class="icon-stats-down text-base !font-semibold text-red-500 dark:!text-red-500"></span>
 
-                                    <p
-                                        class="text-xs font-semibold text-green-500"
-                                        :class="[report.statistics.total_lost_revenue.progress < 0 ?  'text-red-500' : 'text-green-500']"
-                                    >
+                                    <p class="text-xs font-semibold text-red-500">
                                         @{{ Math.abs(report.statistics.total_lost_revenue.progress.toFixed(2)) }}%
                                     </p>
                                 </div>

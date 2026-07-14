@@ -4,7 +4,7 @@
     <script
         type="text/x-template"
         id="v-lookup-template"
-    >
+        >
         <div
             class="relative"
             ref="lookup"
@@ -63,7 +63,7 @@
                         v-model.lazy="searchTerm"
                         v-debounce="500"
                         class="w-full rounded border border-gray-300 px-2.5 py-2 text-sm font-normal text-gray-800 transition-all hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 dark:focus:border-gray-400"
-                        placeholder="@lang('admin::app.components.lookup.search')"
+                        :placeholder="placeholder ?? '@lang('admin::app.components.lookup.search')'"
                         ref="searchInput"
                         @keyup="search"
                     />
@@ -159,7 +159,12 @@
                 preload: {
                     type: Boolean,
                     default: false,
-                }
+                },
+
+                searchKeys: {
+                    type: Array,
+                    default: () => ['name'],
+                },
             },
 
             emits: ['on-selected'],
@@ -184,6 +189,8 @@
                 if (this.value) {
                     this.selectedItem = this.value;
                 }
+
+                console.log(this.placeholder);
             },
 
             created() {
@@ -207,8 +214,18 @@
                  * @return {Array}
                  */
                 filteredResults() {
+                    const term = this.searchTerm.toLowerCase();
+
                     return this.searchedResults.filter(item =>
-                        item.name.toLowerCase().includes(this.searchTerm.toLowerCase())
+                        this.searchKeys.some(key => {
+                            const value = item[key];
+
+                            if (Array.isArray(value)) {
+                                return value.some(entry => (entry?.value ?? '').toLowerCase().includes(term));
+                            }
+
+                            return (value ?? '').toString().toLowerCase().includes(term);
+                        })
                     );
                 }
             },

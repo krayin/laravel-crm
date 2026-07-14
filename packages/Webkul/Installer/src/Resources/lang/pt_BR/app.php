@@ -13,6 +13,11 @@ return [
                 'type' => 'Tipo',
                 'pipeline' => 'Funil',
                 'stage' => 'Estágio',
+                'lead-source-id' => 'Origem',
+                'lead-type-id' => 'Tipo',
+                'user-id' => 'Responsável pela Venda',
+                'lead-pipeline-id' => 'Funil',
+                'lead-pipeline-stage-id' => 'Estágio',
             ],
 
             'persons' => [
@@ -22,12 +27,15 @@ return [
                 'name' => 'Nome',
                 'organization' => 'Empresa',
                 'sales-owner' => 'Responsável pela Venda',
+                'user-id' => 'Responsável pela Venda',
+                'organization-id' => 'Empresa',
             ],
 
             'organizations' => [
                 'address' => 'Endereço',
                 'name' => 'Nome',
                 'sales-owner' => 'Responsável pela Venda',
+                'user-id' => 'Responsável pela Venda',
             ],
 
             'products' => [
@@ -52,6 +60,8 @@ return [
                 'sub-total' => 'Subtotal',
                 'subject' => 'Assunto',
                 'tax-amount' => 'Valor do Imposto',
+                'user-id' => 'Responsável pela Venda',
+                'person-id' => 'Pessoa',
             ],
 
             'warehouses' => [

@@ -22,9 +22,10 @@
                 ::rules="nameValidationRule"
                 :label="trans('admin::app.leads.common.contact.name')"
                 ::value="{id: person.id, name: person.name}"
-                :placeholder="trans('admin::app.leads.common.contact.name')"
+                :placeholder="trans('admin::app.leads.common.contact.name-search-placeholder')"
                 @on-selected="addPerson"
                 :can-add-new="true"
+                ::search-keys="['name', 'emails', 'contact_numbers']"
             />
 
             <x-admin::form.control-group.control

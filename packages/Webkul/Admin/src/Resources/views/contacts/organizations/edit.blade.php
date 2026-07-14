@@ -64,6 +64,7 @@
                         ],
                     ]"
                     :entity="$organization"
+                    :can-add-new="false"
                 />
                 
                 {!! view_render_event('admin.contacts.organizations.edit.form_controls.after') !!}

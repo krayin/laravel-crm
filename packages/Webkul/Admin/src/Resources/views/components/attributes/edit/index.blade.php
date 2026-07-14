@@ -2,6 +2,7 @@
     'attribute' => '',
     'value' => '',
     'validations' => '',
+    'canAddNew' => true,
 ])
 
 @switch($attribute->type)
@@ -37,7 +38,7 @@
             :attribute="$attribute"
             :value="$value"
             :validations="$validations"
-            can-add-new="true"
+            :can-add-new="$canAddNew"
         />
 
         @break

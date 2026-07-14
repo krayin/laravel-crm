@@ -154,6 +154,7 @@ class ActivityDataGrid extends DataGrid
             'sortable' => true,
             'searchable' => true,
             'filterable' => true,
+            'filterable_type' => 'date_range',
             'closure' => fn ($row) => core()->formatDate($row->schedule_from),
         ]);
 
@@ -164,6 +165,7 @@ class ActivityDataGrid extends DataGrid
             'sortable' => true,
             'searchable' => true,
             'filterable' => true,
+            'filterable_type' => 'date_range',
             'closure' => fn ($row) => core()->formatDate($row->schedule_to),
         ]);
 

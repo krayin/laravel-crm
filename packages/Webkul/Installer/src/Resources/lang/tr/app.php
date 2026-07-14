@@ -13,6 +13,11 @@ return [
                 'type' => 'Tür',
                 'pipeline' => 'Pipeline',
                 'stage' => 'Aşama',
+                'lead-source-id' => 'Kaynak',
+                'lead-type-id' => 'Tür',
+                'user-id' => 'Satış Sahibi',
+                'lead-pipeline-id' => 'Pipeline',
+                'lead-pipeline-stage-id' => 'Aşama',
             ],
 
             'persons' => [
@@ -22,12 +27,15 @@ return [
                 'name' => 'Ad',
                 'organization' => 'Organizasyon',
                 'sales-owner' => 'Satış Sahibi',
+                'user-id' => 'Satış Sahibi',
+                'organization-id' => 'Organizasyon',
             ],
 
             'organizations' => [
                 'address' => 'Adres',
                 'name' => 'Ad',
                 'sales-owner' => 'Satış Sahibi',
+                'user-id' => 'Satış Sahibi',
             ],
 
             'products' => [
@@ -52,6 +60,8 @@ return [
                 'sub-total' => 'Ara Toplam',
                 'subject' => 'Konu',
                 'tax-amount' => 'Vergi Tutarı',
+                'user-id' => 'Satış Sahibi',
+                'person-id' => 'Kişi',
             ],
 
             'warehouses' => [

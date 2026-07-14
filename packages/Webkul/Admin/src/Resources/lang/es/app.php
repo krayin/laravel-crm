@@ -2,6 +2,7 @@
 
 return [
     'acl' => [
+        'help' => 'Ayuda',
         'leads' => 'Clientes potenciales',
         'lead' => 'Cliente potencial',
         'quotes' => 'Cotizaciones',
@@ -1870,6 +1871,7 @@ return [
         'common' => [
             'contact' => [
                 'name' => 'Nombre',
+                'name-search-placeholder' => 'Buscar por nombre, correo electrónico y número',
                 'email' => 'Correo Electrónico',
                 'contact-number' => 'Número de Contacto',
                 'organization' => 'Organización',
@@ -2112,9 +2114,65 @@ return [
             ],
         ],
     ],
+    'help' => [
+        'index' => [
+            'title' => 'Ayuda y recursos',
+            'description' => 'Todo lo que necesitas para sacar el máximo partido a Krayin Admin: alojamiento, soporte y servicios profesionales, además de extensiones y documentación para desarrolladores.',
+            'contact-us' => 'Contáctanos',
+            'view-all' => 'Ver todo',
+            'still-need-help-title' => '¿Todavía necesitas ayuda?',
+            'still-need-help-description' => 'Habla con el equipo de Krayin sobre alojamiento, desarrollo personalizado o cualquier otra cosa.',
+
+            'services' => [
+                'title' => 'Servicios y recursos',
+                'cloud-hosting' => [
+                    'title' => 'Alojamiento en la nube',
+                    'description' => 'Alojamiento en la nube gestionado y rentable: prueba y lanza Krayin en la nube en minutos, totalmente optimizado y escalable.',
+                ],
+                'support' => [
+                    'title' => 'Soporte y mantenimiento',
+                    'description' => 'Soporte técnico dedicado y planes de mantenimiento continuo para mantener tu CRM seguro, actualizado y funcionando sin problemas.',
+                ],
+                'extensions' => [
+                    'title' => 'Extensiones',
+                    'description' => 'Explora complementos oficiales y de la comunidad para ampliar Krayin con nuevos conectores, canales y funciones.',
+                ],
+            ],
+
+            'resources' => [
+                'title' => 'Documentación',
+                'user-docs' => [
+                    'title' => 'Guía del usuario',
+                    'description' => 'Ayuda experta para la integración de módulos, personalización, migración de datos, actualizaciones de versión y desarrollo a medida.',
+                ],
+                'dev-docs' => [
+                    'title' => 'Documentación para desarrolladores y blogs',
+                    'description' => 'Guías para desarrolladores, tutoriales y los últimos artículos para ayudarte a crear, configurar y mantenerte al día.',
+                ],
+                'api-docs' => [
+                    'title' => 'Documentación de la API',
+                    'description' => 'Referencia completa de la API REST con endpoints, autenticación y ejemplos para integrar Krayin con tu stack.',
+                ],
+            ],
+
+            'community' => [
+                'forums' => [
+                    'title' => 'Foros de la comunidad',
+                    'description' => 'Conecta con miles de usuarios y desarrolladores de Krayin para compartir consejos y resolver problemas.',
+                    'link' => 'Únete a la comunidad',
+                ],
+                'tutorials' => [
+                    'title' => 'Tutoriales en vídeo',
+                    'description' => 'Mira guías en vídeo paso a paso sobre cómo configurar tu CRM, configurar canales y gestionar usuarios.',
+                    'link' => 'Explorar el canal de YouTube',
+                ],
+            ],
+        ],
+    ],
     'layouts' => [
         'app-version' => 'Versión: :version',
         'dashboard' => 'Tablero',
+        'help' => 'Ayuda y recursos',
         'leads' => 'Leads',
         'quotes' => 'Cotizaciones',
         'quote' => 'Cotización',

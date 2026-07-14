@@ -108,8 +108,8 @@ test.describe("quotes management", () => {
 
          await adminPage.locator('.relative.flex.cursor-pointer.items-center.justify-between.rounded.border.p-2').first().click();
 
-        await adminPage.getByRole("textbox", { name: "Search..." }).click();
-        await adminPage.getByRole("textbox", { name: "Search..." }).fill(Product.name);
+        await adminPage.getByRole("textbox", { name: "Search Products" }).click();
+        await adminPage.getByRole("textbox", { name: "Search Products" }).fill(Product.name);
 
         await adminPage.getByRole("listitem").filter({ hasText: Product.name }).first().click();
 

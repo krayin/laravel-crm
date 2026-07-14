@@ -13,6 +13,11 @@ return [
                 'type' => 'Tipo',
                 'pipeline' => 'Pipeline',
                 'stage' => 'Etapa',
+                'lead-source-id' => 'Fuente',
+                'lead-type-id' => 'Tipo',
+                'user-id' => 'Propietario de Ventas',
+                'lead-pipeline-id' => 'Pipeline',
+                'lead-pipeline-stage-id' => 'Etapa',
             ],
 
             'persons' => [
@@ -22,12 +27,15 @@ return [
                 'name' => 'Nombre',
                 'organization' => 'Organización',
                 'sales-owner' => 'Propietario de Ventas',
+                'user-id' => 'Propietario de Ventas',
+                'organization-id' => 'Organización',
             ],
 
             'organizations' => [
                 'address' => 'Dirección',
                 'name' => 'Nombre',
                 'sales-owner' => 'Propietario de Ventas',
+                'user-id' => 'Propietario de Ventas',
             ],
 
             'products' => [
@@ -52,6 +60,8 @@ return [
                 'sub-total' => 'Subtotal',
                 'subject' => 'Asunto',
                 'tax-amount' => 'Cantidad de Impuestos',
+                'user-id' => 'Propietario de Ventas',
+                'person-id' => 'Persona',
             ],
 
             'warehouses' => [

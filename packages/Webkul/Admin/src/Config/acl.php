@@ -576,5 +576,10 @@ return [
         'name' => 'admin::app.acl.configuration',
         'route' => 'admin.configuration.index',
         'sort' => 9,
+    ], [
+        'key' => 'help',
+        'name' => 'admin::app.acl.help',
+        'route' => 'admin.help.index',
+        'sort' => 10,
     ],
 ];

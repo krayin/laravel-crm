@@ -123,6 +123,8 @@ class Installer extends Command
      */
     public function handle()
     {
+        $this->output->writeln(ComposerEvents::cloudHostingBox());
+
         $applicationDetails = ! $this->option('skip-env-check')
             ? $this->checkForEnvFile()
             : [];

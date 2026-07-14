@@ -152,8 +152,11 @@ class LeadController extends Controller
     public function create(): View
     {
         $attributes = $this->attributeRepository
-            ->whereIn('code', ['description', 'title', 'lead_value', 'lead_type_id', 'lead_source_id', 'expected_close_date', 'user_id'])
             ->where('entity_type', 'leads')
+            ->where(function ($query) {
+                $query->whereIn('code', ['description', 'title', 'lead_value', 'lead_type_id', 'lead_source_id', 'expected_close_date', 'user_id'])
+                    ->orWhere('is_user_defined', 1);
+            })
             ->orderBy('sort_order', 'asc')
             ->get();
 
@@ -219,8 +222,11 @@ class LeadController extends Controller
     public function edit(int $id): View
     {
         $attributes = $this->attributeRepository
-            ->whereIn('code', ['description', 'title', 'lead_value', 'lead_type_id', 'lead_source_id', 'expected_close_date', 'user_id'])
             ->where('entity_type', 'leads')
+            ->where(function ($query) {
+                $query->whereIn('code', ['description', 'title', 'lead_value', 'lead_type_id', 'lead_source_id', 'expected_close_date', 'user_id'])
+                    ->orWhere('is_user_defined', 1);
+            })
             ->orderBy('sort_order', 'asc')
             ->get();
 

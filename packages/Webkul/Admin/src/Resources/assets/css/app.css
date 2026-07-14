@@ -27,6 +27,16 @@
     -moz-osx-font-smoothing: grayscale;
   }
 
+  /* Help menu glyph rendered as an SVG mask (no icomoon glyph available). */
+  .icon-help {
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    background-color: currentColor;
+    -webkit-mask: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGZpbGw9Im5vbmUiIHZpZXdCb3g9IjAgMCAyNCAyNCIgc3Ryb2tlLXdpZHRoPSIxLjUiIHN0cm9rZT0iIzAwMCI+PHBhdGggc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBkPSJNOS44NzkgNy41MTljMS4xNzEtMS4wMjUgMy4wNzEtMS4wMjUgNC4yNDIgMCAxLjE3MiAxLjAyNSAxLjE3MiAyLjY4NyAwIDMuNzEyLS4yMDMuMTc5LS40My4zMjYtLjY3LjQ0Mi0uNzQ1LjM2MS0xLjQ1Ljk5OS0xLjQ1IDEuODI3di43NU0yMSAxMmE5IDkgMCAxIDEtMTggMCA5IDkgMCAwIDEgMTggMFptLTkgNS4yNWguMDA4di4wMDhIMTJ2LS4wMDhaIi8+PC9zdmc+") no-repeat center / contain;
+    mask: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGZpbGw9Im5vbmUiIHZpZXdCb3g9IjAgMCAyNCAyNCIgc3Ryb2tlLXdpZHRoPSIxLjUiIHN0cm9rZT0iIzAwMCI+PHBhdGggc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBkPSJNOS44NzkgNy41MTljMS4xNzEtMS4wMjUgMy4wNzEtMS4wMjUgNC4yNDIgMCAxLjE3MiAxLjAyNSAxLjE3MiAyLjY4NyAwIDMuNzEyLS4yMDMuMTc5LS40My4zMjYtLjY3LjQ0Mi0uNzQ1LjM2MS0xLjQ1Ljk5OS0xLjQ1IDEuODI3di43NU0yMSAxMmE5IDkgMCAxIDEtMTggMCA5IDkgMCAwIDEgMTggMFptLTkgNS4yNWguMDA4di4wMDhIMTJ2LS4wMDhaIi8+PC9zdmc+") no-repeat center / contain;
+  }
+
 @layer components {
     .icon-image:before {
         content: "\e956";

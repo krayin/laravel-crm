@@ -13,6 +13,11 @@ return [
                 'type' => 'Type',
                 'pipeline' => 'Pipeline',
                 'stage' => 'Stage',
+                'lead-source-id' => 'Source',
+                'lead-type-id' => 'Type',
+                'user-id' => 'Sales Owner',
+                'lead-pipeline-id' => 'Pipeline',
+                'lead-pipeline-stage-id' => 'Stage',
             ],
 
             'persons' => [
@@ -22,12 +27,15 @@ return [
                 'name' => 'Name',
                 'organization' => 'Organization',
                 'sales-owner' => 'Sales Owner',
+                'user-id' => 'Sales Owner',
+                'organization-id' => 'Organization',
             ],
 
             'organizations' => [
                 'address' => 'Address',
                 'name' => 'Name',
                 'sales-owner' => 'Sales Owner',
+                'user-id' => 'Sales Owner',
             ],
 
             'products' => [
@@ -52,6 +60,8 @@ return [
                 'sub-total' => 'Sub Total',
                 'subject' => 'Subject',
                 'tax-amount' => 'Tax Amount',
+                'user-id' => 'Sales Owner',
+                'person-id' => 'Person',
             ],
 
             'warehouses' => [

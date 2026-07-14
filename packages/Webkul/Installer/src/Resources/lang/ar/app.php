@@ -13,6 +13,11 @@ return [
                 'type' => 'النوع',
                 'pipeline' => 'قناة المبيعات',
                 'stage' => 'المرحلة',
+                'lead-source-id' => 'المصدر',
+                'lead-type-id' => 'النوع',
+                'user-id' => 'مالك المبيعات',
+                'lead-pipeline-id' => 'قناة المبيعات',
+                'lead-pipeline-stage-id' => 'المرحلة',
             ],
 
             'persons' => [
@@ -22,12 +27,15 @@ return [
                 'name' => 'الاسم',
                 'organization' => 'المنظمة',
                 'sales-owner' => 'مالك المبيعات',
+                'user-id' => 'مالك المبيعات',
+                'organization-id' => 'المنظمة',
             ],
 
             'organizations' => [
                 'address' => 'العنوان',
                 'name' => 'الاسم',
                 'sales-owner' => 'مالك المبيعات',
+                'user-id' => 'مالك المبيعات',
             ],
 
             'products' => [
@@ -52,6 +60,8 @@ return [
                 'sub-total' => 'الإجمالي الفرعي',
                 'subject' => 'الموضوع',
                 'tax-amount' => 'مبلغ الضريبة',
+                'user-id' => 'مالك المبيعات',
+                'person-id' => 'شخص',
             ],
 
             'warehouses' => [

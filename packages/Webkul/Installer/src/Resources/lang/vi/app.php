@@ -13,6 +13,11 @@ return [
                 'type' => 'Loại',
                 'pipeline' => 'Kênh bán hàng',
                 'stage' => 'Giai đoạn',
+                'lead-source-id' => 'Nguồn',
+                'lead-type-id' => 'Loại',
+                'user-id' => 'Chủ sở hữu bán hàng',
+                'lead-pipeline-id' => 'Kênh bán hàng',
+                'lead-pipeline-stage-id' => 'Giai đoạn',
             ],
 
             'persons' => [
@@ -22,12 +27,15 @@ return [
                 'name' => 'Tên',
                 'organization' => 'Tổ chức',
                 'sales-owner' => 'Chủ sở hữu bán hàng',
+                'user-id' => 'Chủ sở hữu bán hàng',
+                'organization-id' => 'Tổ chức',
             ],
 
             'organizations' => [
                 'address' => 'Địa chỉ',
                 'name' => 'Tên',
                 'sales-owner' => 'Chủ sở hữu bán hàng',
+                'user-id' => 'Chủ sở hữu bán hàng',
             ],
 
             'products' => [
@@ -52,6 +60,8 @@ return [
                 'sub-total' => 'Tổng phụ',
                 'subject' => 'Chủ đề',
                 'tax-amount' => 'Số tiền thuế',
+                'user-id' => 'Chủ sở hữu bán hàng',
+                'person-id' => 'Người',
             ],
 
             'warehouses' => [

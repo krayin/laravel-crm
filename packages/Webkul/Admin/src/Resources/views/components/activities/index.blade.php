@@ -190,8 +190,7 @@
                                         <p
                                             class="dark:text-white"
                                             v-if="activity.comment"
-                                            v-safe-html="activity.comment"
-                                        ></p>
+                                        >@{{ activity.comment }}</p>
 
                                         {!! view_render_event('admin.components.activities.content.activity.item.description.after') !!}
 
