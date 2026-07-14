@@ -121,13 +121,26 @@ class UserController extends Controller
 
         $data = request()->all();
 
+        $authUser = auth()->guard('user')->user();
+
+        if (
+            $authUser->id != $id
+            && $authUser->role?->permission_type !== 'all'
+        ) {
+            $data = Arr::except($data, [
+                'password',
+                'confirm_password',
+                'role_id',
+                'status',
+                'view_permission',
+            ]);
+        }
+
         if (empty($data['password'])) {
             $data = Arr::except($data, ['password', 'confirm_password']);
         } else {
             $data['password'] = bcrypt($data['password']);
         }
-
-        $authUser = auth()->guard('user')->user();
 
         if ($authUser->id == $id) {
             $data['status'] = true;
@@ -193,6 +206,10 @@ class UserController extends Controller
      */
     public function massUpdate(MassUpdateRequest $massDestroyRequest): JsonResponse
     {
+        if (auth()->guard('user')->user()->role?->permission_type !== 'all') {
+            abort(401, trans('admin::app.errors.unauthorized'));
+        }
+
         $count = 0;
 
         $users = $this->userRepository->findWhereIn('id', $massDestroyRequest->input('indices'));
