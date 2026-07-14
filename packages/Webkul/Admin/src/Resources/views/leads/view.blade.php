@@ -60,6 +60,7 @@
                         <!-- Mail Activity Action -->
                         <x-admin::activities.actions.mail
                             :entity="$lead"
+                            :emails="collect($lead->person?->emails ?? [])->pluck('value')->filter()->values()->toArray()"
                             entity-control-name="lead_id"
                         />
                     @endif
