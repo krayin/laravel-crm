@@ -345,6 +345,8 @@
 
                     isLoading: true,
 
+                    isLoadingMore: false,
+
                     tagTextColor: {
                         '#FEE2E2': '#DC2626',
                         '#FFEDD5': '#EA580C',
@@ -674,9 +676,13 @@
                  * @returns {void}
                  */
                 handleScroll(stage, event) {
-                    const bottom = event.target.scrollHeight - event.target.scrollTop === event.target.clientHeight;
+                    const bottom = event.target.scrollHeight - event.target.scrollTop - event.target.clientHeight <= 5;
 
                     if (! bottom) {
+                        return;
+                    }
+
+                    if (this.isLoadingMore) {
                         return;
                     }
 
@@ -684,11 +690,15 @@
                         return;
                     }
 
+                    this.isLoadingMore = true;
+
                     this.append({
                         pipeline_stage_id: stage.id,
                         pipeline_id: stage.lead_pipeline_id,
                         page: this.stageLeads[stage.sort_order].leads.meta.current_page + 1,
                         limit: 10,
+                    }).finally(() => {
+                        this.isLoadingMore = false;
                     });
                 },
 
