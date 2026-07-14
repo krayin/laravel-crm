@@ -2298,6 +2298,7 @@ return [
     'errors' => [
         'dashboard' => 'Kontrol Paneli',
         'go-back' => 'Geri Dön',
+        'unauthorized' => 'Bu işlem yetkisiz.',
         'support' => 'Sorun devam ederse, yardım için bize <a href=":link" class=":class">:email</a> adresinden ulaşın.',
         '404' => [
             'description' => 'Oops! Aradığınız sayfa tatilde. Aradığınız şeyi bulamadık gibi görünüyor.',

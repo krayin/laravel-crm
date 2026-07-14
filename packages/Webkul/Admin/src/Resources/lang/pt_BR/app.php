@@ -2298,6 +2298,7 @@ return [
     'errors' => [
         'dashboard' => 'Dashboard',
         'go-back' => 'Go Back',
+        'unauthorized' => 'Esta ação não está autorizada.',
         'support' => 'If the problem persists, reach out to us at <a href=":link" class=":class">:email</a> for assistance.',
         '404' => [
             'description' => 'Oops! The page you\'re looking for is on vacation. It seems we couldn\'t find what you were searching for.',
