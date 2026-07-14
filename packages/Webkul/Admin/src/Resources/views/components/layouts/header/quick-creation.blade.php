@@ -415,6 +415,8 @@
                                 this.$refs.modal.close();
 
                                 formEl.reset();
+
+                                window.location.reload();
                             })
                             .catch(error => {
                                 if (error.response?.status == 422) {
