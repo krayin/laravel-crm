@@ -3,9 +3,9 @@
     ::value="'{{ $value ? route('admin.settings.attributes.download', ['path' => $value]) : '' }}'"
     rules="required|mimes:jpeg,jpg,png,gif"
     position="left"
-    :label="$attribute->name"
+    :label="$label ?? $attribute->name"
     ::errors="errors"
-    :placeholder="$attribute->name"
+    :placeholder="$label ?? $attribute->name"
     :url="$url"
     :allow-edit="$allowEdit"
 />
