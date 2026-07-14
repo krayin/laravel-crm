@@ -2299,6 +2299,8 @@ return [
         'dashboard' => 'Tablero',
         'go-back' => 'Volver',
         'support' => 'Si el problema persiste, contáctanos en <a href=":link" class=":class">:email</a> para obtener ayuda.',
+        'unauthorized' => 'Esta acción no está autorizada.',
+
         '404' => [
             'description' => '¡Ups! La página que estás buscando está de vacaciones. Parece que no pudimos encontrar lo que estabas buscando.',
             'title' => '404 Página No Encontrada',
