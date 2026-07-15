@@ -24,6 +24,17 @@ class WebhookService
             'connect_timeout' => 10,
             'verify' => true,
             'http_errors' => false,
+            'allow_redirects' => [
+                'max' => 5,
+                'strict' => true,
+                'referer' => false,
+                'protocols' => ['http', 'https'],
+                'on_redirect' => function ($request, $response, $uri) {
+                    if (! $this->isSafeEndpoint((string) $uri)) {
+                        throw new \RuntimeException('Blocked redirect to a disallowed webhook endpoint.');
+                    }
+                },
+            ],
         ]);
     }
 
@@ -45,6 +56,13 @@ class WebhookService
         $headers = isset($data['headers']) ? $this->parseJsonField($data['headers']) : [];
         $payload = isset($data['payload']) ? $data['payload'] : null;
         $data['end_point'] = $this->appendQueryParams($data['end_point'], $data['query_params'] ?? '');
+
+        if (! $this->isSafeEndpoint($data['end_point'])) {
+            return [
+                'status' => 'error',
+                'response' => 'The webhook endpoint URL is not allowed.',
+            ];
+        }
 
         $formattedHeaders = $this->formatHeaders($headers);
 
@@ -69,7 +87,59 @@ class WebhookService
                 'response' => $e->hasResponse() ? Message::toString($e->getResponse()) : $e->getMessage(),
                 'status_code' => $e->hasResponse() ? $e->getResponse()->getStatusCode() : null,
             ];
+        } catch (\Throwable $e) {
+            return [
+                'status' => 'error',
+                'response' => $e->getMessage(),
+            ];
         }
+    }
+
+    /**
+     * Guard against Server-Side Request Forgery (SSRF). Only plain HTTP(S) endpoints whose host
+     * resolves exclusively to public addresses are permitted. Endpoints that resolve to private,
+     * reserved, loopback, or link-local ranges (e.g. cloud metadata services) are rejected.
+     */
+    protected function isSafeEndpoint(string $endPoint): bool
+    {
+        $scheme = strtolower((string) parse_url($endPoint, PHP_URL_SCHEME));
+
+        $host = parse_url($endPoint, PHP_URL_HOST);
+
+        if (
+            ! in_array($scheme, ['http', 'https'])
+            || empty($host)
+        ) {
+            return false;
+        }
+
+        $host = trim($host, '[]');
+
+        if (filter_var($host, FILTER_VALIDATE_IP)) {
+            $ips = [$host];
+        } else {
+            $records = array_merge(
+                @dns_get_record($host, DNS_A) ?: [],
+                @dns_get_record($host, DNS_AAAA) ?: [],
+            );
+
+            $ips = array_values(array_filter(array_map(
+                fn ($record) => $record['ip'] ?? $record['ipv6'] ?? null,
+                $records,
+            )));
+        }
+
+        if (empty($ips)) {
+            return false;
+        }
+
+        foreach ($ips as $ip) {
+            if (! filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE)) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     /**
