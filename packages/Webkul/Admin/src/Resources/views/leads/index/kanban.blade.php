@@ -377,6 +377,15 @@
 
             mounted () {
                 this.boot();
+
+                this.$emitter.on('reload-datagrids', () => {
+                    this.get()
+                        .then(response => {
+                            for (let [sortOrder, data] of Object.entries(response.data)) {
+                                this.stageLeads[sortOrder] = data;
+                            }
+                        });
+                });
             },
 
             methods: {
