@@ -441,6 +441,7 @@ return [
             'quote-info-info' => 'Introduce la información básica de la cotización.',
             'address-info' => 'Información de la Dirección',
             'address-info-info' => 'Información sobre la dirección relacionada con la cotización.',
+            'same-as-billing' => 'Dirección de envío igual que la dirección de facturación',
             'quote-items' => 'Artículos de la Cotización',
             'search-products' => 'Buscar Productos',
             'link-to-lead' => 'Vincular a cliente potencial',
@@ -2299,6 +2300,8 @@ return [
         'dashboard' => 'Tablero',
         'go-back' => 'Volver',
         'support' => 'Si el problema persiste, contáctanos en <a href=":link" class=":class">:email</a> para obtener ayuda.',
+        'unauthorized' => 'Esta acción no está autorizada.',
+
         '404' => [
             'description' => '¡Ups! La página que estás buscando está de vacaciones. Parece que no pudimos encontrar lo que estabas buscando.',
             'title' => '404 Página No Encontrada',

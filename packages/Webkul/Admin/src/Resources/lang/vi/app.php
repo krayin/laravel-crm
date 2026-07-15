@@ -441,6 +441,7 @@ return [
             'quote-info-info' => 'Nhập thông tin cơ bản của báo giá.',
             'address-info' => 'Thông tin Địa chỉ',
             'address-info-info' => 'Thông tin về địa chỉ liên quan đến báo giá.',
+            'same-as-billing' => 'Địa chỉ giao hàng giống địa chỉ thanh toán',
             'quote-items' => 'Mục Báo giá',
             'search-products' => 'Tìm kiếm Sản phẩm',
             'link-to-lead' => 'Liên kết tới lead',
@@ -2299,6 +2300,8 @@ return [
         'dashboard' => 'Bảng điều khiển',
         'go-back' => 'Quay lại',
         'support' => 'Nếu sự cố vẫn tiếp diễn, vui lòng liên hệ với chúng tôi tại <a href=":link" class=":class">:email</a> để được hỗ trợ.',
+        'unauthorized' => 'Hành động này không được phép.',
+
         '404' => [
             'description' => 'Rất tiếc! Trang bạn đang tìm kiếm hiện không có ở đây. Có vẻ như chúng tôi không thể tìm thấy những gì bạn đang tìm kiếm.',
             'title' => '404 Không Tìm Thấy Trang',

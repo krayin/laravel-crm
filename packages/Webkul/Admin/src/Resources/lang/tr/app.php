@@ -441,6 +441,7 @@ return [
             'quote-info-info' => 'Teklifin temel bilgilerini girin.',
             'address-info' => 'Adres Bilgileri',
             'address-info-info' => 'Teklif ile ilgili adres bilgileri.',
+            'same-as-billing' => 'Teslimat adresi fatura adresi ile aynı',
             'quote-items' => 'Teklif Kalemleri',
             'search-products' => 'Ürünleri Ara',
             'link-to-lead' => 'Potansiyele Bağla',
@@ -2299,6 +2300,8 @@ return [
         'dashboard' => 'Kontrol Paneli',
         'go-back' => 'Geri Dön',
         'support' => 'Sorun devam ederse, yardım için bize <a href=":link" class=":class">:email</a> adresinden ulaşın.',
+        'unauthorized' => 'Bu işlem için yetkiniz yok.',
+
         '404' => [
             'description' => 'Oops! Aradığınız sayfa tatilde. Aradığınız şeyi bulamadık gibi görünüyor.',
             'title' => '404 Sayfa Bulunamadı',
