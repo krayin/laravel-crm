@@ -415,6 +415,12 @@
                                 this.$refs.modal.close();
 
                                 formEl.reset();
+
+                                /**
+                                 * Refresh any datagrid on the current page so the newly created
+                                 * record appears without a manual reload.
+                                 */
+                                this.$emitter.emit('reload-datagrids');
                             })
                             .catch(error => {
                                 if (error.response?.status == 422) {
