@@ -857,6 +857,8 @@ return [
                 'any-condition-are-true' => 'Herhangi bir koşul doğru',
                 'add-condition' => 'Koşul Ekle',
                 'add-action' => 'Eylem Ekle',
+                'no-webhook-found' => 'Webhook bulunamadı.',
+                'create-webhook' => 'Yeni bir webhook oluşturun.',
                 'yes' => 'Evet',
                 'no' => 'Hayır',
                 'email' => 'E-posta',

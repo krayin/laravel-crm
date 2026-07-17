@@ -857,6 +857,8 @@ return [
                 'any-condition-are-true' => 'هر شرطی صحیح است',
                 'add-condition' => 'افزودن شرط',
                 'add-action' => 'افزودن اقدام',
+                'no-webhook-found' => 'هیچ وب‌هوکی یافت نشد.',
+                'create-webhook' => 'ایجاد وب‌هوک جدید.',
                 'yes' => 'بله',
                 'no' => 'خیر',
                 'email' => 'ایمیل',
