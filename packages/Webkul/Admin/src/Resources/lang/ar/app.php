@@ -1812,6 +1812,7 @@ return [
                     'title' => 'العنوان',
                     'tags' => 'العلامات',
                     'expected-close-date' => 'تاريخ الإغلاق المتوقع',
+                    'date-to' => 'تاريخ إلى',
                     'created-at' => 'تم الإنشاء في',
                 ],
                 'toolbar' => [

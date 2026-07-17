@@ -449,6 +449,20 @@
                         }
 
                         /**
+                         * Date range filters are sent as a dedicated parameter, not through the search
+                         * string, so the server can resolve them the same way the datagrid does. A quick
+                         * filter, such as `last_month`, is applied as a plain string, whereas a custom
+                         * range is applied as a `[[from, to]]` pair.
+                         */
+                        if (column.type === 'date' || column.type === 'datetime') {
+                            if (column.value.length) {
+                                params[column.index] = column.value;
+                            }
+
+                            return;
+                        }
+
+                        /**
                          * If the column is a searchable dropdown, then we need to append the column value
                          * with the column label. Otherwise, we can directly append the column value.
                          */
