@@ -87,6 +87,8 @@ class QuoteController extends Controller
             $this->additionalValidation();
         }
 
+        $this->syncShippingAddressWithBilling($request);
+
         Event::dispatch('quote.create.before');
 
         $quote = $this->quoteRepository->create($request->all());
@@ -122,6 +124,8 @@ class QuoteController extends Controller
     {
         $quote = $this->quoteRepository->findOrFail($id);
 
+        $this->preventUnauthorizedAccess($quote->user_id);
+
         $leadId = old('lead_id') ?? optional($quote->leads->first())->id;
 
         $linkedLead = $leadId ? $this->leadRepository->find($leadId) : null;
@@ -142,7 +146,11 @@ class QuoteController extends Controller
      */
     public function update(AttributeForm $request, int $id): RedirectResponse
     {
+        $this->preventUnauthorizedAccess($this->quoteRepository->findOrFail($id)->user_id);
+
         $this->additionalValidation();
+
+        $this->syncShippingAddressWithBilling($request);
 
         Event::dispatch('quote.update.before', $id);
 
@@ -196,7 +204,7 @@ class QuoteController extends Controller
      */
     public function destroy(int $id): JsonResponse
     {
-        $this->quoteRepository->findOrFail($id);
+        $this->preventUnauthorizedAccess($this->quoteRepository->findOrFail($id)->user_id);
 
         try {
             Event::dispatch('quote.delete.before', $id);
@@ -220,7 +228,9 @@ class QuoteController extends Controller
      */
     public function massDestroy(MassDestroyRequest $massDestroyRequest): JsonResponse
     {
-        $quotes = $this->quoteRepository->findWhereIn('id', $massDestroyRequest->input('indices'));
+        $quotes = $this->filterAuthorizedRecords(
+            $this->quoteRepository->findWhereIn('id', $massDestroyRequest->input('indices'))
+        );
 
         try {
             foreach ($quotes as $quotes) {
@@ -247,6 +257,8 @@ class QuoteController extends Controller
     public function print($id): Response|StreamedResponse
     {
         $quote = $this->quoteRepository->findOrFail($id);
+
+        $this->preventUnauthorizedAccess($quote->user_id);
 
         return $this->downloadPDF(
             view('admin::quotes.pdf', [
@@ -278,6 +290,7 @@ class QuoteController extends Controller
         }
 
         return 'data:image/svg+xml;base64,'.base64_encode($svg);
+
     }
 
     /**

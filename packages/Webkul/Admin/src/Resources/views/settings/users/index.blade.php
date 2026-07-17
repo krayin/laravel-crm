@@ -394,10 +394,10 @@
 
                             {!! view_render_event('admin.settings.users.index.form.role_id.before') !!}
 
-                            <template v-if="user.view_permission === 'group'">
+                            <template v-if="['group', 'individual'].includes(user.view_permission)">
                                 <!-- Group -->
                                 <x-admin::form.control-group>
-                                    <x-admin::form.control-group.label class="required">
+                                    <x-admin::form.control-group.label ::class="{ required: user.view_permission === 'group' }">
                                         @lang('admin::app.settings.users.index.create.group')
                                     </x-admin::form.control-group.label>
 
@@ -406,7 +406,7 @@
                                         label="@lang('admin::app.settings.users.index.create.group')"
                                         multiple
                                         v-model="user.groups"
-                                        rules="required"
+                                        :rules="user.view_permission === 'group' ? 'required' : ''"
                                     >
                                         <select
                                             name="groups[]"

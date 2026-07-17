@@ -17,10 +17,19 @@ class TinyMCEController extends Controller
     private string $storagePath = 'tinymce';
 
     /**
+     * The image extensions allowed to be uploaded through the editor.
+     */
+    private string $allowedExtensions = 'bmp,gif,jpeg,jpg,png,svg,webp';
+
+    /**
      * Upload file from tinymce.
      */
     public function upload(): JsonResponse
     {
+        $this->validate(request(), [
+            'file' => 'required|file|mimes:'.$this->allowedExtensions.'|max:8192',
+        ]);
+
         $media = $this->storeMedia();
 
         if (! empty($media)) {
@@ -47,7 +56,13 @@ class TinyMCEController extends Controller
             return [];
         }
 
-        $filename = md5($file->getClientOriginalName().time()).'.'.$file->getClientOriginalExtension();
+        $extension = $file->extension();
+
+        if (! in_array($extension, explode(',', $this->allowedExtensions), true)) {
+            return [];
+        }
+
+        $filename = md5($file->getClientOriginalName().time()).'.'.$extension;
 
         $path = $file->storeAs($this->storagePath, $filename);
 

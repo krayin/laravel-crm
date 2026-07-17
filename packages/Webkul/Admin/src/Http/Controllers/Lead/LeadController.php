@@ -174,6 +174,10 @@ class LeadController extends Controller
 
         $data['status'] = 1;
 
+        if (request()->has('quick_add') && empty($data['user_id'])) {
+            $data['user_id'] = auth()->guard('user')->user()->id;
+        }
+
         if (! empty($data['lead_pipeline_stage_id'])) {
             $stage = $this->stageRepository->findOrFail($data['lead_pipeline_stage_id']);
 
@@ -232,6 +236,8 @@ class LeadController extends Controller
 
         $lead = $this->leadRepository->findOrFail($id);
 
+        $this->preventUnauthorizedAccess($lead->user_id);
+
         return view('admin::leads.edit', compact('lead', 'attributes'));
     }
 
@@ -259,6 +265,8 @@ class LeadController extends Controller
      */
     public function update(LeadForm $request, int $id): RedirectResponse|JsonResponse
     {
+        $this->preventUnauthorizedAccess($this->leadRepository->findOrFail($id)->user_id);
+
         Event::dispatch('lead.update.before', $id);
 
         $data = $request->all();
@@ -301,6 +309,8 @@ class LeadController extends Controller
      */
     public function updateAttributes(int $id)
     {
+        $this->preventUnauthorizedAccess($this->leadRepository->findOrFail($id)->user_id);
+
         $data = request()->all();
 
         $attributes = $this->attributeRepository->findWhere([
@@ -329,6 +339,8 @@ class LeadController extends Controller
         ]);
 
         $lead = $this->leadRepository->findOrFail($id);
+
+        $this->preventUnauthorizedAccess($lead->user_id);
 
         $stage = $lead->pipeline->stages()
             ->where('id', request()->input('lead_pipeline_stage_id'))
@@ -378,7 +390,7 @@ class LeadController extends Controller
      */
     public function destroy(int $id): JsonResponse
     {
-        $this->leadRepository->findOrFail($id);
+        $this->preventUnauthorizedAccess($this->leadRepository->findOrFail($id)->user_id);
 
         try {
             Event::dispatch('lead.delete.before', $id);
@@ -402,7 +414,9 @@ class LeadController extends Controller
      */
     public function massUpdate(MassUpdateRequest $massUpdateRequest): JsonResponse
     {
-        $leads = $this->leadRepository->findWhereIn('id', $massUpdateRequest->input('indices'));
+        $leads = $this->filterAuthorizedRecords(
+            $this->leadRepository->findWhereIn('id', $massUpdateRequest->input('indices'))
+        );
 
         try {
             foreach ($leads as $lead) {
@@ -430,7 +444,9 @@ class LeadController extends Controller
      */
     public function massDestroy(MassDestroyRequest $massDestroyRequest): JsonResponse
     {
-        $leads = $this->leadRepository->findWhereIn('id', $massDestroyRequest->input('indices'));
+        $leads = $this->filterAuthorizedRecords(
+            $this->leadRepository->findWhereIn('id', $massDestroyRequest->input('indices'))
+        );
 
         try {
             foreach ($leads as $lead) {
@@ -456,6 +472,8 @@ class LeadController extends Controller
      */
     public function addProduct(int $leadId): JsonResponse
     {
+        $this->preventUnauthorizedAccess($this->leadRepository->findOrFail($leadId)->user_id);
+
         $product = $this->productRepository->updateOrCreate(
             [
                 'lead_id' => $leadId,
@@ -481,6 +499,8 @@ class LeadController extends Controller
      */
     public function removeProduct(int $id): JsonResponse
     {
+        $this->preventUnauthorizedAccess($this->leadRepository->findOrFail($id)->user_id);
+
         try {
             Event::dispatch('lead.product.delete.before', $id);
 
