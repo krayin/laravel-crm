@@ -3,12 +3,21 @@
 namespace Webkul\Attribute\Repositories;
 
 use Illuminate\Container\Container;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use Webkul\Attribute\Contracts\Attribute;
 use Webkul\Core\Eloquent\Repository;
 
 class AttributeRepository extends Repository
 {
+    /**
+     * The attribute codes which are never exposed on a web form.
+     */
+    protected $restrictedWebFormAttributeCodes = [
+        'lead_pipeline_id',
+        'lead_pipeline_stage_id',
+    ];
+
     /**
      * Create a new repository instance.
      *
@@ -176,5 +185,36 @@ class AttributeRepository extends Repository
         } else {
             return app($lookup['repository'])->find($entityId, $columns);
         }
+    }
+
+    /**
+     * Returns the attributes which can be added to a web form.
+     *
+     * The pipeline and the stage of a lead are decided by the web form itself, so they are never
+     * offered to the visitor and are excluded from the builder.
+     *
+     * @param  array  $excludedAttributeIds
+     * @return Collection
+     */
+    public function getWebFormAttributes($excludedAttributeIds = [])
+    {
+        return $this->model
+            ->whereIn('entity_type', ['persons', 'leads'])
+            ->whereNotIn('id', $excludedAttributeIds)
+            ->whereNotIn('code', $this->restrictedWebFormAttributeCodes)
+            ->get();
+    }
+
+    /**
+     * Returns the ids of the attributes which are never exposed on a web form.
+     *
+     * @return array
+     */
+    public function getRestrictedWebFormAttributeIds()
+    {
+        return $this->model
+            ->whereIn('code', $this->restrictedWebFormAttributeCodes)
+            ->pluck('id')
+            ->toArray();
     }
 }

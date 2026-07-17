@@ -74,7 +74,17 @@ class WebFormController extends Controller
 
             $data['status'] = 1;
 
-            $pipeline = $this->pipelineRepository->getDefaultPipeline();
+            /**
+             * The pipeline is configured on the web form by the admin, so the default pipeline is
+             * only used when the web form does not point to one.
+             */
+            $pipeline = $webForm->lead_pipeline_id
+                ? $this->pipelineRepository->find($webForm->lead_pipeline_id)
+                : null;
+
+            if (! $pipeline) {
+                $pipeline = $this->pipelineRepository->getDefaultPipeline();
+            }
 
             $stage = $pipeline->stages()->first();
 
