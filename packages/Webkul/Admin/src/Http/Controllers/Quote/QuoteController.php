@@ -7,6 +7,8 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Vite;
 use Illuminate\View\View;
 use Prettus\Repository\Criteria\RequestCriteria;
 use Symfony\Component\HttpFoundation\StreamedResponse;
@@ -259,21 +261,36 @@ class QuoteController extends Controller
         $this->preventUnauthorizedAccess($quote->user_id);
 
         return $this->downloadPDF(
-            view('admin::quotes.pdf', compact('quote'))->render(),
+            view('admin::quotes.pdf', [
+                'quote' => $quote,
+                'logo' => $this->getPdfLogo(),
+            ])->render(),
             'Quote_'.$quote->subject.'_'.$quote->created_at->format('d-m-Y')
         );
     }
 
     /**
-     * Mirror the billing address into the shipping address when "same as billing" is enabled.
+     * Resolve the brand logo as a base64 data URI, falling back to the default Krayin logo.
      */
-    private function syncShippingAddressWithBilling(AttributeForm $request): void
+    private function getPdfLogo(): ?string
     {
-        if ($request->boolean('shipping_address_same_as_billing')) {
-            $request->merge([
-                'shipping_address' => $request->input('billing_address'),
-            ]);
+        $logo = core()->getConfigData('general.general.admin_logo.logo_image');
+
+        if ($logo && Storage::exists($logo)) {
+            return 'data:'.Storage::mimeType($logo).';base64,'.base64_encode(Storage::get($logo));
         }
+
+        try {
+            $assetsDirectory = trim(config('krayin-vite.viters.admin.package_assets_directory'), '/');
+
+            $svg = Vite::useBuildDirectory(config('krayin-vite.viters.admin.build_directory'))
+                ->content($assetsDirectory.'/images/logo.svg');
+        } catch (\Throwable $e) {
+            return null;
+        }
+
+        return 'data:image/svg+xml;base64,'.base64_encode($svg);
+
     }
 
     /**
