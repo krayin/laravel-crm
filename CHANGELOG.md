@@ -2,7 +2,23 @@
 
 This changelog consists of the bug & security fixes and new features being included in the releases listed below.
 
-## **v2.2.4 (15th of July 2026)** *Release*
+## **v2.2.4 (20th of July 2026)** *Release*
+
+* #2590[fixed] Fixed page does not refresh after creating a record via Quick Add.
+
+* #2589[fixed] Fixed Quick Add not working for users with group and individual permissions.
+
+* #2582[fixed] Fixed pipeline field visible on public webform.
+
+* #2581[enhancement] Fixed responsive UI issues when page is zoomed.
+
+* #2579[feature] Allow group selection for individual view permission users.
+
+* #2575[enhancement] Added previous month's sales update in Kanban view.
+
+* #2573[enhancement] Added dashboard support for multiple pipelines.
+
+* #2572[enhancement] Added filter by tag option in Contacts > Persons.
 
 * #2571[fixed] Fixed issue with lead creation.
 
