@@ -441,6 +441,7 @@ return [
             'quote-info-info' => 'أدخل المعلومات الأساسية لعرض السعر.',
             'address-info' => 'معلومات العنوان',
             'address-info-info' => 'معلومات عن العنوان المتعلق بعرض السعر.',
+            'same-as-billing' => 'عنوان الشحن نفس عنوان الفوترة',
             'quote-items' => 'بنود عرض السعر',
             'search-products' => 'البحث عن المنتجات',
             'link-to-lead' => 'ربط بالعميل المحتمل',
@@ -516,6 +517,7 @@ return [
                     'view' => 'عرض',
                     'name' => 'الاسم',
                     'organization-name' => 'اسم المؤسسة',
+                    'tag-name' => 'اسم الوسم',
                 ],
             ],
             'view' => [
@@ -855,6 +857,8 @@ return [
                 'any-condition-are-true' => 'أي شرط صحيح',
                 'add-condition' => 'إضافة شرط',
                 'add-action' => 'إضافة إجراء',
+                'no-webhook-found' => 'لم يتم العثور على أي webhook.',
+                'create-webhook' => 'إنشاء webhook جديد.',
                 'yes' => 'نعم',
                 'no' => 'لا',
                 'email' => 'البريد الإلكتروني',
@@ -938,6 +942,7 @@ return [
                 'general' => 'عام',
                 'leads' => 'العملاء المحتملون',
                 'person' => 'شخص',
+                'pipeline' => 'خط الأنابيب',
                 'save-btn' => 'حفظ نموذج الويب',
                 'submit-button-label' => 'تسمية زر الإرسال',
                 'submit-success-action' => 'إجراء نجاح الإرسال',
@@ -971,6 +976,7 @@ return [
                 'general' => 'عام',
                 'leads' => 'العملاء المحتملون',
                 'person' => 'شخص',
+                'pipeline' => 'خط الأنابيب',
                 'preview' => 'معاينة',
                 'public-url' => 'الرابط العام',
                 'redirect-to-url' => 'إعادة التوجيه إلى الرابط',
@@ -1809,6 +1815,7 @@ return [
                     'title' => 'العنوان',
                     'tags' => 'العلامات',
                     'expected-close-date' => 'تاريخ الإغلاق المتوقع',
+                    'date-to' => 'تاريخ إلى',
                     'created-at' => 'تم الإنشاء في',
                 ],
                 'toolbar' => [
@@ -2300,6 +2307,8 @@ return [
         'go-back' => 'العودة',
         'unauthorized' => 'هذا الإجراء غير مصرح به.',
         'support' => 'إذا استمرت المشكلة، تواصل معنا على <a href=":link" class=":class">:email</a> للحصول على المساعدة.',
+        'unauthorized' => 'هذا الإجراء غير مصرح به.',
+
         '404' => [
             'description' => 'عذرًا! الصفحة التي تبحث عنها في إجازة. يبدو أننا لم نجد ما كنت تبحث عنه.',
             'title' => '404 الصفحة غير موجودة',

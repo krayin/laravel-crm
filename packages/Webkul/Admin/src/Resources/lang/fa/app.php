@@ -441,6 +441,7 @@ return [
             'quote-info-info' => 'اطلاعات پایه نقل‌قول را وارد کنید.',
             'address-info' => 'اطلاعات آدرس',
             'address-info-info' => 'اطلاعات مربوط به آدرس مرتبط با نقل‌قول.',
+            'same-as-billing' => 'آدرس ارسال همانند آدرس صورتحساب',
             'quote-items' => 'موارد نقل‌قول',
             'search-products' => 'جستجوی محصولات',
             'link-to-lead' => 'پیوند به سرنخ',
@@ -516,6 +517,7 @@ return [
                     'view' => 'مشاهده',
                     'name' => 'نام',
                     'organization-name' => 'نام سازمان',
+                    'tag-name' => 'نام برچسب',
                 ],
             ],
             'view' => [
@@ -855,6 +857,8 @@ return [
                 'any-condition-are-true' => 'هر شرطی صحیح است',
                 'add-condition' => 'افزودن شرط',
                 'add-action' => 'افزودن اقدام',
+                'no-webhook-found' => 'هیچ وب‌هوکی یافت نشد.',
+                'create-webhook' => 'ایجاد وب‌هوک جدید.',
                 'yes' => 'بله',
                 'no' => 'خیر',
                 'email' => 'ایمیل',
@@ -938,6 +942,7 @@ return [
                 'general' => 'عمومی',
                 'leads' => 'سرنخ‌ها',
                 'person' => 'شخص',
+                'pipeline' => 'پایپ‌لاین',
                 'save-btn' => 'ذخیره فرم وب',
                 'submit-button-label' => 'برچسب دکمه ارسال',
                 'submit-success-action' => 'عملکرد موفقیت آمیز ارسال',
@@ -971,6 +976,7 @@ return [
                 'general' => 'عمومی',
                 'leads' => 'سرنخ‌ها',
                 'person' => 'شخص',
+                'pipeline' => 'پایپ‌لاین',
                 'preview' => 'پیش‌نمایش',
                 'public-url' => 'آدرس عمومی',
                 'redirect-to-url' => 'انتقال به آدرس',
@@ -1809,6 +1815,7 @@ return [
                     'title' => 'عنوان',
                     'tags' => 'برچسب‌ها',
                     'expected-close-date' => 'تاریخ بسته شدن مورد انتظار',
+                    'date-to' => 'تاریخ تا',
                     'created-at' => 'تاریخ ایجاد',
                 ],
                 'toolbar' => [
@@ -2300,6 +2307,8 @@ return [
         'go-back' => 'بازگشت',
         'unauthorized' => 'این عملیات مجاز نیست.',
         'support' => 'اگر مشکل ادامه داشت، برای کمک با ما از طریق <a href=":link" class=":class">:email</a> تماس بگیرید.',
+        'unauthorized' => 'این عملیات مجاز نیست.',
+
         '404' => [
             'description' => 'اوه! به نظر می‌رسد صفحه‌ای که دنبال آن بودید، در دسترس نیست. نتوانستیم چیزی که دنبالش بودید را پیدا کنیم.',
             'title' => '404 صفحه پیدا نشد',

@@ -345,6 +345,8 @@
 
                     isLoading: true,
 
+                    isLoadingMore: false,
+
                     tagTextColor: {
                         '#FEE2E2': '#DC2626',
                         '#FFEDD5': '#EA580C',
@@ -375,6 +377,15 @@
 
             mounted () {
                 this.boot();
+
+                this.$emitter.on('reload-datagrids', () => {
+                    this.get()
+                        .then(response => {
+                            for (let [sortOrder, data] of Object.entries(response.data)) {
+                                this.stageLeads[sortOrder] = data;
+                            }
+                        });
+                });
             },
 
             methods: {
@@ -433,6 +444,20 @@
 
                             params['search'] += `title:${column.value.join(',')};`;
                             params['searchFields'] += `title:like;`;
+
+                            return;
+                        }
+
+                        /**
+                         * Date range filters are sent as a dedicated parameter, not through the search
+                         * string, so the server can resolve them the same way the datagrid does. A quick
+                         * filter, such as `last_month`, is applied as a plain string, whereas a custom
+                         * range is applied as a `[[from, to]]` pair.
+                         */
+                        if (column.type === 'date' || column.type === 'datetime') {
+                            if (column.value.length) {
+                                params[column.index] = column.value;
+                            }
 
                             return;
                         }
@@ -674,9 +699,13 @@
                  * @returns {void}
                  */
                 handleScroll(stage, event) {
-                    const bottom = event.target.scrollHeight - event.target.scrollTop === event.target.clientHeight;
+                    const bottom = event.target.scrollHeight - event.target.scrollTop - event.target.clientHeight <= 5;
 
                     if (! bottom) {
+                        return;
+                    }
+
+                    if (this.isLoadingMore) {
                         return;
                     }
 
@@ -684,11 +713,15 @@
                         return;
                     }
 
+                    this.isLoadingMore = true;
+
                     this.append({
                         pipeline_stage_id: stage.id,
                         pipeline_id: stage.lead_pipeline_id,
                         page: this.stageLeads[stage.sort_order].leads.meta.current_page + 1,
                         limit: 10,
+                    }).finally(() => {
+                        this.isLoadingMore = false;
                     });
                 },
 

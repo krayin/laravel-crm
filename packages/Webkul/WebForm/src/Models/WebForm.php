@@ -15,6 +15,7 @@ class WebForm extends Model implements WebFormContract
         'submit_success_action',
         'submit_success_content',
         'create_lead',
+        'lead_pipeline_id',
         'background_color',
         'form_background_color',
         'form_title_color',

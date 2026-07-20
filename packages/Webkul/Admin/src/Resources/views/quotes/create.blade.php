@@ -218,21 +218,57 @@
                         <div class="w-1/2 max-md:w-full">
                             {!! view_render_event('admin.contacts.quotes.create.address_information.attributes.before') !!}
 
+                            <!-- Billing Address -->
                             <x-admin::attributes
                                 :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
                                     'entity_type' => 'quotes',
-                                    ['code', 'IN', ['billing_address', 'shipping_address']],
+                                    ['code', 'IN', ['billing_address']],
                                 ])"
                                 :custom-validations="[
                                     'billing_address' => [
                                         'max:100',
                                     ],
-                                    'shipping_address' => [
-                                        'max:100',
-                                    ],
                                 ]"
                                 :entity="$quote"
                             />
+
+                            <!-- Shipping Address Same As Billing Address -->
+                            <x-admin::form.control-group class="!mb-4">
+                                <x-admin::form.control-group.label class="!text-sm">
+                                    @lang('admin::app.quotes.create.same-as-billing')
+                                </x-admin::form.control-group.label>
+
+                                <input
+                                    type="hidden"
+                                    name="shipping_address_same_as_billing"
+                                    :value="0"
+                                />
+
+                                <x-admin::form.control-group.control
+                                    type="switch"
+                                    name="shipping_address_same_as_billing"
+                                    value="1"
+                                    :label="trans('admin::app.quotes.create.same-as-billing')"
+                                    :checked="(bool) old('shipping_address_same_as_billing')"
+                                    @change="sameAsBilling = $event.target.checked"
+                                />
+                            </x-admin::form.control-group>
+
+                            <!-- Shipping Address -->
+                            <template v-if="! sameAsBilling">
+                                <x-admin::attributes
+                                    :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
+                                        'entity_type' => 'quotes',
+                                        ['code', 'IN', ['shipping_address']],
+                                    ])"
+                                    :custom-validations="[
+                                        'shipping_address' => [
+                                            'max:100',
+                                        ],
+                                    ]"
+                                    :entity="$quote"
+                                />
+                            </template>
 
                             {!! view_render_event('admin.contacts.quotes.create.address_information.attributes.after') !!}
                         </div>
@@ -586,6 +622,8 @@
                         ],
 
                         leadEntity: @json($lookUpEntityData ?? []),
+
+                        sameAsBilling: {{ old('shipping_address_same_as_billing') ? 'true' : 'false' }},
                     };
                 },
 
