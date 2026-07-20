@@ -19,6 +19,8 @@ use Webkul\Admin\Http\Resources\LeadResource;
 use Webkul\Admin\Http\Resources\StageResource;
 use Webkul\Attribute\Repositories\AttributeRepository;
 use Webkul\Contact\Repositories\PersonRepository;
+use Webkul\DataGrid\ColumnTypes\Date as DateColumn;
+use Webkul\DataGrid\Enums\DateRangeOptionEnum;
 use Webkul\Lead\Helpers\MagicAI;
 use Webkul\Lead\Repositories\LeadRepository;
 use Webkul\Lead\Repositories\PipelineRepository;
@@ -114,6 +116,8 @@ class LeadController extends Controller
                 $query->whereIn('leads.user_id', $userIds);
             }
 
+            $this->applyDateRangeFilters($query);
+
             $stage->lead_value = (clone $query)->sum('lead_value');
 
             $data[$stage->sort_order] = (new StageResource($stage))->jsonSerialize();
@@ -174,6 +178,10 @@ class LeadController extends Controller
 
         $data['status'] = 1;
 
+        if (request()->has('quick_add') && empty($data['user_id'])) {
+            $data['user_id'] = auth()->guard('user')->user()->id;
+        }
+
         if (! empty($data['lead_pipeline_stage_id'])) {
             $stage = $this->stageRepository->findOrFail($data['lead_pipeline_stage_id']);
 
@@ -232,6 +240,8 @@ class LeadController extends Controller
 
         $lead = $this->leadRepository->findOrFail($id);
 
+        $this->preventUnauthorizedAccess($lead->user_id);
+
         return view('admin::leads.edit', compact('lead', 'attributes'));
     }
 
@@ -259,6 +269,8 @@ class LeadController extends Controller
      */
     public function update(LeadForm $request, int $id): RedirectResponse|JsonResponse
     {
+        $this->preventUnauthorizedAccess($this->leadRepository->findOrFail($id)->user_id);
+
         Event::dispatch('lead.update.before', $id);
 
         $data = $request->all();
@@ -301,6 +313,8 @@ class LeadController extends Controller
      */
     public function updateAttributes(int $id)
     {
+        $this->preventUnauthorizedAccess($this->leadRepository->findOrFail($id)->user_id);
+
         $data = request()->all();
 
         $attributes = $this->attributeRepository->findWhere([
@@ -329,6 +343,8 @@ class LeadController extends Controller
         ]);
 
         $lead = $this->leadRepository->findOrFail($id);
+
+        $this->preventUnauthorizedAccess($lead->user_id);
 
         $stage = $lead->pipeline->stages()
             ->where('id', request()->input('lead_pipeline_stage_id'))
@@ -378,7 +394,7 @@ class LeadController extends Controller
      */
     public function destroy(int $id): JsonResponse
     {
-        $this->leadRepository->findOrFail($id);
+        $this->preventUnauthorizedAccess($this->leadRepository->findOrFail($id)->user_id);
 
         try {
             Event::dispatch('lead.delete.before', $id);
@@ -402,7 +418,9 @@ class LeadController extends Controller
      */
     public function massUpdate(MassUpdateRequest $massUpdateRequest): JsonResponse
     {
-        $leads = $this->leadRepository->findWhereIn('id', $massUpdateRequest->input('indices'));
+        $leads = $this->filterAuthorizedRecords(
+            $this->leadRepository->findWhereIn('id', $massUpdateRequest->input('indices'))
+        );
 
         try {
             foreach ($leads as $lead) {
@@ -430,7 +448,9 @@ class LeadController extends Controller
      */
     public function massDestroy(MassDestroyRequest $massDestroyRequest): JsonResponse
     {
-        $leads = $this->leadRepository->findWhereIn('id', $massDestroyRequest->input('indices'));
+        $leads = $this->filterAuthorizedRecords(
+            $this->leadRepository->findWhereIn('id', $massDestroyRequest->input('indices'))
+        );
 
         try {
             foreach ($leads as $lead) {
@@ -456,6 +476,8 @@ class LeadController extends Controller
      */
     public function addProduct(int $leadId): JsonResponse
     {
+        $this->preventUnauthorizedAccess($this->leadRepository->findOrFail($leadId)->user_id);
+
         $product = $this->productRepository->updateOrCreate(
             [
                 'lead_id' => $leadId,
@@ -481,6 +503,8 @@ class LeadController extends Controller
      */
     public function removeProduct(int $id): JsonResponse
     {
+        $this->preventUnauthorizedAccess($this->leadRepository->findOrFail($id)->user_id);
+
         try {
             Event::dispatch('lead.product.delete.before', $id);
 
@@ -585,7 +609,6 @@ class LeadController extends Controller
                 'searchable' => false,
                 'search_field' => 'in',
                 'filterable' => true,
-                'filterable_options' => [],
                 'allow_multiple_values' => true,
                 'sortable' => true,
                 'visibility' => true,
@@ -631,7 +654,6 @@ class LeadController extends Controller
                 'searchable' => false,
                 'search_field' => 'in',
                 'filterable' => true,
-                'filterable_options' => [],
                 'allow_multiple_values' => true,
                 'sortable' => true,
                 'visibility' => true,
@@ -644,6 +666,76 @@ class LeadController extends Controller
                     ],
                 ],
             ],
+            [
+                'index' => 'expected_close_date',
+                'label' => trans('admin::app.leads.index.kanban.columns.date-to'),
+                'type' => 'date',
+                'searchable' => false,
+                'search_field' => 'between',
+                'filterable' => true,
+                'filterable_type' => 'date_range',
+                'filterable_options' => DateRangeOptionEnum::options(),
+                'allow_multiple_values' => true,
+                'sortable' => true,
+                'visibility' => true,
+            ],
+            [
+                'index' => 'created_at',
+                'label' => trans('admin::app.leads.index.kanban.columns.created-at'),
+                'type' => 'date',
+                'searchable' => false,
+                'search_field' => 'between',
+                'filterable' => true,
+                'filterable_type' => 'date_range',
+                'filterable_options' => DateRangeOptionEnum::options(),
+                'allow_multiple_values' => true,
+                'sortable' => true,
+                'visibility' => true,
+            ],
+        ];
+    }
+
+    /**
+     * Apply the kanban date range filters to the given lead query. These filters are sent as a
+     * dedicated parameter rather than through the search string, so they are applied here.
+     *
+     * The datagrid's date column type is reused to resolve the requested value, which keeps the
+     * quick filter options, the partial ranges and the day boundaries consistent between the
+     * kanban and the lead listing.
+     *
+     * @param  mixed  $query
+     */
+    private function applyDateRangeFilters($query): void
+    {
+        foreach ($this->getKanbanDateColumns() as $index => $columnName) {
+            $requestedDates = request($index);
+
+            if (empty($requestedDates)) {
+                continue;
+            }
+
+            $column = new DateColumn([
+                'index' => $index,
+                'label' => $index,
+                'type' => 'date',
+                'filterable' => true,
+                'filterable_type' => 'date_range',
+            ]);
+
+            $column->setColumnName($columnName);
+
+            $column->processFilter($query, $requestedDates);
+        }
+    }
+
+    /**
+     * Returns the kanban date columns, mapped to their qualified table column name.
+     */
+    private function getKanbanDateColumns(): array
+    {
+        return [
+            'expected_close_date' => 'leads.expected_close_date',
+            'created_at' => 'leads.created_at',
         ];
     }
 

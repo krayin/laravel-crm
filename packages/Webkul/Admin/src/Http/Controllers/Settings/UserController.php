@@ -61,6 +61,8 @@ class UserController extends Controller
             'role_id' => 'required',
             'status' => 'boolean|in:0,1',
             'view_permission' => 'string|in:global,group,individual',
+            'groups' => 'required_if:view_permission,group|array',
+            'groups.*' => 'integer|exists:groups,id',
         ]);
 
         $data = request()->all();
@@ -117,6 +119,8 @@ class UserController extends Controller
             'role_id' => 'required|integer|exists:roles,id',
             'status' => 'nullable|boolean|in:0,1',
             'view_permission' => 'required|string|in:global,group,individual',
+            'groups' => 'required_if:view_permission,group|array',
+            'groups.*' => 'integer|exists:groups,id',
         ]);
 
         $data = request()->all();

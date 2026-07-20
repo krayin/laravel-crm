@@ -9,9 +9,9 @@
     @foreach ($customAttributes as $attribute)
         @if (view()->exists($typeView = 'admin::components.attributes.view.' . $attribute->type))
             <div class="grid grid-cols-[1fr_2fr] items-center gap-1">
-                <div class="label dark:text-white">{{ $attribute->name }}</div>
+                <div class="label min-w-0 dark:text-white">{{ $attribute->name }}</div>
 
-                <div class="font-medium dark:text-white">
+                <div class="min-w-0 break-words font-medium dark:text-white">
                     @include ($typeView, [
                         'attribute' => $attribute,
                         'value' => isset($entity) ? $entity[$attribute->code] : null,

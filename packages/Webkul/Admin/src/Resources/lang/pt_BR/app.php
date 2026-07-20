@@ -441,6 +441,7 @@ return [
             'quote-info-info' => 'Informe as informações básicas da cotação.',
             'address-info' => 'Informações de Endereço',
             'address-info-info' => 'Informações sobre o endereço relacionado à cotação.',
+            'same-as-billing' => 'Endereço de entrega igual ao endereço de cobrança',
             'quote-items' => 'Itens da Cotação',
             'search-products' => 'Pesquisar Produtos',
             'link-to-lead' => 'Vincular a um negócio',
@@ -516,6 +517,7 @@ return [
                     'view' => 'Visualizar',
                     'name' => 'Nome',
                     'organization-name' => 'Nome da Empresa',
+                    'tag-name' => 'Nome da Tag',
                 ],
             ],
             'view' => [
@@ -855,6 +857,8 @@ return [
                 'any-condition-are-true' => 'Qualquer condição é verdadeira',
                 'add-condition' => 'Adicionar Condição',
                 'add-action' => 'Adicionar Ação',
+                'no-webhook-found' => 'Nenhum webhook encontrado.',
+                'create-webhook' => 'Criar um novo webhook.',
                 'yes' => 'Sim',
                 'no' => 'Não',
                 'email' => 'E-mail',
@@ -938,6 +942,7 @@ return [
                 'general' => 'Geral',
                 'leads' => 'Oportunidades',
                 'person' => 'Pessoa',
+                'pipeline' => 'Funil',
                 'save-btn' => 'Salvar Webform',
                 'submit-button-label' => 'Rótulo do Botão de Envio',
                 'submit-success-action' => 'Ação de Sucesso ao Enviar',
@@ -971,6 +976,7 @@ return [
                 'general' => 'Geral',
                 'leads' => 'Oportunidades',
                 'person' => 'Pessoa',
+                'pipeline' => 'Funil',
                 'preview' => 'Visualizar',
                 'public-url' => 'URL Pública',
                 'redirect-to-url' => 'Redirecionar Para URL',
@@ -1809,6 +1815,7 @@ return [
                     'title' => 'Título',
                     'tags' => 'Tags',
                     'expected-close-date' => 'Data esperada de fechamento',
+                    'date-to' => 'Data esperada de fechamento',
                     'created-at' => 'Criado em',
                 ],
                 'toolbar' => [
@@ -2299,6 +2306,8 @@ return [
         'dashboard' => 'Dashboard',
         'go-back' => 'Go Back',
         'support' => 'If the problem persists, reach out to us at <a href=":link" class=":class">:email</a> for assistance.',
+        'unauthorized' => 'Esta ação não está autorizada.',
+
         '404' => [
             'description' => 'Oops! The page you\'re looking for is on vacation. It seems we couldn\'t find what you were searching for.',
             'title' => '404 Page Not Found',
