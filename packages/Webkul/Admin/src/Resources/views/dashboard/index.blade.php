@@ -23,6 +23,10 @@
         <v-dashboard-filters>
             <!-- Shimmer -->
             <div class="flex gap-1.5">
+                @if ($pipelines->count() > 1)
+                    <div class="light-shimmer-bg dark:shimmer h-[39px] w-[160px] rounded-md"></div>
+                @endif
+
                 <div class="light-shimmer-bg dark:shimmer h-[39px] w-[140px] rounded-md"></div>
                 <div class="light-shimmer-bg dark:shimmer h-[39px] w-[140px] rounded-md"></div>
             </div>
@@ -101,6 +105,18 @@
             {!! view_render_event('admin.dashboard.index.date_filters.before') !!}
 
             <div class="flex gap-1.5">
+                @if ($pipelines->count() > 1)
+                    <!-- Pipeline Selector -->
+                    <select
+                        class="custom-select flex min-h-[39px] w-[160px] rounded-md border border-gray-300 bg-white px-3 py-2 text-sm font-normal text-gray-600 transition-all hover:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400"
+                        v-model="filters.pipeline_id"
+                    >
+                        @foreach ($pipelines as $pipeline)
+                            <option value="{{ $pipeline->id }}">{{ $pipeline->name }}</option>
+                        @endforeach
+                    </select>
+                @endif
+
                 <x-admin::flat-picker.date
                     class="!w-[140px]"
                     ::allow-input="false"
@@ -137,6 +153,8 @@
                     return {
                         filters: {
                             channel: '',
+
+                            pipeline_id: "{{ $defaultPipeline?->id }}",
 
                             start: "{{ $startDate->format('Y-m-d') }}",
 

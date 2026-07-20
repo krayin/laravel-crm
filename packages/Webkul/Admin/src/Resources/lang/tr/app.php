@@ -441,6 +441,7 @@ return [
             'quote-info-info' => 'Teklifin temel bilgilerini girin.',
             'address-info' => 'Adres Bilgileri',
             'address-info-info' => 'Teklif ile ilgili adres bilgileri.',
+            'same-as-billing' => 'Teslimat adresi fatura adresi ile aynı',
             'quote-items' => 'Teklif Kalemleri',
             'search-products' => 'Ürünleri Ara',
             'link-to-lead' => 'Potansiyele Bağla',
@@ -516,6 +517,7 @@ return [
                     'view' => 'Görüntüle',
                     'name' => 'Ad',
                     'organization-name' => 'Kuruluş Adı',
+                    'tag-name' => 'Etiket Adı',
                 ],
             ],
             'view' => [
@@ -855,6 +857,8 @@ return [
                 'any-condition-are-true' => 'Herhangi bir koşul doğru',
                 'add-condition' => 'Koşul Ekle',
                 'add-action' => 'Eylem Ekle',
+                'no-webhook-found' => 'Webhook bulunamadı.',
+                'create-webhook' => 'Yeni bir webhook oluşturun.',
                 'yes' => 'Evet',
                 'no' => 'Hayır',
                 'email' => 'E-posta',
@@ -938,6 +942,7 @@ return [
                 'general' => 'Genel',
                 'leads' => 'Fırsatlar',
                 'person' => 'Kişi',
+                'pipeline' => 'Pipeline',
                 'save-btn' => 'Web Formunu Kaydet',
                 'submit-button-label' => 'Gönderim Düğmesi Etiketi',
                 'submit-success-action' => 'Gönderim Başarı Eylemi',
@@ -971,6 +976,7 @@ return [
                 'general' => 'Genel',
                 'leads' => 'Fırsatlar',
                 'person' => 'Kişi',
+                'pipeline' => 'Pipeline',
                 'preview' => 'Önizleme',
                 'public-url' => 'Genel URL',
                 'redirect-to-url' => 'URL\'ye Yönlendir',
@@ -1811,6 +1817,7 @@ return [
                     'title' => 'Başlık',
                     'tags' => 'Etiketler',
                     'expected-close-date' => 'Beklenen Kapanış Tarihi',
+                    'date-to' => 'Bitiş Tarihi',
                     'created-at' => 'Oluşturulma Tarihi',
                 ],
                 'toolbar' => [
@@ -2301,6 +2308,8 @@ return [
         'dashboard' => 'Kontrol Paneli',
         'go-back' => 'Geri Dön',
         'support' => 'Sorun devam ederse, yardım için bize <a href=":link" class=":class">:email</a> adresinden ulaşın.',
+        'unauthorized' => 'Bu işlem için yetkiniz yok.',
+
         '404' => [
             'description' => 'Oops! Aradığınız sayfa tatilde. Aradığınız şeyi bulamadık gibi görünüyor.',
             'title' => '404 Sayfa Bulunamadı',
