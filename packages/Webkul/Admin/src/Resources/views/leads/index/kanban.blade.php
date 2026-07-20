@@ -377,6 +377,15 @@
 
             mounted () {
                 this.boot();
+
+                this.$emitter.on('reload-datagrids', () => {
+                    this.get()
+                        .then(response => {
+                            for (let [sortOrder, data] of Object.entries(response.data)) {
+                                this.stageLeads[sortOrder] = data;
+                            }
+                        });
+                });
             },
 
             methods: {
@@ -435,6 +444,20 @@
 
                             params['search'] += `title:${column.value.join(',')};`;
                             params['searchFields'] += `title:like;`;
+
+                            return;
+                        }
+
+                        /**
+                         * Date range filters are sent as a dedicated parameter, not through the search
+                         * string, so the server can resolve them the same way the datagrid does. A quick
+                         * filter, such as `last_month`, is applied as a plain string, whereas a custom
+                         * range is applied as a `[[from, to]]` pair.
+                         */
+                        if (column.type === 'date' || column.type === 'datetime') {
+                            if (column.value.length) {
+                                params[column.index] = column.value;
+                            }
 
                             return;
                         }

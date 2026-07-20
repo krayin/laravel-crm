@@ -19,6 +19,8 @@ use Webkul\Admin\Http\Resources\LeadResource;
 use Webkul\Admin\Http\Resources\StageResource;
 use Webkul\Attribute\Repositories\AttributeRepository;
 use Webkul\Contact\Repositories\PersonRepository;
+use Webkul\DataGrid\ColumnTypes\Date as DateColumn;
+use Webkul\DataGrid\Enums\DateRangeOptionEnum;
 use Webkul\Lead\Helpers\MagicAI;
 use Webkul\Lead\Repositories\LeadRepository;
 use Webkul\Lead\Repositories\PipelineRepository;
@@ -114,6 +116,8 @@ class LeadController extends Controller
                 $query->whereIn('leads.user_id', $userIds);
             }
 
+            $this->applyDateRangeFilters($query);
+
             $stage->lead_value = (clone $query)->sum('lead_value');
 
             $data[$stage->sort_order] = (new StageResource($stage))->jsonSerialize();
@@ -173,6 +177,10 @@ class LeadController extends Controller
         $data = $request->all();
 
         $data['status'] = 1;
+
+        if (request()->has('quick_add') && empty($data['user_id'])) {
+            $data['user_id'] = auth()->guard('user')->user()->id;
+        }
 
         if (! empty($data['lead_pipeline_stage_id'])) {
             $stage = $this->stageRepository->findOrFail($data['lead_pipeline_stage_id']);
@@ -601,7 +609,6 @@ class LeadController extends Controller
                 'searchable' => false,
                 'search_field' => 'in',
                 'filterable' => true,
-                'filterable_options' => [],
                 'allow_multiple_values' => true,
                 'sortable' => true,
                 'visibility' => true,
@@ -647,7 +654,6 @@ class LeadController extends Controller
                 'searchable' => false,
                 'search_field' => 'in',
                 'filterable' => true,
-                'filterable_options' => [],
                 'allow_multiple_values' => true,
                 'sortable' => true,
                 'visibility' => true,
@@ -660,6 +666,76 @@ class LeadController extends Controller
                     ],
                 ],
             ],
+            [
+                'index' => 'expected_close_date',
+                'label' => trans('admin::app.leads.index.kanban.columns.date-to'),
+                'type' => 'date',
+                'searchable' => false,
+                'search_field' => 'between',
+                'filterable' => true,
+                'filterable_type' => 'date_range',
+                'filterable_options' => DateRangeOptionEnum::options(),
+                'allow_multiple_values' => true,
+                'sortable' => true,
+                'visibility' => true,
+            ],
+            [
+                'index' => 'created_at',
+                'label' => trans('admin::app.leads.index.kanban.columns.created-at'),
+                'type' => 'date',
+                'searchable' => false,
+                'search_field' => 'between',
+                'filterable' => true,
+                'filterable_type' => 'date_range',
+                'filterable_options' => DateRangeOptionEnum::options(),
+                'allow_multiple_values' => true,
+                'sortable' => true,
+                'visibility' => true,
+            ],
+        ];
+    }
+
+    /**
+     * Apply the kanban date range filters to the given lead query. These filters are sent as a
+     * dedicated parameter rather than through the search string, so they are applied here.
+     *
+     * The datagrid's date column type is reused to resolve the requested value, which keeps the
+     * quick filter options, the partial ranges and the day boundaries consistent between the
+     * kanban and the lead listing.
+     *
+     * @param  mixed  $query
+     */
+    private function applyDateRangeFilters($query): void
+    {
+        foreach ($this->getKanbanDateColumns() as $index => $columnName) {
+            $requestedDates = request($index);
+
+            if (empty($requestedDates)) {
+                continue;
+            }
+
+            $column = new DateColumn([
+                'index' => $index,
+                'label' => $index,
+                'type' => 'date',
+                'filterable' => true,
+                'filterable_type' => 'date_range',
+            ]);
+
+            $column->setColumnName($columnName);
+
+            $column->processFilter($query, $requestedDates);
+        }
+    }
+
+    /**
+     * Returns the kanban date columns, mapped to their qualified table column name.
+     */
+    private function getKanbanDateColumns(): array
+    {
+        return [
+            'expected_close_date' => 'leads.expected_close_date',
+            'created_at' => 'leads.created_at',
         ];
     }
 

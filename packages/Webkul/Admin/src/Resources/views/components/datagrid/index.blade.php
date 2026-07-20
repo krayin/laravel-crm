@@ -164,6 +164,8 @@
 
             mounted() {
                 this.boot();
+
+                this.$emitter.on('reload-datagrids', () => this.get());
             },
 
             methods: {
