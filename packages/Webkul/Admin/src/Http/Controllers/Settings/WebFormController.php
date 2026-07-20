@@ -50,7 +50,11 @@ class WebFormController extends Controller
      */
     public function create(): View
     {
-        $tempAttributes = $this->attributeRepository->findWhereIn('entity_type', ['persons', 'leads']);
+        $tempAttributes = $this->attributeRepository->getWebFormAttributes();
+
+        $pipelines = $this->pipelineRepository->all();
+
+        $defaultPipelineId = $this->pipelineRepository->getDefaultPipeline()?->id;
 
         $attributes = [];
 
@@ -65,7 +69,7 @@ class WebFormController extends Controller
             }
         }
 
-        return view('admin::settings.web-forms.create', compact('attributes'));
+        return view('admin::settings.web-forms.create', compact('attributes', 'pipelines', 'defaultPipelineId'));
     }
 
     /**
@@ -78,6 +82,7 @@ class WebFormController extends Controller
             'submit_button_label' => 'required',
             'submit_success_action' => 'required',
             'submit_success_content' => 'required',
+            'lead_pipeline_id' => 'nullable|integer|exists:lead_pipelines,id',
         ]);
 
         Event::dispatch('settings.web_forms.create.before');
@@ -100,12 +105,15 @@ class WebFormController extends Controller
     {
         $webForm = $this->webFormRepository->findOrFail($id);
 
-        $attributes = $this->attributeRepository->findWhere([
-            ['entity_type', 'IN', ['persons', 'leads']],
-            ['id', 'NOTIN', $webForm->attributes()->pluck('attribute_id')->toArray()],
-        ]);
+        $attributes = $this->attributeRepository->getWebFormAttributes(
+            $webForm->attributes()->pluck('attribute_id')->toArray()
+        );
 
-        return view('admin::settings.web-forms.edit', compact('webForm', 'attributes'));
+        $pipelines = $this->pipelineRepository->all();
+
+        $defaultPipelineId = $this->pipelineRepository->getDefaultPipeline()?->id;
+
+        return view('admin::settings.web-forms.edit', compact('webForm', 'attributes', 'pipelines', 'defaultPipelineId'));
     }
 
     /**
@@ -118,6 +126,7 @@ class WebFormController extends Controller
             'submit_button_label' => 'required',
             'submit_success_action' => 'required',
             'submit_success_content' => 'required',
+            'lead_pipeline_id' => 'nullable|integer|exists:lead_pipelines,id',
         ]);
 
         Event::dispatch('settings.web_forms.update.before', $id);

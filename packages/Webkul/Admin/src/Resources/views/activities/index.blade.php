@@ -95,7 +95,7 @@
                                 <template v-else>
                                     <div class="row grid grid-cols-[.3fr_.1fr_.3fr_.5fr] grid-rows-1 items-center gap-x-2.5 border-b px-4 py-2.5 dark:border-gray-800 max-lg:hidden">
                                         <div
-                                            class="flex select-none items-center gap-2.5"
+                                            class="flex min-w-0 select-none items-center gap-2.5"
                                             v-for="(columnGroup, index) in [['id', 'title', 'created_by_id'], ['is_done'], ['comment', 'lead_title', 'type'], ['schedule_from', 'schedule_to', 'created_at']]"
                                         >
                                             <label
@@ -238,7 +238,7 @@
                                         v-for="record in available.records"
                                     >
                                         <!-- Mass Actions, Title and Created By -->
-                                        <div class="flex gap-2.5">
+                                        <div class="flex min-w-0 gap-2.5">
                                             <input
                                                 type="checkbox"
                                                 :name="`mass_action_select_record_${record.id}`"
@@ -253,17 +253,17 @@
                                                 :for="`mass_action_select_record_${record.id}`"
                                             ></label>
 
-                                            <div class="flex flex-col gap-1.5">
+                                            <div class="flex min-w-0 flex-col gap-1.5">
                                                 <p class="text-gray-600 dark:text-gray-300">
                                                     @{{ record.id }}
                                                 </p>
 
-                                                <p class="text-gray-600 dark:text-gray-300">
+                                                <p class="break-words text-gray-600 dark:text-gray-300">
                                                     @{{ record.title }}
                                                 </p>
 
                                                 <p
-                                                    class="text-gray-600 dark:text-gray-300"
+                                                    class="break-words text-gray-600 dark:text-gray-300"
                                                     v-html="record.created_by_id"
                                                 >
                                                 </p>
@@ -271,8 +271,8 @@
                                         </div>
 
                                         <!-- Is Done -->
-                                        <div class="flex gap-1.5">
-                                            <div class="flex flex-col gap-1.5">
+                                        <div class="flex min-w-0 gap-1.5">
+                                            <div class="flex min-w-0 flex-col gap-1.5">
                                                 <p
                                                     class="text-gray-600 dark:text-gray-300"
                                                     v-html="record.is_done"
@@ -282,14 +282,17 @@
                                         </div>
 
                                         <!-- Comment, Lead Title and Type -->
-                                        <div class="flex gap-1.5">
-                                            <div class="flex flex-col gap-1.5">
-                                                <p class="text-gray-600 dark:text-gray-300">
+                                        <div class="flex min-w-0 gap-1.5">
+                                            <div class="flex min-w-0 flex-col gap-1.5">
+                                                <p class="break-words text-gray-600 dark:text-gray-300">
                                                     {{-- @{{ record.comment }} --}}
                                                     @{{ (record.comment || '').length > 180 ? (record.comment || '').slice(0, 180) + '...' : (record.comment || '') }}
                                                 </p>
 
-                                                <p v-html="record.lead_title"></p>
+                                                <p
+                                                    class="break-words"
+                                                    v-html="record.lead_title"
+                                                ></p>
 
                                                 <p class="text-gray-600 dark:text-gray-300">
                                                     @{{ record.type ?? 'N/A'}}
@@ -297,7 +300,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="flex items-start justify-between gap-x-4">
+                                        <div class="flex min-w-0 items-start justify-between gap-x-4">
                                             <div class="flex flex-col gap-1.5">
                                                 <p class="text-gray-600 dark:text-gray-300">
                                                     @{{ record.schedule_from ?? 'N/A' }}
