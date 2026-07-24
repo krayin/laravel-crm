@@ -109,6 +109,7 @@ return [
         'en' => 'English',
         'es' => 'Español',
         'fa' => 'Persian',
+        'ko' => '한국어',
         'pt_BR' => 'Portuguese',
         'tr' => 'Türkçe',
         'vi' => 'Vietnamese',
