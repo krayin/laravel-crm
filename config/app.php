@@ -113,6 +113,7 @@ return [
         'pt_BR' => 'Portuguese',
         'tr' => 'Türkçe',
         'vi' => 'Vietnamese',
+        'zh_CN' => '简体中文',
     ],
 
     /*

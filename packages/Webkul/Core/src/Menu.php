@@ -4,7 +4,9 @@ namespace Webkul\Core;
 
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Str;
 use Webkul\Core\Menu\MenuItem;
+use Webkul\Core\Models\CoreConfig;
 
 class Menu
 {
@@ -22,6 +24,14 @@ class Menu
      * Contains current item key.
      */
     private string $currentKey = '';
+
+    /**
+     * Per-request cache of the custom menu names configured under
+     * `general.settings.menu`, keyed by menu key. Labels are read many times
+     * per page (sidebar, breadcrumbs, page title), so the whole group is
+     * loaded once instead of querying per key.
+     */
+    private ?array $configuredNames = null;
 
     /**
      * Menu area for admin.
@@ -100,6 +110,41 @@ class Menu
     }
 
     /**
+     * Resolve the display label for a menu key.
+     *
+     * Honours the rename configured under `general.settings.menu`, falling back
+     * to the given translation key when no custom name has been set. Every
+     * surface that shows a menu label must go through here so a rename applies
+     * consistently, not just in the sidebar.
+     */
+    public function getLabel(string $key, ?string $fallbackTransKey = null): string
+    {
+        if ($this->configuredNames === null) {
+            $this->configuredNames = $this->loadConfiguredNames();
+        }
+
+        if (filled($this->configuredNames[$key] ?? null)) {
+            return $this->configuredNames[$key];
+        }
+
+        return $fallbackTransKey ? trans($fallbackTransKey) : '';
+    }
+
+    /**
+     * Load every custom menu name in a single query, keyed by menu key.
+     */
+    private function loadConfiguredNames(): array
+    {
+        $prefix = 'general.settings.menu.';
+
+        return CoreConfig::query()
+            ->where('code', 'like', $prefix.'%')
+            ->pluck('value', 'code')
+            ->mapWithKeys(fn ($value, $code) => [Str::after($code, $prefix) => $value])
+            ->all();
+    }
+
+    /**
      * Prepare menu items.
      */
     private function prepareMenuItems(): void
@@ -119,7 +164,7 @@ class Menu
         foreach ($menu as $menuItemKey => $menuItem) {
             $this->addItem(new MenuItem(
                 key: $menuItemKey,
-                name: trans($menuItem['name']),
+                name: $this->getLabel($menuItemKey, $menuItem['name']),
                 route: $menuItem['route'],
                 url: $menuItem['url'],
                 sort: $menuItem['sort'],
@@ -143,7 +188,7 @@ class Menu
 
                 return new MenuItem(
                     key: $subMenuItem['key'],
-                    name: trans($subMenuItem['name']),
+                    name: $this->getLabel($subMenuItem['key'], $subMenuItem['name']),
                     route: $subMenuItem['route'],
                     url: $subMenuItem['url'],
                     sort: $subMenuItem['sort'],

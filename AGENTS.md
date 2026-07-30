@@ -44,6 +44,14 @@ skill content here — keep details in the skills.
   Config). The `crm-package-development` skill documents the full structure.
 - **Repository pattern:** models are accessed through repositories bound via
   contracts in the service provider — match the surrounding modules.
+- **Translations follow the views:** a package gets its own `Resources/lang/`
+  **only if** it also has `Resources/views/`. Every view-less package keeps its
+  strings in the Admin package under `admin::app.*` — no lang directory, no
+  `loadTranslationsFrom()`. See the `crm-package-development` skill.
+- **Every fix and feature updates `CHANGELOG.md`** in the same change, under the
+  topmost unreleased version heading. Never invent a `#PR` number and never bump
+  `KRAYIN_VERSION` outside a release commit. See the `crm-package-development`
+  skill for the entry format and tags.
 - **Preserve backward compatibility** so the CRM stays upgrade-safe.
 
 ---

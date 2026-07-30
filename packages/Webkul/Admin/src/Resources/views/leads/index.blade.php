@@ -1,6 +1,6 @@
 <x-admin::layouts>
     <x-slot:title>
-        @lang('admin::app.leads.index.title')
+        {{ menu()->getLabel('leads', 'admin::app.leads.index.title') }}
     </x-slot>
 
     <!-- Header -->
@@ -14,7 +14,7 @@
             <x-admin::breadcrumbs name="leads" />
 
             <div class="text-xl font-bold dark:text-white">
-                @lang('admin::app.leads.index.title')
+                {{ menu()->getLabel('leads', 'admin::app.leads.index.title') }}
             </div>
         </div>
 

@@ -1,7 +1,7 @@
 <x-admin::layouts>
     <!-- Page Title -->
     <x-slot:title>
-        @lang('admin::app.contacts.organizations.index.title')
+        {{ menu()->getLabel('contacts.organizations', 'admin::app.contacts.organizations.index.title') }}
     </x-slot>
 
     <div class="flex flex-col gap-4">
@@ -15,7 +15,7 @@
                 {!! view_render_event('admin.organizations.index.breadcrumbs.before') !!}
                 
                 <div class="text-xl font-bold dark:text-gray-300">
-                    @lang('admin::app.contacts.organizations.index.title')
+                    {{ menu()->getLabel('contacts.organizations', 'admin::app.contacts.organizations.index.title') }}
                 </div>
             </div>
 
