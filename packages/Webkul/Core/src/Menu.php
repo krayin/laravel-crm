@@ -6,7 +6,7 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use Webkul\Core\Menu\MenuItem;
-use Webkul\Core\Models\CoreConfig;
+use Webkul\Core\Repositories\CoreConfigRepository;
 
 class Menu
 {
@@ -42,6 +42,13 @@ class Menu
      * Menu area for customer.
      */
     const CUSTOMER = 'customer';
+
+    /**
+     * Create a new Menu instance.
+     *
+     * @return void
+     */
+    public function __construct(protected CoreConfigRepository $coreConfigRepository) {}
 
     /**
      * Add a new menu item.
@@ -137,10 +144,9 @@ class Menu
     {
         $prefix = 'general.settings.menu.';
 
-        return CoreConfig::query()
-            ->where('code', 'like', $prefix.'%')
-            ->pluck('value', 'code')
-            ->mapWithKeys(fn ($value, $code) => [Str::after($code, $prefix) => $value])
+        return $this->coreConfigRepository
+            ->findWhere([['code', 'like', $prefix.'%']], ['code', 'value'])
+            ->mapWithKeys(fn ($config) => [Str::after($config->code, $prefix) => $config->value])
             ->all();
     }
 
