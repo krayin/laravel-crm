@@ -909,6 +909,19 @@ return [
                 'does-not-contain' => 'Does not contain',
             ],
         ],
+        'google-contacts' => [
+            'index' => [
+                'title' => 'Google Contacts',
+                'not-connected-info' => 'Connect a Google account to export CRM contacts to Google Contacts.',
+                'connected-info' => 'Connected as :email.',
+                'connect-btn' => 'Connect Google Account',
+                'disconnect-btn' => 'Disconnect',
+                'connect-success' => 'Google account connected successfully.',
+                'connect-failed' => 'Unable to connect your Google account. Please try again.',
+                'disconnect-success' => 'Google account disconnected successfully.',
+            ],
+        ],
+
         'webforms' => [
             'index' => [
                 'title' => 'Webforms',

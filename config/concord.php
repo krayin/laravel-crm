@@ -13,6 +13,7 @@ return [
         Webkul\DataGrid\Providers\ModuleServiceProvider::class,
         Webkul\EmailTemplate\Providers\ModuleServiceProvider::class,
         Webkul\Email\Providers\ModuleServiceProvider::class,
+        Webkul\GoogleContact\Providers\ModuleServiceProvider::class,
         Webkul\Lead\Providers\ModuleServiceProvider::class,
         Webkul\Product\Providers\ModuleServiceProvider::class,
         Webkul\Quote\Providers\ModuleServiceProvider::class,
