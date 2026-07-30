@@ -16,6 +16,8 @@ This changelog consists of the bug & security fixes and new features being inclu
 
 * [fixed] Fixed Arabic DataTransfer translations never loading, as the file was named `ar/ar.php` instead of `ar/app.php`.
 
+* [fixed] Fixed the missing Korean translation for the "None" input validation option on the create and edit attribute forms.
+
 * [enhancement] Moved the Core and DataTransfer package translations into the Admin package. Only packages that ship their own Blade views now carry a `Resources/lang` directory.
 
 * [enhancement] Reduced database queries on every admin page by loading the configured menu names in a single query instead of one per menu item.
