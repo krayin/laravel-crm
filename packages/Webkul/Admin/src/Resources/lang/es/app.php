@@ -1237,6 +1237,7 @@ return [
                 'update-success' => 'Webhook actualizado exitosamente.',
                 'delete-success' => 'Webhook eliminado exitosamente.',
                 'delete-failed' => 'No se puede eliminar el Webhook.',
+                'invalid-endpoint' => 'La URL del endpoint del webhook debe ser una dirección HTTP o HTTPS pública.',
                 'datagrid' => [
                     'id' => 'ID',
                     'delete' => 'Eliminar',

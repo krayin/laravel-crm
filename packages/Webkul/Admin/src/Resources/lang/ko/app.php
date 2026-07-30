@@ -1237,6 +1237,7 @@ return [
                 'update-success' => '웹훅이 수정되었습니다.',
                 'delete-success' => '웹훅이 삭제되었습니다.',
                 'delete-failed' => '웹훅을 삭제할 수 없습니다.',
+                'invalid-endpoint' => '웹훅 엔드포인트 URL은 공개된 HTTP 또는 HTTPS 주소여야 합니다.',
                 'datagrid' => [
                     'id' => 'ID',
                     'delete' => '삭제',
