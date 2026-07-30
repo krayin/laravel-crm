@@ -301,10 +301,10 @@ class Activity extends AbstractEntity
 
         foreach ($activity->participants as $participant) {
             if ($participant->user) {
-                $content[] = 'ATTENDEE;ROLE=REQ-PARTICIPANT;CN='.$participant->user->name.';PARTSTAT=NEEDS-ACTION:MAILTO:'.$participant->user->email;
+                $content[] = 'ATTENDEE;ROLE=REQ-PARTICIPANT;CN='.$this->escapeICSParameter($participant->user->name).';PARTSTAT=NEEDS-ACTION:MAILTO:'.$participant->user->email;
             } else {
                 foreach (data_get($participant->person->emails, '*.value') as $email) {
-                    $content[] = 'ATTENDEE;ROLE=REQ-PARTICIPANT;CN='.$participant->person->name.';PARTSTAT=NEEDS-ACTION:MAILTO:'.$email;
+                    $content[] = 'ATTENDEE;ROLE=REQ-PARTICIPANT;CN='.$this->escapeICSParameter($participant->person->name).';PARTSTAT=NEEDS-ACTION:MAILTO:'.$email;
                 }
             }
         }
@@ -312,13 +312,83 @@ class Activity extends AbstractEntity
         $content = array_merge($content, [
             'DTSTART:'.$activity->schedule_from->copy()->utc()->format('Ymd\THis\Z'),
             'DTEND:'.$activity->schedule_to->copy()->utc()->format('Ymd\THis\Z'),
-            'SUMMARY:'.$activity->title,
-            'LOCATION:'.$activity->location,
-            'DESCRIPTION:'.$activity->comment,
+            'SUMMARY:'.$this->escapeICSText($activity->title),
+            'LOCATION:'.$this->escapeICSText($activity->location),
+            'DESCRIPTION:'.$this->escapeICSText($activity->comment),
             'END:VEVENT',
             'END:VCALENDAR',
         ]);
 
-        return implode("\r\n", $content);
+        return implode("\r\n", array_map([$this, 'foldICSLine'], $content));
+    }
+
+    /**
+     * Escape a TEXT property value per RFC 5545 section 3.3.11.
+     *
+     * Backslash, semicolon and comma are delimiters in a TEXT value, and a
+     * line break has no literal representation at all — a raw one ends the
+     * content line, so whatever follows is read as a new property. An activity
+     * comment is free text written by a user, so it routinely contains all
+     * four: a multi-line comment whose second line happens to hold a colon
+     * ("Note: ...") yields a property named "Note", which is not a valid name,
+     * and strict parsers reject the whole calendar rather than that one line.
+     */
+    protected function escapeICSText(?string $value): string
+    {
+        return str_replace(
+            ['\\', ';', ',', "\r\n", "\n", "\r"],
+            ['\\\\', '\\;', '\\,', '\\n', '\\n', '\\n'],
+            (string) $value
+        );
+    }
+
+    /**
+     * Escape a parameter value (CN=, …) per RFC 5545 section 3.2.
+     *
+     * Parameters follow different rules from TEXT: backslash escaping does not
+     * apply, and a value carrying ':', ';' or ',' — "Sanchez, Alejandro" — has
+     * to be wrapped in double quotes instead. A double quote itself cannot be
+     * represented even inside a quoted string, and control characters cannot
+     * be represented at all, so both are dropped.
+     */
+    protected function escapeICSParameter(?string $value): string
+    {
+        $value = str_replace('"', '', preg_replace('/[\x00-\x1F\x7F]/', '', (string) $value));
+
+        return preg_match('/[:;,]/', $value)
+            ? '"'.$value.'"'
+            : $value;
+    }
+
+    /**
+     * Fold a content line to 75 octets per RFC 5545 section 3.1.
+     *
+     * Continuation lines are marked by a single leading space, which counts
+     * toward the octet budget. Splitting is done per character rather than per
+     * byte so a multi-byte UTF-8 sequence is never cut in half.
+     */
+    protected function foldICSLine(string $line): string
+    {
+        if (strlen($line) <= 75) {
+            return $line;
+        }
+
+        $lines = [];
+        $current = '';
+        $limit = 75;
+
+        foreach (mb_str_split($line, 1, 'UTF-8') as $character) {
+            if (strlen($current) + strlen($character) > $limit) {
+                $lines[] = $current;
+                $current = '';
+                $limit = 74;
+            }
+
+            $current .= $character;
+        }
+
+        $lines[] = $current;
+
+        return implode("\r\n ", $lines);
     }
 }
