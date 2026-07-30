@@ -47,7 +47,7 @@ class Importer extends AbstractImporter
      * Error message templates.
      */
     protected array $messages = [
-        self::ERROR_ID_NOT_FOUND_FOR_DELETE => 'data_transfer::app.importers.leads.validation.errors.id-not-found',
+        self::ERROR_ID_NOT_FOUND_FOR_DELETE => 'admin::app.settings.data-transfer.importers.leads.validation.errors.id-not-found',
     ];
 
     /**
@@ -284,7 +284,7 @@ class Importer extends AbstractImporter
                             request($field)
                         )
                         ) {
-                            $fail(trans('data_transfer::app.validation.errors.already-exists', ['attribute' => $attribute->name]));
+                            $fail(trans('admin::app.settings.data-transfer.validation.errors.already-exists', ['attribute' => $attribute->name]));
                         }
                     });
                 }

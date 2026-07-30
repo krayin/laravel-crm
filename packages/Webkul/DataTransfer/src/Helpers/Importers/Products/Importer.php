@@ -27,7 +27,7 @@ class Importer extends AbstractImporter
      * Error message templates.
      */
     protected array $messages = [
-        self::ERROR_SKU_NOT_FOUND_FOR_DELETE => 'data_transfer::app.importers.products.validation.errors.sku-not-found',
+        self::ERROR_SKU_NOT_FOUND_FOR_DELETE => 'admin::app.settings.data-transfer.importers.products.validation.errors.sku-not-found',
     ];
 
     /**

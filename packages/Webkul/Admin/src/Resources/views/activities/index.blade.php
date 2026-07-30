@@ -1,6 +1,6 @@
 <x-admin::layouts>
     <x-slot:title>
-        @lang('admin::app.activities.index.title')
+        {{ menu()->getLabel('activities', 'admin::app.activities.index.title') }}
     </x-slot>
 
     {!! view_render_event('admin.activities.index.activities.before') !!}
@@ -13,7 +13,7 @@
                     <x-admin::breadcrumbs name="activities" />
 
                     <div class="text-xl font-bold dark:text-white">
-                        @lang('admin::app.activities.index.title')
+                        {{ menu()->getLabel('activities', 'admin::app.activities.index.title') }}
                     </div>
                 </div>
 
@@ -47,7 +47,7 @@
                         <x-admin::breadcrumbs name="activities" />
 
                         <div class="text-xl font-bold dark:text-white">
-                            @lang('admin::app.activities.index.title')
+                            {{ menu()->getLabel('activities', 'admin::app.activities.index.title') }}
                         </div>
                     </div>
 

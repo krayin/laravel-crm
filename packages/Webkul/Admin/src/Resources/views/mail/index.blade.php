@@ -1,6 +1,6 @@
 <x-admin::layouts>
     <x-slot:title>
-        @lang('admin::app.mail.index.' . $route)
+        {{ menu()->getLabel('mail.' . $route, 'admin::app.mail.index.' . $route) }}
     </x-slot>
 
     <div class="flex flex-col gap-4">
@@ -18,7 +18,7 @@
 
                 <div class="text-xl font-bold dark:text-white">
                     <!-- title -->
-                    @lang('admin::app.mail.index.' . $route)
+                    {{ menu()->getLabel('mail.' . $route, 'admin::app.mail.index.' . $route) }}
                 </div>
             </div>
 

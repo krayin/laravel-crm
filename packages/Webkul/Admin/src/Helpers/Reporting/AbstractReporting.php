@@ -9,6 +9,11 @@ use Illuminate\Support\Str;
 abstract class AbstractReporting
 {
     /**
+     * Number of days used when the configured range is missing or unusable.
+     */
+    public const FALLBACK_RANGE_IN_DAYS = 30;
+
+    /**
      * The starting date for a given period.
      */
     protected Carbon $startDate;
@@ -41,18 +46,51 @@ abstract class AbstractReporting
     }
 
     /**
-     * Set the start date or default to 30 days ago if not provided.
+     * Set the start date, or fall back to the range configured under
+     * `general.settings.dashboard` when none is provided.
      *
      * @param  \Carbon\Carbon|null  $startDate
      * @return void
      */
     public function setStartDate(?Carbon $startDate = null): self
     {
-        $this->startDate = $startDate ? $startDate->startOfDay() : now()->subDays(30)->startOfDay();
+        $this->startDate = $startDate ? $startDate->startOfDay() : $this->getDefaultStartDate();
 
         $this->setLastStartDate();
 
         return $this;
+    }
+
+    /**
+     * Resolve the default start date from the configured dashboard date range.
+     *
+     * @return \Carbon\Carbon
+     */
+    public function getDefaultStartDate(): Carbon
+    {
+        $range = core()->getConfigData('general.settings.dashboard.date_range');
+
+        $startDate = match ($range) {
+            '3_months' => now()->subMonths(3),
+            '9_months' => now()->subMonths(9),
+            '1_year' => now()->subYear(),
+            '2_years' => now()->subYears(2),
+            'custom' => now()->subDays($this->getCustomRangeInDays()),
+            default => now()->subMonth(),
+        };
+
+        return $startDate->startOfDay();
+    }
+
+    /**
+     * Number of days configured for the custom range. Falls back when the
+     * stored value is missing or not a positive number.
+     */
+    protected function getCustomRangeInDays(): int
+    {
+        $days = (int) core()->getConfigData('general.settings.dashboard.custom_days');
+
+        return $days > 0 ? $days : self::FALLBACK_RANGE_IN_DAYS;
     }
 
     /**

@@ -1502,6 +1502,46 @@ return [
             ],
         ],
         'data-transfer' => [
+            'importers' => [
+                'persons' => [
+                    'title' => 'Kişiler',
+                    'validation' => [
+                        'errors' => [
+                            'duplicate-email' => 'E-posta: \'%s\' içe aktarma dosyasında birden fazla kez bulundu.',
+                            'duplicate-phone' => 'Telefon: \'%s\' içe aktarma dosyasında birden fazla kez bulundu.',
+                            'email-not-found' => 'E-posta: \'%s\' sistemde bulunamadı.',
+                        ],
+                    ],
+                ],
+                'products' => [
+                    'title' => 'Ürünler',
+                    'validation' => [
+                        'errors' => [
+                            'sku-not-found' => 'Belirtilen SKU\'ya sahip ürün bulunamadı.',
+                        ],
+                    ],
+                ],
+                'leads' => [
+                    'title' => 'Müşteri Adayları',
+                    'validation' => [
+                        'errors' => [
+                            'id-not-found' => 'ID: \'%s\' sistemde bulunamadı.',
+                        ],
+                    ],
+                ],
+            ],
+            'validation' => [
+                'errors' => [
+                    'column-empty-headers' => '"%s" numaralı sütunların başlıkları boş.',
+                    'column-name-invalid' => 'Geçersiz sütun adları: "%s".',
+                    'column-not-found' => 'Gerekli sütunlar bulunamadı: %s.',
+                    'column-numbers' => 'Sütun sayısı başlıktaki satır sayısına karşılık gelmiyor.',
+                    'invalid-attribute' => 'Başlık geçersiz öznitelikler içeriyor: "%s".',
+                    'system' => 'Beklenmeyen bir sistem hatası oluştu.',
+                    'wrong-quotes' => 'Doğru olmayan tırnak işaretleri kullanıldı.',
+                    'already-exists' => 'The :attribute already exists.',
+                ],
+            ],
             'imports' => [
                 'create' => [
                     'action' => 'Eylem',
@@ -1984,7 +2024,7 @@ return [
                     'info' => 'Genel ayarlarınızı burada güncelleyin.',
                     'locale-settings' => [
                         'title' => 'Yerel Ayarlar',
-                        'title-info' => 'Kullanıcı arayüzünde kullanılan dili tanımlar, örneğin Arapça (ar), İngilizce (en), İspanyolca (es), Farsça (fa) ve Türkçe (tr).',
+                        'title-info' => 'Yönetim paneli arayüzünde kullanılan dili tanımlar. Açılır liste, kurulumunuzda mevcut olan tüm dilleri gösterir.',
                     ],
                     'admin-logo' => [
                         'logo-image' => 'Logo Resmi',
@@ -2021,6 +2061,22 @@ return [
                         'settings' => 'Ayarlar',
                         'title' => 'Menü Öğesi Yapılandırmaları',
                         'trash' => 'Çöp Kutusu',
+                    ],
+                    'dashboard' => [
+                        'title' => 'Kontrol Paneli Yapılandırmaları',
+                        'info' => 'Kontrol panelinin varsayılan tarih aralığını burada yapılandırabiliriz.',
+                        'date-range' => 'Varsayılan Tarih Aralığı',
+                        'date-range-info' => 'Kontrol panelinin yüklendiği dönem. Kontrol panelindeki tarih seçicileri tek seferlik görünüm için yine de değiştirilebilir.',
+                        'custom-days' => 'Özel Aralık (Gün)',
+                        'custom-days-info' => 'Tarih aralığı Özel olarak ayarlandığında geriye dönük bakılacak gün sayısı.',
+                        'ranges' => [
+                            '1-month' => '1 Ay',
+                            '3-months' => '3 Ay',
+                            '9-months' => '9 Ay',
+                            '1-year' => '1 Yıl',
+                            '2-years' => '2 Yıl',
+                            'custom' => 'Özel',
+                        ],
                     ],
                     'menu-color' => [
                         'brand-color' => 'Marka Rengi',
@@ -2301,6 +2357,7 @@ return [
     ],
     'validations' => [
         'message' => [
+            'code' => 'Alan geçerli bir kod olmalıdır.',
             'decimal' => ':attribute ondalıklı bir sayı olmalıdır.',
         ],
     ],

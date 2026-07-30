@@ -1,7 +1,7 @@
 <x-admin::layouts>
     <!-- Title of the page. -->
     <x-slot:title>
-        @lang('admin::app.configuration.index.title')
+        {{ menu()->getLabel('configuration', 'admin::app.configuration.index.title') }}
     </x-slot>
 
     <!-- Breadcrumbs -->
@@ -12,7 +12,7 @@
     <!-- Heading of the page -->
     <div class="mb-7 flex flex-wrap items-center justify-between">
         <p class="py-3 text-xl font-bold text-gray-800 dark:text-white">
-            @lang('admin::app.configuration.index.title')
+            {{ menu()->getLabel('configuration', 'admin::app.configuration.index.title') }}
         </p>
 
         {!! view_render_event('admin.configuration.index.header.configuration_search.before') !!}
