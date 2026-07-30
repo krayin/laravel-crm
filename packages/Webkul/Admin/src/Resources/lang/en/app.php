@@ -519,6 +519,8 @@ return [
                     'name' => 'Name',
                     'organization-name' => 'Organization Name',
                     'tag-name' => 'Tag Name',
+                    'google-export-not-connected' => 'Please connect your Google account first from Settings > Other Settings > Google Contacts.',
+                    'google-export-started' => 'Export to Google Contacts started.',
                 ],
             ],
             'view' => [
@@ -2349,6 +2351,8 @@ return [
         'csv' => 'CSV',
         'download' => 'Download',
         'export' => 'Export',
+        'google-contacts' => 'Google Contacts',
+        'google-contacts-summary' => 'Export finished: :exported exported, :duplicate already existed, :failed failed.',
         'no-records' => 'Nothing to export',
         'xls' => 'XLS',
         'xlsx' => 'XLSX',

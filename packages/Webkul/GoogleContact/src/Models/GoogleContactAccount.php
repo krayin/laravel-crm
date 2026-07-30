@@ -36,10 +36,10 @@ class GoogleContactAccount extends Model implements GoogleContactAccountContract
      * @var array
      */
     protected $casts = [
-        'access_token'  => 'encrypted',
+        'access_token' => 'encrypted',
         'refresh_token' => 'encrypted',
-        'expires_at'    => 'datetime',
-        'scopes'        => 'array',
+        'expires_at' => 'datetime',
+        'scopes' => 'array',
     ];
 
     /**

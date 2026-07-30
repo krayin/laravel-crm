@@ -46,6 +46,13 @@
                                 <option value="xlsx">
                                     @lang('admin::app.export.xlsx')
                                 </option>
+
+                                <option
+                                    value="google_contacts"
+                                    v-if="googleContactsSrc"
+                                >
+                                    @lang('admin::app.export.google-contacts')
+                                </option>
                             </x-admin::form.control-group.control>
                         </x-admin::form.control-group>
                     </x-admin::form>
@@ -68,7 +75,7 @@
         app.component('v-datagrid-export', {
             template: '#v-datagrid-export-template',
 
-            props: ['src'],
+            props: ['src', 'googleContactsSrc'],
 
             data() {
                 return {
@@ -118,10 +125,6 @@
                         this.$refs.exportModal.toggle();
                     } else {
                         let params = {
-                            export: 1,
-
-                            format: this.format,
-
                             sort: {},
 
                             filters: {},
@@ -137,6 +140,16 @@
                         this.applied.filters.columns.forEach(column => {
                             params.filters[column.index] = column.value;
                         });
+
+                        if (this.format === 'google_contacts') {
+                            this.exportToGoogleContacts(params);
+
+                            return;
+                        }
+
+                        params.export = 1;
+
+                        params.format = this.format;
 
                         this.$axios
                             .get(this.src, {
@@ -163,6 +176,54 @@
                                 this.$refs.exportModal.toggle();
                             });
                     }
+                },
+
+                /**
+                 * Kick off an async export of every person matching the current
+                 * filters/sort to the current user's connected Google account.
+                 *
+                 * @param {object} params
+                 * @returns {void}
+                 */
+                exportToGoogleContacts(params) {
+                    this.$axios.post(this.googleContactsSrc, params)
+                        .then((response) => {
+                            this.$emitter.emit('add-flash', { type: 'success', message: response.data.message });
+
+                            this.$refs.exportModal.toggle();
+
+                            this.pollGoogleContactsExportBatch(response.data.batch_id);
+                        })
+                        .catch((error) => {
+                            this.$emitter.emit('add-flash', { type: 'error', message: error.response.data.message });
+                        });
+                },
+
+                /**
+                 * Poll an export batch until it finishes, then show a result summary.
+                 *
+                 * @param {number} batchId
+                 * @returns {void}
+                 */
+                pollGoogleContactsExportBatch(batchId) {
+                    this.$axios.get(`${this.googleContactsSrc}/${batchId}/stats`)
+                        .then((response) => {
+                            const stats = response.data;
+
+                            if (! stats.finished) {
+                                setTimeout(() => this.pollGoogleContactsExportBatch(batchId), 2000);
+
+                                return;
+                            }
+
+                            this.$emitter.emit('add-flash', {
+                                type: stats.failed_count > 0 ? 'warning' : 'success',
+                                message: "@lang('admin::app.export.google-contacts-summary')"
+                                    .replace(':exported', stats.exported_count)
+                                    .replace(':duplicate', stats.duplicate_count)
+                                    .replace(':failed', stats.failed_count),
+                            });
+                        });
                 },
             },
         });
