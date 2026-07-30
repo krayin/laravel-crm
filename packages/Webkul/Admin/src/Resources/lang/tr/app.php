@@ -1998,6 +1998,8 @@ return [
                     'title' => 'Ayarlar',
                     'info' => 'Ayarlarınızı burada güncelleyin.',
                     'footer' => [
+                        'show' => '"Powered By" Göster',
+                        'show-info' => 'Yönetim panelinin altındaki "Powered by" çubuğunu gösterir veya gizler.',
                         'info' => 'Powered by bölümünü burada yapılandırabiliriz.',
                         'powered-by' => 'Powered by metin düzenleyici',
                         'title' => 'Powered by Bölüm Yapılandırmaları',
@@ -2215,6 +2217,10 @@ return [
         'users-info' => 'CRM’den kullanıcıları ekleyin, düzenleyin veya silin',
         'lead' => 'Lead',
         'lead-info' => 'CRM’de tüm lead ayarlarınızı yönetin',
+        'sidebar' => [
+            'collapse' => 'Daralt',
+            'expand' => 'Genişlet',
+        ],
         'quick-add' => [
             'title' => 'Hızlı Ekle',
             'save' => 'Kaydet',

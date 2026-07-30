@@ -1998,6 +1998,8 @@ return [
                     'title' => 'Cài đặt',
                     'info' => 'Cập nhật cài đặt của bạn tại đây.',
                     'footer' => [
+                        'show' => 'Hiển thị "Powered By"',
+                        'show-info' => 'Hiển thị hoặc ẩn thanh "Powered by" ở cuối bảng quản trị.',
                         'info' => 'Chúng ta có thể cấu hình phần "Powered by" ở đây.',
                         'powered-by' => 'Trình soạn thảo văn bản "Powered by"',
                         'title' => 'Cấu hình phần "Powered by"',
@@ -2215,6 +2217,10 @@ return [
         'users-info' => 'Thêm, chỉnh sửa hoặc xóa người dùng khỏi CRM',
         'lead' => 'Lead',
         'lead-info' => 'Quản lý tất cả các cài đặt liên quan đến leads trong CRM',
+        'sidebar' => [
+            'collapse' => 'Thu gọn',
+            'expand' => 'Mở rộng',
+        ],
         'quick-add' => [
             'title' => 'Thêm nhanh',
             'save' => 'Lưu',

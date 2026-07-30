@@ -2,6 +2,12 @@
 
 This changelog consists of the bug & security fixes and new features being included in the releases listed below.
 
+## **v2.2.5 (Upcoming)**
+
+* [feature] Added a collapse/expand toggle to the admin sidebar, matching the Bagisto admin. The choice is remembered across page loads, and page content now reflows to the sidebar width instead of being overlaid by it. The sidebar no longer expands on hover; it is controlled by the toggle only.
+
+* [feature] Added an option to show or hide the "Powered by" bar under Configuration > General > Settings > Powered by Section Configurations.
+
 ## **v2.2.4 (20th of July 2026)** *Release*
 
 * #2590[fixed] Fixed page does not refresh after creating a record via Quick Add.

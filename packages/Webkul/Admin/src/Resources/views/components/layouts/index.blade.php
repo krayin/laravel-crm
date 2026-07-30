@@ -110,24 +110,35 @@
         <x-admin::layouts.header />
 
         <div
-            class="group/container sidebar-collapsed flex gap-4"
+            class="group/container {{ request()->cookie('sidebar_collapsed') ?? 0 ? 'sidebar-collapsed' : 'sidebar-not-collapsed' }} flex gap-4"
             ref="appLayout"
         >
             <!-- Page Sidebar Blade Component -->
             <x-admin::layouts.sidebar.desktop />
 
+            @php
+                /**
+                 * The bar is fixed, so the content below reserves space for it.
+                 * When it is switched off that reserve goes away too, otherwise
+                 * every page keeps a strip of dead space at the bottom.
+                 */
+                $showPoweredBy = (bool) core()->getConfigData('general.settings.footer.show');
+            @endphp
+
             <div class="flex min-h-[calc(100vh-62px)] max-w-full flex-1 flex-col bg-gray-100 pt-3 transition-all duration-300 dark:bg-gray-950">
                 <!-- Page Content Blade Component -->
-                <div class="px-4 pb-[72px] ltr:lg:pl-[85px] rtl:lg:pr-[85px]">
+                <div class="px-4 {{ $showPoweredBy ? 'pb-[72px]' : 'pb-4' }} transition-all duration-300 lg:ltr:pl-[215px] lg:group-[.sidebar-collapsed]/container:ltr:pl-[85px] lg:rtl:pr-[215px] lg:group-[.sidebar-collapsed]/container:rtl:pr-[85px]">
                     {{ $slot }}
                 </div>
 
-                <!-- Powered By -->
-                <div class="fixed bottom-0 left-0 right-0 z-1">
-                    <div class="border-t bg-white py-5 text-center text-sm font-normal dark:border-gray-800 dark:bg-gray-900 dark:text-white max-md:py-3">
-                        <p>{!! core()->getConfigData('general.settings.footer.label') !!}</p>
+                @if ($showPoweredBy)
+                    <!-- Powered By -->
+                    <div class="fixed bottom-0 left-0 right-0 z-1">
+                        <div class="border-t bg-white py-5 text-center text-sm font-normal dark:border-gray-800 dark:bg-gray-900 dark:text-white max-md:py-3">
+                            <p>{!! core()->getConfigData('general.settings.footer.label') !!}</p>
+                        </div>
                     </div>
-                </div>
+                @endif
             </div>
         </div>
 

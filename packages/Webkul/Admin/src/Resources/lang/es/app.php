@@ -1998,6 +1998,8 @@ return [
                     'title' => 'Configuraciones',
                     'info' => 'Actualiza tus configuraciones aquí.',
                     'footer' => [
+                        'show' => 'Mostrar "Desarrollado por"',
+                        'show-info' => 'Muestra u oculta la barra "Desarrollado por" en la parte inferior del panel de administración.',
                         'info' => 'Podemos configurar la sección de powered by aquí.',
                         'powered-by' => 'Editor de texto impulsado por',
                         'title' => 'Configuraciones de la Sección Powered by',
@@ -2215,6 +2217,10 @@ return [
         'users-info' => 'Agregar, editar o eliminar usuarios del CRM',
         'lead' => 'Lead',
         'lead-info' => 'Administra todas las configuraciones relacionadas con los leads en el CRM',
+        'sidebar' => [
+            'collapse' => 'Contraer',
+            'expand' => 'Expandir',
+        ],
         'quick-add' => [
             'title' => 'Añadir rápido',
             'save' => 'Guardar',

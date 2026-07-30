@@ -1998,6 +1998,8 @@ return [
                     'title' => 'Configurações',
                     'info' => 'Atualize suas configurações aqui.',
                     'footer' => [
+                        'show' => 'Exibir "Desenvolvido por"',
+                        'show-info' => 'Exibe ou oculta a barra "Desenvolvido por" na parte inferior do painel administrativo.',
                         'info' => 'Podemos configurar a seção "Desenvolvido por" aqui.',
                         'powered-by' => 'Editor de texto "Desenvolvido por"',
                         'title' => 'Configurações da Seção "Desenvolvido por"',
@@ -2215,6 +2217,10 @@ return [
         'users-info' => 'Adicionar, editar ou excluir usuários do CRM',
         'lead' => 'Negócio',
         'lead-info' => 'Gerencie todas as configurações relacionadas aos Negócios no CRM',
+        'sidebar' => [
+            'collapse' => 'Recolher',
+            'expand' => 'Expandir',
+        ],
         'quick-add' => [
             'title' => 'Adição rápida',
             'save' => 'Salvar',
