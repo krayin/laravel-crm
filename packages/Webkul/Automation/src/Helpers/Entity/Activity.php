@@ -290,10 +290,11 @@ class Activity extends AbstractEntity
             'BEGIN:VCALENDAR',
             'VERSION:2.0',
             'PRODID:-//Krayincrm//Krayincrm//EN',
+            'METHOD:REQUEST',
             'BEGIN:VEVENT',
             'UID:'.time().'-'.$activity->id,
-            'DTSTAMP:'.Carbon::now()->format('YmdTHis'),
-            'CREATED:'.$activity->created_at->format('YmdTHis'),
+            'DTSTAMP:'.Carbon::now()->utc()->format('Ymd\THis\Z'),
+            'CREATED:'.$activity->created_at->copy()->utc()->format('Ymd\THis\Z'),
             'SEQUENCE:1',
             'ORGANIZER;CN='.$activity->user->name.':MAILTO:'.$activity->user->email,
         ];
@@ -309,8 +310,8 @@ class Activity extends AbstractEntity
         }
 
         $content = array_merge($content, [
-            'DTSTART:'.$activity->schedule_from->format('YmdTHis'),
-            'DTEND:'.$activity->schedule_to->format('YmdTHis'),
+            'DTSTART:'.$activity->schedule_from->copy()->utc()->format('Ymd\THis\Z'),
+            'DTEND:'.$activity->schedule_to->copy()->utc()->format('Ymd\THis\Z'),
             'SUMMARY:'.$activity->title,
             'LOCATION:'.$activity->location,
             'DESCRIPTION:'.$activity->comment,
