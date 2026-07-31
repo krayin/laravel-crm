@@ -519,6 +519,8 @@ return [
                     'name' => 'Name',
                     'organization-name' => 'Organization Name',
                     'tag-name' => 'Tag Name',
+                    'google-export-not-connected' => 'Please connect your Google account first from Settings > Other Settings > Google Contacts.',
+                    'google-export-started' => 'Export to Google Contacts started.',
                 ],
             ],
             'view' => [
@@ -909,6 +911,19 @@ return [
                 'does-not-contain' => 'Does not contain',
             ],
         ],
+        'google-contacts' => [
+            'index' => [
+                'title' => 'Google Contacts',
+                'not-connected-info' => 'Connect a Google account to export CRM contacts to Google Contacts.',
+                'connected-info' => 'Connected as :email.',
+                'connect-btn' => 'Connect Google Account',
+                'disconnect-btn' => 'Disconnect',
+                'connect-success' => 'Google account connected successfully.',
+                'connect-failed' => 'Unable to connect your Google account. Please try again.',
+                'disconnect-success' => 'Google account disconnected successfully.',
+            ],
+        ],
+
         'webforms' => [
             'index' => [
                 'title' => 'Webforms',
@@ -2336,6 +2351,13 @@ return [
         'csv' => 'CSV',
         'download' => 'Download',
         'export' => 'Export',
+        'google-contacts' => 'Google Contacts',
+        'google-contacts-in-progress' => 'Exporting your contacts to Google… this may take a moment.',
+        'google-contacts-total' => 'Total Contacts:',
+        'google-contacts-exported' => 'Exported:',
+        'google-contacts-duplicate' => 'Already Existed:',
+        'google-contacts-failed' => 'Failed:',
+        'google-contacts-summary' => 'Export finished: :exported exported, :duplicate already existed, :failed failed.',
         'no-records' => 'Nothing to export',
         'xls' => 'XLS',
         'xlsx' => 'XLSX',
