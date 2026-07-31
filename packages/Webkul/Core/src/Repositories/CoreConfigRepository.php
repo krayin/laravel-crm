@@ -164,7 +164,7 @@ class CoreConfigRepository extends Repository
                     }
 
                     $preparedData[] = [
-                        'code'  => $fieldName,
+                        'code' => $fieldName,
                         'value' => $path ?? $value,
                     ];
                 }
