@@ -349,6 +349,12 @@ Breadcrumbs::for('settings.tags.edit', function (BreadcrumbTrail $trail, $tag) {
     $trail->push(trans('admin::app.settings.tags.edit-title'), route('admin.settings.tags.edit', $tag->id));
 });
 
+// Settings > Google Contacts
+Breadcrumbs::for('settings.google_contacts', function (BreadcrumbTrail $trail) {
+    $trail->parent('settings');
+    $trail->push(trans('admin::app.settings.google-contacts.index.title'), route('admin.settings.google_contacts.index'));
+});
+
 // Settings > Web Form
 Breadcrumbs::for('settings.web_forms', function (BreadcrumbTrail $trail) {
     $trail->parent('settings');

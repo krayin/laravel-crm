@@ -208,6 +208,27 @@ abstract class DataGrid
     }
 
     /**
+     * Prepare and return the query builder with the currently requested filters
+     * and sort applied, but without pagination or export side effects — e.g.
+     * for bulk actions that need every matching row rather than just the
+     * current page or a file download.
+     */
+    public function getFilteredQueryBuilder(): mixed
+    {
+        $this->prepareColumns();
+
+        $this->setQueryBuilder();
+
+        $requestedParams = request()->only(['filters', 'sort']);
+
+        $this->queryBuilder = $this->processRequestedFilters($requestedParams['filters'] ?? []);
+
+        $this->queryBuilder = $this->processRequestedSorting($requestedParams['sort'] ?? []);
+
+        return $this->queryBuilder;
+    }
+
+    /**
      * Map your filter.
      */
     public function addFilter(string $datagridColumn, mixed $queryColumn): void

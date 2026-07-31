@@ -15,7 +15,10 @@
 
             <div class="flex items-center gap-x-2.5">
                 <!-- Export Modal -->
-                <x-admin::datagrid.export :src="route('admin.contacts.persons.index')" />
+                <x-admin::datagrid.export
+                    :src="route('admin.contacts.persons.index')"
+                    :google-contacts-src="bouncer()->hasPermission('contacts.persons.export_google') ? route('admin.contacts.persons.google_export.store') : null"
+                />
 
                 <!-- Create button for person -->
                 <div class="flex items-center gap-x-2.5">
