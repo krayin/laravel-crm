@@ -19,6 +19,7 @@ return Application::configure(basePath: dirname(__DIR__))
 
         $middleware->encryptCookies(except: [
             'dark_mode',
+            'sidebar_collapsed',
         ]);
 
         $middleware->validateCsrfTokens(except: [

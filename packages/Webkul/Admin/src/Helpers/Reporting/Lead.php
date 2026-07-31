@@ -5,6 +5,7 @@ namespace Webkul\Admin\Helpers\Reporting;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Webkul\Lead\Repositories\LeadRepository;
+use Webkul\Lead\Repositories\PipelineRepository;
 use Webkul\Lead\Repositories\StageRepository;
 
 class Lead extends AbstractReporting
@@ -30,19 +31,35 @@ class Lead extends AbstractReporting
     protected array $lostStageIds;
 
     /**
+     * The pipeline the dashboard is scoped to.
+     */
+    protected $pipeline;
+
+    /**
      * Create a helper instance.
      *
      * @return void
      */
     public function __construct(
         protected LeadRepository $leadRepository,
-        protected StageRepository $stageRepository
+        protected StageRepository $stageRepository,
+        protected PipelineRepository $pipelineRepository
     ) {
-        $this->allStageIds = $this->stageRepository->pluck('id')->toArray();
+        $this->pipeline = request('pipeline_id')
+            ? $this->pipelineRepository->find(request('pipeline_id'))
+            : null;
 
-        $this->wonStageIds = $this->stageRepository->where('code', 'won')->pluck('id')->toArray();
+        if (! $this->pipeline) {
+            $this->pipeline = $this->pipelineRepository->getDefaultPipeline();
+        }
 
-        $this->lostStageIds = $this->stageRepository->where('code', 'lost')->pluck('id')->toArray();
+        $stages = $this->pipeline->stages;
+
+        $this->allStageIds = $stages->pluck('id')->toArray();
+
+        $this->wonStageIds = $stages->where('code', 'won')->pluck('id')->toArray();
+
+        $this->lostStageIds = $stages->where('code', 'lost')->pluck('id')->toArray();
 
         parent::__construct();
     }
@@ -137,6 +154,7 @@ class Lead extends AbstractReporting
     {
         return $this->leadRepository
             ->resetModel()
+            ->where('lead_pipeline_id', $this->pipeline->id)
             ->whereBetween('created_at', [$startDate, $endDate])
             ->count();
     }
@@ -193,6 +211,7 @@ class Lead extends AbstractReporting
     {
         return $this->leadRepository
             ->resetModel()
+            ->where('lead_pipeline_id', $this->pipeline->id)
             ->whereBetween('created_at', [$startDate, $endDate])
             ->sum('lead_value');
     }
@@ -220,6 +239,7 @@ class Lead extends AbstractReporting
     {
         return $this->leadRepository
             ->resetModel()
+            ->where('lead_pipeline_id', $this->pipeline->id)
             ->whereBetween('created_at', [$startDate, $endDate])
             ->avg('lead_value') ?? 0;
     }

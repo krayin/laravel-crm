@@ -55,6 +55,7 @@ class AttributeController extends Controller
             'code' => ['required', 'unique:attributes,code,NULL,NULL,entity_type,'.request('entity_type'), new Code],
             'name' => 'required',
             'type' => 'required',
+            'validation' => 'nullable|in:numeric,email,decimal,url',
         ]);
 
         Event::dispatch('settings.attribute.create.before');
@@ -94,6 +95,7 @@ class AttributeController extends Controller
             'code' => ['required', 'unique:attributes,code,NULL,NULL,entity_type,'.$id, new Code],
             'name' => 'required',
             'type' => 'required',
+            'validation' => 'nullable|in:numeric,email,decimal,url',
         ]);
 
         Event::dispatch('settings.attribute.update.before', $id);

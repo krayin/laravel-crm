@@ -5,6 +5,7 @@ namespace Webkul\Admin\Http\Controllers;
 use Illuminate\Http\JsonResponse;
 use Illuminate\View\View;
 use Webkul\Admin\Helpers\Dashboard;
+use Webkul\Lead\Repositories\PipelineRepository;
 
 class DashboardController extends Controller
 {
@@ -29,7 +30,10 @@ class DashboardController extends Controller
      *
      * @return void
      */
-    public function __construct(protected Dashboard $dashboardHelper) {}
+    public function __construct(
+        protected Dashboard $dashboardHelper,
+        protected PipelineRepository $pipelineRepository
+    ) {}
 
     /**
      * Display a listing of the resource.
@@ -41,6 +45,8 @@ class DashboardController extends Controller
         return view('admin::dashboard.index')->with([
             'startDate' => $this->dashboardHelper->getStartDate(),
             'endDate' => $this->dashboardHelper->getEndDate(),
+            'pipelines' => $this->pipelineRepository->all(),
+            'defaultPipeline' => $this->pipelineRepository->getDefaultPipeline(),
         ]);
     }
 

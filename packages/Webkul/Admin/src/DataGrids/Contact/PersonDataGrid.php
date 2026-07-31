@@ -6,6 +6,7 @@ use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Facades\DB;
 use Webkul\Contact\Repositories\OrganizationRepository;
 use Webkul\DataGrid\DataGrid;
+use Webkul\Tag\Repositories\TagRepository;
 
 class PersonDataGrid extends DataGrid
 {
@@ -28,9 +29,13 @@ class PersonDataGrid extends DataGrid
                 'persons.emails',
                 'persons.contact_numbers',
                 'organizations.name as organization',
-                'organizations.id as organization_id'
+                'organizations.id as organization_id',
+                'tags.name as tag_name'
             )
-            ->leftJoin('organizations', 'persons.organization_id', '=', 'organizations.id');
+            ->leftJoin('organizations', 'persons.organization_id', '=', 'organizations.id')
+            ->leftJoin('person_tags', 'persons.id', '=', 'person_tags.person_id')
+            ->leftJoin('tags', 'tags.id', '=', 'person_tags.tag_id')
+            ->groupBy('persons.id');
 
         if ($userIds = bouncer()->getAuthorizedUserIds()) {
             $queryBuilder->whereIn('persons.user_id', $userIds);
@@ -39,6 +44,7 @@ class PersonDataGrid extends DataGrid
         $this->addFilter('id', 'persons.id');
         $this->addFilter('person_name', 'persons.name');
         $this->addFilter('organization', 'organizations.name');
+        $this->addFilter('tag_name', 'tags.name');
 
         return $queryBuilder;
     }
@@ -96,6 +102,24 @@ class PersonDataGrid extends DataGrid
             'filterable_type' => 'searchable_dropdown',
             'filterable_options' => [
                 'repository' => OrganizationRepository::class,
+                'column' => [
+                    'label' => 'name',
+                    'value' => 'name',
+                ],
+            ],
+        ]);
+
+        $this->addColumn([
+            'index' => 'tag_name',
+            'label' => trans('admin::app.contacts.persons.index.datagrid.tag-name'),
+            'type' => 'string',
+            'searchable' => false,
+            'sortable' => true,
+            'filterable' => true,
+            'filterable_type' => 'searchable_dropdown',
+            'closure' => fn ($row) => $row->tag_name ?? '--',
+            'filterable_options' => [
+                'repository' => TagRepository::class,
                 'column' => [
                     'label' => 'name',
                     'value' => 'name',
