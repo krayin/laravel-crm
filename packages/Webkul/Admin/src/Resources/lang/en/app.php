@@ -2014,6 +2014,8 @@ return [
                     'title' => 'Settings',
                     'info' => 'Update your settings here.',
                     'footer' => [
+                        'show' => 'Show Powered By',
+                        'show-info' => 'Show or hide the "Powered by" bar at the bottom of the admin panel.',
                         'info' => 'We can configure the powered by section here.',
                         'powered-by' => 'Powered by text editor',
                         'title' => 'Powered by Section Configurations',
@@ -2231,6 +2233,10 @@ return [
         'users-info' => 'Add, edit or delete users from CRM',
         'lead' => 'Lead',
         'lead-info' => 'Manage all your leads related settings in the CRM',
+        'sidebar' => [
+            'collapse' => 'Collapse',
+            'expand' => 'Expand',
+        ],
         'quick-add' => [
             'title' => 'Quick Add',
             'save' => 'Save',

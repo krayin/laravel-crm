@@ -60,9 +60,16 @@ return [
         'sort' => 1,
         'fields' => [
             [
+                'name' => 'show',
+                'title' => 'admin::app.configuration.index.general.settings.footer.show',
+                'info' => 'admin::app.configuration.index.general.settings.footer.show-info',
+                'type' => 'boolean',
+                'default' => 1,
+            ], [
                 'name' => 'label',
                 'title' => 'admin::app.configuration.index.general.settings.footer.powered-by',
                 'type' => 'editor',
+                'depends' => 'show:1',
                 'default' => 'Powered by <span style="color: rgb(14, 144, 217);"><a href="http://www.krayincrm.com" target="_blank">Krayin</a></span>, an open-source project by <span style="color: rgb(14, 144, 217);"><a href="https://webkul.com" target="_blank">Webkul</a></span>.',
                 'tinymce' => true,
             ],

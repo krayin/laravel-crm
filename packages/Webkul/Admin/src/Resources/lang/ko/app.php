@@ -2012,6 +2012,8 @@ return [
                     'title' => '설정',
                     'info' => '여기에서 설정을 수정하세요.',
                     'footer' => [
+                        'show' => 'Powered By 표시',
+                        'show-info' => '관리자 패널 하단의 "Powered by" 표시줄을 표시하거나 숨깁니다.',
                         'info' => '여기에서 \'Powered by\' 섹션을 설정할 수 있습니다.',
                         'powered-by' => 'Powered by 텍스트 편집기',
                         'title' => 'Powered by 섹션 설정',
@@ -2226,6 +2228,10 @@ return [
         'users-info' => 'CRM에서 사용자를 추가, 수정 또는 삭제합니다',
         'lead' => '리드',
         'lead-info' => 'CRM 내 리드 관련 설정을 모두 관리합니다',
+        'sidebar' => [
+            'collapse' => '접기',
+            'expand' => '펼치기',
+        ],
         'quick-add' => [
             'title' => '빠른 추가',
             'save' => '저장',
