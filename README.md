@@ -145,7 +145,7 @@ carry on building on top of Krayin conventions.
 
 Get a ready-to-use CRM on your own domain, without manual installation or infrastructure complexity, and focus on growing your business while we handle the technology.
 
-![Krayin CRM Cloud Hosting](https://raw.githubusercontent.com/krayin/temp-media/master/cloud_hosting.png)
+[![Krayin CRM Cloud Hosting](https://raw.githubusercontent.com/krayin/temp-media/master/cloud_hosting.png)](https://krayincrm.com/crm-cloud-hosting)
 
 ### Krayin CRM Multi Tenant SaaS
 
