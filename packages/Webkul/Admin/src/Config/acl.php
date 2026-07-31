@@ -172,6 +172,11 @@ return [
         'route' => ['admin.contacts.persons.delete', 'admin.contacts.persons.mass_delete'],
         'sort' => 4,
     ], [
+        'key' => 'contacts.persons.export_google',
+        'name' => 'admin::app.acl.export',
+        'route' => ['admin.contacts.persons.google_export.store', 'admin.contacts.persons.google_export.stats'],
+        'sort' => 6,
+    ], [
         'key' => 'contacts.persons.view',
         'name' => 'admin::app.acl.view',
         'route' => 'admin.contacts.persons.view',
