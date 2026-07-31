@@ -2,6 +2,10 @@
 
 This changelog consists of the bug & security fixes and new features being included in the releases listed below.
 
+## **v2.2.5 (Upcoming)**
+
+* [enhancement] Documented the AI installation method in the README, alongside the manual and Docker options, pointing at the agent instructions published at https://devdocs.krayincrm.com/agents.txt.
+
 ## **v2.2.4 (20th of July 2026)** *Release*
 
 * #2590[fixed] Fixed page does not refresh after creating a record via Quick Add.

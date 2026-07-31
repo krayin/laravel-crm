@@ -23,10 +23,11 @@
 2. [Documentation](#documentation)
 3. [Requirements](#requirements)
 4. [Installation & Configuration](#installation-and-configuration)
-4. [Docker Installation](https://devdocs.krayincrm.com/2.0/introduction/docker.html)
-5. [Krayin Cloud System](#krayin-cloud-system)
-6. [License](#license)
-7. [Security Vulnerabilities](#security-vulnerabilities)
+5. [AI Installation](#ai-installation)
+6. [Docker Installation](https://devdocs.krayincrm.com/2.0/introduction/docker.html)
+7. [Krayin Cloud System](#krayin-cloud-system)
+8. [License](#license)
+9. [Security Vulnerabilities](#security-vulnerabilities)
 
 ### Introduction
 
@@ -116,13 +117,35 @@ email:admin@example.com
 password:admin123
 ```
 
+### AI Installation
+
+If you work with an AI coding agent (Claude Code, Codex, Cursor, Copilot, Kilo Code, ...),
+it can set Krayin up for you. Paste this prompt into the agent:
+
+```
+Set up a new Krayin CRM application by following the instructions at https://devdocs.krayincrm.com/agents.txt
+```
+
+The agent will check for `php`, `composer`, `node` and a MySQL-compatible database,
+install anything missing, run `composer create-project krayin/laravel-crm` followed by
+`php artisan krayin-crm:install`, and start the development server. It will only ask you
+for the database credentials and the admin user details — everything else falls back to
+Krayin defaults.
+
+Once the project exists, the agent skills shipped in the repository (`AGENTS.md` plus
+`.claude/`, `.codex/`, `.cursor/` and `.kilocode/`) become active, so the same agent can
+carry on building on top of Krayin conventions.
+
+> **Note:** the installer needs an interactive terminal. If your agent cannot keep a
+> long-running process alive, run `php artisan serve` yourself in a second terminal.
+
 ### Krayin Cloud Hosting
 
 [Krayin CRM Cloud Hosting](https://krayincrm.com/crm-cloud-hosting) is a fully managed hosting solution where our team sets up, secures, and configures your Krayin CRM on reliable infrastructure.
 
 Get a ready-to-use CRM on your own domain, without manual installation or infrastructure complexity, and focus on growing your business while we handle the technology.
 
-![Krayin CRM Cloud Hosting](https://raw.githubusercontent.com/krayin/temp-media/master/cloud_hosting.png)
+[![Krayin CRM Cloud Hosting](https://raw.githubusercontent.com/krayin/temp-media/master/cloud_hosting.png)](https://krayincrm.com/crm-cloud-hosting)
 
 ### Krayin CRM Multi Tenant SaaS
 
