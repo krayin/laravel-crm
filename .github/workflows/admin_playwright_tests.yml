@@ -66,7 +66,7 @@ jobs:
           sed -i "s|^\(DB_DATABASE=\s*\).*$|\1krayin|" .env
           sed -i "s|^\(DB_USERNAME=\s*\).*$|\1root|" .env
           sed -i "s|^\(DB_PASSWORD=\s*\).*$|\1root|" .env
-          sed -i "s|^\(APP_DEBUG=\s*\).*$|\1false|" .env
+          sed -i "s|^\(APP_DEBUG=\s*\).*$|\1true|" .env
           sed -i "s|^\(APP_URL=\s*\).*$|\1http://127.0.0.1:8000|" .env
           cat .env
 
@@ -75,6 +75,27 @@ jobs:
 
       - name: Running Krayin Installer
         run: php artisan krayin-crm:install --skip-env-check --skip-admin-creation
+
+      - name: Clear Laravel Caches
+        run: php artisan optimize:clear
+
+      - name: Verify Activity Binding
+        run: |
+          php artisan tinker --execute="
+          // 1) Laravel container binding (needed by repositories)
+          if (! app()->bound(Webkul\\Activity\\Contracts\\Activity::class)) {
+              throw new RuntimeException('Activity contract is NOT bound in Laravel container');
+          }
+
+          // 2) Concord model-proxy registry (needed by ActivityProxy::modelClass())
+          \$concord = app('concord');
+          if (! \$concord->model(Webkul\\Activity\\Contracts\\Activity::class)) {
+              throw new RuntimeException('Activity contract is NOT registered in Concord model registry');
+          }
+
+          dump(app()->make(Webkul\\Activity\\Contracts\\Activity::class)::class);
+          dump(\$concord->model(Webkul\\Activity\\Contracts\\Activity::class));
+          "
 
       # - name: Seed Product Table
       #   run: php artisan db:seed --class="Webkul\\Installer\\Database\\Seeders\\ProductTableSeeder"

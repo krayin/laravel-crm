@@ -42,12 +42,12 @@ class RoleController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(): RedirectResponse
+    public function store(): RedirectResponse|JsonResponse
     {
         $this->validate(request(), [
-            'name'            => 'required',
+            'name' => 'required',
             'permission_type' => 'required|in:all,custom',
-            'description'     => 'required',
+            'description' => 'required',
         ]);
 
         if (request('permission_type') == 'custom') {
@@ -68,6 +68,13 @@ class RoleController extends Controller
         $role = $this->roleRepository->create($data);
 
         Event::dispatch('settings.role.create.after', $role);
+
+        if (request()->ajax()) {
+            return response()->json([
+                'data' => $role,
+                'message' => trans('admin::app.settings.roles.index.create-success'),
+            ]);
+        }
 
         session()->flash('success', trans('admin::app.settings.roles.index.create-success'));
 
@@ -90,10 +97,10 @@ class RoleController extends Controller
     public function update(int $id): RedirectResponse
     {
         $this->validate(request(), [
-            'name'            => 'required',
+            'name' => 'required',
             'permission_type' => 'required|in:all,custom',
-            'description'     => 'required',
-            'permissions'     => 'required_if:permission_type,custom',
+            'description' => 'required',
+            'permissions' => 'required_if:permission_type,custom',
         ]);
 
         Event::dispatch('settings.role.update.before', $id);
@@ -149,7 +156,7 @@ class RoleController extends Controller
 
                     $response = [
                         'responseCode' => 200,
-                        'message'      => $message,
+                        'message' => $message,
                     ];
 
                     session()->flash('success', $message);

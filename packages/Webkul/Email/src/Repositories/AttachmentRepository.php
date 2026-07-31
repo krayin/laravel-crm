@@ -69,11 +69,11 @@ class AttachmentRepository extends Repository
         Storage::put($path, $content);
 
         $attributes = [
-            'path'         => $path,
-            'name'         => $name,
+            'path' => $path,
+            'name' => $name,
             'content_type' => $mimeType,
-            'size'         => Storage::size($path),
-            'email_id'     => $email->id,
+            'size' => Storage::size($path),
+            'email_id' => $email->id,
         ];
 
         return $attributes;

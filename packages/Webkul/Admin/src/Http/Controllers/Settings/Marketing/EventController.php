@@ -36,9 +36,9 @@ class EventController extends Controller
     public function store(): JsonResponse
     {
         $validatedData = $this->validate(request(), [
-            'name'        => 'required|max:60',
+            'name' => 'required|max:60',
             'description' => 'required',
-            'date'        => 'required|date|after_or_equal:today',
+            'date' => 'required|date|after_or_equal:today',
         ]);
 
         Event::dispatch('settings.marketing.events.create.before');
@@ -49,7 +49,7 @@ class EventController extends Controller
 
         return response()->json([
             'message' => trans('admin::app.settings.marketing.events.index.create-success'),
-            'data'    => $marketingEvent,
+            'data' => $marketingEvent,
         ]);
     }
 
@@ -59,9 +59,9 @@ class EventController extends Controller
     public function update(int $id): JsonResponse
     {
         $validatedData = $this->validate(request(), [
-            'name'        => 'required|max:60',
+            'name' => 'required|max:60',
             'description' => 'required',
-            'date'        => 'required|date|after_or_equal:today',
+            'date' => 'required|date|after_or_equal:today',
         ]);
 
         Event::dispatch('settings.marketing.events.update.before', $id);
@@ -72,7 +72,7 @@ class EventController extends Controller
 
         return response()->json([
             'message' => trans('admin::app.settings.marketing.events.index.update-success'),
-            'data'    => $marketingEvent,
+            'data' => $marketingEvent,
         ]);
     }
 

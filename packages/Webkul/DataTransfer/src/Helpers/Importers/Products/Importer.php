@@ -27,7 +27,7 @@ class Importer extends AbstractImporter
      * Error message templates.
      */
     protected array $messages = [
-        self::ERROR_SKU_NOT_FOUND_FOR_DELETE  => 'data_transfer::app.importers.products.validation.errors.sku-not-found',
+        self::ERROR_SKU_NOT_FOUND_FOR_DELETE => 'data_transfer::app.importers.products.validation.errors.sku-not-found',
     ];
 
     /**
@@ -197,7 +197,7 @@ class Importer extends AbstractImporter
         $batch = $this->importBatchRepository->update([
             'state' => Import::STATE_PROCESSED,
 
-            'summary'      => [
+            'summary' => [
                 'created' => $this->getCreatedItemsCount(),
                 'updated' => $this->getUpdatedItemsCount(),
                 'deleted' => $this->getDeletedItemsCount(),

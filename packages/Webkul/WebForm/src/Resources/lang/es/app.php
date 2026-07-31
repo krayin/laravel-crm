@@ -2,15 +2,15 @@
 
 return [
     'acl' => [
-        'title'  => 'Formularios Web',
-        'view'   => 'Ver',
+        'title' => 'Formularios Web',
+        'view' => 'Ver',
         'create' => 'Crear',
-        'edit'   => 'Editar',
+        'edit' => 'Editar',
         'delete' => 'Eliminar',
     ],
 
     'menu' => [
-        'title'      => 'Formularios Web',
+        'title' => 'Formularios Web',
         'title-info' => 'Agregar, editar o eliminar formularios web desde CRM',
     ],
 

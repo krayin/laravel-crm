@@ -2,6 +2,7 @@
 
 namespace Webkul\Admin\Http\Controllers\Products;
 
+use Illuminate\Http\Response;
 use Webkul\Activity\Repositories\ActivityRepository;
 use Webkul\Admin\Http\Controllers\Controller;
 use Webkul\Admin\Http\Resources\ActivityResource;
@@ -23,7 +24,7 @@ class ActivityController extends Controller
      * Display a listing of the resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function index($id)
     {

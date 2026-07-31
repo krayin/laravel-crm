@@ -4,6 +4,7 @@ namespace Webkul\Installer\Http\Controllers;
 
 use Illuminate\Http\Response as IlluminateResponse;
 use Illuminate\Support\Facades\Cache;
+use Intervention\Image\Image;
 
 class ImageCacheController
 {
@@ -44,7 +45,7 @@ class ImageCacheController
      * Init from given URL
      *
      * @param  string  $url
-     * @return \Intervention\Image\Image
+     * @return Image
      */
     public function getImageFromUrl($url)
     {
@@ -52,9 +53,9 @@ class ImageCacheController
 
         $options = [
             'http' => [
-                'method'           => 'GET',
+                'method' => 'GET',
                 'protocol_version' => 1.1, // force use HTTP 1.1 for service mesh environment with envoy
-                'header'           => "Accept-language: en\r\n".
+                'header' => "Accept-language: en\r\n".
                 "Domain: $domain\r\n".
                 "User-Agent: Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/97.0.4692.71 Safari/537.36\r\n",
             ],
@@ -99,10 +100,10 @@ class ImageCacheController
          * Return http response
          */
         return new IlluminateResponse($content, $statusCode, [
-            'Content-Type'   => $mime,
-            'Cache-Control'  => 'max-age=10080, public',
+            'Content-Type' => $mime,
+            'Cache-Control' => 'max-age=10080, public',
             'Content-Length' => strlen($content),
-            'Etag'           => $eTag,
+            'Etag' => $eTag,
         ]);
     }
 }

@@ -47,9 +47,9 @@ class Importer extends AbstractImporter
      * Error message templates.
      */
     protected array $messages = [
-        self::ERROR_EMAIL_NOT_FOUND_FOR_DELETE  => 'data_transfer::app.importers.persons.validation.errors.email-not-found',
-        self::ERROR_DUPLICATE_EMAIL             => 'data_transfer::app.importers.persons.validation.errors.duplicate-email',
-        self::ERROR_DUPLICATE_PHONE             => 'data_transfer::app.importers.persons.validation.errors.duplicate-phone',
+        self::ERROR_EMAIL_NOT_FOUND_FOR_DELETE => 'data_transfer::app.importers.persons.validation.errors.email-not-found',
+        self::ERROR_DUPLICATE_EMAIL => 'data_transfer::app.importers.persons.validation.errors.duplicate-email',
+        self::ERROR_DUPLICATE_PHONE => 'data_transfer::app.importers.persons.validation.errors.duplicate-phone',
     ];
 
     /**
@@ -151,14 +151,14 @@ class Importer extends AbstractImporter
          */
         $validator = Validator::make($rowData, [
             ...$this->getValidationRules('persons', $rowData),
-            'organization_id'         => 'required|exists:organizations,id',
-            'user_id'                 => 'required|exists:users,id',
-            'contact_numbers'         => 'required|array',
+            'organization_id' => 'required|exists:organizations,id',
+            'user_id' => 'required|exists:users,id',
+            'contact_numbers' => 'required|array',
             'contact_numbers.*.value' => 'required|numeric',
             'contact_numbers.*.label' => 'required|in:home,work',
-            'emails'                  => 'required|array',
-            'emails.*.value'          => 'required|email',
-            'emails.*.label'          => 'required|in:home,work',
+            'emails' => 'required|array',
+            'emails.*.value' => 'required|email',
+            'emails.*.label' => 'required|in:home,work',
         ]);
 
         if ($validator->fails()) {
@@ -231,7 +231,7 @@ class Importer extends AbstractImporter
         $batch = $this->importBatchRepository->update([
             'state' => Import::STATE_PROCESSED,
 
-            'summary'      => [
+            'summary' => [
                 'created' => $this->getCreatedItemsCount(),
                 'updated' => $this->getUpdatedItemsCount(),
                 'deleted' => $this->getDeletedItemsCount(),
@@ -447,7 +447,7 @@ class Importer extends AbstractImporter
 
             foreach ($emails as $email) {
                 $attributeValues[$email][] = array_merge($attributeTypeValues, [
-                    'attribute_id'                => $attribute->id,
+                    'attribute_id' => $attribute->id,
                     $typeFields[$attribute->type] => $value,
                 ]);
             }

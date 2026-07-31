@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <phpunit
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.5/phpunit.xsd"
+    xsi:noNamespaceSchemaLocation="vendor/phpunit/phpunit/phpunit.xsd"
     bootstrap="vendor/autoload.php"
     colors="true"
     cacheDirectory=".phpunit.cache"
@@ -23,12 +23,14 @@
     </source>
 
     <php>
-        <server name="APP_ENV" value="testing" />
-        <server name="BCRYPT_ROUNDS" value="4" />
-        <server name="CACHE_DRIVER" value="array" />
-        <server name="MAIL_MAILER" value="array" />
-        <server name="QUEUE_CONNECTION" value="sync" />
-        <server name="SESSION_DRIVER" value="array" />
-        <server name="TELESCOPE_ENABLED" value="false" />
+        <env name="APP_ENV" value="testing" />
+        <env name="APP_MAINTENANCE_DRIVER" value="file" />
+        <env name="BCRYPT_ROUNDS" value="4" />
+        <env name="CACHE_STORE" value="array" />
+        <env name="MAIL_MAILER" value="array" />
+        <env name="PULSE_ENABLED" value="false" />
+        <env name="QUEUE_CONNECTION" value="sync" />
+        <env name="SESSION_DRIVER" value="array" />
+        <env name="TELESCOPE_ENABLED" value="false" />
     </php>
 </phpunit>

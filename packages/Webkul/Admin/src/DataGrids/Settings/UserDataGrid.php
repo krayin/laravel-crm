@@ -39,53 +39,53 @@ class UserDataGrid extends DataGrid
     public function prepareColumns(): void
     {
         $this->addColumn([
-            'index'    => 'id',
-            'label'    => trans('admin::app.settings.users.index.datagrid.id'),
-            'type'     => 'string',
+            'index' => 'id',
+            'label' => trans('admin::app.settings.users.index.datagrid.id'),
+            'type' => 'string',
             'sortable' => true,
         ]);
 
         $this->addColumn([
-            'index'      => 'name',
-            'label'      => trans('admin::app.settings.users.index.datagrid.name'),
-            'type'       => 'string',
-            'sortable'   => true,
+            'index' => 'name',
+            'label' => trans('admin::app.settings.users.index.datagrid.name'),
+            'type' => 'string',
+            'sortable' => true,
             'searchable' => true,
             'filterable' => true,
-            'closure'    => function ($row) {
+            'closure' => function ($row) {
                 return [
                     'image' => $row->image ? Storage::url($row->image) : null,
-                    'name'  => $row->name,
+                    'name' => $row->name,
                 ];
             },
         ]);
 
         $this->addColumn([
-            'index'      => 'email',
-            'label'      => trans('admin::app.settings.users.index.datagrid.email'),
-            'type'       => 'string',
-            'sortable'   => true,
+            'index' => 'email',
+            'label' => trans('admin::app.settings.users.index.datagrid.email'),
+            'type' => 'string',
+            'sortable' => true,
             'searchable' => true,
             'filterable' => true,
         ]);
 
         $this->addColumn([
-            'index'      => 'status',
-            'label'      => trans('admin::app.settings.users.index.datagrid.status'),
-            'type'       => 'boolean',
+            'index' => 'status',
+            'label' => trans('admin::app.settings.users.index.datagrid.status'),
+            'type' => 'boolean',
             'filterable' => true,
-            'sortable'   => true,
+            'sortable' => true,
             'searchable' => true,
         ]);
 
         $this->addColumn([
-            'index'           => 'created_at',
-            'label'           => trans('admin::app.settings.users.index.datagrid.created-at'),
-            'type'            => 'date',
-            'sortable'        => true,
-            'searchable'      => true,
+            'index' => 'created_at',
+            'label' => trans('admin::app.settings.users.index.datagrid.created-at'),
+            'type' => 'date',
+            'sortable' => true,
+            'searchable' => true,
             'filterable_type' => 'date_range',
-            'filterable'      => true,
+            'filterable' => true,
         ]);
     }
 
@@ -96,21 +96,21 @@ class UserDataGrid extends DataGrid
     {
         if (bouncer()->hasPermission('settings.user.users.edit')) {
             $this->addAction([
-                'index'  => 'edit',
-                'icon'   => 'icon-edit',
-                'title'  => trans('admin::app.settings.users.index.datagrid.edit'),
+                'index' => 'edit',
+                'icon' => 'icon-edit',
+                'title' => trans('admin::app.settings.users.index.datagrid.edit'),
                 'method' => 'GET',
-                'url'    => fn ($row) => route('admin.settings.users.edit', $row->id),
+                'url' => fn ($row) => route('admin.settings.users.edit', $row->id),
             ]);
         }
 
         if (bouncer()->hasPermission('settings.user.users.delete')) {
             $this->addAction([
-                'index'  => 'delete',
-                'icon'   => 'icon-delete',
-                'title'  => trans('admin::app.settings.users.index.datagrid.delete'),
+                'index' => 'delete',
+                'icon' => 'icon-delete',
+                'title' => trans('admin::app.settings.users.index.datagrid.delete'),
                 'method' => 'DELETE',
-                'url'    => fn ($row) => route('admin.settings.users.delete', $row->id),
+                'url' => fn ($row) => route('admin.settings.users.delete', $row->id),
             ]);
         }
     }
@@ -121,16 +121,16 @@ class UserDataGrid extends DataGrid
     public function prepareMassActions(): void
     {
         $this->addMassAction([
-            'icon'   => 'icon-delete',
-            'title'  => trans('admin::app.settings.users.index.datagrid.delete'),
+            'icon' => 'icon-delete',
+            'title' => trans('admin::app.settings.users.index.datagrid.delete'),
             'method' => 'POST',
-            'url'    => route('admin.settings.users.mass_delete'),
+            'url' => route('admin.settings.users.mass_delete'),
         ]);
 
         $this->addMassAction([
-            'title'   => trans('admin::app.settings.users.index.datagrid.update-status'),
-            'method'  => 'POST',
-            'url'     => route('admin.settings.users.mass_update'),
+            'title' => trans('admin::app.settings.users.index.datagrid.update-status'),
+            'method' => 'POST',
+            'url' => route('admin.settings.users.mass_update'),
             'options' => [
                 [
                     'label' => trans('admin::app.settings.users.index.datagrid.active'),

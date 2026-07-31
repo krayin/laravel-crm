@@ -86,7 +86,7 @@
                 v-slot="{ meta, errors, handleSubmit }"
                 as="div"
                 ref="stageUpdateForm"
-            >
+                >
                 <form @submit="handleSubmit($event, handleFormSubmit)">
                     {!! view_render_event('admin.leads.view.stages.form_controls.modal.before', ['lead' => $lead]) !!}
 

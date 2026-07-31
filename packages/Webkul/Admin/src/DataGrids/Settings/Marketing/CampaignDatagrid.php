@@ -33,34 +33,34 @@ class CampaignDatagrid extends DataGrid
     public function prepareColumns()
     {
         $this->addColumn([
-            'index'      => 'id',
-            'label'      => trans('admin::app.settings.marketing.campaigns.index.datagrid.id'),
-            'type'       => 'string',
-            'sortable'   => true,
+            'index' => 'id',
+            'label' => trans('admin::app.settings.marketing.campaigns.index.datagrid.id'),
+            'type' => 'string',
+            'sortable' => true,
             'searchable' => true,
             'filterable' => true,
         ]);
 
         $this->addColumn([
-            'index'      => 'name',
-            'label'      => trans('admin::app.settings.marketing.campaigns.index.datagrid.name'),
-            'type'       => 'string',
-            'sortable'   => true,
+            'index' => 'name',
+            'label' => trans('admin::app.settings.marketing.campaigns.index.datagrid.name'),
+            'type' => 'string',
+            'sortable' => true,
             'searchable' => true,
             'filterable' => true,
         ]);
 
         $this->addColumn([
-            'index'    => 'subject',
-            'label'    => trans('admin::app.settings.marketing.campaigns.index.datagrid.subject'),
-            'type'     => 'string',
+            'index' => 'subject',
+            'label' => trans('admin::app.settings.marketing.campaigns.index.datagrid.subject'),
+            'type' => 'string',
             'sortable' => true,
         ]);
 
         $this->addColumn([
-            'index'    => 'status',
-            'label'    => trans('admin::app.settings.marketing.campaigns.index.datagrid.status'),
-            'type'     => 'string',
+            'index' => 'status',
+            'label' => trans('admin::app.settings.marketing.campaigns.index.datagrid.status'),
+            'type' => 'string',
             'sortable' => true,
         ]);
     }
@@ -74,21 +74,21 @@ class CampaignDatagrid extends DataGrid
     {
         if (bouncer()->hasPermission('settings.automation.campaigns.edit')) {
             $this->addAction([
-                'index'  => 'edit',
-                'icon'   => 'icon-edit',
-                'title'  => trans('admin::app.settings.marketing.campaigns.index.datagrid.edit'),
+                'index' => 'edit',
+                'icon' => 'icon-edit',
+                'title' => trans('admin::app.settings.marketing.campaigns.index.datagrid.edit'),
                 'method' => 'GET',
-                'url'    => fn ($row) => route('admin.settings.marketing.campaigns.edit', $row->id),
+                'url' => fn ($row) => route('admin.settings.marketing.campaigns.edit', $row->id),
             ]);
         }
 
         if (bouncer()->hasPermission('settings.automation.campaigns.delete')) {
             $this->addAction([
-                'index'          => 'delete',
-                'icon'           => 'icon-delete',
-                'title'          => trans('admin::app.settings.marketing.campaigns.index.datagrid.delete'),
-                'method'         => 'DELETE',
-                'url'            => fn ($row) => route('admin.settings.marketing.campaigns.delete', $row->id),
+                'index' => 'delete',
+                'icon' => 'icon-delete',
+                'title' => trans('admin::app.settings.marketing.campaigns.index.datagrid.delete'),
+                'method' => 'DELETE',
+                'url' => fn ($row) => route('admin.settings.marketing.campaigns.delete', $row->id),
             ]);
         }
     }
@@ -100,10 +100,10 @@ class CampaignDatagrid extends DataGrid
     {
         if (bouncer()->hasPermission('settings.automation.campaigns.mass_delete')) {
             $this->addMassAction([
-                'icon'   => 'icon-delete',
-                'title'  => trans('admin::app.settings.marketing.campaigns.index.datagrid.delete'),
+                'icon' => 'icon-delete',
+                'title' => trans('admin::app.settings.marketing.campaigns.index.datagrid.delete'),
                 'method' => 'POST',
-                'url'    => route('admin.settings.marketing.campaigns.mass_delete'),
+                'url' => route('admin.settings.marketing.campaigns.mass_delete'),
             ]);
         }
     }

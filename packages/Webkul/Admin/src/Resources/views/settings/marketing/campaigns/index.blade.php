@@ -6,7 +6,7 @@
 
     <div class="flex flex-col gap-4">
         <!-- Header section -->
-        <div class="flex items-center justify-between rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
+        <div class="scroll-reactive-sticky sticky top-[60px] z-[1000] flex items-center justify-between rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm shadow-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
             <div class="flex flex-col gap-2">
                 <div class="flex cursor-pointer items-center">
                     {!! view_render_event('admin.settings.marketing.campaigns.index.breadcrumbs.before') !!}
@@ -452,7 +452,7 @@
                      * @return {void}
                      */
                     getEvents() {
-                        this.$axios.get('{{ route('admin.settings.marketing.campaigns.events') }}')
+                        this.$axios.get("{{ route('admin.settings.marketing.campaigns.events') }}")
                             .then(response => this.events = response.data.data)
                             .catch(error => {});
                     },
@@ -463,7 +463,7 @@
                      * @return {void}
                      */
                     getEmailTemplates() {
-                        this.$axios.get('{{ route('admin.settings.marketing.campaigns.email-templates') }}')
+                        this.$axios.get("{{ route('admin.settings.marketing.campaigns.email-templates') }}")
                             .then(response => this.emailTemplates = response.data.data)
                             .catch(error => {});
                     },
@@ -487,8 +487,8 @@
 
                         this.$axios.post(
                             isUpdating
-                            ? `{{ route('admin.settings.marketing.campaigns.update', '') }}/${paramas.id}`
-                            : '{{ route('admin.settings.marketing.campaigns.store') }}',
+                            ? "{{ route('admin.settings.marketing.campaigns.update', ':id') }}".replace(':id', paramas.id)
+                            : "{{ route('admin.settings.marketing.campaigns.store') }}",
                             campaignForm,
                         )
                             .then(response => {
@@ -510,7 +510,7 @@
                      * @param {Object} record
                      */
                     edit(record) {
-                        this.$axios.get(`{{ route('admin.settings.marketing.campaigns.edit', '') }}/${record.id}`)
+                        this.$axios.get("{{ route('admin.settings.marketing.campaigns.edit', ':id') }}".replace(':id', record.id))
                             .then(response => {
                                 this.campaign = response.data.data;
 

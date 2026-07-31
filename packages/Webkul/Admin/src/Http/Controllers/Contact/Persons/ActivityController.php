@@ -2,6 +2,7 @@
 
 namespace Webkul\Admin\Http\Controllers\Contact\Persons;
 
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 use Webkul\Activity\Repositories\ActivityRepository;
 use Webkul\Admin\Http\Controllers\Controller;
@@ -26,7 +27,7 @@ class ActivityController extends Controller
      * Display a listing of the resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function index($id)
     {
@@ -52,36 +53,36 @@ class ActivityController extends Controller
 
         return $activities->concat($emails->map(function ($email) {
             return (object) [
-                'id'            => $email->id,
-                'parent_id'     => $email->parent_id,
-                'title'         => $email->subject,
-                'type'          => 'email',
-                'is_done'       => 1,
-                'comment'       => $email->reply,
+                'id' => $email->id,
+                'parent_id' => $email->parent_id,
+                'title' => $email->subject,
+                'type' => 'email',
+                'is_done' => 1,
+                'comment' => $email->reply,
                 'schedule_from' => null,
-                'schedule_to'   => null,
-                'user'          => auth()->guard('user')->user(),
-                'participants'  => [],
-                'location'      => null,
-                'additional'    => [
+                'schedule_to' => null,
+                'user' => auth()->guard('user')->user(),
+                'participants' => [],
+                'location' => null,
+                'additional' => [
                     'folders' => json_decode($email->folders),
-                    'from'    => json_decode($email->from),
-                    'to'      => json_decode($email->reply_to),
-                    'cc'      => json_decode($email->cc),
-                    'bcc'     => json_decode($email->bcc),
+                    'from' => json_decode($email->from),
+                    'to' => json_decode($email->reply_to),
+                    'cc' => json_decode($email->cc),
+                    'bcc' => json_decode($email->bcc),
                 ],
-                'files'         => $this->attachmentRepository->findWhere(['email_id' => $email->id])->map(function ($attachment) {
+                'files' => $this->attachmentRepository->findWhere(['email_id' => $email->id])->map(function ($attachment) {
                     return (object) [
-                        'id'         => $attachment->id,
-                        'name'       => $attachment->name,
-                        'path'       => $attachment->path,
-                        'url'        => $attachment->url,
+                        'id' => $attachment->id,
+                        'name' => $attachment->name,
+                        'path' => $attachment->path,
+                        'url' => $attachment->url,
                         'created_at' => $attachment->created_at,
                         'updated_at' => $attachment->updated_at,
                     ];
                 }),
-                'created_at'    => $email->created_at,
-                'updated_at'    => $email->updated_at,
+                'created_at' => $email->created_at,
+                'updated_at' => $email->updated_at,
             ];
         }))->sortByDesc('id')->sortByDesc('created_at');
     }

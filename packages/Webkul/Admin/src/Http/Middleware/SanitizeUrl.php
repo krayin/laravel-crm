@@ -3,6 +3,7 @@
 namespace Webkul\Admin\Http\Middleware;
 
 use Closure;
+use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Webkul\Email\Enums\SupportedFolderEnum;
 
@@ -11,7 +12,7 @@ class SanitizeUrl
     /**
      * Handle an incoming request.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  Request  $request
      * @return mixed
      */
     public function handle($request, Closure $next)

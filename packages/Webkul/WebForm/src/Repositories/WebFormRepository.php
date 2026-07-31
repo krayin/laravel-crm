@@ -4,6 +4,7 @@ namespace Webkul\WebForm\Repositories;
 
 use Illuminate\Container\Container;
 use Illuminate\Support\Str;
+use Webkul\Attribute\Repositories\AttributeRepository;
 use Webkul\Core\Eloquent\Repository;
 use Webkul\WebForm\Contracts\WebForm;
 
@@ -16,6 +17,7 @@ class WebFormRepository extends Repository
      */
     public function __construct(
         protected WebFormAttributeRepository $webFormAttributeRepository,
+        protected AttributeRepository $attributeRepository,
         Container $container
     ) {
         parent::__construct($container);
@@ -34,7 +36,7 @@ class WebFormRepository extends Repository
     /**
      * Create Web Form.
      *
-     * @return \Webkul\WebForm\Contracts\WebForm
+     * @return WebForm
      */
     public function create(array $data)
     {
@@ -42,7 +44,7 @@ class WebFormRepository extends Repository
             'form_id' => Str::random(50),
         ]));
 
-        foreach ($data['attributes'] as $attributeData) {
+        foreach ($this->filterRestrictedAttributes($data['attributes']) as $attributeData) {
             $this->webFormAttributeRepository->create(array_merge([
                 'web_form_id' => $webForm->id,
             ], $attributeData));
@@ -56,7 +58,7 @@ class WebFormRepository extends Repository
      *
      * @param  int  $id
      * @param  string  $attribute
-     * @return \Webkul\WebForm\Contracts\WebForm
+     * @return WebForm
      */
     public function update(array $data, $id, $attribute = 'id')
     {
@@ -64,7 +66,7 @@ class WebFormRepository extends Repository
 
         $previousAttributeIds = $webForm->attributes()->pluck('id');
 
-        foreach ($data['attributes'] as $attributeId => $attributeData) {
+        foreach ($this->filterRestrictedAttributes($data['attributes']) as $attributeId => $attributeData) {
             if (Str::contains($attributeId, 'attribute_')) {
                 $this->webFormAttributeRepository->create(array_merge([
                     'web_form_id' => $webForm->id,
@@ -83,5 +85,21 @@ class WebFormRepository extends Repository
         }
 
         return $webForm;
+    }
+
+    /**
+     * Removes the attributes which are never exposed on a web form, such as the pipeline and the
+     * stage of a lead. Those are decided by the web form itself, so they are dropped here as well
+     * to keep them out of the public form when the request is not made through the builder.
+     *
+     * @return array
+     */
+    protected function filterRestrictedAttributes(array $attributes)
+    {
+        $restrictedAttributeIds = $this->attributeRepository->getRestrictedWebFormAttributeIds();
+
+        return array_filter($attributes, function ($attributeData) use ($restrictedAttributeIds) {
+            return ! in_array($attributeData['attribute_id'] ?? null, $restrictedAttributeIds);
+        });
     }
 }

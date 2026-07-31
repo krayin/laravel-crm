@@ -124,7 +124,7 @@ class PipelineController extends Controller
             $defaultPipeline = $this->pipelineRepository->getDefaultPipeline();
 
             $pipeline->leads()->update([
-                'lead_pipeline_id'       => $defaultPipeline->id,
+                'lead_pipeline_id' => $defaultPipeline->id,
                 'lead_pipeline_stage_id' => $defaultPipeline->stages()->first()->id,
             ]);
         }

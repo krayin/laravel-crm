@@ -33,7 +33,7 @@ class Dashboard
     public function getRevenueStats(): array
     {
         return [
-            'total_won_revenue'  => $this->leadReporting->getTotalWonLeadValueProgress(),
+            'total_won_revenue' => $this->leadReporting->getTotalWonLeadValueProgress(),
             'total_lost_revenue' => $this->leadReporting->getTotalLostLeadValueProgress(),
         ];
     }
@@ -44,12 +44,12 @@ class Dashboard
     public function getOverAllStats(): array
     {
         return [
-            'total_leads'           => $this->leadReporting->getTotalLeadsProgress(),
-            'average_lead_value'    => $this->leadReporting->getAverageLeadValueProgress(),
+            'total_leads' => $this->leadReporting->getTotalLeadsProgress(),
+            'average_lead_value' => $this->leadReporting->getAverageLeadValueProgress(),
             'average_leads_per_day' => $this->leadReporting->getAverageLeadsPerDayProgress(),
-            'total_quotations'      => $this->quoteReporting->getTotalQuotesProgress(),
-            'total_persons'         => $this->personReporting->getTotalPersonsProgress(),
-            'total_organizations'   => $this->organizationReporting->getTotalOrganizationsProgress(),
+            'total_quotations' => $this->quoteReporting->getTotalQuotesProgress(),
+            'total_persons' => $this->personReporting->getTotalPersonsProgress(),
+            'total_organizations' => $this->organizationReporting->getTotalOrganizationsProgress(),
         ];
     }
 
@@ -59,11 +59,11 @@ class Dashboard
     public function getTotalLeadsStats(): array
     {
         return [
-            'all'  => [
+            'all' => [
                 'over_time' => $this->leadReporting->getTotalLeadsOverTime(),
             ],
 
-            'won'  => [
+            'won' => [
                 'over_time' => $this->leadReporting->getTotalWonLeadsOverTime(),
             ],
             'lost' => [

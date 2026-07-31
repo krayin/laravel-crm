@@ -38,12 +38,12 @@ return [
     'validation' => [
         'errors' => [
             'column-empty-headers' => '"%s" numaralı sütunların başlıkları boş.',
-            'column-name-invalid'  => 'Geçersiz sütun adları: "%s".',
-            'column-not-found'     => 'Gerekli sütunlar bulunamadı: %s.',
-            'column-numbers'       => 'Sütun sayısı başlıktaki satır sayısına karşılık gelmiyor.',
-            'invalid-attribute'    => 'Başlık geçersiz öznitelikler içeriyor: "%s".',
-            'system'               => 'Beklenmeyen bir sistem hatası oluştu.',
-            'wrong-quotes'         => 'Doğru olmayan tırnak işaretleri kullanıldı.',
+            'column-name-invalid' => 'Geçersiz sütun adları: "%s".',
+            'column-not-found' => 'Gerekli sütunlar bulunamadı: %s.',
+            'column-numbers' => 'Sütun sayısı başlıktaki satır sayısına karşılık gelmiyor.',
+            'invalid-attribute' => 'Başlık geçersiz öznitelikler içeriyor: "%s".',
+            'system' => 'Beklenmeyen bir sistem hatası oluştu.',
+            'wrong-quotes' => 'Doğru olmayan tırnak işaretleri kullanıldı.',
         ],
     ],
 ];

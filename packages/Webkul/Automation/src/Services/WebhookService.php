@@ -20,10 +20,10 @@ class WebhookService
     public function __construct(protected PersonRepository $personRepository)
     {
         $this->client = new Client([
-            'timeout'         => 30,
+            'timeout' => 30,
             'connect_timeout' => 10,
-            'verify'          => true,
-            'http_errors'     => false,
+            'verify' => true,
+            'http_errors' => false,
         ]);
     }
 
@@ -37,7 +37,7 @@ class WebhookService
             || ! isset($data['end_point'])
         ) {
             return [
-                'status'   => 'error',
+                'status' => 'error',
                 'response' => 'Missing required fields: method or end_point',
             ];
         }
@@ -58,15 +58,15 @@ class WebhookService
             );
 
             return [
-                'status'      => 'success',
-                'response'    => $response->getBody()->getContents(),
+                'status' => 'success',
+                'response' => $response->getBody()->getContents(),
                 'status_code' => $response->getStatusCode(),
-                'headers'     => $response->getHeaders(),
+                'headers' => $response->getHeaders(),
             ];
         } catch (RequestException $e) {
             return [
-                'status'      => 'error',
-                'response'    => $e->hasResponse() ? Message::toString($e->getResponse()) : $e->getMessage(),
+                'status' => 'error',
+                'response' => $e->hasResponse() ? Message::toString($e->getResponse()) : $e->getMessage(),
                 'status_code' => $e->hasResponse() ? $e->getResponse()->getStatusCode() : null,
             ];
         }
@@ -278,7 +278,7 @@ class WebhookService
 
         foreach ($payload as $key => $value) {
             $multipart[] = [
-                'name'     => $key,
+                'name' => $key,
                 'contents' => is_array($value) ? json_encode($value) : (string) $value,
             ];
         }

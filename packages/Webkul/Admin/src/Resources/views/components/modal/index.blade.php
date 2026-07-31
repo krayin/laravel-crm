@@ -1,7 +1,7 @@
 @props([
     'isActive' => false,
     'position' => 'center',
-    'size'     => 'normal',
+    'size' => 'normal',
 ])
 
 <v-modal

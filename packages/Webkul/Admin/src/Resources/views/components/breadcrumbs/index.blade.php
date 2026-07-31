@@ -1,7 +1,7 @@
 @props([
-    'name'   => '',
+    'name' => '',
     'entity' => null,
-    'route'  => null,
+    'route' => null,
 ])
 
 <div class="flex justify-start max-lg:hidden">

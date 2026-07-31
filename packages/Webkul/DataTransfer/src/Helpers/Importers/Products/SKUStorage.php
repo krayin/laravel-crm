@@ -54,7 +54,7 @@ class SKUStorage
 
         foreach ($products as $product) {
             $this->set($product->sku, [
-                'id'  => $product->id,
+                'id' => $product->id,
                 'sku' => $product->sku,
             ]);
         }

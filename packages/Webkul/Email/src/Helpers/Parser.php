@@ -393,9 +393,9 @@ class Parser
         $textBody = $htmlBody = $body = false;
 
         $mime_types = [
-            'text'=> 'text/plain',
-            'text'=> 'text/plain; (error)',
-            'html'=> 'text/html',
+            'text' => 'text/plain',
+            'text' => 'text/plain; (error)',
+            'html' => 'text/html',
         ];
 
         if (in_array($type, array_keys($mime_types))) {
@@ -633,7 +633,7 @@ class Parser
 
                             $attachmentCollection[] = [
                                 'details' => $attachmentDetails,
-                                'data'    => $attachmentData,
+                                'data' => $attachmentData,
                             ];
                         }
                     }
@@ -645,12 +645,12 @@ class Parser
             $stream = '';
 
             $resourceDetails = [
-                'name'               => '',
-                'fileName'           => '',
-                'contentType'        => '',
-                'encodingType'       => 'base64',
+                'name' => '',
+                'fileName' => '',
+                'contentType' => '',
+                'encodingType' => 'base64',
                 'contentDisposition' => 'inline',
-                'contentId'          => '',
+                'contentId' => '',
             ];
 
             foreach ($attachmentDetails['details'] as $attachmentDetail) {

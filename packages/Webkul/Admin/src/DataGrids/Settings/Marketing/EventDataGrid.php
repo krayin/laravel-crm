@@ -33,34 +33,34 @@ class EventDataGrid extends DataGrid
     public function prepareColumns()
     {
         $this->addColumn([
-            'index'      => 'id',
-            'label'      => trans('admin::app.settings.marketing.events.index.datagrid.id'),
-            'type'       => 'string',
-            'sortable'   => true,
+            'index' => 'id',
+            'label' => trans('admin::app.settings.marketing.events.index.datagrid.id'),
+            'type' => 'string',
+            'sortable' => true,
             'searchable' => true,
             'filterable' => true,
         ]);
 
         $this->addColumn([
-            'index'      => 'name',
-            'label'      => trans('admin::app.settings.marketing.events.index.datagrid.name'),
-            'type'       => 'string',
-            'sortable'   => true,
+            'index' => 'name',
+            'label' => trans('admin::app.settings.marketing.events.index.datagrid.name'),
+            'type' => 'string',
+            'sortable' => true,
             'searchable' => true,
             'filterable' => true,
         ]);
 
         $this->addColumn([
-            'index'    => 'description',
-            'label'    => trans('admin::app.settings.marketing.events.index.datagrid.description'),
-            'type'     => 'string',
+            'index' => 'description',
+            'label' => trans('admin::app.settings.marketing.events.index.datagrid.description'),
+            'type' => 'string',
             'sortable' => true,
         ]);
 
         $this->addColumn([
-            'index'    => 'date',
-            'label'    => trans('admin::app.settings.marketing.events.index.datagrid.date'),
-            'type'     => 'string',
+            'index' => 'date',
+            'label' => trans('admin::app.settings.marketing.events.index.datagrid.date'),
+            'type' => 'string',
             'sortable' => true,
         ]);
     }
@@ -74,21 +74,21 @@ class EventDataGrid extends DataGrid
     {
         if (bouncer()->hasPermission('settings.automation.events.edit')) {
             $this->addAction([
-                'index'  => 'edit',
-                'icon'   => 'icon-edit',
-                'title'  => trans('admin::app.settings.marketing.events.index.datagrid.edit'),
+                'index' => 'edit',
+                'icon' => 'icon-edit',
+                'title' => trans('admin::app.settings.marketing.events.index.datagrid.edit'),
                 'method' => 'GET',
-                'url'    => fn ($row) => route('admin.settings.marketing.events.edit', $row->id),
+                'url' => fn ($row) => route('admin.settings.marketing.events.edit', $row->id),
             ]);
         }
 
         if (bouncer()->hasPermission('settings.automation.events.delete')) {
             $this->addAction([
-                'index'          => 'delete',
-                'icon'           => 'icon-delete',
-                'title'          => trans('admin::app.settings.marketing.events.index.datagrid.delete'),
-                'method'         => 'DELETE',
-                'url'            => fn ($row) => route('admin.settings.marketing.events.delete', $row->id),
+                'index' => 'delete',
+                'icon' => 'icon-delete',
+                'title' => trans('admin::app.settings.marketing.events.index.datagrid.delete'),
+                'method' => 'DELETE',
+                'url' => fn ($row) => route('admin.settings.marketing.events.delete', $row->id),
             ]);
         }
     }
@@ -100,10 +100,10 @@ class EventDataGrid extends DataGrid
     {
         if (bouncer()->hasPermission('settings.automation.events.delete')) {
             $this->addMassAction([
-                'icon'   => 'icon-delete',
-                'title'  => trans('admin::app.settings.marketing.events.index.datagrid.delete'),
+                'icon' => 'icon-delete',
+                'title' => trans('admin::app.settings.marketing.events.index.datagrid.delete'),
                 'method' => 'POST',
-                'url'    => route('admin.settings.marketing.events.mass_delete'),
+                'url' => route('admin.settings.marketing.events.mass_delete'),
             ]);
         }
     }

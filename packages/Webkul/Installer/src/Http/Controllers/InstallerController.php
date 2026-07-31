@@ -83,7 +83,7 @@ class InstallerController extends Controller
 
         $parameter = [
             'parameter' => [
-                'default_locales'  => $allParameters['app_locale'] ?? null,
+                'default_locales' => $allParameters['app_locale'] ?? null,
                 'default_currency' => $allParameters['app_currency'] ?? null,
             ],
         ];
@@ -109,11 +109,11 @@ class InstallerController extends Controller
                 [
                     'id' => self::USER_ID,
                 ], [
-                    'name'     => request()->input('admin'),
-                    'email'    => request()->input('email'),
+                    'name' => request()->input('admin'),
+                    'email' => request()->input('email'),
                     'password' => $password,
-                    'role_id'  => 1,
-                    'status'   => 1,
+                    'role_id' => 1,
+                    'status' => 1,
                 ]
             );
 

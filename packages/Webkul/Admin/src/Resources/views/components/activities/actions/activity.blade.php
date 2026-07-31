@@ -1,5 +1,5 @@
 @props([
-    'entity'            => null,
+    'entity' => null,
     'entityControlName' => null,
 ])
 

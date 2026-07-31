@@ -3,6 +3,8 @@
 namespace Webkul\Marketing\Providers;
 
 use Webkul\Core\Providers\BaseModuleServiceProvider;
+use Webkul\Marketing\Models\Campaign;
+use Webkul\Marketing\Models\Event;
 
 class ModuleServiceProvider extends BaseModuleServiceProvider
 {
@@ -12,7 +14,7 @@ class ModuleServiceProvider extends BaseModuleServiceProvider
      * @var array
      */
     protected $models = [
-        \Webkul\Marketing\Models\Event::class,
-        \Webkul\Marketing\Models\Campaign::class,
+        Event::class,
+        Campaign::class,
     ];
 }

@@ -2,6 +2,7 @@
 
 namespace Webkul\Admin\Requests;
 
+use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -18,18 +19,18 @@ class WebhookRequest extends FormRequest
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
+     * @return array<string, ValidationRule|array<mixed>|string>
      */
     public function rules()
     {
         return [
-            'name'         => 'required|string|max:255',
-            'entity_type'  => 'required|string|max:255',
-            'description'  => 'nullable|string|max:255',
-            'method'       => 'required|string|max:255',
-            'end_point'    => 'required|string|max:255',
+            'name' => 'required|string|max:255',
+            'entity_type' => 'required|string|max:255',
+            'description' => 'nullable|string|max:255',
+            'method' => 'required|string|max:255',
+            'end_point' => 'required|string|max:255',
             'query_params' => 'nullable',
-            'headers'      => 'nullable',
+            'headers' => 'nullable',
             'payload_type' => [
                 'required',
                 'string',

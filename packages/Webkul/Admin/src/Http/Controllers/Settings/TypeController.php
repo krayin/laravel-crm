@@ -46,7 +46,7 @@ class TypeController extends Controller
         Event::dispatch('settings.type.create.after', $type);
 
         return new JsonResponse([
-            'data'    => $type,
+            'data' => $type,
             'message' => trans('admin::app.settings.types.index.create-success'),
         ]);
     }
@@ -79,7 +79,7 @@ class TypeController extends Controller
         Event::dispatch('settings.type.update.after', $type);
 
         return new JsonResponse([
-            'data'    => $type,
+            'data' => $type,
             'message' => trans('admin::app.settings.types.index.update-success'),
         ]);
     }

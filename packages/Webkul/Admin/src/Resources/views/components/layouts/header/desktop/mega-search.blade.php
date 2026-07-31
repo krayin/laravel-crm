@@ -20,7 +20,7 @@
 
             <input
                 type="text"
-                class="peer block w-full rounded-3xl border bg-white px-10 py-1.5 leading-6 text-gray-600 transition-all hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 dark:focus:border-gray-400"
+                class="peer block w-full rounded-3xl border border-gray-300 bg-white px-10 py-1.5 leading-6 text-gray-600 transition-all hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 dark:focus:border-gray-400"
                 :class="{'border-gray-400': isDropdownOpen}"
                 placeholder="@lang('admin::app.components.layouts.header.mega-search.title')"
                 v-model.lazy="searchTerm"
@@ -29,7 +29,7 @@
             >
 
             <div
-                class="absolute top-10 z-10 w-full rounded-lg border bg-white shadow-[0px_0px_0px_0px_rgba(0,0,0,0.10),0px_1px_3px_0px_rgba(0,0,0,0.10),0px_5px_5px_0px_rgba(0,0,0,0.09),0px_12px_7px_0px_rgba(0,0,0,0.05),0px_22px_9px_0px_rgba(0,0,0,0.01),0px_34px_9px_0px_rgba(0,0,0,0.00)] dark:border-gray-800 dark:bg-gray-900"
+                class="absolute top-10 z-10 w-full rounded-lg border border-gray-300 bg-white shadow-[0px_0px_0px_0px_rgba(0,0,0,0.10),0px_1px_3px_0px_rgba(0,0,0,0.10),0px_5px_5px_0px_rgba(0,0,0,0.09),0px_12px_7px_0px_rgba(0,0,0,0.05),0px_22px_9px_0px_rgba(0,0,0,0.01),0px_34px_9px_0px_rgba(0,0,0,0.00)] dark:border-gray-800 dark:bg-gray-900"
                 v-if="isDropdownOpen"
             >
                 <!-- Search Tabs -->
@@ -359,9 +359,9 @@
                     tabs: {
                         leads: {
                             key: 'leads',
-                            title: '@lang('admin::app.components.layouts.header.mega-search.tabs.leads')',
+                            title: "@lang('admin::app.components.layouts.header.mega-search.tabs.leads')",
                             is_active: true,
-                            endpoint: '{{ route('admin.leads.search') }}',
+                            endpoint: "{{ route('admin.leads.search') }}",
                             query_params: [
                                 {
                                     search: 'title',
@@ -380,9 +380,9 @@
 
                         quotes: {
                             key: 'quotes',
-                            title: '@lang('admin::app.components.layouts.header.mega-search.tabs.quotes')',
+                            title: "@lang('admin::app.components.layouts.header.mega-search.tabs.quotes')",
                             is_active: false,
-                            endpoint: '{{ route('admin.quotes.search') }}',
+                            endpoint: "{{ route('admin.quotes.search') }}",
                             query_params: [
                                 {
                                     search: 'subject',
@@ -405,9 +405,9 @@
 
                         products: {
                             key: 'products',
-                            title: '@lang('admin::app.components.layouts.header.mega-search.tabs.products')',
+                            title: "@lang('admin::app.components.layouts.header.mega-search.tabs.products')",
                             is_active: false,
-                            endpoint: '{{ route('admin.products.search') }}',
+                            endpoint: "{{ route('admin.products.search') }}",
                             query_params: [
                                 {
                                     search: 'name',
@@ -426,9 +426,9 @@
 
                         persons: {
                             key: 'persons',
-                            title: '@lang('admin::app.components.layouts.header.mega-search.tabs.persons')',
+                            title: "@lang('admin::app.components.layouts.header.mega-search.tabs.persons')",
                             is_active: false,
-                            endpoint: '{{ route('admin.contacts.persons.search') }}',
+                            endpoint: "{{ route('admin.contacts.persons.search') }}",
                             query_params: [
                                 {
                                     search: 'name',
@@ -451,17 +451,17 @@
 
                         settings: {
                             key: 'settings',
-                            title: '@lang('Settings')',
+                            title: "@lang('admin::app.components.layouts.header.mega-search.tabs.settings')",
                             is_active: false,
-                            endpoint: '{{ route('admin.settings.search') }}',
+                            endpoint: "{{ route('admin.settings.search') }}",
                             query: '',
                         },
 
                         configurations: {
                             key: 'configurations',
-                            title: '@lang('Configurations')',
+                            title: "@lang('admin::app.components.layouts.header.mega-search.tabs.configurations')",
                             is_active: false,
-                            endpoint: '{{ route('admin.configuration.search') }}',
+                            endpoint: "{{ route('admin.configuration.search') }}",
                             query: '',
                         },
                     },

@@ -20,7 +20,7 @@
 
         <!-- Total Sales Section -->
         <template v-else>
-            <div class="w-full rounded-lg border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900">
+            <div class="w-full rounded-lg border border-gray-300 bg-white dark:border-gray-800 dark:bg-gray-900">
                 <div class="flex items-center justify-between p-4">
                     <p class="text-base font-semibold text-gray-600 dark:text-gray-300">
                         @lang('admin::app.dashboard.index.top-persons.title')
@@ -33,7 +33,7 @@
                     v-if="report.statistics.length"
                 >
                     <a
-                        :href="`{{route('admin.contacts.persons.view', '')}}/${item.id}`"
+                        :href="'{{ route('admin.contacts.persons.view', ':id') }}'.replace(':id', item.id)"
                         class="flex gap-2.5 border-b p-4 transition-all last:border-b-0 hover:bg-gray-50 dark:border-gray-800 dark:hover:bg-gray-950"
                         target="_blank"
                         v-for="item in report.statistics"

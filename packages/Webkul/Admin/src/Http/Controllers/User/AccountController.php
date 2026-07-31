@@ -2,9 +2,11 @@
 
 namespace Webkul\Admin\Http\Controllers\User;
 
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\View\View;
 use Webkul\Admin\Http\Controllers\Controller;
 
 class AccountController extends Controller
@@ -12,7 +14,7 @@ class AccountController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\View\View
+     * @return View
      */
     public function edit()
     {
@@ -24,18 +26,18 @@ class AccountController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function update()
     {
         $user = auth()->guard('user')->user();
 
         $this->validate(request(), [
-            'name'             => 'required',
-            'email'            => 'email|unique:users,email,'.$user->id,
-            'password'         => 'nullable|min:6|confirmed',
+            'name' => 'required',
+            'email' => 'email|unique:users,email,'.$user->id,
+            'password' => 'nullable|min:6|confirmed',
             'current_password' => 'required|min:6',
-            'image.*'          => 'nullable|mimes:bmp,jpeg,jpg,png,webp',
+            'image.*' => 'nullable|mimes:bmp,jpeg,jpg,png,webp',
         ]);
 
         $data = request()->only([

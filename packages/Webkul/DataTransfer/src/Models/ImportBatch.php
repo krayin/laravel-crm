@@ -3,6 +3,7 @@
 namespace Webkul\DataTransfer\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Webkul\DataTransfer\Contracts\ImportBatch as ImportBatchContract;
 
 class ImportBatch extends Model implements ImportBatchContract
@@ -33,13 +34,13 @@ class ImportBatch extends Model implements ImportBatchContract
      */
     protected $casts = [
         'summary' => 'array',
-        'data'    => 'array',
+        'data' => 'array',
     ];
 
     /**
      * Get the import that owns the import batch.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo
      */
     public function import()
     {

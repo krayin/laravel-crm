@@ -2,7 +2,9 @@
 
 namespace Webkul\Admin\Http\Controllers\User;
 
+use Illuminate\Contracts\Auth\PasswordBroker;
 use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Password;
 use Webkul\Admin\Http\Controllers\Controller;
 use Webkul\Admin\Notifications\User\UserResetPassword;
@@ -34,7 +36,7 @@ class ForgotPasswordController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function store()
     {
@@ -68,7 +70,7 @@ class ForgotPasswordController extends Controller
     /**
      * Get the broker to be used during password reset.
      *
-     * @return \Illuminate\Contracts\Auth\PasswordBroker
+     * @return PasswordBroker
      */
     public function broker()
     {

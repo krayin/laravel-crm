@@ -14,7 +14,7 @@
     >
         <div class="w-full">
             <div
-                class="flex justify-center gap-4 border-b border-gray-200"
+                class="flex justify-center gap-4 border-b border-gray-300"
                 :style="positionStyles"
             >
                 <div

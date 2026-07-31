@@ -32,39 +32,39 @@ class WebhookDataGrid extends DataGrid
     public function prepareColumns(): void
     {
         $this->addColumn([
-            'index'      => 'id',
-            'label'      => trans('admin::app.settings.webhooks.index.datagrid.id'),
-            'type'       => 'string',
+            'index' => 'id',
+            'label' => trans('admin::app.settings.webhooks.index.datagrid.id'),
+            'type' => 'string',
             'searchable' => true,
             'filterable' => true,
-            'sortable'   => true,
+            'sortable' => true,
         ]);
 
         $this->addColumn([
-            'index'      => 'name',
-            'label'      => trans('admin::app.settings.webhooks.index.datagrid.name'),
-            'type'       => 'string',
+            'index' => 'name',
+            'label' => trans('admin::app.settings.webhooks.index.datagrid.name'),
+            'type' => 'string',
             'searchable' => true,
             'filterable' => true,
-            'sortable'   => true,
+            'sortable' => true,
         ]);
 
         $this->addColumn([
-            'index'      => 'entity_type',
-            'label'      => trans('admin::app.settings.webhooks.index.datagrid.entity-type'),
-            'type'       => 'string',
+            'index' => 'entity_type',
+            'label' => trans('admin::app.settings.webhooks.index.datagrid.entity-type'),
+            'type' => 'string',
             'searchable' => true,
             'filterable' => true,
-            'sortable'   => true,
+            'sortable' => true,
         ]);
 
         $this->addColumn([
-            'index'      => 'end_point',
-            'label'      => trans('admin::app.settings.webhooks.index.datagrid.end-point'),
-            'type'       => 'string',
+            'index' => 'end_point',
+            'label' => trans('admin::app.settings.webhooks.index.datagrid.end-point'),
+            'type' => 'string',
             'searchable' => true,
             'filterable' => true,
-            'sortable'   => true,
+            'sortable' => true,
         ]);
     }
 
@@ -75,21 +75,21 @@ class WebhookDataGrid extends DataGrid
     {
         if (bouncer()->hasPermission('settings.automation.webhooks.edit')) {
             $this->addAction([
-                'index'  => 'edit',
-                'icon'   => 'icon-edit',
-                'title'  => trans('admin::app.settings.webhooks.index.datagrid.edit'),
+                'index' => 'edit',
+                'icon' => 'icon-edit',
+                'title' => trans('admin::app.settings.webhooks.index.datagrid.edit'),
                 'method' => 'GET',
-                'url'    => fn ($row) => route('admin.settings.webhooks.edit', $row->id),
+                'url' => fn ($row) => route('admin.settings.webhooks.edit', $row->id),
             ]);
         }
 
         if (bouncer()->hasPermission('settings.automation.webhooks.delete')) {
             $this->addAction([
-                'index'  => 'delete',
-                'icon'   => 'icon-delete',
-                'title'  => trans('admin::app.settings.webhooks.index.datagrid.delete'),
+                'index' => 'delete',
+                'icon' => 'icon-delete',
+                'title' => trans('admin::app.settings.webhooks.index.datagrid.delete'),
                 'method' => 'DELETE',
-                'url'    => fn ($row) => route('admin.settings.webhooks.delete', $row->id),
+                'url' => fn ($row) => route('admin.settings.webhooks.delete', $row->id),
             ]);
         }
     }

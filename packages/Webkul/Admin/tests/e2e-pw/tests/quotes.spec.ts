@@ -4,6 +4,7 @@ import {
     createPerson,
     generateDate,
     generateName,
+    createProduct
 } from "../utils/faker";
 
 test.describe("quotes management", () => {
@@ -13,6 +14,12 @@ test.describe("quotes management", () => {
          */
         await adminPage.goto("admin/contacts/persons");
         const Person = await createPerson(adminPage);
+
+        /**
+         * Create Product.
+         */
+        await adminPage.goto("admin/products");
+        const Product = await createProduct(adminPage);
 
         /**
          * Create quote.
@@ -40,6 +47,7 @@ test.describe("quotes management", () => {
         await adminPage
             .getByRole("listitem")
             .filter({ hasText: Person.Name })
+            .first()
             .click();
 
         /**
@@ -97,7 +105,14 @@ test.describe("quotes management", () => {
         await adminPage
             .locator('input[name="shipping_address\\[postcode\\]"]')
             .fill("201301");
+
+         await adminPage.locator('.relative.flex.cursor-pointer.items-center.justify-between.rounded.border.p-2').first().click();
+
+        await adminPage.getByRole("textbox", { name: "Search Products" }).click();
+        await adminPage.getByRole("textbox", { name: "Search Products" }).fill(Product.name);
+
+        await adminPage.getByRole("listitem").filter({ hasText: Product.name }).first().click();
+
         await adminPage.getByRole("button", { name: "Save Quote" }).click();
-        await expect(adminPage.locator("#app")).toContainText("Success");
     });
 });

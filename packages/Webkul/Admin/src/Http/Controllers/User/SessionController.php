@@ -36,7 +36,7 @@ class SessionController extends Controller
     public function store(): RedirectResponse
     {
         $this->validate(request(), [
-            'email'    => 'required|email',
+            'email' => 'required|email',
             'password' => 'required',
         ]);
 

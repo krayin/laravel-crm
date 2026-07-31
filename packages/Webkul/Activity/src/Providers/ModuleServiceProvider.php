@@ -2,13 +2,16 @@
 
 namespace Webkul\Activity\Providers;
 
+use Webkul\Activity\Models\Activity;
+use Webkul\Activity\Models\File;
+use Webkul\Activity\Models\Participant;
 use Webkul\Core\Providers\BaseModuleServiceProvider;
 
 class ModuleServiceProvider extends BaseModuleServiceProvider
 {
     protected $models = [
-        \Webkul\Activity\Models\Activity::class,
-        \Webkul\Activity\Models\File::class,
-        \Webkul\Activity\Models\Participant::class,
+        Activity::class,
+        File::class,
+        Participant::class,
     ];
 }

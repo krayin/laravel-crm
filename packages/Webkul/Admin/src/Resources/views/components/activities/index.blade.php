@@ -1,9 +1,9 @@
 @props([
     'endpoint',
     'emailDetachEndpoint' => null,
-    'activeType'          => 'all',
-    'types'               => null,
-    'extraTypes'          => null,
+    'activeType' => 'all',
+    'types' => null,
+    'extraTypes' => null,
 ])
 
 {!! view_render_event('admin.components.activities.before') !!}
@@ -39,15 +39,15 @@
         <template v-else>
             {!! view_render_event('admin.components.activities.content.before') !!}
 
-            <div class="w-full rounded-md border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900">
-                <div class="flex gap-2 overflow-x-auto border-b border-gray-200 dark:border-gray-800">
+            <div class="rounded-md border border-gray-300 bg-white dark:border-gray-800 dark:bg-gray-900">
+                <div class="flex flex-wrap gap-2 border-b border-gray-300 dark:border-gray-800">
                     {!! view_render_event('admin.components.activities.content.types.before') !!}
 
                     <div
                         v-for="type in types"
                         class="cursor-pointer px-3 py-2.5 text-sm font-medium dark:text-white"
                         :class="{'border-brandColor border-b-2 !text-brandColor transition': selectedType == type.name }"
-                        @click="selectedType = type.name"
+                        @click="onTabChange(type.name)"
                     >
                         @{{ type.label }}
                     </div>
@@ -190,8 +190,7 @@
                                         <p
                                             class="dark:text-white"
                                             v-if="activity.comment"
-                                            v-safe-html="activity.comment"
-                                        ></p>
+                                        >@{{ activity.comment }}</p>
 
                                         {!! view_render_event('admin.components.activities.content.activity.item.description.after') !!}
 
@@ -545,6 +544,15 @@
             },
 
             methods: {
+                onTabChange(tabName) {
+                    this.selectedType = tabName;
+
+                    // Update URL query parameter to persist tab selection
+                    const url = new window['URL'](window.location);
+                    url.searchParams.set('tab', tabName);
+                    window.history.replaceState({}, '', url.toString());
+                },
+
                 get() {
                     this.isLoading = true;
 

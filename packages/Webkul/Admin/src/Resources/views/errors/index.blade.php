@@ -49,7 +49,7 @@
 
                 <p class="text-sm text-gray-800 dark:text-white">
                     @lang('admin::app.errors.support', [
-                        'link'  => 'mailto:support@example.com',
+                        'link' => 'mailto:support@example.com',
                         'email' => 'support@example.com',
                         'class' => 'font-semibold text-blue-600 transition-all hover:underline',
                     ])

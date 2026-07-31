@@ -19,13 +19,8 @@ test.describe("product management", () => {
         const name = generateName();
         const description = generateDescription();
         await adminPage.waitForSelector('input[name="name"]', { state: 'visible' });
-        await adminPage.getByRole('textbox', { name: 'Name *' }).click();
-        await adminPage.locator('#name').clear();
-        await adminPage.getByRole('textbox', { name: 'Name *' }).fill(name);
-        await adminPage.locator('textarea[name="description"]').clear();
-        await adminPage
-            .locator('textarea[name="description"]')
-            .type(description);
+        await adminPage.locator('input[name="name"]').fill(name);
+        await adminPage.locator('textarea[name="description"]').fill(description);
         await adminPage.fill('input[name="sku"]', generateSKU());
         await adminPage.waitForSelector('input[name="price"]', {
             state: "visible",
@@ -50,7 +45,7 @@ test.describe("product management", () => {
         );
     });
 
-  test("should edit a product", async ({ adminPage }) => {
+    test("should edit a product", async ({ adminPage }) => {
         /**
          * Go to the product listing page.
          */
@@ -72,8 +67,8 @@ test.describe("product management", () => {
         await adminPage.fill('input[name="price"]', "1000");
         await adminPage.fill('input[name="quantity"]', "500");
         await adminPage.click('button:has-text("Save Products")');
-        await expect(adminPage.locator("#app")).toContainText(
-            "Product updated successfully." );
+
+        await expect(adminPage.locator("#app")).toContainText("Product updated successfully.");
     });
 
     test("should delete a product", async ({ adminPage }) => {
@@ -81,6 +76,7 @@ test.describe("product management", () => {
          * Go to the product listing page.
          */
         await adminPage.goto("admin/products");
+
         await adminPage.waitForSelector("a.primary-button", {
             state: "visible",
         });
@@ -91,12 +87,13 @@ test.describe("product management", () => {
         await adminPage.waitForSelector("span.cursor-pointer.icon-delete", {
             state: "visible",
         });
+
         await adminPage.locator("span.icon-delete").first().click();
+
         await adminPage.click(
             "button.transparent-button + button.primary-button:visible"
         );
-        await expect(adminPage.locator("#app")).toContainText(
-            "Product deleted successfully."
-        );
+
+        await expect(adminPage.locator("#app")).toContainText("Product deleted successfully.");
     });
 });

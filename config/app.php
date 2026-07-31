@@ -1,8 +1,5 @@
 <?php
 
-use Illuminate\Support\Facades\Facade;
-use Illuminate\Support\ServiceProvider;
-
 return [
 
     /*
@@ -69,7 +66,7 @@ return [
 
     'admin_path' => env('APP_ADMIN_PATH', 'admin'),
 
-    'asset_url' => env('ASSET_URL', null),
+    'asset_url' => env('ASSET_URL'),
 
     /*
     |--------------------------------------------------------------------------
@@ -108,13 +105,14 @@ return [
      */
 
     'available_locales' => [
-        'ar'    => 'Arabic',
-        'en'    => 'English',
-        'es'    => 'Español',
-        'fa'    => 'Persian',
+        'ar' => 'Arabic',
+        'en' => 'English',
+        'es' => 'Español',
+        'fa' => 'Persian',
+        'ko' => '한국어',
         'pt_BR' => 'Portuguese',
-        'tr'    => 'Türkçe',
-        'vi'    => 'Vietnamese',
+        'tr' => 'Türkçe',
+        'vi' => 'Vietnamese',
     ],
 
     /*
@@ -171,67 +169,19 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Autoloaded Service Providers
+    | Maintenance Mode Driver
     |--------------------------------------------------------------------------
     |
-    | The service providers listed here will be automatically loaded on the
-    | request to your application. Feel free to add your own services to
-    | this array to grant expanded functionality to your applications.
+    | These configuration options determine the driver used to determine and
+    | manage Laravel's "maintenance mode" status. The "cache" driver will
+    | allow maintenance mode to be controlled across multiple machines.
+    |
+    | Supported drivers: "file", "cache"
     |
      */
 
-    'providers' => ServiceProvider::defaultProviders()->merge([
-        /*
-         * Package Service Providers...
-         */
-        Barryvdh\DomPDF\ServiceProvider::class,
-        Konekt\Concord\ConcordServiceProvider::class,
-        Prettus\Repository\Providers\RepositoryServiceProvider::class,
-
-        /*
-         * Application Service Providers...
-         */
-        App\Providers\AppServiceProvider::class,
-        App\Providers\AuthServiceProvider::class,
-        // App\Providers\BroadcastServiceProvider::class,
-        App\Providers\EventServiceProvider::class,
-        App\Providers\RouteServiceProvider::class,
-
-        /*
-         * Webkul Service Providers...
-         */
-        Webkul\Activity\Providers\ActivityServiceProvider::class,
-        Webkul\Admin\Providers\AdminServiceProvider::class,
-        Webkul\Attribute\Providers\AttributeServiceProvider::class,
-        Webkul\Automation\Providers\WorkflowServiceProvider::class,
-        Webkul\Contact\Providers\ContactServiceProvider::class,
-        Webkul\Core\Providers\CoreServiceProvider::class,
-        Webkul\DataGrid\Providers\DataGridServiceProvider::class,
-        Webkul\DataTransfer\Providers\DataTransferServiceProvider::class,
-        Webkul\EmailTemplate\Providers\EmailTemplateServiceProvider::class,
-        Webkul\Email\Providers\EmailServiceProvider::class,
-        Webkul\Marketing\Providers\MarketingServiceProvider::class,
-        Webkul\Installer\Providers\InstallerServiceProvider::class,
-        Webkul\Lead\Providers\LeadServiceProvider::class,
-        Webkul\Product\Providers\ProductServiceProvider::class,
-        Webkul\Quote\Providers\QuoteServiceProvider::class,
-        Webkul\Tag\Providers\TagServiceProvider::class,
-        Webkul\User\Providers\UserServiceProvider::class,
-        Webkul\Warehouse\Providers\WarehouseServiceProvider::class,
-        Webkul\WebForm\Providers\WebFormServiceProvider::class,
-    ])->toArray(),
-
-    /*
-    |--------------------------------------------------------------------------
-    | Class Aliases
-    |--------------------------------------------------------------------------
-    |
-    | This array of class aliases will be registered when this application
-    | is started. However, feel free to register as many as you wish as
-    | the aliases are "lazy" loaded so they don't hinder performance.
-    |
-     */
-
-    'aliases' => Facade::defaultAliases()->merge([])->toArray(),
-
+    'maintenance' => [
+        'driver' => env('APP_MAINTENANCE_DRIVER', 'file'),
+        'store' => env('APP_MAINTENANCE_STORE', 'database'),
+    ],
 ];

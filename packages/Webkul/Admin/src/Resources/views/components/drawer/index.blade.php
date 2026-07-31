@@ -1,7 +1,7 @@
 @props([
     'isActive' => false,
     'position' => 'right',
-    'width'    => '500px',
+    'width' => '500px',
 ])
 
 <v-drawer

@@ -4,7 +4,7 @@
     </x-slot>
 
     <div class="flex flex-col gap-4">
-        <div class="flex items-center justify-between rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
+        <div class="scroll-reactive-sticky sticky top-[60px] z-[1000] flex items-center justify-between rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm shadow-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
             <div class="flex flex-col gap-2">
                 <x-admin::breadcrumbs name="contacts.persons" />
 
@@ -15,7 +15,10 @@
 
             <div class="flex items-center gap-x-2.5">
                 <!-- Export Modal -->
-                <x-admin::datagrid.export :src="route('admin.contacts.persons.index')" />
+                <x-admin::datagrid.export
+                    :src="route('admin.contacts.persons.index')"
+                    :google-contacts-src="bouncer()->hasPermission('contacts.persons.export_google') ? route('admin.contacts.persons.google_export.store') : null"
+                />
 
                 <!-- Create button for person -->
                 <div class="flex items-center gap-x-2.5">
@@ -70,7 +73,7 @@
                     <template v-else>
                         <div class="row grid grid-cols-[.1fr_.2fr_.2fr_.2fr_.2fr_.2fr] grid-rows-1 items-center border-b px-4 py-2.5 dark:border-gray-800 max-lg:hidden">
                             <div
-                                class="flex select-none items-center gap-2.5"
+                                class="flex min-w-0 select-none items-center gap-2.5"
                                 v-for="(columnGroup, index) in [['id'], ['person_name'], ['emails'], ['contact_numbers'], ['organization']]"
                             >
                                 <label
@@ -209,11 +212,11 @@
 
                     <template v-else>
                         <div
-                            class="row grid grid-cols-[.1fr_.2fr_.2fr_.2fr_.2fr_.2fr] grid-rows-1 border-b px-4 py-2.5 transition-all hover:bg-gray-50 dark:border-gray-800 dark:hover:bg-gray-950 max-lg:hidden"
+                            class="row grid grid-cols-[.1fr_.2fr_.2fr_.2fr_.2fr_.2fr] grid-rows-1 items-center border-b px-4 py-2.5 transition-all hover:bg-gray-50 dark:border-gray-800 dark:hover:bg-gray-950 max-lg:hidden"
                             v-for="record in available.records"
                         >
                             <!-- Mass Action and Person ID. -->
-                            <div class="flex items-center gap-2.5">
+                            <div class="flex min-w-0 items-center gap-2.5">
                                 <input
                                     type="checkbox"
                                     :name="`mass_action_select_record_${record.id}`"
@@ -234,29 +237,31 @@
                             </div>
 
                             <!-- Name -->
-                            <div class="flex items-center gap-1.5 dark:text-gray-300">
+                            <div class="flex min-w-0 items-center gap-1.5 dark:text-gray-300">
                                 <x-admin::avatar ::name="record.person_name" />
 
-                                @{{ record.person_name }}
+                                <span class="truncate">
+                                    @{{ record.person_name }}
+                                </span>
                             </div>
 
                             <!-- Emails -->
-                            <p class="flex items-center dark:text-gray-300">
+                            <p class="truncate dark:text-gray-300">
                                 @{{ record.emails }}
                             </p>
 
                             <!-- Contact Numbers -->
-                            <p class="flex items-center dark:text-gray-300">
+                            <p class="truncate dark:text-gray-300">
                                 @{{ record.contact_numbers }}
                             </p>
 
                             <!-- Organization -->
-                            <p class="flex items-center dark:text-gray-300">
+                            <p class="truncate dark:text-gray-300">
                                 @{{ record.organization }}
                             </p>
 
                             <!-- Actions -->
-                            <div class="flex items-center justify-end gap-x-4">
+                            <div class="flex min-w-0 items-center justify-end gap-x-4">
                                 <div class="flex items-center gap-1.5">
                                     <p
                                         class="place-self-end"

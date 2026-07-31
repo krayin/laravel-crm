@@ -1,9 +1,5 @@
 import { test, expect } from "../../../setup";
-import {
-    generateFullName,
-    generateEmail,
-    generateDescription,
-} from "../../../utils/faker";
+import { generateFullName, generateEmail, generateDescription } from "../../../utils/faker";
 import { confirmModal } from "../../../utils/components";
 
 async function createGroup(adminPage) {
@@ -21,6 +17,7 @@ async function createGroup(adminPage) {
      * Generate group name and fill in the form with group details.
      */
     const groupName = generateFullName();
+
     await adminPage.locator('input[name="name"]').fill(groupName);
     await adminPage
         .locator('textarea[name="description"]')
@@ -186,7 +183,9 @@ test.describe("user management", () => {
         await adminPage.waitForSelector("span.cursor-pointer.icon-edit", {
             state: "visible",
         });
+
         const iconEdit = await adminPage.$$("span.cursor-pointer.icon-edit");
+
         await iconEdit[0].click();
 
         await adminPage.locator('input[name="name"]').fill(updatedName);
@@ -213,9 +212,11 @@ test.describe("user management", () => {
          * Delete the first user.
          */
         await adminPage.waitForSelector("span.cursor-pointer.icon-delete");
+        
         const iconDelete = await adminPage.$$(
             "span.cursor-pointer.icon-delete"
         );
+
         await iconDelete[0].click();
 
         /**

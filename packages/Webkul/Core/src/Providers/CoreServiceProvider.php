@@ -2,6 +2,7 @@
 
 namespace Webkul\Core\Providers;
 
+use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\ServiceProvider;
 use Webkul\Core\Acl;
@@ -21,7 +22,7 @@ class CoreServiceProvider extends ServiceProvider
      *
      * @return void
      *
-     * @throws \Illuminate\Contracts\Container\BindingResolutionException
+     * @throws BindingResolutionException
      */
     public function boot()
     {
@@ -33,7 +34,7 @@ class CoreServiceProvider extends ServiceProvider
 
         $this->publishes([
             dirname(__DIR__).'/Config/concord.php' => config_path('concord.php'),
-            dirname(__DIR__).'/Config/cors.php'    => config_path('cors.php'),
+            dirname(__DIR__).'/Config/cors.php' => config_path('cors.php'),
             dirname(__DIR__).'/Config/sanctum.php' => config_path('sanctum.php'),
         ]);
     }

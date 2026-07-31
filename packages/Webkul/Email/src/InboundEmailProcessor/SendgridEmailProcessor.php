@@ -49,18 +49,18 @@ class SendgridEmailProcessor implements InboundEmailProcessor
         }
 
         $headers = [
-            'from'          => $this->emailParser->parseEmailAddress('from'),
-            'sender'        => $this->emailParser->parseEmailAddress('sender'),
-            'reply_to'      => $this->emailParser->parseEmailAddress('to'),
-            'cc'            => $this->emailParser->parseEmailAddress('cc'),
-            'bcc'           => $this->emailParser->parseEmailAddress('bcc'),
-            'subject'       => $this->emailParser->getHeader('subject'),
-            'name'          => $this->emailParser->parseSenderName(),
-            'source'        => 'email',
-            'user_type'     => 'person',
-            'message_id'    => $messageID ?? time().'@'.config('mail.domain'),
+            'from' => $this->emailParser->parseEmailAddress('from'),
+            'sender' => $this->emailParser->parseEmailAddress('sender'),
+            'reply_to' => $this->emailParser->parseEmailAddress('to'),
+            'cc' => $this->emailParser->parseEmailAddress('cc'),
+            'bcc' => $this->emailParser->parseEmailAddress('bcc'),
+            'subject' => $this->emailParser->getHeader('subject'),
+            'name' => $this->emailParser->parseSenderName(),
+            'source' => 'email',
+            'user_type' => 'person',
+            'message_id' => $messageID ?? time().'@'.config('mail.domain'),
             'reference_ids' => htmlspecialchars_decode($this->emailParser->getHeader('references')),
-            'in_reply_to'   => htmlspecialchars_decode($this->emailParser->getHeader('in-reply-to')),
+            'in_reply_to' => htmlspecialchars_decode($this->emailParser->getHeader('in-reply-to')),
         ];
 
         foreach ($headers['reply_to'] as $to) {
@@ -93,31 +93,31 @@ class SendgridEmailProcessor implements InboundEmailProcessor
 
         if (! isset($email)) {
             $email = $this->emailRepository->create(array_merge($headers, [
-                'folders'       => ['inbox'],
-                'reply'         => $reply,
-                'unique_id'     => time().'@'.config('mail.domain'),
+                'folders' => ['inbox'],
+                'reply' => $reply,
+                'unique_id' => time().'@'.config('mail.domain'),
                 'reference_ids' => [$headers['message_id']],
-                'user_type'     => 'person',
+                'user_type' => 'person',
             ]));
 
             $this->attachmentRepository->uploadAttachments($email, [
-                'source'      => 'email',
+                'source' => 'email',
                 'attachments' => $this->emailParser->getAttachments(),
             ]);
         } else {
             $parentEmail = $this->emailRepository->update([
-                'folders'       => array_unique(array_merge($email->folders, ['inbox'])),
+                'folders' => array_unique(array_merge($email->folders, ['inbox'])),
                 'reference_ids' => array_merge($email->reference_ids ?? [], [$headers['message_id']]),
             ], $email->id);
 
             $email = $this->emailRepository->create(array_merge($headers, [
-                'reply'         => $this->htmlFilter->process($reply, ''),
-                'parent_id'     => $parentEmail->id,
-                'user_type'     => 'person',
+                'reply' => $this->htmlFilter->process($reply, ''),
+                'parent_id' => $parentEmail->id,
+                'user_type' => 'person',
             ]));
 
             $this->attachmentRepository->uploadAttachments($email, [
-                'source'      => 'email',
+                'source' => 'email',
                 'attachments' => $this->emailParser->getAttachments(),
             ]);
         }

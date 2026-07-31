@@ -63,23 +63,23 @@ class AttributeForm extends FormRequest
                 }
 
                 $validations = [
-                    $attribute->code.'.address'  => 'required',
-                    $attribute->code.'.country'  => 'required',
-                    $attribute->code.'.state'    => 'required',
-                    $attribute->code.'.city'     => 'required',
+                    $attribute->code.'.address' => 'required',
+                    $attribute->code.'.country' => 'required',
+                    $attribute->code.'.state' => 'required',
+                    $attribute->code.'.city' => 'required',
                     $attribute->code.'.postcode' => 'required',
                 ];
             } elseif ($attribute->type == 'email') {
                 $validations = [
-                    $attribute->code              => [$attribute->is_required ? 'required' : 'nullable'],
-                    $attribute->code.'.*.value'   => [$attribute->is_required ? 'required' : 'nullable', 'email'],
-                    $attribute->code.'.*.label'   => $attribute->is_required ? 'required' : 'nullable',
+                    $attribute->code => [$attribute->is_required ? 'required' : 'nullable'],
+                    $attribute->code.'.*.value' => [$attribute->is_required ? 'required' : 'nullable', 'email'],
+                    $attribute->code.'.*.label' => $attribute->is_required ? 'required' : 'nullable',
                 ];
             } elseif ($attribute->type == 'phone') {
                 $validations = [
-                    $attribute->code              => [$attribute->is_required ? 'required' : 'nullable'],
-                    $attribute->code.'.*.value'   => [$attribute->is_required ? 'required' : 'nullable'],
-                    $attribute->code.'.*.label'   => $attribute->is_required ? 'required' : 'nullable',
+                    $attribute->code => [$attribute->is_required ? 'required' : 'nullable'],
+                    $attribute->code.'.*.value' => [$attribute->is_required ? 'required' : 'nullable'],
+                    $attribute->code.'.*.label' => $attribute->is_required ? 'required' : 'nullable',
                 ];
             } else {
                 $validations[$attribute->code] = [$attribute->is_required ? 'required' : 'nullable'];

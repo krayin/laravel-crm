@@ -5,6 +5,7 @@ namespace Webkul\Admin\Http\Controllers\Mail;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
@@ -59,7 +60,7 @@ class EmailController extends Controller
     /**
      * Display a resource.
      *
-     * @return \Illuminate\View\View
+     * @return View
      */
     public function view()
     {
@@ -106,14 +107,14 @@ class EmailController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function store()
     {
         $this->validate(request(), [
-            'reply_to'   => 'required|array|min:1',
+            'reply_to' => 'required|array|min:1',
             'reply_to.*' => 'email',
-            'reply'      => 'required',
+            'reply' => 'required',
         ]);
 
         Event::dispatch('email.create.before');
@@ -127,7 +128,7 @@ class EmailController extends Controller
                 $this->emailRepository->update([
                     'folders' => [SupportedFolderEnum::SENT->value],
                 ], $email->id);
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
             }
         }
 
@@ -135,7 +136,7 @@ class EmailController extends Controller
 
         if (request()->ajax()) {
             return response()->json([
-                'data'    => new EmailResource($email),
+                'data' => new EmailResource($email),
                 'message' => trans('admin::app.mail.create-success'),
             ]);
         }
@@ -148,14 +149,14 @@ class EmailController extends Controller
 
         session()->flash('success', trans('admin::app.mail.create-success'));
 
-        return redirect()->route('admin.mail.index', ['route'   => SupportedFolderEnum::SENT->value]);
+        return redirect()->route('admin.mail.index', ['route' => SupportedFolderEnum::SENT->value]);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function update($id)
     {
@@ -178,7 +179,7 @@ class EmailController extends Controller
                 $this->emailRepository->update([
                     'folders' => [SupportedFolderEnum::INBOX->value, SupportedFolderEnum::SENT->value],
                 ], $email->id);
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
             }
         }
 
@@ -196,7 +197,7 @@ class EmailController extends Controller
 
         if (request()->ajax()) {
             return response()->json([
-                'data'    => new EmailResource($email->refresh()),
+                'data' => new EmailResource($email->refresh()),
                 'message' => trans('admin::app.mail.update-success'),
             ]);
         }
@@ -209,7 +210,7 @@ class EmailController extends Controller
     /**
      * Run process inbound parse email.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function inboundParse(InboundEmailProcessor $inboundEmailProcessor)
     {
@@ -222,7 +223,7 @@ class EmailController extends Controller
      * Download file from storage
      *
      * @param  int  $id
-     * @return \Illuminate\View\View
+     * @return View
      */
     public function download($id)
     {
@@ -230,7 +231,7 @@ class EmailController extends Controller
 
         try {
             return Storage::download($attachment->path);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             session()->flash('error', $e->getMessage());
 
             return redirect()->back();
@@ -300,7 +301,7 @@ class EmailController extends Controller
             }
 
             return redirect()->route('admin.mail.index', ['route' => SupportedFolderEnum::INBOX->value]);
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
             if (request()->ajax()) {
                 return response()->json([
                     'message' => trans('admin::app.mail.delete-failed'),
@@ -336,7 +337,7 @@ class EmailController extends Controller
             return response()->json([
                 'message' => trans('admin::app.mail.delete-success'),
             ]);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return response()->json([
                 'message' => trans('admin::app.mail.delete-success'),
             ]);

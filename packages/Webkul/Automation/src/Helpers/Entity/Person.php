@@ -57,20 +57,20 @@ class Person extends AbstractEntity
 
         return [
             [
-                'id'         => 'update_person',
-                'name'       => trans('admin::app.settings.workflows.helpers.update-person'),
+                'id' => 'update_person',
+                'name' => trans('admin::app.settings.workflows.helpers.update-person'),
                 'attributes' => $this->getAttributes('persons'),
             ], [
-                'id'         => 'update_related_leads',
-                'name'       => trans('admin::app.settings.workflows.helpers.update-related-leads'),
+                'id' => 'update_related_leads',
+                'name' => trans('admin::app.settings.workflows.helpers.update-related-leads'),
                 'attributes' => $this->getAttributes('leads'),
             ], [
-                'id'      => 'send_email_to_person',
-                'name'    => trans('admin::app.settings.workflows.helpers.send-email-to-person'),
+                'id' => 'send_email_to_person',
+                'name' => trans('admin::app.settings.workflows.helpers.send-email-to-person'),
                 'options' => $emailTemplates,
             ], [
-                'id'      => 'trigger_webhook',
-                'name'    => trans('admin::app.settings.workflows.helpers.add-webhook'),
+                'id' => 'trigger_webhook',
+                'name' => trans('admin::app.settings.workflows.helpers.add-webhook'),
                 'options' => $webhooksOptions,
             ],
         ];
@@ -85,7 +85,7 @@ class Person extends AbstractEntity
             switch ($action['id']) {
                 case 'update_person':
                     $this->personRepository->update([
-                        'entity_type'        => 'persons',
+                        'entity_type' => 'persons',
                         $action['attribute'] => $action['value'],
                     ], $person->id);
 
@@ -97,7 +97,7 @@ class Person extends AbstractEntity
                     foreach ($leads as $lead) {
                         $this->leadRepository->update(
                             [
-                                'entity_type'        => 'leads',
+                                'entity_type' => 'leads',
                                 $action['attribute'] => $action['value'],
                             ],
                             $lead->id,
@@ -116,9 +116,9 @@ class Person extends AbstractEntity
 
                     try {
                         Mail::queue(new Common([
-                            'to'      => data_get($person->emails, '*.value'),
+                            'to' => data_get($person->emails, '*.value'),
                             'subject' => $this->replacePlaceholders($person, $emailTemplate->subject),
-                            'body'    => $this->replacePlaceholders($person, $emailTemplate->content),
+                            'body' => $this->replacePlaceholders($person, $emailTemplate->content),
                         ]));
                     } catch (\Exception $e) {
                         report($e);

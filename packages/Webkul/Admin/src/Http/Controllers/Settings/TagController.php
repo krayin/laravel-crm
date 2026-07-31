@@ -3,6 +3,7 @@
 namespace Webkul\Admin\Http\Controllers\Settings;
 
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Event;
 use Illuminate\View\View;
 use Prettus\Repository\Criteria\RequestCriteria;
@@ -54,7 +55,7 @@ class TagController extends Controller
         Event::dispatch('settings.tag.create.after', $tag);
 
         return new JsonResponse([
-            'data'    => new TagResource($tag),
+            'data' => new TagResource($tag),
             'message' => trans('admin::app.settings.tags.index.create-success'),
         ]);
     }
@@ -90,7 +91,7 @@ class TagController extends Controller
         Event::dispatch('settings.tag.update.after', $tag);
 
         return new JsonResponse([
-            'data'    => new TagResource($tag),
+            'data' => new TagResource($tag),
             'message' => trans('admin::app.settings.tags.index.update-success'),
         ]);
     }
@@ -122,7 +123,7 @@ class TagController extends Controller
     /**
      * Search tag results
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function search()
     {

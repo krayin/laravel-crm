@@ -140,8 +140,8 @@ class Importer extends AbstractImporter
             $product = $this->parseProducts($rowData['product']);
 
             $validator = Validator::make($product, [
-                'id'       => 'required|exists:products,id',
-                'price'    => 'required',
+                'id' => 'required|exists:products,id',
+                'price' => 'required',
                 'quantity' => 'required',
             ]);
 
@@ -161,13 +161,13 @@ class Importer extends AbstractImporter
          */
         $validator = Validator::make($rowData, [
             ...$this->getValidationRules('leads|persons', $rowData),
-            'id'                     => 'numeric',
-            'status'                 => 'sometimes|required|in:0,1',
-            'user_id'                => 'required|exists:users,id',
-            'person_id'              => 'required|exists:persons,id',
-            'lead_source_id'         => 'required|exists:lead_sources,id',
-            'lead_type_id'           => 'required|exists:lead_types,id',
-            'lead_pipeline_id'       => 'required|exists:lead_pipelines,id',
+            'id' => 'numeric',
+            'status' => 'sometimes|required|in:0,1',
+            'user_id' => 'required|exists:users,id',
+            'person_id' => 'required|exists:persons,id',
+            'lead_source_id' => 'required|exists:lead_sources,id',
+            'lead_type_id' => 'required|exists:lead_types,id',
+            'lead_pipeline_id' => 'required|exists:lead_pipelines,id',
             'lead_pipeline_stage_id' => 'required|exists:lead_pipeline_stages,id',
         ]);
 
@@ -238,23 +238,23 @@ class Importer extends AbstractImporter
                     }
 
                     $validations = [
-                        $attribute->code.'.address'  => 'required',
-                        $attribute->code.'.country'  => 'required',
-                        $attribute->code.'.state'    => 'required',
-                        $attribute->code.'.city'     => 'required',
+                        $attribute->code.'.address' => 'required',
+                        $attribute->code.'.country' => 'required',
+                        $attribute->code.'.state' => 'required',
+                        $attribute->code.'.city' => 'required',
                         $attribute->code.'.postcode' => 'required',
                     ];
                 } elseif ($attribute->type == 'email') {
                     $validations = [
-                        $attribute->code              => [$attribute->is_required ? 'required' : 'nullable'],
-                        $attribute->code.'.*.value'   => [$attribute->is_required ? 'required' : 'nullable', 'email'],
-                        $attribute->code.'.*.label'   => $attribute->is_required ? 'required' : 'nullable',
+                        $attribute->code => [$attribute->is_required ? 'required' : 'nullable'],
+                        $attribute->code.'.*.value' => [$attribute->is_required ? 'required' : 'nullable', 'email'],
+                        $attribute->code.'.*.label' => $attribute->is_required ? 'required' : 'nullable',
                     ];
                 } elseif ($attribute->type == 'phone') {
                     $validations = [
-                        $attribute->code              => [$attribute->is_required ? 'required' : 'nullable'],
-                        $attribute->code.'.*.value'   => [$attribute->is_required ? 'required' : 'nullable'],
-                        $attribute->code.'.*.label'   => $attribute->is_required ? 'required' : 'nullable',
+                        $attribute->code => [$attribute->is_required ? 'required' : 'nullable'],
+                        $attribute->code.'.*.value' => [$attribute->is_required ? 'required' : 'nullable'],
+                        $attribute->code.'.*.label' => $attribute->is_required ? 'required' : 'nullable',
                     ];
                 } else {
                     $validations[$attribute->code] = [$attribute->is_required ? 'required' : 'nullable'];
@@ -318,7 +318,7 @@ class Importer extends AbstractImporter
         $batch = $this->importBatchRepository->update([
             'state' => Import::STATE_PROCESSED,
 
-            'summary'      => [
+            'summary' => [
                 'created' => $this->getCreatedItemsCount(),
                 'updated' => $this->getUpdatedItemsCount(),
                 'deleted' => $this->getDeletedItemsCount(),
@@ -386,17 +386,17 @@ class Importer extends AbstractImporter
             $lead = $this->leadsStorage->get($title);
 
             $leadProducts['insert'][] = [
-                'lead_id'    => $lead['id'],
+                'lead_id' => $lead['id'],
                 'product_id' => $product['id'],
-                'price'      => $product['price'],
-                'quantity'   => $product['quantity'],
-                'amount'     => $product['amount'],
+                'price' => $product['price'],
+                'quantity' => $product['quantity'],
+                'amount' => $product['amount'],
             ];
         }
 
         foreach ($leadProducts['insert'] as $key => $leadProduct) {
             $this->leadProductRepository->deleteWhere([
-                'lead_id'    => $leadProduct['lead_id'],
+                'lead_id' => $leadProduct['lead_id'],
                 'product_id' => $leadProduct['product_id'],
             ]);
         }
@@ -488,7 +488,7 @@ class Importer extends AbstractImporter
 
             foreach ($newLeads as $lead) {
                 $this->leadsStorage->set($lead->title, [
-                    'id'    => $lead->id,
+                    'id' => $lead->id,
                     'title' => $lead->title,
                 ]);
             }

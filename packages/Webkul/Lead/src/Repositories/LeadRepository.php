@@ -4,6 +4,7 @@ namespace Webkul\Lead\Repositories;
 
 use Carbon\Carbon;
 use Illuminate\Container\Container;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Webkul\Attribute\Repositories\AttributeRepository;
@@ -108,7 +109,7 @@ class LeadRepository extends Repository
     /**
      * Create.
      *
-     * @return \Webkul\Lead\Contracts\Lead
+     * @return Lead
      */
     public function create(array $data)
     {
@@ -132,7 +133,7 @@ class LeadRepository extends Repository
         }
 
         $lead = parent::create(array_merge([
-            'lead_pipeline_id'       => 1,
+            'lead_pipeline_id' => 1,
             'lead_pipeline_stage_id' => 1,
         ], $data));
 
@@ -144,7 +145,7 @@ class LeadRepository extends Repository
             foreach ($data['products'] as $product) {
                 $this->productRepository->create(array_merge($product, [
                     'lead_id' => $lead->id,
-                    'amount'  => $product['price'] * $product['quantity'],
+                    'amount' => $product['price'] * $product['quantity'],
                 ]));
             }
         }
@@ -156,8 +157,8 @@ class LeadRepository extends Repository
      * Update.
      *
      * @param  int  $id
-     * @param  array|\Illuminate\Database\Eloquent\Collection  $attributes
-     * @return \Webkul\Lead\Contracts\Lead
+     * @param  array|Collection  $attributes
+     * @return Lead
      */
     public function update(array $data, $id, $attributes = [])
     {

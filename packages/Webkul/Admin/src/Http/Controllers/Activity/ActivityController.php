@@ -32,6 +32,17 @@ class ActivityController extends Controller
     ) {}
 
     /**
+     * Resolve the user ids that own or participate in the given activity (owner or participant).
+     */
+    private function activityOwnerIds($activity): array
+    {
+        return array_merge(
+            [$activity->user_id],
+            $activity->participants->pluck('user_id')->filter()->all()
+        );
+    }
+
+    /**
      * Display a listing of the resource.
      */
     public function index(): View
@@ -69,11 +80,11 @@ class ActivityController extends Controller
     public function store(): RedirectResponse|JsonResponse
     {
         $this->validate(request(), [
-            'type'          => 'required',
-            'comment'       => 'required_if:type,note',
+            'type' => 'required',
+            'comment' => 'required_if:type,note',
             'schedule_from' => 'required_unless:type,note,file',
-            'schedule_to'   => 'required_unless:type,note,file',
-            'file'          => 'required_if:type,file',
+            'schedule_to' => 'required_unless:type,note,file',
+            'file' => 'required_if:type,file',
         ]);
 
         if (request('type') === 'meeting') {
@@ -111,7 +122,7 @@ class ActivityController extends Controller
 
         if (request()->ajax()) {
             return response()->json([
-                'data'    => new ActivityResource($activity),
+                'data' => new ActivityResource($activity),
                 'message' => trans('admin::app.activities.create-success'),
             ]);
         }
@@ -128,6 +139,8 @@ class ActivityController extends Controller
     {
         $activity = $this->activityRepository->findOrFail($id);
 
+        $this->preventUnauthorizedAccess($this->activityOwnerIds($activity));
+
         $leadId = old('lead_id') ?? optional($activity->leads()->first())->id;
 
         $lookUpEntityData = $this->attributeRepository->getLookUpEntity('leads', $leadId);
@@ -140,6 +153,8 @@ class ActivityController extends Controller
      */
     public function update($id): RedirectResponse|JsonResponse
     {
+        $this->preventUnauthorizedAccess($this->activityOwnerIds($this->activityRepository->findOrFail($id)));
+
         Event::dispatch('activity.update.before', $id);
 
         $data = request()->all();
@@ -163,7 +178,7 @@ class ActivityController extends Controller
 
         if (request()->ajax()) {
             return response()->json([
-                'data'    => new ActivityResource($activity),
+                'data' => new ActivityResource($activity),
                 'message' => trans('admin::app.activities.update-success'),
             ]);
         }
@@ -178,7 +193,10 @@ class ActivityController extends Controller
      */
     public function massUpdate(MassUpdateRequest $massUpdateRequest): JsonResponse
     {
-        $activities = $this->activityRepository->findWhereIn('id', $massUpdateRequest->input('indices'));
+        $activities = $this->filterAuthorizedRecords(
+            $this->activityRepository->findWhereIn('id', $massUpdateRequest->input('indices')),
+            fn ($activity) => $this->activityOwnerIds($activity)
+        );
 
         foreach ($activities as $activity) {
             Event::dispatch('activity.update.before', $activity->id);
@@ -200,9 +218,11 @@ class ActivityController extends Controller
      */
     public function download(int $id): StreamedResponse
     {
-        try {
-            $file = $this->fileRepository->findOrFail($id);
+        $file = $this->fileRepository->findOrFail($id);
 
+        $this->preventUnauthorizedAccess($this->activityOwnerIds($file->activity));
+
+        try {
             return Storage::download($file->path);
         } catch (\Exception $exception) {
             abort(404);
@@ -215,6 +235,8 @@ class ActivityController extends Controller
     public function destroy(int $id): JsonResponse
     {
         $activity = $this->activityRepository->findOrFail($id);
+
+        $this->preventUnauthorizedAccess($this->activityOwnerIds($activity));
 
         try {
             Event::dispatch('activity.delete.before', $id);
@@ -238,7 +260,10 @@ class ActivityController extends Controller
      */
     public function massDestroy(MassDestroyRequest $massDestroyRequest): JsonResponse
     {
-        $activities = $this->activityRepository->findWhereIn('id', $massDestroyRequest->input('indices'));
+        $activities = $this->filterAuthorizedRecords(
+            $this->activityRepository->findWhereIn('id', $massDestroyRequest->input('indices')),
+            fn ($activity) => $this->activityOwnerIds($activity)
+        );
 
         try {
             foreach ($activities as $activity) {
