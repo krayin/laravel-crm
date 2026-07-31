@@ -23,6 +23,9 @@ This changelog consists of the bug & security fixes and new features being inclu
 * [enhancement] Reduced database queries on every admin page by loading the configured menu names in a single query instead of one per menu item.
 
 * [enhancement] Documented the localization convention in the `crm-package-development` agent skill and in AGENTS.md.
+* [feature] Added a collapse/expand toggle to the admin sidebar, matching the Bagisto admin. The choice is remembered across page loads, and page content now reflows to the sidebar width instead of being overlaid by it. The sidebar no longer expands on hover; it is controlled by the toggle only.
+
+* [feature] Added an option to show or hide the "Powered by" bar under Configuration > General > Settings > Powered by Section Configurations.
 
 ## **v2.2.4 (20th of July 2026)** *Release*
 
