@@ -1253,6 +1253,7 @@ return [
                 'update-success' => 'Webhook updated successfully.',
                 'delete-success' => 'Webhook deleted successfully.',
                 'delete-failed' => 'Webhook can not be deleted.',
+                'invalid-endpoint' => 'The webhook endpoint URL must be a public HTTP or HTTPS address.',
                 'datagrid' => [
                     'id' => 'ID',
                     'delete' => 'Delete',

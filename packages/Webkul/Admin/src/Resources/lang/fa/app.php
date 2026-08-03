@@ -1251,6 +1251,7 @@ return [
                 'update-success' => 'وب‌هوک با موفقیت به‌روزرسانی شد.',
                 'delete-success' => 'وب‌هوک با موفقیت حذف شد.',
                 'delete-failed' => 'وب‌هوک قابل حذف نیست.',
+                'invalid-endpoint' => 'آدرس نقطه پایانی وب‌هوک باید یک آدرس عمومی HTTP یا HTTPS باشد.',
                 'datagrid' => [
                     'id' => 'شناسه',
                     'delete' => 'حذف',

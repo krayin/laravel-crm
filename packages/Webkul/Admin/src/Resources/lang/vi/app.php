@@ -1251,6 +1251,7 @@ return [
                 'update-success' => 'Webhook đã được cập nhật thành công.',
                 'delete-success' => 'Webhook đã được xóa thành công.',
                 'delete-failed' => 'Webhook không thể bị xóa.',
+                'invalid-endpoint' => 'URL điểm cuối webhook phải là địa chỉ HTTP hoặc HTTPS công khai.',
                 'datagrid' => [
                     'id' => 'ID',
                     'delete' => 'Xóa',
