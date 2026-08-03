@@ -3,7 +3,10 @@
 namespace Webkul\Admin\DataGrids\Lead;
 
 use Illuminate\Contracts\Database\Query\Builder;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
+use Webkul\Attribute\Models\Attribute;
+use Webkul\Attribute\Models\AttributeValue;
 use Webkul\Contact\Repositories\PersonRepository;
 use Webkul\Contract\Repositories\Pipeline;
 use Webkul\DataGrid\DataGrid;
@@ -81,6 +84,26 @@ class LeadDataGrid extends DataGrid
             ->leftJoin('tags', 'tags.id', '=', 'lead_tags.tag_id')
             ->groupBy('leads.id')
             ->where('leads.lead_pipeline_id', $this->pipeline->id);
+
+        /**
+         * Custom (user defined) attribute values live in the EAV `attribute_values` table, so they
+         * are pulled in as correlated sub-selects only when exporting. They are hidden from the
+         * grid display (see prepareColumns) but included in the exported file.
+         */
+        if (request()->boolean('export')) {
+            foreach ($this->getCustomAttributes() as $attribute) {
+                $valueColumn = AttributeValue::$attributeTypeFields[$attribute->type] ?? 'text_value';
+
+                $queryBuilder->addSelect(DB::raw(
+                    '(SELECT '.$tablePrefix.'attribute_values.'.$valueColumn.
+                    ' FROM '.$tablePrefix.'attribute_values'.
+                    ' WHERE '.$tablePrefix.'attribute_values.entity_id = '.$tablePrefix.'leads.id'.
+                    ' AND '.$tablePrefix.'attribute_values.attribute_id = '.(int) $attribute->id.
+                    ' AND '.$tablePrefix."attribute_values.entity_type = 'leads'".
+                    ' LIMIT 1) as '.$attribute->code
+                ));
+            }
+        }
 
         if ($userIds = bouncer()->getAuthorizedUserIds()) {
             $queryBuilder->whereIn('leads.user_id', $userIds);
@@ -283,6 +306,37 @@ class LeadDataGrid extends DataGrid
             'filterable' => true,
             'filterable_type' => 'date_range',
         ]);
+
+        /**
+         * User defined attributes are hidden from the grid but included in the export so the data
+         * entered into custom fields can be exported alongside the built-in columns.
+         */
+        if (request()->boolean('export')) {
+            foreach ($this->getCustomAttributes() as $attribute) {
+                $this->addColumn([
+                    'index' => $attribute->code,
+                    'label' => $attribute->name,
+                    'type' => 'string',
+                    'searchable' => false,
+                    'sortable' => false,
+                    'filterable' => false,
+                    'visibility' => false,
+                ]);
+            }
+        }
+    }
+
+    /**
+     * Retrieve the user defined attributes for leads.
+     */
+    protected function getCustomAttributes(): Collection
+    {
+        static $attributes;
+
+        return $attributes ??= Attribute::query()
+            ->where('entity_type', 'leads')
+            ->where('is_user_defined', 1)
+            ->get();
     }
 
     /**
