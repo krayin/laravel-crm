@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 use Webkul\Admin\DataGrids\Settings\DataTransfer\ImportDataGrid;
 use Webkul\Admin\Http\Controllers\Controller;
+use Webkul\Attribute\Repositories\AttributeRepository;
 use Webkul\DataTransfer\Helpers\Import;
 use Webkul\DataTransfer\Repositories\ImportRepository;
 
@@ -21,7 +22,8 @@ class ImportController extends Controller
      */
     public function __construct(
         protected ImportRepository $importRepository,
-        protected Import $importHelper
+        protected Import $importHelper,
+        protected AttributeRepository $attributeRepository
     ) {}
 
     /**
@@ -466,7 +468,45 @@ class ImportController extends Controller
     {
         $importer = config('importers.'.$type);
 
-        return Storage::download($importer['sample_path']);
+        $content = Storage::get($importer['sample_path']);
+
+        /**
+         * Append the user defined attribute codes as extra columns so the downloaded sample always
+         * reflects the custom attributes configured for the entity type. Only codes that are valid
+         * import column names (lowercase, matching the importer's column rule) are included so the
+         * generated sample remains importable.
+         */
+        $customAttributeCodes = $this->attributeRepository
+            ->findWhere(['entity_type' => $type, 'is_user_defined' => 1])
+            ->pluck('code')
+            ->filter(fn ($code) => preg_match('/^[a-z][a-z0-9_]*$/', $code))
+            ->all();
+
+        if (! empty($customAttributeCodes)) {
+            $content = $this->appendColumnsToCsv($content, $customAttributeCodes);
+        }
+
+        return response($content, 200, [
+            'Content-Type' => 'text/csv',
+            'Content-Disposition' => 'attachment; filename="'.basename($importer['sample_path']).'"',
+        ]);
+    }
+
+    /**
+     * Append the given columns to the header row and an empty value to every data row of a CSV.
+     */
+    protected function appendColumnsToCsv(string $content, array $columns): string
+    {
+        $lines = preg_split('/\r\n|\r|\n/', rtrim($content, "\r\n"));
+
+        $suffix = str_repeat(',', count($columns));
+
+        return collect($lines)
+            ->filter(fn ($line) => $line !== '')
+            ->map(fn ($line, $index) => $index === 0
+                ? $line.','.implode(',', $columns)
+                : $line.$suffix)
+            ->implode("\n")."\n";
     }
 
     /**

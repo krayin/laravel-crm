@@ -84,7 +84,7 @@ class Importer extends AbstractImporter
      */
     protected function initAttributes(): void
     {
-        $this->attributes = $this->attributeRepository->all();
+        $this->attributes = $this->attributeRepository->findWhere(['entity_type' => 'products']);
 
         foreach ($this->attributes as $attribute) {
             $this->validColumnNames[] = $attribute->code;
