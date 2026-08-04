@@ -115,6 +115,8 @@ class EmailController extends Controller
             'reply_to' => 'required|array|min:1',
             'reply_to.*' => 'email',
             'reply' => 'required',
+            'attachments' => 'sometimes|array',
+            'attachments.*' => 'file|max:20480',
         ]);
 
         Event::dispatch('email.create.before');
@@ -230,7 +232,8 @@ class EmailController extends Controller
         $attachment = $this->attachmentRepository->findOrFail($id);
 
         try {
-            return Storage::download($attachment->path);
+            return Storage::disk(AttachmentRepository::resolveDisk($attachment->path))
+                ->download($attachment->path, $attachment->name);
         } catch (Exception $e) {
             session()->flash('error', $e->getMessage());
 
