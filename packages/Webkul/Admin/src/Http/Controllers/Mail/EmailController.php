@@ -115,6 +115,8 @@ class EmailController extends Controller
             'reply_to' => 'required|array|min:1',
             'reply_to.*' => 'email',
             'reply' => 'required',
+            'attachments' => 'sometimes|array',
+            'attachments.*' => 'file|max:20480',
         ]);
 
         Event::dispatch('email.create.before');

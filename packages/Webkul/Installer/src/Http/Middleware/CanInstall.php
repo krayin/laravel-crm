@@ -16,18 +16,37 @@ class CanInstall
     public function handle(Request $request, Closure $next): mixed
     {
         if (Str::contains($request->getPathInfo(), '/install')) {
-            if ($this->isAlreadyInstalled()) {
-                if (! $request->ajax()) {
-                    return redirect()->route('admin.dashboard.index');
+            /**
+             * Once the application is fully installed, the installer and its API endpoints must be
+             * unreachable. Previously AJAX requests were exempted here, but whether a request is
+             * "AJAX" is decided solely by the client supplied `X-Requested-With` header, which let an
+             * unauthenticated request reach the installer endpoints on a live application. The
+             * completion marker is written only when the installation finishes, so an installation in
+             * progress is unaffected.
+             */
+            if ($this->isInstallationComplete()) {
+                if ($request->ajax()) {
+                    abort(403);
                 }
+
+                return redirect()->route('admin.dashboard.index');
             }
-        } else {
-            if (! $this->isAlreadyInstalled()) {
-                return redirect()->route('installer.index');
-            }
+        } elseif (! $this->isAlreadyInstalled()) {
+            return redirect()->route('installer.index');
         }
 
         return $next($request);
+    }
+
+    /**
+     * Whether the installation has fully completed.
+     *
+     * Unlike isAlreadyInstalled(), this relies solely on the completion marker written at the end of
+     * the web and console installer, so it is never true while an installation is still in progress.
+     */
+    public function isInstallationComplete(): bool
+    {
+        return file_exists(storage_path('installed'));
     }
 
     /**

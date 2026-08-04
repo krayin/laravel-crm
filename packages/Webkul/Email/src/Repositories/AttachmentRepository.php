@@ -12,6 +12,17 @@ use Webkul\Email\Contracts\Email;
 class AttachmentRepository extends Repository
 {
     /**
+     * File extensions that the web server or the browser may execute when a file is served from the
+     * public disk (`APP_URL/storage`). Attachments whose name contains one of these are stored under
+     * a neutralised name so the uploaded file can never be executed.
+     */
+    public const DANGEROUS_EXTENSIONS = [
+        'php', 'php2', 'php3', 'php4', 'php5', 'php6', 'php7', 'php8', 'phps', 'pht', 'phtm', 'phtml',
+        'phar', 'phpt', 'cgi', 'pl', 'py', 'sh', 'bash', 'exe', 'com', 'bat', 'cmd', 'asp', 'aspx',
+        'jsp', 'jspx', 'jar', 'war', 'htaccess', 'htpasswd', 'shtml', 'html', 'htm', 'xhtml', 'xht', 'svg',
+    ];
+
+    /**
      * Specify model class name.
      */
     public function model(): string
@@ -64,6 +75,8 @@ class AttachmentRepository extends Repository
             $mimeType = $attachment->mime;
         }
 
+        $name = $this->sanitizeName($name);
+
         $path = 'emails/'.$email->id.'/'.$name;
 
         Storage::put($path, $content);
@@ -77,5 +90,25 @@ class AttachmentRepository extends Repository
         ];
 
         return $attributes;
+    }
+
+    /**
+     * Neutralise an attachment file name before it is written to the public disk.
+     *
+     * Directory components (including traversal sequences) are stripped, and any name that carries a
+     * dangerous extension has its dots collapsed and a `.txt` suffix appended, so the stored file can
+     * never be served as executable code from `APP_URL/storage`.
+     */
+    private function sanitizeName(string $name): string
+    {
+        $name = basename(str_replace('\\', '/', $name));
+
+        foreach (explode('.', $name) as $segment) {
+            if (in_array(strtolower($segment), self::DANGEROUS_EXTENSIONS, true)) {
+                return str_replace('.', '_', $name).'.txt';
+            }
+        }
+
+        return $name;
     }
 }
