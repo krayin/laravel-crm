@@ -323,7 +323,7 @@ return [
                 'added-tags' => '已添加的标签',
                 'save-btn' => '保存标签',
                 'placeholder' => '输入以搜索标签',
-                'add-tag' => '添加 \":term\"……',
+                'add-tag' => '添加 \\":term\\"……',
                 'aquarelle-red' => '水彩红',
                 'crushed-cashew' => '腰果棕',
                 'beeswax' => '蜂蜡黄',
@@ -347,7 +347,6 @@ return [
                         'settings' => '设置',
                         'configurations' => '配置',
                     ],
-
                     'explore-all-products' => '浏览全部产品',
                     'explore-all-leads' => '浏览全部线索',
                     'explore-all-contacts' => '浏览全部联系人',
@@ -519,6 +518,8 @@ return [
                     'name' => '姓名',
                     'organization-name' => '组织名称',
                     'tag-name' => '标签名称',
+                    'google-export-not-connected' => '请先在“设置 > 其他设置 > Google 通讯录”中连接您的 Google 账户。',
+                    'google-export-started' => '已开始导出到 Google 通讯录。',
                 ],
             ],
             'view' => [
@@ -909,6 +910,18 @@ return [
                 'does-not-contain' => '不包含',
             ],
         ],
+        'google-contacts' => [
+            'index' => [
+                'title' => 'Google 通讯录',
+                'not-connected-info' => '连接 Google 账户，以将 CRM 联系人导出到 Google 通讯录。',
+                'connected-info' => '已连接为 :email。',
+                'connect-btn' => '连接 Google 账户',
+                'disconnect-btn' => '断开连接',
+                'connect-success' => 'Google 账户连接成功。',
+                'connect-failed' => '无法连接您的 Google 账户，请重试。',
+                'disconnect-success' => 'Google 账户已成功断开连接。',
+            ],
+        ],
         'webforms' => [
             'index' => [
                 'title' => '网页表单',
@@ -1238,6 +1251,7 @@ return [
                 'update-success' => 'Webhook 更新成功。',
                 'delete-success' => 'Webhook 删除成功。',
                 'delete-failed' => 'Webhook 无法删除。',
+                'invalid-endpoint' => 'Webhook 端点 URL 必须是可公开访问的 HTTP 或 HTTPS 地址。',
                 'datagrid' => [
                     'id' => 'ID',
                     'delete' => '删除',
@@ -2039,6 +2053,8 @@ return [
                     'title' => '设置',
                     'info' => '在此更新您的设置。',
                     'footer' => [
+                        'show' => '显示“技术支持”',
+                        'show-info' => '显示或隐藏管理面板底部的“技术支持”栏。',
                         'info' => '我们可以在此配置“技术支持”区域。',
                         'powered-by' => '“技术支持”文本编辑器',
                         'title' => '“技术支持”区域配置',
@@ -2188,7 +2204,6 @@ return [
             'view-all' => '查看全部',
             'still-need-help-title' => '仍需帮助？',
             'still-need-help-description' => '就托管、定制开发或其他任何问题与 Krayin 团队交流。',
-
             'services' => [
                 'title' => '服务与资源',
                 'cloud-hosting' => [
@@ -2204,7 +2219,6 @@ return [
                     'description' => '浏览官方与社区插件，为 Krayin 增添新的连接器、渠道和功能。',
                 ],
             ],
-
             'resources' => [
                 'title' => '文档',
                 'user-docs' => [
@@ -2220,7 +2234,6 @@ return [
                     'description' => '完整的 REST API 参考，包含接口、认证方式与示例，助您将 Krayin 集成到您的技术栈中。',
                 ],
             ],
-
             'community' => [
                 'forums' => [
                     'title' => '社区论坛',
@@ -2272,6 +2285,10 @@ return [
         'users-info' => '在 CRM 中添加、编辑或删除用户',
         'lead' => '线索',
         'lead-info' => '在 CRM 中管理所有与线索相关的设置',
+        'sidebar' => [
+            'collapse' => '收起',
+            'expand' => '展开',
+        ],
         'quick-add' => [
             'title' => '快速添加',
             'save' => '保存',
@@ -2367,7 +2384,6 @@ return [
         'go-back' => '返回',
         'support' => '如果问题仍然存在，请通过 <a href=":link" class=":class">:email</a> 联系我们获取帮助。',
         'unauthorized' => '此操作未获授权。',
-
         '404' => [
             'description' => '哎呀！您要找的页面去度假了。我们似乎找不到您所搜索的内容。',
             'title' => '404 页面未找到',
@@ -2393,6 +2409,13 @@ return [
         'csv' => 'CSV',
         'download' => '下载',
         'export' => '导出',
+        'google-contacts' => 'Google 通讯录',
+        'google-contacts-in-progress' => '正在将您的联系人导出到 Google……这可能需要一些时间。',
+        'google-contacts-total' => '联系人总数：',
+        'google-contacts-exported' => '已导出：',
+        'google-contacts-duplicate' => '已存在：',
+        'google-contacts-failed' => '失败：',
+        'google-contacts-summary' => '导出完成：已导出 :exported 个，已存在 :duplicate 个，失败 :failed 个。',
         'no-records' => '没有可导出的内容',
         'xls' => 'XLS',
         'xlsx' => 'XLSX',
