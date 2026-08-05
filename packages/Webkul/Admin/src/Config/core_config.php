@@ -39,12 +39,12 @@ return [
                 'name' => 'logo_image',
                 'title' => 'admin::app.configuration.index.general.general.admin-logo.logo-image',
                 'type' => 'image',
-                'validation' => 'mimes:bmp,jpeg,jpg,png,webp,svg',
+                'validation' => 'mimes:bmp,jpeg,jpg,png,webp',
             ], [
                 'name' => 'favicon_image',
                 'title' => 'admin::app.configuration.index.general.general.admin-logo.favicon-image',
                 'type' => 'image',
-                'validation' => 'mimes:ico,jpeg,jpg,png,webp,svg',
+                'validation' => 'mimes:ico,jpeg,jpg,png,webp',
             ],
         ],
     ], [
