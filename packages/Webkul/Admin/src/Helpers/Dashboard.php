@@ -133,10 +133,17 @@ class Dashboard
     }
 
     /**
-     * Returns date range
+     * Returns date range. The year is included only when the range spans more
+     * than one calendar year, so longer ranges stay unambiguous.
      */
     public function getDateRange(): string
     {
-        return $this->getStartDate()->format('d M').' - '.$this->getEndDate()->format('d M');
+        $startDate = $this->getStartDate();
+
+        $endDate = $this->getEndDate();
+
+        $format = $startDate->year === $endDate->year ? 'd M' : 'd M Y';
+
+        return $startDate->format($format).' - '.$endDate->format($format);
     }
 }

@@ -48,9 +48,9 @@ class Importer extends AbstractImporter
      * Error message templates.
      */
     protected array $messages = [
-        self::ERROR_EMAIL_NOT_FOUND_FOR_DELETE => 'data_transfer::app.importers.persons.validation.errors.email-not-found',
-        self::ERROR_DUPLICATE_EMAIL => 'data_transfer::app.importers.persons.validation.errors.duplicate-email',
-        self::ERROR_DUPLICATE_PHONE => 'data_transfer::app.importers.persons.validation.errors.duplicate-phone',
+        self::ERROR_EMAIL_NOT_FOUND_FOR_DELETE => 'admin::app.settings.data-transfer.importers.persons.validation.errors.email-not-found',
+        self::ERROR_DUPLICATE_EMAIL => 'admin::app.settings.data-transfer.importers.persons.validation.errors.duplicate-email',
+        self::ERROR_DUPLICATE_PHONE => 'admin::app.settings.data-transfer.importers.persons.validation.errors.duplicate-phone',
     ];
 
     /**

@@ -96,7 +96,7 @@ return [
                 'type' => 'text',
                 'validation' => 'max:20',
             ], [
-                'name' => 'mail.mail',
+                'name' => 'mail',
                 'title' => 'admin::app.configuration.index.general.settings.menu.mail',
                 'type' => 'text',
                 'validation' => 'max:20',
@@ -131,7 +131,7 @@ return [
                 'type' => 'text',
                 'validation' => 'max:20',
             ], [
-                'name' => 'contacts.contacts',
+                'name' => 'contacts',
                 'title' => 'admin::app.configuration.index.general.settings.menu.contacts',
                 'type' => 'text',
                 'validation' => 'max:20',
@@ -173,6 +173,49 @@ return [
                 'title' => 'admin::app.configuration.index.general.settings.menu-color.brand-color',
                 'type' => 'color',
                 'default' => '#0E90D9',
+            ],
+        ],
+    ], [
+        'key' => 'general.settings.dashboard',
+        'name' => 'admin::app.configuration.index.general.settings.dashboard.title',
+        'info' => 'admin::app.configuration.index.general.settings.dashboard.info',
+        'sort' => 4,
+        'fields' => [
+            [
+                'name' => 'date_range',
+                'title' => 'admin::app.configuration.index.general.settings.dashboard.date-range',
+                'info' => 'admin::app.configuration.index.general.settings.dashboard.date-range-info',
+                'type' => 'select',
+                'default' => '1_month',
+                'options' => [
+                    [
+                        'title' => 'admin::app.configuration.index.general.settings.dashboard.ranges.1-month',
+                        'value' => '1_month',
+                    ], [
+                        'title' => 'admin::app.configuration.index.general.settings.dashboard.ranges.3-months',
+                        'value' => '3_months',
+                    ], [
+                        'title' => 'admin::app.configuration.index.general.settings.dashboard.ranges.9-months',
+                        'value' => '9_months',
+                    ], [
+                        'title' => 'admin::app.configuration.index.general.settings.dashboard.ranges.1-year',
+                        'value' => '1_year',
+                    ], [
+                        'title' => 'admin::app.configuration.index.general.settings.dashboard.ranges.2-years',
+                        'value' => '2_years',
+                    ], [
+                        'title' => 'admin::app.configuration.index.general.settings.dashboard.ranges.custom',
+                        'value' => 'custom',
+                    ],
+                ],
+            ], [
+                'name' => 'custom_days',
+                'title' => 'admin::app.configuration.index.general.settings.dashboard.custom-days',
+                'info' => 'admin::app.configuration.index.general.settings.dashboard.custom-days-info',
+                'type' => 'number',
+                'default' => 30,
+                'depends' => 'date_range:custom',
+                'validation' => 'required_if:date_range,custom',
             ],
         ],
     ], [
