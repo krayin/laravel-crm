@@ -1517,6 +1517,46 @@ return [
             ],
         ],
         'data-transfer' => [
+            'importers' => [
+                'persons' => [
+                    'title' => 'Pessoas',
+                    'validation' => [
+                        'errors' => [
+                            'duplicate-email' => 'E-mail : \'%s\' é encontrado mais de uma vez no arquivo de importação.',
+                            'duplicate-phone' => 'Telefone : \'%s\' é encontrado mais de uma vez no arquivo de importação.',
+                            'email-not-found' => 'E-mail : \'%s\' não foi encontrado no sistema.',
+                        ],
+                    ],
+                ],
+                'products' => [
+                    'title' => 'Produtos',
+                    'validation' => [
+                        'errors' => [
+                            'sku-not-found' => 'Produto com este código não foi encontrado',
+                        ],
+                    ],
+                ],
+                'leads' => [
+                    'title' => 'Oportunidades',
+                    'validation' => [
+                        'errors' => [
+                            'id-not-found' => 'ID : \'%s\' não foi encontrado no sistema.',
+                        ],
+                    ],
+                ],
+            ],
+            'validation' => [
+                'errors' => [
+                    'column-empty-headers' => 'As colunas de número "%s" têm cabeçalhos vazios.',
+                    'column-name-invalid' => 'Nomes de colunas inválidos: "%s".',
+                    'column-not-found' => 'Colunas obrigatórias não encontradas: %s.',
+                    'column-numbers' => 'O número de colunas não corresponde ao número de linhas no cabeçalho.',
+                    'invalid-attribute' => 'O cabeçalho contém atributo(s) inválido(s): "%s".',
+                    'system' => 'Ocorreu um erro inesperado no sistema.',
+                    'wrong-quotes' => 'Aspas curvas usadas em vez de aspas retas.',
+                    'already-exists' => 'O :attribute já existe.',
+                ],
+            ],
             'imports' => [
                 'create' => [
                     'action' => 'Action',
@@ -1999,7 +2039,7 @@ return [
                     'info' => 'Atualize suas configurações gerais aqui.',
                     'locale-settings' => [
                         'title' => 'Configurações de Idioma',
-                        'title-info' => 'Define o idioma usado na interface do usuário.',
+                        'title-info' => 'Define o idioma usado na interface do painel administrativo. A lista suspensa exibe todos os idiomas disponíveis na sua instalação.',
                     ],
                     'admin-logo' => [
                         'logo-image' => 'Imagem do Logo',
@@ -2038,6 +2078,22 @@ return [
                         'settings' => 'Configurações',
                         'title' => 'Configurações dos Itens de Menu',
                         'trash' => 'Lixeira',
+                    ],
+                    'dashboard' => [
+                        'title' => 'Configurações do Painel',
+                        'info' => 'Aqui podemos configurar o intervalo de datas padrão do painel.',
+                        'date-range' => 'Intervalo de Datas Padrão',
+                        'date-range-info' => 'O período com que o painel é carregado. Os seletores de data no painel ainda podem ser ajustados para uma visualização pontual.',
+                        'custom-days' => 'Intervalo Personalizado (Dias)',
+                        'custom-days-info' => 'Número de dias a consultar quando o intervalo de datas for Personalizado.',
+                        'ranges' => [
+                            '1-month' => '1 Mês',
+                            '3-months' => '3 Meses',
+                            '9-months' => '9 Meses',
+                            '1-year' => '1 Ano',
+                            '2-years' => '2 Anos',
+                            'custom' => 'Personalizado',
+                        ],
                     ],
                     'menu-color' => [
                         'brand-color' => 'Cor da Marca',
@@ -2322,6 +2378,7 @@ return [
     ],
     'validations' => [
         'message' => [
+            'code' => 'O campo deve ser um código válido.',
             'decimal' => 'The :attribute must be a decimal.',
         ],
     ],

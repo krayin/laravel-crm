@@ -1,6 +1,6 @@
 <x-admin::layouts>
     <x-slot:title>
-        @lang('admin::app.quotes.index.title')
+        {{ menu()->getLabel('quotes', 'admin::app.quotes.index.title') }}
     </x-slot>
 
     <v-qoute>
@@ -11,7 +11,7 @@
                     <x-admin::breadcrumbs name="quotes" />
         
                     <div class="text-xl font-bold dark:text-white">
-                        @lang('admin::app.quotes.index.title')
+                        {{ menu()->getLabel('quotes', 'admin::app.quotes.index.title') }}
                     </div>
                 </div>
         
@@ -47,7 +47,7 @@
                         <x-admin::breadcrumbs name="quotes" />
         
                         <div class="text-xl font-bold dark:text-white">
-                            @lang('admin::app.quotes.index.title')
+                            {{ menu()->getLabel('quotes', 'admin::app.quotes.index.title') }}
                         </div>
                     </div>
 

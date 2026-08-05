@@ -1517,6 +1517,46 @@ return [
             ],
         ],
         'data-transfer' => [
+            'importers' => [
+                'persons' => [
+                    'title' => 'Personas',
+                    'validation' => [
+                        'errors' => [
+                            'duplicate-email' => 'Correo electrónico: \'%s\' se encontró más de una vez en el archivo de importación.',
+                            'duplicate-phone' => 'Teléfono: \'%s\' se encontró más de una vez en el archivo de importación.',
+                            'email-not-found' => 'Correo electrónico: \'%s\' no se encontró en el sistema.',
+                        ],
+                    ],
+                ],
+                'products' => [
+                    'title' => 'Productos',
+                    'validation' => [
+                        'errors' => [
+                            'sku-not-found' => 'Producto con el SKU especificado no encontrado.',
+                        ],
+                    ],
+                ],
+                'leads' => [
+                    'title' => 'Clientes Potenciales',
+                    'validation' => [
+                        'errors' => [
+                            'id-not-found' => 'ID: \'%s\' no se encuentra en el sistema.',
+                        ],
+                    ],
+                ],
+            ],
+            'validation' => [
+                'errors' => [
+                    'column-empty-headers' => 'Las columnas número "%s" tienen encabezados vacíos.',
+                    'column-name-invalid' => 'Nombres de columnas no válidos: "%s".',
+                    'column-not-found' => 'No se encontraron las columnas requeridas: %s.',
+                    'column-numbers' => 'El número de columnas no corresponde al número de filas en el encabezado.',
+                    'invalid-attribute' => 'El encabezado contiene atributos no válidos: "%s".',
+                    'system' => 'Ocurrió un error inesperado en el sistema.',
+                    'wrong-quotes' => 'Se usaron comillas curvas en lugar de comillas rectas.',
+                    'already-exists' => 'The :attribute already exists.',
+                ],
+            ],
             'imports' => [
                 'create' => [
                     'action' => 'Acción',
@@ -1999,7 +2039,7 @@ return [
                     'info' => 'Actualiza tus configuraciones generales aquí.',
                     'locale-settings' => [
                         'title' => 'Configuraciones de Idioma',
-                        'title-info' => 'Define el idioma utilizado en la interfaz de usuario, como Árabe (ar), Inglés (en), Español (es), Persa (fa) y Turco (tr).',
+                        'title-info' => 'Define el idioma utilizado en la interfaz del panel de administración. La lista desplegable muestra todos los idiomas disponibles en su instalación.',
                     ],
                     'admin-logo' => [
                         'logo-image' => 'Imagen del Logo',
@@ -2038,6 +2078,22 @@ return [
                         'settings' => 'Configuraciones',
                         'title' => 'Configuraciones de Elementos del Menú',
                         'trash' => 'Papelera',
+                    ],
+                    'dashboard' => [
+                        'title' => 'Configuraciones del Panel',
+                        'info' => 'Aquí podemos configurar el rango de fechas predeterminado del panel.',
+                        'date-range' => 'Rango de Fechas Predeterminado',
+                        'date-range-info' => 'El período con el que se carga el panel. Los selectores de fecha del panel aún se pueden ajustar para una vista puntual.',
+                        'custom-days' => 'Rango Personalizado (Días)',
+                        'custom-days-info' => 'Número de días a consultar cuando el rango de fechas es Personalizado.',
+                        'ranges' => [
+                            '1-month' => '1 mes',
+                            '3-months' => '3 meses',
+                            '9-months' => '9 meses',
+                            '1-year' => '1 año',
+                            '2-years' => '2 años',
+                            'custom' => 'Personalizado',
+                        ],
                     ],
                     'menu-color' => [
                         'brand-color' => 'Color de Marca',
@@ -2322,6 +2378,7 @@ return [
     ],
     'validations' => [
         'message' => [
+            'code' => 'El campo debe ser un código válido.',
             'decimal' => 'El :attribute debe ser un número decimal.',
         ],
     ],

@@ -1519,6 +1519,46 @@ return [
             ],
         ],
         'data-transfer' => [
+            'importers' => [
+                'persons' => [
+                    'title' => 'Persons',
+                    'validation' => [
+                        'errors' => [
+                            'duplicate-email' => 'Email : \'%s\' is found more than once in the import file.',
+                            'duplicate-phone' => 'Phone : \'%s\' is found more than once in the import file.',
+                            'email-not-found' => 'Email : \'%s\' not found in the system.',
+                        ],
+                    ],
+                ],
+                'products' => [
+                    'title' => 'Products',
+                    'validation' => [
+                        'errors' => [
+                            'sku-not-found' => 'Product with specified SKU not found',
+                        ],
+                    ],
+                ],
+                'leads' => [
+                    'title' => 'Leads',
+                    'validation' => [
+                        'errors' => [
+                            'id-not-found' => 'ID : \'%s\' not found in the system.',
+                        ],
+                    ],
+                ],
+            ],
+            'validation' => [
+                'errors' => [
+                    'column-empty-headers' => 'Columns number "%s" have empty headers.',
+                    'column-name-invalid' => 'Invalid column names: "%s".',
+                    'column-not-found' => 'Required columns not found: %s.',
+                    'column-numbers' => 'Number of columns does not correspond to the number of rows in the header.',
+                    'invalid-attribute' => 'Header contains invalid attribute(s): "%s".',
+                    'system' => 'An unexpected system error occurred.',
+                    'wrong-quotes' => 'Curly quotes used instead of straight quotes.',
+                    'already-exists' => 'The :attribute already exists.',
+                ],
+            ],
             'imports' => [
                 'create' => [
                     'action' => 'Action',
@@ -2001,7 +2041,7 @@ return [
                     'info' => 'Update your general settings here.',
                     'locale-settings' => [
                         'title' => 'Locale Settings',
-                        'title-info' => 'Defines the language used in the user interface, such as Arabic (ar), English (en), Spanish (es), Persian(fa) and Turkish (tr).',
+                        'title-info' => 'Defines the language used in the admin panel interface. The dropdown lists every locale available in your installation.',
                     ],
                     'admin-logo' => [
                         'logo-image' => 'Logo Image',
@@ -2040,6 +2080,22 @@ return [
                         'settings' => 'Settings',
                         'title' => 'Menu Item Configurations',
                         'trash' => 'Trash',
+                    ],
+                    'dashboard' => [
+                        'title' => 'Dashboard Configurations',
+                        'info' => 'We can configure the default date range of the dashboard here.',
+                        'date-range' => 'Default Date Range',
+                        'date-range-info' => 'The period the dashboard loads with. The date pickers on the dashboard can still be adjusted for a one-off view.',
+                        'custom-days' => 'Custom Range (Days)',
+                        'custom-days-info' => 'Number of days to look back when the date range is set to Custom.',
+                        'ranges' => [
+                            '1-month' => '1 Month',
+                            '3-months' => '3 Months',
+                            '9-months' => '9 Months',
+                            '1-year' => '1 Year',
+                            '2-years' => '2 Years',
+                            'custom' => 'Custom',
+                        ],
                     ],
                     'menu-color' => [
                         'brand-color' => 'Brand Color',
@@ -2324,6 +2380,7 @@ return [
     ],
     'validations' => [
         'message' => [
+            'code' => 'The field must be a valid code.',
             'decimal' => 'The :attribute must be a decimal.',
         ],
     ],
