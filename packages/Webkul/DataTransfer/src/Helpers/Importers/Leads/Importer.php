@@ -4,7 +4,9 @@ namespace Webkul\DataTransfer\Helpers\Importers\Leads;
 
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Validator;
+use Webkul\Attribute\Models\AttributeValue;
 use Webkul\Attribute\Repositories\AttributeRepository;
 use Webkul\Attribute\Repositories\AttributeValueRepository;
 use Webkul\Core\Contracts\Validations\Decimal;
@@ -85,6 +87,21 @@ class Importer extends AbstractImporter
             $attributeRepository,
             $attributeValueRepository,
         );
+
+        $this->initAttributes();
+    }
+
+    /**
+     * Append the lead attribute codes (including user defined ones) to the list of valid columns
+     * so that custom attributes can be imported alongside the built-in fields.
+     */
+    protected function initAttributes(): void
+    {
+        $attributes = $this->attributeRepository->findWhere(['entity_type' => 'leads']);
+
+        foreach ($attributes as $attribute) {
+            $this->validColumnNames[] = $attribute->code;
+        }
     }
 
     /**
@@ -394,6 +411,13 @@ class Importer extends AbstractImporter
             ];
         }
 
+        /**
+         * Nothing to link when none of the rows in this batch reference a product.
+         */
+        if (empty($leadProducts['insert'])) {
+            return;
+        }
+
         foreach ($leadProducts['insert'] as $key => $leadProduct) {
             $this->leadProductRepository->deleteWhere([
                 'lead_id' => $leadProduct['lead_id'],
@@ -445,19 +469,30 @@ class Importer extends AbstractImporter
 
         $leads = [];
 
+        $attributeValues = [];
+
         /**
          * Prepare leads for import.
          */
         foreach ($batch->data as $rowData) {
+            /**
+             * Custom (user defined) attribute values are not columns on the leads table; they are
+             * persisted separately via saveAttributeValues(). Only the native columns are written
+             * to the leads table here.
+             */
+            $native = Arr::only($rowData, $this->getEntityColumns());
+
             if (isset($rowData['id'])) {
-                $leads['update'][$rowData['id']] = Arr::except($rowData, ['product']);
+                $leads['update'][$rowData['id']] = $native;
             } else {
                 $leads['insert'][$rowData['title']] = [
-                    ...Arr::except($rowData, ['id', 'product']),
+                    ...Arr::except($native, ['id']),
                     'created_at' => $rowData['created_at'] ?? now(),
                     'updated_at' => $rowData['updated_at'] ?? now(),
                 ];
             }
+
+            $this->prepareAttributeValues($rowData, $attributeValues);
         }
 
         if (! empty($leads['update'])) {
@@ -494,7 +529,80 @@ class Importer extends AbstractImporter
             }
         }
 
+        $this->saveAttributeValues($attributeValues);
+
         return true;
+    }
+
+    /**
+     * The native columns of the leads table (custom attribute values are stored separately).
+     */
+    protected function getEntityColumns(): array
+    {
+        static $columns;
+
+        return $columns ??= Schema::getColumnListing('leads');
+    }
+
+    /**
+     * Map each row's lead attribute values (including user defined ones), keyed by lead title.
+     */
+    public function prepareAttributeValues(array $rowData, array &$attributeValues): void
+    {
+        foreach ($rowData as $code => $value) {
+            if (is_null($value)) {
+                continue;
+            }
+
+            $attribute = $this->attributeRepository->findOneWhere([
+                'code' => $code,
+                'entity_type' => 'leads',
+            ]);
+
+            if (! $attribute) {
+                continue;
+            }
+
+            $attributeTypeValues = array_fill_keys(array_values(AttributeValue::$attributeTypeFields), null);
+
+            $attributeValues[$rowData['title']][] = array_merge($attributeTypeValues, [
+                'attribute_id' => $attribute->id,
+                AttributeValue::$attributeTypeFields[$attribute->type] => $value,
+            ]);
+        }
+    }
+
+    /**
+     * Upsert the collected lead attribute values into the EAV attribute_values table.
+     */
+    public function saveAttributeValues(array $attributeValues): void
+    {
+        $leadAttributeValues = [];
+
+        foreach ($attributeValues as $title => $values) {
+            $lead = $this->leadsStorage->get($title);
+
+            if (! $lead) {
+                continue;
+            }
+
+            foreach ($values as $attribute) {
+                $attribute['entity_id'] = (int) $lead['id'];
+
+                $attribute['unique_id'] = implode('|', array_filter([
+                    $attribute['entity_id'],
+                    $attribute['attribute_id'],
+                ]));
+
+                $attribute['entity_type'] = 'leads';
+
+                $leadAttributeValues[$attribute['unique_id']] = $attribute;
+            }
+        }
+
+        if (! empty($leadAttributeValues)) {
+            $this->attributeValueRepository->upsert($leadAttributeValues, 'unique_id');
+        }
     }
 
     /**

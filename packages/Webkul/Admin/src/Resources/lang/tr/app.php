@@ -1251,6 +1251,7 @@ return [
                 'update-success' => 'Webhook başarıyla güncellendi.',
                 'delete-success' => 'Webhook başarıyla silindi.',
                 'delete-failed' => 'Webhook silinemedi.',
+                'invalid-endpoint' => 'Web kancası uç nokta URL\'si genel bir HTTP veya HTTPS adresi olmalıdır.',
                 'datagrid' => [
                     'id' => 'ID',
                     'delete' => 'Sil',

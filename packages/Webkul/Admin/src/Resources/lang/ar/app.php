@@ -1251,6 +1251,7 @@ return [
                 'update-success' => 'تم تحديث الويب هوك بنجاح.',
                 'delete-success' => 'تم حذف الويب هوك بنجاح.',
                 'delete-failed' => 'لا يمكن حذف الويب هوك.',
+                'invalid-endpoint' => 'يجب أن يكون عنوان URL لنقطة نهاية الويب هوك عنوان HTTP أو HTTPS عامًا.',
                 'datagrid' => [
                     'id' => 'المعرف',
                     'delete' => 'حذف',
