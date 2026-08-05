@@ -53,27 +53,35 @@ class UserController extends Controller
      */
     public function store(): View|JsonResponse
     {
-        $this->validate(request(), [
+        $validated = $this->validate(request(), [
             'email' => 'required|email|unique:users,email',
             'name' => 'required',
             'password' => 'nullable',
             'confirm_password' => 'nullable|required_with:password|same:password',
-            'role_id' => 'required',
+            'role_id' => 'required|integer|exists:roles,id',
             'status' => 'boolean|in:0,1',
             'view_permission' => 'string|in:global,group,individual',
             'groups' => 'required_if:view_permission,group|array',
             'groups.*' => 'integer|exists:groups,id',
         ]);
 
-        $data = request()->all();
+        /**
+         * Reject any role that grants privileges beyond the acting user's own, so an administrator
+         * role (or any broader custom role) can never be granted by a non-administrator.
+         */
+        $this->preventUnauthorizedRoleAssignment($validated['role_id']);
 
-        $this->preventUnauthorizedRoleAssignment();
+        /**
+         * Build the payload from the validated data only; never mass-assign the raw request.
+         */
+        $data = Arr::only($validated, [
+            'name', 'email', 'password', 'role_id', 'status', 'view_permission', 'groups',
+        ]);
 
-        if (
-            isset($data['password'])
-            && $data['password']
-        ) {
+        if (! empty($data['password'])) {
             $data['password'] = bcrypt($data['password']);
+        } else {
+            unset($data['password']);
         }
 
         Event::dispatch('settings.user.create.before');
@@ -101,6 +109,16 @@ class UserController extends Controller
      */
     public function edit(int $id): View|JsonResponse
     {
+        $authUser = auth()->guard('user')->user();
+
+        /**
+         * A non-administrator may only view their own account, mirroring the ownership rule enforced
+         * in update() so another user's details cannot be read by id (IDOR).
+         */
+        if ($authUser->role?->permission_type !== 'all' && $authUser->id != $id) {
+            abort(401, trans('admin::app.errors.unauthorized'));
+        }
+
         $admin = $this->userRepository->with(['role', 'groups'])->findOrFail($id);
 
         return new JsonResponse([
@@ -113,7 +131,20 @@ class UserController extends Controller
      */
     public function update(int $id): JsonResponse
     {
-        $this->validate(request(), [
+        $authUser = auth()->guard('user')->user();
+
+        $isAdministrator = $authUser->role?->permission_type === 'all';
+
+        /**
+         * The `settings.user.users.edit` permission is already enforced by the ACL middleware. Here
+         * we additionally restrict a non-administrator to editing only their own account, which
+         * blocks horizontal access to other accounts (IDOR).
+         */
+        if (! $isAdministrator && $authUser->id != $id) {
+            abort(401, trans('admin::app.errors.unauthorized'));
+        }
+
+        $validated = $this->validate(request(), [
             'email' => 'required|email|unique:users,email,'.$id,
             'name' => 'required|string',
             'password' => 'nullable|string|min:6',
@@ -125,30 +156,44 @@ class UserController extends Controller
             'groups.*' => 'integer|exists:groups,id',
         ]);
 
-        $data = request()->all();
-
-        $authUser = auth()->guard('user')->user();
-
-        $isAdministrator = $authUser->role?->permission_type === 'all';
-
         /**
-         * A user without the `all` permission may only update their own account, and only its
-         * non-privileged fields. This blocks horizontal access to other accounts (IDOR) as well as
-         * vertical privilege escalation, e.g. assigning themselves an administrator role, elevating
-         * their data scope or reactivating a disabled account.
+         * A non-administrator may only edit their own profile fields. Reject — with a clear error
+         * rather than a silent success — any attempt to change privileged fields such as their role
+         * or data scope, which the field whitelist below would otherwise drop unnoticed. Editing
+         * others is already blocked above, so only full administrators reach the role path here and
+         * are trusted to assign any role.
          */
-        if (! $isAdministrator) {
-            if ($authUser->id != $id) {
-                abort(401, trans('admin::app.errors.unauthorized'));
-            }
-
-            $data = Arr::only($data, ['name', 'email', 'password', 'confirm_password']);
+        if (
+            ! $isAdministrator
+            && ((int) request('role_id') !== (int) $authUser->role_id
+                || request('view_permission') !== $authUser->view_permission)
+        ) {
+            abort(401, trans('admin::app.errors.unauthorized'));
         }
 
+        /**
+         * Whitelist writable fields from the validated data. A non-administrator editing their own
+         * account can only touch profile fields, never role, data scope, status, or group membership.
+         */
+        $data = Arr::only($validated, $isAdministrator
+            ? ['name', 'email', 'password', 'role_id', 'status', 'view_permission', 'groups']
+            : ['name', 'email', 'password']
+        );
+
         if (empty($data['password'])) {
-            $data = Arr::except($data, ['password', 'confirm_password']);
+            unset($data['password']);
         } else {
             $data['password'] = bcrypt($data['password']);
+        }
+
+        /**
+         * The primary administrator (id 1) can never be demoted, rescoped, or disabled, so the
+         * system is never left without a full administrator.
+         */
+        if ((int) $id === 1) {
+            $data = Arr::except($data, ['role_id', 'view_permission']);
+
+            $data['status'] = 1;
         }
 
         if ($authUser->id == $id) {
@@ -159,8 +204,8 @@ class UserController extends Controller
 
         $admin = $this->userRepository->update($data, $id);
 
-        if ($isAdministrator) {
-            $admin->groups()->sync($data['groups'] ?? []);
+        if ($isAdministrator && (int) $id !== 1) {
+            $admin->groups()->sync(request('groups') ?? []);
         }
 
         Event::dispatch('settings.user.update.after', $admin);
@@ -169,26 +214,6 @@ class UserController extends Controller
             'data' => $admin,
             'message' => trans('admin::app.settings.users.index.update-success'),
         ]);
-    }
-
-    /**
-     * Prevent a user without the `all` permission from assigning an administrator role.
-     *
-     * Only an administrator may grant a role whose permission type is `all`; this stops a user with
-     * delegated user-management access from escalating privileges by creating or promoting an account
-     * to administrator.
-     */
-    protected function preventUnauthorizedRoleAssignment(): void
-    {
-        if (auth()->guard('user')->user()->role?->permission_type === 'all') {
-            return;
-        }
-
-        $role = $this->roleRepository->find(request('role_id'));
-
-        if ($role?->permission_type === 'all') {
-            abort(401, trans('admin::app.errors.unauthorized'));
-        }
     }
 
     /**
@@ -208,7 +233,10 @@ class UserController extends Controller
      */
     public function destroy(int $id): JsonResponse
     {
-        if ($this->userRepository->count() == 1) {
+        /**
+         * Never delete the last remaining user or the primary administrator (id 1).
+         */
+        if ($this->userRepository->count() == 1 || (int) $id === 1) {
             return new JsonResponse([
                 'message' => trans('admin::app.settings.users.index.last-delete-error'),
             ], 400);
@@ -242,7 +270,10 @@ class UserController extends Controller
         $users = $this->userRepository->findWhereIn('id', $massDestroyRequest->input('indices'));
 
         foreach ($users as $users) {
-            if (auth()->guard('user')->user()->id == $users->id) {
+            /**
+             * Never mass-update the acting user or the primary administrator (id 1).
+             */
+            if (auth()->guard('user')->user()->id == $users->id || (int) $users->id === 1) {
                 continue;
             }
 
@@ -278,7 +309,10 @@ class UserController extends Controller
         $users = $this->userRepository->findWhereIn('id', $massDestroyRequest->input('indices'));
 
         foreach ($users as $user) {
-            if (auth()->guard('user')->user()->id == $user->id) {
+            /**
+             * Never mass-delete the acting user or the primary administrator (id 1).
+             */
+            if (auth()->guard('user')->user()->id == $user->id || (int) $user->id === 1) {
                 continue;
             }
 
@@ -300,5 +334,42 @@ class UserController extends Controller
         return response()->json([
             'message' => trans('admin::app.settings.users.index.mass-delete-success'),
         ]);
+    }
+
+    /**
+     * Guard against privilege escalation through role assignment.
+     *
+     * A full administrator may assign any role, including administrator. Everyone else may only
+     * assign a role whose privileges are a subset of their own, and may never assign a role whose
+     * permission type is `all`. This mirrors the "cannot grant a role above your own" model used by
+     * mainstream CRMs (Salesforce role hierarchy, HubSpot/SuiteCRM/EspoCRM permission sets).
+     */
+    protected function preventUnauthorizedRoleAssignment(?int $roleId): void
+    {
+        $authUser = auth()->guard('user')->user();
+
+        /**
+         * Full administrators are trusted to grant any role.
+         */
+        if ($authUser->role?->permission_type === 'all') {
+            return;
+        }
+
+        $role = $this->roleRepository->find($roleId);
+
+        /**
+         * A non-administrator can never grant the administrator (`all`) role.
+         */
+        if (! $role || $role->permission_type === 'all') {
+            abort(401, trans('admin::app.errors.unauthorized'));
+        }
+
+        /**
+         * The requested role must not contain any permission the acting user does not personally
+         * hold, so a user can never grant privileges beyond their own.
+         */
+        if (! empty(array_diff($role->permissions ?? [], $authUser->role?->permissions ?? []))) {
+            abort(401, trans('admin::app.errors.unauthorized'));
+        }
     }
 }
