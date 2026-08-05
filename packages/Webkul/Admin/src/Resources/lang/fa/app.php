@@ -518,6 +518,8 @@ return [
                     'name' => 'نام',
                     'organization-name' => 'نام سازمان',
                     'tag-name' => 'نام برچسب',
+                    'google-export-not-connected' => 'لطفاً ابتدا حساب Google خود را از تنظیمات > تنظیمات دیگر > مخاطبین گوگل متصل کنید.',
+                    'google-export-started' => 'صدور به مخاطبین گوگل آغاز شد.',
                 ],
             ],
             'view' => [
@@ -908,6 +910,18 @@ return [
                 'does-not-contain' => 'شامل نمی‌شود',
             ],
         ],
+        'google-contacts' => [
+            'index' => [
+                'title' => 'مخاطبین گوگل',
+                'not-connected-info' => 'یک حساب Google متصل کنید تا مخاطبین CRM را به مخاطبین گوگل صادر کنید.',
+                'connected-info' => 'متصل به عنوان :email.',
+                'connect-btn' => 'اتصال حساب Google',
+                'disconnect-btn' => 'قطع اتصال',
+                'connect-success' => 'حساب Google با موفقیت متصل شد.',
+                'connect-failed' => 'اتصال حساب Google شما ممکن نشد. لطفاً دوباره تلاش کنید.',
+                'disconnect-success' => 'اتصال حساب Google با موفقیت قطع شد.',
+            ],
+        ],
         'webforms' => [
             'index' => [
                 'title' => 'فرم‌های وب',
@@ -1237,6 +1251,7 @@ return [
                 'update-success' => 'وب‌هوک با موفقیت به‌روزرسانی شد.',
                 'delete-success' => 'وب‌هوک با موفقیت حذف شد.',
                 'delete-failed' => 'وب‌هوک قابل حذف نیست.',
+                'invalid-endpoint' => 'آدرس نقطه پایانی وب‌هوک باید یک آدرس عمومی HTTP یا HTTPS باشد.',
                 'datagrid' => [
                     'id' => 'شناسه',
                     'delete' => 'حذف',
@@ -1423,6 +1438,7 @@ return [
                 'is-unique' => 'منحصربه‌فرد است',
                 'labels' => 'برچسب‌ها',
                 'general' => 'عمومی',
+                'none' => 'هیچ‌کدام',
                 'numeric' => 'عددی',
                 'decimal' => 'اعشاری',
                 'url' => 'آدرس',
@@ -1481,6 +1497,7 @@ return [
                 'multiselect' => 'چند انتخابی',
                 'name' => 'نام',
                 'quick_add' => 'افزودن سریع',
+                'none' => 'هیچ‌کدام',
                 'numeric' => 'عددی',
                 'option-deleted' => 'گزینه ویژگی با موفقیت حذف شد',
                 'option-name' => 'نام گزینه',
@@ -1996,6 +2013,8 @@ return [
                     'title' => 'تنظیمات',
                     'info' => 'تنظیمات خود را اینجا به‌روزرسانی کنید.',
                     'footer' => [
+                        'show' => 'نمایش «قدرت‌گرفته از»',
+                        'show-info' => 'نوار «قدرت‌گرفته از» را در پایین پنل مدیریت نمایش داده یا پنهان می‌کند.',
                         'info' => 'ما می‌توانیم بخش "توسعه یافته توسط" را اینجا پیکربندی کنیم.',
                         'powered-by' => 'توسعه یافته توسط ویرایشگر متن',
                         'title' => 'پیکربندی بخش "توسعه یافته توسط"',
@@ -2213,6 +2232,10 @@ return [
         'users-info' => 'اضافه، ویرایش یا حذف کاربران از CRM',
         'lead' => 'لید',
         'lead-info' => 'مدیریت همه تنظیمات مربوط به لیدها در CRM',
+        'sidebar' => [
+            'collapse' => 'جمع کردن',
+            'expand' => 'باز کردن',
+        ],
         'quick-add' => [
             'title' => 'افزودن سریع',
             'save' => 'ذخیره',
@@ -2334,6 +2357,13 @@ return [
         'csv' => 'CSV',
         'download' => 'دانلود',
         'export' => 'صادر کردن',
+        'google-contacts' => 'مخاطبین گوگل',
+        'google-contacts-in-progress' => 'در حال صادر کردن مخاطبین شما به گوگل... این ممکن است کمی طول بکشد.',
+        'google-contacts-total' => 'مجموع مخاطبین:',
+        'google-contacts-exported' => 'صادر شده:',
+        'google-contacts-duplicate' => 'از قبل موجود بود:',
+        'google-contacts-failed' => 'ناموفق:',
+        'google-contacts-summary' => 'صدور به پایان رسید: :exported صادر شد، :duplicate از قبل موجود بود، :failed ناموفق بود.',
         'no-records' => 'هیچ سوابقی برای صادر کردن وجود ندارد.',
         'xls' => 'XLS',
         'xlsx' => 'XLSX',

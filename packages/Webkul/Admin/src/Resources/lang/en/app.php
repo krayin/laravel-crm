@@ -519,6 +519,8 @@ return [
                     'name' => 'Name',
                     'organization-name' => 'Organization Name',
                     'tag-name' => 'Tag Name',
+                    'google-export-not-connected' => 'Please connect your Google account first from Settings > Other Settings > Google Contacts.',
+                    'google-export-started' => 'Export to Google Contacts started.',
                 ],
             ],
             'view' => [
@@ -909,6 +911,19 @@ return [
                 'does-not-contain' => 'Does not contain',
             ],
         ],
+        'google-contacts' => [
+            'index' => [
+                'title' => 'Google Contacts',
+                'not-connected-info' => 'Connect a Google account to export CRM contacts to Google Contacts.',
+                'connected-info' => 'Connected as :email.',
+                'connect-btn' => 'Connect Google Account',
+                'disconnect-btn' => 'Disconnect',
+                'connect-success' => 'Google account connected successfully.',
+                'connect-failed' => 'Unable to connect your Google account. Please try again.',
+                'disconnect-success' => 'Google account disconnected successfully.',
+            ],
+        ],
+
         'webforms' => [
             'index' => [
                 'title' => 'Webforms',
@@ -1238,6 +1253,7 @@ return [
                 'update-success' => 'Webhook updated successfully.',
                 'delete-success' => 'Webhook deleted successfully.',
                 'delete-failed' => 'Webhook can not be deleted.',
+                'invalid-endpoint' => 'The webhook endpoint URL must be a public HTTP or HTTPS address.',
                 'datagrid' => [
                     'id' => 'ID',
                     'delete' => 'Delete',
@@ -1424,6 +1440,7 @@ return [
                 'is-unique' => 'Is Unique',
                 'labels' => 'Labels',
                 'general' => 'General',
+                'none' => 'None',
                 'numeric' => 'Numeric',
                 'decimal' => 'Decimal',
                 'url' => 'Url',
@@ -1482,6 +1499,7 @@ return [
                 'multiselect' => 'Multiselect',
                 'name' => 'Name',
                 'quick_add' => 'Quick Add',
+                'none' => 'None',
                 'numeric' => 'Numeric',
                 'option-deleted' => 'Attribute Option is deleted successfully',
                 'option-name' => 'Option Name',
@@ -1997,6 +2015,8 @@ return [
                     'title' => 'Settings',
                     'info' => 'Update your settings here.',
                     'footer' => [
+                        'show' => 'Show Powered By',
+                        'show-info' => 'Show or hide the "Powered by" bar at the bottom of the admin panel.',
                         'info' => 'We can configure the powered by section here.',
                         'powered-by' => 'Powered by text editor',
                         'title' => 'Powered by Section Configurations',
@@ -2214,6 +2234,10 @@ return [
         'users-info' => 'Add, edit or delete users from CRM',
         'lead' => 'Lead',
         'lead-info' => 'Manage all your leads related settings in the CRM',
+        'sidebar' => [
+            'collapse' => 'Collapse',
+            'expand' => 'Expand',
+        ],
         'quick-add' => [
             'title' => 'Quick Add',
             'save' => 'Save',
@@ -2335,6 +2359,13 @@ return [
         'csv' => 'CSV',
         'download' => 'Download',
         'export' => 'Export',
+        'google-contacts' => 'Google Contacts',
+        'google-contacts-in-progress' => 'Exporting your contacts to Google… this may take a moment.',
+        'google-contacts-total' => 'Total Contacts:',
+        'google-contacts-exported' => 'Exported:',
+        'google-contacts-duplicate' => 'Already Existed:',
+        'google-contacts-failed' => 'Failed:',
+        'google-contacts-summary' => 'Export finished: :exported exported, :duplicate already existed, :failed failed.',
         'no-records' => 'Nothing to export',
         'xls' => 'XLS',
         'xlsx' => 'XLSX',

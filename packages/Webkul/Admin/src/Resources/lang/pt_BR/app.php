@@ -518,6 +518,8 @@ return [
                     'name' => 'Nome',
                     'organization-name' => 'Nome da Empresa',
                     'tag-name' => 'Nome da Tag',
+                    'google-export-not-connected' => 'Conecte sua conta do Google primeiro em Configurações > Outras Configurações > Google Contacts.',
+                    'google-export-started' => 'Exportação para o Google Contacts iniciada.',
                 ],
             ],
             'view' => [
@@ -908,6 +910,18 @@ return [
                 'does-not-contain' => 'Não contém',
             ],
         ],
+        'google-contacts' => [
+            'index' => [
+                'title' => 'Google Contacts',
+                'not-connected-info' => 'Conecte uma conta do Google para exportar contatos do CRM para o Google Contacts.',
+                'connected-info' => 'Conectado como :email.',
+                'connect-btn' => 'Conectar Conta do Google',
+                'disconnect-btn' => 'Desconectar',
+                'connect-success' => 'Conta do Google conectada com sucesso.',
+                'connect-failed' => 'Não foi possível conectar sua conta do Google. Tente novamente.',
+                'disconnect-success' => 'Conta do Google desconectada com sucesso.',
+            ],
+        ],
         'webforms' => [
             'index' => [
                 'title' => 'Webforms',
@@ -1237,6 +1251,7 @@ return [
                 'update-success' => 'Webhook atualizado com sucesso.',
                 'delete-success' => 'Webhook deletado com sucesso.',
                 'delete-failed' => 'Webhook não pode ser deletado.',
+                'invalid-endpoint' => 'A URL do endpoint do webhook deve ser um endereço HTTP ou HTTPS público.',
                 'datagrid' => [
                     'id' => 'ID',
                     'delete' => 'Deletar',
@@ -1423,6 +1438,7 @@ return [
                 'is-unique' => 'É Único',
                 'labels' => 'Rótulos',
                 'general' => 'Geral',
+                'none' => 'Nenhum',
                 'numeric' => 'Numérico',
                 'decimal' => 'Decimal',
                 'url' => 'URL',
@@ -1481,6 +1497,7 @@ return [
                 'multiselect' => 'Multiseleção',
                 'name' => 'Nome',
                 'quick_add' => 'Adicionar Rápido',
+                'none' => 'Nenhum',
                 'numeric' => 'Numérico',
                 'option-deleted' => 'Opção de Atributo eliminada com sucesso',
                 'option-name' => 'Nome da Opção',
@@ -1996,6 +2013,8 @@ return [
                     'title' => 'Configurações',
                     'info' => 'Atualize suas configurações aqui.',
                     'footer' => [
+                        'show' => 'Exibir "Desenvolvido por"',
+                        'show-info' => 'Exibe ou oculta a barra "Desenvolvido por" na parte inferior do painel administrativo.',
                         'info' => 'Podemos configurar a seção "Desenvolvido por" aqui.',
                         'powered-by' => 'Editor de texto "Desenvolvido por"',
                         'title' => 'Configurações da Seção "Desenvolvido por"',
@@ -2213,6 +2232,10 @@ return [
         'users-info' => 'Adicionar, editar ou excluir usuários do CRM',
         'lead' => 'Negócio',
         'lead-info' => 'Gerencie todas as configurações relacionadas aos Negócios no CRM',
+        'sidebar' => [
+            'collapse' => 'Recolher',
+            'expand' => 'Expandir',
+        ],
         'quick-add' => [
             'title' => 'Adição rápida',
             'save' => 'Salvar',
@@ -2334,6 +2357,13 @@ return [
         'csv' => 'CSV',
         'download' => 'Download',
         'export' => 'Exportar',
+        'google-contacts' => 'Google Contacts',
+        'google-contacts-in-progress' => 'Exportando seus contatos para o Google… isso pode levar um momento.',
+        'google-contacts-total' => 'Total de Contatos:',
+        'google-contacts-exported' => 'Exportados:',
+        'google-contacts-duplicate' => 'Já Existiam:',
+        'google-contacts-failed' => 'Falharam:',
+        'google-contacts-summary' => 'Exportação concluída: :exported exportados, :duplicate já existiam, :failed falharam.',
         'no-records' => 'Nenhum registro encontrado.',
         'xls' => 'XLS',
         'xlsx' => 'XLSX',

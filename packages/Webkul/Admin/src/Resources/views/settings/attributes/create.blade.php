@@ -437,6 +437,10 @@
                                     @change="inputValidation=true"
                                 >
                                     <!-- Here! All Needed types are defined -->
+                                    <option value="">
+                                        @lang('admin::app.settings.attributes.create.none')
+                                    </option>
+
                                     @foreach(['numeric', 'email', 'decimal', 'url'] as $type)
                                         <option value="{{ $type }}">
                                             @lang('admin::app.settings.attributes.create.' . $type)

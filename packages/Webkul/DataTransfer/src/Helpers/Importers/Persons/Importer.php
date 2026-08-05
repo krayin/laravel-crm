@@ -5,6 +5,7 @@ namespace Webkul\DataTransfer\Helpers\Importers\Persons;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Validator;
 use Webkul\Attribute\Repositories\AttributeRepository;
 use Webkul\Attribute\Repositories\AttributeValueRepository;
@@ -91,6 +92,31 @@ class Importer extends AbstractImporter
             $attributeRepository,
             $attributeValueRepository,
         );
+
+        $this->initAttributes();
+    }
+
+    /**
+     * Append the person attribute codes (including user defined ones) to the list of valid columns
+     * so that custom attributes can be imported alongside the built-in fields.
+     */
+    protected function initAttributes(): void
+    {
+        $attributes = $this->attributeRepository->findWhere(['entity_type' => 'persons']);
+
+        foreach ($attributes as $attribute) {
+            $this->validColumnNames[] = $attribute->code;
+        }
+    }
+
+    /**
+     * The native columns of the persons table (custom attribute values are stored separately).
+     */
+    protected function getEntityColumns(): array
+    {
+        static $columns;
+
+        return $columns ??= Schema::getColumnListing('persons');
     }
 
     /**
@@ -151,9 +177,9 @@ class Importer extends AbstractImporter
          */
         $validator = Validator::make($rowData, [
             ...$this->getValidationRules('persons', $rowData),
-            'organization_id' => 'required|exists:organizations,id',
+            'organization_id' => 'nullable|exists:organizations,id',
             'user_id' => 'required|exists:users,id',
-            'contact_numbers' => 'required|array',
+            'contact_numbers' => 'nullable|array',
             'contact_numbers.*.value' => 'required|numeric',
             'contact_numbers.*.label' => 'required|in:home,work',
             'emails' => 'required|array',
@@ -336,11 +362,18 @@ class Importer extends AbstractImporter
 
             $rowData['unique_id'] = "{$rowData['user_id']}|{$rowData['organization_id']}|{$email}|{$contactNumber[0]['value']}";
 
+            /**
+             * Custom (user defined) attribute values are not columns on the persons table; they are
+             * persisted separately via saveAttributeValues(). Only the native columns are written
+             * to the persons table here.
+             */
+            $native = Arr::only($rowData, $this->getEntityColumns());
+
             if ($this->isEmailExist($email)) {
-                $persons['update'][$email] = $rowData;
+                $persons['update'][$email] = $native;
             } else {
                 $persons['insert'][$email] = [
-                    ...$rowData,
+                    ...$native,
                     'created_at' => $rowData['created_at'] ?? now(),
                     'updated_at' => $rowData['updated_at'] ?? now(),
                 ];
@@ -427,13 +460,10 @@ class Importer extends AbstractImporter
                 continue;
             }
 
-            $where = ['code' => $code];
-
-            if ($code === 'name') {
-                $where['entity_type'] = 'persons';
-            }
-
-            $attribute = $this->attributeRepository->findOneWhere($where);
+            $attribute = $this->attributeRepository->findOneWhere([
+                'code' => $code,
+                'entity_type' => 'persons',
+            ]);
 
             if (! $attribute) {
                 continue;

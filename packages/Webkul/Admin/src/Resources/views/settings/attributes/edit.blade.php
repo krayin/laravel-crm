@@ -471,6 +471,10 @@
                                         disabled="disabled"
                                     >
                                         <!-- Here! All Needed types are defined -->
+                                        <option value="" {{ ! $attribute->validation ? 'selected' : '' }}>
+                                            @lang('admin::app.settings.attributes.edit.none')
+                                        </option>
+
                                         @foreach(['numeric', 'email', 'decimal', 'url'] as $type)
                                             <option value="{{ $type }}" {{ $attribute->validation == $type ? 'selected' : '' }}>
                                                 @lang('admin::app.settings.attributes.edit.' . $type)

@@ -24,7 +24,7 @@
 3. [Requirements](#requirements)
 4. [Installation & Configuration](#installation-and-configuration)
 4. [Docker Installation](https://devdocs.krayincrm.com/2.0/introduction/docker.html)
-5. [Krayin Cloud System](#krayin-cloud-system)
+5. [Krayin Cloud System](#krayin-cloud-hosting)
 6. [License](#license)
 7. [Security Vulnerabilities](#security-vulnerabilities)
 

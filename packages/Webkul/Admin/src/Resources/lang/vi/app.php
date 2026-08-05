@@ -518,6 +518,8 @@ return [
                     'name' => 'Tên',
                     'organization-name' => 'Tên Tổ chức',
                     'tag-name' => 'Tên thẻ',
+                    'google-export-not-connected' => 'Vui lòng kết nối tài khoản Google trước trong Cài đặt > Cài đặt khác > Google Contacts.',
+                    'google-export-started' => 'Đã bắt đầu xuất sang Google Contacts.',
                 ],
             ],
             'view' => [
@@ -908,6 +910,18 @@ return [
                 'does-not-contain' => 'Không chứa',
             ],
         ],
+        'google-contacts' => [
+            'index' => [
+                'title' => 'Google Contacts',
+                'not-connected-info' => 'Kết nối một tài khoản Google để xuất danh bạ CRM sang Google Contacts.',
+                'connected-info' => 'Đã kết nối với :email.',
+                'connect-btn' => 'Kết Nối Tài Khoản Google',
+                'disconnect-btn' => 'Ngắt Kết Nối',
+                'connect-success' => 'Kết nối tài khoản Google thành công.',
+                'connect-failed' => 'Không thể kết nối tài khoản Google của bạn. Vui lòng thử lại.',
+                'disconnect-success' => 'Đã ngắt kết nối tài khoản Google thành công.',
+            ],
+        ],
         'webforms' => [
             'index' => [
                 'title' => 'Biểu mẫu Web',
@@ -1237,6 +1251,7 @@ return [
                 'update-success' => 'Webhook đã được cập nhật thành công.',
                 'delete-success' => 'Webhook đã được xóa thành công.',
                 'delete-failed' => 'Webhook không thể bị xóa.',
+                'invalid-endpoint' => 'URL điểm cuối webhook phải là địa chỉ HTTP hoặc HTTPS công khai.',
                 'datagrid' => [
                     'id' => 'ID',
                     'delete' => 'Xóa',
@@ -1423,6 +1438,7 @@ return [
                 'is-unique' => 'Là Độc Nhất',
                 'labels' => 'Nhãn',
                 'general' => 'Chung',
+                'none' => 'Không có',
                 'numeric' => 'Số',
                 'decimal' => 'Thập Phân',
                 'url' => 'Url',
@@ -1481,6 +1497,7 @@ return [
                 'multiselect' => 'Chọn Nhiều',
                 'name' => 'Tên',
                 'quick_add' => 'Thêm Nhanh',
+                'none' => 'Không có',
                 'numeric' => 'Số',
                 'option-deleted' => 'Tùy chọn thuộc tính đã được xóa thành công',
                 'option-name' => 'Tên Tùy Chọn',
@@ -1996,6 +2013,8 @@ return [
                     'title' => 'Cài đặt',
                     'info' => 'Cập nhật cài đặt của bạn tại đây.',
                     'footer' => [
+                        'show' => 'Hiển thị "Powered By"',
+                        'show-info' => 'Hiển thị hoặc ẩn thanh "Powered by" ở cuối bảng quản trị.',
                         'info' => 'Chúng ta có thể cấu hình phần "Powered by" ở đây.',
                         'powered-by' => 'Trình soạn thảo văn bản "Powered by"',
                         'title' => 'Cấu hình phần "Powered by"',
@@ -2213,6 +2232,10 @@ return [
         'users-info' => 'Thêm, chỉnh sửa hoặc xóa người dùng khỏi CRM',
         'lead' => 'Lead',
         'lead-info' => 'Quản lý tất cả các cài đặt liên quan đến leads trong CRM',
+        'sidebar' => [
+            'collapse' => 'Thu gọn',
+            'expand' => 'Mở rộng',
+        ],
         'quick-add' => [
             'title' => 'Thêm nhanh',
             'save' => 'Lưu',
@@ -2334,6 +2357,13 @@ return [
         'csv' => 'CSV',
         'download' => 'Tải Xuống',
         'export' => 'Xuất',
+        'google-contacts' => 'Google Contacts',
+        'google-contacts-in-progress' => 'Đang xuất danh bạ của bạn sang Google... việc này có thể mất một chút thời gian.',
+        'google-contacts-total' => 'Tổng Số Liên Hệ:',
+        'google-contacts-exported' => 'Đã Xuất:',
+        'google-contacts-duplicate' => 'Đã Tồn Tại:',
+        'google-contacts-failed' => 'Thất Bại:',
+        'google-contacts-summary' => 'Xuất hoàn tất: :exported đã xuất, :duplicate đã tồn tại, :failed thất bại.',
         'no-records' => 'Không có bản ghi nào được tìm thấy.',
         'xls' => 'XLS',
         'xlsx' => 'XLSX',

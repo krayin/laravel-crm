@@ -518,6 +518,8 @@ return [
                     'name' => 'الاسم',
                     'organization-name' => 'اسم المؤسسة',
                     'tag-name' => 'اسم الوسم',
+                    'google-export-not-connected' => 'يرجى توصيل حساب Google أولاً من الإعدادات > إعدادات أخرى > جهات اتصال Google.',
+                    'google-export-started' => 'بدأ التصدير إلى جهات اتصال Google.',
                 ],
             ],
             'view' => [
@@ -908,6 +910,18 @@ return [
                 'does-not-contain' => 'لا يحتوي',
             ],
         ],
+        'google-contacts' => [
+            'index' => [
+                'title' => 'جهات اتصال Google',
+                'not-connected-info' => 'قم بتوصيل حساب Google لتصدير جهات اتصال CRM إلى جهات اتصال Google.',
+                'connected-info' => 'متصل باسم :email.',
+                'connect-btn' => 'ربط حساب Google',
+                'disconnect-btn' => 'قطع الاتصال',
+                'connect-success' => 'تم ربط حساب Google بنجاح.',
+                'connect-failed' => 'تعذر ربط حساب Google الخاص بك. يرجى المحاولة مرة أخرى.',
+                'disconnect-success' => 'تم فصل حساب Google بنجاح.',
+            ],
+        ],
         'webforms' => [
             'index' => [
                 'title' => 'نماذج الويب',
@@ -1237,6 +1251,7 @@ return [
                 'update-success' => 'تم تحديث الويب هوك بنجاح.',
                 'delete-success' => 'تم حذف الويب هوك بنجاح.',
                 'delete-failed' => 'لا يمكن حذف الويب هوك.',
+                'invalid-endpoint' => 'يجب أن يكون عنوان URL لنقطة نهاية الويب هوك عنوان HTTP أو HTTPS عامًا.',
                 'datagrid' => [
                     'id' => 'المعرف',
                     'delete' => 'حذف',
@@ -1423,6 +1438,7 @@ return [
                 'is-unique' => 'فريد',
                 'labels' => 'التسميات',
                 'general' => 'عام',
+                'none' => 'بدون',
                 'numeric' => 'رقمي',
                 'decimal' => 'عشري',
                 'url' => 'رابط',
@@ -1481,6 +1497,7 @@ return [
                 'multiselect' => 'اختيار متعدد',
                 'name' => 'الاسم',
                 'quick_add' => 'إضافة سريعة',
+                'none' => 'بدون',
                 'numeric' => 'رقمي',
                 'option-deleted' => 'تم حذف خيار الخاصية بنجاح',
                 'option-name' => 'اسم الخيار',
@@ -1996,6 +2013,8 @@ return [
                     'title' => 'الإعدادات',
                     'info' => 'قم بتحديث إعداداتك هنا.',
                     'footer' => [
+                        'show' => 'إظهار "مدعوم بواسطة"',
+                        'show-info' => 'إظهار أو إخفاء شريط "مدعوم بواسطة" أسفل لوحة التحكم.',
                         'info' => 'يمكننا تكوين قسم "تم تطويره بواسطة" هنا.',
                         'powered-by' => 'محرر نص "تم تطويره بواسطة"',
                         'title' => 'إعدادات قسم "تم تطويره بواسطة"',
@@ -2213,6 +2232,10 @@ return [
         'users-info' => 'إضافة أو تعديل أو حذف المستخدمين من نظام CRM',
         'lead' => 'عميل محتمل',
         'lead-info' => 'إدارة جميع إعدادات العملاء المحتملين الخاصة بك في نظام CRM',
+        'sidebar' => [
+            'collapse' => 'طي',
+            'expand' => 'توسيع',
+        ],
         'quick-add' => [
             'title' => 'إضافة سريعة',
             'save' => 'حفظ',
@@ -2334,6 +2357,13 @@ return [
         'csv' => 'CSV',
         'download' => 'تحميل',
         'export' => 'تصدير',
+        'google-contacts' => 'جهات اتصال Google',
+        'google-contacts-in-progress' => 'جارٍ تصدير جهات الاتصال إلى Google... قد يستغرق هذا بعض الوقت.',
+        'google-contacts-total' => 'إجمالي جهات الاتصال:',
+        'google-contacts-exported' => 'تم التصدير:',
+        'google-contacts-duplicate' => 'موجود مسبقًا:',
+        'google-contacts-failed' => 'فشل:',
+        'google-contacts-summary' => 'اكتمل التصدير: تم تصدير :exported، :duplicate موجود مسبقًا، :failed فشل.',
         'no-records' => 'لا توجد سجلات للتصدير',
         'xls' => 'XLS',
         'xlsx' => 'XLSX',

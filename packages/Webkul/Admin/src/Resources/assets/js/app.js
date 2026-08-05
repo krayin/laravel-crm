@@ -62,35 +62,11 @@ window.app = createApp({
             }, 100);
         },
 
-        handleMouseOver(event) {
-            if (this.isMenuActive) {
-                return;
-            }
-
-            const parentElement = event.currentTarget.parentElement;
-
-            if (parentElement.classList.contains('sidebar-collapsed')) {
-                parentElement.classList.remove('sidebar-collapsed');
-
-                parentElement.classList.add('sidebar-not-collapsed');
-            }
-
-        },
-
-        handleMouseLeave(event) {
-            if (this.isMenuActive) {
-                return;
-            }
-
-            const parentElement = event.currentTarget.parentElement;
-
-            if (parentElement.classList.contains('sidebar-not-collapsed')) {
-                parentElement.classList.remove('sidebar-not-collapsed');
-
-                parentElement.classList.add('sidebar-collapsed');
-            }
-        },
-
+        /**
+         * Closes an open submenu flyout when the click lands outside the
+         * sidebar. The sidebar width itself is owned solely by the collapse
+         * toggle, so nothing here touches `sidebar-collapsed`.
+         */
         handleFocusOut(event) {
             const sidebar = this.$refs.sidebar;
 
@@ -99,14 +75,6 @@ window.app = createApp({
                 !sidebar.contains(event.target)
             ) {
                 this.isMenuActive = false;
-
-                const parentElement = sidebar.parentElement;
-
-                if (parentElement.classList.contains('sidebar-not-collapsed')) {
-                    parentElement.classList.remove('sidebar-not-collapsed');
-
-                    parentElement.classList.add('sidebar-collapsed');
-                }
             }
         },
 
