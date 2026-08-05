@@ -2,11 +2,29 @@
 
 This changelog consists of the bug & security fixes and new features being included in the releases listed below.
 
-## **v2.2.5 (Upcoming)**
+## **v2.2.5 (4th of Aug 2026)**
 
-* [feature] Added a collapse/expand toggle to the admin sidebar, matching the Bagisto admin. The choice is remembered across page loads, and page content now reflows to the sidebar width instead of being overlaid by it. The sidebar no longer expands on hover; it is controlled by the toggle only.
+* #2614[security] Fixed unauthenticated installer access and executable email attachment upload vulnerabilities.
 
-* [feature] Added an option to show or hide the "Powered by" bar under Configuration > General > Settings > Powered by Section Configurations.
+* #2612[feature] Added import and export support for custom attributes for Leads and Persons.
+
+* #2609[feature] Added Google Contacts export for Persons with Google account connection, duplicate detection, queued export progress, and result summary.
+
+* #2608[fixed] Added missing "none" key to the Korean locale for attribute validation.
+
+* #2606[feature] Added a collapse/expand toggle to the admin sidebar, matching the Bagisto admin. The choice is remembered across page loads, and page content now reflows to the sidebar width instead of being overlaid by it. The sidebar no longer expands on hover; it is controlled by the toggle only.
+
+* #2606[feature] Added an option to show or hide the "Powered by" bar under Configuration > General > Settings > Powered by Section Configurations.
+
+* #2603[feature] Added Korean translations for the Installer, DataTransfer, WebForm, and Core packages.
+
+* #2602[feature] Added Korean translation support for the Admin package.
+
+* #2600[fixed] Fixed invalid activity calendar .ics date-times by emitting UTC RFC 5545 values.
+
+* #2592[security] Fixed webhook validation to reject internal endpoint URLs.
+
+* #2580[enhancement] Added a "None" option to input validation for text attributes.
 
 ## **v2.2.4 (20th of July 2026)** *Release*
 
