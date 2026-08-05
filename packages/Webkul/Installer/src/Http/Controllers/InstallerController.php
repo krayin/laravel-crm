@@ -59,6 +59,8 @@ class InstallerController extends Controller
      */
     public function envFileSetup(Request $request): JsonResponse
     {
+        $this->abortIfInstalled();
+
         $message = $this->environmentManager->generateEnv($request);
 
         return new JsonResponse(['data' => $message]);
@@ -69,6 +71,8 @@ class InstallerController extends Controller
      */
     public function runMigration(): mixed
     {
+        $this->abortIfInstalled();
+
         return $this->databaseManager->migration();
     }
 
@@ -79,6 +83,8 @@ class InstallerController extends Controller
      */
     public function runSeeder()
     {
+        $this->abortIfInstalled();
+
         $allParameters = request()->allParameters;
 
         $parameter = [
@@ -102,6 +108,8 @@ class InstallerController extends Controller
      */
     public function adminConfigSetup(): bool
     {
+        $this->abortIfInstalled();
+
         $password = password_hash(request()->input('password'), PASSWORD_BCRYPT, ['cost' => 10]);
 
         try {
@@ -124,6 +132,21 @@ class InstallerController extends Controller
             report($th);
 
             return false;
+        }
+    }
+
+    /**
+     * Abort the request when the application has already been installed.
+     *
+     * The installer API endpoints re-write the environment file, run migrations/seeders and overwrite
+     * the administrator account. Once the completion marker exists the installation has finished, so
+     * these endpoints must not run again — this prevents an already installed application from being
+     * reconfigured or its administrator overwritten through the installer routes.
+     */
+    private function abortIfInstalled(): void
+    {
+        if (file_exists(storage_path('installed'))) {
+            abort(403);
         }
     }
 
