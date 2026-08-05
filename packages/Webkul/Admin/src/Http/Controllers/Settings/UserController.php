@@ -127,17 +127,17 @@ class UserController extends Controller
 
         $authUser = auth()->guard('user')->user();
 
+        /**
+         * A user without the `all` permission may only update their own account. Editing any other
+         * user's account is forbidden, so the request is rejected outright rather than silently
+         * dropping individual fields, which would still allow tampering with another user's name,
+         * email or groups (and account takeover through an email change).
+         */
         if (
             $authUser->id != $id
             && $authUser->role?->permission_type !== 'all'
         ) {
-            $data = Arr::except($data, [
-                'password',
-                'confirm_password',
-                'role_id',
-                'status',
-                'view_permission',
-            ]);
+            abort(401, trans('admin::app.errors.unauthorized'));
         }
 
         if (empty($data['password'])) {
