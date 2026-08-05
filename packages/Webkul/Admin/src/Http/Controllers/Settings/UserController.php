@@ -67,6 +67,8 @@ class UserController extends Controller
 
         $data = request()->all();
 
+        $this->preventUnauthorizedRoleAssignment();
+
         if (
             isset($data['password'])
             && $data['password']
@@ -125,13 +127,29 @@ class UserController extends Controller
 
         $data = request()->all();
 
+        $authUser = auth()->guard('user')->user();
+
+        $isAdministrator = $authUser->role?->permission_type === 'all';
+
+        /**
+         * A user without the `all` permission may only update their own account, and only its
+         * non-privileged fields. This blocks horizontal access to other accounts (IDOR) as well as
+         * vertical privilege escalation, e.g. assigning themselves an administrator role, elevating
+         * their data scope or reactivating a disabled account.
+         */
+        if (! $isAdministrator) {
+            if ($authUser->id != $id) {
+                abort(401, trans('admin::app.errors.unauthorized'));
+            }
+
+            $data = Arr::only($data, ['name', 'email', 'password', 'confirm_password']);
+        }
+
         if (empty($data['password'])) {
             $data = Arr::except($data, ['password', 'confirm_password']);
         } else {
             $data['password'] = bcrypt($data['password']);
         }
-
-        $authUser = auth()->guard('user')->user();
 
         if ($authUser->id == $id) {
             $data['status'] = true;
@@ -141,7 +159,9 @@ class UserController extends Controller
 
         $admin = $this->userRepository->update($data, $id);
 
-        $admin->groups()->sync($data['groups'] ?? []);
+        if ($isAdministrator) {
+            $admin->groups()->sync($data['groups'] ?? []);
+        }
 
         Event::dispatch('settings.user.update.after', $admin);
 
@@ -149,6 +169,26 @@ class UserController extends Controller
             'data' => $admin,
             'message' => trans('admin::app.settings.users.index.update-success'),
         ]);
+    }
+
+    /**
+     * Prevent a user without the `all` permission from assigning an administrator role.
+     *
+     * Only an administrator may grant a role whose permission type is `all`; this stops a user with
+     * delegated user-management access from escalating privileges by creating or promoting an account
+     * to administrator.
+     */
+    protected function preventUnauthorizedRoleAssignment(): void
+    {
+        if (auth()->guard('user')->user()->role?->permission_type === 'all') {
+            return;
+        }
+
+        $role = $this->roleRepository->find(request('role_id'));
+
+        if ($role?->permission_type === 'all') {
+            abort(401, trans('admin::app.errors.unauthorized'));
+        }
     }
 
     /**
