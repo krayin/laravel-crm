@@ -374,27 +374,27 @@ return [
     ], [
         'key' => 'settings.inventory',
         'name' => 'admin::app.acl.inventory',
-        'route' => ['admin.settings.warehouse.index'],
+        'route' => ['admin.settings.warehouses.index'],
         'sort' => 3,
     ], [
         'key' => 'settings.inventory.warehouse',
         'name' => 'admin::app.acl.warehouses',
-        'route' => ['admin.settings.warehouse.index'],
+        'route' => ['admin.settings.warehouses.index'],
         'sort' => 1,
     ], [
         'key' => 'settings.inventory.warehouse.create',
         'name' => 'admin::app.acl.create',
-        'route' => ['admin.settings.warehouse.create', 'admin.settings.warehouse.store'],
+        'route' => ['admin.settings.warehouses.create', 'admin.settings.warehouses.store'],
         'sort' => 1,
     ], [
         'key' => 'settings.inventory.warehouse.edit',
         'name' => 'admin::app.acl.edit',
-        'route' => ['admin.settings.warehouse.edit', 'admin.settings.warehouse.update'],
+        'route' => ['admin.settings.warehouses.edit', 'admin.settings.warehouses.update'],
         'sort' => 2,
     ], [
         'key' => 'settings.inventory.warehouse.delete',
         'name' => 'admin::app.acl.delete',
-        'route' => 'admin.settings.warehouse.delete',
+        'route' => 'admin.settings.warehouses.delete',
         'sort' => 3,
     ], [
         'key' => 'settings.automation',
