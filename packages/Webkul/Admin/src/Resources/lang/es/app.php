@@ -2387,6 +2387,12 @@ return [
         'go-back' => 'Volver',
         'support' => 'Si el problema persiste, contáctanos en <a href=":link" class=":class">:email</a> para obtener ayuda.',
         'unauthorized' => 'Esta acción no está autorizada.',
+        'role-exceeds-own' => 'You can only assign a role whose permissions are the same as or fewer than your own.',
+        'user-exceeds-own' => 'You can only manage users whose permissions are the same as or fewer than your own.',
+        'own-privileges' => 'You cannot change your own role or data scope.',
+        'scope-exceeds-own' => 'You cannot grant a data scope wider than your own.',
+        'primary-admin-protected' => 'The primary administrator account is protected and cannot be modified here.',
+        'role-permissions-exceed-own' => 'You can only create or edit roles whose permissions are the same as or fewer than your own.',
 
         '404' => [
             'description' => '¡Ups! La página que estás buscando está de vacaciones. Parece que no pudimos encontrar lo que estabas buscando.',

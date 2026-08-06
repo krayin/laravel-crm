@@ -2387,6 +2387,12 @@ return [
         'go-back' => 'Quay lại',
         'support' => 'Nếu sự cố vẫn tiếp diễn, vui lòng liên hệ với chúng tôi tại <a href=":link" class=":class">:email</a> để được hỗ trợ.',
         'unauthorized' => 'Hành động này không được phép.',
+        'role-exceeds-own' => 'You can only assign a role whose permissions are the same as or fewer than your own.',
+        'user-exceeds-own' => 'You can only manage users whose permissions are the same as or fewer than your own.',
+        'own-privileges' => 'You cannot change your own role or data scope.',
+        'scope-exceeds-own' => 'You cannot grant a data scope wider than your own.',
+        'primary-admin-protected' => 'The primary administrator account is protected and cannot be modified here.',
+        'role-permissions-exceed-own' => 'You can only create or edit roles whose permissions are the same as or fewer than your own.',
 
         '404' => [
             'description' => 'Rất tiếc! Trang bạn đang tìm kiếm hiện không có ở đây. Có vẻ như chúng tôi không thể tìm thấy những gì bạn đang tìm kiếm.',

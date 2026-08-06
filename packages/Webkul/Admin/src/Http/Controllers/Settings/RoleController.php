@@ -65,11 +65,11 @@ class RoleController extends Controller
         if (! $this->canManageRole(request('permission_type'), (array) request('permissions'))) {
             if (request()->ajax()) {
                 return response()->json([
-                    'message' => trans('admin::app.errors.unauthorized'),
+                    'message' => trans('admin::app.errors.role-permissions-exceed-own'),
                 ], 401);
             }
 
-            session()->flash('error', trans('admin::app.errors.unauthorized'));
+            session()->flash('error', trans('admin::app.errors.role-permissions-exceed-own'));
 
             return redirect()->back()->withInput();
         }
@@ -130,7 +130,7 @@ class RoleController extends Controller
          * surfaced as a flash message rather than a 401 page, since this is a standard form submit.
          */
         if (! $this->canManageRole(request('permission_type'), (array) request('permissions'), $role)) {
-            session()->flash('error', trans('admin::app.errors.unauthorized'));
+            session()->flash('error', trans('admin::app.errors.role-permissions-exceed-own'));
 
             return redirect()->back()->withInput();
         }

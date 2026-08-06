@@ -2384,6 +2384,12 @@ return [
         'go-back' => '返回',
         'support' => '如果问题仍然存在，请通过 <a href=":link" class=":class">:email</a> 联系我们获取帮助。',
         'unauthorized' => '此操作未获授权。',
+        'role-exceeds-own' => 'You can only assign a role whose permissions are the same as or fewer than your own.',
+        'user-exceeds-own' => 'You can only manage users whose permissions are the same as or fewer than your own.',
+        'own-privileges' => 'You cannot change your own role or data scope.',
+        'scope-exceeds-own' => 'You cannot grant a data scope wider than your own.',
+        'primary-admin-protected' => 'The primary administrator account is protected and cannot be modified here.',
+        'role-permissions-exceed-own' => 'You can only create or edit roles whose permissions are the same as or fewer than your own.',
         '404' => [
             'description' => '哎呀！您要找的页面去度假了。我们似乎找不到您所搜索的内容。',
             'title' => '404 页面未找到',

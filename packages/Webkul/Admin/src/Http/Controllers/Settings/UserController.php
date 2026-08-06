@@ -204,7 +204,7 @@ class UserController extends Controller
             && ((int) request('role_id') !== (int) $authUser->role_id
                 || request('view_permission') !== $authUser->view_permission)
         ) {
-            abort(401, trans('admin::app.errors.unauthorized'));
+            abort(401, trans('admin::app.errors.own-privileges'));
         }
 
         /**
@@ -240,7 +240,7 @@ class UserController extends Controller
                 || request('view_permission') !== $targetUser->view_permission
                 || (request()->filled('status') && ! (int) request('status'))
             ) {
-                abort(401, trans('admin::app.errors.unauthorized'));
+                abort(401, trans('admin::app.errors.primary-admin-protected'));
             }
 
             $data['status'] = 1;
@@ -432,7 +432,7 @@ class UserController extends Controller
          * A non-administrator can never grant the administrator (`all`) role.
          */
         if (! $role || $role->permission_type === 'all') {
-            abort(401, trans('admin::app.errors.unauthorized'));
+            abort(401, trans('admin::app.errors.role-exceeds-own'));
         }
 
         /**
@@ -440,7 +440,7 @@ class UserController extends Controller
          * hold, so a user can never grant privileges beyond their own.
          */
         if (! empty(array_diff($role->permissions ?? [], $authUser->role?->permissions ?? []))) {
-            abort(401, trans('admin::app.errors.unauthorized'));
+            abort(401, trans('admin::app.errors.role-exceeds-own'));
         }
     }
 
@@ -469,7 +469,7 @@ class UserController extends Controller
         $ceiling = max($rank[$authUser->view_permission] ?? 0, $rank[$currentScope] ?? 0);
 
         if (($rank[$scope] ?? 0) > $ceiling) {
-            abort(401, trans('admin::app.errors.unauthorized'));
+            abort(401, trans('admin::app.errors.scope-exceeds-own'));
         }
     }
 
@@ -506,7 +506,7 @@ class UserController extends Controller
     protected function preventManagingHigherPrivilegedUser($targetUser): void
     {
         if (! $this->canManageUser($targetUser)) {
-            abort(401, trans('admin::app.errors.unauthorized'));
+            abort(401, trans('admin::app.errors.user-exceeds-own'));
         }
     }
 }

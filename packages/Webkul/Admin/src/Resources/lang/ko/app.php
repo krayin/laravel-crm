@@ -2384,6 +2384,12 @@ return [
         'go-back' => '뒤로 가기',
         'support' => '문제가 계속되면 <a href=":link" class=":class">:email</a>(으)로 문의해 주세요.',
         'unauthorized' => '이 작업은 권한이 없습니다.',
+        'role-exceeds-own' => 'You can only assign a role whose permissions are the same as or fewer than your own.',
+        'user-exceeds-own' => 'You can only manage users whose permissions are the same as or fewer than your own.',
+        'own-privileges' => 'You cannot change your own role or data scope.',
+        'scope-exceeds-own' => 'You cannot grant a data scope wider than your own.',
+        'primary-admin-protected' => 'The primary administrator account is protected and cannot be modified here.',
+        'role-permissions-exceed-own' => 'You can only create or edit roles whose permissions are the same as or fewer than your own.',
         '404' => [
             'description' => '이런! 찾으시는 페이지가 자리를 비웠습니다. 요청하신 내용을 찾을 수 없습니다.',
             'title' => '404 페이지를 찾을 수 없습니다',
