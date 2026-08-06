@@ -197,7 +197,7 @@
                         input-type="checkbox"
                         value-field="key"
                         id-field="key"
-                        :items="json_encode(acl()->getItems())"
+                        :items="json_encode(acl()->getAuthorizedItems())"
                         :value="json_encode($role->permissions ?? [])"
                         :fallback-locale="config('app.fallback_locale')"
                     />

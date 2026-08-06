@@ -26,8 +26,18 @@ class UserDataGrid extends DataGrid
             )
             ->leftJoin('user_groups', 'id', '=', 'user_groups.user_id');
 
+        /**
+         * Scope the listing to the acting user's data scope, mirroring how Krayin scopes lead and
+         * contact records. A `global` scope (or a full administrator) returns null and sees every
+         * user; otherwise the user sees the accounts they created together with the authorized users
+         * themselves — so a user with the `individual` scope sees the users they created, and a
+         * `group` scope sees those created within the group.
+         */
         if ($userIds = bouncer()->getAuthorizedUserIds()) {
-            $queryBuilder->whereIn('id', $userIds);
+            $queryBuilder->where(function ($query) use ($userIds) {
+                $query->whereIn('users.created_by', $userIds)
+                    ->orWhereIn('users.id', $userIds);
+            });
         }
 
         return $queryBuilder;

@@ -5,6 +5,7 @@ namespace Webkul\Admin\DataGrids\Settings;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Facades\DB;
 use Webkul\DataGrid\DataGrid;
+use Webkul\User\Repositories\RoleRepository;
 
 class RoleDataGrid extends DataGrid
 {
@@ -20,6 +21,30 @@ class RoleDataGrid extends DataGrid
                 'roles.description',
                 'roles.permission_type'
             );
+
+        $authUser = auth()->guard('user')->user();
+
+        /**
+         * A full administrator, and any user with the global data scope, sees every role. A group or
+         * individual scope instead sees only the roles they can manage and assign — their own role and
+         * any role whose privileges are a subset of their own, never the administrator role or a role
+         * holding permissions they do not personally have. This mirrors the "cannot manage or grant a
+         * role above your own" model enforced in the controller.
+         */
+        if (
+            $authUser?->role?->permission_type !== 'all'
+            && bouncer()->getAuthorizedUserIds() !== null
+        ) {
+            $ownPermissions = $authUser?->role?->permissions ?? [];
+
+            $manageableRoleIds = app(RoleRepository::class)->all()
+                ->filter(fn ($role) => $role->permission_type !== 'all'
+                    && empty(array_diff($role->permissions ?? [], $ownPermissions)))
+                ->pluck('id')
+                ->all();
+
+            $queryBuilder->whereIn('roles.id', $manageableRoleIds);
+        }
 
         $this->addFilter('id', 'roles.id');
         $this->addFilter('name', 'roles.name');

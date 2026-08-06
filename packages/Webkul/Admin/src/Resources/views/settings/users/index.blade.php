@@ -588,7 +588,12 @@
 
                                 this.$refs.userUpdateAndCreateModal.toggle();
                             })
-                            .catch(error => {});
+                            .catch(error => {
+                                this.$emitter.emit('add-flash', {
+                                    type: 'error',
+                                    message: error.response?.data?.message ?? "@lang('admin::app.errors.unauthorized')",
+                                });
+                            });
                     },
                 },
             });
