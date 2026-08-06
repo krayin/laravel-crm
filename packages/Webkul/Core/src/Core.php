@@ -7,9 +7,12 @@ use Illuminate\Support\Collection;
 use Webkul\Core\Repositories\CoreConfigRepository;
 use Webkul\Core\Repositories\CountryRepository;
 use Webkul\Core\Repositories\CountryStateRepository;
+use Webkul\Core\Traits\Sanitizer;
 
 class Core
 {
+    use Sanitizer;
+
     /**
      * The Krayin version.
      *
