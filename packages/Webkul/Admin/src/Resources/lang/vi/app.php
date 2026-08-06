@@ -1517,6 +1517,46 @@ return [
             ],
         ],
         'data-transfer' => [
+            'importers' => [
+                'persons' => [
+                    'title' => 'Persons',
+                    'validation' => [
+                        'errors' => [
+                            'duplicate-email' => 'Email : \'%s\' is found more than once in the import file.',
+                            'duplicate-phone' => 'Phone : \'%s\' is found more than once in the import file.',
+                            'email-not-found' => 'Email : \'%s\' not found in the system.',
+                        ],
+                    ],
+                ],
+                'products' => [
+                    'title' => 'Products',
+                    'validation' => [
+                        'errors' => [
+                            'sku-not-found' => 'Product with specified SKU not found',
+                        ],
+                    ],
+                ],
+                'leads' => [
+                    'title' => 'Leads',
+                    'validation' => [
+                        'errors' => [
+                            'id-not-found' => 'ID : \'%s\' not found in the system.',
+                        ],
+                    ],
+                ],
+            ],
+            'validation' => [
+                'errors' => [
+                    'column-empty-headers' => 'Columns number "%s" have empty headers.',
+                    'column-name-invalid' => 'Invalid column names: "%s".',
+                    'column-not-found' => 'Required columns not found: %s.',
+                    'column-numbers' => 'Number of columns does not correspond to the number of rows in the header.',
+                    'invalid-attribute' => 'Header contains invalid attribute(s): "%s".',
+                    'system' => 'An unexpected system error occurred.',
+                    'wrong-quotes' => 'Curly quotes used instead of straight quotes.',
+                    'already-exists' => 'The :attribute already exists.',
+                ],
+            ],
             'imports' => [
                 'create' => [
                     'action' => 'Action',
@@ -1999,7 +2039,7 @@ return [
                     'info' => 'Cập nhật cài đặt chung của bạn tại đây.',
                     'locale-settings' => [
                         'title' => 'Cài đặt ngôn ngữ',
-                        'title-info' => 'Định nghĩa ngôn ngữ được sử dụng trong giao diện người dùng, như tiếng Ả Rập (ar), tiếng Anh (en), tiếng Tây Ban Nha (es), tiếng Ba Tư (fa) và tiếng Thổ Nhĩ Kỳ (tr).',
+                        'title-info' => 'Xác định ngôn ngữ được sử dụng trong giao diện bảng quản trị. Danh sách thả xuống hiển thị tất cả ngôn ngữ có sẵn trong bản cài đặt của bạn.',
                     ],
                     'admin-logo' => [
                         'logo-image' => 'Hình ảnh Logo',
@@ -2038,6 +2078,22 @@ return [
                         'settings' => 'Cài đặt',
                         'title' => 'Cấu hình mục menu',
                         'trash' => 'Thùng rác',
+                    ],
+                    'dashboard' => [
+                        'title' => 'Cấu Hình Bảng Điều Khiển',
+                        'info' => 'Chúng ta có thể cấu hình khoảng thời gian mặc định của bảng điều khiển tại đây.',
+                        'date-range' => 'Khoảng Thời Gian Mặc Định',
+                        'date-range-info' => 'Khoảng thời gian bảng điều khiển tải theo mặc định. Bộ chọn ngày trên bảng điều khiển vẫn có thể điều chỉnh cho lần xem tạm thời.',
+                        'custom-days' => 'Khoảng Tùy Chỉnh (Ngày)',
+                        'custom-days-info' => 'Số ngày truy xuất khi khoảng thời gian được đặt là Tùy chỉnh.',
+                        'ranges' => [
+                            '1-month' => '1 Tháng',
+                            '3-months' => '3 Tháng',
+                            '9-months' => '9 Tháng',
+                            '1-year' => '1 Năm',
+                            '2-years' => '2 Năm',
+                            'custom' => 'Tùy chỉnh',
+                        ],
                     ],
                     'menu-color' => [
                         'brand-color' => 'Màu thương hiệu',
@@ -2322,6 +2378,7 @@ return [
     ],
     'validations' => [
         'message' => [
+            'code' => 'Trường phải là một mã hợp lệ.',
             'decimal' => 'The :attribute must be a decimal.',
         ],
     ],

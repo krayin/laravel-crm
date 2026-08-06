@@ -1,6 +1,6 @@
 <x-admin::layouts>
     <x-slot:title>
-        @lang('admin::app.dashboard.index.title')
+        {{ menu()->getLabel('dashboard', 'admin::app.dashboard.index.title') }}
     </x-slot>
 
     <!-- Head Details Section -->
@@ -11,7 +11,7 @@
 
         <div class="grid gap-1.5">
             <p class="text-2xl font-semibold dark:text-white">
-                @lang('admin::app.dashboard.index.title')
+                {{ menu()->getLabel('dashboard', 'admin::app.dashboard.index.title') }}
             </p>
         </div>
 

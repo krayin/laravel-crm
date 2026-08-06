@@ -120,8 +120,14 @@ class LeadRepository extends Repository
             if (! empty($data['person']['id'])) {
                 $person = $this->personRepository->findOrFail($data['person']['id']);
             } else {
+                /**
+                 * Assign the person to the lead owner (falling back to the current user) so that the
+                 * person is not created with a null `user_id`, which would otherwise hide it from the
+                 * person listing for users restricted to group/individual data scope.
+                 */
                 $person = $this->personRepository->create(array_merge($data['person'], [
                     'entity_type' => 'persons',
+                    'user_id' => $data['user_id'] ?? auth()->guard('user')->id(),
                 ]));
             }
 
@@ -171,8 +177,14 @@ class LeadRepository extends Repository
             if (! empty($data['person']['id'])) {
                 $person = $this->personRepository->findOrFail($data['person']['id']);
             } else {
+                /**
+                 * Assign the person to the lead owner (falling back to the current user) so that the
+                 * person is not created with a null `user_id`, which would otherwise hide it from the
+                 * person listing for users restricted to group/individual data scope.
+                 */
                 $person = $this->personRepository->create(array_merge($data['person'], [
                     'entity_type' => 'persons',
+                    'user_id' => $data['user_id'] ?? auth()->guard('user')->id(),
                 ]));
             }
 

@@ -1517,6 +1517,46 @@ return [
             ],
         ],
         'data-transfer' => [
+            'importers' => [
+                'persons' => [
+                    'title' => '담당자',
+                    'validation' => [
+                        'errors' => [
+                            'duplicate-email' => '이메일 : \'%s\'가 가져오기 파일에 두 번 이상 존재합니다.',
+                            'duplicate-phone' => '전화번호 : \'%s\'가 가져오기 파일에 두 번 이상 존재합니다.',
+                            'email-not-found' => '이메일 : \'%s\'를 시스템에서 찾을 수 없습니다.',
+                        ],
+                    ],
+                ],
+                'products' => [
+                    'title' => '상품',
+                    'validation' => [
+                        'errors' => [
+                            'sku-not-found' => '지정한 SKU를 가진 상품을 찾을 수 없습니다',
+                        ],
+                    ],
+                ],
+                'leads' => [
+                    'title' => '리드',
+                    'validation' => [
+                        'errors' => [
+                            'id-not-found' => 'ID : \'%s\'를 시스템에서 찾을 수 없습니다.',
+                        ],
+                    ],
+                ],
+            ],
+            'validation' => [
+                'errors' => [
+                    'column-empty-headers' => '열 번호 "%s"에 빈 헤더가 있습니다.',
+                    'column-name-invalid' => '잘못된 열 이름입니다: "%s".',
+                    'column-not-found' => '필수 열을 찾을 수 없습니다: %s.',
+                    'column-numbers' => '열의 개수가 헤더의 행 개수와 일치하지 않습니다.',
+                    'invalid-attribute' => '헤더에 잘못된 속성이 포함되어 있습니다: "%s".',
+                    'system' => '예기치 않은 시스템 오류가 발생했습니다.',
+                    'wrong-quotes' => '직선 따옴표 대신 곡선 따옴표가 사용되었습니다.',
+                    'already-exists' => ':attribute이(가) 이미 존재합니다.',
+                ],
+            ],
             'imports' => [
                 'create' => [
                     'action' => '작업',
@@ -1999,7 +2039,7 @@ return [
                     'info' => '여기에서 일반 설정을 수정하세요.',
                     'locale-settings' => [
                         'title' => '언어 설정',
-                        'title-info' => '아랍어(ar), 영어(en), 스페인어(es), 페르시아어(fa), 터키어(tr)와 같이 사용자 인터페이스에서 사용할 언어를 정의합니다.',
+                        'title-info' => '관리자 패널 인터페이스에서 사용할 언어를 정의합니다. 드롭다운에는 설치된 모든 사용 가능한 언어가 표시됩니다.',
                     ],
                     'admin-logo' => [
                         'logo-image' => '로고 이미지',
@@ -2038,6 +2078,22 @@ return [
                         'settings' => '설정',
                         'title' => '메뉴 항목 설정',
                         'trash' => '휴지통',
+                    ],
+                    'dashboard' => [
+                        'title' => '대시보드 설정',
+                        'info' => '여기에서 대시보드의 기본 날짜 범위를 설정할 수 있습니다.',
+                        'date-range' => '기본 날짜 범위',
+                        'date-range-info' => '대시보드가 로드될 때 사용하는 기간입니다. 대시보드의 날짜 선택기는 일회성 조회를 위해 계속 변경할 수 있습니다.',
+                        'custom-days' => '사용자 지정 범위(일)',
+                        'custom-days-info' => '날짜 범위를 사용자 지정으로 설정한 경우 조회할 일수입니다.',
+                        'ranges' => [
+                            '1-month' => '1개월',
+                            '3-months' => '3개월',
+                            '9-months' => '9개월',
+                            '1-year' => '1년',
+                            '2-years' => '2년',
+                            'custom' => '사용자 지정',
+                        ],
                     ],
                     'menu-color' => [
                         'brand-color' => '브랜드 색상',
@@ -2319,6 +2375,7 @@ return [
     ],
     'validations' => [
         'message' => [
+            'code' => '이 필드는 유효한 코드여야 합니다.',
             'decimal' => ':attribute 항목은 소수여야 합니다.',
         ],
     ],
