@@ -6,6 +6,8 @@ use enshrined\svgSanitize\data\AllowedAttributes;
 use enshrined\svgSanitize\data\AllowedTags;
 use enshrined\svgSanitize\Sanitizer as MainSanitizer;
 use Exception;
+use HTMLPurifier;
+use HTMLPurifier_Config;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 
@@ -14,6 +16,36 @@ use Illuminate\Support\Facades\Storage;
  */
 trait Sanitizer
 {
+    /**
+     * Sanitize rich-text (TinyMCE/editor) HTML with an allowlist, removing scripts, event handlers,
+     * `javascript:` URIs and other active content while keeping safe formatting and links.
+     *
+     * This provides the server-side boundary that client-side TinyMCE filtering cannot, so a crafted
+     * request submitted directly to an endpoint can never store an executable payload.
+     */
+    public function sanitizeHtml(?string $html): string
+    {
+        if ($html === null || trim($html) === '') {
+            return '';
+        }
+
+        $config = HTMLPurifier_Config::createDefault();
+
+        /**
+         * Disable the on-disk definition cache so the vendor directory is never written to; config
+         * and rich-text saves are infrequent, so the small extra cost is irrelevant.
+         */
+        $config->set('Cache.DefinitionImpl', null);
+
+        /**
+         * Preserve `target="_blank"` links (used by the default footer) while neutralising tab-nabbing.
+         */
+        $config->set('Attr.AllowedFrameTargets', ['_blank']);
+        $config->set('HTML.TargetBlank', true);
+
+        return (new HTMLPurifier($config))->purify($html);
+    }
+
     /**
      * Sanitize an SVG file to remove potentially malicious content.
      */
