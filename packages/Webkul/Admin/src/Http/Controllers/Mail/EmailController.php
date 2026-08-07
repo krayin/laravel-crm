@@ -229,6 +229,14 @@ class EmailController extends Controller
      */
     public function download($id)
     {
+        /**
+         * Downloading an attachment requires the mail view permission — the same permission that
+         * gates the mailbox it belongs to. This closes the missing function-level authorization that
+         * let any authenticated user retrieve an attachment by its id, independent of the ACL route
+         * map (defense in depth).
+         */
+        abort_unless(bouncer()->hasPermission('mail.view'), 401, trans('admin::app.errors.unauthorized'));
+
         $attachment = $this->attachmentRepository->findOrFail($id);
 
         try {

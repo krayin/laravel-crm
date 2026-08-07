@@ -23,6 +23,16 @@ class SanitizeUrl
 
         $route = $request->route('route');
 
+        /**
+         * This middleware only sanitizes and whitelists the mailbox folder parameter. Routes in the
+         * mail group that do not carry a `route` parameter — such as the attachment download — are not
+         * folder listings, so they must pass through untouched; validating them against the folder
+         * whitelist would wrongly reject them (the attachment download link is a plain, non-ajax href).
+         */
+        if (is_null($route)) {
+            return $next($request);
+        }
+
         $sanitizedRoute = Str::of($route)->ascii()->lower()->replaceMatches('/[^a-z0-9_-]/', '')->__toString();
 
         $request->route()->setParameter('route', $sanitizedRoute);
