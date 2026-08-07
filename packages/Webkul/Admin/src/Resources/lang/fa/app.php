@@ -718,6 +718,7 @@ return [
                 'create-btn' => 'ایجاد نقش‌ها',
                 'create-success' => 'نقش با موفقیت ایجاد شد.',
                 'current-role-delete-error' => 'نقش اختصاص داده شده به کاربر فعلی قابل حذف نیست.',
+                'current-role-edit-error' => 'نقش اختصاص داده شده به حساب خودتان قابل ویرایش نیست.',
                 'delete-failed' => 'نقش قابل حذف نیست.',
                 'delete-success' => 'نقش با موفقیت حذف شد.',
                 'last-delete-error' => 'حداقل یک نقش لازم است.',

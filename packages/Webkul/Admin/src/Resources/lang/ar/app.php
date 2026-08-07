@@ -718,6 +718,7 @@ return [
                 'create-btn' => 'إنشاء الأدوار',
                 'create-success' => 'تم إنشاء الدور بنجاح.',
                 'current-role-delete-error' => 'لا يمكن حذف الدور المخصص للمستخدم الحالي.',
+                'current-role-edit-error' => 'لا يمكن تعديل الدور المخصص لحسابك.',
                 'delete-failed' => 'لا يمكن حذف الدور.',
                 'delete-success' => 'تم حذف الدور بنجاح.',
                 'last-delete-error' => 'مطلوب دور واحد على الأقل.',

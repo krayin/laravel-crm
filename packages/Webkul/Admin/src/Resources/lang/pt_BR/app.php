@@ -718,6 +718,7 @@ return [
                 'create-btn' => 'Adicionar Cargos',
                 'create-success' => 'Cargo adicionado com sucesso.',
                 'current-role-delete-error' => 'Não é possível excluir o cargo atribuído ao usuário atual.',
+                'current-role-edit-error' => 'Não é possível editar o cargo atribuído à sua própria conta.',
                 'delete-failed' => 'Não foi possível excluir o cargo.',
                 'delete-success' => 'Cargo excluído com sucesso.',
                 'last-delete-error' => 'É necessário pelo menos um cargo.',

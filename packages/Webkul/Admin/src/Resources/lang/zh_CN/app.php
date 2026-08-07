@@ -718,6 +718,7 @@ return [
                 'create-btn' => '创建角色',
                 'create-success' => '角色创建成功。',
                 'current-role-delete-error' => '无法删除已分配给当前用户的角色。',
+                'current-role-edit-error' => '无法编辑分配给您自己账户的角色。',
                 'delete-failed' => '角色无法删除。',
                 'delete-success' => '角色删除成功。',
                 'last-delete-error' => '至少需要保留一个角色。',

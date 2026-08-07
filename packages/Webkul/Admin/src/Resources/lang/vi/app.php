@@ -718,6 +718,7 @@ return [
                 'create-btn' => 'Tạo Vai trò',
                 'create-success' => 'Vai trò đã được tạo thành công.',
                 'current-role-delete-error' => 'Không thể xóa vai trò đã gán cho người dùng hiện tại.',
+                'current-role-edit-error' => 'Không thể chỉnh sửa vai trò đã gán cho tài khoản của bạn.',
                 'delete-failed' => 'Không thể xóa vai trò.',
                 'delete-success' => 'Vai trò đã được xóa thành công.',
                 'last-delete-error' => 'Cần ít nhất một vai trò.',

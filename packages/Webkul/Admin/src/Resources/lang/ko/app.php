@@ -718,6 +718,7 @@ return [
                 'create-btn' => '역할 생성',
                 'create-success' => '역할이 생성되었습니다.',
                 'current-role-delete-error' => '현재 사용자에게 할당된 역할은 삭제할 수 없습니다.',
+                'current-role-edit-error' => '자신의 계정에 할당된 역할은 편집할 수 없습니다.',
                 'delete-failed' => '역할을 삭제할 수 없습니다.',
                 'delete-success' => '역할이 삭제되었습니다.',
                 'last-delete-error' => '최소 하나의 역할이 필요합니다.',

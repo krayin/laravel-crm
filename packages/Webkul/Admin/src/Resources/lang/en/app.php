@@ -719,6 +719,7 @@ return [
                 'create-btn' => 'Create Roles',
                 'create-success' => 'Role created successfully.',
                 'current-role-delete-error' => 'Can not delete role assigned to the current user.',
+                'current-role-edit-error' => 'Can not edit the role assigned to your own account.',
                 'delete-failed' => 'Role can not be deleted.',
                 'delete-success' => 'Role deleted successfully.',
                 'last-delete-error' => 'At least one role is required.',

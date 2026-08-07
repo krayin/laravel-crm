@@ -718,6 +718,7 @@ return [
                 'create-btn' => 'Crear Roles',
                 'create-success' => 'Rol creado con éxito.',
                 'current-role-delete-error' => 'No se puede eliminar el rol asignado al usuario actual.',
+                'current-role-edit-error' => 'No se puede editar el rol asignado a su propia cuenta.',
                 'delete-failed' => 'No se puede eliminar el rol.',
                 'delete-success' => 'Rol eliminado con éxito.',
                 'last-delete-error' => 'Se requiere al menos un rol.',

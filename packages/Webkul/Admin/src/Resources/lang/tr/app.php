@@ -718,6 +718,7 @@ return [
                 'create-btn' => 'Rol Oluştur',
                 'create-success' => 'Rol başarıyla oluşturuldu.',
                 'current-role-delete-error' => 'Mevcut kullanıcıya atanmış rol silinemedi.',
+                'current-role-edit-error' => 'Kendi hesabınıza atanmış rolü düzenleyemezsiniz.',
                 'delete-failed' => 'Rol silinemedi.',
                 'delete-success' => 'Rol başarıyla silindi.',
                 'last-delete-error' => 'En az bir rol gereklidir.',

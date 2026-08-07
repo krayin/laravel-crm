@@ -99,6 +99,12 @@ class UserController extends Controller
         $this->preventUnauthorizedRoleAssignment($validated['role_id']);
 
         /**
+         * Reject any data scope broader than the acting user's own on the new account — the advisory
+         * abuses `view_permission=global` alongside `role_id`, so both must be constrained on create.
+         */
+        $this->preventUnauthorizedScopeAssignment(request('view_permission'));
+
+        /**
          * Build the payload from the validated data only; never mass-assign the raw request.
          */
         $data = Arr::only($validated, [

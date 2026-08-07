@@ -108,9 +108,20 @@ class RoleController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(int $id): View
+    public function edit(int $id): View|RedirectResponse
     {
         $role = $this->roleRepository->findOrFail($id);
+
+        /**
+         * A user — including a full administrator — may never edit the role currently assigned to
+         * their own account, otherwise they could grant themselves additional permissions by
+         * editing their own role. This mirrors the block on deleting your own role.
+         */
+        if (auth()->guard('user')->user()->role_id == $id) {
+            session()->flash('error', trans('admin::app.settings.roles.index.current-role-edit-error'));
+
+            return redirect()->route('admin.settings.roles.index');
+        }
 
         return view('admin::settings.roles.edit', compact('role'));
     }
@@ -128,6 +139,17 @@ class RoleController extends Controller
         ]);
 
         $role = $this->roleRepository->findOrFail($id);
+
+        /**
+         * A user — including a full administrator — may never edit the role currently assigned to
+         * their own account, otherwise they could grant themselves additional permissions by
+         * editing their own role. This mirrors the block on deleting your own role.
+         */
+        if (auth()->guard('user')->user()->role_id == $id) {
+            session()->flash('error', trans('admin::app.settings.roles.index.current-role-edit-error'));
+
+            return redirect()->back();
+        }
 
         /**
          * A non-administrator may neither modify a role that is broader than their own (such as the
