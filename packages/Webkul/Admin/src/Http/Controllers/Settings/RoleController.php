@@ -83,6 +83,12 @@ class RoleController extends Controller
             'permissions',
         ]);
 
+        /**
+         * Record who created the role so the listing can scope it by the acting user's data scope
+         * (a user with the `individual` scope sees only the roles they created).
+         */
+        $data['created_by'] = auth()->guard('user')->id();
+
         $role = $this->roleRepository->create($data);
 
         Event::dispatch('settings.role.create.after', $role);

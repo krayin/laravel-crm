@@ -6,7 +6,6 @@ use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Webkul\DataGrid\DataGrid;
-use Webkul\User\Repositories\RoleRepository;
 
 class UserDataGrid extends DataGrid
 {
@@ -27,29 +26,17 @@ class UserDataGrid extends DataGrid
             )
             ->leftJoin('user_groups', 'id', '=', 'user_groups.user_id');
 
-        $authUser = auth()->guard('user')->user();
-
         /**
-         * A full administrator, and any user with the global data scope, sees every user. Everyone
-         * else sees the users they can actually manage — themselves and any user whose role holds the
-         * same or fewer permissions than their own — so the listing matches what the controller allows
-         * them to edit or delete, and a user above them (an administrator or a broader role) is hidden.
+         * Scope the listing to the acting user's data scope, mirroring how Krayin scopes lead and
+         * contact records by their owner. A `global` scope (or a full administrator) returns null and
+         * sees every user; a `group` scope sees the users belonging to their group; an `individual`
+         * scope sees the users they created together with their own account. What a user may then edit
+         * or delete is further constrained by the role hierarchy enforced in the controller.
          */
-        if (
-            $authUser?->role?->permission_type !== 'all'
-            && bouncer()->getAuthorizedUserIds() !== null
-        ) {
-            $ownPermissions = $authUser?->role?->permissions ?? [];
-
-            $manageableRoleIds = app(RoleRepository::class)->all()
-                ->filter(fn ($role) => $role->permission_type !== 'all'
-                    && empty(array_diff($role->permissions ?? [], $ownPermissions)))
-                ->pluck('id')
-                ->all();
-
-            $queryBuilder->where(function ($query) use ($manageableRoleIds, $authUser) {
-                $query->whereIn('users.role_id', $manageableRoleIds)
-                    ->orWhere('users.id', $authUser?->id);
+        if ($userIds = bouncer()->getAuthorizedUserIds()) {
+            $queryBuilder->where(function ($query) use ($userIds) {
+                $query->whereIn('users.created_by', $userIds)
+                    ->orWhereIn('users.id', $userIds);
             });
         }
 
