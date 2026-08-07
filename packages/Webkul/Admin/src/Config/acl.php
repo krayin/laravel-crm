@@ -109,7 +109,7 @@ return [
     ], [
         'key' => 'mail.view',
         'name' => 'admin::app.acl.view',
-        'route' => 'admin.mail.view',
+        'route' => ['admin.mail.view', 'admin.mail.attachment_download'],
         'sort' => 7,
     ], [
         'key' => 'mail.edit',
