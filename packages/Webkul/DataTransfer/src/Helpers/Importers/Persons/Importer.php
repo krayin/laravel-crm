@@ -76,6 +76,11 @@ class Importer extends AbstractImporter
     protected array $phones = [];
 
     /**
+     * Cache of resolved person attributes, keyed by attribute code.
+     */
+    protected array $attributeCache = [];
+
+    /**
      * Create a new helper instance.
      *
      * @return void
@@ -370,6 +375,15 @@ class Importer extends AbstractImporter
             $native = Arr::only($rowData, $this->getEntityColumns());
 
             if ($this->isEmailExist($email)) {
+                /**
+                 * Update the existing person by its primary key. Keying the update on the person id
+                 * (resolved from the matched email) rather than the composite `unique_id` — which
+                 * embeds the phone and organization — ensures a revised row whose phone or
+                 * organization changed still updates the existing record instead of inserting a
+                 * duplicate.
+                 */
+                $native['id'] = $this->personStorage->get($email);
+
                 $persons['update'][$email] = $native;
             } else {
                 $persons['insert'][$email] = [
@@ -391,7 +405,7 @@ class Importer extends AbstractImporter
 
             $this->personRepository->upsert(
                 $persons['update'],
-                $this->masterAttributeCode,
+                'id',
             );
         }
 
@@ -456,16 +470,28 @@ class Importer extends AbstractImporter
     public function prepareAttributeValues(array $rowData, array &$attributeValues): void
     {
         foreach ($rowData as $code => $value) {
-            if (is_null($value)) {
+            if (is_null($value) || $value === '') {
                 continue;
             }
 
-            $attribute = $this->attributeRepository->findOneWhere([
-                'code' => $code,
-                'entity_type' => 'persons',
-            ]);
+            $attribute = $this->getPersonAttribute($code);
 
             if (! $attribute) {
+                continue;
+            }
+
+            /**
+             * Convert the raw CSV cell into the value stored for this attribute type — option
+             * labels (or ids) are resolved to their option ids. When a choice value cannot be
+             * resolved the attribute is skipped, so an existing value is never overwritten with an
+             * invalid one (such as the integer `0` a label used to become).
+             */
+            $storedValue = $this->formatAttributeValue($attribute, $value);
+
+            if (
+                is_null($storedValue)
+                && in_array($attribute->type, ['select', 'multiselect', 'checkbox'])
+            ) {
                 continue;
             }
 
@@ -478,10 +504,67 @@ class Importer extends AbstractImporter
             foreach ($emails as $email) {
                 $attributeValues[$email][] = array_merge($attributeTypeValues, [
                     'attribute_id' => $attribute->id,
-                    $typeFields[$attribute->type] => $value,
+                    $typeFields[$attribute->type] => $storedValue,
                 ]);
             }
         }
+    }
+
+    /**
+     * Resolve (and cache) a person attribute by its code.
+     */
+    protected function getPersonAttribute(string $code)
+    {
+        if (array_key_exists($code, $this->attributeCache)) {
+            return $this->attributeCache[$code];
+        }
+
+        return $this->attributeCache[$code] = $this->attributeRepository->findOneWhere([
+            'code' => $code,
+            'entity_type' => 'persons',
+        ]);
+    }
+
+    /**
+     * Convert a raw imported value into the value persisted for the attribute's type.
+     *
+     * Choice attributes (select/multiselect/checkbox) are stored as option ids, so an imported
+     * option label is resolved to its id (a numeric id is accepted as-is). A null return means the
+     * value could not be resolved.
+     */
+    protected function formatAttributeValue($attribute, $value)
+    {
+        if ($attribute->type === 'select') {
+            return $this->resolveOptionId($attribute, $value);
+        }
+
+        if (in_array($attribute->type, ['multiselect', 'checkbox'])) {
+            $ids = collect(explode(',', (string) $value))
+                ->map(fn ($label) => $this->resolveOptionId($attribute, trim($label)))
+                ->filter()
+                ->implode(',');
+
+            return $ids !== '' ? $ids : null;
+        }
+
+        return $value;
+    }
+
+    /**
+     * Resolve an imported option label (case-insensitive) — or a raw option id — to its option id.
+     */
+    protected function resolveOptionId($attribute, $label): ?int
+    {
+        if ($label === null || $label === '') {
+            return null;
+        }
+
+        $option = $attribute->options->first(function ($option) use ($label) {
+            return strcasecmp((string) $option->name, (string) $label) === 0
+                || (is_numeric($label) && (int) $option->id === (int) $label);
+        });
+
+        return $option?->id;
     }
 
     /**
