@@ -61,9 +61,12 @@ class Importer extends AbstractImporter
     protected $permanentAttributes = ['emails'];
 
     /**
-     * Permanent entity column.
+     * Column used to match existing persons when upserting. The person's primary key is used (like
+     * the leads importer) so a re-imported row updates the existing record by id, rather than the
+     * composite `unique_id` which embeds the phone and organization and breaks the match when they
+     * change.
      */
-    protected string $masterAttributeCode = 'unique_id';
+    protected string $masterAttributeCode = 'id';
 
     /**
      * Emails storage.
@@ -405,7 +408,7 @@ class Importer extends AbstractImporter
 
             $this->personRepository->upsert(
                 $persons['update'],
-                'id',
+                $this->masterAttributeCode,
             );
         }
 
