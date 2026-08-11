@@ -340,13 +340,21 @@
             props: ['field', 'checked'],
 
             mounted() {
-                if (this.checked == '') {
-                    return;
+                /**
+                 * Deterministically set the field's checked state from the `checked` attribute,
+                 * which arrives as a string. `false`, `0` and an empty value must render unchecked
+                 * (and are explicitly cleared, not just left as-is) so `:checked="false"` no longer
+                 * leaves the switch on (issue #2629); any other value checks it.
+                 */
+                const value = String(this.checked ?? '').toLowerCase();
+
+                const shouldCheck = value !== '' && value !== 'false' && value !== '0';
+
+                this.field.checked = shouldCheck;
+
+                if (shouldCheck) {
+                    this.field.onChange();
                 }
-
-                this.field.checked = true;
-
-                this.field.onChange();
             },
         });
     </script>
