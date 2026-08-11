@@ -920,6 +920,7 @@ return [
                 'disconnect-btn' => 'Disconnect',
                 'connect-success' => 'Google account connected successfully.',
                 'connect-failed' => 'Unable to connect your Google account. Please try again.',
+                'not-configured' => 'Google OAuth is not configured. Please set the required environment variables first.',
                 'disconnect-success' => 'Google account disconnected successfully.',
             ],
         ],

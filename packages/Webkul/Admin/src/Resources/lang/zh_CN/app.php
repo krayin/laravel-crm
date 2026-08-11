@@ -919,6 +919,7 @@ return [
                 'disconnect-btn' => '断开连接',
                 'connect-success' => 'Google 账户连接成功。',
                 'connect-failed' => '无法连接您的 Google 账户，请重试。',
+                'not-configured' => '尚未配置 Google OAuth。请先设置所需的环境变量。',
                 'disconnect-success' => 'Google 账户已成功断开连接。',
             ],
         ],

@@ -919,6 +919,7 @@ return [
                 'disconnect-btn' => '연결 해제',
                 'connect-success' => 'Google 계정이 성공적으로 연결되었습니다.',
                 'connect-failed' => 'Google 계정을 연결할 수 없습니다. 다시 시도해 주세요.',
+                'not-configured' => 'Google OAuth가 구성되지 않았습니다. 먼저 필요한 환경 변수를 설정하세요.',
                 'disconnect-success' => 'Google 계정 연결이 해제되었습니다.',
             ],
         ],

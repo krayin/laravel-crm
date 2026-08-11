@@ -919,6 +919,7 @@ return [
                 'disconnect-btn' => 'Desconectar',
                 'connect-success' => 'Conta do Google conectada com sucesso.',
                 'connect-failed' => 'Não foi possível conectar sua conta do Google. Tente novamente.',
+                'not-configured' => 'O Google OAuth não está configurado. Configure primeiro as variáveis de ambiente necessárias.',
                 'disconnect-success' => 'Conta do Google desconectada com sucesso.',
             ],
         ],
