@@ -1525,6 +1525,7 @@ return [
                             'duplicate-email' => 'E-posta: \'%s\' içe aktarma dosyasında birden fazla kez bulundu.',
                             'duplicate-phone' => 'Telefon: \'%s\' içe aktarma dosyasında birden fazla kez bulundu.',
                             'email-not-found' => 'E-posta: \'%s\' sistemde bulunamadı.',
+                            'invalid-date' => 'Tarih: \'%s\' geçerli bir tarih değil.',
                         ],
                     ],
                 ],

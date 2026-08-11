@@ -1525,6 +1525,7 @@ return [
                             'duplicate-email' => 'E-mail : \'%s\' é encontrado mais de uma vez no arquivo de importação.',
                             'duplicate-phone' => 'Telefone : \'%s\' é encontrado mais de uma vez no arquivo de importação.',
                             'email-not-found' => 'E-mail : \'%s\' não foi encontrado no sistema.',
+                            'invalid-date' => 'Data : \'%s\' não é uma data válida.',
                         ],
                     ],
                 ],

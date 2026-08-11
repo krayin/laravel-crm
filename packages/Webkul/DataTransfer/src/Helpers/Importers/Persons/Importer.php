@@ -2,6 +2,7 @@
 
 namespace Webkul\DataTransfer\Helpers\Importers\Persons;
 
+use Carbon\Carbon;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Event;
@@ -33,6 +34,11 @@ class Importer extends AbstractImporter
     const ERROR_DUPLICATE_PHONE = 'duplicated_phone';
 
     /**
+     * Error code for an unparseable date value.
+     */
+    const ERROR_INVALID_DATE = 'invalid_date';
+
+    /**
      * Permanent entity columns.
      */
     protected array $validColumnNames = [
@@ -51,6 +57,7 @@ class Importer extends AbstractImporter
         self::ERROR_EMAIL_NOT_FOUND_FOR_DELETE => 'admin::app.settings.data-transfer.importers.persons.validation.errors.email-not-found',
         self::ERROR_DUPLICATE_EMAIL => 'admin::app.settings.data-transfer.importers.persons.validation.errors.duplicate-email',
         self::ERROR_DUPLICATE_PHONE => 'admin::app.settings.data-transfer.importers.persons.validation.errors.duplicate-phone',
+        self::ERROR_INVALID_DATE => 'admin::app.settings.data-transfer.importers.persons.validation.errors.invalid-date',
     ];
 
     /**
@@ -74,6 +81,11 @@ class Importer extends AbstractImporter
      * Phones storage.
      */
     protected array $phones = [];
+
+    /**
+     * Cache of person date/datetime attribute codes mapped to their type.
+     */
+    protected ?array $dateAttributeCodes = null;
 
     /**
      * Create a new helper instance.
@@ -232,6 +244,23 @@ class Importer extends AbstractImporter
 
                     $this->skipRow($rowNumber, self::ERROR_DUPLICATE_PHONE, 'phone', $message);
                 }
+            }
+        }
+
+        /**
+         * Reject any date/datetime attribute value that cannot be parsed, so a malformed date is
+         * flagged as a row error instead of silently persisting as a zero date (0000-00-00).
+         */
+        foreach ($this->getDateAttributeCodes() as $code => $type) {
+            $value = $rowData[$code] ?? null;
+
+            if (! is_null($value) && $value !== '' && is_null($this->normalizeDate($value, $type))) {
+                $message = sprintf(
+                    trans($this->messages[self::ERROR_INVALID_DATE]),
+                    $value
+                );
+
+                $this->skipRow($rowNumber, self::ERROR_INVALID_DATE, $code, $message);
             }
         }
 
@@ -469,6 +498,20 @@ class Importer extends AbstractImporter
                 continue;
             }
 
+            /**
+             * Normalise date/datetime values (Excel serials and regional formats) to the ISO
+             * storage format. An unparseable value is skipped rather than stored as a zero date.
+             */
+            $storedValue = $value;
+
+            if (in_array($attribute->type, ['date', 'datetime'])) {
+                $storedValue = $this->normalizeDate($value, $attribute->type);
+
+                if (is_null($storedValue)) {
+                    continue;
+                }
+            }
+
             $typeFields = $this->personRepository->getModel()::$attributeTypeFields;
 
             $attributeTypeValues = array_fill_keys(array_values($typeFields), null);
@@ -478,10 +521,68 @@ class Importer extends AbstractImporter
             foreach ($emails as $email) {
                 $attributeValues[$email][] = array_merge($attributeTypeValues, [
                     'attribute_id' => $attribute->id,
-                    $typeFields[$attribute->type] => $value,
+                    $typeFields[$attribute->type] => $storedValue,
                 ]);
             }
         }
+    }
+
+    /**
+     * The person date/datetime attribute codes, mapped to their type (cached).
+     */
+    protected function getDateAttributeCodes(): array
+    {
+        if (! is_null($this->dateAttributeCodes)) {
+            return $this->dateAttributeCodes;
+        }
+
+        return $this->dateAttributeCodes = $this->attributeRepository
+            ->findWhere(['entity_type' => 'persons'])
+            ->whereIn('type', ['date', 'datetime'])
+            ->pluck('type', 'code')
+            ->all();
+    }
+
+    /**
+     * Normalise an imported date to the storage format, accepting the ISO format, Excel/spreadsheet
+     * serial numbers and common regional (day-first) formats. Returns null when the value cannot be
+     * parsed so an invalid date is never stored as a zero date (0000-00-00).
+     */
+    protected function normalizeDate($value, string $type): ?string
+    {
+        $value = trim((string) $value);
+
+        if ($value === '') {
+            return null;
+        }
+
+        /**
+         * A bare integer is a spreadsheet serial number — days since 1899-12-30, which also absorbs
+         * Excel's fictitious 1900 leap year.
+         */
+        if (ctype_digit($value)) {
+            $date = Carbon::create(1899, 12, 30, 0, 0, 0)->addDays((int) $value);
+        } else {
+            $date = null;
+
+            foreach (['Y-m-d', 'd/m/Y', 'd-m-Y', 'Y/m/d', 'm/d/Y'] as $format) {
+                if (Carbon::hasFormat($value, $format)) {
+                    $date = Carbon::createFromFormat($format, $value);
+
+                    break;
+                }
+            }
+
+            if (is_null($date)) {
+                try {
+                    $date = Carbon::parse($value);
+                } catch (\Exception $e) {
+                    return null;
+                }
+            }
+        }
+
+        return $type === 'datetime' ? $date->format('Y-m-d H:i:s') : $date->format('Y-m-d');
     }
 
     /**

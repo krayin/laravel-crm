@@ -1525,6 +1525,7 @@ return [
                             'duplicate-email' => '邮箱：\'%s\' 在导入文件中出现了多次。',
                             'duplicate-phone' => '电话：\'%s\' 在导入文件中出现了多次。',
                             'email-not-found' => '邮箱：\'%s\' 在系统中未找到。',
+                            'invalid-date' => '日期：\'%s\' 不是有效的日期。',
                         ],
                     ],
                 ],
