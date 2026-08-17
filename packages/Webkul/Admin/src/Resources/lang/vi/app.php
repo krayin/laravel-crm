@@ -919,6 +919,7 @@ return [
                 'disconnect-btn' => 'Ngắt Kết Nối',
                 'connect-success' => 'Kết nối tài khoản Google thành công.',
                 'connect-failed' => 'Không thể kết nối tài khoản Google của bạn. Vui lòng thử lại.',
+                'not-configured' => 'Google OAuth chưa được cấu hình. Vui lòng thiết lập các biến môi trường cần thiết trước.',
                 'disconnect-success' => 'Đã ngắt kết nối tài khoản Google thành công.',
             ],
         ],
