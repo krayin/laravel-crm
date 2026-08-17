@@ -1159,6 +1159,8 @@ return [
                     'name' => 'Tên',
                     'status' => 'Trạng thái',
                     'update-status' => 'Cập nhật Trạng thái',
+                    'group' => 'Nhóm Liên Kết',
+                    'no-group' => 'Không Có Nhóm',
                     'users' => 'Người dùng',
                 ],
                 'create' => [
