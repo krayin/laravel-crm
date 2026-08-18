@@ -2,7 +2,7 @@
 
 This changelog consists of the bug & security fixes and new features being included in the releases listed below.
 
-## **v2.2.6 (date to be updated)**
+## **v2.2.6 (19th of Aug 2026)**
 
 * [security] Updated Composer dependencies to clear all 40 outstanding security advisories across 13 packages, with no constraint changes — Laravel stays on 12.x and Symfony on 7.4.x. Notable fixes: `symfony/mime` 7.4.16 (CRLF in `Address` allowing email header and SMTP command injection), `laravel/framework` 12.66.0 (CRLF injection in the default `email` validation rule, and temporary signed URL path confusion), `league/commonmark` 2.10.0 (quadratic-time parsing, duplicate footnote definitions and three further denial-of-service paths, plus an unsafe-link filter bypass), `guzzlehttp/guzzle` 7.15.3 and `guzzlehttp/psr7` 2.13.0 (host-check bypasses, cookie scope and CRLF issues), `dompdf/dompdf` 3.1.6 (local file read and resource exhaustion) and `setasign/fpdi` 2.6.8.
 
