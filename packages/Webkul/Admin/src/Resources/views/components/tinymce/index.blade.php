@@ -171,9 +171,11 @@
 
                     tinyMCEHelper.initTinyMCE({
                         selector: this.selector,
-                        plugins: 'image media wordcount save fullscreen code table lists link',
+                        plugins: 'image media wordcount save fullscreen code table lists link autolink',
                         toolbar: 'placeholders | bold italic strikethrough forecolor backcolor image alignleft aligncenter alignright alignjustify | link hr | numlist bullist outdent indent | removeformat | code | table',
                         image_advtab: true,
+                        link_default_protocol: 'http',
+                        link_default_target: '_blank',
                         directionality: 'ltr',
                         setup: (editor) => {
                             let toggleState = false;
