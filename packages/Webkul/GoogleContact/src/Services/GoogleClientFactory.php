@@ -17,6 +17,17 @@ class GoogleClientFactory
     ];
 
     /**
+     * Determine whether the Google OAuth credentials are configured, so the consent flow can be
+     * skipped gracefully instead of letting the Google client throw when they are missing.
+     */
+    public function isConfigured(): bool
+    {
+        return filled(config('services.google.client_id'))
+            && filled(config('services.google.client_secret'))
+            && filled(config('services.google.redirect'));
+    }
+
+    /**
      * Build a Google API client configured with this app's OAuth credentials.
      */
     public function make(): Client

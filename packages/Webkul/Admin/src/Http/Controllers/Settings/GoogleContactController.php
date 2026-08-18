@@ -37,6 +37,16 @@ class GoogleContactController extends Controller
      */
     public function connect(): RedirectResponse
     {
+        /**
+         * Guard against missing OAuth credentials so the user sees a clear message instead of an
+         * unhandled exception from the Google client (issue #2633).
+         */
+        if (! $this->googleClientFactory->isConfigured()) {
+            session()->flash('error', trans('admin::app.settings.google-contacts.index.not-configured'));
+
+            return redirect()->route('admin.settings.google_contacts.index');
+        }
+
         $client = $this->googleClientFactory->make();
 
         return redirect()->away($client->createAuthUrl());

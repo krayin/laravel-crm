@@ -112,6 +112,9 @@
                             <!-- Users Email -->
                             <p class="truncate">@{{ record.email }}</p>
 
+                            <!-- Associated Group -->
+                            <p class="truncate">@{{ record.group_name }}</p>
+
                             <!-- Users Status -->
                             <span
                                 :class="record.status == 1 ? 'label-active' : 'label-inactive'"

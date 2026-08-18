@@ -920,6 +920,7 @@ return [
                 'disconnect-btn' => 'Desconectar',
                 'connect-success' => 'Cuenta de Google conectada con éxito.',
                 'connect-failed' => 'No se pudo conectar tu cuenta de Google. Por favor, inténtalo de nuevo.',
+                'not-configured' => 'Google OAuth no está configurado. Por favor, configura primero las variables de entorno requeridas.',
                 'disconnect-success' => 'Cuenta de Google desconectada con éxito.',
             ],
         ],
@@ -1159,6 +1160,8 @@ return [
                     'name' => 'Nombre',
                     'status' => 'Estado',
                     'update-status' => 'Actualizar Estado',
+                    'group' => 'Grupo Asociado',
+                    'no-group' => 'Sin Grupo',
                     'users' => 'Usuarios',
                 ],
                 'create' => [
