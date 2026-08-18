@@ -86,6 +86,14 @@ class SessionController extends Controller
     {
         auth()->guard('user')->logout();
 
+        /**
+         * Drop every value the session carried and rotate its identifier, so no
+         * data survives the logout and the id cannot be replayed afterwards.
+         */
+        session()->invalidate();
+
+        session()->regenerateToken();
+
         return redirect()->route('admin.session.create');
     }
 

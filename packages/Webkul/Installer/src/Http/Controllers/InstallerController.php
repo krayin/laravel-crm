@@ -148,6 +148,15 @@ class InstallerController extends Controller
         if (file_exists(storage_path('installed'))) {
             abort(403);
         }
+
+        /**
+         * The marker file is gitignored and so is lost by any deploy that does not carry `storage/`
+         * across, which would otherwise leave these endpoints reachable on a live application. The
+         * database flag is written at the end of installation and travels with the data.
+         */
+        if ($this->databaseManager->isInstallationCompleted()) {
+            abort(403);
+        }
     }
 
     /**
@@ -158,6 +167,12 @@ class InstallerController extends Controller
         $filePath = storage_path('installed');
 
         File::put($filePath, 'Your Krayin App is Successfully Installed');
+
+        /**
+         * Recorded in the database as well as on disk, so losing the marker file cannot reopen the
+         * installer on an application that already holds real data.
+         */
+        $this->databaseManager->markInstallationCompleted();
 
         Event::dispatch('krayin.installed');
 

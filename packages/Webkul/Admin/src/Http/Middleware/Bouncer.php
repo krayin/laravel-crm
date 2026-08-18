@@ -25,9 +25,7 @@ class Bouncer
          * logged out.
          */
         if (! (bool) auth()->guard($guard)->user()->status) {
-            auth()->guard($guard)->logout();
-
-            session()->flash('error', trans('admin::app.errors.401'));
+            $this->terminateSession($guard);
 
             return redirect()->route('admin.session.create');
         }
@@ -37,14 +35,30 @@ class Bouncer
          * auto logged out and need to contact the administrator again.
          */
         if ($this->isPermissionsEmpty()) {
-            auth()->guard($guard)->logout();
-
-            session()->flash('error', trans('admin::app.errors.401'));
+            $this->terminateSession($guard);
 
             return redirect()->route('admin.session.create');
         }
 
         return $next($request);
+    }
+
+    /**
+     * Log the user out and tear the session down, then flash the reason.
+     *
+     * The session is invalidated and its token rotated so nothing the revoked
+     * session held survives; the message is flashed afterwards because
+     * invalidating would otherwise discard it.
+     */
+    protected function terminateSession($guard): void
+    {
+        auth()->guard($guard)->logout();
+
+        session()->invalidate();
+
+        session()->regenerateToken();
+
+        session()->flash('error', trans('admin::app.errors.401'));
     }
 
     /**

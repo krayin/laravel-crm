@@ -11,6 +11,58 @@ use Webkul\Installer\Database\Seeders\DatabaseSeeder as KrayinDatabaseSeeder;
 class DatabaseManager
 {
     /**
+     * The core_config code recording that installation finished.
+     */
+    public const INSTALLATION_COMPLETED_FLAG = 'installation.completed';
+
+    /**
+     * Whether the database says this application has finished installing.
+     *
+     * This is the durable counterpart to the `storage/installed` marker file: the file is gitignored
+     * and so is lost by any deploy that does not carry `storage/` across, whereas this flag travels
+     * with the data it describes. It is written only when installation completes, so it stays false
+     * for the whole of a genuine installation and never blocks it.
+     */
+    public function isInstallationCompleted(): bool
+    {
+        try {
+            if (! Schema::hasTable('core_config')) {
+                return false;
+            }
+
+            return DB::table('core_config')
+                ->where('code', self::INSTALLATION_COMPLETED_FLAG)
+                ->exists();
+        } catch (Exception $e) {
+            return false;
+        }
+    }
+
+    /**
+     * Record that installation has finished, so the installer cannot be reopened by a deploy that
+     * loses the marker file.
+     */
+    public function markInstallationCompleted(): void
+    {
+        try {
+            if (! Schema::hasTable('core_config')) {
+                return;
+            }
+
+            DB::table('core_config')->updateOrInsert(
+                ['code' => self::INSTALLATION_COMPLETED_FLAG],
+                [
+                    'value' => '1',
+                    'updated_at' => now(),
+                    'created_at' => now(),
+                ]
+            );
+        } catch (Exception $e) {
+            report($e);
+        }
+    }
+
+    /**
      * Check Database Connection.
      */
     public function isInstalled()

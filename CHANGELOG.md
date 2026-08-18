@@ -2,6 +2,34 @@
 
 This changelog consists of the bug & security fixes and new features being included in the releases listed below.
 
+## **v2.2.6 (date to be updated)**
+
+* [security] Updated Composer dependencies to clear all 40 outstanding security advisories across 13 packages, with no constraint changes — Laravel stays on 12.x and Symfony on 7.4.x. Notable fixes: `symfony/mime` 7.4.16 (CRLF in `Address` allowing email header and SMTP command injection), `laravel/framework` 12.66.0 (CRLF injection in the default `email` validation rule, and temporary signed URL path confusion), `league/commonmark` 2.10.0 (quadratic-time parsing, duplicate footnote definitions and three further denial-of-service paths, plus an unsafe-link filter bypass), `guzzlehttp/guzzle` 7.15.3 and `guzzlehttp/psr7` 2.13.0 (host-check bypasses, cookie scope and CRLF issues), `dompdf/dompdf` 3.1.6 (local file read and resource exhaustion) and `setasign/fpdi` 2.6.8.
+
+* [security] Upgraded Vite to 6.4.3 across the root, Admin, Installer and WebForm packages, along with `laravel-vite-plugin` (0.7 → 1.3) and `@vitejs/plugin-vue` (4 → 5) where those packages still required them. Vite 4.x and 5.x are affected by CVE-2026-53571, where `server.fs.deny` could be bypassed on Windows through NTFS alternate data streams (`/.env::$DATA?raw`) and 8.3 short names, exposing `.env` and certificate files; no fix exists on the 4.x or 5.x lines, so a major upgrade was the only route. This affects the development server only — never a built deployment — and requires the server to be exposed to the network, which `VITE_HOST` makes possible.
+
+* [security] The same Vite upgrade also picks up a patched `launch-editor`, which Vite bundles into its distribution rather than installing as a resolvable dependency (CVE-2024-52011, arbitrary command execution on Windows via crafted filenames).
+
+* [security] Updated DOMPurify to 3.4.13, fixing an XSS where removing an `IN_PLACE` hook left a detached subtree executable, and nanoid to 3.3.18.
+
+* [security] Updated `phpoffice/phpspreadsheet` to 1.30.6 and added an explicit `^1.30.6` floor. 1.30.4 shipped a `prohibitWrappers` guard built on `parse_url()`, which returns `false` rather than a scheme for a `phar:///a/b.phar/c` path and so let the phar stream wrapper through (CVE-2026-34084). Krayin was not exploitable — import paths are resolved through `Storage::disk('public')->path()`, which puts the disk root at position 0 so no wrapper scheme is ever honoured — but the dependency is now patched regardless.
+
+* [security] Fixed the SVG sanitizer being skipped when an SVG was uploaded under a non-SVG file name. The TinyMCE media upload derives the stored extension from the file's own content, so an SVG named `payload.png` was stored and served as an SVG while the name-based check waved it past the sanitizer. Detection now also consults the stored path and the markup itself.
+
+* [security] Fixed nested configuration fields storing uploaded files without SVG sanitization, unlike the flat configuration fields alongside them.
+
+* [fixed] Fixed a configuration save reusing a previously uploaded file's path as the value of a later field that had no upload of its own.
+
+* [security] Fixed the installer API endpoints (`/install/api/admin-config-setup`, `/install/api/run-migration`, `/install/api/run-seeder`) becoming reachable again on a fully installed application whenever the `storage/installed` marker was missing. That file is gitignored, so a fresh checkout, a container rebuild or any deploy not carrying `storage/` across left the endpoints open to unauthenticated callers, who could overwrite the administrator account and re-run `migrate:fresh` against live data. Installation completion is now also recorded in the database, where it travels with the data it describes.
+
+* [security] Added rate limiting to the admin login, forgot-password and reset-password endpoints, which previously accepted unlimited attempts and allowed offline-speed credential brute-forcing.
+
+* [security] Fixed the admin logout leaving the session intact — the session is now invalidated and its CSRF token rotated, so no session data survives a logout and the session id cannot be replayed.
+
+* [security] Fixed the forgot-password form disclosing which email addresses belong to registered users; it now returns the same response whether or not the address exists.
+
+* [security] Fixed a deactivated user being signed in automatically after completing a password reset, bypassing the account-status check that login enforces.
+
 ## **v2.2.5 (4th of Aug 2026)**
 
 * [feature] Added Chinese (Simplified) `zh_CN` translation for the Admin, Installer, DataTransfer, WebForm and Core packages.

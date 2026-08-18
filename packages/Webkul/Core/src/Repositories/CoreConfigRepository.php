@@ -137,7 +137,16 @@ class CoreConfigRepository extends Repository
 
                         $coreConfigValues = $this->model->where('code', $fieldNameWithKey)->get();
                         if (request()->hasFile($fieldNameWithKey)) {
-                            $val = request()->file($fieldNameWithKey)->store('configuration');
+                            $uploadedFile = request()->file($fieldNameWithKey);
+
+                            $val = $uploadedFile->store('configuration');
+
+                            /**
+                             * Nested configuration fields accept uploads on the same terms as the
+                             * flat ones below, so they need the same SVG sanitization; without it an
+                             * SVG carrying script was stored and later served untouched.
+                             */
+                            $this->sanitizeSVG($val, $uploadedFile);
                         } else {
                             $val = $this->sanitizeConfigValue($fieldNameWithKey, $val);
                         }
@@ -155,6 +164,12 @@ class CoreConfigRepository extends Repository
                         }
                     }
                 } else {
+                    /**
+                     * Reset per field: $path persists across iterations otherwise, and a later field
+                     * with no upload would be saved with the previous field's file path as its value.
+                     */
+                    $path = null;
+
                     if (request()->hasFile($fieldName)) {
                         $file = request()->file($fieldName);
 

@@ -19,7 +19,7 @@ Route::withoutMiddleware(['user'])->group(function () {
         Route::prefix('login')->group(function () {
             Route::get('', 'create')->name('admin.session.create');
 
-            Route::post('', 'store')->name('admin.session.store');
+            Route::middleware(['throttle:5,1'])->post('', 'store')->name('admin.session.store');
         });
 
         Route::middleware(['user'])->group(function () {
@@ -33,7 +33,7 @@ Route::withoutMiddleware(['user'])->group(function () {
     Route::controller(ForgotPasswordController::class)->prefix('forget-password')->group(function () {
         Route::get('', 'create')->name('admin.forgot_password.create');
 
-        Route::post('', 'store')->name('admin.forgot_password.store');
+        Route::middleware(['throttle:5,1'])->post('', 'store')->name('admin.forgot_password.store');
     });
 
     /**
@@ -42,6 +42,6 @@ Route::withoutMiddleware(['user'])->group(function () {
     Route::controller(ResetPasswordController::class)->prefix('reset-password')->group(function () {
         Route::get('{token}', 'create')->name('admin.reset_password.create');
 
-        Route::post('', 'store')->name('admin.reset_password.store');
+        Route::middleware(['throttle:5,1'])->post('', 'store')->name('admin.reset_password.store');
     });
 });
