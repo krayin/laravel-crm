@@ -4,7 +4,7 @@
     </x-slot>
 
     <div class="flex flex-col gap-4">
-        <div class="flex items-center justify-between rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
+        <div class="scroll-reactive-sticky sticky top-[60px] z-[1000] flex items-center justify-between rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm shadow-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
             <div class="flex flex-col gap-2">
                 <!-- Breadcrumbs -->
                 <x-admin::breadcrumbs name="settings.users" />
@@ -111,6 +111,9 @@
 
                             <!-- Users Email -->
                             <p class="truncate">@{{ record.email }}</p>
+
+                            <!-- Associated Group -->
+                            <p class="truncate">@{{ record.group_name }}</p>
 
                             <!-- Users Status -->
                             <span
@@ -394,10 +397,10 @@
 
                             {!! view_render_event('admin.settings.users.index.form.role_id.before') !!}
 
-                            <template v-if="user.view_permission === 'group'">
+                            <template v-if="['group', 'individual'].includes(user.view_permission)">
                                 <!-- Group -->
                                 <x-admin::form.control-group>
-                                    <x-admin::form.control-group.label class="required">
+                                    <x-admin::form.control-group.label ::class="{ required: user.view_permission === 'group' }">
                                         @lang('admin::app.settings.users.index.create.group')
                                     </x-admin::form.control-group.label>
 
@@ -406,7 +409,7 @@
                                         label="@lang('admin::app.settings.users.index.create.group')"
                                         multiple
                                         v-model="user.groups"
-                                        rules="required"
+                                        :rules="user.view_permission === 'group' ? 'required' : ''"
                                     >
                                         <select
                                             name="groups[]"
@@ -552,7 +555,7 @@
 
                         this.$axios.post(
                                 params.id
-                                ? `{{ route('admin.settings.users.update', '') }}/${params.id}`
+                                ? "{{ route('admin.settings.users.update', ':id') }}".replace(':id', params.id)
                                 : "{{ route('admin.settings.users.store') }}", userForm
                             )
                             .then(response => {

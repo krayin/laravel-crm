@@ -38,7 +38,7 @@
                 <a
                     href="{{ route('admin.leads.index', [
                         'pipeline_id' => $tempPipeline->id,
-                        'view_type'   => request('view_type')
+                        'view_type' => request('view_type')
                     ]) }}"
                     class="block px-3 py-2.5 pl-4 text-gray-600 transition-all hover:bg-gray-100 dark:hover:bg-gray-950 dark:text-gray-300 {{ $pipeline->id == $tempPipeline->id ? 'bg-gray-100 dark:bg-gray-950' : '' }}"
                 >

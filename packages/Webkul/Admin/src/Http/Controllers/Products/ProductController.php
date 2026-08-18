@@ -48,8 +48,6 @@ class ProductController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @return \Illuminate\Http\Response
      */
     public function store(AttributeForm $request)
     {
@@ -58,6 +56,13 @@ class ProductController extends Controller
         $product = $this->productRepository->create($request->all());
 
         Event::dispatch('product.create.after', $product);
+
+        if (request()->ajax()) {
+            return response()->json([
+                'data' => $product,
+                'message' => trans('admin::app.products.index.create-success'),
+            ]);
+        }
 
         session()->flash('success', trans('admin::app.products.index.create-success'));
 
@@ -86,12 +91,12 @@ class ProductController extends Controller
             ->get()
             ->map(function ($inventory) {
                 return [
-                    'id'                    => $inventory->id,
-                    'name'                  => $inventory->location->name,
-                    'warehouse_id'          => $inventory->warehouse_id,
+                    'id' => $inventory->id,
+                    'name' => $inventory->location->name,
+                    'warehouse_id' => $inventory->warehouse_id,
                     'warehouse_location_id' => $inventory->warehouse_location_id,
-                    'in_stock'              => $inventory->in_stock,
-                    'allocated'             => $inventory->allocated,
+                    'in_stock' => $inventory->in_stock,
+                    'allocated' => $inventory->allocated,
                 ];
             });
 
@@ -126,11 +131,11 @@ class ProductController extends Controller
     public function storeInventories(int $id, ?int $warehouseId = null): JsonResponse
     {
         $this->validate(request(), [
-            'inventories'                         => 'array',
+            'inventories' => 'array',
             'inventories.*.warehouse_location_id' => 'required',
-            'inventories.*.warehouse_id'          => 'required',
-            'inventories.*.in_stock'              => 'required|integer|min:0',
-            'inventories.*.allocated'             => 'required|integer|min:0',
+            'inventories.*.warehouse_id' => 'required',
+            'inventories.*.in_stock' => 'required|integer|min:0',
+            'inventories.*.allocated' => 'required|integer|min:0',
         ]);
 
         $product = $this->productRepository->findOrFail($id);
@@ -151,11 +156,21 @@ class ProductController extends Controller
      */
     public function search(): JsonResource
     {
-        $products = $this->productRepository
+        $query = $this->productRepository
             ->pushCriteria(app(RequestCriteria::class))
-            ->orderBy('created_at', 'desc')
-            ->take(5)
-            ->get();
+            ->orderBy('created_at', 'desc');
+
+        $excludedIds = request()->input('exclude_ids', []);
+
+        if (is_string($excludedIds)) {
+            $excludedIds = array_filter(array_map('trim', explode(',', $excludedIds)));
+        }
+
+        if (! empty($excludedIds)) {
+            $query->whereNotIn('products.id', $excludedIds);
+        }
+
+        $products = $query->get();
 
         return ProductResource::collection($products);
     }

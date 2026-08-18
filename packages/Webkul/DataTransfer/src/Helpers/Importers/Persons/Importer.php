@@ -5,6 +5,7 @@ namespace Webkul\DataTransfer\Helpers\Importers\Persons;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Validator;
 use Webkul\Attribute\Repositories\AttributeRepository;
 use Webkul\Attribute\Repositories\AttributeValueRepository;
@@ -47,9 +48,9 @@ class Importer extends AbstractImporter
      * Error message templates.
      */
     protected array $messages = [
-        self::ERROR_EMAIL_NOT_FOUND_FOR_DELETE  => 'data_transfer::app.importers.persons.validation.errors.email-not-found',
-        self::ERROR_DUPLICATE_EMAIL             => 'data_transfer::app.importers.persons.validation.errors.duplicate-email',
-        self::ERROR_DUPLICATE_PHONE             => 'data_transfer::app.importers.persons.validation.errors.duplicate-phone',
+        self::ERROR_EMAIL_NOT_FOUND_FOR_DELETE => 'admin::app.settings.data-transfer.importers.persons.validation.errors.email-not-found',
+        self::ERROR_DUPLICATE_EMAIL => 'admin::app.settings.data-transfer.importers.persons.validation.errors.duplicate-email',
+        self::ERROR_DUPLICATE_PHONE => 'admin::app.settings.data-transfer.importers.persons.validation.errors.duplicate-phone',
     ];
 
     /**
@@ -91,6 +92,31 @@ class Importer extends AbstractImporter
             $attributeRepository,
             $attributeValueRepository,
         );
+
+        $this->initAttributes();
+    }
+
+    /**
+     * Append the person attribute codes (including user defined ones) to the list of valid columns
+     * so that custom attributes can be imported alongside the built-in fields.
+     */
+    protected function initAttributes(): void
+    {
+        $attributes = $this->attributeRepository->findWhere(['entity_type' => 'persons']);
+
+        foreach ($attributes as $attribute) {
+            $this->validColumnNames[] = $attribute->code;
+        }
+    }
+
+    /**
+     * The native columns of the persons table (custom attribute values are stored separately).
+     */
+    protected function getEntityColumns(): array
+    {
+        static $columns;
+
+        return $columns ??= Schema::getColumnListing('persons');
     }
 
     /**
@@ -151,14 +177,14 @@ class Importer extends AbstractImporter
          */
         $validator = Validator::make($rowData, [
             ...$this->getValidationRules('persons', $rowData),
-            'organization_id'         => 'required|exists:organizations,id',
-            'user_id'                 => 'required|exists:users,id',
-            'contact_numbers'         => 'required|array',
+            'organization_id' => 'nullable|exists:organizations,id',
+            'user_id' => 'required|exists:users,id',
+            'contact_numbers' => 'nullable|array',
             'contact_numbers.*.value' => 'required|numeric',
             'contact_numbers.*.label' => 'required|in:home,work',
-            'emails'                  => 'required|array',
-            'emails.*.value'          => 'required|email',
-            'emails.*.label'          => 'required|in:home,work',
+            'emails' => 'required|array',
+            'emails.*.value' => 'required|email',
+            'emails.*.label' => 'required|in:home,work',
         ]);
 
         if ($validator->fails()) {
@@ -231,7 +257,7 @@ class Importer extends AbstractImporter
         $batch = $this->importBatchRepository->update([
             'state' => Import::STATE_PROCESSED,
 
-            'summary'      => [
+            'summary' => [
                 'created' => $this->getCreatedItemsCount(),
                 'updated' => $this->getUpdatedItemsCount(),
                 'deleted' => $this->getDeletedItemsCount(),
@@ -336,11 +362,18 @@ class Importer extends AbstractImporter
 
             $rowData['unique_id'] = "{$rowData['user_id']}|{$rowData['organization_id']}|{$email}|{$contactNumber[0]['value']}";
 
+            /**
+             * Custom (user defined) attribute values are not columns on the persons table; they are
+             * persisted separately via saveAttributeValues(). Only the native columns are written
+             * to the persons table here.
+             */
+            $native = Arr::only($rowData, $this->getEntityColumns());
+
             if ($this->isEmailExist($email)) {
-                $persons['update'][$email] = $rowData;
+                $persons['update'][$email] = $native;
             } else {
                 $persons['insert'][$email] = [
-                    ...$rowData,
+                    ...$native,
                     'created_at' => $rowData['created_at'] ?? now(),
                     'updated_at' => $rowData['updated_at'] ?? now(),
                 ];
@@ -427,13 +460,10 @@ class Importer extends AbstractImporter
                 continue;
             }
 
-            $where = ['code' => $code];
-
-            if ($code === 'name') {
-                $where['entity_type'] = 'persons';
-            }
-
-            $attribute = $this->attributeRepository->findOneWhere($where);
+            $attribute = $this->attributeRepository->findOneWhere([
+                'code' => $code,
+                'entity_type' => 'persons',
+            ]);
 
             if (! $attribute) {
                 continue;
@@ -447,7 +477,7 @@ class Importer extends AbstractImporter
 
             foreach ($emails as $email) {
                 $attributeValues[$email][] = array_merge($attributeTypeValues, [
-                    'attribute_id'                => $attribute->id,
+                    'attribute_id' => $attribute->id,
                     $typeFields[$attribute->type] => $value,
                 ]);
             }

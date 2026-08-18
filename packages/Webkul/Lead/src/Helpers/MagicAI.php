@@ -3,6 +3,7 @@
 namespace Webkul\Lead\Helpers;
 
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\ValidationException;
 use Webkul\Admin\Http\Requests\LeadForm;
 
 class MagicAI
@@ -65,15 +66,15 @@ class MagicAI
         $dataArray = json_decode(json_encode($data), true);
 
         $validator = Validator::make($dataArray, [
-            'title'                         => 'required|string|max:255',
-            'lead_value'                    => 'required|numeric|min:0',
-            'person.name'                   => 'required|string|max:255',
-            'person.emails.value'           => 'required|email',
-            'person.contact_numbers.value'  => 'required|string|max:20',
+            'title' => 'required|string|max:255',
+            'lead_value' => 'required|numeric|min:0',
+            'person.name' => 'required|string|max:255',
+            'person.emails.value' => 'required|email',
+            'person.contact_numbers.value' => 'required|string|max:20',
         ]);
 
         if ($validator->fails()) {
-            throw new \Illuminate\Validation\ValidationException(
+            throw new ValidationException(
                 $validator,
                 response()->json(self::errorHandler($validator->errors()->getMessages()), 400)
             );
@@ -88,15 +89,15 @@ class MagicAI
     private static function prepareLeadData($finalData)
     {
         return [
-            'status'              => 1,
-            'title'               => $finalData->title ?? 'N/A',
-            'description'         => $finalData->description ?? null,
-            'lead_source_id'      => 1,
-            'lead_type_id'        => 1,
-            'lead_value'          => $finalData->lead_value ?? 0,
-            'person'              => [
-                'name'            => $finalData->person->name ?? 'Unknown',
-                'emails'          => [
+            'status' => 1,
+            'title' => $finalData->title ?? 'N/A',
+            'description' => $finalData->description ?? null,
+            'lead_source_id' => 1,
+            'lead_type_id' => 1,
+            'lead_value' => $finalData->lead_value ?? 0,
+            'person' => [
+                'name' => $finalData->person->name ?? 'Unknown',
+                'emails' => [
                     [
                         'value' => $finalData->person->emails->value ?? null,
                         'label' => $finalData->person->emails->label ?? 'work',
@@ -108,9 +109,9 @@ class MagicAI
                         'label' => $finalData->person->contact_numbers->label ?? 'work',
                     ],
                 ],
-                'entity_type'     => self::PERSON_ENTITY,
+                'entity_type' => self::PERSON_ENTITY,
             ],
-            'entity_type'         => self::LEAD_ENTITY,
+            'entity_type' => self::LEAD_ENTITY,
         ];
     }
 
@@ -120,7 +121,7 @@ class MagicAI
     public static function errorHandler($message)
     {
         return [
-            'status'  => 'error',
+            'status' => 'error',
             'message' => $message,
         ];
     }

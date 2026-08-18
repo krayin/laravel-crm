@@ -2,6 +2,7 @@
 
 namespace Webkul\Attribute\Traits;
 
+use Illuminate\Database\Eloquent\MassAssignmentException;
 use Webkul\Attribute\Models\AttributeValueProxy;
 use Webkul\Attribute\Repositories\AttributeRepository;
 
@@ -11,21 +12,21 @@ trait CustomAttribute
      * @var array
      */
     public static $attributeTypeFields = [
-        'text'        => 'text_value',
-        'textarea'    => 'text_value',
-        'price'       => 'float_value',
-        'boolean'     => 'boolean_value',
-        'select'      => 'integer_value',
+        'text' => 'text_value',
+        'textarea' => 'text_value',
+        'price' => 'float_value',
+        'boolean' => 'boolean_value',
+        'select' => 'integer_value',
         'multiselect' => 'text_value',
-        'checkbox'    => 'text_value',
-        'email'       => 'json_value',
-        'address'     => 'json_value',
-        'phone'       => 'json_value',
-        'lookup'      => 'integer_value',
-        'datetime'    => 'datetime_value',
-        'date'        => 'date_value',
-        'file'        => 'text_value',
-        'image'       => 'text_value',
+        'checkbox' => 'text_value',
+        'email' => 'json_value',
+        'address' => 'json_value',
+        'phone' => 'json_value',
+        'lookup' => 'integer_value',
+        'datetime' => 'datetime_value',
+        'date' => 'date_value',
+        'file' => 'text_value',
+        'image' => 'text_value',
     ];
 
     /**
@@ -154,7 +155,7 @@ trait CustomAttribute
      *
      * @return $this
      *
-     * @throws \Illuminate\Database\Eloquent\MassAssignmentException
+     * @throws MassAssignmentException
      */
     public function fill(array $attributes)
     {

@@ -30,21 +30,21 @@ class WorkflowDataGrid extends DataGrid
     public function prepareColumns(): void
     {
         $this->addColumn([
-            'index'      => 'id',
-            'label'      => trans('admin::app.settings.workflows.index.datagrid.id'),
-            'type'       => 'string',
+            'index' => 'id',
+            'label' => trans('admin::app.settings.workflows.index.datagrid.id'),
+            'type' => 'string',
             'searchable' => true,
             'filterable' => true,
-            'sortable'   => true,
+            'sortable' => true,
         ]);
 
         $this->addColumn([
-            'index'      => 'name',
-            'label'      => trans('admin::app.settings.workflows.index.datagrid.name'),
-            'type'       => 'string',
+            'index' => 'name',
+            'label' => trans('admin::app.settings.workflows.index.datagrid.name'),
+            'type' => 'string',
             'searchable' => true,
             'filterable' => true,
-            'sortable'   => true,
+            'sortable' => true,
         ]);
     }
 
@@ -55,21 +55,21 @@ class WorkflowDataGrid extends DataGrid
     {
         if (bouncer()->hasPermission('settings.automation.workflows.edit')) {
             $this->addAction([
-                'index'  => 'edit',
-                'icon'   => 'icon-edit',
-                'title'  => trans('admin::app.settings.workflows.index.datagrid.edit'),
+                'index' => 'edit',
+                'icon' => 'icon-edit',
+                'title' => trans('admin::app.settings.workflows.index.datagrid.edit'),
                 'method' => 'GET',
-                'url'    => fn ($row) => route('admin.settings.workflows.edit', $row->id),
+                'url' => fn ($row) => route('admin.settings.workflows.edit', $row->id),
             ]);
         }
 
         if (bouncer()->hasPermission('settings.automation.workflows.delete')) {
             $this->addAction([
-                'index'        => 'delete',
-                'icon'         => 'icon-delete',
-                'title'        => trans('admin::app.settings.workflows.index.datagrid.delete'),
-                'method'       => 'DELETE',
-                'url'          => fn ($row) => route('admin.settings.workflows.delete', $row->id),
+                'index' => 'delete',
+                'icon' => 'icon-delete',
+                'title' => trans('admin::app.settings.workflows.index.datagrid.delete'),
+                'method' => 'DELETE',
+                'url' => fn ($row) => route('admin.settings.workflows.delete', $row->id),
             ]);
         }
     }

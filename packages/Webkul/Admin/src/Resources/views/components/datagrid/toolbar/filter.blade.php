@@ -1045,7 +1045,7 @@
                         params._method = 'PUT';
                     }
 
-                    this.$axios.post(params.id ? `{{ route('admin.datagrid.saved_filters.update', '') }}/${params.id}` : "{{ route('admin.datagrid.saved_filters.store') }}", {
+                    this.$axios.post(params.id ? "{{ route('admin.datagrid.saved_filters.update', ':id') }}".replace(':id', params.id) : "{{ route('admin.datagrid.saved_filters.store') }}", {
                         src: this.src,
                         applied,
                         ...params,
@@ -1085,7 +1085,7 @@
                  */
                 getSavedFilters() {
                     this.$axios
-                        .get('{{ route('admin.datagrid.saved_filters.index') }}', {
+                        .get(`{{ route('admin.datagrid.saved_filters.index') }}`, {
                             params: { src: this.src }
                         })
                         .then(response => {
@@ -1102,7 +1102,7 @@
                 deleteSavedFilter(filter) {
                     this.$emitter.emit('open-confirm-modal', {
                         agree: () => {
-                            this.$axios.delete(`{{ route('admin.datagrid.saved_filters.destroy', '') }}/${filter.id}`)
+                            this.$axios.delete("{{ route('admin.datagrid.saved_filters.destroy', ':id') }}".replace(':id', filter.id))
                                 .then(response => {
                                     this.applySavedFilter(null);
 
@@ -1425,7 +1425,7 @@
             </x-slot>
 
             <!-- Dropdown Content -->
-            <x-slot:menu class="mt-1 rounded-md border border-gray-200 dark:border-gray-800">
+            <x-slot:menu class="mt-1 rounded-md border border-gray-300 dark:border-gray-800">
                 <div class="relative">
                     <div class="relative rounded">
                         <ul class="list-reset">
@@ -1503,7 +1503,7 @@
                     }
 
                     this.$axios
-                        .get('{{ route('admin.datagrid.look_up') }}', {
+                        .get(`{{ route('admin.datagrid.look_up') }}`, {
                             params
                         })
                         .then(({

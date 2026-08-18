@@ -40,38 +40,38 @@ class WarehouseDataGrid extends DataGrid
     public function prepareColumns(): void
     {
         $this->addColumn([
-            'index'      => 'id',
-            'label'      => trans('admin::app.settings.warehouses.index.datagrid.id'),
-            'type'       => 'string',
-            'sortable'   => true,
+            'index' => 'id',
+            'label' => trans('admin::app.settings.warehouses.index.datagrid.id'),
+            'type' => 'string',
+            'sortable' => true,
             'filterable' => true,
         ]);
 
         $this->addColumn([
-            'index'      => 'name',
-            'label'      => trans('admin::app.settings.warehouses.index.datagrid.name'),
-            'type'       => 'string',
-            'sortable'   => true,
+            'index' => 'name',
+            'label' => trans('admin::app.settings.warehouses.index.datagrid.name'),
+            'type' => 'string',
+            'sortable' => true,
             'filterable' => true,
         ]);
 
         $this->addColumn([
-            'index'      => 'contact_name',
-            'label'      => trans('admin::app.settings.warehouses.index.datagrid.contact-name'),
-            'type'       => 'string',
+            'index' => 'contact_name',
+            'label' => trans('admin::app.settings.warehouses.index.datagrid.contact-name'),
+            'type' => 'string',
             'searchable' => true,
             'filterable' => true,
-            'sortable'   => true,
+            'sortable' => true,
         ]);
 
         $this->addColumn([
-            'index'      => 'contact_emails',
-            'label'      => trans('admin::app.settings.warehouses.index.datagrid.contact-emails'),
-            'type'       => 'string',
+            'index' => 'contact_emails',
+            'label' => trans('admin::app.settings.warehouses.index.datagrid.contact-emails'),
+            'type' => 'string',
             'searchable' => true,
             'filterable' => true,
-            'sortable'   => true,
-            'closure'    => function ($row) {
+            'sortable' => true,
+            'closure' => function ($row) {
                 $emails = json_decode($row->contact_emails, true);
 
                 if ($emails) {
@@ -81,11 +81,11 @@ class WarehouseDataGrid extends DataGrid
         ]);
 
         $this->addColumn([
-            'index'    => 'contact_numbers',
-            'label'    => trans('admin::app.settings.warehouses.index.datagrid.contact-numbers'),
-            'type'     => 'string',
+            'index' => 'contact_numbers',
+            'label' => trans('admin::app.settings.warehouses.index.datagrid.contact-numbers'),
+            'type' => 'string',
             'sortable' => false,
-            'closure'  => function ($row) {
+            'closure' => function ($row) {
                 $numbers = json_decode($row->contact_numbers, true);
 
                 if ($numbers) {
@@ -95,22 +95,22 @@ class WarehouseDataGrid extends DataGrid
         ]);
 
         $this->addColumn([
-            'index'      => 'products',
-            'label'      => trans('admin::app.settings.warehouses.index.datagrid.products'),
-            'type'       => 'string',
-            'sortable'   => true,
+            'index' => 'products',
+            'label' => trans('admin::app.settings.warehouses.index.datagrid.products'),
+            'type' => 'string',
+            'sortable' => true,
             'filterable' => false,
         ]);
 
         $this->addColumn([
-            'index'           => 'created_at',
-            'label'           => trans('admin::app.settings.warehouses.index.datagrid.created-at'),
-            'type'            => 'date',
-            'searchable'      => true,
-            'filterable'      => true,
+            'index' => 'created_at',
+            'label' => trans('admin::app.settings.warehouses.index.datagrid.created-at'),
+            'type' => 'date',
+            'searchable' => true,
+            'filterable' => true,
             'filterable_type' => 'date_range',
-            'sortable'        => true,
-            'closure'         => function ($row) {
+            'sortable' => true,
+            'closure' => function ($row) {
                 return core()->formatDate($row->created_at);
             },
         ]);
@@ -123,31 +123,37 @@ class WarehouseDataGrid extends DataGrid
      */
     public function prepareActions()
     {
-        $this->addAction([
-            'icon'   => 'icon-eye',
-            'title'  => trans('admin::app.settings.warehouses.index.datagrid.view'),
-            'method' => 'GET',
-            'url'    => function ($row) {
-                return route('admin.settings.warehouses.view', $row->id);
-            },
-        ]);
+        if (bouncer()->hasPermission('settings.inventory.warehouse')) {
+            $this->addAction([
+                'icon' => 'icon-eye',
+                'title' => trans('admin::app.settings.warehouses.index.datagrid.view'),
+                'method' => 'GET',
+                'url' => function ($row) {
+                    return route('admin.settings.warehouses.view', $row->id);
+                },
+            ]);
+        }
 
-        $this->addAction([
-            'icon'   => 'icon-edit',
-            'title'  => trans('admin::app.settings.warehouses.index.datagrid.edit'),
-            'method' => 'GET',
-            'url'    => function ($row) {
-                return route('admin.settings.warehouses.edit', $row->id);
-            },
-        ]);
+        if (bouncer()->hasPermission('settings.inventory.warehouse.edit')) {
+            $this->addAction([
+                'icon' => 'icon-edit',
+                'title' => trans('admin::app.settings.warehouses.index.datagrid.edit'),
+                'method' => 'GET',
+                'url' => function ($row) {
+                    return route('admin.settings.warehouses.edit', $row->id);
+                },
+            ]);
+        }
 
-        $this->addAction([
-            'icon'   => 'icon-delete',
-            'title'  => trans('admin::app.settings.warehouses.index.datagrid.delete'),
-            'method' => 'DELETE',
-            'url'    => function ($row) {
-                return route('admin.settings.warehouses.delete', $row->id);
-            },
-        ]);
+        if (bouncer()->hasPermission('settings.inventory.warehouse.delete')) {
+            $this->addAction([
+                'icon' => 'icon-delete',
+                'title' => trans('admin::app.settings.warehouses.index.datagrid.delete'),
+                'method' => 'DELETE',
+                'url' => function ($row) {
+                    return route('admin.settings.warehouses.delete', $row->id);
+                },
+            ]);
+        }
     }
 }

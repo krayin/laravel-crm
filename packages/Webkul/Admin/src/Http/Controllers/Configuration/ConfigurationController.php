@@ -4,6 +4,7 @@ namespace Webkul\Admin\Http\Controllers\Configuration;
 
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
@@ -54,7 +55,7 @@ class ConfigurationController extends Controller
     /**
      * download the file for the specified resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function download()
     {

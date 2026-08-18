@@ -9,9 +9,12 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Webkul\Core\Contracts\CoreConfig;
 use Webkul\Core\Eloquent\Repository;
+use Webkul\Core\Traits\Sanitizer;
 
 class CoreConfigRepository extends Repository
 {
+    use Sanitizer;
+
     /**
      * Specify model class name.
      */
@@ -56,7 +59,7 @@ class CoreConfigRepository extends Repository
                 : $configuration->getFields();
 
             $tempPath = array_merge($path, [[
-                'key'   => $configuration->getKey() ?? null,
+                'key' => $configuration->getKey() ?? null,
                 'title' => $this->getTranslatedTitle($configuration),
             ]]);
 
@@ -84,7 +87,7 @@ class CoreConfigRepository extends Repository
 
                 $results[] = [
                     'title' => implode(' > ', [...Arr::pluck($path, 'title'), $title]),
-                    'url'   => route('admin.configuration.index', Str::replace('.', '/', $queryParam)),
+                    'url' => route('admin.configuration.index', Str::replace('.', '/', $queryParam)),
                 ];
             }
 
@@ -133,9 +136,10 @@ class CoreConfigRepository extends Repository
                         $fieldNameWithKey = $fieldName.'.'.$key;
 
                         $coreConfigValues = $this->model->where('code', $fieldNameWithKey)->get();
-
                         if (request()->hasFile($fieldNameWithKey)) {
                             $val = request()->file($fieldNameWithKey)->store('configuration');
+                        } else {
+                            $val = $this->sanitizeConfigValue($fieldNameWithKey, $val);
                         }
 
                         if ($coreConfigValues->isNotEmpty()) {
@@ -152,12 +156,18 @@ class CoreConfigRepository extends Repository
                     }
                 } else {
                     if (request()->hasFile($fieldName)) {
-                        $value = request()->file($fieldName)->store('configuration');
+                        $file = request()->file($fieldName);
+
+                        $filename = md5($file->getClientOriginalName().time()).'.'.$file->getClientOriginalExtension();
+
+                        $path = $file->storeAs('configuration', $filename);
+
+                        $this->sanitizeSVG($path, $file);
                     }
 
                     $preparedData[] = [
-                        'code'  => $fieldName,
-                        'value' => $value,
+                        'code' => $fieldName,
+                        'value' => $path ?? $this->sanitizeConfigValue($fieldName, $value),
                     ];
                 }
             }
@@ -178,6 +188,31 @@ class CoreConfigRepository extends Repository
         }
 
         Event::dispatch('core.configuration.save.after');
+    }
+
+    /**
+     * Sanitize a configuration value before it is persisted.
+     *
+     * Rich-text (`editor`/TinyMCE) fields legitimately hold HTML and are rendered unescaped, so their
+     * value is passed through an allowlist HTML sanitizer to strip any active content. This is the
+     * server-side boundary that client-side TinyMCE filtering does not provide.
+     */
+    protected function sanitizeConfigValue(string $code, mixed $value): mixed
+    {
+        if (! is_string($value)) {
+            return $value;
+        }
+
+        $field = core()->getConfigField($code);
+
+        if (
+            $field
+            && (($field['type'] ?? null) === 'editor' || ! empty($field['tinymce']))
+        ) {
+            return $this->sanitizeHtml($value);
+        }
+
+        return $value;
     }
 
     /**

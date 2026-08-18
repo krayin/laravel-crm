@@ -1,9 +1,9 @@
 @props([
-    'name'                => 'attachments',
-    'validations'         => null,
+    'name' => 'attachments',
+    'validations' => null,
     'uploadedAttachments' => [],
-    'allowMultiple'       => false,
-    'hideButton'          => false,
+    'allowMultiple' => false,
+    'hideButton' => false,
 ])
 
 <v-attachments

@@ -76,8 +76,8 @@ class DatabaseManager
     {
         try {
             app(KrayinDatabaseSeeder::class)->run([
-                'default_locale'     => $data['parameter']['default_locales'],
-                'default_currency'   => $data['parameter']['default_currency'],
+                'default_locale' => $data['parameter']['default_locales'],
+                'default_currency' => $data['parameter']['default_currency'],
             ]);
 
             $this->storageLink();

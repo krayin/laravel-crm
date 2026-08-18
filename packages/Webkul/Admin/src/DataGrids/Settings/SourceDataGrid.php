@@ -30,19 +30,19 @@ class SourceDataGrid extends DataGrid
     public function prepareColumns(): void
     {
         $this->addColumn([
-            'index'    => 'id',
-            'label'    => trans('admin::app.settings.sources.index.datagrid.id'),
-            'type'     => 'string',
+            'index' => 'id',
+            'label' => trans('admin::app.settings.sources.index.datagrid.id'),
+            'type' => 'string',
             'sortable' => true,
         ]);
 
         $this->addColumn([
-            'index'      => 'name',
-            'label'      => trans('admin::app.settings.sources.index.datagrid.name'),
-            'type'       => 'string',
+            'index' => 'name',
+            'label' => trans('admin::app.settings.sources.index.datagrid.name'),
+            'type' => 'string',
             'searchable' => true,
             'filterable' => true,
-            'sortable'   => true,
+            'sortable' => true,
         ]);
     }
 
@@ -53,21 +53,21 @@ class SourceDataGrid extends DataGrid
     {
         if (bouncer()->hasPermission('settings.lead.sources.edit')) {
             $this->addAction([
-                'index'  => 'edit',
-                'icon'   => 'icon-edit',
-                'title'  => trans('admin::app.settings.sources.index.datagrid.edit'),
+                'index' => 'edit',
+                'icon' => 'icon-edit',
+                'title' => trans('admin::app.settings.sources.index.datagrid.edit'),
                 'method' => 'GET',
-                'url'    => fn ($row) => route('admin.settings.sources.edit', $row->id),
+                'url' => fn ($row) => route('admin.settings.sources.edit', $row->id),
             ]);
         }
 
         if (bouncer()->hasPermission('settings.lead.sources.delete')) {
             $this->addAction([
-                'index'  => 'delete',
-                'icon'   => 'icon-delete',
-                'title'  => trans('admin::app.settings.sources.index.datagrid.delete'),
+                'index' => 'delete',
+                'icon' => 'icon-delete',
+                'title' => trans('admin::app.settings.sources.index.datagrid.delete'),
                 'method' => 'DELETE',
-                'url'    => fn ($row) => route('admin.settings.sources.delete', $row->id),
+                'url' => fn ($row) => route('admin.settings.sources.delete', $row->id),
             ]);
         }
     }

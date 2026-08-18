@@ -41,41 +41,41 @@ class TagDataGrid extends DataGrid
     public function prepareColumns(): void
     {
         $this->addColumn([
-            'index'      => 'id',
-            'label'      => trans('admin::app.settings.tags.index.datagrid.id'),
-            'type'       => 'string',
+            'index' => 'id',
+            'label' => trans('admin::app.settings.tags.index.datagrid.id'),
+            'type' => 'string',
             'searchable' => true,
-            'sortable'   => true,
+            'sortable' => true,
             'filterable' => true,
         ]);
 
         $this->addColumn([
-            'index'      => 'name',
-            'label'      => trans('admin::app.settings.tags.index.datagrid.name'),
-            'type'       => 'string',
+            'index' => 'name',
+            'label' => trans('admin::app.settings.tags.index.datagrid.name'),
+            'type' => 'string',
             'searchable' => true,
-            'sortable'   => true,
+            'sortable' => true,
             'filterable' => true,
         ]);
 
         $this->addColumn([
-            'index'      => 'user_name',
-            'label'      => trans('admin::app.settings.tags.index.datagrid.users'),
-            'type'       => 'string',
+            'index' => 'user_name',
+            'label' => trans('admin::app.settings.tags.index.datagrid.users'),
+            'type' => 'string',
             'searchable' => true,
-            'sortable'   => true,
+            'sortable' => true,
             'filterable' => true,
         ]);
 
         $this->addColumn([
-            'index'           => 'created_at',
-            'label'           => trans('admin::app.settings.tags.index.datagrid.created-at'),
-            'type'            => 'date',
-            'searchable'      => true,
-            'filterable'      => true,
-            'sortable'        => true,
+            'index' => 'created_at',
+            'label' => trans('admin::app.settings.tags.index.datagrid.created-at'),
+            'type' => 'date',
+            'searchable' => true,
+            'filterable' => true,
+            'sortable' => true,
             'filterable_type' => 'date_range',
-            'closure'         => fn ($row) => core()->formatDate($row->created_at),
+            'closure' => fn ($row) => core()->formatDate($row->created_at),
         ]);
     }
 
@@ -86,11 +86,11 @@ class TagDataGrid extends DataGrid
     {
         if (bouncer()->hasPermission('settings.other_settings.tags.edit')) {
             $this->addAction([
-                'index'  => 'edit',
-                'icon'   => 'icon-edit',
-                'title'  => trans('admin::app.settings.tags.index.datagrid.edit'),
+                'index' => 'edit',
+                'icon' => 'icon-edit',
+                'title' => trans('admin::app.settings.tags.index.datagrid.edit'),
                 'method' => 'GET',
-                'url'    => function ($row) {
+                'url' => function ($row) {
                     return route('admin.settings.tags.edit', $row->id);
                 },
             ]);
@@ -98,11 +98,11 @@ class TagDataGrid extends DataGrid
 
         if (bouncer()->hasPermission('settings.other_settings.tags.delete')) {
             $this->addAction([
-                'index'  => 'delete',
-                'icon'   => 'icon-delete',
-                'title'  => trans('admin::app.settings.tags.index.datagrid.delete'),
+                'index' => 'delete',
+                'icon' => 'icon-delete',
+                'title' => trans('admin::app.settings.tags.index.datagrid.delete'),
                 'method' => 'DELETE',
-                'url'    => function ($row) {
+                'url' => function ($row) {
                     return route('admin.settings.tags.delete', $row->id);
                 },
             ]);
@@ -115,10 +115,10 @@ class TagDataGrid extends DataGrid
     public function prepareMassActions(): void
     {
         $this->addMassAction([
-            'icon'   => 'icon-delete',
-            'title'  => trans('admin::app.settings.tags.index.datagrid.delete'),
+            'icon' => 'icon-delete',
+            'title' => trans('admin::app.settings.tags.index.datagrid.delete'),
             'method' => 'POST',
-            'url'    => route('admin.settings.tags.mass_delete'),
+            'url' => route('admin.settings.tags.mass_delete'),
         ]);
     }
 }

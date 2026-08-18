@@ -13,7 +13,7 @@
         method="PUT"
     >
         <div class="flex flex-col gap-4">
-            <div class="flex items-center justify-between rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
+            <div class="scroll-reactive-sticky sticky top-[60px] z-[1000] flex items-center justify-between rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm shadow-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
                 <div class="flex flex-col gap-2">
                     <x-admin::breadcrumbs
                         name="quotes.edit"
@@ -55,8 +55,8 @@
             type="text/x-template"
             id="v-quote-template"
         >
-            <div class="box-shadow flex flex-col gap-4 rounded-lg border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900">
-                <div class="flex w-full gap-2 border-b border-gray-200 dark:border-gray-800">
+            <div class="box-shadow flex flex-col gap-4 rounded-lg border border-gray-300 bg-white dark:border-gray-800 dark:bg-gray-900">
+                <div class="flex w-full gap-2 border-b border-gray-300 dark:border-gray-800">
                     {!! view_render_event('admin.contacts.quotes.edit.tags.before', ['quote' => $quote]) !!}
 
                     <template
@@ -161,12 +161,6 @@
 
                                 <x-admin::attributes.edit.lookup />
 
-                                @php
-                                    $leadId = old('lead_id') ?? optional($quote->leads->first())->id;
-
-                                    $lookUpEntityData = app('Webkul\Attribute\Repositories\AttributeRepository')->getLookUpEntity('leads', $leadId);
-                                @endphp
-
                                 <x-admin::form.control-group class="w-full">
                                     <x-admin::form.control-group.label>
                                         @lang('admin::app.quotes.create.link-to-lead')
@@ -177,6 +171,7 @@
                                         :attribute="{'code': 'lead_id', 'name': 'Lead', 'lookup_type': 'leads'}"
                                         :value="leadEntity"
                                         can-add-new="true"
+                                        @lookup-added="setLeadEntity"
                                         @lookup-removed="setLeadEntity"
                                     ></v-lookup-component>
                                 </x-admin::form.control-group>
@@ -185,7 +180,7 @@
                             <!-- Custom Attributes -->
                             <x-admin::attributes
                                 :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
-                                    'entity_type'     => 'quotes',
+                                    'entity_type' => 'quotes',
                                     'is_user_defined' => 1,
                                 ])->sortBy('sort_order')"
                                 :custom-validations="[
@@ -220,21 +215,57 @@
                         </div>
 
                         <div class="w-1/2 max-md:w-full">
+                            <!-- Billing Address -->
                             <x-admin::attributes
                                 :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
                                     'entity_type' => 'quotes',
-                                    ['code', 'IN', ['billing_address', 'shipping_address']],
+                                    ['code', 'IN', ['billing_address']],
                                 ])"
                                 :custom-validations="[
                                     'billing_address' => [
                                         'max:100',
                                     ],
-                                    'shipping_address' => [
-                                        'max:100',
-                                    ],
                                 ]"
                                 :entity="$quote"
                             />
+
+                            <!-- Shipping Address Same As Billing Address -->
+                            <x-admin::form.control-group class="!mb-4">
+                                <x-admin::form.control-group.label class="!text-sm">
+                                    @lang('admin::app.quotes.create.same-as-billing')
+                                </x-admin::form.control-group.label>
+
+                                <input
+                                    type="hidden"
+                                    name="shipping_address_same_as_billing"
+                                    :value="0"
+                                />
+
+                                <x-admin::form.control-group.control
+                                    type="switch"
+                                    name="shipping_address_same_as_billing"
+                                    value="1"
+                                    :label="trans('admin::app.quotes.create.same-as-billing')"
+                                    :checked="(bool) (old('shipping_address_same_as_billing') ?? (! empty($quote->shipping_address) && $quote->shipping_address == $quote->billing_address))"
+                                    @change="sameAsBilling = $event.target.checked"
+                                />
+                            </x-admin::form.control-group>
+
+                            <!-- Shipping Address -->
+                            <template v-if="! sameAsBilling">
+                                <x-admin::attributes
+                                    :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
+                                        'entity_type' => 'quotes',
+                                        ['code', 'IN', ['shipping_address']],
+                                    ])"
+                                    :custom-validations="[
+                                        'shipping_address' => [
+                                            'max:100',
+                                        ],
+                                    ]"
+                                    :entity="$quote"
+                                />
+                            </template>
                         </div>
                     </div>
 
@@ -258,7 +289,10 @@
                         </div>
 
                         <!-- Quote Item List Vue Component -->
-                        <v-quote-item-list :errors="errors"></v-quote-item-list>
+                        <v-quote-item-list
+                            :errors="errors"
+                            :lead-entity="leadEntity"
+                        ></v-quote-item-list>
                     </div>
 
                     {!! view_render_event('admin.contacts.quotes.edit.quote_information.after', ['quote' => $quote]) !!}
@@ -288,23 +322,23 @@
                                 </x-admin::table.th>
 
                                 <x-admin::table.th class="text-center">
-                                    @lang('admin::app.quotes.create.price') ({{ core()->currencySymbol(config('app.currency')) }})
+                                    @lang('admin::app.quotes.create.price')
                                 </x-admin::table.th>
 
                                 <x-admin::table.th class="text-center">
-                                    @lang('admin::app.quotes.create.amount') ({{ core()->currencySymbol(config('app.currency')) }})
+                                    @lang('admin::app.quotes.create.amount')
                                 </x-admin::table.th>
 
                                 <x-admin::table.th class="text-center">
-                                    @lang('admin::app.quotes.create.discount') ({{ core()->currencySymbol(config('app.currency')) }})
+                                    @lang('admin::app.quotes.create.discount')
                                 </x-admin::table.th>
 
                                 <x-admin::table.th class="text-center">
-                                    @lang('admin::app.quotes.create.tax') ({{ core()->currencySymbol(config('app.currency')) }})
+                                    @lang('admin::app.quotes.create.tax')
                                 </x-admin::table.th>
 
                                 <x-admin::table.th class="text-center">
-                                    @lang('admin::app.quotes.create.total') ({{ core()->currencySymbol(config('app.currency')) }})
+                                    @lang('admin::app.quotes.create.total')
                                 </x-admin::table.th>
 
                                 <x-admin::table.th
@@ -332,6 +366,7 @@
                             </template>
                         </x-admin::table.tbody>
                     </x-admin::table>
+                    <x-admin::form.control-group.error name="items"/>
                 </div>
 
                 <!-- Add New Quote Item -->
@@ -393,7 +428,7 @@
                                 ::errors="errors"
                                 :label="trans('admin::app.quotes.create.adjustment-amount')"
                                 :placeholder="trans('admin::app.quotes.create.adjustment-amount')"
-                                @on-change="(event) => adjustmentAmount = event.value"
+                                @on-change="handleAdjustmentAmountChange"
                             />
                         </div>
 
@@ -428,7 +463,12 @@
                             ::value="{ id: product.product_id, name: product.name }"
                             @on-selected="(product) => addProduct(product)"
                             :placeholder="trans('admin::app.quotes.edit.search-products')"
+                            rules="required"
+                            :label="trans('admin::app.quotes.edit.product-name')"
+                            ::class="errors[`${inputName}[product_id]`] ? 'border !border-red-600 hover:border-red-600' : ''"
                         />
+                        <x-admin::form.control-group.error name="`items.${product.id}.product_id`"/>
+                        <x-admin::form.control-group.error ::name="`${inputName}[product_id]`"/>
                     </x-admin::form.control-group>
                 </x-admin::table.td>
 
@@ -446,6 +486,7 @@
                             @on-change="(event) => product.quantity = event.value"
                             position="center"
                         />
+                        <x-admin::form.control-group.error ::name="`items.${product.id}.quantity`"/>
                     </x-admin::form.control-group>
                 </x-admin::table.td>
 
@@ -455,7 +496,7 @@
                         <x-admin::form.control-group.control
                             type="inline"
                             ::name="`${inputName}[price]`"
-                            ::value="product.price"
+                            ::value="(product.price) ?? 0"
                             rules="required|decimal:4"
                             ::errors="errors"
                             :label="trans('admin::app.quotes.create.price')"
@@ -464,6 +505,8 @@
                             position="center"
                             ::value-label="$admin.formatPrice(product.price)"
                         />
+                        <x-admin::form.control-group.error name="`items.${product.id}.price`"/>
+                        <x-admin::form.control-group.error ::name="`${inputName}[price]`"/>
                     </x-admin::form.control-group>
                 </x-admin::table.td>
 
@@ -473,7 +516,7 @@
                         <x-admin::form.control-group.control
                             type="inline"
                             ::name="`${inputName}[total]`"
-                            ::value="product.price * product.quantity"
+                            ::value="(product.price * product.quantity) ?? 0"
                             rules="required|decimal:4"
                             ::errors="errors"
                             :label="trans('admin::app.quotes.create.total')"
@@ -482,6 +525,8 @@
                             position="center"
                             ::value-label="$admin.formatPrice(product.price * product.quantity)"
                         />
+                        <x-admin::form.control-group.error name="`items.${product.id}.total`"/>
+                        <x-admin::form.control-group.error ::name="`${inputName}[total]`"/>
                     </x-admin::form.control-group>
                 </x-admin::table.td>
 
@@ -500,6 +545,8 @@
                             position="center"
                             ::value-label="$admin.formatPrice(product.discount_amount)"
                         />
+                        <x-admin::form.control-group.error name="`items.${product.id}.discount_amount`"/>
+                        <x-admin::form.control-group.error ::name="`${inputName}[discount_amount]`"/>
                     </x-admin::form.control-group>
                 </x-admin::table.td>
 
@@ -562,12 +609,14 @@
                         activeTab: 'quote-info',
 
                         tabs: [
-                            { id: 'quote-info', label: '@lang('admin::app.quotes.create.quote-info')' },
-                            { id: 'address-info', label: '@lang('admin::app.quotes.create.address-info')' },
-                            { id: 'quote-items', label: '@lang('admin::app.quotes.create.quote-items')' }
+                            { id: 'quote-info', label: "@lang('admin::app.quotes.create.quote-info')" },
+                            { id: 'address-info', label: "@lang('admin::app.quotes.create.address-info')" },
+                            { id: 'quote-items', label: "@lang('admin::app.quotes.create.quote-items')" }
                         ],
 
                         leadEntity: @json($lookUpEntityData ?? []),
+
+                        sameAsBilling: {{ (old('shipping_address_same_as_billing') ?? (! empty($quote->shipping_address) && $quote->shipping_address == $quote->billing_address)) ? 'true' : 'false' }},
                     };
                 },
 
@@ -588,7 +637,7 @@
                     },
 
                     setLeadEntity($event) {
-                        this.leadEntity = $event;
+                        this.leadEntity = $event ?? { id: '', name: '' };
                     },
                 },
             });
@@ -596,14 +645,30 @@
             app.component('v-quote-item-list', {
                 template: '#v-quote-item-list-template',
 
-                props: ['errors'],
+                props: ['errors', 'leadEntity'],
 
                 data() {
                     return {
-                        adjustmentAmount: 0,
+                        adjustmentAmount: '0.0000',
 
-                        products: @json($quote->items),
+                        products: @json($initialQuoteItems),
                     }
+                },
+
+                watch: {
+                    'leadEntity.id': function(newLeadId, oldLeadId) {
+                        if (newLeadId === oldLeadId) {
+                            return;
+                        }
+
+                        if (! newLeadId) {
+                            this.products = [];
+
+                            return;
+                        }
+
+                        this.fetchLeadProducts(newLeadId);
+                    },
                 },
 
                 computed: {
@@ -613,13 +678,11 @@
                      * @returns {Number}
                      */
                     subTotal() {
-                        let total = 0;
+                        const total = this.products.reduce((carry, product) => {
+                            return carry + this.getProductBaseTotal(product);
+                        }, 0);
 
-                        this.products.forEach(product => {
-                            total += parseFloat(product.price * product.quantity);
-                        });
-
-                        return total;
+                        return this.formatDecimal(total);
                     },
 
                     /**
@@ -628,11 +691,11 @@
                      * @returns {Number}
                      */
                     discountAmount() {
-                        let total = 0;
+                        const total = this.products.reduce((carry, product) => {
+                            return carry + this.parseDecimal(product.discount_amount);
+                        }, 0);
 
-                        this.products.forEach(product => total += parseFloat(product.discount_amount));
-
-                        return total;
+                        return this.formatDecimal(total);
                     },
 
                     /**
@@ -641,11 +704,11 @@
                      * @returns {Number}
                      */
                     taxAmount() {
-                        let total = 0;
+                        const total = this.products.reduce((carry, product) => {
+                            return carry + this.parseDecimal(product.tax_amount);
+                        }, 0);
 
-                        this.products.forEach(product => total += parseFloat(product.tax_amount));
-
-                        return total;
+                        return this.formatDecimal(total);
                     },
 
                     /**
@@ -654,17 +717,94 @@
                      * @returns {Number}
                      */
                     grandTotal() {
-                        let total = 0;
+                        const itemsTotal = this.products.reduce((carry, product) => {
+                            return carry
+                                + this.getProductBaseTotal(product)
+                                + this.parseDecimal(product.tax_amount)
+                                - this.parseDecimal(product.discount_amount);
+                        }, 0);
 
-                        this.products.forEach(product => {
-                            total += parseFloat(product.price * product.quantity) + parseFloat(product.tax_amount) - parseFloat(product.discount_amount) + parseFloat(this.adjustmentAmount);
-                        });
-
-                        return total;
+                        return this.formatDecimal(itemsTotal + this.parseDecimal(this.adjustmentAmount));
                     },
                 },
 
                 methods: {
+                    /**
+                     * Parse decimal-like values safely.
+                     *
+                     * @param {Number|String|null} value
+                     *
+                     * @returns {Number}
+                     */
+                    parseDecimal(value) {
+                        const parsedValue = Number.parseFloat(value);
+
+                        return Number.isFinite(parsedValue) ? parsedValue : 0;
+                    },
+
+                    /**
+                     * Format numeric values as fixed decimals.
+                     *
+                     * @param {Number|String|null} value
+                     *
+                     * @returns {String}
+                     */
+                    formatDecimal(value) {
+                        return this.parseDecimal(value).toFixed(4);
+                    },
+
+                    /**
+                     * Calculate product line subtotal.
+                     *
+                     * @param {Object} product
+                     *
+                     * @returns {Number}
+                     */
+                    getProductBaseTotal(product) {
+                        return this.parseDecimal(product.price) * this.parseDecimal(product.quantity);
+                    },
+
+                    /**
+                     * Keep adjustment amount stored as a fixed decimal string.
+                     *
+                     * @param {Object} event
+                     *
+                     * @returns {void}
+                     */
+                    handleAdjustmentAmountChange(event) {
+                        this.adjustmentAmount = this.formatDecimal(event.value);
+                    },
+
+                    /**
+                     * Fetch and replace items with selected lead products.
+                     *
+                     * @param {Number|String} leadId
+                     *
+                     * @returns {void}
+                     */
+                    fetchLeadProducts(leadId) {
+                        this.$axios
+                            .get("{{ route('admin.quotes.lead_products', '__LEAD_ID__') }}".replace('__LEAD_ID__', leadId))
+                            .then((response) => {
+                                const leadProducts = response.data?.data ?? [];
+
+                                this.products = leadProducts;
+
+                                this.$emitter.emit('add-flash', {
+                                    type: leadProducts.length ? 'success' : 'info',
+                                    message: leadProducts.length
+                                        ? 'Lead products assigned to quote. See items section.'
+                                        : 'No products found for selected lead.',
+                                });
+                            })
+                            .catch((error) => {
+                                this.$emitter.emit('add-flash', {
+                                    type: 'error',
+                                    message: error?.response?.data?.message || 'Unable to fetch lead products.',
+                                });
+                            });
+                    },
+
                     /**
                      * Add a new product.
                      *
@@ -676,10 +816,10 @@
                             product_id: null,
                             name: '',
                             quantity: 1,
-                            total: 0,
-                            price: 0,
-                            discount_amount: 0,
-                            tax_amount: 0,
+                            total: '0.0000',
+                            price: '0.0000',
+                            discount_amount: '0.0000',
+                            tax_amount: '0.0000',
                         });
                     },
 

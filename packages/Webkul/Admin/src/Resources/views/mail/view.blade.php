@@ -12,7 +12,7 @@
     </x-slot>
 
     <div class="flex flex-col gap-4">
-        <div class="flex items-center justify-between rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
+        <div class="scroll-reactive-sticky sticky top-[60px] z-[1000] flex items-center justify-between rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm shadow-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
             <div class="flex flex-col gap-2">
                 {!! view_render_event('admin.mail.view.form.before', ['email' => $email]) !!}
 
@@ -607,7 +607,7 @@
                         <!-- Popup Box -->
                         <div
                             v-if="showPopup"
-                            class="transcontact_lookup absolute top-full z-10 mt-1 flex w-full origin-top flex-col gap-2 rounded-lg border border-gray-200 bg-white p-2 shadow-lg transition-transform dark:border-gray-900 dark:bg-gray-800"
+                            class="transcontact_lookup absolute top-full z-10 mt-1 flex w-full origin-top flex-col gap-2 rounded-lg border border-gray-300 bg-white p-2 shadow-lg transition-transform dark:border-gray-900 dark:bg-gray-800"
                         >
                             <!-- Search Bar -->
                             <div class="relative">
@@ -616,7 +616,7 @@
                                     type="text"
                                     v-model.lazy="searchTerm"
                                     v-debounce="500"
-                                    class="w-full rounded border border-gray-200 px-2.5 py-2 pr-10 text-sm font-normal text-gray-800 transition-all hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 dark:focus:border-gray-400"
+                                    class="w-full rounded border border-gray-300 px-2.5 py-2 pr-10 text-sm font-normal text-gray-800 transition-all hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 dark:focus:border-gray-400"
                                     placeholder="Search..."
                                     ref="searchInput"
                                     @keyup="search"
@@ -672,7 +672,7 @@
                             @if (bouncer()->hasPermission('contacts.persons.create'))
                                 <button
                                     type="button"
-                                    class="flex cursor-pointer items-center gap-2 border-t border-gray-200 p-2 text-brandColor transition-colors"
+                                    class="flex cursor-pointer items-center gap-2 border-t border-gray-300 p-2 text-brandColor transition-colors"
                                     @click="toggleContactModal"
                                 >
                                     <i class="icon-add text-md !text-brandColor"></i>
@@ -830,7 +830,7 @@
                             <!-- Popup Box -->
                             <div
                                 v-if="showPopup"
-                                class="absolute top-full z-10 mt-1 flex w-full origin-top transform flex-col gap-2 rounded-lg border border-gray-200 bg-white p-2 shadow-lg transition-transform dark:border-gray-900 dark:bg-gray-800"
+                                class="absolute top-full z-10 mt-1 flex w-full origin-top transform flex-col gap-2 rounded-lg border border-gray-300 bg-white p-2 shadow-lg transition-transform dark:border-gray-900 dark:bg-gray-800"
                             >
                                 <!-- Search Bar -->
                                 <div class="relative">
@@ -839,7 +839,7 @@
                                         type="text"
                                         v-model.lazy="searchTerm"
                                         v-debounce="500"
-                                        class="w-full rounded border border-gray-200 px-2.5 py-2 pr-10 text-sm font-normal text-gray-800 transition-all hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 dark:focus:border-gray-400"
+                                        class="w-full rounded border border-gray-300 px-2.5 py-2 pr-10 text-sm font-normal text-gray-800 transition-all hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 dark:focus:border-gray-400"
                                         placeholder="@lang('admin::app.mail.view.search')"
                                         ref="searchInput"
                                         @keyup="search"
@@ -890,7 +890,7 @@
                                 @if (bouncer()->hasPermission('leads.create'))
                                     <button
                                         type="button"
-                                        class="flex cursor-pointer items-center gap-2 border-t border-gray-200 p-2 text-brandColor transition-colors dark:border-gray-700"
+                                        class="flex cursor-pointer items-center gap-2 border-t border-gray-300 p-2 text-brandColor transition-colors dark:border-gray-700"
                                         @click="toggleLeadModal"
                                     >
                                         <i class="icon-add text-md !text-brandColor"></i>
@@ -992,7 +992,7 @@
 
                             <x-slot:content>
                                 <div class="flex flex-col gap-2">
-                                    <div class="flex gap-2 border-b border-gray-200 dark:border-gray-800">
+                                    <div class="flex gap-2 border-b border-gray-300 dark:border-gray-800">
                                         <!-- Tabs -->
                                         <template
                                             v-for="type in types"
@@ -1022,7 +1022,7 @@
                                                             :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
                                                                 ['code', 'IN', ['title']],
                                                                 'entity_type' => 'leads',
-                                                                'quick_add'   => 1
+                                                                'quick_add' => 1
                                                             ])"
                                                         />
                                                     </div>
@@ -1032,7 +1032,7 @@
                                                             :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
                                                                 ['code', 'IN', ['lead_value']],
                                                                 'entity_type' => 'leads',
-                                                                'quick_add'   => 1
+                                                                'quick_add' => 1
                                                             ])"
                                                         />
                                                     </div>
@@ -1044,7 +1044,7 @@
                                                         :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
                                                             ['code', 'IN', ['description']],
                                                             'entity_type' => 'leads',
-                                                            'quick_add'   => 1
+                                                            'quick_add' => 1
                                                         ])"
                                                     />
                                                 </div>
@@ -1056,7 +1056,7 @@
                                                             :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
                                                                 ['code', 'IN', ['lead_pipeline_id']],
                                                                 'entity_type' => 'leads',
-                                                                'quick_add'   => 1
+                                                                'quick_add' => 1
                                                             ])"
                                                         />
                                                     </div>
@@ -1066,7 +1066,7 @@
                                                             :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
                                                                 ['code', 'IN', ['lead_pipeline_stage_id']],
                                                                 'entity_type' => 'leads',
-                                                                'quick_add'   => 1
+                                                                'quick_add' => 1
                                                             ])"
                                                         />
                                                     </div>
@@ -1078,7 +1078,7 @@
                                                             :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
                                                                 ['code', 'IN', ['lead_type_id']],
                                                                 'entity_type' => 'leads',
-                                                                'quick_add'   => 1
+                                                                'quick_add' => 1
                                                             ])"
                                                         />
                                                     </div>
@@ -1088,7 +1088,7 @@
                                                             :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
                                                                 ['code', 'IN', ['lead_source_id']],
                                                                 'entity_type' => 'leads',
-                                                                'quick_add'   => 1
+                                                                'quick_add' => 1
                                                             ])"
                                                         />
                                                     </div>
@@ -1100,7 +1100,7 @@
                                                             :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
                                                                 ['code', 'IN', ['user_id']],
                                                                 'entity_type' => 'leads',
-                                                                'quick_add'   => 1
+                                                                'quick_add' => 1
                                                             ])"
                                                         />
                                                     </div>
@@ -1110,7 +1110,7 @@
                                                             :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
                                                                 ['code', 'IN', ['expected_close_date']],
                                                                 'entity_type' => 'leads',
-                                                                'quick_add'   => 1
+                                                                'quick_add' => 1
                                                             ])"
                                                             :custom-validations="[
                                                                 'expected_close_date' => [

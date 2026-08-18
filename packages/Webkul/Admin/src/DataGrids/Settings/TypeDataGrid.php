@@ -30,19 +30,21 @@ class TypeDataGrid extends DataGrid
     public function prepareColumns(): void
     {
         $this->addColumn([
-            'index'      => 'id',
-            'label'      => trans('admin::app.settings.types.index.datagrid.id'),
-            'type'       => 'string',
+            'index' => 'id',
+            'label' => trans('admin::app.settings.types.index.datagrid.id'),
+            'type' => 'string',
+            'searchable' => true,
             'filterable' => true,
-            'sortable'   => true,
+            'sortable' => true,
         ]);
 
         $this->addColumn([
-            'index'      => 'name',
-            'label'      => trans('admin::app.settings.types.index.datagrid.name'),
-            'type'       => 'string',
+            'index' => 'name',
+            'label' => trans('admin::app.settings.types.index.datagrid.name'),
+            'type' => 'string',
+            'searchable' => true,
             'filterable' => true,
-            'sortable'   => true,
+            'sortable' => true,
         ]);
     }
 
@@ -53,21 +55,21 @@ class TypeDataGrid extends DataGrid
     {
         if (bouncer()->hasPermission('settings.lead.types.edit')) {
             $this->addAction([
-                'index'  => 'edit',
-                'icon'   => 'icon-edit',
-                'title'  => trans('admin::app.settings.roles.index.datagrid.edit'),
+                'index' => 'edit',
+                'icon' => 'icon-edit',
+                'title' => trans('admin::app.settings.roles.index.datagrid.edit'),
                 'method' => 'GET',
-                'url'    => fn ($row) => route('admin.settings.types.update', $row->id),
+                'url' => fn ($row) => route('admin.settings.types.update', $row->id),
             ]);
         }
 
         if (bouncer()->hasPermission('settings.lead.types.delete')) {
             $this->addAction([
-                'index'  => 'delete',
-                'icon'   => 'icon-delete',
-                'title'  => trans('admin::app.settings.roles.index.datagrid.delete'),
+                'index' => 'delete',
+                'icon' => 'icon-delete',
+                'title' => trans('admin::app.settings.roles.index.datagrid.delete'),
                 'method' => 'DELETE',
-                'url'    => fn ($row) => route('admin.settings.types.delete', $row->id),
+                'url' => fn ($row) => route('admin.settings.types.delete', $row->id),
             ]);
         }
     }

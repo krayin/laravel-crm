@@ -24,8 +24,9 @@
 3. [Requirements](#requirements)
 4. [Installation & Configuration](#installation-and-configuration)
 4. [Docker Installation](https://devdocs.krayincrm.com/2.0/introduction/docker.html)
-5. [License](#license)
-6. [Security Vulnerabilities](#security-vulnerabilities)
+5. [Krayin Cloud System](#krayin-cloud-hosting)
+6. [License](#license)
+7. [Security Vulnerabilities](#security-vulnerabilities)
 
 ### Introduction
 
@@ -65,11 +66,9 @@ Take advantage of two of the hottest frameworks used in this project -- Laravel 
 
 -   **SERVER**: Apache 2 or NGINX.
 -   **RAM**: 3 GB or higher.
--   **PHP**: 8.1 or higher
--   **For MySQL users**: 5.7.23 or higher.
--   **For MariaDB users**: 10.2.7 or Higher.
--   **Node**: 8.11.3 LTS or higher.
+-   **PHP**: 8.3 or higher
 -   **Composer**: 2.5 or higher
+-   **For MySQL users**: 8.0.32 or higher.
 
 ### Installation and Configuration
 
@@ -116,6 +115,15 @@ php artisan serve
 email:admin@example.com
 password:admin123
 ```
+
+### Krayin Cloud Hosting
+
+[Krayin CRM Cloud Hosting](https://krayincrm.com/crm-cloud-hosting) is a fully managed hosting solution where our team sets up, secures, and configures your Krayin CRM on reliable infrastructure.
+
+Get a ready-to-use CRM on your own domain, without manual installation or infrastructure complexity, and focus on growing your business while we handle the technology.
+
+![Krayin CRM Cloud Hosting](https://raw.githubusercontent.com/krayin/temp-media/master/cloud_hosting.png)
+
 ### Krayin CRM Multi Tenant SaaS
 
 [Krayin CRM Multi Tenant SaaS](https://krayincrm.com/extensions/krayin-crm-multi-tenant-saas-extension/) Krayin Multitenant SaaS is a Laravel-based CRM solution that allows multiple businesses (tenants) to use a single application instance while keeping their data isolated and secure.

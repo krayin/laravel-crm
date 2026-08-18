@@ -854,7 +854,7 @@ class HtmlFilter
         $styledef = '';
 
         if (is_array($attary) && count($attary) > 0) {
-            foreach ($attary as $attname=>$attvalue) {
+            foreach ($attary as $attname => $attvalue) {
                 $quotchar = substr($attvalue, 0, 1);
 
                 $attvalue = str_replace($quotchar, '', $attvalue);

@@ -2,7 +2,10 @@
 
 namespace Webkul\Email\InboundEmailProcessor;
 
+use Carbon\Carbon;
 use Webklex\IMAP\Facades\Client;
+use Webklex\IMAP\Support\FolderCollection;
+use Webklex\PHPIMAP\Message;
 use Webkul\Email\Enums\SupportedFolderEnum;
 use Webkul\Email\InboundEmailProcessor\Contracts\InboundEmailProcessor;
 use Webkul\Email\Repositories\AttachmentRepository;
@@ -58,7 +61,7 @@ class WebklexImapEmailProcessor implements InboundEmailProcessor
     /**
      * Process the inbound email.
      *
-     * @param  ?\Webklex\PHPIMAP\Message  $message
+     * @param  ?Message  $message
      */
     public function processMessage($message = null): void
     {
@@ -108,46 +111,46 @@ class WebklexImapEmailProcessor implements InboundEmailProcessor
          * To Do: Review this.
          */
         $folderName = match ($message->getFolder()->name) {
-            'INBOX'     => SupportedFolderEnum::INBOX->value,
+            'INBOX' => SupportedFolderEnum::INBOX->value,
             'Important' => SupportedFolderEnum::IMPORTANT->value,
-            'Starred'   => SupportedFolderEnum::STARRED->value,
-            'Drafts'    => SupportedFolderEnum::DRAFT->value,
+            'Starred' => SupportedFolderEnum::STARRED->value,
+            'Drafts' => SupportedFolderEnum::DRAFT->value,
             'Sent Mail' => SupportedFolderEnum::SENT->value,
-            'Trash'     => SupportedFolderEnum::TRASH->value,
-            default     => '',
+            'Trash' => SupportedFolderEnum::TRASH->value,
+            default => '',
         };
 
         $parentEmail = null;
 
         if ($email) {
             $parentEmail = $this->emailRepository->update([
-                'folders'       => array_unique(array_merge($email->folders, [$folderName])),
+                'folders' => array_unique(array_merge($email->folders, [$folderName])),
                 'reference_ids' => array_merge($email->reference_ids ?? [], [$references]),
             ], $email->id);
         }
 
         $email = $this->emailRepository->create([
-            'from'          => $attributes['from']->first()->mail,
-            'subject'       => $attributes['subject']->first(),
-            'name'          => $attributes['from']->first()->personal,
-            'reply'         => $message->bodies['html'] ?? $message->bodies['text'],
-            'is_read'       => (int) $message->flags()->has('seen'),
-            'folders'       => [$folderName],
-            'reply_to'      => $this->getEmailsByAttributeCode($attributes, 'to'),
-            'cc'            => $this->getEmailsByAttributeCode($attributes, 'cc'),
-            'bcc'           => $this->getEmailsByAttributeCode($attributes, 'bcc'),
-            'source'        => 'email',
-            'user_type'     => 'person',
-            'unique_id'     => $messageId,
-            'message_id'    => $messageId,
+            'from' => $attributes['from']->first()->mail,
+            'subject' => $attributes['subject']->first(),
+            'name' => $attributes['from']->first()->personal,
+            'reply' => $message->bodies['html'] ?? $message->bodies['text'],
+            'is_read' => (int) $message->flags()->has('seen'),
+            'folders' => [$folderName],
+            'reply_to' => $this->getEmailsByAttributeCode($attributes, 'to'),
+            'cc' => $this->getEmailsByAttributeCode($attributes, 'cc'),
+            'bcc' => $this->getEmailsByAttributeCode($attributes, 'bcc'),
+            'source' => 'email',
+            'user_type' => 'person',
+            'unique_id' => $messageId,
+            'message_id' => $messageId,
             'reference_ids' => $references,
-            'created_at'    => $this->convertToDesiredTimezone($message->date->toDate()),
-            'parent_id'     => $parentEmail?->id,
+            'created_at' => $this->convertToDesiredTimezone($message->date->toDate()),
+            'parent_id' => $parentEmail?->id,
         ]);
 
         if ($message->hasAttachments()) {
             $this->attachmentRepository->uploadAttachments($email, [
-                'source'      => 'email',
+                'source' => 'email',
                 'attachments' => $message->getAttachments(),
             ]);
         }
@@ -156,7 +159,7 @@ class WebklexImapEmailProcessor implements InboundEmailProcessor
     /**
      * Process the messages from all folders.
      *
-     * @param  \Webklex\IMAP\Support\FolderCollection  $rootFoldersCollection
+     * @param  FolderCollection  $rootFoldersCollection
      */
     protected function processMessagesFromLeafFolders($rootFoldersCollection = null): void
     {
@@ -194,7 +197,7 @@ class WebklexImapEmailProcessor implements InboundEmailProcessor
     /**
      * Convert the date to the desired timezone.
      *
-     * @param  \Carbon\Carbon  $carbonDate
+     * @param  Carbon  $carbonDate
      * @param  ?string  $targetTimezone
      */
     protected function convertToDesiredTimezone($carbonDate, $targetTimezone = null)

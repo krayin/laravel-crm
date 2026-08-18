@@ -23,12 +23,12 @@ class Email extends Model implements EmailContract
      * @var array
      */
     protected $casts = [
-        'folders'       => 'array',
-        'sender'        => 'array',
-        'from'          => 'array',
-        'reply_to'      => 'array',
-        'cc'            => 'array',
-        'bcc'           => 'array',
+        'folders' => 'array',
+        'sender' => 'array',
+        'from' => 'array',
+        'reply_to' => 'array',
+        'cc' => 'array',
+        'bcc' => 'array',
         'reference_ids' => 'array',
     ];
 

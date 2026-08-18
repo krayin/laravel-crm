@@ -2,7 +2,10 @@
 
 namespace Webkul\Admin\Http\Controllers;
 
+use Illuminate\Http\JsonResponse;
+use Illuminate\View\View;
 use Webkul\Admin\Helpers\Dashboard;
+use Webkul\Lead\Repositories\PipelineRepository;
 
 class DashboardController extends Controller
 {
@@ -12,13 +15,13 @@ class DashboardController extends Controller
      * @var array
      */
     protected $typeFunctions = [
-        'over-all'             => 'getOverAllStats',
-        'revenue-stats'        => 'getRevenueStats',
-        'total-leads'          => 'getTotalLeadsStats',
-        'revenue-by-sources'   => 'getLeadsStatsBySources',
-        'revenue-by-types'     => 'getLeadsStatsByTypes',
+        'over-all' => 'getOverAllStats',
+        'revenue-stats' => 'getRevenueStats',
+        'total-leads' => 'getTotalLeadsStats',
+        'revenue-by-sources' => 'getLeadsStatsBySources',
+        'revenue-by-types' => 'getLeadsStatsByTypes',
         'top-selling-products' => 'getTopSellingProducts',
-        'top-persons'          => 'getTopPersons',
+        'top-persons' => 'getTopPersons',
         'open-leads-by-states' => 'getOpenLeadsByStates',
     ];
 
@@ -27,25 +30,30 @@ class DashboardController extends Controller
      *
      * @return void
      */
-    public function __construct(protected Dashboard $dashboardHelper) {}
+    public function __construct(
+        protected Dashboard $dashboardHelper,
+        protected PipelineRepository $pipelineRepository
+    ) {}
 
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\View\View
+     * @return View
      */
     public function index()
     {
         return view('admin::dashboard.index')->with([
             'startDate' => $this->dashboardHelper->getStartDate(),
-            'endDate'   => $this->dashboardHelper->getEndDate(),
+            'endDate' => $this->dashboardHelper->getEndDate(),
+            'pipelines' => $this->pipelineRepository->all(),
+            'defaultPipeline' => $this->pipelineRepository->getDefaultPipeline(),
         ]);
     }
 
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
     public function stats()
     {

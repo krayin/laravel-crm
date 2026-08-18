@@ -15,12 +15,18 @@ test("should be able to assign a company to person", async ({ adminPage }) => {
      */
     await adminPage.goto("admin/contacts/persons");
     await createPerson(adminPage);
-    await adminPage.locator("span.icon-edit").first().click();
-    await adminPage
+    const editButton = adminPage.locator("span.icon-edit").first();
+
+    await expect(editButton).toBeVisible();
+    await editButton.click();
+
+    const addCompanyField = adminPage
         .locator("div")
         .filter({ hasText: /^Click to add$/ })
-        .nth(2)
-        .click();
+        .nth(2);
+
+    await expect(addCompanyField).toBeVisible();
+    await addCompanyField.click();
     await adminPage.getByRole("textbox", { name: "Search..." }).click();
     await adminPage
         .getByRole("textbox", { name: "Search..." })
@@ -31,10 +37,15 @@ test("should be able to assign a company to person", async ({ adminPage }) => {
 
 test("should be able to delete person", async ({ adminPage }) => {
     /**
-     * Delete person.
+     * Create a person first so there is one to delete.
      */
     await adminPage.goto("admin/contacts/persons");
-    await adminPage.locator("span.icon-delete").nth(1).click();
+    await createPerson(adminPage);
+
+    /**
+     * Delete person.
+     */
+    await adminPage.locator("span.icon-delete").first().click();
     await adminPage.getByRole("button", { name: "Agree", exact: true }).click();
-    await expect(adminPage.locator("#app")).toContainText("Success");
+    await expect(adminPage.locator("#app")).toContainText("Success", { timeout: 10000 });
 });

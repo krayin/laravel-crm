@@ -24,28 +24,28 @@ class SourceSeeder extends Seeder
 
         DB::table('lead_sources')->insert([
             [
-                'id'         => 1,
-                'name'       => trans('installer::app.seeders.lead.source.email', [], $defaultLocale),
+                'id' => 1,
+                'name' => trans('installer::app.seeders.lead.source.email', [], $defaultLocale),
                 'created_at' => $now,
                 'updated_at' => $now,
             ], [
-                'id'         => 2,
-                'name'       => trans('installer::app.seeders.lead.source.web', [], $defaultLocale),
+                'id' => 2,
+                'name' => trans('installer::app.seeders.lead.source.web', [], $defaultLocale),
                 'created_at' => $now,
                 'updated_at' => $now,
             ], [
-                'id'         => 3,
-                'name'       => trans('installer::app.seeders.lead.source.web-form', [], $defaultLocale),
+                'id' => 3,
+                'name' => trans('installer::app.seeders.lead.source.web-form', [], $defaultLocale),
                 'created_at' => $now,
                 'updated_at' => $now,
             ], [
-                'id'         => 4,
-                'name'       => trans('installer::app.seeders.lead.source.phone', [], $defaultLocale),
+                'id' => 4,
+                'name' => trans('installer::app.seeders.lead.source.phone', [], $defaultLocale),
                 'created_at' => $now,
                 'updated_at' => $now,
             ], [
-                'id'         => 5,
-                'name'       => trans('installer::app.seeders.lead.source.direct', [], $defaultLocale),
+                'id' => 5,
+                'name' => trans('installer::app.seeders.lead.source.direct', [], $defaultLocale),
                 'created_at' => $now,
                 'updated_at' => $now,
             ],

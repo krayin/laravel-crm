@@ -5,6 +5,7 @@ namespace Webkul\Admin\Notifications\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
+use Webkul\User\Contracts\User;
 
 class UserUpdatePassword extends Mailable
 {
@@ -13,7 +14,7 @@ class UserUpdatePassword extends Mailable
     /**
      * Create a new admin instance.
      *
-     * @param  \Webkul\User\Contracts\User  $user
+     * @param  User  $user
      * @return void
      */
     public function __construct(public $user) {}

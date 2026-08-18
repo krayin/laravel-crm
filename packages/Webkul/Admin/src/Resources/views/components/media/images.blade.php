@@ -1,10 +1,10 @@
 @props([
-    'name'             => 'images',
-    'allowMultiple'    => false,
+    'name' => 'images',
+    'allowMultiple' => false,
     'showPlaceholders' => false,
-    'uploadedImages'   => [],
-    'width'            => '120px',
-    'height'           => '120px'
+    'uploadedImages' => [],
+    'width' => '120px',
+    'height' => '120px'
 ])
 
 <v-media-images

@@ -55,13 +55,19 @@ class PersonController extends Controller
     {
         Event::dispatch('contacts.person.create.before');
 
-        $person = $this->personRepository->create($request->all());
+        $data = $request->all();
+
+        if (request()->has('quick_add') && empty($data['user_id'])) {
+            $data['user_id'] = auth()->guard('user')->user()->id;
+        }
+
+        $person = $this->personRepository->create($data);
 
         Event::dispatch('contacts.person.create.after', $person);
 
         if (request()->ajax()) {
             return response()->json([
-                'data'    => $person,
+                'data' => $person,
                 'message' => trans('admin::app.contacts.persons.index.create-success'),
             ]);
         }
@@ -78,6 +84,8 @@ class PersonController extends Controller
     {
         $person = $this->personRepository->findOrFail($id);
 
+        $this->preventUnauthorizedAccess($person->user_id);
+
         return view('admin::contacts.persons.view', compact('person'));
     }
 
@@ -88,6 +96,8 @@ class PersonController extends Controller
     {
         $person = $this->personRepository->findOrFail($id);
 
+        $this->preventUnauthorizedAccess($person->user_id);
+
         return view('admin::contacts.persons.edit', compact('person'));
     }
 
@@ -96,6 +106,8 @@ class PersonController extends Controller
      */
     public function update(AttributeForm $request, int $id): RedirectResponse|JsonResponse
     {
+        $this->preventUnauthorizedAccess($this->personRepository->findOrFail($id)->user_id);
+
         Event::dispatch('contacts.person.update.before', $id);
 
         $person = $this->personRepository->update($request->all(), $id);
@@ -104,7 +116,7 @@ class PersonController extends Controller
 
         if (request()->ajax()) {
             return response()->json([
-                'data'    => $person,
+                'data' => $person,
                 'message' => trans('admin::app.contacts.persons.index.update-success'),
             ], 200);
         }
@@ -119,14 +131,23 @@ class PersonController extends Controller
      */
     public function search(): JsonResource
     {
+        $personRepository = $this->personRepository
+            ->pushCriteria(app(RequestCriteria::class));
+
+        if ($searchTerm = request()->query('query')) {
+            $personRepository = $personRepository->scopeQuery(function ($query) use ($searchTerm) {
+                return $query->where(function ($q) use ($searchTerm) {
+                    $q->where('name', 'like', '%'.$searchTerm.'%')
+                        ->orWhere('emails', 'like', '%'.$searchTerm.'%')
+                        ->orWhere('contact_numbers', 'like', '%'.$searchTerm.'%');
+                });
+            });
+        }
+
         if ($userIds = bouncer()->getAuthorizedUserIds()) {
-            $persons = $this->personRepository
-                ->pushCriteria(app(RequestCriteria::class))
-                ->findWhereIn('user_id', $userIds);
+            $persons = $personRepository->findWhereIn('user_id', $userIds);
         } else {
-            $persons = $this->personRepository
-                ->pushCriteria(app(RequestCriteria::class))
-                ->all();
+            $persons = $personRepository->all();
         }
 
         return PersonResource::collection($persons);
@@ -138,6 +159,8 @@ class PersonController extends Controller
     public function destroy(int $id): JsonResponse
     {
         $person = $this->personRepository->findOrFail($id);
+
+        $this->preventUnauthorizedAccess($person->user_id);
 
         if (
             $person->leads
@@ -172,7 +195,9 @@ class PersonController extends Controller
     public function massDestroy(MassDestroyRequest $request): JsonResponse
     {
         try {
-            $persons = $this->personRepository->findWhereIn('id', $request->input('indices', []));
+            $persons = $this->filterAuthorizedRecords(
+                $this->personRepository->findWhereIn('id', $request->input('indices', []))
+            );
 
             $deletedCount = 0;
 

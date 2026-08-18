@@ -47,7 +47,7 @@ class SourceController extends Controller
         Event::dispatch('settings.source.create.after', $source);
 
         return new JsonResponse([
-            'data'    => $source,
+            'data' => $source,
             'message' => trans('admin::app.settings.sources.index.create-success'),
         ]);
     }
@@ -80,7 +80,7 @@ class SourceController extends Controller
         Event::dispatch('settings.source.update.after', $source);
 
         return new JsonResponse([
-            'data'    => $source,
+            'data' => $source,
             'message' => trans('admin::app.settings.sources.index.update-success'),
         ]);
     }

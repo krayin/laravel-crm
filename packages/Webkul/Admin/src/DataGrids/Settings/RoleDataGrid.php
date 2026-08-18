@@ -33,38 +33,38 @@ class RoleDataGrid extends DataGrid
     public function prepareColumns(): void
     {
         $this->addColumn([
-            'index'      => 'id',
-            'label'      => trans('admin::app.settings.roles.index.datagrid.id'),
-            'type'       => 'string',
+            'index' => 'id',
+            'label' => trans('admin::app.settings.roles.index.datagrid.id'),
+            'type' => 'string',
             'searchable' => true,
             'filterable' => true,
-            'sortable'   => true,
+            'sortable' => true,
         ]);
 
         $this->addColumn([
-            'index'      => 'name',
-            'label'      => trans('admin::app.settings.roles.index.datagrid.name'),
-            'type'       => 'string',
+            'index' => 'name',
+            'label' => trans('admin::app.settings.roles.index.datagrid.name'),
+            'type' => 'string',
             'searchable' => true,
             'filterable' => true,
-            'sortable'   => true,
+            'sortable' => true,
         ]);
 
         $this->addColumn([
-            'index'      => 'description',
-            'label'      => trans('admin::app.settings.roles.index.datagrid.description'),
-            'type'       => 'string',
+            'index' => 'description',
+            'label' => trans('admin::app.settings.roles.index.datagrid.description'),
+            'type' => 'string',
             'searchable' => true,
-            'sortable'   => false,
+            'sortable' => false,
         ]);
 
         $this->addColumn([
-            'index'              => 'permission_type',
-            'label'              => trans('admin::app.settings.roles.index.datagrid.permission-type'),
-            'type'               => 'string',
-            'searchable'         => true,
-            'filterable'         => true,
-            'filterable_type'    => 'dropdown',
+            'index' => 'permission_type',
+            'label' => trans('admin::app.settings.roles.index.datagrid.permission-type'),
+            'type' => 'string',
+            'searchable' => true,
+            'filterable' => true,
+            'filterable_type' => 'dropdown',
             'filterable_options' => [
                 [
                     'label' => trans('admin::app.settings.roles.index.datagrid.custom'),
@@ -75,7 +75,7 @@ class RoleDataGrid extends DataGrid
                     'value' => 'all',
                 ],
             ],
-            'sortable'   => true,
+            'sortable' => true,
         ]);
     }
 
@@ -86,19 +86,19 @@ class RoleDataGrid extends DataGrid
     {
         if (bouncer()->hasPermission('settings.user.roles.edit')) {
             $this->addAction([
-                'icon'   => 'icon-edit',
-                'title'  => trans('admin::app.settings.roles.index.datagrid.edit'),
+                'icon' => 'icon-edit',
+                'title' => trans('admin::app.settings.roles.index.datagrid.edit'),
                 'method' => 'GET',
-                'url'    => fn ($row) => route('admin.settings.roles.edit', $row->id),
+                'url' => fn ($row) => route('admin.settings.roles.edit', $row->id),
             ]);
         }
 
         if (bouncer()->hasPermission('settings.user.roles.delete')) {
             $this->addAction([
-                'icon'   => 'icon-delete',
-                'title'  => trans('admin::app.settings.roles.index.datagrid.delete'),
+                'icon' => 'icon-delete',
+                'title' => trans('admin::app.settings.roles.index.datagrid.delete'),
                 'method' => 'DELETE',
-                'url'    => fn ($row) => route('admin.settings.roles.delete', $row->id),
+                'url' => fn ($row) => route('admin.settings.roles.delete', $row->id),
             ]);
         }
     }

@@ -47,13 +47,20 @@ class OrganizationController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(AttributeForm $request): RedirectResponse
+    public function store(AttributeForm $request): RedirectResponse|JsonResponse
     {
         Event::dispatch('contacts.organization.create.before');
 
         $organization = $this->organizationRepository->create(request()->all());
 
         Event::dispatch('contacts.organization.create.after', $organization);
+
+        if (request()->ajax()) {
+            return response()->json([
+                'data' => $organization,
+                'message' => trans('admin::app.contacts.organizations.index.create-success'),
+            ]);
+        }
 
         session()->flash('success', trans('admin::app.contacts.organizations.index.create-success'));
 
@@ -67,6 +74,8 @@ class OrganizationController extends Controller
     {
         $organization = $this->organizationRepository->findOrFail($id);
 
+        $this->preventUnauthorizedAccess($organization->user_id);
+
         return view('admin::contacts.organizations.edit', compact('organization'));
     }
 
@@ -75,6 +84,8 @@ class OrganizationController extends Controller
      */
     public function update(AttributeForm $request, int $id): RedirectResponse
     {
+        $this->preventUnauthorizedAccess($this->organizationRepository->findOrFail($id)->user_id);
+
         Event::dispatch('contacts.organization.update.before', $id);
 
         $organization = $this->organizationRepository->update(request()->all(), $id);
@@ -91,6 +102,8 @@ class OrganizationController extends Controller
      */
     public function destroy(int $id): JsonResponse
     {
+        $this->preventUnauthorizedAccess($this->organizationRepository->findOrFail($id)->user_id);
+
         try {
             Event::dispatch('contact.organization.delete.before', $id);
 
@@ -113,7 +126,9 @@ class OrganizationController extends Controller
      */
     public function massDestroy(MassDestroyRequest $massDestroyRequest): JsonResponse
     {
-        $organizations = $this->organizationRepository->findWhereIn('id', $massDestroyRequest->input('indices'));
+        $organizations = $this->filterAuthorizedRecords(
+            $this->organizationRepository->findWhereIn('id', $massDestroyRequest->input('indices'))
+        );
 
         foreach ($organizations as $organization) {
             Event::dispatch('contact.organization.delete.before', $organization);

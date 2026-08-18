@@ -37,30 +37,20 @@
                     :style="{ 'text-align': position }"
                 >
                     <span class="cursor-pointer truncate rounded">
-                        <template v-if="isDirty">
-                            @{{
-                                inputValue.length > 20
-                                    ? inputValue.substring(0, 20) + '...'
-                                    : inputValue
-                            }}
-                        </template>
-
-                        <template v-else>
-                            @{{
-                                (valueLabel || inputValue || '').length > 20
-                                    ? (valueLabel || inputValue).substring(0, 20) + '...'
-                                    : (valueLabel || inputValue)
-                            }}
-                        </template>
+                        @{{
+                            displayValue.length > 20
+                                ? displayValue.substring(0, 20) + '...'
+                                : displayValue
+                        }}
                     </span>
 
                     <!-- Tooltip -->
                     <div
                         class="absolute bottom-0 mb-5 hidden flex-col group-hover:flex"
-                        v-if="inputValue?.length > 20"
+                        v-if="displayValue.length > 20"
                     >
                         <span class="whitespace-no-wrap relative z-10 rounded-md bg-black px-4 py-2 text-xs leading-none text-white shadow-lg dark:bg-white dark:text-gray-900">
-                            @{{ inputValue }}
+                            @{{ displayValue }}
                         </span>
 
                         <div class="-mt-2 ml-4 h-3 w-3 rotate-45 bg-black dark:bg-white"></div>
@@ -176,6 +166,11 @@
                     type: String,
                     default: '',
                 },
+
+                valueFormatter: {
+                    type: Function,
+                    default: null,
+                },
             },
 
             data() {
@@ -198,6 +193,34 @@
                  */
                 value(newValue) {
                     this.inputValue = newValue;
+                },
+            },
+
+            computed: {
+                /**
+                 * Resolve the display value for non-editing mode.
+                 *
+                 * Keep server label by default, but allow optional formatting
+                 * after inline save when the local value is dirty.
+                 *
+                 * @return {String}
+                 */
+                displayValue() {
+                    let value = this.isDirty
+                        ? this.inputValue
+                        : (this.valueLabel || this.inputValue || '');
+
+                    if (this.isDirty && this.valueFormatter) {
+                        const formattedValue = this.valueFormatter(this.inputValue);
+
+                        value = formattedValue ?? value;
+                    }
+
+                    if (value === null || value === undefined) {
+                        return '';
+                    }
+
+                    return String(value);
                 },
             },
 

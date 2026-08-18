@@ -2,6 +2,7 @@
 
 namespace Webkul\Admin\Helpers\Reporting;
 
+use Carbon\Carbon;
 use Webkul\Quote\Repositories\QuoteRepository;
 
 class Quote extends AbstractReporting
@@ -23,7 +24,7 @@ class Quote extends AbstractReporting
     {
         return [
             'previous' => $previous = $this->getTotalQuotes($this->lastStartDate, $this->lastEndDate),
-            'current'  => $current = $this->getTotalQuotes($this->startDate, $this->endDate),
+            'current' => $current = $this->getTotalQuotes($this->startDate, $this->endDate),
             'progress' => $this->getPercentageChange($previous, $current),
         ];
     }
@@ -31,8 +32,8 @@ class Quote extends AbstractReporting
     /**
      * Retrieves total quotes by date
      *
-     * @param  \Carbon\Carbon  $startDate
-     * @param  \Carbon\Carbon  $endDate
+     * @param  Carbon  $startDate
+     * @param  Carbon  $endDate
      */
     public function getTotalQuotes($startDate, $endDate): int
     {

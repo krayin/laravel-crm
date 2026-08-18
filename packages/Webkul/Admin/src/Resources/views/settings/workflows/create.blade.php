@@ -7,7 +7,7 @@
 
     <x-admin::form :action="route('admin.settings.workflows.store')">
         <div class="flex flex-col gap-4">
-            <div class="flex items-center justify-between rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
+            <div class="scroll-reactive-sticky sticky top-[60px] z-[1000] flex items-center justify-between rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm shadow-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
                 <div class="flex flex-col gap-2">
                     {!! view_render_event('admin.settings.workflow.breadcrumbs.before') !!}
 
@@ -51,11 +51,11 @@
             type="text/x-template"
             id="v-workflow-template"
         >
-            <div class="box-shadow flex flex-col gap-4 rounded-lg border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900">
+            <div class="box-shadow flex flex-col gap-4 rounded-lg border border-gray-300 bg-white dark:border-gray-800 dark:bg-gray-900">
                 {!! view_render_event('admin.settings.workflows.create.form_controls.before') !!}
 
                 <!-- Tab Switcher -->
-                <div class="flex w-full gap-2 border-b border-gray-200 dark:border-gray-800">
+                <div class="flex w-full gap-2 border-b border-gray-300 dark:border-gray-800">
                     <!-- Tabs -->
                     <template
                         v-for="tab in tabs"
@@ -552,7 +552,7 @@
                     <select
                         :name="['actions[' + index + '][id]']"
                         :id="['actions[' + index + '][id]']"
-                        class="custom-select flex h-10 w-full rounded-md border bg-white px-3 py-2.5 text-sm font-normal text-gray-600 transition-all hover:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 max-sm:max-w-full max-sm:flex-auto"
+                        class="custom-select flex h-10 w-[16rem] rounded-md border bg-white px-3 py-2.5 text-sm font-normal text-gray-600 transition-all hover:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 max-sm:max-w-full max-sm:flex-auto"
                         v-model="action.id"
                     >
                         <option
@@ -763,7 +763,23 @@
                         </template>
 
                         <template v-if="matchedAction && matchedAction.options">
+                            <!-- Guide the user to create a webhook when none exist yet. -->
+                            <template v-if="matchedAction.id === 'trigger_webhook' && ! matchedAction.options.length">
+                                <p class="text-sm text-gray-600 dark:text-gray-300">
+                                    @lang('admin::app.settings.workflows.create.no-webhook-found')
+
+                                    <a
+                                        href="{{ route('admin.settings.webhooks.create') }}"
+                                        target="_blank"
+                                        class="text-brandColor hover:underline"
+                                    >
+                                        @lang('admin::app.settings.workflows.create.create-webhook')
+                                    </a>
+                                </p>
+                            </template>
+
                             <select
+                                v-else
                                 :name="`actions[${index}][value]`"
                                 class="custom-select flex h-10 w-full rounded-md border bg-white px-3 py-2.5 text-sm font-normal text-gray-600 transition-all hover:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 max-sm:max-w-full max-sm:flex-auto"
                                 v-model="action.value"
