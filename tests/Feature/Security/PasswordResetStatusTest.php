@@ -2,6 +2,7 @@
 
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Webkul\Admin\Http\Controllers\User\ResetPasswordController;
+use Webkul\User\Models\Role;
 use Webkul\User\Models\User;
 
 /**
@@ -11,7 +12,8 @@ use Webkul\User\Models\User;
  * not become the way around that check.
  *
  * Every test here runs inside a transaction that is rolled back afterwards, so the temporary
- * accounts never persist in the database.
+ * accounts never persist in the database, and each creates the role it needs rather than assuming
+ * the database has been seeded.
  */
 uses(DatabaseTransactions::class);
 
@@ -29,12 +31,22 @@ function completeResetFor(User $user): void
 
 function makeUser(int $status): User
 {
+    /**
+     * Created here rather than assumed: a freshly migrated test database has no roles, and the
+     * users table has a foreign key onto them.
+     */
+    $role = Role::create([
+        'name' => 'Reset Probe Role '.bin2hex(random_bytes(6)),
+        'description' => 'Created by the password reset status tests.',
+        'permission_type' => 'all',
+    ]);
+
     return User::create([
         'name' => 'Reset Status Probe',
         'email' => 'reset-probe-'.bin2hex(random_bytes(6)).'@example.invalid',
         'password' => bcrypt('original-password'),
         'status' => $status,
-        'role_id' => 1,
+        'role_id' => $role->id,
         'view_permission' => 'global',
     ]);
 }

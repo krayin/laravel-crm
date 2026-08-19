@@ -3,16 +3,38 @@
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\URL;
+use Webkul\User\Models\Role;
 use Webkul\User\Models\User;
 
 /**
  * Hardening around the admin authentication endpoints.
  *
- * These tests are deliberately read-only against the database: they authenticate as the existing
- * administrator and submit credentials that cannot match an account, so no rows are created,
- * updated or deleted.
+ * Every account these tests need is created by the test itself, inside a transaction that is rolled
+ * back afterwards. Nothing here assumes the database has been seeded, so the suite behaves the same
+ * against a freshly migrated test database as it does against a working one.
  */
 uses(DatabaseTransactions::class);
+
+/**
+ * A user with a role that grants everything, so the ACL middleware lets the request through.
+ */
+function makeAuthProbeUser(string $password = 'correct-horse-battery-staple', int $status = 1): User
+{
+    $role = Role::create([
+        'name' => 'Auth Probe Role '.bin2hex(random_bytes(6)),
+        'description' => 'Created by the authentication hardening tests.',
+        'permission_type' => 'all',
+    ]);
+
+    return User::create([
+        'name' => 'Auth Probe',
+        'email' => 'auth-probe-'.bin2hex(random_bytes(6)).'@example.invalid',
+        'password' => bcrypt($password),
+        'status' => $status,
+        'role_id' => $role->id,
+        'view_permission' => 'global',
+    ]);
+}
 
 beforeEach(function () {
     /**
@@ -63,9 +85,7 @@ it('does not reveal whether an email belongs to an account', function () {
 });
 
 it('destroys the whole session on logout, not just the auth state', function () {
-    $admin = User::find(1);
-
-    expect($admin)->not->toBeNull();
+    $admin = makeAuthProbeUser();
 
     $response = test()
         ->actingAs($admin, 'user')
@@ -88,14 +108,7 @@ it('destroys the whole session on logout, not just the auth state', function () 
 it('never throttles repeated successful logins', function () {
     $password = 'correct-horse-battery-staple';
 
-    $user = User::create([
-        'name' => 'Throttle Probe',
-        'email' => 'throttle-probe-'.bin2hex(random_bytes(6)).'@example.invalid',
-        'password' => bcrypt($password),
-        'status' => 1,
-        'role_id' => 1,
-        'view_permission' => 'global',
-    ]);
+    $user = makeAuthProbeUser($password);
 
     foreach (range(1, 12) as $attempt) {
         $status = test()
@@ -111,14 +124,7 @@ it('never throttles repeated successful logins', function () {
 it('lets a correct sign-in clear earlier failures for those credentials', function () {
     $password = 'correct-horse-battery-staple';
 
-    $user = User::create([
-        'name' => 'Throttle Probe',
-        'email' => 'throttle-probe-'.bin2hex(random_bytes(6)).'@example.invalid',
-        'password' => bcrypt($password),
-        'status' => 1,
-        'role_id' => 1,
-        'view_permission' => 'global',
-    ]);
+    $user = makeAuthProbeUser($password);
 
     foreach (range(1, 4) as $ignored) {
         test()->post('/admin/login', ['email' => $user->email, 'password' => 'wrong']);
