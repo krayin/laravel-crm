@@ -83,6 +83,9 @@
                                 <x-admin::form.control-group.control
                                     type="textarea"
                                     name="comment"
+                                    id="comment"
+                                    rules="required"
+                                    :tinymce="true"
                                     rules="required"
                                     :label="trans('admin::app.components.activities.actions.note.comment')"
                                 />
