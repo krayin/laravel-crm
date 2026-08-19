@@ -1652,6 +1652,7 @@ return [
                 'delete-success' => '导入删除成功。',
                 'not-valid' => '导入内容无效',
                 'nothing-to-import' => '没有可导入的资源。',
+                'queue-worker-not-running' => '队列工作进程未运行。请运行 php artisan queue:work 来处理此导入，或关闭队列处理后重试。',
                 'setup-queue-error' => '请将队列驱动改为 "database" 或 "redis" 后再开始导入流程。',
                 'update-success' => '导入更新成功。',
             ],

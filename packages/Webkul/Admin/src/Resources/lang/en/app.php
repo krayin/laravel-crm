@@ -1654,6 +1654,7 @@ return [
                 'delete-success' => 'Import deleted successfully.',
                 'not-valid' => 'Import is invalid',
                 'nothing-to-import' => 'There are no resources to import.',
+                'queue-worker-not-running' => 'Queue worker is not running. Run php artisan queue:work to process this import, or turn off Process In Queue and try again.',
                 'setup-queue-error' => 'Please change your queue driver to "database" or "redis" to start the import process.',
                 'update-success' => 'Import updated successfully.',
             ],

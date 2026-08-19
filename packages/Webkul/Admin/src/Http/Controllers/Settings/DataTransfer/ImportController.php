@@ -456,6 +456,7 @@ class ImportController extends Controller
 
         return new JsonResponse([
             'stats' => $stats,
+            'stuck' => $this->importHelper->isStuck(),
             'import' => $this->importHelper->getImport()->unsetRelations(),
         ]);
     }

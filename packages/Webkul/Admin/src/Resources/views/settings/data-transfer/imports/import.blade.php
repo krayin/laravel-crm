@@ -522,6 +522,19 @@
 
                                 this.stats = response.data.stats;
 
+                                /**
+                                 * A queued import with no worker consuming the chain never progresses,
+                                 * so stop polling and surface the cause instead of spinning at 0%.
+                                 */
+                                if (response.data.stuck) {
+                                    this.$emitter.emit('add-flash', {
+                                        type: 'error',
+                                        message: "@lang('admin::app.settings.data-transfer.imports.queue-worker-not-running')",
+                                    });
+
+                                    return;
+                                }
+
                                 if (this.importResource.state != 'completed') {
                                     setTimeout(() => {
                                         this.getStats();

@@ -1652,6 +1652,7 @@ return [
                 'delete-success' => 'Import deleted successfully.',
                 'not-valid' => 'Import is invalid',
                 'nothing-to-import' => 'There are no resources to import.',
+                'queue-worker-not-running' => 'O worker da fila não está em execução. Execute php artisan queue:work para processar esta importação, ou desative Processar na fila e tente novamente.',
                 'setup-queue-error' => 'Please change your queue driver to "database" or "redis" to start the import process.',
                 'update-success' => 'Import updated successfully.',
             ],

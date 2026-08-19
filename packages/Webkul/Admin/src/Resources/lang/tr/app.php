@@ -1652,6 +1652,7 @@ return [
                 'delete-success' => 'İthalat başarıyla silindi.',
                 'not-valid' => 'İthalat geçersiz',
                 'nothing-to-import' => 'İthal edilecek kaynak yok.',
+                'queue-worker-not-running' => 'Kuyruk işçisi çalışmıyor. Bu içe aktarmayı işlemek için php artisan queue:work komutunu çalıştırın veya Kuyrukta İşle seçeneğini kapatıp tekrar deneyin.',
                 'setup-queue-error' => 'İthalat işlemini başlatmak için kuyruk sürücünüzü "veritabanı" veya "redis" olarak değiştirin.',
                 'update-success' => 'İthalat başarıyla güncellendi.',
             ],

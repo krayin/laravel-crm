@@ -1652,6 +1652,7 @@ return [
                 'delete-success' => '가져오기가 삭제되었습니다.',
                 'not-valid' => '가져오기가 유효하지 않습니다',
                 'nothing-to-import' => '가져올 리소스가 없습니다.',
+                'queue-worker-not-running' => '큐 워커가 실행되고 있지 않습니다. 이 가져오기를 처리하려면 php artisan queue:work 를 실행하거나, 큐에서 처리 옵션을 끄고 다시 시도하세요.',
                 'setup-queue-error' => '가져오기 프로세스를 시작하려면 큐 드라이버를 "database" 또는 "redis"로 변경해 주세요.',
                 'update-success' => '가져오기가 수정되었습니다.',
             ],

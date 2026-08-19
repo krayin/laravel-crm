@@ -1652,6 +1652,7 @@ return [
                 'delete-success' => 'Importación eliminada exitosamente.',
                 'not-valid' => 'La importación no es válida',
                 'nothing-to-import' => 'No hay recursos para importar.',
+                'queue-worker-not-running' => 'El worker de la cola no está en ejecución. Ejecute php artisan queue:work para procesar esta importación, o desactive Procesar en cola e inténtelo de nuevo.',
                 'setup-queue-error' => 'Por favor, cambia tu controlador de cola a "database" o "redis" para iniciar el proceso de importación.',
                 'update-success' => 'Importación actualizada exitosamente.',
             ],
