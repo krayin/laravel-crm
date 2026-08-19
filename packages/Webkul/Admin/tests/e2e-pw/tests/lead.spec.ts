@@ -92,6 +92,43 @@ function generateFile(fileName, content) {
     return fileName;
 }
 
+/**
+ * Fill the comment field of whichever activity modal is open.
+ *
+ * Some of these modals render a plain textarea and some render it through TinyMCE. When TinyMCE
+ * initialises it hides the original textarea and puts a contenteditable iframe in its place, so
+ * filling `textarea[name="comment"]` directly waits forever on an element that is deliberately
+ * invisible. Whether a given modal is rich-text can change, so both shapes are handled here rather
+ * than assumed per call site.
+ */
+async function fillComment(adminPage, text) {
+    const textarea = adminPage.locator('textarea[name="comment"]').first();
+
+    await textarea.waitFor({ state: 'attached' });
+
+    const editorFrame = adminPage.locator('iframe.tox-edit-area__iframe').first();
+
+    /**
+     * Give TinyMCE a chance to take the textarea over before deciding which one to use, so a slow
+     * initialisation cannot have the text typed into a field that is about to be replaced.
+     */
+    await Promise.race([
+        editorFrame.waitFor({ state: 'visible', timeout: 5000 }).catch(() => {}),
+        textarea.waitFor({ state: 'visible', timeout: 5000 }).catch(() => {}),
+    ]);
+
+    if (await editorFrame.isVisible().catch(() => false)) {
+        const frame = await (await editorFrame.elementHandle()).contentFrame();
+
+        await frame.waitForSelector('body');
+        await frame.fill('body', text);
+
+        return;
+    }
+
+    await textarea.fill(text);
+}
+
 async function openLeadByTitle(adminPage, leadTitle) {
   await adminPage.goto("admin/leads");
   const searchInput = adminPage.getByRole("textbox", { name: "Search by Title" });
@@ -198,7 +235,7 @@ test.describe("lead management", () => {
     await openLeadByTitle(adminPage, lead.leadTitle);
     await adminPage.getByRole('button', { name: ' File' }).click();
     await adminPage.locator('input[name="title"]').fill(lead.leadTitle);
-    await adminPage.locator('textarea[name="comment"]').fill(generateDescription());
+    await fillComment(adminPage, generateDescription());
     await adminPage.locator('input[name="name"]').fill(generateName());
     await adminPage.locator('#file').setInputFiles(generateFile('example.txt', 'Hello, this is a generated file!'));
     await adminPage.getByRole('button', { name: 'Save File' }).click();
@@ -215,7 +252,7 @@ test.describe("lead management", () => {
      */
     await openLeadByTitle(adminPage, lead.leadTitle);
     await adminPage.getByRole('button', { name: ' Note' }).click();
-    await adminPage.locator('textarea[name="comment"]').fill(generateDescription());
+    await fillComment(adminPage, generateDescription());
     await adminPage.getByRole('button', { name: 'Save Note' }).click();
   });
 
@@ -233,7 +270,7 @@ test.describe("lead management", () => {
     await adminPage.getByRole('heading', { name: 'Add Activity - Call ' }).locator('span').click();
     await adminPage.getByText('Call', { exact: true }).click();
     await adminPage.locator('input[name="title"]').fill(lead.leadTitle);
-    await adminPage.locator('textarea[name="comment"]').fill(generateDescription());
+    await fillComment(adminPage, generateDescription());
     await adminPage.locator('input[name="schedule_from"]').click();
     await adminPage.locator('input[name="schedule_from"]').fill(getRandomDateTime());
     await adminPage.locator('input[name="schedule_to"]').click();
@@ -256,7 +293,7 @@ test.describe("lead management", () => {
     await adminPage.getByRole('heading', { name: 'Add Activity' }).locator('span').click();
     await adminPage.getByText('Meeting', { exact: true }).click();
     await adminPage.locator('input[name="title"]').fill(lead.leadTitle);
-    await adminPage.locator('textarea[name="comment"]').fill(generateDescription());
+    await fillComment(adminPage, generateDescription());
     await adminPage.locator('input[name="schedule_from"]').click();
     await adminPage.locator('input[name="schedule_from"]').fill(getRandomDateTime());
     await adminPage.locator('input[name="schedule_to"]').click();
@@ -279,7 +316,7 @@ test.describe("lead management", () => {
     await adminPage.getByRole('heading', { name: 'Add Activity' }).locator('span').click();
     await adminPage.getByText('Lunch', { exact: true }).click();
     await adminPage.locator('input[name="title"]').fill(lead.leadTitle);
-    await adminPage.locator('textarea[name="comment"]').fill(generateDescription());
+    await fillComment(adminPage, generateDescription());
     await adminPage.locator('input[name="schedule_from"]').click();
     await adminPage.locator('input[name="schedule_from"]').fill(getRandomDateTime());
     await adminPage.locator('input[name="schedule_to"]').click();
