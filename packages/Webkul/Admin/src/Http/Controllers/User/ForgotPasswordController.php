@@ -45,21 +45,18 @@ class ForgotPasswordController extends Controller
                 'email' => 'required|email',
             ]);
 
-            $response = $this->broker()->sendResetLink(request(['email']), function ($user, $token) {
+            $this->broker()->sendResetLink(request(['email']), function ($user, $token) {
                 $user->notify(new UserResetPassword($token));
             });
 
-            if ($response == Password::RESET_LINK_SENT) {
-                session()->flash('success', trans('admin::app.users.forget-password.create.reset-link-sent'));
+            /**
+             * The same answer is returned whether or not the address belongs to an
+             * account. Reporting "this email does not exist" would let anyone probe
+             * the form to learn which addresses are registered users.
+             */
+            session()->flash('success', trans('admin::app.users.forget-password.create.reset-link-sent'));
 
-                return back();
-            }
-
-            return back()
-                ->withInput(request(['email']))
-                ->withErrors([
-                    'email' => trans('admin::app.users.forget-password.create.email-not-exist'),
-                ]);
+            return back();
         } catch (\Exception $exception) {
             session()->flash('error', trans($exception->getMessage()));
 

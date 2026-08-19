@@ -51,14 +51,23 @@ trait Sanitizer
      */
     public function sanitizeSvg(string $path, UploadedFile $file): void
     {
-        if (! $this->isSvgFile($file)) {
-            return;
-        }
-
         try {
             $svgContent = Storage::get($path);
 
             if (! $svgContent) {
+                return;
+            }
+
+            /**
+             * The decision to sanitize must not rest on the client-supplied file name alone. An SVG
+             * uploaded as `payload.png` passes a name-based check while still being stored — and
+             * later served — as an SVG, so the markup itself and the stored path are consulted too.
+             */
+            if (
+                ! $this->isSvgFile($file)
+                && ! $this->isSvgPath($path)
+                && ! $this->hasSvgMarkup($svgContent)
+            ) {
                 return;
             }
 
@@ -104,10 +113,28 @@ trait Sanitizer
     }
 
     /**
-     * Check if the uploaded file is an SVG based on both extension and mime type.
+     * Whether the client named the upload as an SVG. This is only one of the signals used, because
+     * the name is attacker-controlled; see isSvgPath() and hasSvgMarkup().
      */
     public function isSvgFile(UploadedFile $file): bool
     {
-        return str_contains(strtolower($file->getClientOriginalExtension()), 'svg');
+        return str_contains(strtolower((string) $file->getClientOriginalExtension()), 'svg');
+    }
+
+    /**
+     * Whether the path the file was actually stored under is an SVG. Upload handlers that derive the
+     * stored extension from the file's own content land here even when the client named it otherwise.
+     */
+    public function isSvgPath(string $path): bool
+    {
+        return str_contains(strtolower((string) pathinfo($path, PATHINFO_EXTENSION)), 'svg');
+    }
+
+    /**
+     * Whether the stored bytes actually contain SVG markup, whatever the file is called.
+     */
+    public function hasSvgMarkup(string $contents): bool
+    {
+        return (bool) preg_match('/<\s*svg\b/i', $contents);
     }
 }
