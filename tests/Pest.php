@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\URL;
 use Laravel\Sanctum\Sanctum;
 use Tests\TestCase;
 use Webkul\User\Models\User;
@@ -16,6 +17,17 @@ use Webkul\User\Models\User;
  */
 
 uses(TestCase::class)->in('Feature');
+
+/**
+ * The configured APP_URL may point at a subdirectory (for example when the application is served
+ * from `/public` under a project folder). Laravel's test client prepends that URL to every request
+ * path, so the resulting path info would carry the subdirectory and no route would ever match,
+ * failing every feature test with a 404. Pinning a bare root URL keeps request paths aligned with
+ * the routes as registered, whatever APP_URL happens to be on the machine running the tests.
+ */
+uses()->beforeEach(function () {
+    URL::forceRootUrl('http://localhost');
+})->in('Feature');
 
 /*
 |--------------------------------------------------------------------------

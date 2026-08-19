@@ -25,14 +25,31 @@ beforeEach(function () {
 
     app()->useStoragePath($this->tempStorage);
 
-    $this->fakeDatabase = function (bool $completed) {
-        app()->instance(DatabaseManager::class, new class($completed) extends DatabaseManager
+    /**
+     * $completed  — whether the completion flag has been recorded in the database.
+     * $populated  — whether the database actually holds an installed application.
+     */
+    $this->fakeDatabase = function (bool $completed, bool $populated = false) {
+        app()->instance(DatabaseManager::class, new class($completed, $populated) extends DatabaseManager
         {
-            public function __construct(private bool $completed) {}
+            public bool $backfilled = false;
+
+            public function __construct(private bool $completed, private bool $populated) {}
 
             public function isInstallationCompleted(): bool
             {
                 return $this->completed;
+            }
+
+            public function isInstalled()
+            {
+                return $this->populated;
+            }
+
+            public function markInstallationCompleted(): void
+            {
+                $this->backfilled = true;
+                $this->completed = true;
             }
         });
     };
@@ -42,6 +59,7 @@ afterEach(function () {
     app()->useStoragePath($this->originalStoragePath);
 
     @unlink($this->tempStorage.'/installed');
+    @unlink($this->tempStorage.'/installing');
     @rmdir($this->tempStorage);
 });
 
@@ -105,4 +123,82 @@ it('lets the installer api through while an installation is genuinely in progres
     );
 
     expect($reached)->toBeTrue();
+});
+
+/**
+ * A legacy installation — one completed before the database flag existed — has neither signal
+ * after a deploy that leaves `storage/` behind, yet its database is fully populated. The installer
+ * API must still be closed to it: reaching run-migration there wipes live data, and
+ * admin-config-setup overwrites the administrator account.
+ */
+it('treats a legacy installation with no flag and no marker as installed', function () {
+    ($this->fakeDatabase)(completed: false, populated: true);
+
+    expect(file_exists(storage_path('installed')))->toBeFalse()
+        ->and((new CanInstall)->isInstallationComplete())->toBeTrue();
+});
+
+it('blocks the installer api for a legacy installation that lost its marker file', function (string $path) {
+    ($this->fakeDatabase)(completed: false, populated: true);
+
+    $reached = false;
+
+    (new CanInstall)->handle(Request::create($path, 'POST'), function () use (&$reached) {
+        $reached = true;
+
+        return response('controller reached');
+    });
+
+    expect($reached)->toBeFalse();
+})->with([
+    '/install/api/run-migration',
+    '/install/api/admin-config-setup',
+    '/install/api/env-file-setup',
+]);
+
+/**
+ * The seeder creates the default administrator before `admin-config-setup` runs, so from that
+ * moment the database looks "installed" while the installation is in fact still going. The
+ * in-progress marker is what keeps the final step reachable.
+ */
+it('does not lock out the final installer step once the seeder has run', function () {
+    ($this->fakeDatabase)(completed: false, populated: true);
+
+    app(DatabaseManager::class)->markInstallationInProgress();
+
+    expect(app(DatabaseManager::class)->isInstallationComplete())->toBeFalse();
+
+    $reached = false;
+
+    (new CanInstall)->handle(Request::create('/install/api/admin-config-setup', 'POST'), function () use (&$reached) {
+        $reached = true;
+
+        return response('ok');
+    });
+
+    expect($reached)->toBeTrue();
+});
+
+it('closes the installer again once the in-progress marker is cleared', function () {
+    ($this->fakeDatabase)(completed: false, populated: true);
+
+    $database = app(DatabaseManager::class);
+
+    $database->markInstallationInProgress();
+    expect($database->isInstallationComplete())->toBeFalse();
+
+    $database->clearInstallationInProgress();
+    expect($database->isInstallationComplete())->toBeTrue();
+});
+
+it('backfills the database flag when it infers completion from the database', function () {
+    ($this->fakeDatabase)(completed: false, populated: true);
+
+    $database = app(DatabaseManager::class);
+
+    expect($database->backfilled)->toBeFalse();
+
+    $database->isInstallationComplete();
+
+    expect($database->backfilled)->toBeTrue();
 });

@@ -35,7 +35,6 @@ return [
         UserModuleServiceProvider::class,
         WarehouseModuleServiceProvider::class,
         WebFormModuleServiceProvider::class,
-        DataTransferModuleServiceProvider::class,
     ],
 
     'register_route_models' => true,

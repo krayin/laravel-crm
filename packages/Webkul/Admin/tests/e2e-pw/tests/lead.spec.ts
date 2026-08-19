@@ -7,7 +7,12 @@ async function generateLead(adminPage) {
      * Go to the lead listing page.
      */
     await adminPage.goto("admin/leads");
-    await adminPage.getByRole('link', { name: 'Create Lead' }).click();
+    /**
+     * The leads page remembers whether it was last left in list or kanban view. Kanban renders a
+     * "Create Lead" link per stage column, so an unqualified locator matches several elements and
+     * fails strict mode; the first match is the right one in either view.
+     */
+    await adminPage.getByRole('link', { name: 'Create Lead' }).first().click();
 
     /**
      * Fill the lead form.

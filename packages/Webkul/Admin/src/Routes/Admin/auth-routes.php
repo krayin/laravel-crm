@@ -19,7 +19,11 @@ Route::withoutMiddleware(['user'])->group(function () {
         Route::prefix('login')->group(function () {
             Route::get('', 'create')->name('admin.session.create');
 
-            Route::middleware(['throttle:5,1'])->post('', 'store')->name('admin.session.store');
+            /**
+             * Throttled inside the controller instead of here, counting only failed attempts, so a
+             * correct sign-in never consumes the budget.
+             */
+            Route::post('', 'store')->name('admin.session.store');
         });
 
         Route::middleware(['user'])->group(function () {

@@ -63,6 +63,68 @@ class DatabaseManager
     }
 
     /**
+     * Whether an installation is currently under way.
+     *
+     * Written when the web installer takes its first step and removed when it finishes. Unlike the
+     * completion marker this only has to survive the few minutes of an installation, never a
+     * deploy, so a file is a sound place for it.
+     */
+    public function isInstallationInProgress(): bool
+    {
+        return file_exists(storage_path('installing'));
+    }
+
+    /**
+     * Record that an installation has started.
+     */
+    public function markInstallationInProgress(): void
+    {
+        @file_put_contents(storage_path('installing'), 'Krayin installation in progress');
+    }
+
+    /**
+     * Clear the in-progress marker once the installation has finished.
+     */
+    public function clearInstallationInProgress(): void
+    {
+        @unlink(storage_path('installing'));
+    }
+
+    /**
+     * The single authority on whether this application has already been installed.
+     *
+     * Three signals, in order of cost. The completion marker file and the database flag are both
+     * recorded when an installation finishes. Neither exists for a *legacy* installation — one that
+     * completed before the flag was introduced — once a deploy drops `storage/`, even though its
+     * database is fully populated, so the database itself is consulted last and the flag backfilled
+     * from it. An installation that is genuinely under way is excluded, because the seeder creates
+     * the default administrator before the final step runs, which would otherwise make a real
+     * installation look complete and lock its last step out.
+     */
+    public function isInstallationComplete(): bool
+    {
+        if (file_exists(storage_path('installed'))) {
+            return true;
+        }
+
+        if ($this->isInstallationCompleted()) {
+            return true;
+        }
+
+        if ($this->isInstallationInProgress()) {
+            return false;
+        }
+
+        if (! $this->isInstalled()) {
+            return false;
+        }
+
+        $this->markInstallationCompleted();
+
+        return true;
+    }
+
+    /**
      * Check Database Connection.
      */
     public function isInstalled()

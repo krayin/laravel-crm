@@ -41,22 +41,12 @@ class CanInstall
     /**
      * Whether the installation has fully completed.
      *
-     * Unlike isAlreadyInstalled(), this relies solely on completion state recorded at the end of the
-     * web and console installer, so it is never true while an installation is still in progress.
+     * Delegates to the single authority, which consults the completion marker, the database flag and
+     * finally the database itself, while excluding an installation that is genuinely under way.
      */
     public function isInstallationComplete(): bool
     {
-        if (file_exists(storage_path('installed'))) {
-            return true;
-        }
-
-        /**
-         * The marker file is gitignored, so a fresh checkout, a container rebuild or any deploy that
-         * does not carry `storage/` across arrives without it while the database is still fully
-         * populated. Falling back to the database flag keeps the installer closed in that case
-         * instead of reopening it to anyone on a live application.
-         */
-        return app(DatabaseManager::class)->isInstallationCompleted();
+        return app(DatabaseManager::class)->isInstallationComplete();
     }
 
     /**

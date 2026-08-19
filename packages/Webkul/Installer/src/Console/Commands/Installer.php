@@ -375,6 +375,8 @@ class Installer extends Command
              */
             app(DatabaseManager::class)->markInstallationCompleted();
 
+            app(DatabaseManager::class)->clearInstallationInProgress();
+
             $this->info('-----------------------------');
             $this->info('Congratulations!');
             $this->info('The installation has been finished and you can now use Krayin.');
