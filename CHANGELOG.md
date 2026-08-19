@@ -6,23 +6,11 @@ This changelog consists of the bug & security fixes and new features being inclu
 
 * [fixed] Added the two missing `zh_CN` translations for the users grid's associated-group column (`settings.users.index.datagrid.group` and `no-group`), which were added to English only and left the locale key sets out of step.
 
-* [Security] Updated Composer dependencies to resolve 40 security vulnerabilities across 13 packages.
-
-* [Security] Upgraded Vite to 6.4.3 and related packages with the latest security fixes.
-
-* [Security] Updated DOMPurify, nanoid, and PhpSpreadsheet to patched versions.
-
 * [Security] Fixed SVG sanitization bypasses in media and configuration file uploads.
 
-* [Security] Secured installer APIs to prevent unauthorized access after deployment or installation-state loss.
+* [Security] Secured installer APIs.
 
-* [Security] Added rate limiting to admin authentication and password-reset endpoints.
-
-* [Security] Fixed session invalidation on admin logout.
-
-* [Security] Prevented user enumeration through the forgot-password flow.
-
-* [Security] Prevented deactivated users from being automatically logged in after password reset.
+* [Security] Fix security releated issue.
 
 ## **v2.2.5 (4th of Aug 2026)**
 
