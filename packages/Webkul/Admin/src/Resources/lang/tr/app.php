@@ -919,6 +919,7 @@ return [
                 'disconnect-btn' => 'Bağlantıyı Kes',
                 'connect-success' => 'Google hesabı başarıyla bağlandı.',
                 'connect-failed' => 'Google hesabınız bağlanamadı. Lütfen tekrar deneyin.',
+                'not-configured' => 'Google OAuth yapılandırılmamış. Lütfen önce gerekli ortam değişkenlerini ayarlayın.',
                 'disconnect-success' => 'Google hesabı bağlantısı başarıyla kesildi.',
             ],
         ],
@@ -1158,6 +1159,8 @@ return [
                     'name' => 'Ad',
                     'status' => 'Durum',
                     'update-status' => 'Durumu Güncelle',
+                    'group' => 'İlişkili Grup',
+                    'no-group' => 'Grup Yok',
                     'users' => 'Kullanıcılar',
                 ],
                 'create' => [

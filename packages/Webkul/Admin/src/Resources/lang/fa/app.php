@@ -919,6 +919,7 @@ return [
                 'disconnect-btn' => 'قطع اتصال',
                 'connect-success' => 'حساب Google با موفقیت متصل شد.',
                 'connect-failed' => 'اتصال حساب Google شما ممکن نشد. لطفاً دوباره تلاش کنید.',
+                'not-configured' => 'احراز هویت Google OAuth پیکربندی نشده است. لطفاً ابتدا متغیرهای محیطی لازم را تنظیم کنید.',
                 'disconnect-success' => 'اتصال حساب Google با موفقیت قطع شد.',
             ],
         ],
@@ -1158,6 +1159,8 @@ return [
                     'name' => 'نام',
                     'status' => 'وضعیت',
                     'update-status' => 'به‌روزرسانی وضعیت',
+                    'group' => 'گروه مرتبط',
+                    'no-group' => 'بدون گروه',
                     'users' => 'کاربران',
                 ],
                 'create' => [

@@ -99,8 +99,8 @@ test.describe("organization management", () => {
          * Click to add extra details
          */
         await adminPage.locator('div').filter({ hasText: /^Click to add$/ }).nth(2).click();
-        await adminPage.getByRole('textbox', { name: 'Search...' }).fill('admin');
-        await adminPage.getByRole('listitem').filter({ hasText: /admin/i }).first().click();
+        await adminPage.getByRole('textbox', { name: 'Search...' }).fill('example');
+        await adminPage.getByRole('listitem').filter({ hasText: /example/i }).first().click();
 
         /** 
          * Click on "Save Organization"

@@ -2,6 +2,16 @@
 
 This changelog consists of the bug & security fixes and new features being included in the releases listed below.
 
+## **v2.2.6 (19th of Aug 2026)**
+
+* [fixed] Added the two missing `zh_CN` translations for the users grid's associated-group column (`settings.users.index.datagrid.group` and `no-group`), which were added to English only and left the locale key sets out of step.
+
+* [Security] Fixed SVG sanitization bypasses in media and configuration file uploads.
+
+* [Security] Secured installer APIs.
+
+* [Security] Fix security releated issue.
+
 ## **v2.2.5 (4th of Aug 2026)**
 
 * [feature] Added Chinese (Simplified) `zh_CN` translation for the Admin, Installer, DataTransfer, WebForm and Core packages.

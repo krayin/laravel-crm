@@ -919,6 +919,7 @@ return [
                 'disconnect-btn' => 'قطع الاتصال',
                 'connect-success' => 'تم ربط حساب Google بنجاح.',
                 'connect-failed' => 'تعذر ربط حساب Google الخاص بك. يرجى المحاولة مرة أخرى.',
+                'not-configured' => 'لم يتم تكوين مصادقة Google OAuth. يرجى ضبط متغيرات البيئة المطلوبة أولاً.',
                 'disconnect-success' => 'تم فصل حساب Google بنجاح.',
             ],
         ],
@@ -1158,6 +1159,8 @@ return [
                     'name' => 'الاسم',
                     'status' => 'الحالة',
                     'update-status' => 'تحديث الحالة',
+                    'group' => 'المجموعة المرتبطة',
+                    'no-group' => 'بدون مجموعة',
                     'users' => 'المستخدمون',
                 ],
                 'create' => [
