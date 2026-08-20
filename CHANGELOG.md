@@ -4,11 +4,13 @@ This changelog consists of the bug & security fixes and new features being inclu
 
 ## **v2.2.6 (19th of Aug 2026)**
 
-* [fixed] Added the two missing `zh_CN` translations for the users grid's associated-group column (`settings.users.index.datagrid.group` and `no-group`), which were added to English only and left the locale key sets out of step.
+* [fixed] Added the missing Chinese translations for the users grid's associated group column.
 
-* [Security] Fixed SVG sanitization bypasses in media and configuration file uploads.
+* [fixed] Fixed flaky admin end-to-end tests around organization owner lookup, lead creation and rich-text comment fields.
 
-* [Security] Secured installer APIs.
+* [security] Fixed SVG sanitization bypasses in media and configuration file uploads.
+
+* [security] Secured installer APIs.
 
 * [Security] Fix security releated issue.
 
