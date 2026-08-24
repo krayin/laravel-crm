@@ -1528,6 +1528,7 @@ return [
                             'duplicate-email' => 'Correo electrónico: \'%s\' se encontró más de una vez en el archivo de importación.',
                             'duplicate-phone' => 'Teléfono: \'%s\' se encontró más de una vez en el archivo de importación.',
                             'email-not-found' => 'Correo electrónico: \'%s\' no se encontró en el sistema.',
+                            'invalid-date' => 'Fecha: \'%s\' no es una fecha válida.',
                         ],
                     ],
                 ],

@@ -1528,6 +1528,7 @@ return [
                             'duplicate-email' => 'Email : \'%s\' is found more than once in the import file.',
                             'duplicate-phone' => 'Phone : \'%s\' is found more than once in the import file.',
                             'email-not-found' => 'Email : \'%s\' not found in the system.',
+                            'invalid-date' => 'Ngày : \'%s\' không phải là ngày hợp lệ.',
                         ],
                     ],
                 ],
