@@ -21,6 +21,21 @@ class RoleDataGrid extends DataGrid
                 'roles.permission_type'
             );
 
+        /**
+         * Scope the listing to the acting user's data scope. A `global` scope (or a full
+         * administrator) returns null and sees every role; a `group` scope sees the roles created
+         * within their group; an `individual` scope sees only the roles they created. In every case
+         * the user's own assigned role is included, so they can always see the role they belong to.
+         */
+        if ($userIds = bouncer()->getAuthorizedUserIds()) {
+            $ownRoleId = auth()->guard('user')->user()?->role_id;
+
+            $queryBuilder->where(function ($query) use ($userIds, $ownRoleId) {
+                $query->whereIn('roles.created_by', $userIds)
+                    ->orWhere('roles.id', $ownRoleId);
+            });
+        }
+
         $this->addFilter('id', 'roles.id');
         $this->addFilter('name', 'roles.name');
 
