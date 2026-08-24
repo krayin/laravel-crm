@@ -61,6 +61,13 @@ class InstallerController extends Controller
     {
         $this->abortIfInstalled();
 
+        /**
+         * From here the database is about to be built, and the seeder will create the default
+         * administrator before the final step runs. Recording that an installation is under way
+         * keeps that half-built state from being mistaken for a finished installation.
+         */
+        $this->databaseManager->markInstallationInProgress();
+
         $message = $this->environmentManager->generateEnv($request);
 
         return new JsonResponse(['data' => $message]);
@@ -145,7 +152,7 @@ class InstallerController extends Controller
      */
     private function abortIfInstalled(): void
     {
-        if (file_exists(storage_path('installed'))) {
+        if ($this->databaseManager->isInstallationComplete()) {
             abort(403);
         }
     }
@@ -158,6 +165,14 @@ class InstallerController extends Controller
         $filePath = storage_path('installed');
 
         File::put($filePath, 'Your Krayin App is Successfully Installed');
+
+        /**
+         * Recorded in the database as well as on disk, so losing the marker file cannot reopen the
+         * installer on an application that already holds real data.
+         */
+        $this->databaseManager->markInstallationCompleted();
+
+        $this->databaseManager->clearInstallationInProgress();
 
         Event::dispatch('krayin.installed');
 

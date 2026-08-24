@@ -36,6 +36,50 @@ class Acl
     }
 
     /**
+     * Get the acl items the acting user is allowed to grant.
+     *
+     * A full administrator may grant any permission and sees the whole tree. Everyone else — mirroring
+     * "you cannot grant a permission you do not have" in Salesforce/HubSpot — sees only the permissions
+     * their own role holds, so a role they build is always a subset of their own and never rejected.
+     */
+    public function getAuthorizedItems(): Collection
+    {
+        $user = auth()->guard('user')->user();
+
+        if ($user?->role?->permission_type === 'all') {
+            return $this->getItems();
+        }
+
+        return $this->filterItemsByPermissions($this->getItems(), $user?->role?->permissions ?? []);
+    }
+
+    /**
+     * Recursively keep only the acl items whose key the user holds, preserving any branch that has an
+     * authorized descendant.
+     */
+    private function filterItemsByPermissions(Collection $items, array $permissions): Collection
+    {
+        return $items
+            ->map(function (AclItem $item) use ($permissions) {
+                $children = $this->filterItemsByPermissions($item->children, $permissions);
+
+                if (! in_array($item->key, $permissions) && $children->isEmpty()) {
+                    return null;
+                }
+
+                return new AclItem(
+                    key: $item->key,
+                    name: $item->name,
+                    route: $item->route,
+                    sort: $item->sort,
+                    children: $children,
+                );
+            })
+            ->filter()
+            ->values();
+    }
+
+    /**
      * Acl Config.
      */
     private function getAclConfig(): array

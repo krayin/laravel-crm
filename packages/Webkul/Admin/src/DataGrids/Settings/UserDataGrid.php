@@ -6,29 +6,61 @@ use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Webkul\DataGrid\DataGrid;
+use Webkul\User\Repositories\GroupRepository;
 
 class UserDataGrid extends DataGrid
 {
+    /**
+     * Create data grid instance.
+     *
+     * @return void
+     */
+    public function __construct(protected GroupRepository $groupRepository) {}
+
     /**
      * Prepare query builder.
      */
     public function prepareQueryBuilder(): Builder
     {
-        $queryBuilder = DB::table('users')
-            ->distinct()
-            ->addSelect(
-                'id',
-                'name',
-                'email',
-                'image',
-                'status',
-                'created_at'
-            )
-            ->leftJoin('user_groups', 'id', '=', 'user_groups.user_id');
+        $tablePrefix = DB::getTablePrefix();
 
+        $queryBuilder = DB::table('users')
+            ->addSelect(
+                'users.id',
+                'users.name',
+                'users.email',
+                'users.image',
+                'users.status',
+                'users.created_at',
+                DB::raw('GROUP_CONCAT(DISTINCT '.$tablePrefix.'groups.name ORDER BY '.$tablePrefix.'groups.name SEPARATOR \', \') as group_name')
+            )
+            ->leftJoin('user_groups', 'users.id', '=', 'user_groups.user_id')
+            ->leftJoin('groups', 'user_groups.group_id', '=', 'groups.id')
+            ->groupBy('users.id');
+
+        /**
+         * Scope the listing to the acting user's data scope, mirroring how Krayin scopes lead and
+         * contact records by their owner. A `global` scope (or a full administrator) returns null and
+         * sees every user; a `group` scope sees the users belonging to their group; an `individual`
+         * scope sees the users they created together with their own account. What a user may then edit
+         * or delete is further constrained by the role hierarchy enforced in the controller.
+         */
         if ($userIds = bouncer()->getAuthorizedUserIds()) {
-            $queryBuilder->whereIn('id', $userIds);
+            $queryBuilder->where(function ($query) use ($userIds) {
+                $query->whereIn('users.created_by', $userIds)
+                    ->orWhereIn('users.id', $userIds);
+            });
         }
+
+        /**
+         * The `groups` join introduces columns that also exist on `users` (e.g. `name`,
+         * `created_at`), so the searchable and filterable columns are qualified to keep the
+         * generated where clauses unambiguous.
+         */
+        $this->addFilter('name', 'users.name');
+        $this->addFilter('email', 'users.email');
+        $this->addFilter('created_at', 'users.created_at');
+        $this->addFilter('group_name', 'groups.name');
 
         return $queryBuilder;
     }
@@ -67,6 +99,18 @@ class UserDataGrid extends DataGrid
             'sortable' => true,
             'searchable' => true,
             'filterable' => true,
+        ]);
+
+        $this->addColumn([
+            'index' => 'group_name',
+            'label' => trans('admin::app.settings.users.index.datagrid.group'),
+            'type' => 'string',
+            'searchable' => true,
+            'sortable' => true,
+            'filterable' => true,
+            'filterable_type' => 'dropdown',
+            'filterable_options' => $this->groupRepository->all(['name as label', 'name as value'])->toArray(),
+            'closure' => fn ($row) => $row->group_name ?: trans('admin::app.settings.users.index.datagrid.no-group'),
         ]);
 
         $this->addColumn([

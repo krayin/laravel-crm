@@ -112,6 +112,9 @@
                             <!-- Users Email -->
                             <p class="truncate">@{{ record.email }}</p>
 
+                            <!-- Associated Group -->
+                            <p class="truncate">@{{ record.group_name }}</p>
+
                             <!-- Users Status -->
                             <span
                                 :class="record.status == 1 ? 'label-active' : 'label-inactive'"
@@ -570,6 +573,11 @@
 
                                 if (error.response.status === 422) {
                                     setErrors(error.response.data.errors);
+                                } else {
+                                    this.$emitter.emit('add-flash', {
+                                        type: 'error',
+                                        message: error.response?.data?.message ?? "@lang('admin::app.errors.unauthorized')",
+                                    });
                                 }
                             });
                     },
@@ -583,7 +591,12 @@
 
                                 this.$refs.userUpdateAndCreateModal.toggle();
                             })
-                            .catch(error => {});
+                            .catch(error => {
+                                this.$emitter.emit('add-flash', {
+                                    type: 'error',
+                                    message: error.response?.data?.message ?? "@lang('admin::app.errors.unauthorized')",
+                                });
+                            });
                     },
                 },
             });

@@ -87,6 +87,14 @@ class ResetPasswordController extends Controller
 
         event(new PasswordReset($admin));
 
+        /**
+         * A deactivated account is not signed in here. Login enforces the same
+         * check, so resetting a password must not become the way around it.
+         */
+        if (! (bool) $admin->status) {
+            return;
+        }
+
         auth()->guard('user')->login($admin);
     }
 
