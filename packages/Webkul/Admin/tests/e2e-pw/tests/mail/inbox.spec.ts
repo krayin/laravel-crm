@@ -25,8 +25,21 @@ async function composeMail(adminPage, ccMail = false, bccMail = false) {
 
     /**
      * Sending mail and closing the modal.
+     *
+     * The send request is awaited rather than only the toast that follows it: a slow send used to
+     * leave the assertion polling for a message that had not been rendered yet, and a rejected one
+     * timed out with no indication of why. Waiting on the response makes a genuine failure report
+     * its status instead of looking like a missing element.
      */
-    await adminPage.getByRole("button", { name: "Send" }).click();
+    const [response] = await Promise.all([
+        adminPage.waitForResponse(
+            (r) => r.url().includes("/mail/create") && r.request().method() === "POST",
+            { timeout: 60000 }
+        ),
+        adminPage.getByRole("button", { name: "Send" }).click(),
+    ]);
+
+    expect(response.status(), "the send request should be accepted").toBeLessThan(400);
 
     await expect(adminPage.getByText("Email sent successfully.")).toBeVisible();
 }

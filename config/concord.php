@@ -19,12 +19,12 @@ use Webkul\WebForm\Providers\ModuleServiceProvider as WebFormModuleServiceProvid
 
 return [
     'modules' => [
+        DataTransferModuleServiceProvider::class,
         AdminModuleServiceProvider::class,
         AttributeModuleServiceProvider::class,
         AutomationModuleServiceProvider::class,
         ContactModuleServiceProvider::class,
         CoreModuleServiceProvider::class,
-        DataTransferModuleServiceProvider::class,
         DataGridModuleServiceProvider::class,
         EmailTemplateModuleServiceProvider::class,
         EmailModuleServiceProvider::class,

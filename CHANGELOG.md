@@ -2,6 +2,18 @@
 
 This changelog consists of the bug & security fixes and new features being included in the releases listed below.
 
+## **v2.2.6 (19th of Aug 2026)**
+
+* [fixed] Added the missing Chinese translations for the users grid's associated group column.
+
+* [fixed] Fixed flaky admin end-to-end tests around organization owner lookup, lead creation and rich-text comment fields.
+
+* [security] Fixed SVG sanitization bypasses in media and configuration file uploads.
+
+* [security] Secured installer APIs.
+
+* [Security] Fix security releated issue.
+
 ## **v2.2.5 (4th of Aug 2026)**
 
 * [feature] Added Chinese (Simplified) `zh_CN` translation for the Admin, Installer, DataTransfer, WebForm and Core packages.
