@@ -718,6 +718,7 @@ return [
                 'create-btn' => 'إنشاء الأدوار',
                 'create-success' => 'تم إنشاء الدور بنجاح.',
                 'current-role-delete-error' => 'لا يمكن حذف الدور المخصص للمستخدم الحالي.',
+                'current-role-edit-error' => 'لا يمكن تعديل الدور المخصص لحسابك.',
                 'delete-failed' => 'لا يمكن حذف الدور.',
                 'delete-success' => 'تم حذف الدور بنجاح.',
                 'last-delete-error' => 'مطلوب دور واحد على الأقل.',
@@ -1528,6 +1529,7 @@ return [
                             'duplicate-email' => 'البريد الإلكتروني: \'%s\' تم العثور عليه أكثر من مرة في ملف الاستيراد.',
                             'duplicate-phone' => 'الهاتف: \'%s\' تم العثور عليه أكثر من مرة في ملف الاستيراد.',
                             'email-not-found' => 'البريد الإلكتروني: \'%s\' لم يتم العثور عليه في النظام.',
+                            'invalid-date' => 'التاريخ: \'%s\' ليس تاريخًا صالحًا.',
                         ],
                     ],
                 ],
@@ -2392,6 +2394,12 @@ return [
         'go-back' => 'العودة',
         'support' => 'إذا استمرت المشكلة، تواصل معنا على <a href=":link" class=":class">:email</a> للحصول على المساعدة.',
         'unauthorized' => 'هذا الإجراء غير مصرح به.',
+        'role-exceeds-own' => 'You can only assign a role whose permissions are the same as or fewer than your own.',
+        'user-exceeds-own' => 'You can only manage users whose permissions are the same as or fewer than your own.',
+        'own-privileges' => 'You cannot change your own role or data scope.',
+        'scope-exceeds-own' => 'You cannot grant a data scope wider than your own.',
+        'primary-admin-protected' => 'The primary administrator account is protected and cannot be modified here.',
+        'role-permissions-exceed-own' => 'You can only create or edit roles whose permissions are the same as or fewer than your own.',
 
         '404' => [
             'description' => 'عذرًا! الصفحة التي تبحث عنها في إجازة. يبدو أننا لم نجد ما كنت تبحث عنه.',

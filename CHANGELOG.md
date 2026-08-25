@@ -4,15 +4,21 @@ This changelog consists of the bug & security fixes and new features being inclu
 
 ## **v2.2.6 (19th of Aug 2026)**
 
-* [fixed] Added the two missing `zh_CN` translations for the users grid's associated-group column (`settings.users.index.datagrid.group` and `no-group`), which were added to English only and left the locale key sets out of step.
+* [fixed] Added the missing Chinese translations for the users grid's associated group column.
 
-* [Security] Fixed SVG sanitization bypasses in media and configuration file uploads.
+* [fixed] Fixed flaky admin end-to-end tests around organization owner lookup, lead creation and rich-text comment fields.
 
-* [Security] Secured installer APIs.
+* [security] Fixed SVG sanitization bypasses in media and configuration file uploads.
+
+* [security] Secured installer APIs.
 
 * [Security] Fix security releated issue.
 
 ## **v2.2.5 (4th of Aug 2026)**
+
+* #2631[fixed] Fixed the persons CSV import creating duplicate records and dropping select attribute values on re-import. Existing people are now updated by matched email regardless of a changed phone or organization (so the reported count is accurate), and select/multiselect option labels (or ids) are resolved to their option ids instead of being stored as `0`.
+
+* #2630[fixed] Fixed date attributes in the persons CSV import silently saving as `0000-00-00`. Spreadsheet serial numbers and regional formats such as `DD/MM/YYYY` are now normalised to a valid date, and a value that cannot be parsed is reported as a row error instead of being stored as a zero date.
 
 * [feature] Added Chinese (Simplified) `zh_CN` translation for the Admin, Installer, DataTransfer, WebForm and Core packages.
 

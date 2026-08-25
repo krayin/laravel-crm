@@ -718,6 +718,7 @@ return [
                 'create-btn' => 'ایجاد نقش‌ها',
                 'create-success' => 'نقش با موفقیت ایجاد شد.',
                 'current-role-delete-error' => 'نقش اختصاص داده شده به کاربر فعلی قابل حذف نیست.',
+                'current-role-edit-error' => 'نقش اختصاص داده شده به حساب خودتان قابل ویرایش نیست.',
                 'delete-failed' => 'نقش قابل حذف نیست.',
                 'delete-success' => 'نقش با موفقیت حذف شد.',
                 'last-delete-error' => 'حداقل یک نقش لازم است.',
@@ -1528,6 +1529,7 @@ return [
                             'duplicate-email' => 'ایمیل: \'%s\' بیش از یک بار در فایل واردات یافت شد.',
                             'duplicate-phone' => 'تلفن: \'%s\' بیش از یک بار در فایل واردات یافت شد.',
                             'email-not-found' => 'ایمیل: \'%s\' در سیستم یافت نشد.',
+                            'invalid-date' => 'تاریخ: \'%s\' یک تاریخ معتبر نیست.',
                         ],
                     ],
                 ],
@@ -2392,6 +2394,12 @@ return [
         'go-back' => 'بازگشت',
         'support' => 'اگر مشکل ادامه داشت، برای کمک با ما از طریق <a href=":link" class=":class">:email</a> تماس بگیرید.',
         'unauthorized' => 'این عملیات مجاز نیست.',
+        'role-exceeds-own' => 'You can only assign a role whose permissions are the same as or fewer than your own.',
+        'user-exceeds-own' => 'You can only manage users whose permissions are the same as or fewer than your own.',
+        'own-privileges' => 'You cannot change your own role or data scope.',
+        'scope-exceeds-own' => 'You cannot grant a data scope wider than your own.',
+        'primary-admin-protected' => 'The primary administrator account is protected and cannot be modified here.',
+        'role-permissions-exceed-own' => 'You can only create or edit roles whose permissions are the same as or fewer than your own.',
 
         '404' => [
             'description' => 'اوه! به نظر می‌رسد صفحه‌ای که دنبال آن بودید، در دسترس نیست. نتوانستیم چیزی که دنبالش بودید را پیدا کنیم.',

@@ -718,6 +718,7 @@ return [
                 'create-btn' => 'Rol Oluştur',
                 'create-success' => 'Rol başarıyla oluşturuldu.',
                 'current-role-delete-error' => 'Mevcut kullanıcıya atanmış rol silinemedi.',
+                'current-role-edit-error' => 'Kendi hesabınıza atanmış rolü düzenleyemezsiniz.',
                 'delete-failed' => 'Rol silinemedi.',
                 'delete-success' => 'Rol başarıyla silindi.',
                 'last-delete-error' => 'En az bir rol gereklidir.',
@@ -1528,6 +1529,7 @@ return [
                             'duplicate-email' => 'E-posta: \'%s\' içe aktarma dosyasında birden fazla kez bulundu.',
                             'duplicate-phone' => 'Telefon: \'%s\' içe aktarma dosyasında birden fazla kez bulundu.',
                             'email-not-found' => 'E-posta: \'%s\' sistemde bulunamadı.',
+                            'invalid-date' => 'Tarih: \'%s\' geçerli bir tarih değil.',
                         ],
                     ],
                 ],
@@ -2392,6 +2394,12 @@ return [
         'go-back' => 'Geri Dön',
         'support' => 'Sorun devam ederse, yardım için bize <a href=":link" class=":class">:email</a> adresinden ulaşın.',
         'unauthorized' => 'Bu işlem için yetkiniz yok.',
+        'role-exceeds-own' => 'You can only assign a role whose permissions are the same as or fewer than your own.',
+        'user-exceeds-own' => 'You can only manage users whose permissions are the same as or fewer than your own.',
+        'own-privileges' => 'You cannot change your own role or data scope.',
+        'scope-exceeds-own' => 'You cannot grant a data scope wider than your own.',
+        'primary-admin-protected' => 'The primary administrator account is protected and cannot be modified here.',
+        'role-permissions-exceed-own' => 'You can only create or edit roles whose permissions are the same as or fewer than your own.',
 
         '404' => [
             'description' => 'Oops! Aradığınız sayfa tatilde. Aradığınız şeyi bulamadık gibi görünüyor.',
