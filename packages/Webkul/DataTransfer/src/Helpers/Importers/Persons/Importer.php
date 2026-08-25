@@ -68,9 +68,12 @@ class Importer extends AbstractImporter
     protected $permanentAttributes = ['emails'];
 
     /**
-     * Permanent entity column.
+     * Column used to match existing persons when upserting. The person's primary key is used (like
+     * the leads importer) so a re-imported row updates the existing record by id, rather than the
+     * composite `unique_id` which embeds the phone and organization and breaks the match when they
+     * change.
      */
-    protected string $masterAttributeCode = 'unique_id';
+    protected string $masterAttributeCode = 'id';
 
     /**
      * Emails storage.
@@ -81,6 +84,11 @@ class Importer extends AbstractImporter
      * Phones storage.
      */
     protected array $phones = [];
+
+    /**
+     * Cache of resolved person attributes, keyed by attribute code.
+     */
+    protected array $attributeCache = [];
 
     /**
      * Cache of person date/datetime attribute codes mapped to their type.
@@ -399,6 +407,15 @@ class Importer extends AbstractImporter
             $native = Arr::only($rowData, $this->getEntityColumns());
 
             if ($this->isEmailExist($email)) {
+                /**
+                 * Update the existing person by its primary key. Keying the update on the person id
+                 * (resolved from the matched email) rather than the composite `unique_id` — which
+                 * embeds the phone and organization — ensures a revised row whose phone or
+                 * organization changed still updates the existing record instead of inserting a
+                 * duplicate.
+                 */
+                $native['id'] = $this->personStorage->get($email);
+
                 $persons['update'][$email] = $native;
             } else {
                 $persons['insert'][$email] = [
@@ -485,27 +502,34 @@ class Importer extends AbstractImporter
     public function prepareAttributeValues(array $rowData, array &$attributeValues): void
     {
         foreach ($rowData as $code => $value) {
-            if (is_null($value)) {
+            if (is_null($value) || $value === '') {
                 continue;
             }
 
-            $attribute = $this->attributeRepository->findOneWhere([
-                'code' => $code,
-                'entity_type' => 'persons',
-            ]);
+            $attribute = $this->getPersonAttribute($code);
 
             if (! $attribute) {
                 continue;
             }
 
             /**
-             * Normalise date/datetime values (Excel serials and regional formats) to the ISO
-             * storage format. An unparseable value is skipped rather than stored as a zero date.
+             * Convert the raw CSV cell into the value stored for this attribute type — option
+             * labels (or ids) are resolved to their option ids, and date/datetime values (Excel
+             * serials and regional formats) are normalised to the ISO storage format. A value that
+             * cannot be resolved or parsed is skipped, so an existing value is never overwritten
+             * with an invalid one (the integer `0` a label used to become, or a zero date).
              */
-            $storedValue = $value;
+            $storedValue = $this->formatAttributeValue($attribute, $value);
+
+            if (
+                is_null($storedValue)
+                && in_array($attribute->type, ['select', 'multiselect', 'checkbox'])
+            ) {
+                continue;
+            }
 
             if (in_array($attribute->type, ['date', 'datetime'])) {
-                $storedValue = $this->normalizeDate($value, $attribute->type);
+                $storedValue = $this->normalizeDate($storedValue, $attribute->type);
 
                 if (is_null($storedValue)) {
                     continue;
@@ -525,6 +549,63 @@ class Importer extends AbstractImporter
                 ]);
             }
         }
+    }
+
+    /**
+     * Resolve (and cache) a person attribute by its code.
+     */
+    protected function getPersonAttribute(string $code)
+    {
+        if (array_key_exists($code, $this->attributeCache)) {
+            return $this->attributeCache[$code];
+        }
+
+        return $this->attributeCache[$code] = $this->attributeRepository->findOneWhere([
+            'code' => $code,
+            'entity_type' => 'persons',
+        ]);
+    }
+
+    /**
+     * Convert a raw imported value into the value persisted for the attribute's type.
+     *
+     * Choice attributes (select/multiselect/checkbox) are stored as option ids, so an imported
+     * option label is resolved to its id (a numeric id is accepted as-is). A null return means the
+     * value could not be resolved.
+     */
+    protected function formatAttributeValue($attribute, $value)
+    {
+        if ($attribute->type === 'select') {
+            return $this->resolveOptionId($attribute, $value);
+        }
+
+        if (in_array($attribute->type, ['multiselect', 'checkbox'])) {
+            $ids = collect(explode(',', (string) $value))
+                ->map(fn ($label) => $this->resolveOptionId($attribute, trim($label)))
+                ->filter()
+                ->implode(',');
+
+            return $ids !== '' ? $ids : null;
+        }
+
+        return $value;
+    }
+
+    /**
+     * Resolve an imported option label (case-insensitive) — or a raw option id — to its option id.
+     */
+    protected function resolveOptionId($attribute, $label): ?int
+    {
+        if ($label === null || $label === '') {
+            return null;
+        }
+
+        $option = $attribute->options->first(function ($option) use ($label) {
+            return strcasecmp((string) $option->name, (string) $label) === 0
+                || (is_numeric($label) && (int) $option->id === (int) $label);
+        });
+
+        return $option?->id;
     }
 
     /**
