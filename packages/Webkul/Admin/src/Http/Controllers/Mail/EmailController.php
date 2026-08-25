@@ -80,19 +80,22 @@ class EmailController extends Controller
             ])
             ->findOrFail(request('id'));
 
+        /**
+         * A mail linked to a lead or person is scoped to whoever owns that record. The mailbox
+         * itself is shared, so unlinked mail stays visible to everyone with mail access; but a
+         * linked mail belonging to a lead/person outside the acting user's data scope is denied
+         * outright, rather than merely hiding its `lead_id` while still returning the subject,
+         * body, thread and attachments.
+         */
         if ($userIds = bouncer()->getAuthorizedUserIds()) {
-            $results = $this->leadRepository->findWhere([
-                ['id', '=', $email->lead_id],
-                ['user_id', 'IN', $userIds],
+            $ownerIds = array_filter([
+                $email->lead?->user_id,
+                $email->person?->user_id,
             ]);
-        } else {
-            $results = $this->leadRepository->findWhere([
-                ['id', '=', $email->lead_id],
-            ]);
-        }
 
-        if (empty($results->toArray())) {
-            unset($email->lead_id);
+            if ($ownerIds && empty(array_intersect($ownerIds, $userIds))) {
+                abort(401, trans('admin::app.errors.unauthorized'));
+            }
         }
 
         if ($route == SupportedFolderEnum::DRAFT->value) {
@@ -238,6 +241,24 @@ class EmailController extends Controller
         abort_unless(bouncer()->hasPermission('mail.view'), 401, trans('admin::app.errors.unauthorized'));
 
         $attachment = $this->attachmentRepository->findOrFail($id);
+
+        /**
+         * Bind the download to the acting user's data scope through the attachment's parent mail:
+         * an attachment on a lead/person-linked mail outside that scope is refused, so an
+         * unauthorized mail id can no longer be turned into an unauthorized file download.
+         */
+        if ($userIds = bouncer()->getAuthorizedUserIds()) {
+            $email = $attachment->email;
+
+            $ownerIds = array_filter([
+                $email?->lead?->user_id,
+                $email?->person?->user_id,
+            ]);
+
+            if ($ownerIds && empty(array_intersect($ownerIds, $userIds))) {
+                abort(401, trans('admin::app.errors.unauthorized'));
+            }
+        }
 
         try {
             return Storage::disk(AttachmentRepository::resolveDisk($attachment->path))
