@@ -1630,6 +1630,7 @@ return [
                     'edit-btn' => 'Düzenle',
                     'imported-info' => 'Tebrikler! İthalatınız başarılı oldu.',
                     'importing-info' => 'İthalat İşlemde',
+                    'importing-queue-hint' => 'Bu içe aktarma %0 değerinde kalırsa, kuyruk işçisi çalışmıyor olabilir. Yöneticinizden \'php artisan queue:work\' komutunu çalıştırmasını isteyin veya \'Kuyrukta İşle\' seçeneğini kapatıp yeniden içe aktarın.',
                     'indexing-info' => 'Kaynaklar İndeksleniyor (Fiyat, Stok ve Elastic Search) İlerliyor',
                     'linking-info' => 'Kaynaklar Bağlanıyor',
                     'progress' => 'İlerleme:',

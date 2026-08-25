@@ -1630,6 +1630,7 @@ return [
                     'edit-btn' => '编辑',
                     'imported-info' => '恭喜！导入成功。',
                     'importing-info' => '导入进行中',
+                    'importing-queue-hint' => '如果此导入始终停留在 0%，队列工作进程可能未运行。请让管理员运行 \'php artisan queue:work\'，或关闭“队列处理”后重新导入。',
                     'indexing-info' => '资源索引（价格、库存和 Elastic Search）进行中',
                     'linking-info' => '资源关联进行中',
                     'progress' => '进度：',

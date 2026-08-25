@@ -1632,6 +1632,7 @@ return [
                     'edit-btn' => 'Edit',
                     'imported-info' => 'Congratulations! Your import was successful.',
                     'importing-info' => 'Import In Process',
+                    'importing-queue-hint' => 'If this import stays at 0%, the queue worker may not be running. Ask your administrator to run \'php artisan queue:work\', or turn off \'Process In Queue\' and import again.',
                     'indexing-info' => 'Resources Indexing (Price, Inventory and Elastic Search) In Progress',
                     'linking-info' => 'Resources Linking In Progress',
                     'progress' => 'Progress:',

@@ -1630,6 +1630,7 @@ return [
                     'edit-btn' => '수정',
                     'imported-info' => '축하합니다! 가져오기가 성공적으로 완료되었습니다.',
                     'importing-info' => '가져오기 처리 중',
+                    'importing-queue-hint' => '이 가져오기가 0%에 머무르면 큐 워커가 실행되지 않았을 수 있습니다. 관리자에게 \'php artisan queue:work\' 실행을 요청하거나 \'큐에서 처리\'를 끄고 다시 가져오세요.',
                     'indexing-info' => '리소스 인덱싱(가격, 재고, Elastic Search) 진행 중',
                     'linking-info' => '리소스 연결 진행 중',
                     'progress' => '진행률:',

@@ -1630,6 +1630,7 @@ return [
                     'edit-btn' => 'Editar',
                     'imported-info' => '¡Felicidades! Tu importación fue exitosa.',
                     'importing-info' => 'Importación en Proceso',
+                    'importing-queue-hint' => 'Si esta importación permanece en 0%, es posible que el worker de la cola no esté en ejecución. Pida al administrador que ejecute \'php artisan queue:work\', o desactive \'Procesar en cola\' e importe de nuevo.',
                     'indexing-info' => 'Indexación de Recursos (Precios, Inventario y Elastic Search) en Progreso',
                     'linking-info' => 'Vinculación de Recursos en Progreso',
                     'progress' => 'Progreso:',
