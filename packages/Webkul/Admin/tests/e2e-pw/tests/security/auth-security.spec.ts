@@ -1,4 +1,4 @@
-import { test, expect } from "../../setup";
+import { test, expect } from "../../fixtures/AdminFixtures";
 
 /**
  * Security regressions around admin authentication, exercised through the browser.
