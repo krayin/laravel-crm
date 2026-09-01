@@ -74,11 +74,12 @@ class ImportController extends Controller
             'field_separator',
         ]);
 
-        if (! isset($data['process_in_queue'])) {
-            $data['process_in_queue'] = false;
-        } else {
-            $data['process_in_queue'] = true;
-        }
+        /**
+         * Cast the toggle to a real boolean. The switch submits its value even when off (as `false`,
+         * `"0"` or `""`), so relying on the key's presence stored `process_in_queue = 1` for every
+         * import — which then fails to run on the default `sync` queue (issue #2629).
+         */
+        $data['process_in_queue'] = request()->boolean('process_in_queue');
 
         $import = $this->importRepository->create(
             array_merge(
@@ -165,9 +166,7 @@ class ImportController extends Controller
             );
         }
 
-        if (! isset($data['process_in_queue'])) {
-            $data['process_in_queue'] = false;
-        }
+        $data['process_in_queue'] = request()->boolean('process_in_queue');
 
         $import = $this->importRepository->update($data, $import->id);
 
@@ -457,6 +456,7 @@ class ImportController extends Controller
 
         return new JsonResponse([
             'stats' => $stats,
+            'stuck' => $this->importHelper->isStuck(),
             'import' => $this->importHelper->getImport()->unsetRelations(),
         ]);
     }
