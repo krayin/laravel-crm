@@ -29,6 +29,7 @@
 
                 <div class="light-shimmer-bg dark:shimmer h-[39px] w-[140px] rounded-md"></div>
                 <div class="light-shimmer-bg dark:shimmer h-[39px] w-[140px] rounded-md"></div>
+                <div class="light-shimmer-bg dark:shimmer h-[39px] w-[110px] rounded-md"></div>
             </div>
         </v-dashboard-filters>
 
@@ -140,6 +141,15 @@
                         placeholder="@lang('admin::app.dashboard.index.end-date')"
                     />
                 </x-admin::flat-picker.date>
+
+                <!-- Export PDF -->
+                <a
+                    :href="exportUrl"
+                    target="_blank"
+                    class="secondary-button !min-h-[39px]"
+                >
+                    @lang('admin::app.dashboard.index.export-pdf')
+                </a>
             </div>
 
             {!! view_render_event('admin.dashboard.index.date_filters.after') !!}
@@ -160,6 +170,21 @@
 
                             end: "{{ $endDate->format('Y-m-d') }}",
                         }
+                    }
+                },
+
+                computed: {
+                    exportUrl() {
+                        let params = new URLSearchParams({
+                            start: this.filters.start,
+                            end: this.filters.end,
+                        });
+
+                        if (this.filters.pipeline_id) {
+                            params.set('pipeline_id', this.filters.pipeline_id);
+                        }
+
+                        return "{{ route('admin.dashboard.export_pdf') }}?" + params.toString();
                     }
                 },
 
