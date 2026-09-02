@@ -38,8 +38,18 @@ class UserDataGrid extends DataGrid
             ->leftJoin('groups', 'user_groups.group_id', '=', 'groups.id')
             ->groupBy('users.id');
 
+        /**
+         * Scope the listing to the acting user's data scope, mirroring how Krayin scopes lead and
+         * contact records by their owner. A `global` scope (or a full administrator) returns null and
+         * sees every user; a `group` scope sees the users belonging to their group; an `individual`
+         * scope sees the users they created together with their own account. What a user may then edit
+         * or delete is further constrained by the role hierarchy enforced in the controller.
+         */
         if ($userIds = bouncer()->getAuthorizedUserIds()) {
-            $queryBuilder->whereIn('users.id', $userIds);
+            $queryBuilder->where(function ($query) use ($userIds) {
+                $query->whereIn('users.created_by', $userIds)
+                    ->orWhereIn('users.id', $userIds);
+            });
         }
 
         /**

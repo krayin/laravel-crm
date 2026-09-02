@@ -199,6 +199,15 @@
                         @lang('admin::app.settings.data-transfer.imports.import.importing-info')
                     </p>
 
+                    <p
+                        v-if="importResource.process_in_queue && stats.progress == 0"
+                        class="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-300"
+                    >
+                        <i class="icon-info text-xl text-blue-600"></i>
+
+                        @lang('admin::app.settings.data-transfer.imports.import.importing-queue-hint')
+                    </p>
+
                     <div class="h-5 w-full rounded-sm bg-green-200 dark:bg-green-700">
                         <div
                             class="h-5 rounded-sm bg-green-600"
@@ -521,6 +530,19 @@
                                 this.importResource = response.data.import;
 
                                 this.stats = response.data.stats;
+
+                                /**
+                                 * A queued import with no worker consuming the chain never progresses,
+                                 * so stop polling and surface the cause instead of spinning at 0%.
+                                 */
+                                if (response.data.stuck) {
+                                    this.$emitter.emit('add-flash', {
+                                        type: 'error',
+                                        message: "@lang('admin::app.settings.data-transfer.imports.queue-worker-not-running')",
+                                    });
+
+                                    return;
+                                }
 
                                 if (this.importResource.state != 'completed') {
                                     setTimeout(() => {

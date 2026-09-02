@@ -238,10 +238,28 @@ class AttributeController extends Controller
      */
     public function download()
     {
-        if (! request('path')) {
-            return false;
+        $path = request('path');
+
+        /**
+         * The path arrives from the query string, so it is resolved against the attribute values
+         * that actually reference a stored file before anything is served. Handing it straight to
+         * the disk let any path on the shared storage disk be downloaded through this endpoint —
+         * import artefacts, activity attachments and configuration uploads all live alongside
+         * attribute files. The type check matters because `text_value` is shared with the text,
+         * textarea, multiselect and checkbox types, which hold no file reference.
+         */
+        if (! is_string($path) || $path === '') {
+            abort(404);
         }
 
-        return Storage::download(request('path'));
+        $attributeValue = $this->attributeValueRepository
+            ->findWhere(['text_value' => $path])
+            ->first(fn ($value) => in_array($value->attribute?->type, ['file', 'image'], true));
+
+        if (! $attributeValue) {
+            abort(404);
+        }
+
+        return Storage::download($attributeValue->text_value);
     }
 }

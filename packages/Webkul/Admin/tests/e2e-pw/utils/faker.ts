@@ -405,8 +405,8 @@ async function createOrganization(page) {
      * Click to add extra details
      */
     await page.locator('div').filter({ hasText: /^Click to add$/ }).nth(2).click();
-    await page.getByRole('textbox', { name: 'Search...' }).fill('admin');
-    await page.getByRole('listitem').filter({ hasText: /admin/i }).first().click();
+    await page.getByRole('textbox', { name: 'Search...' }).fill('example');
+    await page.getByRole('listitem').filter({ hasText: /example/i }).first().click();
 
     /**
      * Click on "Save Organization"

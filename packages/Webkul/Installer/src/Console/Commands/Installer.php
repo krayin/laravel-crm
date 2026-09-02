@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\File;
 use Webkul\Core\Providers\CoreServiceProvider;
 use Webkul\Installer\Database\Seeders\DatabaseSeeder as KrayinDatabaseSeeder;
 use Webkul\Installer\Events\ComposerEvents;
+use Webkul\Installer\Helpers\DatabaseManager;
 
 use function Laravel\Prompts\password;
 use function Laravel\Prompts\select;
@@ -367,6 +368,14 @@ class Installer extends Command
             $filePath = storage_path('installed');
 
             File::put($filePath, 'Krayin is successfully installed');
+
+            /**
+             * Recorded in the database as well as on disk, so losing the marker file cannot reopen
+             * the installer on an application that already holds real data.
+             */
+            app(DatabaseManager::class)->markInstallationCompleted();
+
+            app(DatabaseManager::class)->clearInstallationInProgress();
 
             $this->info('-----------------------------');
             $this->info('Congratulations!');

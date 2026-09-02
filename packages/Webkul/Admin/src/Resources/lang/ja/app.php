@@ -275,9 +275,6 @@ return [
                 'search' => [
                     'title' => '検索',
                 ],
-                'column-settings' => [
-                    'title' => '列の設定',
-                ],
             ],
             'filters' => [
                 'select' => '選択',
@@ -1895,16 +1892,6 @@ return [
                         'from' => '開始',
                         'select' => '選択',
                         'to' => '終了',
-                    ],
-                    'card-settings' => [
-                        'title' => 'カードの設定',
-                        'contact-person' => '担当者',
-                        'rotten-indicator' => '停滞インジケーター',
-                        'sales-person' => '営業担当者',
-                        'estimated-lead-value' => '見積もりリード金額',
-                        'source' => 'ソース',
-                        'lead-type' => 'リードタイプ',
-                        'tags' => 'タグ',
                     ],
                 ],
                 'stages' => [
