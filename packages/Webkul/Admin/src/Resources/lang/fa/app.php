@@ -275,6 +275,9 @@ return [
                 'search' => [
                     'title' => 'جستجو',
                 ],
+                'column-settings' => [
+                    'title' => 'تنظیمات ستون‌ها',
+                ],
             ],
             'filters' => [
                 'select' => 'انتخاب',
@@ -1894,6 +1897,16 @@ return [
                         'from' => 'از',
                         'select' => 'انتخاب',
                         'to' => 'تا',
+                    ],
+                    'card-settings' => [
+                        'title' => 'تنظیمات کارت',
+                        'contact-person' => 'شخص تماس',
+                        'rotten-indicator' => 'نشانگر خراب شدن',
+                        'sales-person' => 'کارشناس فروش',
+                        'estimated-lead-value' => 'ارزش تخمینی سرنخ',
+                        'source' => 'منبع',
+                        'lead-type' => 'نوع سرنخ',
+                        'tags' => 'برچسب‌ها',
                     ],
                 ],
                 'stages' => [
