@@ -275,6 +275,9 @@ return [
                 'search' => [
                     'title' => 'Ara',
                 ],
+                'column-settings' => [
+                    'title' => 'Sütun Ayarları',
+                ],
             ],
             'filters' => [
                 'select' => 'Seç',
@@ -1894,6 +1897,16 @@ return [
                         'from' => 'Kimden',
                         'select' => 'Seç',
                         'to' => 'Kime',
+                    ],
+                    'card-settings' => [
+                        'title' => 'Kart Ayarları',
+                        'contact-person' => 'İletişim Kişisi',
+                        'rotten-indicator' => 'Çürük Göstergesi',
+                        'sales-person' => 'Satış Temsilcisi',
+                        'estimated-lead-value' => 'Tahmini Lead Değeri',
+                        'source' => 'Kaynak',
+                        'lead-type' => 'Lead Türü',
+                        'tags' => 'Etiketler',
                     ],
                 ],
                 'stages' => [

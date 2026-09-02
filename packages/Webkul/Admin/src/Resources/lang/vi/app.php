@@ -275,6 +275,9 @@ return [
                 'search' => [
                     'title' => 'Tìm kiếm',
                 ],
+                'column-settings' => [
+                    'title' => 'Cài Đặt Cột',
+                ],
             ],
             'filters' => [
                 'select' => 'Chọn',
@@ -1894,6 +1897,16 @@ return [
                         'from' => 'Từ',
                         'select' => 'Chọn',
                         'to' => 'Đến',
+                    ],
+                    'card-settings' => [
+                        'title' => 'Cài Đặt Thẻ',
+                        'contact-person' => 'Người Liên Hệ',
+                        'rotten-indicator' => 'Chỉ Báo Hết Hạn',
+                        'sales-person' => 'Nhân Viên Kinh Doanh',
+                        'estimated-lead-value' => 'Giá Trị Ước Tính Khách Hàng',
+                        'source' => 'Nguồn',
+                        'lead-type' => 'Loại Khách Hàng',
+                        'tags' => 'Thẻ',
                     ],
                 ],
                 'stages' => [

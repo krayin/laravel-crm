@@ -275,6 +275,9 @@ return [
                 'search' => [
                     'title' => '검색',
                 ],
+                'column-settings' => [
+                    'title' => '열 설정',
+                ],
             ],
             'filters' => [
                 'select' => '선택',
@@ -1894,6 +1897,16 @@ return [
                         'from' => '시작',
                         'select' => '선택',
                         'to' => '종료',
+                    ],
+                    'card-settings' => [
+                        'title' => '카드 설정',
+                        'contact-person' => '담당자',
+                        'rotten-indicator' => '정체 표시',
+                        'sales-person' => '영업 담당자',
+                        'estimated-lead-value' => '예상 리드 금액',
+                        'source' => '소스',
+                        'lead-type' => '리드 유형',
+                        'tags' => '태그',
                     ],
                 ],
                 'stages' => [

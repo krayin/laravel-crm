@@ -4,6 +4,10 @@ This changelog consists of the bug & security fixes and new features being inclu
 
 ## **v2.2.6 (19th of Aug 2026)**
 
+* #2044[feature] Added the ability to choose which information is displayed on the lead card. A "Card Settings" option in the Kanban board toolbar lets admins choose which fields (contact person, rotten indicator, sales person, estimated lead value, source, lead type, tags) are shown on each lead card, and a new "Column Settings" option in the leads list toolbar lets admins show or hide any grid column. Both choices are remembered per browser via local storage.
+
+* [enhancement] Added an opt-in column visibility override mechanism to the shared `x-admin::datagrid` component, used by the leads list's new "Column Settings" toggle. Grids that do not use it are unaffected.
+
 * [fixed] Added the missing Chinese translations for the users grid's associated group column.
 
 * [fixed] Fixed flaky admin end-to-end tests around organization owner lookup, lead creation and rich-text comment fields.

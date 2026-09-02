@@ -267,6 +267,8 @@
 
                             this.available.columns = columns;
 
+                            this.applyColumnVisibilityOverrides();
+
                             this.available.actions = actions;
 
                             this.available.massActions = mass_actions;
@@ -567,6 +569,65 @@
                         this.getDatagridsStorageKey(),
                         JSON.stringify(datagrids)
                     );
+                },
+
+                //=======================================================================================
+                // Support for persisted column visibility overrides. All code is based on local storage.
+                // A datagrid without any stored overrides is unaffected; this is opt-in per `src`.
+                //=======================================================================================
+
+                /**
+                 * Returns the storage key for column visibility overrides in local storage.
+                 *
+                 * @returns {string} Storage key for column visibility overrides.
+                 */
+                getColumnVisibilityStorageKey() {
+                    return 'datagrid_column_visibility';
+                },
+
+                /**
+                 * Re-applies any column visibility overrides stored for this datagrid's `src` on top
+                 * of the columns just received from the server, so a toggled column stays hidden
+                 * across pagination, sorting and filtering.
+                 *
+                 * @returns {void}
+                 */
+                applyColumnVisibilityOverrides() {
+                    let allOverrides = JSON.parse(localStorage.getItem(this.getColumnVisibilityStorageKey())) ?? {};
+
+                    let overrides = allOverrides[this.src];
+
+                    if (! overrides) {
+                        return;
+                    }
+
+                    this.available.columns = this.available.columns.map(column => ({
+                        ...column,
+                        visibility: overrides[column.index] ?? column.visibility,
+                    }));
+                },
+
+                /**
+                 * Updates a column's visibility and persists the override in local storage, keyed by
+                 * this datagrid's `src` so it does not affect any other datagrid.
+                 *
+                 * @param {string} index - The column's index.
+                 * @param {boolean} visibility - The column's new visibility.
+                 * @returns {void}
+                 */
+                updateColumnVisibility(index, visibility) {
+                    this.available.columns = this.available.columns.map(column =>
+                        column.index === index ? { ...column, visibility } : column
+                    );
+
+                    let allOverrides = JSON.parse(localStorage.getItem(this.getColumnVisibilityStorageKey())) ?? {};
+
+                    allOverrides[this.src] = {
+                        ...(allOverrides[this.src] ?? {}),
+                        [index]: visibility,
+                    };
+
+                    localStorage.setItem(this.getColumnVisibilityStorageKey(), JSON.stringify(allOverrides));
                 },
             },
         });

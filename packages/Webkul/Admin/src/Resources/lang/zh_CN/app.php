@@ -275,6 +275,9 @@ return [
                 'search' => [
                     'title' => '搜索',
                 ],
+                'column-settings' => [
+                    'title' => '列设置',
+                ],
             ],
             'filters' => [
                 'select' => '选择',
@@ -1894,6 +1897,16 @@ return [
                         'from' => '从',
                         'select' => '选择',
                         'to' => '至',
+                    ],
+                    'card-settings' => [
+                        'title' => '卡片设置',
+                        'contact-person' => '联系人',
+                        'rotten-indicator' => '滞留标识',
+                        'sales-person' => '销售人员',
+                        'estimated-lead-value' => '预估线索价值',
+                        'source' => '来源',
+                        'lead-type' => '线索类型',
+                        'tags' => '标签',
                     ],
                 ],
                 'stages' => [

@@ -275,6 +275,9 @@ return [
                 'search' => [
                     'title' => 'Search',
                 ],
+                'column-settings' => [
+                    'title' => 'Column Settings',
+                ],
             ],
             'filters' => [
                 'select' => 'Select',
@@ -1896,6 +1899,16 @@ return [
                         'from' => 'From',
                         'select' => 'Select',
                         'to' => 'To',
+                    ],
+                    'card-settings' => [
+                        'title' => 'Card Settings',
+                        'contact-person' => 'Contact Person',
+                        'rotten-indicator' => 'Rotten Indicator',
+                        'sales-person' => 'Sales Person',
+                        'estimated-lead-value' => 'Estimated Lead Value',
+                        'source' => 'Source',
+                        'lead-type' => 'Lead Type',
+                        'tags' => 'Tags',
                     ],
                 ],
                 'stages' => [
