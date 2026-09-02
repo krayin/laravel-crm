@@ -275,6 +275,9 @@ return [
                 'search' => [
                     'title' => 'Buscar',
                 ],
+                'column-settings' => [
+                    'title' => 'Configuración de Columnas',
+                ],
             ],
             'filters' => [
                 'select' => 'Seleccionar',
@@ -1890,6 +1893,16 @@ return [
                         'from' => 'De',
                         'select' => 'Seleccionar',
                         'to' => 'A',
+                    ],
+                    'card-settings' => [
+                        'title' => 'Configuración de Tarjeta',
+                        'contact-person' => 'Persona de Contacto',
+                        'rotten-indicator' => 'Indicador de Podrido',
+                        'sales-person' => 'Persona de Ventas',
+                        'estimated-lead-value' => 'Valor Estimado del Lead',
+                        'source' => 'Fuente',
+                        'lead-type' => 'Tipo de Lead',
+                        'tags' => 'Etiquetas',
                     ],
                 ],
                 'stages' => [

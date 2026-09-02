@@ -131,7 +131,10 @@
 
                                     <!-- Header -->
                                     <div class="flex items-start justify-between">
-                                        <div class="flex items-center gap-1">
+                                        <div
+                                            class="flex items-center gap-1"
+                                            v-if="cardFields.contactPerson"
+                                        >
                                             <x-admin::avatar ::name="element.person ? element.person.name : 'Unknown'" />
 
                                             <div class="flex flex-col gap-0.5">
@@ -147,7 +150,7 @@
 
                                         <div
                                             class="group relative"
-                                            v-if="element.rotten_days > 0"
+                                            v-if="cardFields.rottenDays && element.rotten_days > 0"
                                         >
                                             <span class="icon-rotten cursor-default text-xl text-rose-600"></span>
 
@@ -175,46 +178,51 @@
                                     <div class="flex flex-wrap gap-1">
                                         <div
                                             class="flex items-center gap-1 rounded-xl bg-gray-200 px-2 py-1 text-xs font-medium dark:bg-gray-800 dark:text-white"
-                                            v-if="element.user"
+                                            v-if="cardFields.assignedUser && element.user"
                                         >
                                             <span class="icon-settings-user text-sm"></span>
 
                                             @{{ element.user.name }}
                                         </div>
 
-                                        <div class="rounded-xl bg-gray-200 px-2 py-1 text-xs font-medium dark:bg-gray-800 dark:text-white">
+                                        <div
+                                            class="rounded-xl bg-gray-200 px-2 py-1 text-xs font-medium dark:bg-gray-800 dark:text-white"
+                                            v-if="cardFields.leadValue"
+                                        >
                                             @{{ element.formatted_lead_value }}
                                         </div>
 
                                         <div
                                             class="rounded-xl bg-gray-200 px-2 py-1 text-xs font-medium dark:bg-gray-800 dark:text-white"
-                                            v-if="element.source"
+                                            v-if="cardFields.source && element.source"
                                         >
                                             @{{ element.source.name }}
                                         </div>
 
                                         <div
                                             class="rounded-xl bg-gray-200 px-2 py-1 text-xs font-medium dark:bg-gray-800 dark:text-white"
-                                            v-if="element.type"
+                                            v-if="cardFields.type && element.type"
                                         >
                                             @{{ element.type.name }}
                                         </div>
 
                                         <!-- Tags -->
-                                        <template v-for="tag in element.tags">
-                                            {!! view_render_event('admin.leads.index.kanban.content.stage.body.card.tag.before') !!}
+                                        <template v-if="cardFields.tags">
+                                            <template v-for="tag in element.tags">
+                                                {!! view_render_event('admin.leads.index.kanban.content.stage.body.card.tag.before') !!}
 
-                                            <div
-                                                class="rounded-xl bg-gray-200 px-2 py-1 text-xs font-medium dark:bg-gray-800"
-                                                :style="{
-                                                    backgroundColor: tag.color,
-                                                    color: tagTextColor[tag.color]
-                                                }"
-                                            >
-                                                @{{ tag.name }}
-                                            </div>
+                                                <div
+                                                    class="rounded-xl bg-gray-200 px-2 py-1 text-xs font-medium dark:bg-gray-800"
+                                                    :style="{
+                                                        backgroundColor: tag.color,
+                                                        color: tagTextColor[tag.color]
+                                                    }"
+                                                >
+                                                    @{{ tag.name }}
+                                                </div>
 
-                                            {!! view_render_event('admin.leads.index.kanban.content.stage.body.card.tag.after') !!}
+                                                {!! view_render_event('admin.leads.index.kanban.content.stage.body.card.tag.after') !!}
+                                            </template>
                                         </template>
                                     </div>
                                 </a>
@@ -347,6 +355,16 @@
 
                     isLoadingMore: false,
 
+                    cardFields: {
+                        contactPerson: true,
+                        rottenDays: true,
+                        assignedUser: true,
+                        leadValue: true,
+                        source: true,
+                        type: true,
+                        tags: true,
+                    },
+
                     tagTextColor: {
                         '#FEE2E2': '#DC2626',
                         '#FFEDD5': '#EA580C',
@@ -395,6 +413,8 @@
                  * @returns {void}
                  */
                 boot() {
+                    this.cardFields = this.getCardFields();
+
                     let kanbans = this.getKanbans();
 
                     if (kanbans?.length) {
@@ -809,6 +829,50 @@
                     localStorage.setItem(
                         this.getKanbansStorageKey(),
                         JSON.stringify(kanbans)
+                    );
+                },
+
+                //=======================================================================================
+                // Support for the customizable lead card fields. All code is based on local storage.
+                //=======================================================================================
+
+                /**
+                 * Returns the storage key for the lead card field's visibility in local storage.
+                 *
+                 * @returns {string} Storage key for the lead card field's visibility.
+                 */
+                getCardFieldsStorageKey() {
+                    return 'lead_kanban_card_fields';
+                },
+
+                /**
+                 * Retrieves the lead card field's visibility stored in local storage, merged with the defaults.
+                 *
+                 * @returns {object} Lead card field's visibility.
+                 */
+                getCardFields() {
+                    let storedCardFields = JSON.parse(
+                        localStorage.getItem(this.getCardFieldsStorageKey())
+                    );
+
+                    return {
+                        ...this.cardFields,
+                        ...(storedCardFields ?? {}),
+                    };
+                },
+
+                /**
+                 * Updates the lead card field's visibility and stores it in local storage.
+                 *
+                 * @param {object} fields - Lead card field's visibility.
+                 * @returns {void}
+                 */
+                updateCardFields(fields) {
+                    this.cardFields = fields;
+
+                    localStorage.setItem(
+                        this.getCardFieldsStorageKey(),
+                        JSON.stringify(fields)
                     );
                 },
             }

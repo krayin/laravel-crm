@@ -275,6 +275,9 @@ return [
                 'search' => [
                     'title' => 'بحث',
                 ],
+                'column-settings' => [
+                    'title' => 'إعدادات الأعمدة',
+                ],
             ],
             'filters' => [
                 'select' => 'اختر',
@@ -1890,6 +1893,16 @@ return [
                         'from' => 'من',
                         'select' => 'اختر',
                         'to' => 'إلى',
+                    ],
+                    'card-settings' => [
+                        'title' => 'إعدادات البطاقة',
+                        'contact-person' => 'شخص الاتصال',
+                        'rotten-indicator' => 'مؤشر التعفن',
+                        'sales-person' => 'مندوب المبيعات',
+                        'estimated-lead-value' => 'القيمة التقديرية للعميل المحتمل',
+                        'source' => 'المصدر',
+                        'lead-type' => 'نوع العميل المحتمل',
+                        'tags' => 'العلامات',
                     ],
                 ],
                 'stages' => [

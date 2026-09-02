@@ -6,6 +6,8 @@
 
     <x-slot:toolbar-right-after>
         @include('admin::leads.index.view-switcher')
+
+        <x-admin::datagrid.column-settings />
     </x-slot>
 </x-admin::datagrid>
 

@@ -275,6 +275,9 @@ return [
                 'search' => [
                     'title' => 'Pesquisar',
                 ],
+                'column-settings' => [
+                    'title' => 'Configurações de Colunas',
+                ],
             ],
             'filters' => [
                 'select' => 'Selecionar',
@@ -1890,6 +1893,16 @@ return [
                         'from' => 'De',
                         'select' => 'Selecionar',
                         'to' => 'Para',
+                    ],
+                    'card-settings' => [
+                        'title' => 'Configurações do Cartão',
+                        'contact-person' => 'Pessoa de Contato',
+                        'rotten-indicator' => 'Indicador de Estagnação',
+                        'sales-person' => 'Vendedor',
+                        'estimated-lead-value' => 'Valor Estimado do Negócio',
+                        'source' => 'Origem',
+                        'lead-type' => 'Tipo de Negócio',
+                        'tags' => 'Tags',
                     ],
                 ],
                 'stages' => [
