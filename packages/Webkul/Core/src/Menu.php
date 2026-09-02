@@ -67,12 +67,6 @@ class Menu
             throw new \Exception('Area must be provided to get menu items.');
         }
 
-        static $items;
-
-        if ($items) {
-            return $items;
-        }
-
         $configMenu = collect(config("menu.$area"))->map(function ($item) {
             return Arr::except([
                 ...$item,
@@ -93,13 +87,18 @@ class Menu
                 break;
         }
 
-        if (! $this->items) {
-            $this->prepareMenuItems();
-        }
+        /**
+         * The menu is rebuilt on every call. It depends on both the requested $area and the acting
+         * user's permissions, so the previous process-wide cache — a `static` keyed on neither —
+         * served the first caller's menu to every later caller, leaking items across users and
+         * ignoring the area. `addItem()` appends, so the accumulator is reset before building to
+         * avoid duplicating entries across calls.
+         */
+        $this->items = [];
 
-        $items = collect($this->items)->sortBy(fn ($item) => $item->getPosition());
+        $this->prepareMenuItems();
 
-        return $items;
+        return collect($this->items)->sortBy(fn ($item) => $item->getPosition());
     }
 
     /**
