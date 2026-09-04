@@ -94,17 +94,17 @@ class DashboardController extends Controller
 
         return $this->downloadPDF(
             view('admin::dashboard.pdf', [
-                'logo'               => $this->getLogoDataUri(),
-                'startDate'          => $this->dashboardHelper->getStartDate(),
-                'endDate'            => $this->dashboardHelper->getEndDate(),
-                'revenueStats'       => $revenueStats,
-                'overAllStats'       => $overAllStats,
-                'totalLeadsStats'    => $totalLeadsStats,
-                'revenueBySources'   => $revenueBySources,
-                'revenueByTypes'     => $revenueByTypes,
-                'openLeadsByStates'  => $openLeadsByStates,
+                'logo' => $this->getLogoDataUri(),
+                'startDate' => $this->dashboardHelper->getStartDate(),
+                'endDate' => $this->dashboardHelper->getEndDate(),
+                'revenueStats' => $revenueStats,
+                'overAllStats' => $overAllStats,
+                'totalLeadsStats' => $totalLeadsStats,
+                'revenueBySources' => $revenueBySources,
+                'revenueByTypes' => $revenueByTypes,
+                'openLeadsByStates' => $openLeadsByStates,
                 'topSellingProducts' => $topSellingProducts,
-                'topPersons'         => $topPersons,
+                'topPersons' => $topPersons,
             ])->render(),
             'Dashboard_Report_'.now()->format('d-m-Y')
         );
