@@ -9,24 +9,41 @@ const usedNames = new Set();
 const usedEmails = new Set();
 const usedNumbers = new Set();
 const usedSlugs = new Set();
+const usedCurrencies = new Set();
+const usedLocales = new Set();
 
-/**
- * Generate a random name.
- */
-function generateName() {
+
+
+export function generateName() {
     const adjectives = [
-        "Cool", "Smart", "Fast", "Sleek", "Innovative", "Shiny", "Bold",
-        "Elegant", "Epic", "Mystic", "Brilliant", "Luminous", "Radiant",
-        "Majestic", "Vivid", "Glowing", "Dynamic", "Fearless", "Silent",
-        "Electric", "Golden", "Blazing", "Timeless", "Noble", "Eternal"
-      ];
+        "Cool",
+        "Smart",
+        "Fast",
+        "Sleek",
+        "Innovative",
+        "Shiny",
+        "Bold",
+        "Elegant",
+        "Epic",
+        "Mystic",
+        "Brilliant",
+        "Luminous",
+    ];
 
-      const nouns = [
-        "Star", "Vision", "Echo", "Spark", "Horizon", "Nova", "Shadow",
-        "Wave", "Pulse", "Vortex", "Zenith", "Element", "Flare", "Comet",
-        "Galaxy", "Ember", "Crystal", "Sky", "Stone", "Blaze", "Eclipse",
-        "Storm", "Orbit", "Phantom", "Mirage"
-      ];
+    const nouns = [
+        "Star",
+        "Vision",
+        "Echo",
+        "Spark",
+        "Horizon",
+        "Nova",
+        "Shadow",
+        "Wave",
+        "Pulse",
+        "Vortex",
+        "Zenith",
+        "Element",
+    ];
 
     let name = "";
 
@@ -42,10 +59,7 @@ function generateName() {
     return name;
 }
 
-/**
- * Generate the first Name.
- */
-function generateFirstName() {
+export function generateFirstName() {
     const firstNames = [
         "James",
         "Emma",
@@ -64,10 +78,7 @@ function generateFirstName() {
     return firstNames[Math.floor(Math.random() * firstNames.length)];
 }
 
-/**
- * Generate the last name.
- */
-function generateLastName() {
+export function generateLastName() {
     const lastNames = [
         "Smith",
         "Johnson",
@@ -86,17 +97,11 @@ function generateLastName() {
     return lastNames[Math.floor(Math.random() * lastNames.length)];
 }
 
-/**
- * Generate the full name.
- */
-function generateFullName() {
+export function generateFullName() {
     return `${generateFirstName()} ${generateLastName()}`;
 }
 
-/**
- * Generate the email address.
- */
-function generateEmail() {
+export function generateEmail() {
     const adjectives = [
         "Cool",
         "Smart",
@@ -142,10 +147,7 @@ function generateEmail() {
     return email;
 }
 
-/**
- * Generate the phone number.
- */
-function generatePhoneNumber() {
+export function generatePhoneNumber() {
     let phoneNumber;
 
     do {
@@ -157,10 +159,7 @@ function generatePhoneNumber() {
     return `${phoneNumber}`;
 }
 
-/**
- * Generate a random SKU.
- */
-function generateSKU() {
+export function generateSKU() {
     const letters = Array.from({ length: 3 }, () =>
         String.fromCharCode(65 + Math.floor(Math.random() * 26))
     ).join("");
@@ -170,10 +169,7 @@ function generateSKU() {
     return `${letters}${numbers}`;
 }
 
-/**
- * Generate a random URL.
- */
-function generateSlug(delimiter = "-") {
+export function generateSlug(delimiter = "-") {
     let slug;
 
     do {
@@ -191,41 +187,7 @@ function generateSlug(delimiter = "-") {
     return slug;
 }
 
-/**
- * Generate a random email subject.
- */
-function generateEmailSubject() {
-    const subjects = [
-        "Exciting news just for you!",
-        "Don't miss out on this opportunity!",
-        "Limited time offer – act now!",
-        "An exclusive deal awaits you!",
-        "Your next big opportunity is here!",
-        "Something special just for you!",
-        "Unlock amazing benefits today!",
-        "Surprise! A special gift inside!",
-        "This could change everything for you!",
-        "You're invited to something amazing!",
-        "Get ready for a game-changing experience!",
-        "Hurry! This offer won't last long!",
-        "A deal you simply can’t resist!",
-        "Exclusive access – only for you!",
-        "We’ve got something exciting for you!",
-        "Your perfect opportunity is here!",
-        "Important update – check this out!",
-        "Discover what’s waiting for you!",
-        "A limited-time surprise for you!",
-        "Special invitation – don’t miss out!",
-    ];
-
-    return subjects[Math.floor(Math.random() * subjects.length)];
-}
-
-
-/**
- * Generate the description.
- */
-function generateDescription(length = 255) {
+export function generateDescription(length = 255) {
     const phrases = [
         "An innovative and sleek design.",
         "Built for speed and efficiency.",
@@ -251,14 +213,14 @@ function generateDescription(length = 255) {
 
     let description = "";
 
-    while (length > 0) {
+    while (description.length < length) {
         let phrase = phrases[Math.floor(Math.random() * phrases.length)];
 
-        if (phrase.length <= length) {
+        if (description.length + phrase.length <= length) {
             description += (description ? " " : "") + phrase;
-            length -= phrase.length;
         } else {
-            description += " " + phrase.substring(0, length);
+            description +=
+                " " + phrase.substring(0, length - description.length);
             break;
         }
     }
@@ -267,9 +229,49 @@ function generateDescription(length = 255) {
 }
 
 /**
- * Generate the host name.
+ * Generates a random numeric string with specified length or within a numeric range.
+ * 
+ * @param {number} [length=10] - The length of the random string (used only when min and max are undefined)
+ * @param {number|null|undefined} [min=undefined] - Minimum value (inclusive) when generating a number in range
+ * @param {number|null|undefined} [max=undefined] - Maximum value (inclusive) when generating a number in range
+ * @returns {string} - Random numeric string
  */
-function generateHostname() {
+export function generateRandomNumericString(length: number = 10, min?: number | null, max?: number | null): string {
+    // Generate a number within range
+    if (min !== null && min !== undefined && max !== null && max !== undefined) {
+        // Input validation
+        if (!Number.isInteger(min) || !Number.isInteger(max)) {
+            throw new Error("Min and max must be integers when provided.");
+        }
+
+        if (min > max) {
+            throw new Error("Min value cannot be greater than max value.");
+        }
+
+        // Generate a random number within the range and convert to string
+        return Math.floor(Math.random() * (max - min + 1) + min).toString();
+    }
+
+    // Generate a random string of specified length
+    if (!Number.isInteger(length) || length <= 0) {
+        throw new Error("Length must be a positive integer.");
+    }
+
+    // More efficient method for generating random digits
+    let result = '';
+    for (let i = 0; i < length; i++) {
+        result += Math.floor(Math.random() * 10);
+    }
+
+    // Ensure first character is not zero for a consistent length string
+    if (length > 1 && result[0] === '0') {
+        result = String(1 + Math.floor(Math.random() * 9)) + result.substring(1);
+    }
+
+    return result;
+}
+
+export function generateHostname() {
     const words = [
         "tech",
         "cloud",
@@ -294,17 +296,509 @@ function generateHostname() {
     return `https://${part1}${part2}${domain}`;
 }
 
-/**
- * Generate a random element from the array.
- */
-function randomElement(array) {
+export function generateCurrency() {
+    const currencies = [
+        {
+            name: "US Dollar",
+            code: "USD",
+            symbol: "$",
+            decimalDigits: "2",
+            groupSeparator: ",",
+            decimalSeparator: ".",
+        },
+        {
+            name: "Euro",
+            code: "EUR",
+            symbol: "€",
+            decimalDigits: "2",
+            groupSeparator: ".",
+            decimalSeparator: ",",
+        },
+        {
+            name: "British Pound",
+            code: "GBP",
+            symbol: "£",
+            decimalDigits: "2",
+            groupSeparator: ",",
+            decimalSeparator: ".",
+        },
+        {
+            name: "Japanese Yen",
+            code: "JPY",
+            symbol: "¥",
+            decimalDigits: "0",
+            groupSeparator: ",",
+            decimalSeparator: ".",
+        },
+        {
+            name: "Australian Dollar",
+            code: "AUD",
+            symbol: "A$",
+            decimalDigits: "2",
+            groupSeparator: ",",
+            decimalSeparator: ".",
+        },
+        {
+            name: "Canadian Dollar",
+            code: "CAD",
+            symbol: "C$",
+            decimalDigits: "2",
+            groupSeparator: ",",
+            decimalSeparator: ".",
+        },
+        {
+            name: "Swiss Franc",
+            code: "CHF",
+            symbol: "CHF",
+            decimalDigits: "2",
+            groupSeparator: "'",
+            decimalSeparator: ".",
+        },
+        {
+            name: "Chinese Yuan",
+            code: "CNY",
+            symbol: "¥",
+            decimalDigits: "2",
+            groupSeparator: ",",
+            decimalSeparator: ".",
+        },
+        {
+            name: "Indian Rupee",
+            code: "INR",
+            symbol: "₹",
+            decimalDigits: "2",
+            groupSeparator: ",",
+            decimalSeparator: ".",
+        },
+        {
+            name: "South Korean Won",
+            code: "KRW",
+            symbol: "₩",
+            decimalDigits: "0",
+            groupSeparator: ",",
+            decimalSeparator: ".",
+        },
+        {
+            name: "Mexican Peso",
+            code: "MXN",
+            symbol: "MX$",
+            decimalDigits: "2",
+            groupSeparator: ",",
+            decimalSeparator: ".",
+        },
+        {
+            name: "Russian Ruble",
+            code: "RUB",
+            symbol: "₽",
+            decimalDigits: "2",
+            groupSeparator: " ",
+            decimalSeparator: ",",
+        },
+        {
+            name: "Brazilian Real",
+            code: "BRL",
+            symbol: "R$",
+            decimalDigits: "2",
+            groupSeparator: ".",
+            decimalSeparator: ",",
+        },
+        {
+            name: "South African Rand",
+            code: "ZAR",
+            symbol: "R",
+            decimalDigits: "2",
+            groupSeparator: " ",
+            decimalSeparator: ",",
+        },
+        {
+            name: "New Zealand Dollar",
+            code: "NZD",
+            symbol: "NZ$",
+            decimalDigits: "2",
+            groupSeparator: ",",
+            decimalSeparator: ".",
+        },
+        {
+            name: "Singapore Dollar",
+            code: "SGD",
+            symbol: "S$",
+            decimalDigits: "2",
+            groupSeparator: ",",
+            decimalSeparator: ".",
+        },
+        {
+            name: "Hong Kong Dollar",
+            code: "HKD",
+            symbol: "HK$",
+            decimalDigits: "2",
+            groupSeparator: ",",
+            decimalSeparator: ".",
+        },
+        {
+            name: "Norwegian Krone",
+            code: "NOK",
+            symbol: "kr",
+            decimalDigits: "2",
+            groupSeparator: " ",
+            decimalSeparator: ",",
+        },
+        {
+            name: "Swedish Krona",
+            code: "SEK",
+            symbol: "kr",
+            decimalDigits: "2",
+            groupSeparator: " ",
+            decimalSeparator: ",",
+        },
+        {
+            name: "Danish Krone",
+            code: "DKK",
+            symbol: "kr",
+            decimalDigits: "2",
+            groupSeparator: ".",
+            decimalSeparator: ",",
+        },
+        {
+            name: "Polish Złoty",
+            code: "PLN",
+            symbol: "zł",
+            decimalDigits: "2",
+            groupSeparator: " ",
+            decimalSeparator: ",",
+        },
+        {
+            name: "Turkish Lira",
+            code: "TRY",
+            symbol: "₺",
+            decimalDigits: "2",
+            groupSeparator: ".",
+            decimalSeparator: ",",
+        },
+        {
+            name: "Thai Baht",
+            code: "THB",
+            symbol: "฿",
+            decimalDigits: "2",
+            groupSeparator: ",",
+            decimalSeparator: ".",
+        },
+        {
+            name: "Indonesian Rupiah",
+            code: "IDR",
+            symbol: "Rp",
+            decimalDigits: "0",
+            groupSeparator: ".",
+            decimalSeparator: ",",
+        },
+        {
+            name: "Malaysian Ringgit",
+            code: "MYR",
+            symbol: "RM",
+            decimalDigits: "2",
+            groupSeparator: ",",
+            decimalSeparator: ".",
+        },
+        {
+            name: "Philippine Peso",
+            code: "PHP",
+            symbol: "₱",
+            decimalDigits: "2",
+            groupSeparator: ",",
+            decimalSeparator: ".",
+        },
+        {
+            name: "Israeli Shekel",
+            code: "ILS",
+            symbol: "₪",
+            decimalDigits: "2",
+            groupSeparator: ",",
+            decimalSeparator: ".",
+        },
+        {
+            name: "Saudi Riyal",
+            code: "SAR",
+            symbol: "﷼",
+            decimalDigits: "2",
+            groupSeparator: ",",
+            decimalSeparator: ".",
+        },
+        {
+            name: "UAE Dirham",
+            code: "AED",
+            symbol: "د.إ",
+            decimalDigits: "2",
+            groupSeparator: ",",
+            decimalSeparator: ".",
+        },
+        {
+            name: "Czech Koruna",
+            code: "CZK",
+            symbol: "Kč",
+            decimalDigits: "2",
+            groupSeparator: " ",
+            decimalSeparator: ",",
+        },
+        {
+            name: "Hungarian Forint",
+            code: "HUF",
+            symbol: "Ft",
+            decimalDigits: "0",
+            groupSeparator: " ",
+            decimalSeparator: ",",
+        },
+        {
+            name: "Romanian Leu",
+            code: "RON",
+            symbol: "lei",
+            decimalDigits: "2",
+            groupSeparator: ".",
+            decimalSeparator: ",",
+        },
+        {
+            name: "Bulgarian Lev",
+            code: "BGN",
+            symbol: "лв",
+            decimalDigits: "2",
+            groupSeparator: " ",
+            decimalSeparator: ",",
+        },
+        {
+            name: "Croatian Kuna",
+            code: "HRK",
+            symbol: "kn",
+            decimalDigits: "2",
+            groupSeparator: ".",
+            decimalSeparator: ",",
+        },
+        {
+            name: "Icelandic Króna",
+            code: "ISK",
+            symbol: "kr",
+            decimalDigits: "0",
+            groupSeparator: ".",
+            decimalSeparator: ",",
+        },
+        {
+            name: "Ukrainian Hryvnia",
+            code: "UAH",
+            symbol: "₴",
+            decimalDigits: "2",
+            groupSeparator: " ",
+            decimalSeparator: ",",
+        },
+        {
+            name: "Pakistani Rupee",
+            code: "PKR",
+            symbol: "₨",
+            decimalDigits: "2",
+            groupSeparator: ",",
+            decimalSeparator: ".",
+        },
+        {
+            name: "Bangladeshi Taka",
+            code: "BDT",
+            symbol: "৳",
+            decimalDigits: "2",
+            groupSeparator: ",",
+            decimalSeparator: ".",
+        },
+        {
+            name: "Sri Lankan Rupee",
+            code: "LKR",
+            symbol: "Rs",
+            decimalDigits: "2",
+            groupSeparator: ",",
+            decimalSeparator: ".",
+        },
+        {
+            name: "Nepalese Rupee",
+            code: "NPR",
+            symbol: "₨",
+            decimalDigits: "2",
+            groupSeparator: ",",
+            decimalSeparator: ".",
+        },
+        {
+            name: "Kuwaiti Dinar",
+            code: "KWD",
+            symbol: "د.ك",
+            decimalDigits: "3",
+            groupSeparator: ",",
+            decimalSeparator: ".",
+        },
+        {
+            name: "Qatari Riyal",
+            code: "QAR",
+            symbol: "ر.ق",
+            decimalDigits: "2",
+            groupSeparator: ",",
+            decimalSeparator: ".",
+        },
+        {
+            name: "Omani Rial",
+            code: "OMR",
+            symbol: "ر.ع.",
+            decimalDigits: "3",
+            groupSeparator: ",",
+            decimalSeparator: ".",
+        },
+        {
+            name: "Bahraini Dinar",
+            code: "BHD",
+            symbol: "ب.د",
+            decimalDigits: "3",
+            groupSeparator: ",",
+            decimalSeparator: ".",
+        },
+        {
+            name: "Argentine Peso",
+            code: "ARS",
+            symbol: "$",
+            decimalDigits: "2",
+            groupSeparator: ".",
+            decimalSeparator: ",",
+        },
+        {
+            name: "Chilean Peso",
+            code: "CLP",
+            symbol: "$",
+            decimalDigits: "0",
+            groupSeparator: ".",
+            decimalSeparator: ",",
+        },
+        {
+            name: "Colombian Peso",
+            code: "COP",
+            symbol: "$",
+            decimalDigits: "0",
+            groupSeparator: ".",
+            decimalSeparator: ",",
+        },
+        {
+            name: "Peruvian Sol",
+            code: "PEN",
+            symbol: "S/.",
+            decimalDigits: "2",
+            groupSeparator: ",",
+            decimalSeparator: ".",
+        },
+        {
+            name: "Venezuelan Bolívar",
+            code: "VES",
+            symbol: "Bs.",
+            decimalDigits: "2",
+            groupSeparator: ".",
+            decimalSeparator: ",",
+        },
+    ];
+
+    if (usedCurrencies.size >= currencies.length) {
+        throw new Error("All currencies have been used.");
+    }
+
+    let currency;
+
+    do {
+        const randomIndex = Math.floor(Math.random() * currencies.length);
+
+        currency = currencies[randomIndex];
+    } while (usedCurrencies.has(currency.code));
+
+    usedCurrencies.add(currency.code);
+
+    return currency;
+}
+
+export function generateLocale() {
+    const locales = [
+        {
+            name: "English",
+            code: "en",
+            direction: "LTR"
+        },
+        {
+            name: "French",
+            code: "fr",
+            direction: "LTR"
+        },
+        {
+            name: "Spanish",
+            code: "es",
+            direction: "LTR"
+        },
+        {
+            name: "Arabic",
+            code: "ar",
+            direction: "RTL"
+        },
+        {
+            name: "Hebrew",
+            code: "he",
+            direction: "RTL"
+        },
+        {
+            name: "Japanese",
+            code: "ja",
+            direction: "LTR"
+        },
+        {
+            name: "Chinese",
+            code: "zh_CN",
+            direction: "LTR"
+        },
+        {
+            name: "Hindi",
+            code: "hi_IN",
+            direction: "LTR"
+        },
+        {
+            name: "Bengali",
+            code: "bn",
+            direction: "LTR"
+        },
+        {
+            name: "German",
+            code: "de",
+            direction: "LTR"
+        },
+        {
+            name: "Persian",
+            code: "fa",
+            direction: "LTR"
+        },
+        {
+            name: "Italian",
+            code: "it",
+            direction: "LTR"
+        },
+        {
+            name: "Dutch",
+            code: "nl",
+            direction: "LTR"
+        },
+    ];
+
+    if (usedLocales.size >= locales.length) {
+        throw new Error("All locales have been used.");
+    }
+
+    let locale;
+
+    do {
+        const randomIndex = Math.floor(Math.random() * locales.length);
+        locale = locales[randomIndex];
+    } while (usedLocales.has(locale.code));
+
+    usedLocales.add(locale.code);
+
+    return locale;
+}
+
+export function randomElement(array) {
     return array[Math.floor(Math.random() * array.length)];
 }
 
-/**
- * Get a random image file from the directory.
- */
-function getImageFile(
+export function getImageFile(
     directory = path.resolve(__dirname, "../data/images/")
 ) {
     if (!fs.existsSync(directory)) {
@@ -325,187 +819,38 @@ function getImageFile(
     return path.join(directory, imageFiles[randomIndex]);
 }
 
-/**
- * Generate a random date from today onwards in YYYY-MM-DD format.
- */
-function generateDate(): string {
-    const today = new Date().getTime();
-    const futureEnd = new Date(2030, 11, 31).getTime();
-    const randomDate = new Date(today + Math.random() * (futureEnd - today));
-
-    return randomDate.toISOString().split('T')[0];
-}
-
-/**
- * Function to generate a random company name
- */
-function generateCompanyName() {
-    const prefixes = [
-        "Tech", "Software", "Innovate", "NextGen", "Cloud", "AI", "Cyber", "Digital",
-        "Technical", "Product", "Organization", "Vendor", "Rock-on", "Super", "Quantum",
-        "Neural", "Hyper", "Ultra", "Smart", "Future", "Mega", "Omni", "Virtual", "Dynamic",
-        "Secure", "Data", "Meta", "Nano", "Robo", "Infinity", "Vision", "Intelli", "Strato",
-        "Blue", "Green", "Red", "White", "Black", "Deep", "Elite", "Prime", "Titan", "Nova",
-        "Storm", "Lightning", "Vertex", "Pioneer", "Omnis", "Synergy", "Core", "Nexus"
-    ];
-    const suffixes = [
-        "Solutions", "Systems", "Pvt Ltd", "Technologies", "Enterprises", "Labs", "Networks",
-        "Corporation", "Group", "Ventures", "Holdings", "Consulting", "Industries", "Analytics",
-        "Innovations", "Services", "Softwares", "Developers", "AI", "Cloud", "Security", "Dynamics",
-        "Technica", "Data", "Infotech", "Research", "Automation", "Synergy", "Strategies", "Platform",
-        "Operations", "Logistics", "Infrastructure", "Management", "Digital", "Interactive",
-        "Vision", "Connect", "Smart", "Solutions Inc", "Partners", "Tech Ltd", "Info Systems",
-        "Growth", "Intelligence", "RoboCorp", "Edge", "Enterprise", "Global", "Power", "NextGen",
-        "Creative"
-    ];
-    return `${prefixes[Math.floor(Math.random() * prefixes.length)]} ${suffixes[Math.floor(Math.random() * suffixes.length)]}`;
-}
-
-function generateProductName() {
-    const adjectives = ['Awesome', 'Portable', 'Eco', 'Smart', 'Compact'];
-    const items = ['Phone', 'Laptop', 'Bottle', 'Bag', 'Watch'];
-    return (
-        adjectives[Math.floor(Math.random() * adjectives.length)] +
-        ' ' +
-        items[Math.floor(Math.random() * items.length)] +
-        '-' + Date.now()
-    );
-}
-
-function generatePrice() {
-    return (Math.random() * (999 - 10) + 10).toFixed(2);
-}
-
-function generateQuantity() {
-    return Math.floor(Math.random() * 100 + 1).toString();
-}
-/**
- * Function to automate organization creation
- */
-async function createOrganization(page) {
-    const companyName = generateCompanyName();
-
-    /**
-     * Click on "Create Organization" button
-     */
-    await page.goto('admin/contacts/organizations');
-    await page.getByRole('link', { name: 'Create Organization' }).click();
-
-    /**
-     * Fill in organization details
-     */
-    await page.locator('input[name="name"]').fill(companyName);
-    await page.locator('textarea[name="address\\[address\\]"]').fill('ARV Park');
-    await page.getByRole('combobox').selectOption('IN');
-    await page.locator('select[name="address\\[state\\]"]').selectOption('DL');
-    await page.getByRole('textbox', { name: 'City' }).fill('Delhi');
-    await page.getByRole('textbox', { name: 'Postcode' }).fill('123456');
-
-    /**
-     * Click to add extra details
-     */
-    await page.locator('div').filter({ hasText: /^Click to add$/ }).nth(2).click();
-    await page.getByRole('textbox', { name: 'Search...' }).fill('example');
-    await page.getByRole('listitem').filter({ hasText: /example/i }).first().click();
-
-    /**
-     * Click on "Save Organization"
-     */
-    await page.getByRole('button', { name: 'Save Organization' }).click();
-    await page.waitForURL(/\/admin\/contacts\/organizations(?:\?.*)?$/);
-    return companyName;
-}
-
-function generateJobProfile() {
-    const jobProfiles = [
-        "Playwright Automation Tester",
-        "Software Engineer",
-        "Data Analyst",
-        "Project Manager",
-        "DevOps Engineer",
-        "QA Engineer",
-        "UI/UX Designer",
-        "Product Manager",
-        "Cybersecurity Analyst",
-        "Cloud Architect"
-    ];
-    const randomIndex = Math.floor(Math.random() * jobProfiles.length);
-    return jobProfiles[randomIndex];
-}
-
-async function createPerson(page) {
-    const Name = generateFullName();
-    const email = generateEmail();
-    const phone = generatePhoneNumber();
-    const Job = generateJobProfile();
-
-    await page.getByRole('link', { name: 'Create Person' }).click();
-
-    await page.locator('input[name="name"]').fill(Name);
-    await page.locator('input[name="emails[0][value]"]').fill(email);
-    await page.locator('input[name="contact_numbers[0][value]"]').fill(phone);
-    await page.locator('input[name="job_title"]').fill(Job);
-
-    // Save person
-    await page.getByRole('button', { name: 'Save Person' }).click();
-    await page.waitForURL(/\/admin\/contacts\/persons(?:\?.*)?$/);
-
-    return { Name, email, phone };
-}
-
-async function createProduct(page) {
-    const name = generateProductName();
-    const description = generateDescription();
-    const sku = generateSKU();
-    const price = generatePrice();
-    const quantity = generateQuantity();
-
-    await page.goto('admin/products');
-    await page.getByRole('link', { name: 'Create Product' }).click();
-
-    await page.locator('input[name="name"]').fill(name);
-    await page.locator('textarea[name="description"]').fill(description);
-    await page.locator('input[name="sku"]').fill(sku);
-    await page.locator('input[name="price"]').fill(price);
-    await page.locator('input[name="quantity"]').fill(quantity);
-    await page.getByRole('button', { name: 'Save Products' }).click();
-    await page.waitForURL(/\/admin\/products(?:\?.*)?$/);
-
-    return { name };
-}
-
-function getRandomDateTime() {
-    const year = Math.floor(Math.random() * (2030 - 2020 + 1)) + 2020;
-    const month = String(Math.floor(Math.random() * 12) + 1).padStart(2, '0');
-    const day = String(Math.floor(Math.random() * 28) + 1).padStart(2, '0');
-    const hours = String(Math.floor(Math.random() * 24)).padStart(2, '0');
-    const minutes = String(Math.floor(Math.random() * 60)).padStart(2, '0');
-    const seconds = String(Math.floor(Math.random() * 60)).padStart(2, '0');
+export function generateRandomDateTime(end = new Date(new Date().setFullYear(new Date().getFullYear() + 10))) {
+    const start = new Date();
+    const date = new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    const hours = String(date.getHours()).padStart(2, '0');
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+    const seconds = String(date.getSeconds()).padStart(2, '0');
 
     return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
-  }
+}
 
-export {
-    generateName,
-    generateFirstName,
-    generateLastName,
-    generateFullName,
-    generateEmail,
-    generatePhoneNumber,
-    generateSKU,
-    generateSlug,
-    generateEmailSubject,
-    generateDescription,
-    generateHostname,
-    randomElement,
-    getImageFile,
-    generateDate,
-    createOrganization,
-    generateCompanyName,
-    createPerson,
-    getRandomDateTime,
-    createProduct,
-    generateProductName,
-    generatePrice,
-    generateQuantity
-};
+export function generateLocation() {
+    const location = [
+        "New York",
+        "Los Angeles",
+        "Chicago",
+        "Houston",
+        "Phoenix",
+        "Philadelphia",
+        "San Antonio",
+        "San Diego",
+        "Dallas",
+        "San Jose",
+        "Austin",
+        "Jacksonville",
+        "San Francisco",
+        "Indianapolis",
+        "Columbus",
+        "Fort Worth",
+    ];
+
+    return location[Math.floor(Math.random() * location.length)];
+}

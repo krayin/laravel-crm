@@ -1,136 +1,94 @@
-import { test, expect } from "../setup";
+import { test, expect } from "../fixtures/AdminFixtures";
+import { QuickAddPage } from "../pages/QuickAddPage";
 import {
-    generateCompanyName,
     generateDescription,
     generateEmail,
     generateFullName,
     generateName,
     generatePhoneNumber,
-    generatePrice,
-    generateProductName,
-    generateQuantity,
+    generateRandomNumericString,
     generateSKU,
 } from "../utils/faker";
 
-/**
- * Open the quick-add modal from the header plus button.
- */
-async function openQuickAddModal(page) {
-    await page.goto("admin/dashboard");
-
-    /**
-     * Two v-quick-add components render (desktop + mobile); only the desktop
-     * one is visible in the default Playwright viewport.
-     */
-    const trigger = page.locator("header button.bg-brandColor").first();
-    await trigger.waitFor({ state: "visible" });
-    await trigger.click();
-
-    /**
-     * Wait for the teleported modal title to be visible.
-     */
-    await expect(
-        page.locator("p").filter({ hasText: "Quick Add" })
-    ).toBeVisible();
-}
-
-async function selectQuickAddTab(page, tabLabel) {
-    await page
-        .locator("span.cursor-pointer")
-        .filter({ hasText: new RegExp(`^${tabLabel}$`) })
-        .first()
-        .click();
-}
-
-async function submitQuickAdd(page) {
-    /**
-     * The footer Save button is the last "Save" button on the page.
-     */
-    await page.getByRole("button", { name: "Save", exact: true }).last().click();
-}
-
 test.describe("quick add modal", () => {
     test("should open the quick add modal from the header plus button", async ({ adminPage }) => {
-        await openQuickAddModal(adminPage);
+        const quickAddPage = new QuickAddPage(adminPage);
+        await quickAddPage.openQuickAddModal();
 
         /**
          * The seeded admin role has all five quick-create permissions.
          */
         for (const tab of ["Lead", "Person", "Organization", "Product", "Email"]) {
-            await expect(
-                adminPage.locator("span.cursor-pointer").filter({ hasText: new RegExp(`^${tab}$`) })
-            ).toBeVisible();
+            await expect(quickAddPage.quickAddTab(tab)).toBeVisible();
         }
     });
 
     test("should create a lead via quick add", async ({ adminPage }) => {
-        await openQuickAddModal(adminPage);
-        await selectQuickAddTab(adminPage, "Lead");
+        const quickAddPage = new QuickAddPage(adminPage);
+        await quickAddPage.openQuickAddModal();
+        await quickAddPage.selectQuickAddTab("Lead");
 
-        const leadForm = adminPage.locator('form:has(input[value="lead"])').first();
+        await quickAddPage.quickAddLeadTitleInput.fill(`${generateName()}-${Date.now()}`);
+        await quickAddPage.quickAddLeadDescriptionTextarea.fill(generateDescription());
 
-        await leadForm.locator('input[name="title"]').fill(`${generateName()}-${Date.now()}`);
-        await leadForm.locator('textarea[name="description"]').fill(generateDescription());
+        await quickAddPage.submitQuickAdd();
 
-        await submitQuickAdd(adminPage);
-
-        await expect(adminPage.getByText("Lead created successfully.")).toBeVisible();
+        await expect(quickAddPage.quickAddLeadSuccessMsg).toBeVisible();
     });
 
     test("should create a person via quick add", async ({ adminPage }) => {
-        await openQuickAddModal(adminPage);
-        await selectQuickAddTab(adminPage, "Person");
+        const quickAddPage = new QuickAddPage(adminPage);
+        await quickAddPage.openQuickAddModal();
+        await quickAddPage.selectQuickAddTab("Person");
 
-        const personForm = adminPage.locator('form:has(input[value="person"])').first();
+        await quickAddPage.quickAddPersonNameInput.fill(generateFullName());
+        await quickAddPage.quickAddPersonEmailInput.fill(generateEmail());
+        await quickAddPage.quickAddPersonContactInput.fill(generatePhoneNumber());
 
-        await personForm.locator('input[name="name"]').fill(generateFullName());
-        await personForm.locator('input[name="emails[0][value]"]').fill(generateEmail());
-        await personForm.locator('input[name="contact_numbers[0][value]"]').fill(generatePhoneNumber());
+        await quickAddPage.submitQuickAdd();
 
-        await submitQuickAdd(adminPage);
-
-        await expect(adminPage.getByText("Person created successfully.")).toBeVisible();
+        await expect(quickAddPage.quickAddPersonSuccessMsg).toBeVisible();
     });
 
     test("should create an organization via quick add", async ({ adminPage }) => {
-        await openQuickAddModal(adminPage);
-        await selectQuickAddTab(adminPage, "Organization");
+        const quickAddPage = new QuickAddPage(adminPage);
+        await quickAddPage.openQuickAddModal();
+        await quickAddPage.selectQuickAddTab("Organization");
 
-        const orgForm = adminPage.locator('form:has(input[value="organization"])').first();
+        await quickAddPage.quickAddOrgNameInput.fill(generateName() + " Inc");
 
-        await orgForm.locator('input[name="name"]').fill(generateCompanyName());
+        await quickAddPage.submitQuickAdd();
 
-        await submitQuickAdd(adminPage);
-
-        await expect(adminPage.getByText("Organization created successfully.")).toBeVisible();
+        await expect(quickAddPage.quickAddOrgSuccessMsg).toBeVisible();
     });
 
     test("should create a product via quick add", async ({ adminPage }) => {
-        await openQuickAddModal(adminPage);
-        await selectQuickAddTab(adminPage, "Product");
+        const quickAddPage = new QuickAddPage(adminPage);
+        await quickAddPage.openQuickAddModal();
+        await quickAddPage.selectQuickAddTab("Product");
 
-        const productForm = adminPage.locator('form:has(input[value="product"])').first();
+        await quickAddPage.quickAddProductNameInput.fill("Product " + generateName());
+        await quickAddPage.quickAddProductDescriptionTextarea.fill(generateDescription());
+        await quickAddPage.quickAddProductSkuInput.fill(generateSKU());
+        await quickAddPage.quickAddProductQuantityInput.fill(generateRandomNumericString(2, 10, 50));
+        await quickAddPage.quickAddProductPriceInput.fill(generateRandomNumericString(3, 100, 500));
 
-        await productForm.locator('input[name="name"]').fill(generateProductName());
-        await productForm.locator('textarea[name="description"]').fill(generateDescription());
-        await productForm.locator('input[name="sku"]').fill(generateSKU());
-        await productForm.locator('input[name="quantity"]').fill(generateQuantity());
-        await productForm.locator('input[name="price"]').fill(generatePrice());
+        await quickAddPage.submitQuickAdd();
 
-        await submitQuickAdd(adminPage);
-
-        await expect(adminPage.getByText("Product created successfully.")).toBeVisible();
+        await expect(quickAddPage.quickAddProductSuccessMsg).toBeVisible();
     });
 
     test("should keep modal open and surface validation errors when fields are empty", async ({ adminPage }) => {
-        await openQuickAddModal(adminPage);
-        await selectQuickAddTab(adminPage, "Lead");
+        const quickAddPage = new QuickAddPage(adminPage);
+        await quickAddPage.openQuickAddModal();
+        await quickAddPage.selectQuickAddTab("Lead");
 
-        await submitQuickAdd(adminPage);
+        await quickAddPage.submitQuickAdd();
 
         /**
          * Validation should keep the modal mounted; the title remains visible.
          */
-        await expect(adminPage.locator("p").filter({ hasText: "Quick Add" })).toBeVisible();
+        await expect(quickAddPage.quickAddModalTitle).toBeVisible();
     });
 });
+
