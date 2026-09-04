@@ -68,6 +68,12 @@ class Import
     public const STATE_COMPLETED = 'completed';
 
     /**
+     * Minutes a queued import may sit in a processing state without a single batch progressing
+     * before it is reported as stuck.
+     */
+    public const STUCK_AFTER_MINUTES = 5;
+
+    /**
      * Validation strategy for skipping the error during the import process.
      */
     public const VALIDATION_STRATEGY_SKIP_ERRORS = 'skip-errors';
@@ -416,6 +422,44 @@ class Import
                 'deleted' => 0,
             ],
         ];
+    }
+
+    /**
+     * Determine whether a queued import has stalled because no queue worker is consuming it.
+     *
+     * The queued path dispatches the batch chain and returns immediately, so an install running
+     * the `database` or `redis` driver without a worker leaves the import in a processing state
+     * with every batch still pending. Reporting that lets the frontend stop polling and tell the
+     * user to start a worker, instead of sitting at 0% with no explanation.
+     */
+    public function isStuck(): bool
+    {
+        if (! $this->import->process_in_queue) {
+            return false;
+        }
+
+        if (! in_array($this->import->state, [
+            self::STATE_PROCESSING,
+            self::STATE_LINKING,
+            self::STATE_INDEXING,
+        ])) {
+            return false;
+        }
+
+        if (
+            ! $this->import->started_at
+            || $this->import->started_at->gt(now()->subMinutes(self::STUCK_AFTER_MINUTES))
+        ) {
+            return false;
+        }
+
+        /**
+         * A worker that ran at all would have moved at least one batch out of `pending`, so no
+         * progress after the threshold means nothing is consuming the queue.
+         */
+        return ! $this->import->batches()
+            ->where('state', '!=', self::STATE_PENDING)
+            ->exists();
     }
 
     /**
