@@ -14,6 +14,7 @@ use Webkul\Admin\Exceptions\Handler;
 use Webkul\Admin\Http\Middleware\Bouncer as BouncerMiddleware;
 use Webkul\Admin\Http\Middleware\Locale;
 use Webkul\Admin\Http\Middleware\SanitizeUrl;
+use Webkul\Admin\Http\Middleware\VerifyInboundEmailToken;
 use Webkul\Contact\Models\Organization;
 use Webkul\Contact\Models\Person;
 use Webkul\Lead\Models\Lead;
@@ -33,6 +34,8 @@ class AdminServiceProvider extends ServiceProvider
         $router->aliasMiddleware('admin_locale', Locale::class);
 
         $router->aliasMiddleware('sanitize_url', SanitizeUrl::class);
+
+        $router->aliasMiddleware('inbound_email_token', VerifyInboundEmailToken::class);
 
         include __DIR__.'/../Http/helpers.php';
 
