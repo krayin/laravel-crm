@@ -61,4 +61,21 @@ Route::controller(LeadController::class)->prefix('leads')->group(function () {
     Route::controller(QuoteController::class)->prefix('{id}/quotes')->group(function () {
         Route::delete('{quote_id?}', 'delete')->name('admin.leads.quotes.delete');
     });
+    
+    // Google Drive routes
+    Route::controller(\App\Http\Controllers\GoogleDriveController::class)->prefix('{id}/drive')->group(function () {
+        Route::post('create-folder', 'createLeadFolder')->name('admin.leads.drive.create_folder');
+        
+        Route::post('move-to-projects', 'moveToProjects')->name('admin.leads.drive.move_to_projects');
+        
+        Route::get('files', 'listFiles')->name('admin.leads.drive.list_files');
+        
+        Route::post('upload', 'uploadFile')->name('admin.leads.drive.upload');
+        
+        Route::delete('files', 'deleteFile')->name('admin.leads.drive.delete_file');
+        
+        Route::get('projects', 'getProjects')->name('admin.leads.drive.get_projects');
+        
+        Route::post('projects', 'createProject')->name('admin.leads.drive.create_project');
+    });
 });

@@ -33,3 +33,4 @@ node_modules/
 /test-results/
 /blob-report/
 /playwright/.cache/
+GOOGLE_DRIVE_DEPLOYMENT.md
