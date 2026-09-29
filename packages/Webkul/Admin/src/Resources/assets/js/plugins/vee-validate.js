@@ -45,8 +45,9 @@ export default {
 
         /**
          * This regular expression allows phone numbers with the following conditions:
-         * - The phone number can start with an optional "+" sign.
-         * - After the "+" sign, there should be one or more digits.
+         * - The phone number can start with an optional "+" sign (country code).
+         * - It may contain digits along with common separators such as spaces,
+         *   hyphens, parentheses and dots (e.g. "+91-7120966590", "+1 (555) 123-4567").
          *
          * This validation is sufficient for global-level phone number validation. If
          * someone wants to customize it, they can override this rule.
@@ -56,7 +57,7 @@ export default {
                 return true;
             }
 
-            if (! /^\+?\d+$/.test(value)) {
+            if (! /^\+?[0-9\s\-().]+$/.test(value)) {
                 return false;
             }
 
