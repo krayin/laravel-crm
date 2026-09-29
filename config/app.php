@@ -105,11 +105,11 @@ return [
      */
 
     'available_locales' => [
-        'ar'    => 'Arabic',
-        'de'    => 'Deutsch',
-        'en'    => 'English',
-        'es'    => 'Español',
-        'fa'    => 'Persian',
+        'ar' => 'Arabic',
+        'de' => 'Deutsch',
+        'en' => 'English',
+        'es' => 'Español',
+        'fa' => 'Persian',
         'ja' => '日本語',
         'ko' => '한국어',
         'pt_BR' => 'Portuguese',
