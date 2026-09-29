@@ -1,0 +1,55 @@
+# Git
+.git
+.gitignore
+
+# Dependencies
+/vendor/
+/node_modules/
+
+# Build artifacts
+/public/hot
+/public/storage
+/.vite/
+
+# Environment
+.env
+.env.backup
+.env.*.local
+
+# IDEs
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Testing
+.phpunit/
+coverage/
+vendor/bin/pest
+vendor/bin/phpunit
+
+# CI/CD
+.github/
+.gitlab-ci.yml
+.travis.yml
+
+# Documentation
+*.md
+!README.md
+docs/
+
+# Misc
+storage/*.key
+Homestead.json
+Homestead.yaml
+npm-debug.log
+yarn-error.log
+
+# Temporary
+tmp/
+temp/
+*.log
