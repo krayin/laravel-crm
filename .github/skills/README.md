@@ -31,6 +31,7 @@ auto-discovers the same skills:
 |-------|----------|
 | `crm-package-development` | Creating a new Krayin CRM package/module or extending CRM functionality without touching core files. |
 | `pest-testing` | Writing or debugging Krayin CRM unit/feature tests with Pest. |
+| `krayin-authorization` | Working on ACL permissions, roles, Bouncer middleware, view permissions/data scoping, privilege escalation guards, or authorization security tests. |
 
 ## Authoring Rules
 
