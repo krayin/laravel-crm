@@ -2,16 +2,18 @@
 
 namespace Webkul\Admin\Exceptions;
 
-use App\Exceptions\Handler as AppExceptionHandler;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Container\Container;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Validation\ValidationException;
 use PDOException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Throwable;
 
-class Handler extends AppExceptionHandler
+class Handler extends ExceptionHandler
 {
     /**
      * Json error messages.
@@ -30,18 +32,18 @@ class Handler extends AppExceptionHandler
         parent::__construct($container);
 
         $this->jsonErrorMessages = [
-            '404' => trans('admin::app.common.resource-not-found'),
-            '403' => trans('admin::app.common.forbidden-error'),
-            '401' => trans('admin::app.common.unauthenticated'),
-            '500' => trans('admin::app.common.internal-server-error'),
+            '404' => trans('admin::app.errors.404.title'),
+            '403' => trans('admin::app.errors.403.title'),
+            '401' => trans('admin::app.errors.401.title'),
+            '500' => trans('admin::app.errors.500.title'),
         ];
     }
 
     /**
      * Render an exception into an HTTP response.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param  Request  $request
+     * @return Response
      */
     public function render($request, Throwable $exception)
     {
@@ -55,8 +57,8 @@ class Handler extends AppExceptionHandler
     /**
      * Convert an authentication exception into a response.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param  Request  $request
+     * @return Response
      */
     protected function unauthenticated($request, AuthenticationException $exception)
     {
@@ -70,7 +72,7 @@ class Handler extends AppExceptionHandler
     /**
      * Render custom HTTP response.
      *
-     * @return \Illuminate\Http\Response|null
+     * @return Response|null
      */
     private function renderCustomResponse(Throwable $exception)
     {

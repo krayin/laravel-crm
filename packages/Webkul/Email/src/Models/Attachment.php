@@ -3,7 +3,7 @@
 namespace Webkul\Email\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Route;
 use Webkul\Email\Contracts\Attachment as AttachmentContract;
 
 class Attachment extends Model implements AttachmentContract
@@ -45,11 +45,16 @@ class Attachment extends Model implements AttachmentContract
     }
 
     /**
-     * Get image url for the product image.
+     * Get the download url for the attachment.
+     *
+     * Attachments are stored on the private disk and are never exposed through a public storage url;
+     * they are served only through the authenticated download route.
      */
     public function url()
     {
-        return Storage::url($this->path);
+        return Route::has('admin.mail.attachment_download')
+            ? route('admin.mail.attachment_download', $this->id)
+            : null;
     }
 
     /**

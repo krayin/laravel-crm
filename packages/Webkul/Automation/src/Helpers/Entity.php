@@ -32,8 +32,8 @@ class Entity
             $object = app($entity['class']);
 
             $events[$key] = [
-                'id'     => $key,
-                'name'   => $entity['name'],
+                'id' => $key,
+                'name' => $entity['name'],
                 'events' => $entity['events'],
             ];
         }

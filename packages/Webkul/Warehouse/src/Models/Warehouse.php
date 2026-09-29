@@ -33,7 +33,7 @@ class Warehouse extends Model implements WarehouseContract
      * @var array
      */
     protected $casts = [
-        'contact_emails'  => 'array',
+        'contact_emails' => 'array',
         'contact_numbers' => 'array',
         'contact_address' => 'array',
     ];

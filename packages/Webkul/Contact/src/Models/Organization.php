@@ -3,6 +3,7 @@
 namespace Webkul\Contact\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Webkul\Attribute\Traits\CustomAttribute;
 use Webkul\Contact\Contracts\Organization as OrganizationContract;
 use Webkul\User\Models\UserProxy;
@@ -29,7 +30,7 @@ class Organization extends Model implements OrganizationContract
     /**
      * Get persons.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return HasMany
      */
     public function persons()
     {

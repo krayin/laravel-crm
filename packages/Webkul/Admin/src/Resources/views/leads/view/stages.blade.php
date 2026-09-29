@@ -12,7 +12,7 @@
     <script type="text/x-template" id="v-lead-stages-template">
         <!-- Stages Container -->
         <div
-            class="flex"
+            class="flex w-full max-w-full"
             :class="{'opacity-50 pointer-events-none': isUpdating}"
         >
             <!-- Stages Item -->
@@ -20,7 +20,7 @@
                 {!! view_render_event('admin.leads.view.stages.items.before', ['lead' => $lead]) !!}
 
                 <div
-                    class="stage relative flex h-7 min-w-24 cursor-pointer items-center justify-center bg-white pl-7 pr-4 dark:bg-gray-900 ltr:first:rounded-l-lg rtl:first:rounded-r-lg"
+                    class="stage relative flex h-7 cursor-pointer items-center justify-center bg-white pl-7 pr-4 dark:bg-gray-900 ltr:first:rounded-l-lg rtl:first:rounded-r-lg"
                     :class="{
                         '!bg-green-500 text-white dark:text-gray-900 ltr:after:bg-green-500 rtl:before:bg-green-500': currentStage.sort_order >= stage.sort_order,
                         '!bg-red-500 text-white dark:text-gray-900 ltr:after:bg-red-500 rtl:before:bg-red-500': currentStage.code == 'lost',
@@ -52,10 +52,10 @@
                         @click="stageToggler = ! stageToggler"
                     >
                         <span class="z-20 whitespace-nowrap text-sm font-medium dark:text-white">
-                            {{ __('admin::app.leads.view.stages.won-lost') }}
+                             @{{ stages.filter(stage => ['won', 'lost'].includes(stage.code)).map(stage => stage.name).join('/') }}
                         </span>
 
-                        <span 
+                        <span
                             class="text-2xl dark:text-gray-900"
                             :class="{'icon-up-arrow': stageToggler, 'icon-down-arrow': ! stageToggler}"
                         ></span>
@@ -68,15 +68,10 @@
                     {!! view_render_event('admin.leads.view.stages.items.dropdown.menu_item.before', ['lead' => $lead]) !!}
 
                     <x-admin::dropdown.menu.item
-                        @click="openModal(this.stages.find(stage => stage.code == 'won'))"
+                        v-for="stage in stages.filter(stage => ['won', 'lost'].includes(stage.code))"
+                        @click="openModal(stage)"
                     >
-                        @lang('admin::app.leads.view.stages.won')
-                    </x-admin::dropdown.menu.item>
-
-                    <x-admin::dropdown.menu.item
-                        @click="openModal(this.stages.find(stage => stage.code == 'lost'))"
-                    >
-                        @lang('admin::app.leads.view.stages.lost')
+                        @{{ stage.name }}
                     </x-admin::dropdown.menu.item>
 
                     {!! view_render_event('admin.leads.view.stages.items.dropdown.menu_item.after', ['lead' => $lead]) !!}
@@ -91,7 +86,7 @@
                 v-slot="{ meta, errors, handleSubmit }"
                 as="div"
                 ref="stageUpdateForm"
-            >
+                >
                 <form @submit="handleSubmit($event, handleFormSubmit)">
                     {!! view_render_event('admin.leads.view.stages.form_controls.modal.before', ['lead' => $lead]) !!}
 
@@ -147,7 +142,7 @@
                                 </x-admin::form.control-group.label>
 
                                 <x-admin::form.control-group.control
-                                    type="date"
+                                    type="datetime"
                                     name="closed_at"
                                     v-model="nextStage.closed_at"
                                     :label="trans('admin::app.leads.view.stages.closed-at')"
@@ -204,7 +199,7 @@
                     if (this.currentStage.code == stage.code) {
                         return;
                     }
-                    
+
                     this.nextStage = stage;
 
                     this.$refs.stageUpdateModal.open();

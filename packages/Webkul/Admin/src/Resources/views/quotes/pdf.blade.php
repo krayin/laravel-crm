@@ -19,19 +19,19 @@
             if ($locale == 'en') {
                 $fontFamily = [
                     'regular' => 'DejaVu Sans',
-                    'bold'    => 'DejaVu Sans',
+                    'bold' => 'DejaVu Sans',
                 ];
             }  else {
                 $fontFamily = [
                     'regular' => 'Arial, sans-serif',
-                    'bold'    => 'Arial, sans-serif',
+                    'bold' => 'Arial, sans-serif',
                 ];
             }
 
             if (in_array($locale, ['ar', 'fa', 'tr'])) {
                 $fontFamily = [
                     'regular' => 'DejaVu Sans',
-                    'bold'    => 'DejaVu Sans',
+                    'bold' => 'DejaVu Sans',
                 ];
             }
         @endphp
@@ -300,6 +300,28 @@
                         </tr>
                     </tbody>
                 </table>
+
+                <!-- Description -->
+                @if ($quote->description)
+                    <table class="{{ $locale }}">
+                        <thead>
+                            <tr>
+                                <th>
+                                    <b>
+                                        @lang('admin::app.quotes.index.pdf.description')
+                                    </b>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td style="padding: 9px 18px;">
+                                    {{ $quote->description }}
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                @endif
 
                 <!-- Items -->
                 <div class="items">

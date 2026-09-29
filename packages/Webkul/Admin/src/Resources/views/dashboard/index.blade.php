@@ -1,6 +1,6 @@
 <x-admin::layouts>
     <x-slot:title>
-        @lang('admin::app.dashboard.index.title')
+        {{ menu()->getLabel('dashboard', 'admin::app.dashboard.index.title') }}
     </x-slot>
 
     <!-- Head Details Section -->
@@ -11,7 +11,7 @@
 
         <div class="grid gap-1.5">
             <p class="text-2xl font-semibold dark:text-white">
-                @lang('admin::app.dashboard.index.title')
+                {{ menu()->getLabel('dashboard', 'admin::app.dashboard.index.title') }}
             </p>
         </div>
 
@@ -23,8 +23,13 @@
         <v-dashboard-filters>
             <!-- Shimmer -->
             <div class="flex gap-1.5">
+                @if ($pipelines->count() > 1)
+                    <div class="light-shimmer-bg dark:shimmer h-[39px] w-[160px] rounded-md"></div>
+                @endif
+
                 <div class="light-shimmer-bg dark:shimmer h-[39px] w-[140px] rounded-md"></div>
                 <div class="light-shimmer-bg dark:shimmer h-[39px] w-[140px] rounded-md"></div>
+                <div class="light-shimmer-bg dark:shimmer h-[39px] w-[110px] rounded-md"></div>
             </div>
         </v-dashboard-filters>
 
@@ -50,7 +55,7 @@
             <!-- Total Leads Stats -->
             @include('admin::dashboard.index.total-leads')
 
-            <div class="flex gap-4 [&>*]:flex-1">
+            <div class="flex gap-4 max-lg:flex-wrap">
                 <!-- Total Products -->
                 @include('admin::dashboard.index.top-selling-products')
 
@@ -101,21 +106,50 @@
             {!! view_render_event('admin.dashboard.index.date_filters.before') !!}
 
             <div class="flex gap-1.5">
-                <x-admin::flat-picker.date class="!w-[140px]" ::allow-input="false">
+                @if ($pipelines->count() > 1)
+                    <!-- Pipeline Selector -->
+                    <select
+                        class="custom-select flex min-h-[39px] w-[160px] rounded-md border border-gray-300 bg-white px-3 py-2 text-sm font-normal text-gray-600 transition-all hover:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400"
+                        v-model="filters.pipeline_id"
+                    >
+                        @foreach ($pipelines as $pipeline)
+                            <option value="{{ $pipeline->id }}">{{ $pipeline->name }}</option>
+                        @endforeach
+                    </select>
+                @endif
+
+                <x-admin::flat-picker.date
+                    class="!w-[140px]"
+                    ::allow-input="false"
+                    ::max-date="filters.end"
+                >
                     <input
-                        class="flex min-h-[39px] w-full rounded-md border px-3 py-2 text-sm text-gray-600 transition-all hover:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400"
+                        class="flex min-h-[39px] w-full rounded-md border border-gray-300 px-3 py-2 text-sm text-gray-600 transition-all hover:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400"
                         v-model="filters.start"
                         placeholder="@lang('admin::app.dashboard.index.start-date')"
                     />
                 </x-admin::flat-picker.date>
 
-                <x-admin::flat-picker.date class="!w-[140px]" ::allow-input="false">
+                <x-admin::flat-picker.date
+                    class="!w-[140px]"
+                    ::allow-input="false"
+                    ::max-date="filters.end"
+                >
                     <input
-                        class="flex min-h-[39px] w-full rounded-md border px-3 py-2 text-sm text-gray-600 transition-all hover:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400"
+                        class="flex min-h-[39px] w-full rounded-md border border-gray-300 px-3 py-2 text-sm text-gray-600 transition-all hover:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400"
                         v-model="filters.end"
                         placeholder="@lang('admin::app.dashboard.index.end-date')"
                     />
                 </x-admin::flat-picker.date>
+
+                <!-- Export PDF -->
+                <a
+                    :href="exportUrl"
+                    target="_blank"
+                    class="secondary-button !min-h-[39px]"
+                >
+                    @lang('admin::app.dashboard.index.export-pdf')
+                </a>
             </div>
 
             {!! view_render_event('admin.dashboard.index.date_filters.after') !!}
@@ -130,10 +164,27 @@
                         filters: {
                             channel: '',
 
+                            pipeline_id: "{{ $defaultPipeline?->id }}",
+
                             start: "{{ $startDate->format('Y-m-d') }}",
 
                             end: "{{ $endDate->format('Y-m-d') }}",
                         }
+                    }
+                },
+
+                computed: {
+                    exportUrl() {
+                        let params = new URLSearchParams({
+                            start: this.filters.start,
+                            end: this.filters.end,
+                        });
+
+                        if (this.filters.pipeline_id) {
+                            params.set('pipeline_id', this.filters.pipeline_id);
+                        }
+
+                        return "{{ route('admin.dashboard.export_pdf') }}?" + params.toString();
                     }
                 },
 

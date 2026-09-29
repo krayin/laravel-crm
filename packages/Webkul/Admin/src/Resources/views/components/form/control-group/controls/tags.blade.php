@@ -5,18 +5,22 @@
 ></v-control-tags>
 
 @pushOnce('scripts')
-    <script 
-        type="text/x-template" 
+    <script
+        type="text/x-template"
         id="v-control-tags-template"
     >
-        <div class="flex min-h-[38px] w-full items-center rounded border border-gray-200 px-2.5 py-1.5 text-sm font-normal text-gray-800 transition-all hover:border-gray-400 dark:border-gray-800 dark:text-white dark:hover:border-gray-400">
+        <div 
+            class="flex min-h-[38px] w-full items-center rounded border border-gray-300 px-2.5 py-1.5 text-sm font-normal text-gray-800 transition-all hover:border-gray-400 dark:border-gray-800 dark:text-white dark:hover:border-gray-400"
+            :class="[errors[`temp-${name}`] ? 'border !border-red-600 hover:border-red-600' : '']"
+        >
             <ul
                 class="flex flex-wrap items-center gap-1"
                 v-bind="$attrs"
             >
                 <li
-                    class="flex items-center gap-1 rounded-md bg-gray-100 dark:bg-gray-950 ltr:pl-2 rtl:pr-2"
                     v-for="(tag, index) in tags"
+                    :key="index"
+                    class="flex items-center gap-1 rounded-md bg-gray-100 dark:bg-gray-950 ltr:pl-2 rtl:pr-2"
                 >
                     <x-admin::form.control-group.control
                         type="hidden"
@@ -37,7 +41,7 @@
                         v-slot="{ field, errors }"
                         :name="'temp-' + name"
                         v-model="input"
-                        :rules="inputRules"
+                        :rules="tags.length ? inputRules : [inputRules, rules].filter(Boolean).join('|')"
                         :label="label"
                     >
                         <input
@@ -58,7 +62,7 @@
                             v-slot="{ field, errors }"
                             :name="name + '[' + 0 +']'"
                             :value="input"
-                            :rules="rules"
+                            :rules="inputRules"
                             :label="label"
                         >
                             <input
@@ -88,17 +92,49 @@
         app.component('v-control-tags', {
             template: '#v-control-tags-template',
 
-            props: [
-                'name',
-                'label',
-                'placeholder',
-                'rules',
-                'inputRules',
-                'data',
-                'errors',
-            ],
+            props: {
+                name: {
+                    type: String,
+                    required: true,
+                },
 
-            data: function () {
+                label: {
+                    type: String,
+                    default: '',
+                },
+
+                placeholder: {
+                    type: String,
+                    default: '',
+                },
+
+                rules: {
+                    type: String,
+                    default: '',
+                },
+
+                inputRules: {
+                    type: String,
+                    default: '',
+                },
+
+                data: {
+                    type: Array,
+                    default: () => [],
+                },
+
+                errors: {
+                    type: Object,
+                    default: () => {},
+                },
+
+                allowDuplicates: {
+                    type: Boolean,
+                    default: true,
+                },
+            },
+
+            data() {
                 return {
                     tags: this.data ? this.data : [],
 
@@ -107,7 +143,7 @@
             },
 
             methods: {
-                addTag: function() {
+                addTag() {
                     if (this.errors['temp-' + this.name]) {
                         return;
                     }
@@ -115,6 +151,15 @@
                     const tag = this.input.trim();
 
                     if (! tag) {
+                        return;
+                    }
+
+                    if (
+                        ! this.allowDuplicates
+                        && this.tags.includes(tag)
+                    ) {
+                        this.input = '';
+
                         return;
                     }
 

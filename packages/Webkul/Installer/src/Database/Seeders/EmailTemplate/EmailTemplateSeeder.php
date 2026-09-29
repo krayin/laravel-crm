@@ -24,12 +24,12 @@ class EmailTemplateSeeder extends Seeder
 
         DB::table('email_templates')->insert([
             [
-                'id'         => 1,
-                'name'       => trans('installer::app.seeders.email.activity-created', [], $defaultLocale),
-                'subject'    => trans('installer::app.seeders.email.activity-created', [], $defaultLocale).': {%activities.title%}',
+                'id' => 1,
+                'name' => trans('installer::app.seeders.email.activity-created', [], $defaultLocale),
+                'subject' => trans('installer::app.seeders.email.activity-created', [], $defaultLocale).': {%activities.title%}',
                 'created_at' => $now,
                 'updated_at' => $now,
-                'content'    => '<p style="font-size: 16px; color: #5e5e5e;">'.trans('installer::app.seeders.email.new-activity', [], $defaultLocale).':</p>
+                'content' => '<p style="font-size: 16px; color: #5e5e5e;">'.trans('installer::app.seeders.email.new-activity', [], $defaultLocale).':</p>
                                 <p><strong style="font-size: 16px;">Details</strong></p>
                                 <table style="height: 97px; width: 952px;">
                                     <tbody>
@@ -52,12 +52,12 @@ class EmailTemplateSeeder extends Seeder
                                     </tbody>
                                 </table>',
             ], [
-                'id'         => 2,
-                'name'       => trans('installer::app.seeders.email.activity-modified', [], $defaultLocale),
-                'subject'    => trans('installer::app.seeders.email.activity-modified', [], $defaultLocale).': {%activities.title%}',
+                'id' => 2,
+                'name' => trans('installer::app.seeders.email.activity-modified', [], $defaultLocale),
+                'subject' => trans('installer::app.seeders.email.activity-modified', [], $defaultLocale).': {%activities.title%}',
                 'created_at' => $now,
                 'updated_at' => $now,
-                'content'    => '<p style="font-size: 16px; color: #5e5e5e;">'.trans('installer::app.seeders.email.new-activity-modified', [], $defaultLocale).':</p>
+                'content' => '<p style="font-size: 16px; color: #5e5e5e;">'.trans('installer::app.seeders.email.new-activity-modified', [], $defaultLocale).':</p>
                                 <p><strong style="font-size: 16px;">Details</strong></p>
                                 <table style="height: 97px; width: 952px;">
                                     <tbody>

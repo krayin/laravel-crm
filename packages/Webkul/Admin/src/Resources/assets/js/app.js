@@ -17,15 +17,31 @@ window.app = createApp({
             isMenuActive: false,
 
             hoveringMenu: '',
+
+            lastScrollY: 0,
         };
     },
 
     created() {
         window.addEventListener('click', this.handleFocusOut);
+        this.lastScrollY = Math.max((window.scrollY ?? window.pageYOffset ?? 0), 0);
+        document.body.classList.remove('is-scrolling-down');
+        window.addEventListener('scroll', this.handleScrollDirection, { passive: true });
+
+        // Keep initial load in normal state when page is at/near top.
+        this.handleScrollDirection();
     },
 
     beforeDestroy() {
         window.removeEventListener('click', this.handleFocusOut);
+        window.removeEventListener('scroll', this.handleScrollDirection);
+        document.body.classList.remove('is-scrolling-down');
+    },
+
+    beforeUnmount() {
+        window.removeEventListener('click', this.handleFocusOut);
+        window.removeEventListener('scroll', this.handleScrollDirection);
+        document.body.classList.remove('is-scrolling-down');
     },
 
     methods: {
@@ -46,52 +62,43 @@ window.app = createApp({
             }, 100);
         },
 
-        handleMouseOver(event) {
-            if (this.isMenuActive) {
-                return;
-            }
-
-            const parentElement = event.currentTarget.parentElement;
-             
-            if (parentElement.classList.contains('sidebar-collapsed')) {
-                parentElement.classList.remove('sidebar-collapsed');
-                
-                parentElement.classList.add('sidebar-not-collapsed');
-            }
-
-        },
-
-        handleMouseLeave(event) {
-            if (this.isMenuActive) {
-                return;
-            }
-
-            const parentElement = event.currentTarget.parentElement;
-             
-            if (parentElement.classList.contains('sidebar-not-collapsed')) {
-                parentElement.classList.remove('sidebar-not-collapsed');
-
-                parentElement.classList.add('sidebar-collapsed');
-            }
-        },
-
+        /**
+         * Closes an open submenu flyout when the click lands outside the
+         * sidebar. The sidebar width itself is owned solely by the collapse
+         * toggle, so nothing here touches `sidebar-collapsed`.
+         */
         handleFocusOut(event) {
             const sidebar = this.$refs.sidebar;
 
             if (
-                sidebar && 
+                sidebar &&
                 !sidebar.contains(event.target)
             ) {
                 this.isMenuActive = false;
-
-                const parentElement = sidebar.parentElement;
-
-                if (parentElement.classList.contains('sidebar-not-collapsed')) {
-                    parentElement.classList.remove('sidebar-not-collapsed');
-
-                    parentElement.classList.add('sidebar-collapsed');
-                }
             }
+        },
+
+        handleScrollDirection() {
+            const topThreshold = 0;
+            const currentScrollY = Math.max((window.scrollY ?? window.pageYOffset ?? 0), 0);
+            const scrollDelta = currentScrollY - this.lastScrollY;
+
+            if (currentScrollY == topThreshold) {
+                document.body.classList.remove('is-scrolling-down');
+                this.lastScrollY = currentScrollY;
+
+                return;
+            }
+
+            if (Math.abs(scrollDelta) < 2) {
+                return;
+            }
+
+            if (scrollDelta > 0) {
+                document.body.classList.add('is-scrolling-down');
+            }
+
+            this.lastScrollY = currentScrollY;
         },
     },
 });
@@ -107,6 +114,7 @@ import VeeValidate from "./plugins/vee-validate";
 import CreateElement from "./plugins/createElement";
 import Draggable from "./plugins/draggable";
 import VueCal from "./plugins/vue-cal";
+
 [
     Admin,
     Axios,
@@ -123,9 +131,11 @@ import VueCal from "./plugins/vue-cal";
  */
 import Debounce from "./directives/debounce";
 import DOMPurify from "./directives/dompurify";
+import ToolTip from "./directives/tooltip";
 
 app.directive("debounce", Debounce);
 app.directive("safe-html", DOMPurify);
+app.directive("tooltip", ToolTip);
 
 export default app;
 

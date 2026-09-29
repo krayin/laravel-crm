@@ -6,6 +6,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Symfony\Component\Mime\Email as MimeEmail;
+use Webkul\Email\Repositories\AttachmentRepository;
 
 class Email extends Mailable
 {
@@ -43,7 +44,11 @@ class Email extends Mailable
         });
 
         foreach ($this->email->attachments as $attachment) {
-            $this->attachFromStorage($attachment->path);
+            $this->attachFromStorageDisk(
+                AttachmentRepository::resolveDisk($attachment->path),
+                $attachment->path,
+                $attachment->name
+            );
         }
 
         return $this;

@@ -1,7 +1,7 @@
 <x-admin::layouts>
     <!-- Title of the page. -->
     <x-slot:title>
-        @lang('admin::app.configuration.index.title')
+        {{ menu()->getLabel('configuration', 'admin::app.configuration.index.title') }}
     </x-slot>
 
     <!-- Breadcrumbs -->
@@ -10,21 +10,21 @@
     {!! view_render_event('admin.configuration.index.header.before') !!}
 
     <!-- Heading of the page -->
-    <div class="mb-7 flex items-center justify-between">
+    <div class="mb-7 flex flex-wrap items-center justify-between">
         <p class="py-3 text-xl font-bold text-gray-800 dark:text-white">
-            @lang('admin::app.configuration.index.title')
+            {{ menu()->getLabel('configuration', 'admin::app.configuration.index.title') }}
         </p>
 
         {!! view_render_event('admin.configuration.index.header.configuration_search.before') !!}
 
         <!-- Configuration Search Bar Vue Component -->
         <v-configuration-search>
-            <div class="relative flex w-[525px] max-w-[525px] items-center max-lg:w-[400px] ltr:ml-2.5 rtl:mr-2.5">
+            <div class="relative flex w-[525px] max-w-[525px] items-center max-lg:w-[400px]">
                 <i class="icon-search absolute top-1.5 flex items-center text-2xl ltr:left-3 rtl:right-3"></i>
 
                 <input 
                     type="text" 
-                    class="block w-full rounded-lg border bg-white px-10 py-1.5 leading-6 text-gray-600 transition-all hover:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300"
+                    class="block w-full rounded-lg border border-gray-300 bg-white px-10 py-1.5 leading-6 text-gray-600 transition-all hover:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300"
                     placeholder="@lang('admin::app.configuration.index.search')" 
                 >
             </div>
@@ -53,7 +53,7 @@
                     </p>
                 </div>
 
-                <div class="box-shadow max-1580:grid-cols-3 mt-2 grid grid-cols-4 flex-wrap justify-between gap-12 rounded bg-white p-4 dark:bg-gray-900 max-xl:grid-cols-2 max-sm:grid-cols-1">
+                <div class="box-shadow max-1580:grid-cols-3 mt-2 grid grid-cols-4 flex-wrap justify-between gap-x-12 gap-y-6 rounded bg-white p-4 dark:bg-gray-900 max-xl:grid-cols-2 max-lg:gap-y-4 max-sm:grid-cols-1">
                     <!-- Menus cards -->
                     @foreach ($item->getChildren() as $key => $child)
                         <a 
@@ -86,12 +86,12 @@
 
     @pushOnce('scripts')
         <script type="text/x-template" id="v-configuration-search-template">
-            <div class="relative flex w-[525px] max-w-[525px] items-center max-lg:w-[400px] ltr:ml-2.5 rtl:mr-2.5">
+            <div class="relative flex w-[525px] max-w-[525px] items-center max-lg:w-[400px]">
                 <i class="icon-search absolute top-1.5 flex items-center text-2xl ltr:left-3 rtl:right-3"></i>
 
                 <input 
                     type="text"
-                    class="peer block w-full rounded-lg border bg-white px-10 py-1.5 leading-6 text-gray-600 transition-all hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 dark:focus:border-gray-400"
+                    class="peer block w-full rounded-lg border border-gray-300 bg-white px-10 py-1.5 leading-6 text-gray-600 transition-all hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 dark:focus:border-gray-400"
                     :class="{'border-gray-400': isDropdownOpen}"
                     placeholder="@lang('admin::app.configuration.index.search')"
                     v-model.lazy="searchTerm"

@@ -11,20 +11,18 @@
         method="POST"
     >
         <!-- Header section -->
-        <div class="flex flex-col gap-2 rounded-lg border border-gray-200 bg-white text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
+        <div class="flex flex-col gap-2 rounded-lg border border-gray-300 bg-white text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
             <div class="flex items-center justify-between px-4 py-2">
                 <div class="flex flex-col gap-2">
-                    <div class="flex cursor-pointer items-center">
-                        {!! view_render_event('admin.settings.pipelines.edit.breadcrumbs.before', ['pipeline' => $pipeline]) !!}
+                    {!! view_render_event('admin.settings.pipelines.edit.breadcrumbs.before', ['pipeline' => $pipeline]) !!}
 
-                        <!-- Breadcrumbs -->
-                        <x-admin::breadcrumbs 
-                            name="settings.pipelines.edit"
-                            :entity="$pipeline"
-                        />
+                    <!-- Breadcrumbs -->
+                    <x-admin::breadcrumbs 
+                        name="settings.pipelines.edit"
+                        :entity="$pipeline"
+                    />
 
-                        {!! view_render_event('admin.settings.pipelines.edit.breadcrumbs.after', ['pipeline' => $pipeline]) !!}
-                    </div>
+                    {!! view_render_event('admin.settings.pipelines.edit.breadcrumbs.after', ['pipeline' => $pipeline]) !!}
 
                     <!-- Title -->
                     <div class="text-xl font-bold dark:text-white">
@@ -49,7 +47,7 @@
                 </div>
             </div>
 
-            <div class="flex gap-4 border-t border-gray-200 px-4 py-2 align-top dark:border-gray-800 max-sm:flex-wrap">
+            <div class="flex gap-4 border-t border-gray-300 px-4 py-2 align-top dark:border-gray-800 max-sm:flex-wrap">
                 {!! view_render_event('admin.settings.pipelines.edit.form.name.before', ['pipeline' => $pipeline]) !!}
 
                 <!-- Pipeline Name -->
@@ -148,8 +146,8 @@
                     class="flex gap-4"
                 >
                     <template #item="{ element, index }">
-                        <div class="draggable flex gap-4 overflow-x-auto">
-                            <div class="flex min-w-[275px] max-w-[275px] flex-col justify-between rounded-lg border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900">
+                        <div ::class="{ draggable: isDragable(element) }" class="flex gap-4 overflow-x-auto">
+                            <div class="flex min-w-[275px] max-w-[275px] flex-col justify-between rounded-lg border border-gray-300 bg-white dark:border-gray-800 dark:bg-gray-900">
                                 <div class="flex flex-col gap-6 px-4 py-3">
                                     <!-- Stage Title and Action -->
                                     <div class="flex items-center justify-between">
@@ -157,7 +155,10 @@
                                             @{{ element.name ? element.name : 'New Added' }} 
                                         </span>
 
-                                        <i class="icon-move cursor-grab rounded-md p-1 text-2xl transition-all hover:bg-gray-100 dark:hover:bg-gray-950">
+                                        <i
+                                            v-if="isDragable(element)" 
+                                            class="icon-move cursor-grab rounded-md p-1 text-2xl transition-all hover:bg-gray-100 dark:hover:bg-gray-950"
+                                        >
                                         </i>
                                     </div>
                                     
@@ -167,7 +168,7 @@
                                         <!-- Code -->
                                         <input
                                             type="hidden"
-                                            :value="slugify(element.name)"
+                                            :value="slugify(element.code ? element.code : element.name)"
                                             :name="'stages[' + element.id + '][code]'"
                                         />
 
@@ -226,8 +227,9 @@
 
                                 <!-- Remove Stage -->
                                 <div
-                                    class="flex cursor-pointer items-center gap-2 border-t border-gray-200 p-2 text-red-600 dark:border-gray-800" 
-                                    @click="remove(element)" 
+                                    class="flex cursor-pointer items-center gap-2 border-t border-gray-300 p-2 text-red-600 dark:border-gray-800" 
+                                    @click="remove(element)"
+                                    v-if="isDragable(element)"
                                 >
                                     <i class="icon-delete text-2xl"></i>
                                     
@@ -241,7 +243,7 @@
                 </draggable>
 
                 <!-- Add New Stage Card -->
-                <div class="flex min-h-[400px] min-w-[275px] max-w-[275px] flex-col items-center justify-center gap-1 rounded-lg border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900">
+                <div class="flex min-h-[400px] min-w-[275px] max-w-[275px] flex-col items-center justify-center gap-1 rounded-lg border border-gray-300 bg-white dark:border-gray-800 dark:bg-gray-900">
                     <div class="flex flex-col items-center justify-center gap-6 px-4 py-3">
                         <div class="grid justify-center justify-items-center gap-3.5 text-center">
                             <div class="flex flex-col items-center gap-2">
@@ -336,7 +338,7 @@
                             });
 
                             if (filteredStages.length > 1) {
-                                return '{!! __('admin::app.settings.pipelines.create.duplicate-name') !!}';
+                                return "{!! trans('admin::app.settings.pipelines.create.duplicate-name') !!}";
                             }
 
                             this.removeUniqueNameErrors();
@@ -369,6 +371,14 @@
                         const draggedElement = event.draggedContext.element;
                         
                         const relatedElement = event.relatedContext.element;
+
+                        return this.isDragable(draggedElement) && this.isDragable(relatedElement);
+                    },
+
+                    isDragable (stage) {
+                        if (stage.code == 'new' || stage.code == 'won' || stage.code == 'lost') {
+                            return false;
+                        }
 
                         return true;
                     },

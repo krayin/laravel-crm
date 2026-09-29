@@ -79,9 +79,24 @@ class PipelineController extends Controller
     {
         $request->validated();
 
-        $request->merge([
-            'is_default' => request()->has('is_default') ? 1 : 0,
-        ]);
+        $isDefault = request()->has('is_default') ? 1 : 0;
+
+        if (! $isDefault) {
+            $defaultCount = $this->pipelineRepository->findWhere(['is_default' => 1])->count();
+
+            $pipeline = $this->pipelineRepository->find($id);
+
+            if (
+                $defaultCount === 1
+                && $pipeline->is_default
+            ) {
+                session()->flash('error', trans('admin::app.settings.pipelines.index.default-required'));
+
+                return redirect()->back();
+            }
+        }
+
+        $request->merge(['is_default' => $isDefault]);
 
         Event::dispatch('settings.pipeline.update.before', $id);
 
@@ -109,7 +124,7 @@ class PipelineController extends Controller
             $defaultPipeline = $this->pipelineRepository->getDefaultPipeline();
 
             $pipeline->leads()->update([
-                'lead_pipeline_id'       => $defaultPipeline->id,
+                'lead_pipeline_id' => $defaultPipeline->id,
                 'lead_pipeline_stage_id' => $defaultPipeline->stages()->first()->id,
             ]);
         }

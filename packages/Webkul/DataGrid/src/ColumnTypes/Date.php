@@ -51,10 +51,19 @@ class Date extends Column
             }
 
             foreach ($requestedDates as $value) {
-                $scopeQueryBuilder->whereBetween($this->columnName, [
-                    ($value[0] ?? '').' 00:00:01',
-                    ($value[1] ?? '').' 23:59:59',
-                ]);
+                $from = $value[0] ?? '';
+                $to = $value[1] ?? '';
+
+                if ($from !== '' && $to !== '') {
+                    $scopeQueryBuilder->whereBetween($this->columnName, [
+                        $from.' 00:00:01',
+                        $to.' 23:59:59',
+                    ]);
+                } elseif ($from !== '') {
+                    $scopeQueryBuilder->where($this->columnName, '>=', $from.' 00:00:01');
+                } elseif ($to !== '') {
+                    $scopeQueryBuilder->where($this->columnName, '<=', $to.' 23:59:59');
+                }
             }
         });
     }

@@ -2,6 +2,11 @@
 
 namespace Webkul\Admin\Traits;
 
+use Webkul\Contact\Repositories\OrganizationRepository;
+use Webkul\Lead\Repositories\SourceRepository;
+use Webkul\User\Repositories\UserRepository;
+use Webkul\Warehouse\Repositories\WarehouseRepository;
+
 /**
  * Single place for all dropdown options. Sets of sorted dropdown
  * options methods. Use as per your need.
@@ -47,19 +52,19 @@ trait ProvideDropdownOptions
     {
         return [
             [
-                'value'    => '',
-                'label'    => __('admin::app.common.select-options'),
+                'value' => '',
+                'label' => trans('admin::app.common.select-options'),
                 'disabled' => true,
                 'selected' => true,
             ],
             [
-                'label'    => trans('admin::app.datagrid.active'),
-                'value'    => 1,
+                'label' => trans('admin::app.datagrid.active'),
+                'value' => 1,
                 'disabled' => false,
                 'selected' => false,
             ], [
-                'label'    => trans('admin::app.datagrid.inactive'),
-                'value'    => 0,
+                'label' => trans('admin::app.datagrid.inactive'),
+                'value' => 0,
                 'disabled' => false,
                 'selected' => false,
             ],
@@ -73,19 +78,19 @@ trait ProvideDropdownOptions
     {
         return [
             [
-                'value'    => '',
-                'label'    => __('admin::app.common.select-options'),
+                'value' => '',
+                'label' => trans('admin::app.common.select-options'),
                 'disabled' => true,
                 'selected' => true,
             ],
             [
-                'value'    => 0,
-                'label'    => __('admin::app.common.no'),
+                'value' => 0,
+                'label' => trans('admin::app.common.no'),
                 'disabled' => false,
                 'selected' => false,
             ], [
-                'value'    => 1,
-                'label'    => __('admin::app.common.yes'),
+                'value' => 1,
+                'label' => trans('admin::app.common.yes'),
                 'disabled' => false,
                 'selected' => false,
             ],
@@ -97,7 +102,7 @@ trait ProvideDropdownOptions
      */
     public function getUserDropdownOptions(): array
     {
-        $options = app(\Webkul\User\Repositories\UserRepository::class)
+        $options = app(UserRepository::class)
             ->get(['id as value', 'name as label'])
             ->map(function ($item, $key) {
                 $item->disabled = false;
@@ -110,8 +115,8 @@ trait ProvideDropdownOptions
 
         return [
             [
-                'label'    => __('admin::app.common.select-users'),
-                'value'    => '',
+                'label' => trans('admin::app.common.select-users'),
+                'value' => '',
                 'disabled' => true,
                 'selected' => true,
             ],
@@ -124,7 +129,7 @@ trait ProvideDropdownOptions
      */
     public function getLeadSourcesOptions(): array
     {
-        $options = app(\Webkul\Lead\Repositories\SourceRepository::class)
+        $options = app(SourceRepository::class)
             ->get(['id as value', 'name as label'])
             ->map(function ($item, $key) {
                 $item->disabled = false;
@@ -137,8 +142,8 @@ trait ProvideDropdownOptions
 
         return [
             [
-                'label'    => __('admin::app.common.select-users'),
-                'value'    => '',
+                'label' => trans('admin::app.common.select-users'),
+                'value' => '',
                 'disabled' => true,
                 'selected' => true,
             ],
@@ -151,7 +156,7 @@ trait ProvideDropdownOptions
      */
     public function getOrganizationDropdownOptions(): array
     {
-        $options = app(\Webkul\Contact\Repositories\OrganizationRepository::class)
+        $options = app(OrganizationRepository::class)
             ->get(['id as value', 'name as label'])
             ->map(function ($item, $key) {
                 $item->disabled = false;
@@ -164,8 +169,8 @@ trait ProvideDropdownOptions
 
         return [
             [
-                'label'    => __('admin::app.common.select-organization'),
-                'value'    => '',
+                'label' => trans('admin::app.common.select-organization'),
+                'value' => '',
                 'disabled' => true,
                 'selected' => true,
             ],
@@ -180,13 +185,13 @@ trait ProvideDropdownOptions
     {
         return [
             [
-                'label'    => trans('admin::app.settings.roles.all'),
-                'value'    => 'all',
+                'label' => trans('admin::app.settings.roles.all'),
+                'value' => 'all',
                 'disabled' => false,
                 'selected' => false,
             ], [
-                'label'    => trans('admin::app.settings.roles.custom'),
-                'value'    => 'custom',
+                'label' => trans('admin::app.settings.roles.custom'),
+                'value' => 'custom',
                 'disabled' => false,
                 'selected' => false,
             ],
@@ -200,23 +205,23 @@ trait ProvideDropdownOptions
     {
         return [
             [
-                'label'    => trans('admin::app.common.select-type'),
-                'value'    => '',
+                'label' => trans('admin::app.common.select-type'),
+                'value' => '',
                 'disabled' => true,
                 'selected' => true,
             ], [
-                'label'    => trans('admin::app.common.select-call'),
-                'value'    => 'call',
+                'label' => trans('admin::app.common.select-call'),
+                'value' => 'call',
                 'disabled' => false,
                 'selected' => false,
             ], [
-                'label'    => trans('admin::app.common.select-meeting'),
-                'value'    => 'meeting',
+                'label' => trans('admin::app.common.select-meeting'),
+                'value' => 'meeting',
                 'disabled' => false,
                 'selected' => false,
             ], [
-                'label'    => trans('admin::app.common.select-lunch'),
-                'value'    => 'lunch',
+                'label' => trans('admin::app.common.select-lunch'),
+                'value' => 'lunch',
                 'disabled' => false,
                 'selected' => false,
             ],
@@ -230,20 +235,20 @@ trait ProvideDropdownOptions
     {
         return [
             [
-                'label'    => trans('admin::app.common.select-options'),
-                'value'    => '',
+                'label' => trans('admin::app.common.select-options'),
+                'value' => '',
                 'disabled' => true,
                 'selected' => true,
             ],
             [
-                'label'    => trans('admin::app.common.system_attribute'),
-                'value'    => '0',
+                'label' => trans('admin::app.common.system_attribute'),
+                'value' => '0',
                 'disabled' => false,
                 'selected' => false,
             ],
             [
-                'label'    => trans('admin::app.common.custom_attribute'),
-                'value'    => '1',
+                'label' => trans('admin::app.common.custom_attribute'),
+                'value' => '1',
                 'disabled' => false,
                 'selected' => false,
             ],
@@ -255,7 +260,7 @@ trait ProvideDropdownOptions
      */
     public function getWarehouseDropdownOptions(): array
     {
-        $options = app(\Webkul\Warehouse\Repositories\WarehouseRepository::class)
+        $options = app(WarehouseRepository::class)
             ->get(['id as value', 'name as label'])
             ->map(function ($item, $key) {
                 $item->disabled = false;
@@ -268,8 +273,8 @@ trait ProvideDropdownOptions
 
         return [
             [
-                'label'    => __('admin::app.common.select-warehouse'),
-                'value'    => '',
+                'label' => trans('admin::app.common.select-warehouse'),
+                'value' => '',
                 'disabled' => true,
                 'selected' => true,
             ],

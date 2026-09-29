@@ -1,6 +1,6 @@
 <x-web_form::layouts>
     <x-slot:title>
-        {{ $webForm->title }}
+        {{ strip_tags($webForm->title) }}
     </x-slot>
 
     <!-- Web Form -->
@@ -23,18 +23,31 @@
             >
                 <div class="flex flex-col items-center gap-5">
                     <!-- Logo -->
-                    <img
-                        class="w-max"
-                        src="{{ vite()->asset('images/logo.svg') }}"
-                        alt="{{ config('app.name') }}"
-                    />
+                    @if ($logo = core()->getConfigData('general.general.admin_logo.logo_image'))
+                        <img
+                            class="w-max"
+                            src="{{ Storage::url($logo) }}"
+                            alt="{{ config('app.name') }}"
+                        />
+                    @else
+                        <img
+                            class="w-max"
+                            src="{{ vite()->asset('images/logo.svg') }}"
+                            alt="{{ config('app.name') }}"
+                        />
+                    @endif
 
-                    <h1 style="color: {{ $webForm->form_title_color }} !important;">{{ $webForm->title }}</h1>
+                    <h1
+                        class="text-2xl font-bold"
+                        style="color: {{ $webForm->form_title_color }} !important;"
+                    >
+                        {{ $webForm->title }}
+                    </h1>
 
-                    <p>{{ $webForm->description }}</p>
+                    <p class="mt-2 text-base text-gray-600">{{ $webForm->description }}</p>
 
                     <div
-                        class="box-shadow flex min-w-[300px] flex-col rounded-lg border border-gray-200 bg-white p-4 dark:bg-gray-900"
+                        class="box-shadow flex min-w-[300px] flex-col rounded-lg border border-gray-300 bg-white p-4 dark:bg-gray-900"
                         style="background-color: {{ $webForm->form_background_color }}"
                     >
                         {!! view_render_event('web_forms.web_forms.form_controls.before', ['webForm' => $webForm]) !!}
@@ -80,10 +93,20 @@
                 },
 
                 methods: {
-                    create(params, { resetForm }) {
+                    create(params, { resetForm, setErrors }) {
                         this.isStoring = true;
 
                         const formData = new FormData(this.$refs.webForm);
+
+                        let inputNames = Array.from(formData.keys());
+
+                        inputNames = inputNames.reduce((acc, name) => {
+                            const dotName = name.replace(/\[([^\]]+)\]/g, '.$1');
+
+                            acc[dotName] = name;
+
+                            return acc;
+                        }, {});
 
                         this.$axios
                             .post('{{ route('admin.settings.web_forms.form_store', $webForm->id) }}', formData, {
@@ -105,7 +128,30 @@
                                     return;
                                 }
 
-                                this.$emitter.emit('add-flash', { type: 'error', message: error.response.data.message });
+                                if (! error.response.data.errors) {
+                                    this.$emitter.emit('add-flash', { type: 'error', message: error.response.data.message });
+
+                                    return;
+                                }
+
+                                const laravelErrors = error.response.data.errors || {};
+                                const mappedErrors = {};
+
+                                for (
+                                    const [dotKey, messages]
+                                    of Object.entries(laravelErrors)
+                                ) {
+                                    const inputName = inputNames[dotKey];
+
+                                    if (
+                                        inputName
+                                        && messages.length
+                                    ) {
+                                        mappedErrors[inputName] = messages[0];
+                                    }
+                                }
+
+                                setErrors(mappedErrors);
                             })
                             .finally(() => {
                                 this.isStoring = false;

@@ -2,7 +2,9 @@
 
 namespace Webkul\Admin\Http\Controllers\User;
 
+use Illuminate\Contracts\Auth\PasswordBroker;
 use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Password;
 use Webkul\Admin\Http\Controllers\Controller;
 use Webkul\Admin\Notifications\User\UserResetPassword;
@@ -34,7 +36,7 @@ class ForgotPasswordController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function store()
     {
@@ -43,21 +45,18 @@ class ForgotPasswordController extends Controller
                 'email' => 'required|email',
             ]);
 
-            $response = $this->broker()->sendResetLink(request(['email']), function ($user, $token) {
+            $this->broker()->sendResetLink(request(['email']), function ($user, $token) {
                 $user->notify(new UserResetPassword($token));
             });
 
-            if ($response == Password::RESET_LINK_SENT) {
-                session()->flash('success', trans('admin::app.users.forget-password.create.reset-link-sent'));
+            /**
+             * The same answer is returned whether or not the address belongs to an
+             * account. Reporting "this email does not exist" would let anyone probe
+             * the form to learn which addresses are registered users.
+             */
+            session()->flash('success', trans('admin::app.users.forget-password.create.reset-link-sent'));
 
-                return back();
-            }
-
-            return back()
-                ->withInput(request(['email']))
-                ->withErrors([
-                    'email' => trans('admin::app.users.forget-password.create.email-not-exist'),
-                ]);
+            return back();
         } catch (\Exception $exception) {
             session()->flash('error', trans($exception->getMessage()));
 
@@ -68,7 +67,7 @@ class ForgotPasswordController extends Controller
     /**
      * Get the broker to be used during password reset.
      *
-     * @return \Illuminate\Contracts\Auth\PasswordBroker
+     * @return PasswordBroker
      */
     public function broker()
     {

@@ -3,6 +3,7 @@
 namespace Webkul\Admin\Http\Controllers\Settings;
 
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Event;
 use Illuminate\View\View;
 use Prettus\Repository\Criteria\RequestCriteria;
@@ -54,7 +55,7 @@ class TagController extends Controller
         Event::dispatch('settings.tag.create.after', $tag);
 
         return new JsonResponse([
-            'data'    => new TagResource($tag),
+            'data' => new TagResource($tag),
             'message' => trans('admin::app.settings.tags.index.create-success'),
         ]);
     }
@@ -65,6 +66,8 @@ class TagController extends Controller
     public function edit(int $id): View|JsonResponse
     {
         $tag = $this->tagRepository->findOrFail($id);
+
+        $this->preventUnauthorizedAccess($tag->user_id);
 
         return new JsonResponse([
             'data' => $tag,
@@ -80,6 +83,8 @@ class TagController extends Controller
             'name' => 'required|max:50|unique:tags,name,'.$id,
         ]);
 
+        $this->preventUnauthorizedAccess($this->tagRepository->findOrFail($id)->user_id);
+
         Event::dispatch('settings.tag.update.before', $id);
 
         $tag = $this->tagRepository->update(request()->only([
@@ -90,7 +95,7 @@ class TagController extends Controller
         Event::dispatch('settings.tag.update.after', $tag);
 
         return new JsonResponse([
-            'data'    => new TagResource($tag),
+            'data' => new TagResource($tag),
             'message' => trans('admin::app.settings.tags.index.update-success'),
         ]);
     }
@@ -101,6 +106,8 @@ class TagController extends Controller
     public function destroy(int $id): JsonResponse
     {
         $tag = $this->tagRepository->findOrFail($id);
+
+        $this->preventUnauthorizedAccess($tag->user_id);
 
         try {
             Event::dispatch('settings.tag.delete.before', $id);
@@ -122,13 +129,20 @@ class TagController extends Controller
     /**
      * Search tag results
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function search()
     {
-        $tags = $this->tagRepository
-            ->pushCriteria(app(RequestCriteria::class))
-            ->all();
+        $tagRepository = $this->tagRepository->pushCriteria(app(RequestCriteria::class));
+
+        /**
+         * Match the tag datagrid: a user without global visibility only sees tags they own (or that
+         * their group owns). Without this, search returned every tag and leaked the ids of records
+         * hidden from the scoped listing, which the edit/update/delete handlers could then act on.
+         */
+        $tags = ($userIds = bouncer()->getAuthorizedUserIds())
+            ? $tagRepository->findWhereIn('user_id', $userIds)
+            : $tagRepository->all();
 
         return TagResource::collection($tags);
     }
@@ -138,15 +152,17 @@ class TagController extends Controller
      */
     public function massDestroy(MassDestroyRequest $massDestroyRequest): JsonResponse
     {
-        $indices = $massDestroyRequest->input('indices');
+        $tags = $this->filterAuthorizedRecords(
+            $this->tagRepository->findWhereIn('id', $massDestroyRequest->input('indices', []))
+        );
 
         try {
-            foreach ($indices as $index) {
-                Event::dispatch('settings.tag.delete.before', $index);
+            foreach ($tags as $tag) {
+                Event::dispatch('settings.tag.delete.before', $tag->id);
 
-                $this->tagRepository->delete($index);
+                $this->tagRepository->delete($tag->id);
 
-                Event::dispatch('settings.tag.delete.after', $index);
+                Event::dispatch('settings.tag.delete.after', $tag->id);
             }
 
             return new JsonResponse([

@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use Webkul\Admin\Http\Controllers\Contact\OrganizationController;
 use Webkul\Admin\Http\Controllers\Contact\Persons\ActivityController;
+use Webkul\Admin\Http\Controllers\Contact\Persons\GoogleContactExportController;
 use Webkul\Admin\Http\Controllers\Contact\Persons\PersonController;
 use Webkul\Admin\Http\Controllers\Contact\Persons\TagController;
 
@@ -28,6 +29,15 @@ Route::prefix('contacts')->group(function () {
         Route::middleware(['throttle:100,60'])->delete('{id}', 'destroy')->name('admin.contacts.persons.delete');
 
         Route::post('mass-destroy', 'massDestroy')->name('admin.contacts.persons.mass_delete');
+
+        /**
+         * Google Contacts export routes.
+         */
+        Route::controller(GoogleContactExportController::class)->prefix('google-export')->group(function () {
+            Route::post('', 'store')->name('admin.contacts.persons.google_export.store');
+
+            Route::get('{batch}/stats', 'stats')->name('admin.contacts.persons.google_export.stats');
+        });
 
         /**
          * Tag routes.

@@ -4,42 +4,26 @@ namespace Webkul\Admin\Http\Controllers\Products;
 
 use Webkul\Activity\Repositories\ActivityRepository;
 use Webkul\Admin\Http\Controllers\Controller;
-use Webkul\Admin\Http\Resources\ActivityResource;
-use Webkul\Email\Repositories\EmailRepository;
+use Webkul\Admin\Traits\HandlesActivityTimeline;
 
 class ActivityController extends Controller
 {
+    use HandlesActivityTimeline;
+
     /**
      * Create a new controller instance.
      *
      * @return void
      */
     public function __construct(
-        protected ActivityRepository $activityRepository,
-        protected EmailRepository $emailRepository
+        protected ActivityRepository $activityRepository
     ) {}
 
     /**
-     * Display a listing of the resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * The pivot linking activities to the product.
      */
-    public function index($id)
+    protected function timelinePivot(): array
     {
-        $activities = $this->activityRepository
-            ->leftJoin('product_activities', 'activities.id', '=', 'product_activities.activity_id')
-            ->where('product_activities.product_id', $id)
-            ->get();
-
-        return ActivityResource::collection($this->concatEmail($activities));
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function concatEmail($activities)
-    {
-        return $activities->sortByDesc('id')->sortByDesc('created_at');
+        return ['table' => 'product_activities', 'foreign' => 'product_id'];
     }
 }

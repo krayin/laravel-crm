@@ -6,16 +6,14 @@
 
     <x-admin::form :action="route('admin.settings.web_forms.store')">
         <div class="flex flex-col gap-4">
-            <div class="flex items-center justify-between rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
+            <div class="scroll-reactive-sticky sticky top-[60px] z-[1000] flex items-center justify-between rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm shadow-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
                 <div class="flex flex-col gap-2">
-                    <div class="flex cursor-pointer items-center">
-                        {!! view_render_event('admin.settings.webform.create.breadcrumbs.before') !!}
+                    {!! view_render_event('admin.settings.webform.create.breadcrumbs.before') !!}
 
-                        <!-- Breadcrumbs -->
-                        <x-admin::breadcrumbs name="settings.web_forms.create" />
+                    <!-- Breadcrumbs -->
+                    <x-admin::breadcrumbs name="settings.web_forms.create" />
 
-                        {!! view_render_event('admin.settings.webform.create.breadcrumbs.after') !!}
-                    </div>
+                    {!! view_render_event('admin.settings.webform.create.breadcrumbs.after') !!}
 
                     <div class="text-xl font-bold dark:text-white">
                         @lang('admin::app.settings.webforms.create.title')
@@ -53,7 +51,7 @@
 
                 <!-- Left Sub Component -->
                 <div class="flex flex-1 flex-col gap-2 max-xl:flex-auto">
-                    <div class="box-shadow rounded-lg border border-gray-200 bg-white p-4 dark:border-gray-800 dark:bg-gray-900">
+                    <div class="box-shadow rounded-lg border border-gray-300 bg-white p-4 dark:border-gray-800 dark:bg-gray-900">
                         <div class="mb-4 flex items-center justify-between gap-4">
                             <div class="flex flex-col gap-1">
                                 <p class="text-base font-semibold text-gray-800 dark:text-white">
@@ -70,13 +68,13 @@
                                 @lang('admin::app.settings.webforms.create.submit-success-action')
                             </x-admin::form.control-group.label>
 
-                            <div class="flex">
+                            <div class="flex flex-col gap-2 sm:flex-row sm:items-start">
                                 <x-admin::form.control-group.control
                                     type="select"
                                     name="submit_success_action"
                                     id="submit_success_action"
                                     value="message"
-                                    class="!w-1/4 rounded-r-none"
+                                    class="w-full sm:w-auto sm:min-w-[12rem] sm:rounded-r-none"
                                     :label="trans('admin::app.settings.webforms.create.submit-success-action')"
                                     v-model="submitSuccessAction.value"
                                 >
@@ -95,8 +93,9 @@
                                     type="text"
                                     name="submit_success_content"
                                     id="submit_success_content"
-                                    class="rounded-l-none"
+                                    class="w-full sm:flex-1 sm:rounded-l-none"
                                     rules="required"
+                                    :value="old('submit_success_content')"
                                     :label="trans('admin::app.settings.webforms.create.submit-success-action')"
                                     ::placeholder="placeholder"
                                 />
@@ -107,25 +106,28 @@
 
                         <!-- Create Leads -->
                         <x-admin::form.control-group>
-                            <x-admin::form.control-group.label class="required">
+                            <x-admin::form.control-group.label for="create_lead">
                                 @lang('admin::app.settings.webforms.create.create-lead')
                             </x-admin::form.control-group.label>
 
-                            <label class="relative inline-flex cursor-pointer items-center">
-                                <input
-                                    type="checkbox"
-                                    name="create_lead"
-                                    :value="1"
-                                    id="create_lead"
-                                    class="peer sr-only"
-                                    v-model="createLead"
-                                >
+                            <input
+                                type="hidden"
+                                name="create_lead"
+                                :value="0"
+                            />
 
-                                <div class="peer h-5 w-9 cursor-pointer rounded-full bg-gray-200 after:absolute after:top-0.5 after:h-4 after:w-4 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-blue-600 peer-checked:after:border-white peer-focus:outline-none peer-focus:ring-blue-300 dark:bg-gray-800 dark:after:border-white dark:after:bg-white dark:peer-checked:bg-gray-950 after:ltr:left-0.5 peer-checked:after:ltr:translate-x-full after:rtl:right-0.5 peer-checked:after:rtl:-translate-x-full"></div>
-                            </label>
+                            <x-admin::form.control-group.control
+                                type="switch"
+                                name="create_lead"
+                                value="1"
+                                :label="trans('admin::app.settings.webforms.create.create-lead')"
+                                :checked="false"
+                                @change="onCreateLeadChange"
+                            />
+
                         </x-admin::form.control-group>
 
-                        <!-- Customize Webform -->
+                        <!-- Customize Web-form -->
                         <div class="mb-4 flex items-center justify-between gap-4">
                             <div class="flex flex-col gap-1">
                                 <p class="text-base font-semibold text-gray-800 dark:text-white">
@@ -256,7 +258,6 @@
                             </x-admin::form.control-group>
                         </v-color-picker>
 
-
                          <!-- Attributes -->
                         <div class="mb-4 flex items-center justify-between gap-4">
                             <div class="flex flex-col gap-1">
@@ -296,19 +297,17 @@
                                         </span>
                                     </template>
 
-                                    <template v-else>
-                                        <div class="m-2 text-lg font-bold">@lang('admin::app.settings.webforms.create.person')</div>
+                                    <div class="m-2 text-lg font-bold">@lang('admin::app.settings.webforms.create.person')</div>
 
-                                        <span
-                                            v-for="attribute in groupedAttributes.persons"
-                                            class="whitespace-no-wrap flex cursor-pointer items-center justify-between gap-1.5 rounded-t px-2 py-2 text-sm text-gray-600 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-950"
-                                            @click="addAttribute(attribute)"
-                                        >
-                                            <div class="items flex items-center gap-1.5">
-                                                @{{ attribute.name }}
-                                            </div>
-                                        </span>
-                                    </template>
+                                    <span
+                                        v-for="attribute in groupedAttributes.persons"
+                                        class="whitespace-no-wrap flex cursor-pointer items-center justify-between gap-1.5 rounded-t px-2 py-2 text-sm text-gray-600 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-950"
+                                        @click="addAttribute(attribute)"
+                                    >
+                                        <div class="items flex items-center gap-1.5">
+                                            @{{ attribute.name }}
+                                        </div>
+                                    </span>
                                 </x-slot>
                             </x-admin::dropdown>
 
@@ -319,7 +318,7 @@
                                 handle=".icon-move"
                                 v-bind="{animation: 200}"
                                 item-key="id"
-                                :list="addedAttributes"z
+                                :list="addedAttributes"
                             >
                                 <template #item="{ element, index }">
                                     <x-admin::table.thead.tr class="hover:bg-gray-50 dark:hover:bg-gray-950">
@@ -497,6 +496,29 @@
 
                                 <x-admin::form.control-group.error control-name="submit_button_label" />
                             </x-admin::form.control-group>
+
+                            <!-- Pipeline -->
+                            <x-admin::form.control-group class="!mt-6">
+                                <x-admin::form.control-group.label>
+                                    @lang('admin::app.settings.webforms.create.pipeline')
+                                </x-admin::form.control-group.label>
+
+                                <x-admin::form.control-group.control
+                                    type="select"
+                                    name="lead_pipeline_id"
+                                    id="lead_pipeline_id"
+                                    :value="old('lead_pipeline_id') ?? $defaultPipelineId"
+                                    :label="trans('admin::app.settings.webforms.create.pipeline')"
+                                >
+                                    @foreach ($pipelines as $pipeline)
+                                        <option value="{{ $pipeline->id }}">
+                                            {{ $pipeline->name }}
+                                        </option>
+                                    @endforeach
+                                </x-admin::form.control-group.control>
+
+                                <x-admin::form.control-group.error control-name="lead_pipeline_id" />
+                            </x-admin::form.control-group>
                         </x-slot>
                     </x-admin::accordion>
                 </div>
@@ -546,7 +568,7 @@
                 data() {
                     return {
                         submitSuccessAction: {
-                            value: 'message',
+                            value: '{{ old('submit_success_action', 'message') }}',
 
                             options: [
                                 { value: 'message', label: '@lang('admin::app.settings.webforms.create.display-custom-message')' },
@@ -562,24 +584,6 @@
 
                         attributeCount: 0,
                     }
-                },
-
-                watch: {
-                    /**
-                     * Watch for the createLead value and remove the added attributes if the value is true.
-                     *
-                     * @param {Boolean} newValue
-                     * @param {Boolean} oldValue
-                     *
-                     * @return {void}
-                     */
-                    createLead(newValue, oldValue) {
-                        if (newValue) {
-                            return;
-                        }
-
-                        this.addedAttributes = this.addedAttributes.filter(attribute => attribute.attribute.entity_type != 'leads');
-                    },
                 },
 
                 computed:{
@@ -618,6 +622,16 @@
 
                 methods: {
                     /**
+                     * Update createLead value from create_lead switch.
+                     *
+                     * @param {Event} event
+                     * @return {void}
+                     */
+                    onCreateLeadChange(event) {
+                        this.createLead = event.target.checked;
+                    },
+
+                    /**
                      * Add the attribute to the added attributes list.
                      *
                      * @param {Object} attribute
@@ -649,6 +663,7 @@
                         this.attributes.push(attribute.attribute);
 
                         const index = this.addedAttributes.indexOf(attribute);
+
                         if (index > -1) {
                             this.addedAttributes.splice(index, 1);
                         }

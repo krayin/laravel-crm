@@ -2,15 +2,15 @@
 
 return [
     'acl' => [
-        'title'  => 'Web Forms',
-        'view'   => 'View',
+        'title' => 'Web Forms',
+        'view' => 'View',
         'create' => 'Create',
-        'edit'   => 'Edit',
+        'edit' => 'Edit',
         'delete' => 'Delete',
     ],
 
     'menu' => [
-        'title'      => 'Web Forms',
+        'title' => 'Web Forms',
         'title-info' => 'Add, edit, or delete web forms from the CRM',
     ],
 

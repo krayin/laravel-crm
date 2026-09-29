@@ -11,6 +11,7 @@ use Webkul\Admin\DataGrids\Settings\AttributeDataGrid;
 use Webkul\Admin\Http\Controllers\Controller;
 use Webkul\Admin\Http\Requests\MassDestroyRequest;
 use Webkul\Attribute\Repositories\AttributeRepository;
+use Webkul\Attribute\Repositories\AttributeValueRepository;
 use Webkul\Core\Contracts\Validations\Code;
 
 class AttributeController extends Controller
@@ -20,7 +21,10 @@ class AttributeController extends Controller
      *
      * @return void
      */
-    public function __construct(protected AttributeRepository $attributeRepository) {}
+    public function __construct(
+        protected AttributeRepository $attributeRepository,
+        protected AttributeValueRepository $attributeValueRepository
+    ) {}
 
     /**
      * Display a listing of the resource.
@@ -45,21 +49,27 @@ class AttributeController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(): RedirectResponse
+    public function store(): RedirectResponse|JsonResponse
     {
         $this->validate(request(), [
             'code' => ['required', 'unique:attributes,code,NULL,NULL,entity_type,'.request('entity_type'), new Code],
             'name' => 'required',
             'type' => 'required',
+            'validation' => 'nullable|in:numeric,email,decimal,url',
         ]);
 
         Event::dispatch('settings.attribute.create.before');
 
-        request()->request->add(['quick_add' => 1]);
-
         $attribute = $this->attributeRepository->create(request()->all());
 
         Event::dispatch('settings.attribute.create.after', $attribute);
+
+        if (request()->ajax()) {
+            return response()->json([
+                'data' => $attribute,
+                'message' => trans('admin::app.settings.attributes.index.create-success'),
+            ]);
+        }
 
         session()->flash('success', trans('admin::app.settings.attributes.index.create-success'));
 
@@ -85,9 +95,14 @@ class AttributeController extends Controller
             'code' => ['required', 'unique:attributes,code,NULL,NULL,entity_type,'.$id, new Code],
             'name' => 'required',
             'type' => 'required',
+            'validation' => 'nullable|in:numeric,email,decimal,url',
         ]);
 
         Event::dispatch('settings.attribute.update.before', $id);
+
+        $quickAdd = request()->has('quick_add') ? 1 : 0;
+
+        request()->merge(['quick_add' => $quickAdd]);
 
         $attribute = $this->attributeRepository->update(request()->all(), $id);
 
@@ -119,7 +134,7 @@ class AttributeController extends Controller
             Event::dispatch('settings.attribute.delete.after', $id);
 
             return response()->json([
-                'status'  => true,
+                'status' => true,
                 'message' => trans('admin::app.settings.attributes.index.delete-success'),
             ], 200);
         } catch (\Exception $exception) {
@@ -127,6 +142,27 @@ class AttributeController extends Controller
                 'message' => trans('admin::app.settings.attributes.index.delete-failed'),
             ], 400);
         }
+    }
+
+    /**
+     * Check unique validation.
+     *
+     * @return void
+     */
+    public function checkUniqueValidation()
+    {
+        $attribute = $this->attributeRepository->findOneWhere([
+            'code' => request('attribute_code'),
+        ]);
+
+        return response()->json([
+            'validated' => $this->attributeValueRepository->isValueUnique(
+                request('entity_id'),
+                request('entity_type'),
+                $attribute,
+                request('attribute_value'),
+            ),
+        ]);
     }
 
     /**
@@ -188,7 +224,7 @@ class AttributeController extends Controller
     /**
      * Get attribute options associated with attribute.
      *
-     * @return \Illuminate\View\View
+     * @return View
      */
     public function getAttributeOptions(int $id)
     {
@@ -202,10 +238,28 @@ class AttributeController extends Controller
      */
     public function download()
     {
-        if (! request('path')) {
-            return false;
+        $path = request('path');
+
+        /**
+         * The path arrives from the query string, so it is resolved against the attribute values
+         * that actually reference a stored file before anything is served. Handing it straight to
+         * the disk let any path on the shared storage disk be downloaded through this endpoint —
+         * import artefacts, activity attachments and configuration uploads all live alongside
+         * attribute files. The type check matters because `text_value` is shared with the text,
+         * textarea, multiselect and checkbox types, which hold no file reference.
+         */
+        if (! is_string($path) || $path === '') {
+            abort(404);
         }
 
-        return Storage::download(request('path'));
+        $attributeValue = $this->attributeValueRepository
+            ->findWhere(['text_value' => $path])
+            ->first(fn ($value) => in_array($value->attribute?->type, ['file', 'image'], true));
+
+        if (! $attributeValue) {
+            abort(404);
+        }
+
+        return Storage::download($attributeValue->text_value);
     }
 }

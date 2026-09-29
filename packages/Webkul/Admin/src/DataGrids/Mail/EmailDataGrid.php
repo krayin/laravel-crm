@@ -6,11 +6,22 @@ use Carbon\Carbon;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Facades\DB;
 use Webkul\DataGrid\DataGrid;
-use Webkul\Email\Repositories\EmailRepository;
 use Webkul\Tag\Repositories\TagRepository;
 
 class EmailDataGrid extends DataGrid
 {
+    /**
+     * Default sort column of datagrid.
+     *
+     * @var ?string
+     */
+    protected $sortColumn = 'created_at';
+
+    /**
+     * Tags of the current page's emails, keyed by email id.
+     */
+    protected array $emailTags = [];
+
     /**
      * Prepare query builder.
      */
@@ -20,6 +31,7 @@ class EmailDataGrid extends DataGrid
             ->select(
                 'emails.id',
                 'emails.name',
+                'emails.from',
                 'emails.subject',
                 'emails.reply',
                 'emails.is_read',
@@ -43,74 +55,80 @@ class EmailDataGrid extends DataGrid
     }
 
     /**
+     * Batch-load the tags for the whole page before the per-row closures run,
+     * so the `tags` column does not query the database once per row.
+     */
+    protected function formatRecords($records): mixed
+    {
+        $this->emailTags = DB::table('email_tags')
+            ->join('tags', 'tags.id', '=', 'email_tags.tag_id')
+            ->whereIn('email_tags.email_id', collect($records)->pluck('id')->all())
+            ->get(['email_tags.email_id', 'tags.name', 'tags.color'])
+            ->groupBy('email_id')
+            ->toArray();
+
+        return parent::formatRecords($records);
+    }
+
+    /**
      * Prepare Columns.
      */
     public function prepareColumns(): void
     {
         $this->addColumn([
-            'index'      => 'id',
-            'label'      => trans('admin::app.mail.index.datagrid.id'),
-            'type'       => 'string',
-            'sortable'   => true,
-            'searchable' => true,
-            'filterable' => true,
-        ]);
-
-        $this->addColumn([
-            'index'      => 'attachments',
-            'label'      => trans('admin::app.mail.index.datagrid.attachments'),
-            'type'       => 'string',
+            'index' => 'attachments',
+            'label' => trans('admin::app.mail.index.datagrid.attachments'),
+            'type' => 'string',
             'searchable' => false,
             'filterable' => false,
-            'sortable'   => false,
-            'closure'    => fn ($row) => $row->attachments ? '<i class="icon-attachment text-2xl"></i>' : '',
+            'sortable' => false,
+            'closure' => fn ($row) => $row->attachments ? '<i class="icon-attachment text-2xl"></i>' : '',
         ]);
 
         $this->addColumn([
-            'index'      => 'name',
-            'label'      => trans('admin::app.mail.index.datagrid.from'),
-            'type'       => 'string',
-            'sortable'   => true,
+            'index' => 'name',
+            'label' => trans('admin::app.mail.index.datagrid.from'),
+            'type' => 'string',
+            'sortable' => true,
             'searchable' => true,
             'filterable' => true,
-        ]);
-
-        $this->addColumn([
-            'index'      => 'subject',
-            'label'      => trans('admin::app.mail.index.datagrid.subject'),
-            'type'       => 'string',
-            'sortable'   => true,
-            'searchable' => true,
-            'filterable' => true,
-        ]);
-
-        $this->addColumn([
-            'index'      => 'reply',
-            'label'      => trans('admin::app.mail.index.datagrid.content'),
-            'type'       => 'string',
-            'sortable'   => true,
-            'searchable' => true,
-            'filterable' => true,
-        ]);
-
-        $this->addColumn([
-            'index'              => 'tags',
-            'label'              => trans('admin::app.mail.index.datagrid.tags'),
-            'type'               => 'string',
-            'searchable'         => false,
-            'sortable'           => true,
-            'filterable'         => true,
-            'filterable_type'    => 'searchable_dropdown',
-            'closure'            => function ($row) {
-                if ($email = app(EmailRepository::class)->find($row->id)) {
-                    return $email->tags;
-                }
-
-                return '--';
+            'closure' => function ($row) {
+                return $row->name
+                    ? trim($row->name, '"')
+                    : trim($row->from, '"');
             },
+        ]);
+
+        $this->addColumn([
+            'index' => 'subject',
+            'label' => trans('admin::app.mail.index.datagrid.subject'),
+            'type' => 'string',
+            'sortable' => true,
+            'searchable' => true,
+            'filterable' => true,
+        ]);
+
+        $this->addColumn([
+            'index' => 'reply',
+            'label' => trans('admin::app.mail.index.datagrid.content'),
+            'type' => 'string',
+            'sortable' => true,
+            'searchable' => true,
+            'filterable' => true,
+        ]);
+
+        $this->addColumn([
+            'index' => 'tags',
+            'label' => trans('admin::app.mail.index.datagrid.tags'),
+            'type' => 'string',
+            'searchable' => false,
+            'sortable' => true,
+            'filterable' => true,
+            'filterable_type' => 'searchable_dropdown',
+            'closure' => fn ($row) => $this->emailTags[$row->id] ?? [],
             'filterable_options' => [
                 'repository' => TagRepository::class,
-                'column'     => [
+                'column' => [
                     'label' => 'name',
                     'value' => 'name',
                 ],
@@ -118,14 +136,14 @@ class EmailDataGrid extends DataGrid
         ]);
 
         $this->addColumn([
-            'index'           => 'created_at',
-            'label'           => trans('admin::app.mail.index.datagrid.date'),
-            'type'            => 'date',
-            'searchable'      => true,
-            'filterable'      => true,
+            'index' => 'created_at',
+            'label' => trans('admin::app.mail.index.datagrid.date'),
+            'type' => 'date',
+            'searchable' => true,
+            'filterable' => true,
             'filterable_type' => 'date_range',
-            'sortable'        => true,
-            'closure'         => function ($row) {
+            'sortable' => true,
+            'closure' => function ($row) {
                 return Carbon::parse($row->created_at)->isToday()
                     ? Carbon::parse($row->created_at)->format('h:i A')
                     : Carbon::parse($row->created_at)->format('M d');
@@ -140,11 +158,11 @@ class EmailDataGrid extends DataGrid
     {
         if (bouncer()->hasPermission('mail.view')) {
             $this->addAction([
-                'index'  => 'edit',
-                'icon'   => request('route') == 'draft'
+                'index' => 'edit',
+                'icon' => request('route') == 'draft'
                     ? 'icon-edit'
                     : 'icon-eye',
-                'title'  => request('route') == 'draft'
+                'title' => request('route') == 'draft'
                     ? trans('admin::app.mail.index.datagrid.edit')
                     : trans('admin::app.mail.index.datagrid.view'),
                 'method' => 'GET',
@@ -153,22 +171,22 @@ class EmailDataGrid extends DataGrid
                         ? 'delete'
                         : 'trash',
                 ],
-                'url'    => fn ($row) => route('admin.mail.view', [request('route'), $row->id]),
+                'url' => fn ($row) => route('admin.mail.view', [request('route'), $row->id]),
             ]);
         }
 
         if (bouncer()->hasPermission('mail.delete')) {
             $this->addAction([
-                'index'        => 'delete',
-                'icon'         => 'icon-delete',
-                'title'        => trans('admin::app.mail.index.datagrid.delete'),
-                'method'       => 'DELETE',
-                'params'       => [
+                'index' => 'delete',
+                'icon' => 'icon-delete',
+                'title' => trans('admin::app.mail.index.datagrid.delete'),
+                'method' => 'DELETE',
+                'params' => [
                     'type' => request('route') == 'trash'
                         ? 'delete'
                         : 'trash',
                 ],
-                'url'    => fn ($row) => route('admin.mail.delete', $row->id),
+                'url' => fn ($row) => route('admin.mail.delete', $row->id),
             ]);
         }
     }
@@ -180,9 +198,9 @@ class EmailDataGrid extends DataGrid
     {
         if (request('route') == 'trash') {
             $this->addMassAction([
-                'title'   => trans('admin::app.mail.index.datagrid.move-to-inbox'),
-                'method'  => 'POST',
-                'url'     => route('admin.mail.mass_update', ['folders' => ['inbox']]),
+                'title' => trans('admin::app.mail.index.datagrid.move-to-inbox'),
+                'method' => 'POST',
+                'url' => route('admin.mail.mass_update', ['folders' => ['inbox']]),
                 'options' => [
                     [
                         'value' => 'trash',
@@ -193,10 +211,12 @@ class EmailDataGrid extends DataGrid
         }
 
         $this->addMassAction([
-            'icon'   => 'icon-delete',
-            'title'  => trans('admin::app.mail.index.datagrid.delete'),
+            'icon' => 'icon-delete',
+            'title' => request('route') == 'trash'
+                    ? trans('admin::app.mail.index.datagrid.delete')
+                    : trans('admin::app.mail.index.datagrid.move-to-trash'),
             'method' => 'POST',
-            'url'    => route('admin.mail.mass_delete', [
+            'url' => route('admin.mail.mass_delete', [
                 'type' => request('route') == 'trash'
                     ? 'delete'
                     : 'trash',

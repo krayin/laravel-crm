@@ -2,6 +2,7 @@
 
 namespace Webkul\Admin\Http\Middleware;
 
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 class Bouncer
@@ -9,7 +10,7 @@ class Bouncer
     /**
      * Handle an incoming request.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  Request  $request
      * @param  string|null  $guard
      * @return mixed
      */
@@ -24,9 +25,7 @@ class Bouncer
          * logged out.
          */
         if (! (bool) auth()->guard($guard)->user()->status) {
-            auth()->guard($guard)->logout();
-
-            session()->flash('error', __('admin::app.errors.401'));
+            $this->terminateSession($guard);
 
             return redirect()->route('admin.session.create');
         }
@@ -36,14 +35,30 @@ class Bouncer
          * auto logged out and need to contact the administrator again.
          */
         if ($this->isPermissionsEmpty()) {
-            auth()->guard($guard)->logout();
-
-            session()->flash('error', __('admin::app.errors.401'));
+            $this->terminateSession($guard);
 
             return redirect()->route('admin.session.create');
         }
 
         return $next($request);
+    }
+
+    /**
+     * Log the user out and tear the session down, then flash the reason.
+     *
+     * The session is invalidated and its token rotated so nothing the revoked
+     * session held survives; the message is flashed afterwards because
+     * invalidating would otherwise discard it.
+     */
+    protected function terminateSession($guard): void
+    {
+        auth()->guard($guard)->logout();
+
+        session()->invalidate();
+
+        session()->regenerateToken();
+
+        session()->flash('error', trans('admin::app.errors.401'));
     }
 
     /**
@@ -73,14 +88,104 @@ class Bouncer
     /**
      * Check authorization.
      *
-     * @return null
+     * The middleware fails closed: an administrative route that is not covered by the ACL map is
+     * denied rather than allowed. A route without its own mapping inherits the permission of the
+     * nearest mapped ancestor feature (so, for example, an unmapped `admin.leads.search` still
+     * requires the `leads` permission), while a small allow-list covers authentication, self-service
+     * account management, and generic UI helpers that expose no privileged data.
+     *
+     * @return void
      */
     public function checkIfAuthorized()
     {
+        $routeName = Route::currentRouteName();
+
+        if (! $routeName) {
+            return;
+        }
+
         $roles = acl()->getRoles();
 
-        if (isset($roles[Route::currentRouteName()])) {
-            bouncer()->allow($roles[Route::currentRouteName()]);
+        /**
+         * Exact ACL mapping.
+         */
+        if (isset($roles[$routeName])) {
+            bouncer()->allow($roles[$routeName]);
+
+            return;
         }
+
+        /**
+         * Public and self-service routes that any authenticated user may reach.
+         */
+        if ($this->isAllowlistedRoute($routeName)) {
+            return;
+        }
+
+        /**
+         * Fail closed: authorize against the nearest mapped ancestor feature, otherwise deny.
+         */
+        if (! $this->isAuthorizedByFeature($routeName, $roles)) {
+            abort(401, 'This action is unauthorized.');
+        }
+    }
+
+    /**
+     * Routes every authenticated user may reach regardless of their role — authentication,
+     * self-service account management, and generic UI helpers exposing no privileged data.
+     */
+    protected function isAllowlistedRoute(string $routeName): bool
+    {
+        return in_array($routeName, [
+            'admin.session.create',
+            'admin.session.store',
+            'admin.session.destroy',
+            'admin.forgot_password.create',
+            'admin.forgot_password.store',
+            'admin.reset_password.create',
+            'admin.reset_password.store',
+            'admin.user.account.edit',
+            'admin.user.account.update',
+            'admin.datagrid.look_up',
+            'admin.datagrid.saved_filters.index',
+            'admin.datagrid.saved_filters.store',
+            'admin.datagrid.saved_filters.update',
+            'admin.datagrid.saved_filters.destroy',
+            'admin.tinymce.upload',
+            'admin.settings.web_forms.form_js',
+            'admin.settings.web_forms.form_store',
+            'admin.settings.web_forms.preview',
+            'admin.mail.inbound_parse',
+        ], true);
+    }
+
+    /**
+     * Authorize an unmapped route against the permission of its nearest mapped ancestor feature.
+     * Walks up the dotted route name until a mapped feature is found, then requires the user to hold
+     * at least one permission within that feature.
+     */
+    protected function isAuthorizedByFeature(string $routeName, $roles): bool
+    {
+        $segments = explode('.', $routeName);
+
+        while (count($segments) > 2) {
+            array_pop($segments);
+
+            $prefix = implode('.', $segments).'.';
+
+            $featureKeys = collect($roles)
+                ->filter(fn ($key, $route) => str_starts_with($route, $prefix))
+                ->values();
+
+            if ($featureKeys->isEmpty()) {
+                continue;
+            }
+
+            $user = auth()->guard('user')->user();
+
+            return $featureKeys->contains(fn ($key) => $user->hasPermission($key));
+        }
+
+        return false;
     }
 }

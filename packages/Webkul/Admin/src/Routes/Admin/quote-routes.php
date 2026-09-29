@@ -6,7 +6,7 @@ use Webkul\Admin\Http\Controllers\Quote\QuoteController;
 Route::controller(QuoteController::class)->prefix('quotes')->group(function () {
     Route::get('', 'index')->name('admin.quotes.index');
 
-    Route::get('create/{id?}', 'create')->name('admin.quotes.create');
+    Route::get('create/{lead_id?}', 'create')->name('admin.quotes.create');
 
     Route::post('create', 'store')->name('admin.quotes.store');
 
@@ -19,6 +19,8 @@ Route::controller(QuoteController::class)->prefix('quotes')->group(function () {
     Route::delete('{id}', 'destroy')->name('admin.quotes.delete');
 
     Route::get('search', 'search')->name('admin.quotes.search');
+
+    Route::get('lead-products/{lead_id}', 'leadProducts')->name('admin.quotes.lead_products');
 
     Route::post('mass-destroy', 'massDestroy')->name('admin.quotes.mass_delete');
 });

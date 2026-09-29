@@ -6,6 +6,7 @@
             $value = \Carbon\Carbon::parse($value)->format('Y-m-d');
         }
     }
+    $value = old($attribute->code, $value);
 @endphp
 
 <x-admin::form.control-group.control
@@ -16,5 +17,3 @@
     :rules="$validations.'|regex:^\d{4}-\d{2}-\d{2}$'"
     :label="$attribute->name"
 />
-
-

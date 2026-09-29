@@ -59,6 +59,15 @@ class InstallerController extends Controller
      */
     public function envFileSetup(Request $request): JsonResponse
     {
+        $this->abortIfInstalled();
+
+        /**
+         * From here the database is about to be built, and the seeder will create the default
+         * administrator before the final step runs. Recording that an installation is under way
+         * keeps that half-built state from being mistaken for a finished installation.
+         */
+        $this->databaseManager->markInstallationInProgress();
+
         $message = $this->environmentManager->generateEnv($request);
 
         return new JsonResponse(['data' => $message]);
@@ -69,6 +78,8 @@ class InstallerController extends Controller
      */
     public function runMigration(): mixed
     {
+        $this->abortIfInstalled();
+
         return $this->databaseManager->migration();
     }
 
@@ -79,16 +90,18 @@ class InstallerController extends Controller
      */
     public function runSeeder()
     {
+        $this->abortIfInstalled();
+
         $allParameters = request()->allParameters;
 
         $parameter = [
             'parameter' => [
-                'default_locales'    => $allParameters['app_locale'] ?? null,
-                'default_currency'   => $allParameters['app_currency'] ?? null,
+                'default_locales' => $allParameters['app_locale'] ?? null,
+                'default_currency' => $allParameters['app_currency'] ?? null,
             ],
         ];
 
-        $response = $this->environmentManager->setEnvConfiguration(request()->allParameters);
+        $response = $this->environmentManager->setEnvConfiguration($allParameters);
 
         if ($response) {
             $seeder = $this->databaseManager->seeder($parameter);
@@ -102,6 +115,8 @@ class InstallerController extends Controller
      */
     public function adminConfigSetup(): bool
     {
+        $this->abortIfInstalled();
+
         $password = password_hash(request()->input('password'), PASSWORD_BCRYPT, ['cost' => 10]);
 
         try {
@@ -109,11 +124,11 @@ class InstallerController extends Controller
                 [
                     'id' => self::USER_ID,
                 ], [
-                    'name'     => request()->input('admin'),
-                    'email'    => request()->input('email'),
+                    'name' => request()->input('admin'),
+                    'email' => request()->input('email'),
                     'password' => $password,
-                    'role_id'  => 1,
-                    'status'   => 1,
+                    'role_id' => 1,
+                    'status' => 1,
                 ]
             );
 
@@ -128,6 +143,21 @@ class InstallerController extends Controller
     }
 
     /**
+     * Abort the request when the application has already been installed.
+     *
+     * The installer API endpoints re-write the environment file, run migrations/seeders and overwrite
+     * the administrator account. Once the completion marker exists the installation has finished, so
+     * these endpoints must not run again — this prevents an already installed application from being
+     * reconfigured or its administrator overwritten through the installer routes.
+     */
+    private function abortIfInstalled(): void
+    {
+        if ($this->databaseManager->isInstallationComplete()) {
+            abort(403);
+        }
+    }
+
+    /**
      * SMTP connection setup for Mail
      */
     private function smtpConfigSetup()
@@ -135,6 +165,14 @@ class InstallerController extends Controller
         $filePath = storage_path('installed');
 
         File::put($filePath, 'Your Krayin App is Successfully Installed');
+
+        /**
+         * Recorded in the database as well as on disk, so losing the marker file cannot reopen the
+         * installer on an application that already holds real data.
+         */
+        $this->databaseManager->markInstallationCompleted();
+
+        $this->databaseManager->clearInstallationInProgress();
 
         Event::dispatch('krayin.installed');
 

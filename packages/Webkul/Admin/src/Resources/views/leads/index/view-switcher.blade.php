@@ -1,6 +1,6 @@
 {!! view_render_event('admin.leads.index.view_switcher.before') !!}
 
-<div class="flex gap-4">
+<div class="flex items-center gap-4 max-md:w-full max-md:!justify-between">
     <x-admin::dropdown>
         <x-slot:toggle>
             {!! view_render_event('admin.leads.index.view_switcher.pipeline.button.before') !!}
@@ -38,7 +38,7 @@
                 <a
                     href="{{ route('admin.leads.index', [
                         'pipeline_id' => $tempPipeline->id,
-                        'view_type'   => request('view_type')
+                        'view_type' => request('view_type')
                     ]) }}"
                     class="block px-3 py-2.5 pl-4 text-gray-600 transition-all hover:bg-gray-100 dark:hover:bg-gray-950 dark:text-gray-300 {{ $pipeline->id == $tempPipeline->id ? 'bg-gray-100 dark:bg-gray-950' : '' }}"
                 >

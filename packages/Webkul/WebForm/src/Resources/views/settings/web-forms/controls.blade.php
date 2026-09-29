@@ -31,6 +31,19 @@
 
                 @break
 
+            @case('textarea')
+                <x-web_form::form.control-group.control
+                    type="textarea"
+                    :name="$fieldName"
+                    :id="$fieldName"
+                    :rules="$validations"
+                    :label="$attribute->name ?? $parentAttribute->name"
+                    :placeholder="$attribute->placeholder"
+                />
+                <x-web_form::form.control-group.error :control-name="$fieldName" />
+
+                @break
+
             @case('price')
                 <x-web_form::form.control-group.control
                     type="text"

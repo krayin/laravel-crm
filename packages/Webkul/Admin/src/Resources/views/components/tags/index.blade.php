@@ -23,7 +23,7 @@
                     'color': backgroundColors.find(color => color.background === tag.color)?.text
                 }"
                 v-for="(tag, index) in tags"
-                v-html="tag.name"
+                v-safe-html="tag.name"
             >
             </span>
 
@@ -47,7 +47,7 @@
 
                             <!-- Search Button -->
                             <div class="relative">
-                                <div class="relative rounded border border-gray-200 p-2 hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:hover:border-gray-400 dark:focus:border-gray-400" role="button">
+                                <div class="relative rounded border border-gray-300 p-2 hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:hover:border-gray-400 dark:focus:border-gray-400" role="button">
                                     <input
                                         type="text"
                                         class="w-full cursor-pointer pr-6 dark:bg-gray-900 dark:text-gray-300"
@@ -105,7 +105,7 @@
                             <label class="text-gray-600 dark:text-gray-300">
                                 @lang('admin::app.components.tags.index.added-tags')
                             </label>
-                            
+
                             <!-- Added Tags List -->
                             <ul class="flex flex-col">
                                 <template v-for="tag in tags">
@@ -129,7 +129,7 @@
                                             @if (bouncer()->hasPermission('settings.other_settings.tags.edit'))
                                                 <x-admin::dropdown position="bottom-right">
                                                     <x-slot:toggle>
-                                                        <button class="flex cursor-pointer items-center gap-1 rounded border border-gray-200 px-2 py-0.5 transition-all hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:hover:border-gray-400 dark:focus:border-gray-400">
+                                                        <button class="flex cursor-pointer items-center gap-1 rounded border border-gray-300 px-2 py-0.5 transition-all hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:hover:border-gray-400 dark:focus:border-gray-400">
                                                             <span
                                                                 class="h-4 w-4 break-all rounded-full"
                                                                 :style="'background-color: ' + (tag.color ? tag.color : '#546E7A')"
@@ -158,7 +158,7 @@
                                                     </x-slot>
                                                 </x-admin::dropdown>
                                             @endif
-                                            
+
                                             @if (bouncer()->hasPermission('settings.other_settings.tags.delete'))
                                                 <div class="flex items-center">
                                                     <span
@@ -200,7 +200,7 @@
                     type: String,
                     default: '',
                 },
-                
+
                 addedTags: {
                     type: Array,
                     default: () => [],
@@ -218,7 +218,7 @@
                     isRemoving: {},
 
                     tags: [],
-                    
+
                     searchedTags: [],
 
                     backgroundColors: [
@@ -276,9 +276,9 @@
                     }
 
                     this.isSearching = true;
-                    
+
                     let self = this;
-                    
+
                     this.$axios.get("{{ route('admin.settings.tags.search') }}", {
                             params: {
                                 search: 'name:' + this.searchTerm,
@@ -365,11 +365,11 @@
 
                 detachFromEntity(tag) {
                     var self = this;
-                    
+
                     this.$emitter.emit('open-confirm-modal', {
                         agree: () => {
                             this.isRemoving[tag.id] = true;
-                    
+
                             this.$axios.delete(this.detachEndpoint, {
                                     data: {
                                         tag_id: tag.id,
@@ -386,7 +386,7 @@
                                 })
                                 .catch(error => {
                                     self.$emitter.emit('add-flash', { type: 'error', message: error.response.data.message });
-                                    
+
                                     self.isRemoving[tag.id] = false;
                                 });
                         },

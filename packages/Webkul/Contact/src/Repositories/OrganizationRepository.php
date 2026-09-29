@@ -37,7 +37,7 @@ class OrganizationRepository extends Repository
     /**
      * Create.
      *
-     * @return \Webkul\Contact\Contracts\Organization
+     * @return Organization
      */
     public function create(array $data)
     {
@@ -59,7 +59,7 @@ class OrganizationRepository extends Repository
      *
      * @param  int  $id
      * @param  array  $attribute
-     * @return \Webkul\Contact\Contracts\Organization
+     * @return Organization
      */
     public function update(array $data, $id, $attributes = [])
     {
@@ -108,10 +108,8 @@ class OrganizationRepository extends Repository
         $organization = $this->findOrFail($id);
 
         DB::transaction(function () use ($organization, $id) {
-            $organization->persons()->delete();
-
             $this->attributeValueRepository->deleteWhere([
-                'entity_id'   => $id,
+                'entity_id' => $id,
                 'entity_type' => 'organizations',
             ]);
 

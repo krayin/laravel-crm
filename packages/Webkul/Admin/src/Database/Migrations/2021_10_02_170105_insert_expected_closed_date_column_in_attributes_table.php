@@ -15,20 +15,20 @@ return new class extends Migration
     {
         DB::table('attributes')->insert([
             [
-                'id'              => '7',
-                'code'            => 'expected_close_date',
-                'name'            => 'Expected Close Date',
-                'type'            => 'date',
-                'entity_type'     => 'leads',
-                'lookup_type'     => null,
-                'validation'      => null,
-                'sort_order'      => '8',
-                'is_required'     => '0',
-                'is_unique'       => '0',
-                'quick_add'       => '1',
+                'id' => '7',
+                'code' => 'expected_close_date',
+                'name' => 'Expected Close Date',
+                'type' => 'date',
+                'entity_type' => 'leads',
+                'lookup_type' => null,
+                'validation' => null,
+                'sort_order' => '8',
+                'is_required' => '0',
+                'is_unique' => '0',
+                'quick_add' => '1',
                 'is_user_defined' => '0',
-                'created_at'      => Carbon::now(),
-                'updated_at'      => Carbon::now(),
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
             ],
         ]);
     }

@@ -1,21 +1,29 @@
+@props([
+    'customAttributes' => [],
+    'entity'           => null,
+    'canAddNew'        => true,
+])
+
 @foreach ($customAttributes as $attribute)
     @php
-        if (isset($customValidations[$attribute->code])) {
-            $validations = implode('|', $customValidations[$attribute->code]);
-        } else {
-            $validations = [];
+        $validations = [];
 
-            if ($attribute->is_required) {
-                array_push($validations, 'required');
-            }
+        if ($attribute->is_required) {
+            $validations[] = 'required';
+        }
 
-            if ($attribute->type == 'price') {
-                array_push($validations, 'decimal');
-            }
+        if ($attribute->type == 'price') {
+            $validations[] = 'decimal';
+        }
 
-            array_push($validations, $attribute->validation);
+        $validations[] = $attribute->validation;
 
-            $validations = implode('|', array_filter($validations));
+        $validations = implode('|', array_filter($validations));
+
+        $key = 'installer::app.seeders.attributes.'.$attribute->entity_type.'.'.str_replace('_', '-', $attribute->code);
+        $label = trans($key);
+        if ($label === $key) {
+            $label = $attribute->name;
         }
     @endphp
 
@@ -24,7 +32,7 @@
             for="{{ $attribute->code }}"
             :class="$attribute->is_required ? 'required' : ''"
         >
-            {{ $attribute->name }}
+            {{ $label }}
 
             @if ($attribute->type == 'price')
                 <span class="currency-code">({{ core()->currencySymbol(config('app.currency')) }})</span>
@@ -36,6 +44,7 @@
                 :attribute="$attribute"
                 :validations="$validations"
                 :value="isset($entity) ? $entity[$attribute->code] : null"
+                :can-add-new="$canAddNew"
             />
         @endif
 

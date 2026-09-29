@@ -41,14 +41,14 @@
 
                     <span
                         v-if="field['channel_based'] && channelCount"
-                        class="rounded border border-gray-200 bg-gray-100 px-1 py-0.5 text-[10px] font-semibold leading-normal text-gray-600"
+                        class="rounded border border-gray-300 bg-gray-100 px-1 py-0.5 text-[10px] font-semibold leading-normal text-gray-600"
                         v-text="JSON.parse(currentChannel).name"
                     >
                     </span>
         
                     <span
                         v-if="field['locale_based']"
-                        class="rounded border border-gray-200 bg-gray-100 px-1 py-0.5 text-[10px] font-semibold leading-normal text-gray-600"
+                        class="rounded border border-gray-300 bg-gray-100 px-1 py-0.5 text-[10px] font-semibold leading-normal text-gray-600"
                         v-text="JSON.parse(currentLocale).name"
                     >
                     </span>
@@ -211,7 +211,10 @@
                         :checked="parseInt(value || 0)"
                     >
 
-                    <div class="peer h-5 w-9 cursor-pointer rounded-full bg-gray-200 after:absolute after:top-0.5 after:h-4 after:w-4 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-blue-600 peer-checked:after:border-white peer-focus:outline-none peer-focus:ring-blue-300 dark:bg-gray-800 dark:after:border-white dark:after:bg-white dark:peer-checked:bg-gray-950 after:ltr:left-0.5 peer-checked:after:ltr:translate-x-full after:rtl:right-0.5 peer-checked:after:rtl:-translate-x-full"></div>
+                    <label
+                        class="peer h-5 w-9 cursor-pointer rounded-full bg-gray-200 after:absolute after:top-0.5 after:h-4 after:w-4 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-blue-600 peer-checked:after:border-white peer-focus:outline-none peer-focus:ring-blue-300 dark:bg-gray-800 dark:after:border-white dark:after:bg-white dark:peer-checked:bg-gray-950 after:ltr:left-0.5 peer-checked:after:ltr:translate-x-full after:rtl:right-0.5 peer-checked:after:rtl:-translate-x-full"
+                        :for="name"
+                    ></label>
                 </label>
             </template>
         
@@ -261,7 +264,7 @@
             <template v-if="field.type == 'file' && field.is_visible">
                 <a
                     v-if="value"
-                    :href="`{{ route('admin.configuration.download', [request()->route('slug'), request()->route('slug2'), '']) }}/${value.split('/')[1]}`"
+                    :href="'{{ route('admin.configuration.download', [request()->route('slug'), request()->route('slug2'), ':id']) }}'.replace(':id', value.split('/')[1])"
                 >
                     <div class="mb-1 inline-flex w-full max-w-max cursor-pointer appearance-none items-center justify-between gap-x-1 rounded-md border border-transparent p-1.5 text-center text-gray-600 transition-all marker:shadow hover:bg-gray-200 active:border-gray-300 dark:text-gray-300 dark:hover:bg-gray-800">
                         <i class="icon-stats-down text-2xl"></i>

@@ -1,5 +1,10 @@
 <?php
 
+use Illuminate\Support\Facades\URL;
+use Laravel\Sanctum\Sanctum;
+use Tests\TestCase;
+use Webkul\User\Models\User;
+
 /*
 |--------------------------------------------------------------------------
 | Test Case
@@ -11,7 +16,18 @@
 |
  */
 
-uses(\Tests\TestCase::class)->in('Feature');
+uses(TestCase::class)->in('Feature');
+
+/**
+ * The configured APP_URL may point at a subdirectory (for example when the application is served
+ * from `/public` under a project folder). Laravel's test client prepends that URL to every request
+ * path, so the resulting path info would carry the subdirectory and no route would ever match,
+ * failing every feature test with a 404. Pinning a bare root URL keeps request paths aligned with
+ * the routes as registered, whatever APP_URL happens to be on the machine running the tests.
+ */
+uses()->beforeEach(function () {
+    URL::forceRootUrl('http://localhost');
+})->in('Feature');
 
 /*
 |--------------------------------------------------------------------------
@@ -42,11 +58,11 @@ expect()->extend('toBeOne', function () {
 /**
  * Get default admin which is created on fresh instance.
  *
- * @return \Webkul\User\Models\User
+ * @return User
  */
 function getDefaultAdmin()
 {
-    $admin = \Webkul\User\Models\User::find(1);
+    $admin = User::find(1);
 
     return $admin;
 }
@@ -54,11 +70,11 @@ function getDefaultAdmin()
 /**
  * Sanctum authenticated admin.
  *
- * @return \Webkul\User\Models\User
+ * @return User
  */
 function actingAsSanctumAuthenticatedAdmin()
 {
-    return \Laravel\Sanctum\Sanctum::actingAs(
+    return Sanctum::actingAs(
         getDefaultAdmin(),
         ['*']
     );

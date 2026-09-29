@@ -1,447 +1,237 @@
-## **v2.0.5 (17th of January 2025)** - *Release*
+# CHANGELOG for 2.2
 
-* #1953[fixed] Users get dead unauthorized page without dashboard permissions.
+This changelog consists of the bug & security fixes and new features being included in the releases listed below.
 
-* #1938[fixed] Add Character Limit in Activity Title and Description.
+## **v2.2.6 (10th of Sept 2026)**
 
-* #1936[fixed] In Leads when we add tags and there when we add Long Tag Name without space causes UI issue. 
+* [feature] Added MariaDB support.
 
-* #1935[fixed] Duplication of won and lost stages regarding pipeline on prospect detail view
+* [feature] Added customizable lead card information. Datagrid columns and Kanban lead card fields can now be chosen per user through new column and card settings components.
 
-* #1934[fixed] Was the ability to export leads/contacts removed in 2.0 ?
+* [feature] Added PDF export for dashboard reports, available from the dashboard alongside the existing views.
 
-* #1917[fixed] UI Issue in Activity Description on Activities Page: Content Limit Needed.
+* [feature] Added Japanese (`ja`) translation for the Admin, Installer, GoogleContact and WebForm packages.
 
-* #1915[fixed] Character Validation for Warehouse and Quotes Address Fields
+* [feature] Added an associated group column to the users grid in Settings > Users.
 
-* #1914[fixed] Exceptional Error Displayed When Previewing Webform Without Admin Login 
+* [fixed] Fixed duplicated activity handling across the lead, person, product and warehouse activity controllers by consolidating the shared logic, and added the missing Japanese activity translations.
 
-* #1873[fixed] FIlters Drop down for Type and Entity Type is having other translation missing. 
+* [fixed] Fixed the data transfer import queue processing inconsistently, and corrected the form control group rendering used by the import screen.
 
-* #1868[fixed] Workflow Webhook not work 
+* [fixed] Fixed the Google Contact settings screen erroring when no account was connected, and added the corresponding translations.
 
-* #1853[fixed] Menu Caching causing menu use old role menu access, not real menu 
+* [fixed] Fixed the mail ACL mapping so email actions are checked against the correct permission.
 
-* #1850[fixed] Failing to access webform when not logged in
+* [fixed] Fixed people created from a lead being saved with a null `user_id`, which hid them from the person listing for users restricted to group or individual data scope. They are now assigned to the lead owner, falling back to the acting user.
 
-* #1848[fixed] In Webform when we click on Add Attribute Button, there we can see translation is missing.
+* [fixed] Fixed the stage API resource omitting `lead_pipeline_id`, so stages could not be matched to their pipeline.
 
-* #1846[fixed] Placeholder Entries Not Visible in Webform Preview Page 
+* [fixed] Fixed email attachment downloads being blocked by the URL sanitizer middleware.
 
-* #1840[fixed] UI Issue When Adding Long Entries in Pipeline Stage Name Section 
+* [fixed] Added the missing Chinese translations for the users grid's associated group column.
 
-* #1838[fixed] In leads Filter we need to change the placeholder Text for Expected Delivery Date and Created Date.
+* [fixed] Fixed flaky admin end-to-end tests around organization owner lookup, lead creation and rich-text comment fields.
 
-* #1836[fixed] UI Issue in Email Input Section of Compose Mail Box
+* [security] Fixed user and role listings not being scoped by the acting user's data scope, which allowed users to see records outside their own group. Roles now track their creator via a new `created_by` column.
 
-* #1835[fixed] Shimmer Effect Missing on Create Quote Form Page
+* [security] Hardened the admin ACL middleware to fail closed. An administrative route with no ACL mapping is now denied rather than allowed, inheriting the permission of its nearest mapped ancestor, with a narrow allow-list for authentication, self-service account management and generic UI helpers.
 
-* #1834[fixed] In Lead Won/Lost drop down arrow positiion is not working.
+* [security] Removed SVG from the allowed upload types for the admin logo and favicon configuration fields.
 
-* #1833[fixed] Assigned Organization Not Displayed in New Lead When Person with Organization is Selected .
+* [security] Fixed a security issue configuration file uploads.
 
-* #1831[fixed] Shimmer Effect Missing on Create Lead Form Page
+* [security] Fixed a security issue activity notes and the TinyMCE editor component.
 
-* #1829[fixed] User Edit and Current Password Mandatory Field Validation Not Working.
+* [security] Fixed a security issue in the web form embed view.
 
-* #1828[fixed] UI issue is appearing when we assign Inventory to the product in location.
+* [security] Fixed a security issue in attribute downloads.
 
-* #1827[fixed] Delete Icon in the Location and QTY assigning to product is not aligned properly.
+* [security] Fixed a security issue in mail links.
 
-* #1825[fixed] Datagrid "Action" Heading Misaligned.
+* [security] Fixed broken tag handling in the tag settings controller.
 
-* #1824[fixed] Need to update the Text in Dashboard Open Leads By States. Change it to Open Leads By Stages.
+* [security] Fixed SVG sanitization bypasses in media and configuration file uploads.
 
-* #1823[fixed] Shimmer effect in the WebForm Page is not appropriate.
+* [security] Secured installer APIs.
 
-* #1822[fixed] When viewing person profile and there when we remove 1 email and save it. All emails entry appears empty.
+## **v2.2.5 (4th of Aug 2026)**
 
-* #1821[fixed] When I am updating the Phone Number and Email drop-down to Work to Home or Home to Work, it is not functionaling properly.
+* #2631[fixed] Fixed the persons CSV import creating duplicate records and dropping select attribute values on re-import. Existing people are now updated by matched email regardless of a changed phone or organization (so the reported count is accurate), and select/multiselect option labels (or ids) are resolved to their option ids instead of being stored as `0`.
 
-* #1820[fixed] Change the text to Mega Search in Mega Search Bar
+* #2630[fixed] Fixed date attributes in the persons CSV import silently saving as `0000-00-00`. Spreadsheet serial numbers and regional formats such as `DD/MM/YYYY` are now normalised to a valid date, and a value that cannot be parsed is reported as a row error instead of being stored as a zero date.
 
-* #1819[fixed] In Mega Search Add button Email option, Clicking on it should directly open the create mail pop-up box.
+* [feature] Added Chinese (Simplified) `zh_CN` translation for the Admin, Installer, DataTransfer, WebForm and Core packages.
 
-* #1817[fixed] Sales Details Bar Graph Not Displaying Properly Due to UI Issue with Lost Leads Graph for todays sale.
+* [feature] Added a configurable default dashboard date range — 1 month, 3 months, 9 months, 1 year, 2 years or a custom number of days — under Configuration > General > Settings > Dashboard Configurations.
 
-* #1812[fixed] Adjust Font Size and Line Height Alignment in Leads Section Without Entries
+* [fixed] Fixed menu item names set in Configuration not applying to section pages, breadcrumbs and the mobile sidebar. Previously only the desktop sidebar reflected a rename.
 
-* #1811[fixed] Add a Scrollbar for Long Warehouse Entries in Product Inventory Addition
+* [fixed] Fixed renaming the "Mail" and "Contacts" menu items having no effect anywhere, as their configuration fields did not match the actual menu keys.
 
-* #1808[fixed] Remove Location Validation in Activities 
+* [fixed] Fixed the dashboard date range label omitting the year on ranges spanning more than one calendar year, which rendered as "30 Jul - 30 Jul".
 
-* #1807[fixed] Organization Name in Person View Page Should be in Black Color. 
+* [fixed] Fixed Arabic DataTransfer translations never loading, as the file was named `ar/ar.php` instead of `ar/app.php`.
 
-* #1806[fixed] Update Button in Filters Not Visible in Dark Theme
+* [fixed] Fixed the missing Korean translation for the "None" input validation option on the create and edit attribute forms.
 
-* #1804[fixed] Creating a Quote Without a Product Leads to a "Not Found" Page
+* [enhancement] Moved the Core and DataTransfer package translations into the Admin package. Only packages that ship their own Blade views now carry a `Resources/lang` directory.
 
-* #1803[fixed] Creating a Quote without Product leads to Not Found page.
+* [enhancement] Reduced database queries on every admin page by loading the configured menu names in a single query instead of one per menu item.
 
-* #1802[fixed] Enhance Saved Filter Entry UI and Make Cross Icon Visible.
+* [enhancement] Documented the localization convention in the `crm-package-development` agent skill and in AGENTS.md.
+* [feature] Added a collapse/expand toggle to the admin sidebar, matching the Bagisto admin. The choice is remembered across page loads, and page content now reflows to the sidebar width instead of being overlaid by it. The sidebar no longer expands on hover; it is controlled by the toggle only.
+* #2614[security] Fixed unauthenticated installer access and executable email attachment upload vulnerabilities.
 
-* #1801[fixed] Add Back Button in Save/Update Filter Section 
+* #2612[feature] Added import and export support for custom attributes for Leads and Persons.
 
-* #1800[fixed] Add Proper Spacing and Padding in Calendar Filter
+* #2609[feature] Added Google Contacts export for Persons with Google account connection, duplicate detection, queued export progress, and result summary.
 
-* #1799[fixed] Enable Auto-Save for Text Fields in Filters Without Requiring "Enter"
+* #2608[fixed] Added missing "none" key to the Korean locale for attribute validation.
 
-* #1798[fixed] Lead Name Not Displaying Properly in "Open Leads By States" Dashboard Widget in Dark Mode.
+* #2606[feature] Added a collapse/expand toggle to the admin sidebar, matching the Bagisto admin. The choice is remembered across page loads, and page content now reflows to the sidebar width instead of being overlaid by it. The sidebar no longer expands on hover; it is controlled by the toggle only.
 
-* #1797[fixed] Update the Format of Organization Address on Person View Page  
+* #2606[feature] Added an option to show or hide the "Powered by" bar under Configuration > General > Settings > Powered by Section Configurations.
 
-* #1796[fixed] Negative Inventory Appears in "On Hand" When Allocated Inventory Exceeds "In Stock"
+* #2603[feature] Added Korean translations for the Installer, DataTransfer, WebForm, and Core packages.
 
-* #1795[fixed] Deleting Email and Contact Number from Lead Also Removes Them from the Person
+* #2602[feature] Added Korean translation support for the Admin package.
 
-* #1794[fixed] Organization Details Removed from Person After Lead Creation Without Adding Organization in Lead 
+* #2600[fixed] Fixed invalid activity calendar .ics date-times by emitting UTC RFC 5545 values.
 
-* #1793[fixed] Spelling Mistake in URL for Calendar When Viewing Activities
+* #2592[security] Fixed webhook validation to reject internal endpoint URLs.
 
-* #1792[fixed] Activity Link Redirects to Lead Section Instead of Specific Lead.
+* #2580[enhancement] Added a "None" option to input validation for text attributes.
 
-* #1791[fixed] Add Proper Spacing Between the Comment and Date Columns in Activities
+## **v2.2.4 (20th of July 2026)** *Release*
 
-* #1790[fixed] Display Quote Subject, Person, and Custom Attributes in Quote Print.
+* #2590[fixed] Fixed page does not refresh after creating a record via Quick Add.
 
-* #1789[fixed] Custom Attributes Assigned to Quotes Are Not Visible
+* #2589[fixed] Fixed Quick Add not working for users with group and individual permissions.
 
-* #1788[fixed] Deleting a Source Also Deletes Related Leads .
+* #2582[fixed] Fixed pipeline field visible on public webform.
 
-* #1787[fixed] Total Lead Entry Not Displayed on Dashboard Bar Graph in Leads. 
+* #2581[enhancement] Fixed responsive UI issues when page is zoomed.
 
-* #1786[fixed] Inappropriate Validation Allows Negative Price in Product Creation.
+* #2579[feature] Allow group selection for individual view permission users.
 
-* #1785[fixed] Proper Character Validation Needed for Name and Job Title in Person Section.
+* #2575[enhancement] Added previous month's sales update in Kanban view.
 
-* #1784[fixed] Proper Character Validation Needed for Name, City, Address, and Zip Code in Organization 
+* #2573[enhancement] Added dashboard support for multiple pipelines.
 
-* #1782[fixed] Text Type Attribute Validation is not working in leads section.
+* #2572[enhancement] Added filter by tag option in Contacts > Persons.
 
-* #1781[fixed] Dashboard Pie Chart Not Displaying Colors for All Lead Details
+* #2571[fixed] Fixed issue with lead creation.
 
-* #1767[fixed] Date and Time Format in RTL view for User Settings is not appropriate.
+* #2570[fixed] Fixed auto-fill lead email issue.
 
-* #1764[fixed] Remove the Mandatory Asterisk sign from the Make as Default in Pipeline.
+* #2567[fixed] Fixed IDOR agent record access control vulnerability.
 
-* #1762[fixed] User Deleted When Assigned Custom Role is Removed. 
+* #2563[fixed] Fixed Kanban infinite scroll duplicates issue.
 
-* #1761[fixed] Custom Role Created Without Selecting Options Causes Exception on User Login 
+* #2583[fixed] Fixed SQL injection in rotten lead filter.
 
-* #1760[fixed] Incorrect Text Displayed in Create Group Modal Box 
+* #2585[security] Fixed unrestricted file upload vulnerability (CVE-2026-38526).
 
-* #1758[fixed] Add Character Limit Validation for Tags Configuration
+* #2559[fixed] Fixed agent record access control issue.
 
-* #1755[fixed] GUI Installer: Admin Password Accepts Fewer Than Minimum Required Characters
+* #2556[fixed] Fixed installation config save issue.
 
-* #1744[fixed] Deleted Options still appearing when we are check the select type attribute when editing it.
+* #2550[fixed] Fixed Kanban infinite scroll duplicates.
 
-* #1742[fixed] Attribute Created File Type and assigned to product. PDF is not appearing on Product View Page.
+* #2549[enhancement] Added support tab feature.
 
-* #1741[fixed] Attribute Created and assigned to product. Attribute is not appearing on Product View Page.
+* #2548[enhancement] Allow search by phone and email when creating a lead.
 
-* #1732[fixed] Create a new attribute and assign it to Quotes, we are unable to see the assigned Attribute data.
+* #2546[feature] Quick Attribute now available at lead form.
 
-* #1701[fixed] XSS vulnerability at Note function. 
+* #2545[feature] Added agent skills functionality.
 
-* #1691[fixed] Mails details are not stored in Activities and changelog in ech section of Krayin.
+* #2544[enhancement] Added validate skills.
 
-* #1690[fixed] Compose Mail, Mail To Entry issue is appearing. This issue is appearing in almost all mail related section. 
+* #2543[enhancement] Added Agents Skills folder.
 
-* #1687[fixed] Need to add correct translation for the Sources text in Settings section.
+* #2542[fixed] Fixed stored XSS vulnerability in notes field.
 
-* #1679[fixed] Workflow Mails are not working. Files are missing due to which mails are not working also Translations are missing.
+* #2541[fixed] Fixed quote description truncation issue.
 
-* #1649[fixed] Drag and Drop Leads Card on Kanban error because fixing sortOrder of #1594
+* #2539[fixed] Fixed lost revenue arrow UI issue.
 
-* #1614[fixed] When we create a webform without enable lead toggle button, there we can see attribute options are not appear. 
+* #2538[fixed] Fixed missing translations.
 
-* #1611[fixed] When Priniting to pdf, cuurency Symbol gets printed with ? instead of the Symbol.
+* #2501[fixed] Fixed sales owner not saved in organization.
 
-* #1609[fixed] Error displaying person contacts
+* #2500[fixed] Fixed activities date filter range issue.
 
-* #1603[fixed] Bug: Page resets when entering the first character in "URL And Parameters" while creating a Webhook on mobile
+* #2479[fixed] Fixed textarea field not rendered in WebForm.
 
-* #1598[fixed] Translation Variables Displayed Instead of Text in Email Notifications
+* #2471[fixed] Fixed missing translations for lead won/lost modal.
 
-* #1595[fixed] REST API: ReflectionException "Class 'Webkul\Attribute\Http\Requests\AttributeForm' does not exist" in Krayin CRM v2.0.1 Bug
+* #2420[fixed] Added missing mega search translations for settings and configurations.
 
-* #1961[fixed] Changing activity schedule from / to date not saving
+* #2533[fixed] Fixed GUI installation issue.
 
-* #1954[fixed] Decimal values must be saved in product Price.
+* #2419[security] Fixed stored XSS vulnerability in notes field.
 
+* #2454[fixed] Fixed quote description truncation.
 
+* #2407[fixed] Fixed missing translations.
 
-## **v2.0.4 (19th of December 2024)** - *Release*
+* #2157[fixed] Fixed auto-fill lead email when creating a lead.
 
-Added support for Brazilian Portuguese (PT_BR) Language.
+* #2258[fixed] Fixed issue with same-as-billing-address field.
 
-* #1727[fixed] Fix: vulnerability issues.
+## **v2.2.3 (1st of May 2026)** *Release*
 
-* #1713[fixed] Refactor the datagrid.
+* [fixed] Pipline critical issue resolved.
 
-* #1712[fixed] Fix the lead mass update action. 
+## **v2.2.2 (1st of May 2026)** *Release*
 
-* #1711[fixed] Fix tinymce dark mode more button ui.
+* [fixed] Update Change Log and version.
 
-* #1710[fixed] Fix sidebar border on rtl.
+## **v2.2.1 (1st of May 2026)** *Release*
 
-* #1708[fixed] Fix translation of arabic and publish build as missing assets.
+* [fixed] Quote fields now auto-fill correctly when a quote is linked to a lead.
 
-* #1705[fixed] Update mass-update method 
+* [fixed] Fixed price formatting issue.
 
-* #1702[fixed] Fix users index page console error, ui and refactor code.
+* [fixed] Fixed Lead Kanban list ordering.
 
-* #1687[fixed] Need to add correct translation for the Sources text in Settings section.
+* [fixed] Fixed header block position at the top.
 
-* #1690[fixed] Compose Mail, Mail To Entry issue is appearing. This issue is appearing in almost all mail related section. 
+* [fixed] Updated Activity UI.
 
-* #1687[fixed] Need to add correct translation for the Sources text in Settings section.
+* [fixed] Admins can now view and share quote details to a person from the quote list.
 
-* #1686[fixed] remove dark mode from sessions pages. 
+* [fixed] Fixed submission issue on the web form.
 
-* #1676[fixed] Translation issue at webform. 
+* [fixed] Fixed activity display issue in the Calendar view.
 
-* #1683[fixed] Update installation link for docker.
+* [fixed] Logo update issue resolved.
 
-* #1673[fixed] Update composer for development phase. 
+* [enhancement] Drag-and-drop support added to Activity. Admins can now change date and time directly from the Calendar view.
 
-* #1673[fixed] Add missing translation. 
+* [feature] Quick App feature added for faster access to key CRM actions.
 
-* #1668[fixed] Activities datagrid total counts.
+* [feature] Admins can now add or update a person directly from the lead view page.
 
-* #1663[fixed] Numerical Validation Filed is appearing Empty in Attribute Text Field Validation. 
+* [security] Resolved an authentication bypass vulnerability caused by improper access control in the installer.
 
-* #1664[fixed] Fix format date and after validation.
+## **v2.2.0 (17th of March 2026)** *Release*
 
-* #1662[fixed] fix datagrid shimmers.
+* **[Laravel 12 Upgrade]** Upgraded framework to Laravel 12
 
-* #1660[fixed] In Attribute Filter, there we can enhance the filter in drop-down. 
+* #2480[enhancement] Codebase updates and refinements.
 
-* #1658[fixed] Entity Type must be clickable and should work and filter just like other options in Attributes Settings.
+* #2478[enhancement] Improved class instantiation handling.
 
-* #1655[fixed] Getting issue in the warehouse view when we add unwanted String in the Description. 
+* #2472[enhancement] Upgrade to Laravel 12.
 
-* #1653[fixed] fix div can not be child of p.
+* #2470[enhancement] Updated auto_commits.yml configuration.
 
-* #1650[fixed] fix lead kanban sort order issue. 
+* #2469[enhancement] General enhancements and optimizations.
 
-* #1643[fixed] Missing translation.
+* #2468[enhancement] Documentation updates (MD files).
 
-* #1642[fixed] Fix activities mass action destroy.
+* #2450[fixed] Added ACL support for warehouses.
 
-* #1640[fixed] Need to Correct translation on Configuration Locale Settings. 
-
-* #1639[fixed] Fix Errors blade file.
-
-* #1637[fixed] Datagrid checkbox.
-
-* #1636[fixed] Quote pdf download error fix. 
-
-* #1594[fixed] Stage Sorting in Pipeline not working - Krayin CRM Version. 
-
-* #1594[fixed] Stage Sorting in Pipeline not working - Krayin CRM Version. 
-
-## **v2.0.2 (24th of September 2024)** - *Release*
-
-* #1633[enhancement] Use variable instead of calling every time of use db table prefix.
-
-* #1621[enhancement] Person view page refactor.
-
-* #1632[fixed] Update mail view render event.
-
-* #1631[fixed] Dark Mode UI.
-
-* #1629[fixed] Activities participants dark mode ui fixed.
-
-* #1628[fixed] Refactor the quotes edit and create page.
-
-* #1627[fixed] Leads actions ui.
-
-* #1626[fixed] Mail View Page Refactor
-
-* #1625[fixed] Sidebar rounded menu fix in rtl view.
-
-* #1619[fixed] Persons view page avatar and organization edit button.
-
-* #1617[fixed] When Printing to pdf, currency Symbol gets printed with ? instead of the Symbol.
-
-* #1603[fixed] Bug: Page resets when entering the first character in "URL And Parameters" while creating a Webhook on mobile.
-
-* #1597[fixed] Issues with Multiselect Attribute Type for Person Entity.
-
-* #1590[fixed] File upload issue.
-
-* #1589[fixed] Date time format.
-
-* #1578[fixed] Create new user.
-
-## **v2.0.1 (6th of September 2024)** - *Release*
-
-* #1583[enhancement] Workflow create and edit page ui enhancement.
-
-* #1580[enhancement] Donut chart, ui enhancement.
-
-* #1570[enhancement] Kanban Leads add empty placeholder.
-
-* #1575[enhancement] sidebar menu width.
-
-* #1584[fixed] User is not being saved when status is not active.
-
-* #1582[fixed] Remove unused links of font family.
-
-* #1581[fixed] Product Inventories Migration have be updated.
-
-* #1576[fixed] Database Table prefix does not working while installation from CLI and GUI.
-
-* #1574[fixed] Inline component ui issues.
-
-* #1573[fixed] Add missing mail inbound parse route.
-
-* #1572[fixed] Fix modal ui issues.
-
-* #1571[fixed] Fixed lookup component.
-
-* #1560[fixed] Add description to leads view
-
-## **v2.0.0 (30th of August 2024)** - *Release*
-
-* #1492[feature] Mega Search.
-
-* #1501[enhancement] Fixed vite helpers.
-
-* #1484[enhancement] Adjustment done for all the attribute entities.
-
-* #1374[enhancement] DataGrid searchable dropdown.
-
-* #1515[enhancement] Activity deleting method added to activity trait's modal.
-
-* #1516[enhancement] Add Support pdf for arabic language.
-
-* #1525[enhancement] Update Activity Log Traits.
-
-* #1523[enhancement] Add value-label props to inline component for showing custom input value.
-
-* #1543[enhancement] Fix validation attributes with enums.
-
-* #1540[enhancement] Inline allow editable or not.
-
-* #1457[enhancement] Fixed Ui Issues.
-
-* #1460[enhancement] Mail View Dark Mode.
-
-* #1462[enhancement] Refactor Lead index page.
-
-* #1466[enhancement] Fixed accordion border issue.
-
-* #1552[enhancement] Automation Entity.
-
-* #1467[enhancement] Fix stage for rtl remove publishable folder and old css file.
-
-* #1557[enhancement] Fix script tag in webform embed.
-
-* #1529[enhancement] Log activity refactor.
-
-* #1558[fixed]  Fix DataGrid not refresh when performing the mass action.
-
-* #1527[fixed] Create Webform, There click on Add Attribute Button we can see that the translation is missing.
-
-* #1549[fixed] Fixed webform is not creating the leads and redirecting to the dashboard.
-
-* #1450[fixed] After fresh Installation when we click on the link it is not redirected to Admin login page.
-
-* #1520[fixed] Unable to add location in the warehouse when we have added location first time and again adding them.
-
-* #1538[fixed] Person View Page.
-
-* #1519[fixed] Getting warning issue when adding inventory in products.
-
-* #1472[fixed] Create a new quote and there in Quote Items we can see UI issue in Quantity and Price Input Fields.
-
-* #1535[fixed] Fix Leads stages won/lost date add validations to date component.
-
-* #1545[fixed] Unable to see List of Leads in List mode in Other ACL User.
-
-* #1541[fixed] Assigned a Lead Role to a user and gave permission for Create, Edit and View, Exceptional Error is appearing.
-
-* #1485[fixed] UI issue in Action Buttons -> They must be centre aligned.
-
-* #1404[fixed] Translation missing -> Trying to login an Inactive User.
-
-* #1482[fixed] Updated Address details in Warehouse format is not appropriate.
-
-* #1520[fixed] Unable to add location in the warehouse when we have added location first time and again adding them.
-
-* #1528[fixed] Checked and Found Console Error on Dashboard.
-
-* #1521[fixed] UI issue is appearing in product View add location section.
-
-* #1518[fixed] Add View Render events.
-
-* #1530[fixed] UI Issues.
-
-* #1526[fixed] Fixed view actions and sticky the right bar.
-
-* #1517[fixed] Fix Leads Stages.
-
-* #1486[fixed] Inactive Users are also visible in Lead Create, Sales Owner Dropdown.
-
-* #1502[fixed] Getting 500 Internal Server Error in Console and Exceptional Error in Dashboard Calender Same Day Filter applied.
-
-* #1503[fixed] Getting Console Error and Blank Page when we edit the Lead and there when we click About Lead.
-
-* #1506[fixed] Fix settings tags view create and update.
-
-* #1481[fixed] The same details are being updated across multiple warehouse locations.
-
-* #1477[fixed] After creating a note and attaching file in Product View Page, we can only see the updated details when we refresh the page.
-
-* #1415[fixed] UI issue in adding Contact Person In Leads Section.
-
-* #1403[fixed] Created a new admin user and set the status to Inactive. However, after saving, we can see the status as Active.
-
-* #1458[fixed] While sending Mail, Draft button must be disable.
-
-## **v2.0.0-BETA-1 (23rd of August 2024)** - *Release*
-
-* New, attractive UI design.
-
-* #1271[feature] Set both these accounts set as individual and yet they still see all the contacts even though they are also in different groups.
-
-* #1048[enhancement] Dashboard Pie Chart
-
-* #791[enhancement] Should have a responsive design on mobile
-
-* #1198[fixed] Sent Mail details are appearing in Inbox.
-
-* #1298[fixed] Toggle button is currently on the sidebar, in the menu section. This is not the perfect place for it .The toggle button is confusing right now
-
-* #1403[fixed] Created a new admin user and set the status to Inactive. However, after saving, we can see the status as Active.
-
-* #1405[fixed] Status Color is missing for Inactive.
-
-* #1406[fixed] Blank Page and console error is appearing when we click on Tags Section in Settings.
-
-* #1411[fixed] Unappropriated Warning Message is appearing when we send a mail In Leads.
-
-* #1418[fixed] Mail Section Checkbox's are missing
-
-* #1421[fixed] While sending Mail, Draft button must be disable.
-
-* #1424[fixed] Unable to Figure out which view is selected in List View mode, as it is not highlighted.
-
-* #1431[fixed] Arabic Local Entry is appearing twice in General Configuration.
-
-* #1432[fixed] Create Pipeline -> Delete the stage -> Warning message not appearing.
-
-* #1433[fixed] Unable to add Note and Files in Products. Getting issue Illegal operator and value combination.
-
-* #1437[fixed] Getting Console Error when we Edit SKU and Inventory in Product View Page. Failed to load resource: the server responded with a status of 405 (Method Not Allowed)
-
-* #1438[fixed] Favicon Icon for Krayin must be available.
-
-* #1445[fixed] Getting Exceptional Error when we click on the Product Number in Warehouse DataGrid.
-
-* #1450[fixed] After fresh installation when we click on the link it is not redirected to Admin login page.
-
-* #1459[fixed] Getting Exceptional error when creating a Contact Person and then we fill the required field and then click save button we can see exceptional error.
+* #2444[fixed] Improved global search functionality for organizations.

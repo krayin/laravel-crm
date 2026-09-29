@@ -2,24 +2,34 @@
 
 namespace Webkul\Admin\Http\Controllers;
 
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
+use Webkul\Core\Traits\Sanitizer;
 
 class TinyMCEController extends Controller
 {
+    use Sanitizer;
+
     /**
      * Storage folder path.
-     *
-     * @var string
      */
-    private $storagePath = 'tinymce';
+    private string $storagePath = 'tinymce';
+
+    /**
+     * The image extensions allowed to be uploaded through the editor.
+     */
+    private string $allowedExtensions = 'bmp,gif,jpeg,jpg,png,svg,webp';
 
     /**
      * Upload file from tinymce.
-     *
-     * @return void
      */
-    public function upload()
+    public function upload(): JsonResponse
     {
+        $this->validate(request(), [
+            'file' => 'required|file|mimes:'.$this->allowedExtensions.'|max:8192',
+        ]);
+
         $media = $this->storeMedia();
 
         if (! empty($media)) {
@@ -33,19 +43,35 @@ class TinyMCEController extends Controller
 
     /**
      * Store media.
-     *
-     * @return array
      */
-    public function storeMedia()
+    public function storeMedia(): array
     {
         if (! request()->hasFile('file')) {
             return [];
         }
 
+        $file = request()->file('file');
+
+        if (! $file instanceof UploadedFile) {
+            return [];
+        }
+
+        $extension = $file->extension();
+
+        if (! in_array($extension, explode(',', $this->allowedExtensions), true)) {
+            return [];
+        }
+
+        $filename = md5($file->getClientOriginalName().time()).'.'.$extension;
+
+        $path = $file->storeAs($this->storagePath, $filename);
+
+        $this->sanitizeSVG($path, $file);
+
         return [
-            'file'      => $path = request()->file('file')->store($this->storagePath),
-            'file_name' => request()->file('file')->getClientOriginalName(),
-            'file_url'  => Storage::url($path),
+            'file' => $path,
+            'file_name' => $file->getClientOriginalName(),
+            'file_url' => Storage::url($path),
         ];
     }
 }

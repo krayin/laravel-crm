@@ -2,6 +2,7 @@
 
 namespace Webkul\Admin\Http\Resources;
 
+use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class EmailAttachmentResource extends JsonResource
@@ -9,21 +10,21 @@ class EmailAttachmentResource extends JsonResource
     /**
      * Transform the resource into an array.
      *
-     * @param  \Illuminate\Http\Request
+     * @param  Request
      * @return array
      */
     public function toArray($request)
     {
         return [
-            'id'           => $this->id,
-            'name'         => $this->name,
-            'path'         => $this->path,
-            'url'          => $this->url,
-            'size'         => $this->size,
+            'id' => $this->id,
+            'name' => $this->name,
+            'path' => $this->path,
+            'url' => $this->url,
+            'size' => $this->size,
             'content_type' => $this->content_type,
-            'content_id'   => $this->content_id,
-            'created_at'   => $this->created_at,
-            'updated_at'   => $this->updated_at,
+            'content_id' => $this->content_id,
+            'created_at' => $this->created_at,
+            'updated_at' => $this->updated_at,
         ];
     }
 }

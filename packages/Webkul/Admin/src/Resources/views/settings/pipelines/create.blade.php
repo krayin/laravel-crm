@@ -10,17 +10,15 @@
         :action="route('admin.settings.pipelines.store')"
         method="POST"
     >
-        <div class="flex flex-col gap-2 rounded-lg border border-gray-200 bg-white text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
+        <div class="flex flex-col gap-2 rounded-lg border border-gray-300 bg-white text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
             <div class="flex items-center justify-between px-4 py-2">
                 <div class="flex flex-col gap-2">
-                    <div class="flex cursor-pointer items-center">
-                        {!! view_render_event('admin.settings.pipelines.create.breadcrumbs.before') !!}
+                    {!! view_render_event('admin.settings.pipelines.create.breadcrumbs.before') !!}
 
-                        <!-- Breadcrumbs -->
-                        <x-admin::breadcrumbs name="settings.pipelines.create" />
+                    <!-- Breadcrumbs -->
+                    <x-admin::breadcrumbs name="settings.pipelines.create" />
 
-                        {!! view_render_event('admin.settings.pipelines.create.breadcrumbs.after') !!}
-                    </div>
+                    {!! view_render_event('admin.settings.pipelines.create.breadcrumbs.after') !!}
 
                     <!-- Title -->
                     <div class="text-xl font-bold dark:text-white">
@@ -45,7 +43,7 @@
                 </div>
             </div>
 
-            <div class="flex gap-4 border-t border-gray-200 px-4 py-2 align-top dark:border-gray-800 max-sm:flex-wrap">
+            <div class="flex gap-4 border-t border-gray-300 px-4 py-2 align-top dark:border-gray-800 max-sm:flex-wrap">
                 {!! view_render_event('admin.settings.pipelines.create.form.name.before') !!}
 
                 <!-- Name -->
@@ -153,7 +151,7 @@
                             ::class="{ draggable: isDragable(element) }"
                             class="flex gap-4 overflow-x-auto"
                         >
-                            <div class="flex min-w-[275px] max-w-[275px] flex-col justify-between rounded-lg border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900">
+                            <div class="flex min-w-[275px] max-w-[275px] flex-col justify-between rounded-lg border border-gray-300 bg-white dark:border-gray-800 dark:bg-gray-900">
                                 <!-- Stage Crad -->
                                 <div class="flex flex-col gap-6 px-4 py-3">
                                     <!-- Stage Title and Action -->
@@ -233,7 +231,7 @@
                                 {!! view_render_event('admin.settings.pipelines.create.form.stages.delete_button.before') !!}
 
                                 <div
-                                    class="flex cursor-pointer items-center gap-2 border-t border-gray-200 p-2 text-red-600 dark:border-gray-800" 
+                                    class="flex cursor-pointer items-center gap-2 border-t border-gray-300 p-2 text-red-600 dark:border-gray-800" 
                                     @click="removeStage(element)" 
                                     v-if="isDragable(element)"
                                 >
@@ -250,7 +248,7 @@
                 </draggable>
 
                 <!-- Add New Stage Card -->
-                <div class="flex min-h-[400px] min-w-[275px] max-w-[275px] flex-col items-center justify-center gap-1 rounded-lg border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900">
+                <div class="flex min-h-[400px] min-w-[275px] max-w-[275px] flex-col items-center justify-center gap-1 rounded-lg border border-gray-300 bg-white dark:border-gray-800 dark:bg-gray-900">
                     <div class="flex flex-col items-center justify-center gap-6 px-4 py-3">
                         <div class="grid justify-center justify-items-center gap-3.5 text-center">
                             <div class="flex flex-col items-center gap-2">
@@ -300,12 +298,12 @@
                         }, {
                             'id': 'stage_99',
                             'code': 'won',
-                            'name': "{{ __('admin::app.settings.pipelines.create.won-stage') }}",
+                            'name': "@lang('admin::app.settings.pipelines.create.won-stage')",
                             'probability': 100
                         }, {
                             'id': 'stage_100',
                             'code': 'lost',
-                            'name': "{{ __('admin::app.settings.pipelines.create.lost-stage') }}",
+                            'name': "@lang('admin::app.settings.pipelines.create.lost-stage')",
                             'probability': 0
                         }],
 
@@ -390,7 +388,7 @@
                             });
 
                             if (filteredStages.length > 1) {
-                                return '{!! __('admin::app.settings.pipelines.create.duplicate-name') !!}';
+                                return "{!! trans('admin::app.settings.pipelines.create.duplicate-name') !!}";
                             }
 
                             this.removeUniqueNameErrors();

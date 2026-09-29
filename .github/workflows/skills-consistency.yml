@@ -1,0 +1,41 @@
+name: Skills Consistency
+
+permissions:
+  contents: read
+
+on:
+  pull_request:
+    paths:
+      - '.github/skills/**'
+      - '.ai/**'
+      - '.claude/**'
+      - '.codex/**'
+      - '.cursor/**'
+      - '.kilocode/**'
+      - 'bin/validate-skills.sh'
+      - '.github/workflows/skills-consistency.yml'
+  push:
+    branches:
+      - '2.*'
+      - master
+      - main
+    paths:
+      - '.github/skills/**'
+      - '.ai/**'
+      - '.claude/**'
+      - '.codex/**'
+      - '.cursor/**'
+      - '.kilocode/**'
+      - 'bin/validate-skills.sh'
+      - '.github/workflows/skills-consistency.yml'
+
+jobs:
+  validate-skills:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Validate skill source-of-truth
+        run: bash bin/validate-skills.sh

@@ -20,8 +20,8 @@ trait LogsActivity
 
             if (! $model instanceof AttributeValue) {
                 $activity = app(ActivityRepository::class)->create([
-                    'type'    => 'system',
-                    'title'   => trans('admin::app.activities.created'),
+                    'type' => 'system',
+                    'title' => trans('admin::app.activities.created'),
                     'is_done' => 1,
                     'user_id' => auth()->check()
                         ? auth()->id()
@@ -74,21 +74,21 @@ trait LogsActivity
             $attributeCode = $model->attribute?->name ?: $attributeCode;
 
             $activity = app(ActivityRepository::class)->create([
-                'type'       => 'system',
-                'title'      => trans('admin::app.activities.updated', ['attribute' => $attributeCode]),
-                'is_done'    => 1,
+                'type' => 'system',
+                'title' => trans('admin::app.activities.updated', ['attribute' => $attributeCode]),
+                'is_done' => 1,
                 'additional' => json_encode([
                     'attribute' => $attributeCode,
-                    'new'       => [
+                    'new' => [
                         'value' => $attributeData['new'],
                         'label' => static::getAttributeLabel($attributeData['new'], $model->attribute),
                     ],
-                    'old'       => [
+                    'old' => [
                         'value' => $attributeData['old'],
                         'label' => static::getAttributeLabel($attributeData['old'], $model->attribute),
                     ],
                 ]),
-                'user_id'    => auth()->id(),
+                'user_id' => auth()->id(),
             ]);
 
             if ($model instanceof AttributeValue) {

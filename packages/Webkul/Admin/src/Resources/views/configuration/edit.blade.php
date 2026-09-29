@@ -1,10 +1,12 @@
 @php
     $activeConfiguration = system_config()->getActiveConfigurationItem();
+
+    $name = $activeConfiguration->getName();
 @endphp
 
 <x-admin::layouts>
     <x-slot:title>
-        {{ $name = $activeConfiguration->getName() }}
+        {{ strip_tags($name) }}
     </x-slot>
 
     {!! view_render_event('admin.configuration.edit.form_controls.before') !!}
@@ -47,9 +49,9 @@
             </div>
         </div>
 
-        <div class="mt-6 grid grid-cols-[1fr_2fr] gap-10 max-xl:flex-wrap">
+        <div class="grid grid-cols-[1fr_2fr] gap-10 max-lg:grid-cols-1 max-lg:gap-4 lg:mt-6">
             @foreach ($activeConfiguration->getChildren() as $child)
-                <div class="grid content-start gap-2.5">
+                <div class="grid content-start gap-2.5 max-lg:mt-6">
                     <p class="text-base font-semibold text-gray-600 dark:text-gray-300">
                         {{ $child->getName() }}
                     </p>

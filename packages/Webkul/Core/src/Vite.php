@@ -30,7 +30,7 @@ class Vite
     }
 
     /**
-     * Set bagisto vite.
+     * Set krayin vite.
      *
      * @return mixed
      */

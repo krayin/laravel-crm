@@ -64,9 +64,17 @@
         />
     @endif
 
+    @php
+        $brandColor = core()->getConfigData('general.settings.menu_color.brand_color') ?? '#0E90D9';
+    @endphp
+
     @stack('styles')
 
     <style>
+        :root {
+            --brand-color: {{ $brandColor }};
+        }
+
         {!! core()->getConfigData('general.content.custom_scripts.custom_css') !!}
     </style>
 

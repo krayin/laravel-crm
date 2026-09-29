@@ -4,6 +4,7 @@ namespace Webkul\Lead\Repositories;
 
 use Carbon\Carbon;
 use Illuminate\Container\Container;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Webkul\Attribute\Repositories\AttributeRepository;
@@ -108,23 +109,37 @@ class LeadRepository extends Repository
     /**
      * Create.
      *
-     * @return \Webkul\Lead\Contracts\Lead
+     * @return Lead
      */
     public function create(array $data)
     {
-        if (! empty($data['person']['id'])) {
-            $person = $this->personRepository->update(array_merge($data['person'], [
-                'entity_type' => 'persons',
-            ]), $data['person']['id']);
-        } else {
-            $person = $this->personRepository->create(array_merge($data['person'], [
-                'entity_type' => 'persons',
-            ]));
+        /**
+         * If a person is provided, create or update the person and set the `person_id`.
+         */
+        if (isset($data['person'])) {
+            if (! empty($data['person']['id'])) {
+                $person = $this->personRepository->findOrFail($data['person']['id']);
+            } else {
+                /**
+                 * Assign the person to the lead owner (falling back to the current user) so that the
+                 * person is not created with a null `user_id`, which would otherwise hide it from the
+                 * person listing for users restricted to group/individual data scope.
+                 */
+                $person = $this->personRepository->create(array_merge($data['person'], [
+                    'entity_type' => 'persons',
+                    'user_id' => $data['user_id'] ?? auth()->guard('user')->id(),
+                ]));
+            }
+
+            $data['person_id'] = $person->id;
+        }
+
+        if (empty($data['expected_close_date'])) {
+            $data['expected_close_date'] = null;
         }
 
         $lead = parent::create(array_merge([
-            'person_id'              => $person->id,
-            'lead_pipeline_id'       => 1,
+            'lead_pipeline_id' => 1,
             'lead_pipeline_stage_id' => 1,
         ], $data));
 
@@ -136,7 +151,7 @@ class LeadRepository extends Repository
             foreach ($data['products'] as $product) {
                 $this->productRepository->create(array_merge($product, [
                     'lead_id' => $lead->id,
-                    'amount'  => $product['price'] * $product['quantity'],
+                    'amount' => $product['price'] * $product['quantity'],
                 ]));
             }
         }
@@ -148,25 +163,32 @@ class LeadRepository extends Repository
      * Update.
      *
      * @param  int  $id
-     * @param  array|\Illuminate\Database\Eloquent\Collection  $attributes
-     * @return \Webkul\Lead\Contracts\Lead
+     * @param  array|Collection  $attributes
+     * @return Lead
      */
     public function update(array $data, $id, $attributes = [])
     {
+        /**
+         * If a person is provided, create or update the person and set the `person_id`.
+         * Be cautious, as a lead can be updated without providing person data.
+         * For example, in the lead Kanban section, when switching stages, only the stage will be updated.
+         */
         if (isset($data['person'])) {
-            if (isset($data['person']['id'])) {
-                $person = $this->personRepository->update(array_merge($data['person'], [
-                    'entity_type' => 'persons',
-                ]), $data['person']['id']);
+            if (! empty($data['person']['id'])) {
+                $person = $this->personRepository->findOrFail($data['person']['id']);
             } else {
+                /**
+                 * Assign the person to the lead owner (falling back to the current user) so that the
+                 * person is not created with a null `user_id`, which would otherwise hide it from the
+                 * person listing for users restricted to group/individual data scope.
+                 */
                 $person = $this->personRepository->create(array_merge($data['person'], [
                     'entity_type' => 'persons',
+                    'user_id' => $data['user_id'] ?? auth()->guard('user')->id(),
                 ]));
             }
 
-            $data = array_merge([
-                'person_id' => $person->id,
-            ], $data);
+            $data['person_id'] = $person->id;
         }
 
         if (isset($data['lead_pipeline_stage_id'])) {
@@ -177,6 +199,10 @@ class LeadRepository extends Repository
             } else {
                 $data['closed_at'] = null;
             }
+        }
+
+        if (empty($data['expected_close_date'])) {
+            $data['expected_close_date'] = null;
         }
 
         $lead = parent::update($data, $id);

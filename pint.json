@@ -3,7 +3,7 @@
     "rules": {
         "binary_operator_spaces": {
             "operators": {
-                "=>": "align"
+                "=>": "single_space"
             }
         }
     }

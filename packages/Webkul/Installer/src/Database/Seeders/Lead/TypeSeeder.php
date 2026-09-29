@@ -24,13 +24,13 @@ class TypeSeeder extends Seeder
 
         DB::table('lead_types')->insert([
             [
-                'id'         => 1,
-                'name'       => trans('installer::app.seeders.lead.type.new-business', [], $defaultLocale),
+                'id' => 1,
+                'name' => trans('installer::app.seeders.lead.type.new-business', [], $defaultLocale),
                 'created_at' => $now,
                 'updated_at' => $now,
             ], [
-                'id'         => 2,
-                'name'       => trans('installer::app.seeders.lead.type.existing-business', [], $defaultLocale),
+                'id' => 2,
+                'name' => trans('installer::app.seeders.lead.type.existing-business', [], $defaultLocale),
                 'created_at' => $now,
                 'updated_at' => $now,
             ],

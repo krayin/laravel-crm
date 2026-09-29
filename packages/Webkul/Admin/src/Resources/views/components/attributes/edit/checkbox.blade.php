@@ -3,8 +3,12 @@
         ? app('Webkul\Attribute\Repositories\AttributeRepository')->getLookUpOptions($attribute->lookup_type)
         : $attribute->options()->orderBy('sort_order')->get();
 
-    $selectedOption = old($attribute->code) ?: $value;
+    $selectedOption = old($attribute->code, $value);
+
+    $selectedOption = is_array($selectedOption) ? $selectedOption : explode(',', $selectedOption);
 @endphp
+
+<input type="hidden" name="{{ $attribute->code }}" />
 
 @foreach ($options as $option)
     <x-admin::form.control-group class="!mb-2 flex items-center gap-2.5">
@@ -13,9 +17,9 @@
             :id="$option->id"
             name="{{ $attribute->code }}[]"
             :value="$option->id"
-            :for="$option->id" 
+            :for="$option->id"
             :label="$option->name"
-            :checked="in_array($option->id, explode(',', $selectedOption))"
+            :checked="in_array($option->id, $selectedOption)"
         />
 
         <label

@@ -4,6 +4,7 @@ namespace Webkul\Admin\Http\Controllers\Settings;
 
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Event;
 use Illuminate\View\View;
 use Webkul\Admin\DataGrids\Settings\GroupDataGrid;
@@ -37,7 +38,7 @@ class GroupController extends Controller
     public function store(): JsonResponse
     {
         $this->validate(request(), [
-            'name'        => 'required|unique:groups,name|max:50',
+            'name' => 'required|unique:groups,name|max:50',
             'description' => 'required|max:250',
         ]);
 
@@ -51,7 +52,7 @@ class GroupController extends Controller
         Event::dispatch('settings.group.create.after', $group);
 
         return new JsonResponse([
-            'data'    => $group,
+            'data' => $group,
             'message' => trans('admin::app.settings.groups.index.create-success'),
         ]);
     }
@@ -74,7 +75,7 @@ class GroupController extends Controller
     public function update(int $id): JsonResponse
     {
         $this->validate(request(), [
-            'name'        => 'required|max:50|unique:groups,name,'.$id,
+            'name' => 'required|max:50|unique:groups,name,'.$id,
             'description' => 'required|max:250',
         ]);
 
@@ -88,7 +89,7 @@ class GroupController extends Controller
         Event::dispatch('settings.group.update.after', $group);
 
         return new JsonResponse([
-            'data'    => $group,
+            'data' => $group,
             'message' => trans('admin::app.settings.groups.index.update-success'),
         ]);
     }
@@ -96,11 +97,17 @@ class GroupController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function destroy(int $id): JsonResponse
     {
         $group = $this->groupRepository->findOrFail($id);
+
+        if ($group->users()->exists()) {
+            return response()->json([
+                'message' => trans('admin::app.settings.groups.index.delete-failed-associated-users'),
+            ], 400);
+        }
 
         try {
             Event::dispatch('settings.group.delete.before', $id);
