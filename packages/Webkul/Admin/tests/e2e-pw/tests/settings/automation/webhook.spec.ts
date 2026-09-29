@@ -1,4 +1,4 @@
-import { test, expect } from '../../../setup';
+import { test, expect } from '../../../fixtures/AdminFixtures';
 import { generateUniqueWebhookUrl } from '../../../utils/faker';
 
 test.describe('Webhook Management', () => {
