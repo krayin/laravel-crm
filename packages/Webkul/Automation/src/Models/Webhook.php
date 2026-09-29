@@ -35,7 +35,7 @@ class Webhook extends Model implements ContractsWebhook
      */
     protected $casts = [
         'query_params' => 'array',
-        'headers'      => 'array',
-        'payload'      => 'array',
+        'headers' => 'array',
+        'payload' => 'array',
     ];
 }

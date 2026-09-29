@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use Webkul\Admin\Http\Controllers\Settings\AttributeController;
 use Webkul\Admin\Http\Controllers\Settings\DataTransfer\ImportController;
 use Webkul\Admin\Http\Controllers\Settings\EmailTemplateController;
+use Webkul\Admin\Http\Controllers\Settings\GoogleContactController;
 use Webkul\Admin\Http\Controllers\Settings\GroupController;
 use Webkul\Admin\Http\Controllers\Settings\LocationController;
 use Webkul\Admin\Http\Controllers\Settings\Marketing\CampaignsController;
@@ -80,6 +81,19 @@ Route::prefix('settings')->group(function () {
         Route::put('edit/{id}', 'update')->name('admin.settings.roles.update');
 
         Route::delete('{id}', 'destroy')->name('admin.settings.roles.delete');
+    });
+
+    /**
+     * Google Contacts Routes.
+     */
+    Route::controller(GoogleContactController::class)->prefix('google-contacts')->group(function () {
+        Route::get('', 'index')->name('admin.settings.google_contacts.index');
+
+        Route::get('connect', 'connect')->name('admin.settings.google_contacts.connect');
+
+        Route::get('callback', 'callback')->name('admin.settings.google_contacts.callback');
+
+        Route::post('disconnect', 'disconnect')->name('admin.settings.google_contacts.disconnect');
     });
 
     /**

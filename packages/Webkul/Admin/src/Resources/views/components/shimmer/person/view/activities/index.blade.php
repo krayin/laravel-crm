@@ -1,6 +1,6 @@
 <div class="w-full bg-white">
     <!-- Tabs -->
-    <div class="flex gap-4 border-b border-gray-200">
+    <div class="flex gap-4 border-b border-gray-300">
         @for ($i = 0; $i < 5; $i++)
             <div class="px-4 py-[11px]">
                 <div class="shimmer h-5 w-24"></div>

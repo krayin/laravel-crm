@@ -146,16 +146,16 @@ class MagicAIService
     {
         try {
             $response = \Http::withHeaders([
-                'Content-Type'  => 'application/json',
+                'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer '.$apiKey,
             ])->post(self::OPEN_ROUTER_URL, [
-                'model'    => $model,
+                'model' => $model,
                 'messages' => [
                     [
-                        'role'    => 'system',
+                        'role' => 'system',
                         'content' => self::getSystemPrompt(),
                     ], [
-                        'role'    => 'user',
+                        'role' => 'user',
                         'content' => [
                             [
                                 'type' => 'text',

@@ -1,10 +1,12 @@
 @php
     $activeConfiguration = system_config()->getActiveConfigurationItem();
+
+    $name = $activeConfiguration->getName();
 @endphp
 
 <x-admin::layouts>
     <x-slot:title>
-        {{ $name = $activeConfiguration->getName() }}
+        {{ strip_tags($name) }}
     </x-slot>
 
     {!! view_render_event('admin.configuration.edit.form_controls.before') !!}

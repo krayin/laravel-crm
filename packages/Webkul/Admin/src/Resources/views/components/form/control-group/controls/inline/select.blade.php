@@ -1,6 +1,6 @@
 @props([
     'allowEdit' => true,
-    'options'   => [],
+    'options' => [],
 ])
 
 <v-inline-select-edit

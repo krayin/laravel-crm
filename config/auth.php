@@ -1,5 +1,7 @@
 <?php
 
+use Webkul\User\Models\User;
+
 return [
 
     /*
@@ -14,7 +16,7 @@ return [
     */
 
     'defaults' => [
-        'guard'     => 'user',
+        'guard' => 'user',
         'passwords' => 'users',
     ],
 
@@ -37,7 +39,7 @@ return [
 
     'guards' => [
         'user' => [
-            'driver'   => 'session',
+            'driver' => 'session',
             'provider' => 'users',
         ],
     ],
@@ -62,7 +64,7 @@ return [
     'providers' => [
         'users' => [
             'driver' => 'eloquent',
-            'model'  => Webkul\User\Models\User::class,
+            'model' => User::class,
         ],
     ],
 
@@ -84,8 +86,8 @@ return [
     'passwords' => [
         'users' => [
             'provider' => 'users',
-            'table'    => 'user_password_resets',
-            'expire'   => 60,
+            'table' => 'user_password_resets',
+            'expire' => 60,
         ],
     ],
 

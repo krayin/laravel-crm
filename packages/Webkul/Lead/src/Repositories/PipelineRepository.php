@@ -5,6 +5,7 @@ namespace Webkul\Lead\Repositories;
 use Illuminate\Container\Container;
 use Illuminate\Support\Str;
 use Webkul\Core\Eloquent\Repository;
+use Webkul\Lead\Contracts\Pipeline;
 
 class PipelineRepository extends Repository
 {
@@ -33,7 +34,7 @@ class PipelineRepository extends Repository
     /**
      * Create pipeline.
      *
-     * @return \Webkul\Lead\Contracts\Pipeline
+     * @return Pipeline
      */
     public function create(array $data)
     {
@@ -57,7 +58,7 @@ class PipelineRepository extends Repository
      *
      * @param  int  $id
      * @param  string  $attribute
-     * @return \Webkul\Lead\Contracts\Pipeline
+     * @return Pipeline
      */
     public function update(array $data, $id, $attribute = 'id')
     {
@@ -99,7 +100,7 @@ class PipelineRepository extends Repository
     /**
      * Return the default pipeline.
      *
-     * @return \Webkul\Lead\Contracts\Pipeline
+     * @return Pipeline
      */
     public function getDefaultPipeline()
     {

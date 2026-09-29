@@ -44,7 +44,7 @@ class InstallerServiceProvider extends ServiceProvider
          */
         $this->app['router']->get('cache/{filename}', [
             'uses' => 'Webkul\Installer\Http\Controllers\ImageCacheController@getImage',
-            'as'   => 'image_cache',
+            'as' => 'image_cache',
         ])->where(['filename' => '[ \w\\.\\/\\-\\@\(\)\=]+']);
     }
 

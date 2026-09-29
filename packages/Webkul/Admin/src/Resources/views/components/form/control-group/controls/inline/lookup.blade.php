@@ -104,7 +104,7 @@
                 <!-- Popup Box -->
                 <div
                     v-if="showPopup"
-                    class="absolute z-10 mt-1 w-full origin-top transform rounded-lg border border-gray-200 bg-white p-2 shadow-lg transition-transform dark:border-gray-800 dark:bg-gray-800"
+                    class="absolute z-10 mt-1 w-full origin-top transform rounded-lg border border-gray-300 bg-white p-2 shadow-lg transition-transform dark:border-gray-800 dark:bg-gray-800"
                     :class="dropdownPosition === 'bottom' ? 'top-full mt-1' : 'bottom-full mb-1'"
                 >
                     <!-- Search Bar -->
@@ -112,7 +112,7 @@
                         type="text"
                         v-model.lazy="searchTerm"
                         v-debounce="200"
-                        class="!mb-2 w-full rounded border border-gray-200 px-2.5 py-2 text-sm font-normal text-gray-800 transition-all hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 dark:focus:border-gray-400"
+                        class="!mb-2 w-full rounded border border-gray-300 px-2.5 py-2 text-sm font-normal text-gray-800 transition-all hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 dark:focus:border-gray-400"
                         placeholder="@lang('admin::app.components.lookup.search')"
                         ref="searchInput"
                     />

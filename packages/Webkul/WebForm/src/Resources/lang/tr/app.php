@@ -2,15 +2,15 @@
 
 return [
     'acl' => [
-        'title'  => 'Web Formları',
-        'view'   => 'Görüntüle',
+        'title' => 'Web Formları',
+        'view' => 'Görüntüle',
         'create' => 'Oluştur',
-        'edit'   => 'Düzenle',
+        'edit' => 'Düzenle',
         'delete' => 'Sil',
     ],
 
     'menu' => [
-        'title'      => 'Web Formları',
+        'title' => 'Web Formları',
         'title-info' => 'CRM’den web formlarını ekle, düzenle veya sil',
     ],
 

@@ -1,9 +1,9 @@
 @props([
     'endpoint',
     'emailDetachEndpoint' => null,
-    'activeType'          => 'all',
-    'types'               => null,
-    'extraTypes'          => null,
+    'activeType' => 'all',
+    'types' => null,
+    'extraTypes' => null,
 ])
 
 {!! view_render_event('admin.components.activities.before') !!}
@@ -39,15 +39,15 @@
         <template v-else>
             {!! view_render_event('admin.components.activities.content.before') !!}
 
-            <div class="w-full rounded-md border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900">
-                <div class="flex gap-2 overflow-x-auto border-b border-gray-200 dark:border-gray-800">
+            <div class="rounded-md border border-gray-300 bg-white dark:border-gray-800 dark:bg-gray-900">
+                <div class="flex flex-wrap gap-2 border-b border-gray-300 dark:border-gray-800">
                     {!! view_render_event('admin.components.activities.content.types.before') !!}
 
                     <div
                         v-for="type in types"
                         class="cursor-pointer px-3 py-2.5 text-sm font-medium dark:text-white"
                         :class="{'border-brandColor border-b-2 !text-brandColor transition': selectedType == type.name }"
-                        @click="selectedType = type.name"
+                        @click="onTabChange(type.name)"
                     >
                         @{{ type.label }}
                     </div>
@@ -190,8 +190,7 @@
                                         <p
                                             class="dark:text-white"
                                             v-if="activity.comment"
-                                            v-safe-html="activity.comment"
-                                        ></p>
+                                        >@{{ activity.comment }}</p>
 
                                         {!! view_render_event('admin.components.activities.content.activity.item.description.after') !!}
 
@@ -356,6 +355,18 @@
                                     </p>
                                 </div>
                             </div>
+
+                            <!-- Infinite Scroll Sentinel -->
+                            <div
+                                ref="scrollSentinel"
+                                v-if="page < lastPage"
+                                class="flex justify-center py-4 text-gray-400 dark:text-gray-400"
+                            >
+                                <span
+                                    class="animate-spin text-2xl icon-resetting"
+                                    v-if="isLoadingMore"
+                                ></span>
+                            </div>
                         </div>
 
                         {!! view_render_event('admin.components.activities.content.activity.list.after') !!}
@@ -443,9 +454,15 @@
                 return {
                     isLoading: false,
 
+                    isLoadingMore: false,
+
                     isUpdating: {},
 
                     activities: [],
+
+                    page: 1,
+
+                    lastPage: 1,
 
                     selectedType: this.activeType,
 
@@ -521,14 +538,12 @@
             },
 
             computed: {
+                /**
+                 * Filtering and pagination now happen server-side, so the loaded
+                 * pages already contain only the selected type.
+                 */
                 filteredActivities() {
-                    if (this.selectedType == 'all') {
-                        return this.activities;
-                    } else if (this.selectedType == 'planned') {
-                        return this.activities.filter(activity => ! activity.is_done);
-                    }
-
-                    return this.activities.filter(activity => activity.type == this.selectedType);
+                    return this.activities;
                 }
             },
 
@@ -544,19 +559,105 @@
                 this.$emitter.on('on-activity-added', (activity) => this.activities.unshift(activity));
             },
 
+            unmounted() {
+                if (this.observer) {
+                    this.observer.disconnect();
+                }
+            },
+
             methods: {
+                onTabChange(tabName) {
+                    this.selectedType = tabName;
+
+                    // Update URL query parameter to persist tab selection
+                    const url = new window['URL'](window.location);
+                    url.searchParams.set('tab', tabName);
+                    window.history.replaceState({}, '', url.toString());
+
+                    // Reload the timeline from the first page for the new type.
+                    if (! this.extraTypes.find(type => type.name == tabName)) {
+                        this.get();
+                    }
+                },
+
                 get() {
                     this.isLoading = true;
+                    this.page = 1;
+                    this.activities = [];
 
-                    this.$axios.get(this.endpoint)
-                        .then(response => {
-                            this.activities = response.data.data;
-
+                    this.fetchPage()
+                        .then(() => {
                             this.isLoading = false;
+
+                            this.$nextTick(() => this.observeSentinel());
                         })
                         .catch(error => {
+                            this.isLoading = false;
+
                             console.error(error);
                         });
+                },
+
+                /**
+                 * Fetch the current page for the selected type and append it.
+                 */
+                fetchPage() {
+                    return this.$axios.get(this.endpoint, {
+                            params: {
+                                type: this.selectedType,
+                                page: this.page,
+                            },
+                        })
+                        .then(response => {
+                            this.activities = this.page === 1
+                                ? response.data.data
+                                : this.activities.concat(response.data.data);
+
+                            this.lastPage = response.data.meta?.last_page ?? 1;
+                        });
+                },
+
+                /**
+                 * Load the next page when the user scrolls to the bottom.
+                 */
+                loadMore() {
+                    if (this.isLoadingMore || this.page >= this.lastPage) {
+                        return;
+                    }
+
+                    this.isLoadingMore = true;
+                    this.page += 1;
+
+                    this.fetchPage()
+                        .catch(error => console.error(error))
+                        .finally(() => {
+                            this.isLoadingMore = false;
+
+                            this.$nextTick(() => this.observeSentinel());
+                        });
+                },
+
+                /**
+                 * Watch the sentinel at the end of the list to drive infinite scroll.
+                 */
+                observeSentinel() {
+                    if (this.observer) {
+                        this.observer.disconnect();
+                    }
+
+                    const sentinel = this.$refs.scrollSentinel;
+
+                    if (! sentinel) {
+                        return;
+                    }
+
+                    this.observer = new window['IntersectionObserver'](entries => {
+                        if (entries[0].isIntersecting) {
+                            this.loadMore();
+                        }
+                    }, { rootMargin: '200px' });
+
+                    this.observer.observe(sentinel);
                 },
 
                 markAsDone(activity) {

@@ -46,7 +46,7 @@ class Storage
 
         foreach ($leads as $lead) {
             $this->set($lead->title, [
-                'id'    => $lead->id,
+                'id' => $lead->id,
                 'title' => $lead->title,
             ]);
         }

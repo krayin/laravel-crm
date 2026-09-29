@@ -31,27 +31,27 @@ class GroupDataGrid extends DataGrid
     public function prepareColumns(): void
     {
         $this->addColumn([
-            'index'      => 'id',
-            'label'      => trans('admin::app.settings.groups.index.datagrid.id'),
-            'type'       => 'string',
+            'index' => 'id',
+            'label' => trans('admin::app.settings.groups.index.datagrid.id'),
+            'type' => 'string',
             'searchable' => true,
             'filterable' => true,
-            'sortable'   => true,
+            'sortable' => true,
         ]);
 
         $this->addColumn([
-            'index'      => 'name',
-            'type'       => 'string',
-            'label'      => trans('admin::app.settings.groups.index.datagrid.name'),
+            'index' => 'name',
+            'type' => 'string',
+            'label' => trans('admin::app.settings.groups.index.datagrid.name'),
             'searchable' => true,
             'filterable' => true,
-            'sortable'   => true,
+            'sortable' => true,
         ]);
 
         $this->addColumn([
-            'index'    => 'description',
-            'label'    => trans('admin::app.settings.groups.index.datagrid.description'),
-            'type'     => 'string',
+            'index' => 'description',
+            'label' => trans('admin::app.settings.groups.index.datagrid.description'),
+            'type' => 'string',
             'sortable' => false,
         ]);
     }
@@ -63,21 +63,21 @@ class GroupDataGrid extends DataGrid
     {
         if (bouncer()->hasPermission('settings.user.groups.edit')) {
             $this->addAction([
-                'index'  => 'edit',
-                'icon'   => 'icon-edit',
-                'title'  => trans('admin::app.settings.groups.index.datagrid.edit'),
+                'index' => 'edit',
+                'icon' => 'icon-edit',
+                'title' => trans('admin::app.settings.groups.index.datagrid.edit'),
                 'method' => 'GET',
-                'url'    => fn ($row) => route('admin.settings.groups.edit', $row->id),
+                'url' => fn ($row) => route('admin.settings.groups.edit', $row->id),
             ]);
         }
 
         if (bouncer()->hasPermission('settings.user.groups.delete')) {
             $this->addAction([
-                'index'  => 'delete',
-                'icon'   => 'icon-delete',
-                'title'  => trans('admin::app.settings.groups.index.datagrid.delete'),
+                'index' => 'delete',
+                'icon' => 'icon-delete',
+                'title' => trans('admin::app.settings.groups.index.datagrid.delete'),
                 'method' => 'DELETE',
-                'url'    => fn ($row) => route('admin.settings.groups.delete', $row->id),
+                'url' => fn ($row) => route('admin.settings.groups.delete', $row->id),
             ]);
         }
     }

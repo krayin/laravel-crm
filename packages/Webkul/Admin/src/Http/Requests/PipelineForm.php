@@ -36,15 +36,15 @@ class PipelineForm extends FormRequest
     {
         if (request('id')) {
             return [
-                'name'          => 'required|unique:lead_pipelines,name,'.request('id'),
+                'name' => 'required|unique:lead_pipelines,name,'.request('id'),
                 'stages.*.name' => 'unique_key',
                 'stages.*.code' => 'unique_key',
             ];
         }
 
         return [
-            'name'          => 'required|unique:lead_pipelines,name',
-            'rotten_days'   => 'required',
+            'name' => 'required|unique:lead_pipelines,name',
+            'rotten_days' => 'required',
             'stages.*.name' => 'unique_key',
             'stages.*.code' => 'unique_key',
         ];
@@ -58,7 +58,7 @@ class PipelineForm extends FormRequest
     public function messages()
     {
         return [
-            'stages.*.name.unique_key' => __('admin::app.settings.pipelines.duplicate-name'),
+            'stages.*.name.unique_key' => trans('admin::app.settings.pipelines.duplicate-name'),
         ];
     }
 

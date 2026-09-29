@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 use Webkul\Admin\DataGrids\Settings\DataTransfer\ImportDataGrid;
 use Webkul\Admin\Http\Controllers\Controller;
+use Webkul\Attribute\Repositories\AttributeRepository;
 use Webkul\DataTransfer\Helpers\Import;
 use Webkul\DataTransfer\Repositories\ImportRepository;
 
@@ -21,7 +22,8 @@ class ImportController extends Controller
      */
     public function __construct(
         protected ImportRepository $importRepository,
-        protected Import $importHelper
+        protected Import $importHelper,
+        protected AttributeRepository $attributeRepository
     ) {}
 
     /**
@@ -52,12 +54,12 @@ class ImportController extends Controller
         $importers = array_keys(config('importers'));
 
         $this->validate(request(), [
-            'type'                => 'required|in:'.implode(',', $importers),
-            'action'              => 'required:in:append,delete',
+            'type' => 'required|in:'.implode(',', $importers),
+            'action' => 'required:in:append,delete',
             'validation_strategy' => 'required:in:stop-on-errors,skip-errors',
-            'allowed_errors'      => 'required|integer|min:0',
-            'field_separator'     => 'required',
-            'file'                => 'required|mimes:csv,xls,xlsx,txt',
+            'allowed_errors' => 'required|integer|min:0',
+            'field_separator' => 'required',
+            'file' => 'required|mimes:csv,xls,xlsx,txt',
         ]);
 
         Event::dispatch('data_transfer.imports.create.before');
@@ -72,11 +74,12 @@ class ImportController extends Controller
             'field_separator',
         ]);
 
-        if (! isset($data['process_in_queue'])) {
-            $data['process_in_queue'] = false;
-        } else {
-            $data['process_in_queue'] = true;
-        }
+        /**
+         * Cast the toggle to a real boolean. The switch submits its value even when off (as `false`,
+         * `"0"` or `""`), so relying on the key's presence stored `process_in_queue = 1` for every
+         * import — which then fails to run on the default `sync` queue (issue #2629).
+         */
+        $data['process_in_queue'] = request()->boolean('process_in_queue');
 
         $import = $this->importRepository->create(
             array_merge(
@@ -118,12 +121,12 @@ class ImportController extends Controller
         $import = $this->importRepository->findOrFail($id);
 
         $this->validate(request(), [
-            'type'                => 'required|in:'.implode(',', $importers),
-            'action'              => 'required:in:append,delete',
+            'type' => 'required|in:'.implode(',', $importers),
+            'action' => 'required:in:append,delete',
             'validation_strategy' => 'required:in:stop-on-errors,skip-errors',
-            'allowed_errors'      => 'required|integer|min:0',
-            'field_separator'     => 'required',
-            'file'                => 'mimes:csv,xls,xlsx,txt',
+            'allowed_errors' => 'required|integer|min:0',
+            'field_separator' => 'required',
+            'file' => 'mimes:csv,xls,xlsx,txt',
         ]);
 
         Event::dispatch('data_transfer.imports.update.before');
@@ -139,15 +142,15 @@ class ImportController extends Controller
                 'field_separator',
             ]),
             [
-                'state'                => 'pending',
+                'state' => 'pending',
                 'processed_rows_count' => 0,
-                'invalid_rows_count'   => 0,
-                'errors_count'         => 0,
-                'errors'               => null,
-                'error_file_path'      => null,
-                'started_at'           => null,
-                'completed_at'         => null,
-                'summary'              => null,
+                'invalid_rows_count' => 0,
+                'errors_count' => 0,
+                'errors' => null,
+                'error_file_path' => null,
+                'started_at' => null,
+                'completed_at' => null,
+                'summary' => null,
             ]
         );
 
@@ -163,9 +166,7 @@ class ImportController extends Controller
             );
         }
 
-        if (! isset($data['process_in_queue'])) {
-            $data['process_in_queue'] = false;
-        }
+        $data['process_in_queue'] = request()->boolean('process_in_queue');
 
         $import = $this->importRepository->update($data, $import->id);
 
@@ -244,7 +245,7 @@ class ImportController extends Controller
 
         return new JsonResponse([
             'is_valid' => $isValid,
-            'import'   => $this->importHelper->getImport()->unsetRelations(),
+            'import' => $this->importHelper->getImport()->unsetRelations(),
         ]);
     }
 
@@ -316,7 +317,7 @@ class ImportController extends Controller
         }
 
         return new JsonResponse([
-            'stats'  => $this->importHelper->stats(Import::STATE_PROCESSED),
+            'stats' => $this->importHelper->stats(Import::STATE_PROCESSED),
             'import' => $this->importHelper->getImport()->unsetRelations(),
         ]);
     }
@@ -377,7 +378,7 @@ class ImportController extends Controller
         }
 
         return new JsonResponse([
-            'stats'  => $this->importHelper->stats(Import::STATE_LINKED),
+            'stats' => $this->importHelper->stats(Import::STATE_LINKED),
             'import' => $this->importHelper->getImport()->unsetRelations(),
         ]);
     }
@@ -437,7 +438,7 @@ class ImportController extends Controller
         }
 
         return new JsonResponse([
-            'stats'  => $this->importHelper->stats(Import::STATE_INDEXED),
+            'stats' => $this->importHelper->stats(Import::STATE_INDEXED),
             'import' => $this->importHelper->getImport()->unsetRelations(),
         ]);
     }
@@ -454,7 +455,8 @@ class ImportController extends Controller
             ->stats($state);
 
         return new JsonResponse([
-            'stats'  => $stats,
+            'stats' => $stats,
+            'stuck' => $this->importHelper->isStuck(),
             'import' => $this->importHelper->getImport()->unsetRelations(),
         ]);
     }
@@ -466,7 +468,45 @@ class ImportController extends Controller
     {
         $importer = config('importers.'.$type);
 
-        return Storage::download($importer['sample_path']);
+        $content = Storage::get($importer['sample_path']);
+
+        /**
+         * Append the user defined attribute codes as extra columns so the downloaded sample always
+         * reflects the custom attributes configured for the entity type. Only codes that are valid
+         * import column names (lowercase, matching the importer's column rule) are included so the
+         * generated sample remains importable.
+         */
+        $customAttributeCodes = $this->attributeRepository
+            ->findWhere(['entity_type' => $type, 'is_user_defined' => 1])
+            ->pluck('code')
+            ->filter(fn ($code) => preg_match('/^[a-z][a-z0-9_]*$/', $code))
+            ->all();
+
+        if (! empty($customAttributeCodes)) {
+            $content = $this->appendColumnsToCsv($content, $customAttributeCodes);
+        }
+
+        return response($content, 200, [
+            'Content-Type' => 'text/csv',
+            'Content-Disposition' => 'attachment; filename="'.basename($importer['sample_path']).'"',
+        ]);
+    }
+
+    /**
+     * Append the given columns to the header row and an empty value to every data row of a CSV.
+     */
+    protected function appendColumnsToCsv(string $content, array $columns): string
+    {
+        $lines = preg_split('/\r\n|\r|\n/', rtrim($content, "\r\n"));
+
+        $suffix = str_repeat(',', count($columns));
+
+        return collect($lines)
+            ->filter(fn ($line) => $line !== '')
+            ->map(fn ($line, $index) => $index === 0
+                ? $line.','.implode(',', $columns)
+                : $line.$suffix)
+            ->implode("\n")."\n";
     }
 
     /**

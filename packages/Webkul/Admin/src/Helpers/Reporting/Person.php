@@ -2,6 +2,7 @@
 
 namespace Webkul\Admin\Helpers\Reporting;
 
+use Carbon\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Webkul\Contact\Repositories\PersonRepository;
@@ -25,7 +26,7 @@ class Person extends AbstractReporting
     {
         return [
             'previous' => $previous = $this->getTotalPersons($this->lastStartDate, $this->lastEndDate),
-            'current'  => $current = $this->getTotalPersons($this->startDate, $this->endDate),
+            'current' => $current = $this->getTotalPersons($this->startDate, $this->endDate),
             'progress' => $this->getPercentageChange($previous, $current),
         ];
     }
@@ -33,8 +34,8 @@ class Person extends AbstractReporting
     /**
      * Retrieves total persons by date
      *
-     * @param  \Carbon\Carbon  $startDate
-     * @param  \Carbon\Carbon  $endDate
+     * @param  Carbon  $startDate
+     * @param  Carbon  $endDate
      */
     public function getTotalPersons($startDate, $endDate): int
     {
@@ -67,11 +68,11 @@ class Person extends AbstractReporting
 
         $items = $items->map(function ($item) {
             return [
-                'id'                => $item->id,
-                'name'              => $item->name,
-                'emails'            => $item->emails,
-                'contact_numbers'   => $item->contact_numbers,
-                'revenue'           => $item->revenue,
+                'id' => $item->id,
+                'name' => $item->name,
+                'emails' => $item->emails,
+                'contact_numbers' => $item->contact_numbers,
+                'revenue' => $item->revenue,
                 'formatted_revenue' => core()->formatBasePrice($item->revenue),
             ];
         });

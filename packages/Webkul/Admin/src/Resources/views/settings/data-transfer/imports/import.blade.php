@@ -4,7 +4,7 @@
     </x-slot>
 
     <!-- Page Header -->
-    <div class="flex items-center justify-between rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
+    <div class="scroll-reactive-sticky sticky top-[60px] z-[1000] flex items-center justify-between rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm shadow-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
         <div class="flex flex-col gap-2">
             {!! view_render_event('admin.settings.data_transfers.import.breadcrumbs.before') !!}
 
@@ -27,7 +27,7 @@
                 {!! view_render_event('admin.settings.data_transfers.import.edit_button.before') !!}
 
                 <!-- Edit Button -->
-                @if (bouncer()->hasPermission('settings.data_transfer.imports.edit'))
+                @if (bouncer()->hasPermission('settings.automation.data_transfer.imports.edit'))
                     <a
                         href="{{ route('admin.settings.data_transfer.imports.edit', $import->id) }}"
                         class="primary-button"
@@ -197,6 +197,15 @@
                         <i class="icon-info rounded-full bg-green-200 text-2xl text-green-600 dark:!text-green-600"></i>
 
                         @lang('admin::app.settings.data-transfer.imports.import.importing-info')
+                    </p>
+
+                    <p
+                        v-if="importResource.process_in_queue && stats.progress == 0"
+                        class="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-300"
+                    >
+                        <i class="icon-info text-xl text-blue-600"></i>
+
+                        @lang('admin::app.settings.data-transfer.imports.import.importing-queue-hint')
                     </p>
 
                     <div class="h-5 w-full rounded-sm bg-green-200 dark:bg-green-700">
@@ -521,6 +530,19 @@
                                 this.importResource = response.data.import;
 
                                 this.stats = response.data.stats;
+
+                                /**
+                                 * A queued import with no worker consuming the chain never progresses,
+                                 * so stop polling and surface the cause instead of spinning at 0%.
+                                 */
+                                if (response.data.stuck) {
+                                    this.$emitter.emit('add-flash', {
+                                        type: 'error',
+                                        message: "@lang('admin::app.settings.data-transfer.imports.queue-worker-not-running')",
+                                    });
+
+                                    return;
+                                }
 
                                 if (this.importResource.state != 'completed') {
                                     setTimeout(() => {

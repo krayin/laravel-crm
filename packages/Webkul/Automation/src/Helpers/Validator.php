@@ -2,12 +2,14 @@
 
 namespace Webkul\Automation\Helpers;
 
+use Webkul\Automation\Contracts\Workflow;
+
 class Validator
 {
     /**
      * Validate workflow for condition
      *
-     * @param  \Webkul\Automation\Contracts\Workflow  $workflow
+     * @param  Workflow  $workflow
      * @param  mixed  $entity
      * @return bool
      */

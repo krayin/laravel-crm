@@ -4,7 +4,9 @@ namespace Webkul\DataTransfer\Helpers\Importers\Leads;
 
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Validator;
+use Webkul\Attribute\Models\AttributeValue;
 use Webkul\Attribute\Repositories\AttributeRepository;
 use Webkul\Attribute\Repositories\AttributeValueRepository;
 use Webkul\Core\Contracts\Validations\Decimal;
@@ -47,7 +49,7 @@ class Importer extends AbstractImporter
      * Error message templates.
      */
     protected array $messages = [
-        self::ERROR_ID_NOT_FOUND_FOR_DELETE => 'data_transfer::app.importers.leads.validation.errors.id-not-found',
+        self::ERROR_ID_NOT_FOUND_FOR_DELETE => 'admin::app.settings.data-transfer.importers.leads.validation.errors.id-not-found',
     ];
 
     /**
@@ -85,6 +87,21 @@ class Importer extends AbstractImporter
             $attributeRepository,
             $attributeValueRepository,
         );
+
+        $this->initAttributes();
+    }
+
+    /**
+     * Append the lead attribute codes (including user defined ones) to the list of valid columns
+     * so that custom attributes can be imported alongside the built-in fields.
+     */
+    protected function initAttributes(): void
+    {
+        $attributes = $this->attributeRepository->findWhere(['entity_type' => 'leads']);
+
+        foreach ($attributes as $attribute) {
+            $this->validColumnNames[] = $attribute->code;
+        }
     }
 
     /**
@@ -140,8 +157,8 @@ class Importer extends AbstractImporter
             $product = $this->parseProducts($rowData['product']);
 
             $validator = Validator::make($product, [
-                'id'       => 'required|exists:products,id',
-                'price'    => 'required',
+                'id' => 'required|exists:products,id',
+                'price' => 'required',
                 'quantity' => 'required',
             ]);
 
@@ -161,13 +178,13 @@ class Importer extends AbstractImporter
          */
         $validator = Validator::make($rowData, [
             ...$this->getValidationRules('leads|persons', $rowData),
-            'id'                     => 'numeric',
-            'status'                 => 'sometimes|required|in:0,1',
-            'user_id'                => 'required|exists:users,id',
-            'person_id'              => 'required|exists:persons,id',
-            'lead_source_id'         => 'required|exists:lead_sources,id',
-            'lead_type_id'           => 'required|exists:lead_types,id',
-            'lead_pipeline_id'       => 'required|exists:lead_pipelines,id',
+            'id' => 'numeric',
+            'status' => 'sometimes|required|in:0,1',
+            'user_id' => 'required|exists:users,id',
+            'person_id' => 'required|exists:persons,id',
+            'lead_source_id' => 'required|exists:lead_sources,id',
+            'lead_type_id' => 'required|exists:lead_types,id',
+            'lead_pipeline_id' => 'required|exists:lead_pipelines,id',
             'lead_pipeline_stage_id' => 'required|exists:lead_pipeline_stages,id',
         ]);
 
@@ -238,23 +255,23 @@ class Importer extends AbstractImporter
                     }
 
                     $validations = [
-                        $attribute->code.'.address'  => 'required',
-                        $attribute->code.'.country'  => 'required',
-                        $attribute->code.'.state'    => 'required',
-                        $attribute->code.'.city'     => 'required',
+                        $attribute->code.'.address' => 'required',
+                        $attribute->code.'.country' => 'required',
+                        $attribute->code.'.state' => 'required',
+                        $attribute->code.'.city' => 'required',
                         $attribute->code.'.postcode' => 'required',
                     ];
                 } elseif ($attribute->type == 'email') {
                     $validations = [
-                        $attribute->code              => [$attribute->is_required ? 'required' : 'nullable'],
-                        $attribute->code.'.*.value'   => [$attribute->is_required ? 'required' : 'nullable', 'email'],
-                        $attribute->code.'.*.label'   => $attribute->is_required ? 'required' : 'nullable',
+                        $attribute->code => [$attribute->is_required ? 'required' : 'nullable'],
+                        $attribute->code.'.*.value' => [$attribute->is_required ? 'required' : 'nullable', 'email'],
+                        $attribute->code.'.*.label' => $attribute->is_required ? 'required' : 'nullable',
                     ];
                 } elseif ($attribute->type == 'phone') {
                     $validations = [
-                        $attribute->code              => [$attribute->is_required ? 'required' : 'nullable'],
-                        $attribute->code.'.*.value'   => [$attribute->is_required ? 'required' : 'nullable'],
-                        $attribute->code.'.*.label'   => $attribute->is_required ? 'required' : 'nullable',
+                        $attribute->code => [$attribute->is_required ? 'required' : 'nullable'],
+                        $attribute->code.'.*.value' => [$attribute->is_required ? 'required' : 'nullable'],
+                        $attribute->code.'.*.label' => $attribute->is_required ? 'required' : 'nullable',
                     ];
                 } else {
                     $validations[$attribute->code] = [$attribute->is_required ? 'required' : 'nullable'];
@@ -284,7 +301,7 @@ class Importer extends AbstractImporter
                             request($field)
                         )
                         ) {
-                            $fail(trans('data_transfer::app.validation.errors.already-exists', ['attribute' => $attribute->name]));
+                            $fail(trans('admin::app.settings.data-transfer.validation.errors.already-exists', ['attribute' => $attribute->name]));
                         }
                     });
                 }
@@ -318,7 +335,7 @@ class Importer extends AbstractImporter
         $batch = $this->importBatchRepository->update([
             'state' => Import::STATE_PROCESSED,
 
-            'summary'      => [
+            'summary' => [
                 'created' => $this->getCreatedItemsCount(),
                 'updated' => $this->getUpdatedItemsCount(),
                 'deleted' => $this->getDeletedItemsCount(),
@@ -386,17 +403,24 @@ class Importer extends AbstractImporter
             $lead = $this->leadsStorage->get($title);
 
             $leadProducts['insert'][] = [
-                'lead_id'    => $lead['id'],
+                'lead_id' => $lead['id'],
                 'product_id' => $product['id'],
-                'price'      => $product['price'],
-                'quantity'   => $product['quantity'],
-                'amount'     => $product['amount'],
+                'price' => $product['price'],
+                'quantity' => $product['quantity'],
+                'amount' => $product['amount'],
             ];
+        }
+
+        /**
+         * Nothing to link when none of the rows in this batch reference a product.
+         */
+        if (empty($leadProducts['insert'])) {
+            return;
         }
 
         foreach ($leadProducts['insert'] as $key => $leadProduct) {
             $this->leadProductRepository->deleteWhere([
-                'lead_id'    => $leadProduct['lead_id'],
+                'lead_id' => $leadProduct['lead_id'],
                 'product_id' => $leadProduct['product_id'],
             ]);
         }
@@ -445,19 +469,30 @@ class Importer extends AbstractImporter
 
         $leads = [];
 
+        $attributeValues = [];
+
         /**
          * Prepare leads for import.
          */
         foreach ($batch->data as $rowData) {
+            /**
+             * Custom (user defined) attribute values are not columns on the leads table; they are
+             * persisted separately via saveAttributeValues(). Only the native columns are written
+             * to the leads table here.
+             */
+            $native = Arr::only($rowData, $this->getEntityColumns());
+
             if (isset($rowData['id'])) {
-                $leads['update'][$rowData['id']] = Arr::except($rowData, ['product']);
+                $leads['update'][$rowData['id']] = $native;
             } else {
                 $leads['insert'][$rowData['title']] = [
-                    ...Arr::except($rowData, ['id', 'product']),
+                    ...Arr::except($native, ['id']),
                     'created_at' => $rowData['created_at'] ?? now(),
                     'updated_at' => $rowData['updated_at'] ?? now(),
                 ];
             }
+
+            $this->prepareAttributeValues($rowData, $attributeValues);
         }
 
         if (! empty($leads['update'])) {
@@ -488,13 +523,86 @@ class Importer extends AbstractImporter
 
             foreach ($newLeads as $lead) {
                 $this->leadsStorage->set($lead->title, [
-                    'id'    => $lead->id,
+                    'id' => $lead->id,
                     'title' => $lead->title,
                 ]);
             }
         }
 
+        $this->saveAttributeValues($attributeValues);
+
         return true;
+    }
+
+    /**
+     * The native columns of the leads table (custom attribute values are stored separately).
+     */
+    protected function getEntityColumns(): array
+    {
+        static $columns;
+
+        return $columns ??= Schema::getColumnListing('leads');
+    }
+
+    /**
+     * Map each row's lead attribute values (including user defined ones), keyed by lead title.
+     */
+    public function prepareAttributeValues(array $rowData, array &$attributeValues): void
+    {
+        foreach ($rowData as $code => $value) {
+            if (is_null($value)) {
+                continue;
+            }
+
+            $attribute = $this->attributeRepository->findOneWhere([
+                'code' => $code,
+                'entity_type' => 'leads',
+            ]);
+
+            if (! $attribute) {
+                continue;
+            }
+
+            $attributeTypeValues = array_fill_keys(array_values(AttributeValue::$attributeTypeFields), null);
+
+            $attributeValues[$rowData['title']][] = array_merge($attributeTypeValues, [
+                'attribute_id' => $attribute->id,
+                AttributeValue::$attributeTypeFields[$attribute->type] => $value,
+            ]);
+        }
+    }
+
+    /**
+     * Upsert the collected lead attribute values into the EAV attribute_values table.
+     */
+    public function saveAttributeValues(array $attributeValues): void
+    {
+        $leadAttributeValues = [];
+
+        foreach ($attributeValues as $title => $values) {
+            $lead = $this->leadsStorage->get($title);
+
+            if (! $lead) {
+                continue;
+            }
+
+            foreach ($values as $attribute) {
+                $attribute['entity_id'] = (int) $lead['id'];
+
+                $attribute['unique_id'] = implode('|', array_filter([
+                    $attribute['entity_id'],
+                    $attribute['attribute_id'],
+                ]));
+
+                $attribute['entity_type'] = 'leads';
+
+                $leadAttributeValues[$attribute['unique_id']] = $attribute;
+            }
+        }
+
+        if (! empty($leadAttributeValues)) {
+            $this->attributeValueRepository->upsert($leadAttributeValues, 'unique_id');
+        }
     }
 
     /**

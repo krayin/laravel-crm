@@ -2,6 +2,7 @@
 
 namespace Webkul\Admin\Helpers\Reporting;
 
+use Carbon\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Webkul\Contact\Repositories\OrganizationRepository;
@@ -25,7 +26,7 @@ class Organization extends AbstractReporting
     {
         return [
             'previous' => $previous = $this->getTotalOrganizations($this->lastStartDate, $this->lastEndDate),
-            'current'  => $current = $this->getTotalOrganizations($this->startDate, $this->endDate),
+            'current' => $current = $this->getTotalOrganizations($this->startDate, $this->endDate),
             'progress' => $this->getPercentageChange($previous, $current),
         ];
     }
@@ -33,8 +34,8 @@ class Organization extends AbstractReporting
     /**
      * Retrieves total organizations by date
      *
-     * @param  \Carbon\Carbon  $startDate
-     * @param  \Carbon\Carbon  $endDate
+     * @param  Carbon  $startDate
+     * @param  Carbon  $endDate
      */
     public function getTotalOrganizations($startDate, $endDate): int
     {
@@ -68,9 +69,9 @@ class Organization extends AbstractReporting
 
         $items = $items->map(function ($item) {
             return [
-                'id'                => $item->id,
-                'name'              => $item->name,
-                'revenue'           => $item->revenue,
+                'id' => $item->id,
+                'name' => $item->name,
+                'revenue' => $item->revenue,
                 'formatted_revenue' => core()->formatBasePrice($item->revenue),
             ];
         });

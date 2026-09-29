@@ -1,6 +1,7 @@
 @props([
-    'entity'            => null,
+    'entity' => null,
     'entityControlName' => null,
+    'emails' => [],
 ])
 
 <!-- Mail Button -->
@@ -24,6 +25,7 @@
     <v-mail-activity
         ref="mailActionComponent"
         :entity="{{ json_encode($entity) }}"
+        :emails="{{ json_encode($emails) }}"
         entity-control-name="{{ $entityControlName }}"
     ></v-mail-activity>
 
@@ -84,11 +86,11 @@
                                 </x-admin::form.control-group.label>
 
                                 <div class="relative">
-                                    <x-admin::form.control-group.control
-                                        type="tags"
+                                    <x-admin::form.control-group.controls.tags
                                         name="reply_to"
                                         rules="required"
                                         input-rules="email"
+                                        ::data="emails"
                                         :label="trans('admin::app.components.activities.actions.mail.to')"
                                         :placeholder="trans('admin::app.components.activities.actions.mail.enter-emails')"
                                     />
@@ -238,6 +240,11 @@
                     type: String,
                     required: true,
                     default: ''
+                },
+
+                emails: {
+                    type: Array,
+                    default: () => []
                 }
             },
 

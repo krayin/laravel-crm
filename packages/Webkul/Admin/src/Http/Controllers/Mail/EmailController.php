@@ -5,6 +5,7 @@ namespace Webkul\Admin\Http\Controllers\Mail;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
@@ -14,6 +15,7 @@ use Webkul\Admin\Http\Controllers\Controller;
 use Webkul\Admin\Http\Requests\MassDestroyRequest;
 use Webkul\Admin\Http\Requests\MassUpdateRequest;
 use Webkul\Admin\Http\Resources\EmailResource;
+use Webkul\Email\Enums\SupportedFolderEnum;
 use Webkul\Email\InboundEmailProcessor\Contracts\InboundEmailProcessor;
 use Webkul\Email\Mails\Email;
 use Webkul\Email\Repositories\AttachmentRepository;
@@ -38,73 +40,86 @@ class EmailController extends Controller
      */
     public function index(): View|JsonResponse|RedirectResponse
     {
-        if (! request('route')) {
-            return redirect()->route('admin.mail.index', ['route' => 'inbox']);
+        $route = request('route');
+
+        if (! $route) {
+            return redirect()->route('admin.mail.index', ['route' => SupportedFolderEnum::INBOX->value]);
         }
 
-        if (! bouncer()->hasPermission('mail.'.request('route'))) {
-            abort(401, 'This action is unauthorized');
+        if (! bouncer()->hasPermission('mail.'.$route)) {
+            abort(401, trans('admin::app.mail.unauthorized'));
         }
 
-        switch (request('route')) {
-            case 'compose':
-                return view('admin::mail.compose');
-
-            default:
-                if (request()->ajax()) {
-                    return datagrid(EmailDataGrid::class)->process();
-                }
-
-                return view('admin::mail.index');
+        if (request()->ajax()) {
+            return datagrid(EmailDataGrid::class)->process();
         }
+
+        return view('admin::mail.index', compact('route'));
     }
 
     /**
      * Display a resource.
      *
-     * @return \Illuminate\View\View
+     * @return View
      */
     public function view()
     {
+        $route = request('route');
+
         $email = $this->emailRepository
-            ->with(['emails', 'attachments', 'emails.attachments', 'lead', 'lead.person', 'lead.tags', 'lead.source', 'lead.type', 'person'])
+            ->with([
+                'emails',
+                'attachments',
+                'emails.attachments',
+                'lead',
+                'lead.person',
+                'lead.tags',
+                'lead.source',
+                'lead.type',
+                'person',
+            ])
             ->findOrFail(request('id'));
 
+        /**
+         * A mail linked to a lead or person is scoped to whoever owns that record. The mailbox
+         * itself is shared, so unlinked mail stays visible to everyone with mail access; but a
+         * linked mail belonging to a lead/person outside the acting user's data scope is denied
+         * outright, rather than merely hiding its `lead_id` while still returning the subject,
+         * body, thread and attachments.
+         */
         if ($userIds = bouncer()->getAuthorizedUserIds()) {
-            $results = $this->leadRepository->findWhere([
-                ['id', '=', $email->lead_id],
-                ['user_id', 'IN', $userIds],
+            $ownerIds = array_filter([
+                $email->lead?->user_id,
+                $email->person?->user_id,
             ]);
-        } else {
-            $results = $this->leadRepository->findWhere([
-                ['id', '=', $email->lead_id],
-            ]);
+
+            if ($ownerIds && empty(array_intersect($ownerIds, $userIds))) {
+                abort(401, trans('admin::app.errors.unauthorized'));
+            }
         }
 
-        if (empty($results->toArray())) {
-            unset($email->lead_id);
-        }
-
-        if (request('route') == 'draft') {
+        if ($route == SupportedFolderEnum::DRAFT->value) {
             return response()->json([
                 'data' => new EmailResource($email),
             ]);
         }
 
-        return view('admin::mail.view', compact('email'));
+        return view('admin::mail.view', compact('email', 'route'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function store()
     {
         $this->validate(request(), [
-            'reply_to'   => 'required|array|min:1',
+            'reply_to' => 'required|array|min:1',
             'reply_to.*' => 'email',
-            'reply'      => 'required',
+            'reply' => 'required',
+            'attachments' => 'sometimes|array',
+            'attachments.*' => 'file|max:20480',
         ]);
 
         Event::dispatch('email.create.before');
@@ -116,9 +131,9 @@ class EmailController extends Controller
                 Mail::send(new Email($email));
 
                 $this->emailRepository->update([
-                    'folders' => ['sent'],
+                    'folders' => [SupportedFolderEnum::SENT->value],
                 ], $email->id);
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
             }
         }
 
@@ -126,7 +141,7 @@ class EmailController extends Controller
 
         if (request()->ajax()) {
             return response()->json([
-                'data'    => new EmailResource($email),
+                'data' => new EmailResource($email),
                 'message' => trans('admin::app.mail.create-success'),
             ]);
         }
@@ -134,19 +149,19 @@ class EmailController extends Controller
         if (request('is_draft')) {
             session()->flash('success', trans('admin::app.mail.saved-to-draft'));
 
-            return redirect()->route('admin.mail.index', ['route' => 'draft']);
+            return redirect()->route('admin.mail.index', ['route' => SupportedFolderEnum::DRAFT->value]);
         }
 
         session()->flash('success', trans('admin::app.mail.create-success'));
 
-        return redirect()->route('admin.mail.index', ['route'   => 'sent']);
+        return redirect()->route('admin.mail.index', ['route' => SupportedFolderEnum::SENT->value]);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function update($id)
     {
@@ -155,7 +170,7 @@ class EmailController extends Controller
         $data = request()->all();
 
         if (! is_null(request('is_draft'))) {
-            $data['folders'] = request('is_draft') ? ['draft'] : ['outbox'];
+            $data['folders'] = request('is_draft') ? [SupportedFolderEnum::DRAFT->value] : [SupportedFolderEnum::OUTBOX->value];
         }
 
         $email = $this->emailRepository->update($data, request('id') ?? $id);
@@ -167,9 +182,9 @@ class EmailController extends Controller
                 Mail::send(new Email($email));
 
                 $this->emailRepository->update([
-                    'folders' => ['inbox', 'sent'],
+                    'folders' => [SupportedFolderEnum::INBOX->value, SupportedFolderEnum::SENT->value],
                 ], $email->id);
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
             }
         }
 
@@ -177,17 +192,17 @@ class EmailController extends Controller
             if (request('is_draft')) {
                 session()->flash('success', trans('admin::app.mail.saved-to-draft'));
 
-                return redirect()->route('admin.mail.index', ['route' => 'draft']);
+                return redirect()->route('admin.mail.index', ['route' => SupportedFolderEnum::DRAFT->value]);
             } else {
                 session()->flash('success', trans('admin::app.mail.create-success'));
 
-                return redirect()->route('admin.mail.index', ['route' => 'inbox']);
+                return redirect()->route('admin.mail.index', ['route' => SupportedFolderEnum::INBOX->value]);
             }
         }
 
         if (request()->ajax()) {
             return response()->json([
-                'data'    => new EmailResource($email->refresh()),
+                'data' => new EmailResource($email->refresh()),
                 'message' => trans('admin::app.mail.update-success'),
             ]);
         }
@@ -200,7 +215,7 @@ class EmailController extends Controller
     /**
      * Run process inbound parse email.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function inboundParse(InboundEmailProcessor $inboundEmailProcessor)
     {
@@ -213,15 +228,42 @@ class EmailController extends Controller
      * Download file from storage
      *
      * @param  int  $id
-     * @return \Illuminate\View\View
+     * @return View
      */
     public function download($id)
     {
+        /**
+         * Downloading an attachment requires the mail view permission — the same permission that
+         * gates the mailbox it belongs to. This closes the missing function-level authorization that
+         * let any authenticated user retrieve an attachment by its id, independent of the ACL route
+         * map (defense in depth).
+         */
+        abort_unless(bouncer()->hasPermission('mail.view'), 401, trans('admin::app.errors.unauthorized'));
+
         $attachment = $this->attachmentRepository->findOrFail($id);
 
+        /**
+         * Bind the download to the acting user's data scope through the attachment's parent mail:
+         * an attachment on a lead/person-linked mail outside that scope is refused, so an
+         * unauthorized mail id can no longer be turned into an unauthorized file download.
+         */
+        if ($userIds = bouncer()->getAuthorizedUserIds()) {
+            $email = $attachment->email;
+
+            $ownerIds = array_filter([
+                $email?->lead?->user_id,
+                $email?->person?->user_id,
+            ]);
+
+            if ($ownerIds && empty(array_intersect($ownerIds, $userIds))) {
+                abort(401, trans('admin::app.errors.unauthorized'));
+            }
+        }
+
         try {
-            return Storage::download($attachment->path);
-        } catch (\Exception $e) {
+            return Storage::disk(AttachmentRepository::resolveDisk($attachment->path))
+                ->download($attachment->path, $attachment->name);
+        } catch (Exception $e) {
             session()->flash('error', $e->getMessage());
 
             return redirect()->back();
@@ -268,9 +310,9 @@ class EmailController extends Controller
 
             $parentId = $email->parent_id;
 
-            if (request('type') == 'trash') {
+            if (request('type') == SupportedFolderEnum::TRASH->value) {
                 $this->emailRepository->update([
-                    'folders' => ['trash'],
+                    'folders' => [SupportedFolderEnum::TRASH->value],
                 ], $id);
             } else {
                 $this->emailRepository->delete($id);
@@ -290,8 +332,8 @@ class EmailController extends Controller
                 return redirect()->back();
             }
 
-            return redirect()->route('admin.mail.index', ['route' => 'inbox']);
-        } catch (\Exception $exception) {
+            return redirect()->route('admin.mail.index', ['route' => SupportedFolderEnum::INBOX->value]);
+        } catch (Exception $exception) {
             if (request()->ajax()) {
                 return response()->json([
                     'message' => trans('admin::app.mail.delete-failed'),
@@ -315,8 +357,8 @@ class EmailController extends Controller
             foreach ($mails as $email) {
                 Event::dispatch('email.'.$massDestroyRequest->input('type').'.before', $email->id);
 
-                if ($massDestroyRequest->input('type') == 'trash') {
-                    $this->emailRepository->update(['folders' => ['trash']], $email->id);
+                if ($massDestroyRequest->input('type') == SupportedFolderEnum::TRASH->value) {
+                    $this->emailRepository->update(['folders' => [SupportedFolderEnum::TRASH->value]], $email->id);
                 } else {
                     $this->emailRepository->delete($email->id);
                 }
@@ -327,7 +369,7 @@ class EmailController extends Controller
             return response()->json([
                 'message' => trans('admin::app.mail.delete-success'),
             ]);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return response()->json([
                 'message' => trans('admin::app.mail.delete-success'),
             ]);

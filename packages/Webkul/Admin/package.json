@@ -23,6 +23,7 @@
         "chartjs-chart-funnel": "^4.2.1",
         "dompurify": "^3.1.7",
         "dotenv": "^16.4.7",
+        "fast-csv": "^5.0.5",
         "flatpickr": "^4.6.13",
         "mitt": "^3.0.1",
         "playwright": "^1.48.1",

@@ -3,15 +3,21 @@
 namespace Webkul\Lead\Providers;
 
 use Webkul\Core\Providers\BaseModuleServiceProvider;
+use Webkul\Lead\Models\Lead;
+use Webkul\Lead\Models\Pipeline;
+use Webkul\Lead\Models\Product;
+use Webkul\Lead\Models\Source;
+use Webkul\Lead\Models\Stage;
+use Webkul\Lead\Models\Type;
 
 class ModuleServiceProvider extends BaseModuleServiceProvider
 {
     protected $models = [
-        \Webkul\Lead\Models\Lead::class,
-        \Webkul\Lead\Models\Pipeline::class,
-        \Webkul\Lead\Models\Product::class,
-        \Webkul\Lead\Models\Source::class,
-        \Webkul\Lead\Models\Stage::class,
-        \Webkul\Lead\Models\Type::class,
+        Lead::class,
+        Pipeline::class,
+        Product::class,
+        Source::class,
+        Stage::class,
+        Type::class,
     ];
 }

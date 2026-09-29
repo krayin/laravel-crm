@@ -460,6 +460,10 @@
                                         >
                                             @lang('installer::app.installer.index.environment-configuration.mysql')
                                         </option>
+
+                                        <option value="mariadb">
+                                            @lang('installer::app.installer.index.environment-configuration.mariadb')
+                                        </option>
                                     </x-installer::form.control-group.control>
 
                                     <x-installer::form.control-group.error control-name="db_connection" />
@@ -1091,12 +1095,12 @@
                         FormSubmit(params, { setErrors }) {
                             const stepActions = {
                                 envDatabase: () => {
-                                    if (params.db_connection === 'mysql') {
+                                    if (['mysql', 'mariadb'].includes(params.db_connection)) {
                                         this.completeStep('envDatabase', 'readyForInstallation', 'active', 'complete', setErrors);
 
                                         this.envData = { ...this.envData, ...params };
                                     } else {
-                                        setErrors({ 'db_connection': ["Krayin currently supports MySQL only."] });
+                                        setErrors({ 'db_connection': ["Krayin currently supports MySQL and MariaDB only."] });
                                     }
                                 },
 

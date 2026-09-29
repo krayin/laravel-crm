@@ -65,11 +65,11 @@ class CampaignsController extends Controller
     public function store(): JsonResponse
     {
         $validatedData = $this->validate(request(), [
-            'name'                  => 'required|string|max:255',
-            'subject'               => 'required|string|max:255',
+            'name' => 'required|string|max:255',
+            'subject' => 'required|string|max:255',
             'marketing_template_id' => 'required|exists:email_templates,id',
-            'marketing_event_id'    => 'required|exists:marketing_events,id',
-            'status'                => 'sometimes|required|in:0,1',
+            'marketing_event_id' => 'required|exists:marketing_events,id',
+            'status' => 'sometimes|required|in:0,1',
         ]);
 
         Event::dispatch('settings.marketing.campaigns.create.before');
@@ -101,11 +101,11 @@ class CampaignsController extends Controller
     public function update(int $id): JsonResponse
     {
         $validatedData = $this->validate(request(), [
-            'name'                  => 'required|string|max:255',
-            'subject'               => 'required|string|max:255',
+            'name' => 'required|string|max:255',
+            'subject' => 'required|string|max:255',
             'marketing_template_id' => 'required|exists:email_templates,id',
-            'marketing_event_id'    => 'required|exists:marketing_events,id',
-            'status'                => 'sometimes|required|in:0,1',
+            'marketing_event_id' => 'required|exists:marketing_events,id',
+            'status' => 'sometimes|required|in:0,1',
         ]);
 
         Event::dispatch('settings.marketing.campaigns.update.before', $id);

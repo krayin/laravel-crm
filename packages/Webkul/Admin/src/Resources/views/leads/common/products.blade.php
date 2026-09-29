@@ -1,8 +1,4 @@
-{!! view_render_event('admin.leads.create.products.form_controls.before') !!}
-
 <v-product-list :data="products"></v-product-list>
-
-{!! view_render_event('admin.leads.create.products.form_controls.after') !!}
 
 @pushOnce('scripts')
     <script
@@ -12,7 +8,7 @@
         <div class="flex flex-col gap-4">
             {!! view_render_event('admin.leads.create.products.form_controls.table.before') !!}
 
-            <div class="block w-full overflow-x-auto">
+            <div class="block w-full">
                 <!-- Table -->
                 <x-admin::table>
                     {!! view_render_event('admin.leads.create.products.form_controls.table.head.before') !!}
@@ -92,10 +88,9 @@
                     <x-admin::lookup
                         ::src="src"
                         ::name="`${inputName}[name]`"
-                        ::params="params"
+                        :preload="true"
                         :placeholder="trans('admin::app.leads.common.products.product-name')"
                         @on-selected="(product) => addProduct(product)"
-                        ::value="{ id: product.product_id, name: product.name }"
                     />
 
                     <x-admin::form.control-group.control
@@ -138,7 +133,7 @@
                         :label="trans('admin::app.leads.common.products.price')"
                         :placeholder="trans('admin::app.leads.common.products.price')"
                         @on-change="(event) => product.price = event.value"
-                        ::value-label="$admin.formatPrice(product.price)"
+                        ::value-label="$admin.formatPrice(Number(product.price) || 0)"
                         position="center"
                     />
                 </x-admin::form.control-group>
@@ -154,7 +149,7 @@
                         rules="required|decimal:4"
                         :label="trans('admin::app.leads.common.products.total')"
                         :placeholder="trans('admin::app.leads.common.products.total')"
-                        ::value-label="$admin.formatPrice(product.price * product.quantity)"
+                        ::value-label="$admin.formatPrice((Number(product.price) || 0) * (Number(product.quantity) || 0))"
                         :allowEdit="false"
                         position="center"
                     />
@@ -185,13 +180,20 @@
                 }
             },
 
+
+            created() {
+                if (! this.data) {
+                    this.addProduct();
+                }
+            },
+
             methods: {
                 addProduct() {
                     this.products.push({
                         id: null,
                         product_id: null,
                         name: '',
-                        quantity: 1,
+                        quantity: 0,
                         price: 0,
                         amount: null,
                     })
@@ -225,7 +227,7 @@
                 },
 
                 src() {
-                    return '{{ route('admin.products.search') }}';
+                    return "{{ route('admin.products.search') }}";
                 },
 
                 params() {

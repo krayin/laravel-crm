@@ -1,7 +1,7 @@
 <x-admin::layouts>
     <!-- Title of the page. -->
     <x-slot:title>
-        @lang('admin::app.configuration.index.title')
+        {{ menu()->getLabel('configuration', 'admin::app.configuration.index.title') }}
     </x-slot>
 
     <!-- Breadcrumbs -->
@@ -12,7 +12,7 @@
     <!-- Heading of the page -->
     <div class="mb-7 flex flex-wrap items-center justify-between">
         <p class="py-3 text-xl font-bold text-gray-800 dark:text-white">
-            @lang('admin::app.configuration.index.title')
+            {{ menu()->getLabel('configuration', 'admin::app.configuration.index.title') }}
         </p>
 
         {!! view_render_event('admin.configuration.index.header.configuration_search.before') !!}
@@ -24,7 +24,7 @@
 
                 <input 
                     type="text" 
-                    class="block w-full rounded-lg border bg-white px-10 py-1.5 leading-6 text-gray-600 transition-all hover:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300"
+                    class="block w-full rounded-lg border border-gray-300 bg-white px-10 py-1.5 leading-6 text-gray-600 transition-all hover:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300"
                     placeholder="@lang('admin::app.configuration.index.search')" 
                 >
             </div>
@@ -91,7 +91,7 @@
 
                 <input 
                     type="text"
-                    class="peer block w-full rounded-lg border bg-white px-10 py-1.5 leading-6 text-gray-600 transition-all hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 dark:focus:border-gray-400"
+                    class="peer block w-full rounded-lg border border-gray-300 bg-white px-10 py-1.5 leading-6 text-gray-600 transition-all hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 dark:focus:border-gray-400"
                     :class="{'border-gray-400': isDropdownOpen}"
                     placeholder="@lang('admin::app.configuration.index.search')"
                     v-model.lazy="searchTerm"

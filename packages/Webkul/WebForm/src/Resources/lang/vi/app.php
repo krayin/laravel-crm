@@ -2,15 +2,15 @@
 
 return [
     'acl' => [
-        'title'  => 'Biểu mẫu Web',
-        'view'   => 'Xem',
+        'title' => 'Biểu mẫu Web',
+        'view' => 'Xem',
         'create' => 'Tạo',
-        'edit'   => 'Chỉnh sửa',
+        'edit' => 'Chỉnh sửa',
         'delete' => 'Xóa',
     ],
 
     'menu' => [
-        'title'      => 'Biểu mẫu Web',
+        'title' => 'Biểu mẫu Web',
         'title-info' => 'Thêm, chỉnh sửa hoặc xóa biểu mẫu web từ CRM',
     ],
 

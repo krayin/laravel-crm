@@ -28,7 +28,7 @@ class EmailRepository extends Repository
     /**
      * Create.
      *
-     * @return \Webkul\Email\Contracts\Email
+     * @return Email
      */
     public function create(array $data)
     {
@@ -43,12 +43,12 @@ class EmailRepository extends Repository
         }
 
         $data = $this->sanitizeEmails(array_merge([
-            'source'        => 'web',
-            'from'          => config('mail.from.address'),
-            'user_type'     => 'admin',
-            'folders'       => isset($data['is_draft']) ? ['draft'] : ['outbox'],
-            'unique_id'     => $uniqueId,
-            'message_id'    => $uniqueId,
+            'source' => 'web',
+            'from' => config('mail.from.address'),
+            'user_type' => 'admin',
+            'folders' => isset($data['is_draft']) ? ['draft'] : ['outbox'],
+            'unique_id' => $uniqueId,
+            'message_id' => $uniqueId,
             'reference_ids' => array_merge($referenceIds, [$uniqueId]),
         ], $data));
 
@@ -64,7 +64,7 @@ class EmailRepository extends Repository
      *
      * @param  int  $id
      * @param  string  $attribute
-     * @return \Webkul\Email\Contracts\Email
+     * @return Email
      */
     public function update(array $data, $id, $attribute = 'id')
     {

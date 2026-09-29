@@ -1,9 +1,9 @@
 <x-admin::shimmer.leads.index.kanban.toolbar />
 
-<div class="flex gap-2.5 overflow-x-auto">
+<div class="flex gap-2.5 overflow-x-auto max-h-[calc(100vh-300px)]">
     <!-- Stages -->
     @for ($i = 1; $i <= 6; $i++)
-        <div class="flex min-w-[275px] max-w-[275px] flex-col gap-1 rounded-lg border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900">
+        <div class="flex min-w-[275px] max-w-[275px] flex-col gap-1 rounded-lg border border-gray-300 bg-white dark:border-gray-800 dark:bg-gray-900">
             <!-- Stage Header -->
             <div class="flex flex-col px-2 py-3">
                 <div class="flex items-center justify-between">
@@ -21,7 +21,7 @@
             <div class="flex h-[calc(100vh-317px)] flex-col gap-2 overflow-y-auto p-2">
                 @for ($j = 1; $j <= 3; $j++)
                     <!-- Card -->
-                    <div class="flex w-full flex-col gap-5 rounded-md border border-gray-100 p-2 dark:border-gray-800">
+                    <div class="flex w-full flex-col gap-5 rounded-lg border p-2 dark:border-gray-800">
                         <!-- Header -->
                         <div class="flex items-start justify-between">
                             <div class="flex items-center gap-1">

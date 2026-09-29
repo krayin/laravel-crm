@@ -2,6 +2,7 @@
 
 namespace Webkul\Admin\Http\Controllers\Products;
 
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Event;
 use Webkul\Admin\Http\Controllers\Controller;
 use Webkul\Product\Repositories\ProductRepository;
@@ -19,7 +20,7 @@ class TagController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function attach($id)
     {
@@ -42,7 +43,7 @@ class TagController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  int  $productId
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function detach($productId)
     {

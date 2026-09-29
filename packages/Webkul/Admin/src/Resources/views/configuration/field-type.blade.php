@@ -41,14 +41,14 @@
 
                     <span
                         v-if="field['channel_based'] && channelCount"
-                        class="rounded border border-gray-200 bg-gray-100 px-1 py-0.5 text-[10px] font-semibold leading-normal text-gray-600"
+                        class="rounded border border-gray-300 bg-gray-100 px-1 py-0.5 text-[10px] font-semibold leading-normal text-gray-600"
                         v-text="JSON.parse(currentChannel).name"
                     >
                     </span>
         
                     <span
                         v-if="field['locale_based']"
-                        class="rounded border border-gray-200 bg-gray-100 px-1 py-0.5 text-[10px] font-semibold leading-normal text-gray-600"
+                        class="rounded border border-gray-300 bg-gray-100 px-1 py-0.5 text-[10px] font-semibold leading-normal text-gray-600"
                         v-text="JSON.parse(currentLocale).name"
                     >
                     </span>
@@ -264,7 +264,7 @@
             <template v-if="field.type == 'file' && field.is_visible">
                 <a
                     v-if="value"
-                    :href="`{{ route('admin.configuration.download', [request()->route('slug'), request()->route('slug2'), '']) }}/${value.split('/')[1]}`"
+                    :href="'{{ route('admin.configuration.download', [request()->route('slug'), request()->route('slug2'), ':id']) }}'.replace(':id', value.split('/')[1])"
                 >
                     <div class="mb-1 inline-flex w-full max-w-max cursor-pointer appearance-none items-center justify-between gap-x-1 rounded-md border border-transparent p-1.5 text-center text-gray-600 transition-all marker:shadow hover:bg-gray-200 active:border-gray-300 dark:text-gray-300 dark:hover:bg-gray-800">
                         <i class="icon-stats-down text-2xl"></i>

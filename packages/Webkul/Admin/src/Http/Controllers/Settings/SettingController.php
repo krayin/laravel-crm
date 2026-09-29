@@ -4,6 +4,7 @@ namespace Webkul\Admin\Http\Controllers\Settings;
 
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Collection;
+use Illuminate\View\View;
 use Webkul\Admin\Http\Controllers\Controller;
 use Webkul\Core\Menu\MenuItem;
 
@@ -12,7 +13,7 @@ class SettingController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\View\View
+     * @return View
      */
     public function index()
     {
@@ -51,9 +52,9 @@ class SettingController extends Controller
             if ($this->matchesQuery($item, $query)) {
                 $results->push([
                     'name' => $item->getName(),
-                    'url'  => $item->getUrl(),
+                    'url' => $item->getUrl(),
                     'icon' => $item->getIcon(),
-                    'key'  => $item->getKey(),
+                    'key' => $item->getKey(),
                 ]);
             }
 

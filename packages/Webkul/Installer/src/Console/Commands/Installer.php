@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\File;
 use Webkul\Core\Providers\CoreServiceProvider;
 use Webkul\Installer\Database\Seeders\DatabaseSeeder as KrayinDatabaseSeeder;
 use Webkul\Installer\Events\ComposerEvents;
+use Webkul\Installer\Helpers\DatabaseManager;
 
 use function Laravel\Prompts\password;
 use function Laravel\Prompts\select;
@@ -38,12 +39,13 @@ class Installer extends Command
      * @var array
      */
     protected $locales = [
-        'ar'    => 'Arabic',
-        'en'    => 'English',
-        'tr'    => 'Turkish',
-        'es'    => 'Spanish',
-        'fa'    => 'Persian',
+        'ar' => 'Arabic',
+        'en' => 'English',
+        'tr' => 'Turkish',
+        'es' => 'Spanish',
+        'fa' => 'Persian',
         'pt_BR' => 'Portuguese',
+        'zh_CN' => 'Chinese (Simplified)',
     ];
 
     /**
@@ -123,6 +125,8 @@ class Installer extends Command
      */
     public function handle()
     {
+        $this->output->writeln(ComposerEvents::cloudHostingBox());
+
         $applicationDetails = ! $this->option('skip-env-check')
             ? $this->checkForEnvFile()
             : [];
@@ -137,7 +141,7 @@ class Installer extends Command
 
         $this->warn('Step: Seeding basic data for Krayin kickstart...');
         $this->info(app(KrayinDatabaseSeeder::class)->run([
-            'locale'   => $applicationDetails['locale'] ?? 'en',
+            'locale' => $applicationDetails['locale'] ?? 'en',
             'currency' => $applicationDetails['currency'] ?? 'USD',
         ]));
 
@@ -236,7 +240,7 @@ class Installer extends Command
         );
 
         return [
-            'locale'   => $locale,
+            'locale' => $locale,
             'currency' => $currency,
         ];
     }
@@ -249,16 +253,16 @@ class Installer extends Command
         $databaseDetails = [
             'DB_CONNECTION' => select(
                 'Please select the database connection',
-                ['mysql', 'pgsql', 'sqlsrv']
+                ['mysql', 'mariadb', 'pgsql', 'sqlsrv']
             ),
 
-            'DB_HOST'       => text(
+            'DB_HOST' => text(
                 label: 'Please enter the database host',
                 default: env('DB_HOST', '127.0.0.1'),
                 required: true
             ),
 
-            'DB_PORT'       => text(
+            'DB_PORT' => text(
                 label: 'Please enter the database port',
                 default: env('DB_PORT', '3306'),
                 required: true
@@ -300,7 +304,7 @@ class Installer extends Command
 
             'DB_PASSWORD' => password(
                 label: 'Please enter your database password',
-                required: true
+                required: false
             ),
         ];
 
@@ -337,7 +341,7 @@ class Installer extends Command
             default: 'admin@example.com',
             validate: fn (string $value) => match (true) {
                 ! filter_var($value, FILTER_VALIDATE_EMAIL) => 'The email address you entered is not valid please try again.',
-                default                                     => null
+                default => null
             }
         );
 
@@ -353,17 +357,25 @@ class Installer extends Command
             DB::table('users')->updateOrInsert(
                 ['id' => 1],
                 [
-                    'name'     => $adminName,
-                    'email'    => $adminEmail,
+                    'name' => $adminName,
+                    'email' => $adminEmail,
                     'password' => $password,
-                    'role_id'  => 1,
-                    'status'   => 1,
+                    'role_id' => 1,
+                    'status' => 1,
                 ]
             );
 
             $filePath = storage_path('installed');
 
             File::put($filePath, 'Krayin is successfully installed');
+
+            /**
+             * Recorded in the database as well as on disk, so losing the marker file cannot reopen
+             * the installer on an application that already holds real data.
+             */
+            app(DatabaseManager::class)->markInstallationCompleted();
+
+            app(DatabaseManager::class)->clearInstallationInProgress();
 
             $this->info('-----------------------------');
             $this->info('Congratulations!');
@@ -395,11 +407,11 @@ class Installer extends Command
          * Setting application configuration.
          */
         config([
-            'app.env'      => $this->getEnvAtRuntime('APP_ENV'),
-            'app.name'     => $this->getEnvAtRuntime('APP_NAME'),
-            'app.url'      => $this->getEnvAtRuntime('APP_URL'),
+            'app.env' => $this->getEnvAtRuntime('APP_ENV'),
+            'app.name' => $this->getEnvAtRuntime('APP_NAME'),
+            'app.url' => $this->getEnvAtRuntime('APP_URL'),
             'app.timezone' => $this->getEnvAtRuntime('APP_TIMEZONE'),
-            'app.locale'   => $this->getEnvAtRuntime('APP_LOCALE'),
+            'app.locale' => $this->getEnvAtRuntime('APP_LOCALE'),
             'app.currency' => $this->getEnvAtRuntime('APP_CURRENCY'),
         ]);
 
@@ -409,12 +421,12 @@ class Installer extends Command
         $databaseConnection = $this->getEnvAtRuntime('DB_CONNECTION');
 
         config([
-            "database.connections.{$databaseConnection}.host"     => $this->getEnvAtRuntime('DB_HOST'),
-            "database.connections.{$databaseConnection}.port"     => $this->getEnvAtRuntime('DB_PORT'),
+            "database.connections.{$databaseConnection}.host" => $this->getEnvAtRuntime('DB_HOST'),
+            "database.connections.{$databaseConnection}.port" => $this->getEnvAtRuntime('DB_PORT'),
             "database.connections.{$databaseConnection}.database" => $this->getEnvAtRuntime('DB_DATABASE'),
             "database.connections.{$databaseConnection}.username" => $this->getEnvAtRuntime('DB_USERNAME'),
             "database.connections.{$databaseConnection}.password" => $this->getEnvAtRuntime('DB_PASSWORD'),
-            "database.connections.{$databaseConnection}.prefix"   => $this->getEnvAtRuntime('DB_PREFIX'),
+            "database.connections.{$databaseConnection}.prefix" => $this->getEnvAtRuntime('DB_PREFIX'),
         ]);
 
         DB::purge($databaseConnection);

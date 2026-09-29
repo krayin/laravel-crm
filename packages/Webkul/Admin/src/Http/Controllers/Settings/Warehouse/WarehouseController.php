@@ -101,7 +101,7 @@ class WarehouseController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\View\View
+     * @return View
      */
     public function edit($id)
     {
@@ -123,7 +123,7 @@ class WarehouseController extends Controller
 
         if (request()->ajax()) {
             return response()->json([
-                'data'    => $warehouse,
+                'data' => $warehouse,
                 'message' => trans('admin::app.settings.warehouses.index.update-success'),
             ]);
         }

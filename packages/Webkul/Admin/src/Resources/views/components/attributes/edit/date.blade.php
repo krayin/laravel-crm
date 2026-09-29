@@ -6,6 +6,7 @@
             $value = \Carbon\Carbon::parse($value)->format('Y-m-d');
         }
     }
+    $value = old($attribute->code, $value);
 @endphp
 
 <x-admin::form.control-group.control

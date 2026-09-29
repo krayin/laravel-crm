@@ -27,10 +27,10 @@
 
                 {!! view_render_event('admin.leads.index.kanban.content.before') !!}
 
-                <div class="flex gap-2.5 overflow-x-auto">
+                <div class="flex gap-2.5 overflow-x-auto max-h-[calc(100vh-300px)]">
                     <!-- Stage Cards -->
                     <div
-                        class="flex min-w-[275px] max-w-[275px] flex-col gap-1 rounded-lg border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900"
+                        class="flex min-w-[275px] max-w-[275px] flex-col gap-1 rounded-lg border border-gray-300 bg-white dark:border-gray-800 dark:bg-gray-900"
                         v-for="(stage, index) in stageLeads"
                     >
                         {!! view_render_event('admin.leads.index.kanban.content.stage.header.before') !!}
@@ -124,30 +124,33 @@
                                 {!! view_render_event('admin.leads.index.kanban.content.stage.body.card.before') !!}
 
                                 <a
-                                    class="lead-item flex cursor-pointer flex-col gap-5 rounded-md border border-gray-100 bg-gray-50 p-2 dark:border-gray-400 dark:bg-gray-400"
+                                    class="lead-item flex cursor-pointer flex-col gap-5 rounded-lg border border-gray-300 shadow-xl shadow-slate-200 bg-gray-100 p-2 dark:border-gray-400 dark:bg-gray-400"
                                     :href="'{{ route('admin.leads.view', 'replaceId') }}'.replace('replaceId', element.id)"
                                 >
                                     {!! view_render_event('admin.leads.index.kanban.content.stage.body.card.header.before') !!}
 
                                     <!-- Header -->
                                     <div class="flex items-start justify-between">
-                                        <div class="flex items-center gap-1">
-                                            <x-admin::avatar ::name="element.person.name" />
+                                        <div
+                                            class="flex items-center gap-1"
+                                            v-if="cardFields.contactPerson"
+                                        >
+                                            <x-admin::avatar ::name="element.person ? element.person.name : 'Unknown'" />
 
                                             <div class="flex flex-col gap-0.5">
                                                 <span class="text-xs font-medium">
-                                                    @{{ element.person.name }}
+                                                    @{{ element.person ? element.person.name : 'Unknown' }}
                                                 </span>
 
                                                 <span class="text-[10px] leading-normal">
-                                                    @{{ element.person.organization?.name }}
+                                                    @{{ element.person && element.person.organization ? element.person.organization.name : '' }}
                                                 </span>
                                             </div>
                                         </div>
 
                                         <div
                                             class="group relative"
-                                            v-if="element.rotten_days > 0"
+                                            v-if="cardFields.rottenDays && element.rotten_days > 0"
                                         >
                                             <span class="icon-rotten cursor-default text-xl text-rose-600"></span>
 
@@ -175,40 +178,51 @@
                                     <div class="flex flex-wrap gap-1">
                                         <div
                                             class="flex items-center gap-1 rounded-xl bg-gray-200 px-2 py-1 text-xs font-medium dark:bg-gray-800 dark:text-white"
-                                            v-if="element.user"
+                                            v-if="cardFields.assignedUser && element.user"
                                         >
                                             <span class="icon-settings-user text-sm"></span>
 
                                             @{{ element.user.name }}
                                         </div>
 
-                                        <div class="rounded-xl bg-gray-200 px-2 py-1 text-xs font-medium dark:bg-gray-800 dark:text-white">
+                                        <div
+                                            class="rounded-xl bg-gray-200 px-2 py-1 text-xs font-medium dark:bg-gray-800 dark:text-white"
+                                            v-if="cardFields.leadValue"
+                                        >
                                             @{{ element.formatted_lead_value }}
                                         </div>
 
-                                        <div class="rounded-xl bg-gray-200 px-2 py-1 text-xs font-medium dark:bg-gray-800 dark:text-white">
+                                        <div
+                                            class="rounded-xl bg-gray-200 px-2 py-1 text-xs font-medium dark:bg-gray-800 dark:text-white"
+                                            v-if="cardFields.source && element.source"
+                                        >
                                             @{{ element.source.name }}
                                         </div>
 
-                                        <div class="rounded-xl bg-gray-200 px-2 py-1 text-xs font-medium dark:bg-gray-800 dark:text-white">
+                                        <div
+                                            class="rounded-xl bg-gray-200 px-2 py-1 text-xs font-medium dark:bg-gray-800 dark:text-white"
+                                            v-if="cardFields.type && element.type"
+                                        >
                                             @{{ element.type.name }}
                                         </div>
 
                                         <!-- Tags -->
-                                        <template v-for="tag in element.tags">
-                                            {!! view_render_event('admin.leads.index.kanban.content.stage.body.card.tag.before') !!}
+                                        <template v-if="cardFields.tags">
+                                            <template v-for="tag in element.tags">
+                                                {!! view_render_event('admin.leads.index.kanban.content.stage.body.card.tag.before') !!}
 
-                                            <div
-                                                class="rounded-xl bg-gray-200 px-2 py-1 text-xs font-medium dark:bg-gray-800"
-                                                :style="{
-                                                    backgroundColor: tag.color,
-                                                    color: tagTextColor[tag.color]
-                                                }"
-                                            >
-                                                @{{ tag.name }}
-                                            </div>
+                                                <div
+                                                    class="rounded-xl bg-gray-200 px-2 py-1 text-xs font-medium dark:bg-gray-800"
+                                                    :style="{
+                                                        backgroundColor: tag.color,
+                                                        color: tagTextColor[tag.color]
+                                                    }"
+                                                >
+                                                    @{{ tag.name }}
+                                                </div>
 
-                                            {!! view_render_event('admin.leads.index.kanban.content.stage.body.card.tag.after') !!}
+                                                {!! view_render_event('admin.leads.index.kanban.content.stage.body.card.tag.after') !!}
+                                            </template>
                                         </template>
                                     </div>
                                 </a>
@@ -229,7 +243,7 @@
                 v-slot="{ meta, errors, handleSubmit }"
                 as="div"
                 ref="stageUpdateForm"
-            >
+                >
                 <form @submit="handleSubmit($event, handleFormSubmit)">
                     <!-- Modal -->
                     <x-admin::modal
@@ -339,6 +353,18 @@
 
                     isLoading: true,
 
+                    isLoadingMore: false,
+
+                    cardFields: {
+                        contactPerson: true,
+                        rottenDays: true,
+                        assignedUser: true,
+                        leadValue: true,
+                        source: true,
+                        type: true,
+                        tags: true,
+                    },
+
                     tagTextColor: {
                         '#FEE2E2': '#DC2626',
                         '#FFEDD5': '#EA580C',
@@ -369,6 +395,15 @@
 
             mounted () {
                 this.boot();
+
+                this.$emitter.on('reload-datagrids', () => {
+                    this.get()
+                        .then(response => {
+                            for (let [sortOrder, data] of Object.entries(response.data)) {
+                                this.stageLeads[sortOrder] = data;
+                            }
+                        });
+                });
             },
 
             methods: {
@@ -378,6 +413,8 @@
                  * @returns {void}
                  */
                 boot() {
+                    this.cardFields = this.getCardFields();
+
                     let kanbans = this.getKanbans();
 
                     if (kanbans?.length) {
@@ -427,6 +464,20 @@
 
                             params['search'] += `title:${column.value.join(',')};`;
                             params['searchFields'] += `title:like;`;
+
+                            return;
+                        }
+
+                        /**
+                         * Date range filters are sent as a dedicated parameter, not through the search
+                         * string, so the server can resolve them the same way the datagrid does. A quick
+                         * filter, such as `last_month`, is applied as a plain string, whereas a custom
+                         * range is applied as a `[[from, to]]` pair.
+                         */
+                        if (column.type === 'date' || column.type === 'datetime') {
+                            if (column.value.length) {
+                                params[column.index] = column.value;
+                            }
 
                             return;
                         }
@@ -506,10 +557,10 @@
                  * Appends the leads to the stage.
                  *
                  * @param {object} params - The parameters to be appended.
-                 * @returns {void}
+                 * @returns {Promise}
                  */
                 append(params) {
-                    this.get(params)
+                    return this.get(params)
                         .then(response => {
                             for (let [sortOrder, data] of Object.entries(response.data)) {
                                 if (! this.stageLeads[sortOrder]) {
@@ -550,26 +601,32 @@
                     }
 
                     if (event.removed) {
-                        stage.lead_value = parseFloat(stage.lead_value) - parseFloat(event.removed.element.lead_value);
-
-                        this.stageLeads[stage.sort_order].leads.meta.total = this.stageLeads[stage.sort_order].leads.meta.total - 1;
-
                         return;
                     }
 
-                    stage.lead_value = parseFloat(stage.lead_value) + parseFloat(event.added.element.lead_value);
-
-                    this.stageLeads[stage.sort_order].leads.meta.total = this.stageLeads[stage.sort_order].leads.meta.total + 1;
-
-                    this.updateStage('{{ route('admin.leads.stage.update', '__LEAD_ID__') }}'.replace('__LEAD_ID__', event.added.element.id), {
+                    this.updateStage("{{ route('admin.leads.stage.update', '__LEAD_ID__') }}".replace('__LEAD_ID__', event.added.element.id), {
                         'lead_pipeline_stage_id': stage.id
                     })
                         .then(response => {
+                            this.get()
+                                .then(response => {
+                                    for (let [sortOrder, data] of Object.entries(response.data)) {
+                                        this.stageLeads[sortOrder] = data;
+                                    }
+                                });
+
                             this.$emitter.emit('add-flash', { type: 'success', message: response.data.message });
                         })
                         .catch(error => {
+                            this.get()
+                                .then(response => {
+                                    for (let [sortOrder, data] of Object.entries(response.data)) {
+                                        this.stageLeads[sortOrder] = data;
+                                    }
+                                });
+
                             this.$emitter.emit('add-flash', { type: 'error', message: error.response.data.message });
-                        });;
+                        });
                 },
 
                 /**
@@ -662,9 +719,13 @@
                  * @returns {void}
                  */
                 handleScroll(stage, event) {
-                    const bottom = event.target.scrollHeight - event.target.scrollTop === event.target.clientHeight;
+                    const bottom = event.target.scrollHeight - event.target.scrollTop - event.target.clientHeight <= 5;
 
                     if (! bottom) {
+                        return;
+                    }
+
+                    if (this.isLoadingMore) {
                         return;
                     }
 
@@ -672,11 +733,15 @@
                         return;
                     }
 
+                    this.isLoadingMore = true;
+
                     this.append({
                         pipeline_stage_id: stage.id,
                         pipeline_id: stage.lead_pipeline_id,
                         page: this.stageLeads[stage.sort_order].leads.meta.current_page + 1,
                         limit: 10,
+                    }).finally(() => {
+                        this.isLoadingMore = false;
                     });
                 },
 
@@ -689,7 +754,7 @@
                  *
                  * @returns {void}
                  */
-                 updateKanbans() {
+                updateKanbans() {
                     let kanbans = this.getKanbans();
 
                     if (kanbans?.length) {
@@ -764,6 +829,50 @@
                     localStorage.setItem(
                         this.getKanbansStorageKey(),
                         JSON.stringify(kanbans)
+                    );
+                },
+
+                //=======================================================================================
+                // Support for the customizable lead card fields. All code is based on local storage.
+                //=======================================================================================
+
+                /**
+                 * Returns the storage key for the lead card field's visibility in local storage.
+                 *
+                 * @returns {string} Storage key for the lead card field's visibility.
+                 */
+                getCardFieldsStorageKey() {
+                    return 'lead_kanban_card_fields';
+                },
+
+                /**
+                 * Retrieves the lead card field's visibility stored in local storage, merged with the defaults.
+                 *
+                 * @returns {object} Lead card field's visibility.
+                 */
+                getCardFields() {
+                    let storedCardFields = JSON.parse(
+                        localStorage.getItem(this.getCardFieldsStorageKey())
+                    );
+
+                    return {
+                        ...this.cardFields,
+                        ...(storedCardFields ?? {}),
+                    };
+                },
+
+                /**
+                 * Updates the lead card field's visibility and stores it in local storage.
+                 *
+                 * @param {object} fields - Lead card field's visibility.
+                 * @returns {void}
+                 */
+                updateCardFields(fields) {
+                    this.cardFields = fields;
+
+                    localStorage.setItem(
+                        this.getCardFieldsStorageKey(),
+                        JSON.stringify(fields)
                     );
                 },
             }

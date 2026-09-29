@@ -3,7 +3,12 @@
 namespace Webkul\Admin\DataGrids\Lead;
 
 use Illuminate\Contracts\Database\Query\Builder;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
+use Webkul\Attribute\Models\Attribute;
+use Webkul\Attribute\Models\AttributeValue;
+use Webkul\Contact\Repositories\PersonRepository;
+use Webkul\Contract\Repositories\Pipeline;
 use Webkul\DataGrid\DataGrid;
 use Webkul\Lead\Repositories\PipelineRepository;
 use Webkul\Lead\Repositories\SourceRepository;
@@ -17,7 +22,7 @@ class LeadDataGrid extends DataGrid
     /**
      * Pipeline instance.
      *
-     * @var \Webkul\Contract\Repositories\Pipeline
+     * @var Pipeline
      */
     protected $pipeline;
 
@@ -80,12 +85,34 @@ class LeadDataGrid extends DataGrid
             ->groupBy('leads.id')
             ->where('leads.lead_pipeline_id', $this->pipeline->id);
 
+        /**
+         * Custom (user defined) attribute values live in the EAV `attribute_values` table, so they
+         * are pulled in as correlated sub-selects only when exporting. They are hidden from the
+         * grid display (see prepareColumns) but included in the exported file.
+         */
+        if (request()->boolean('export')) {
+            foreach ($this->getCustomAttributes() as $attribute) {
+                $valueColumn = AttributeValue::$attributeTypeFields[$attribute->type] ?? 'text_value';
+
+                $queryBuilder->addSelect(DB::raw(
+                    '(SELECT '.$tablePrefix.'attribute_values.'.$valueColumn.
+                    ' FROM '.$tablePrefix.'attribute_values'.
+                    ' WHERE '.$tablePrefix.'attribute_values.entity_id = '.$tablePrefix.'leads.id'.
+                    ' AND '.$tablePrefix.'attribute_values.attribute_id = '.(int) $attribute->id.
+                    ' AND '.$tablePrefix."attribute_values.entity_type = 'leads'".
+                    ' LIMIT 1) as '.$attribute->code
+                ));
+            }
+        }
+
         if ($userIds = bouncer()->getAuthorizedUserIds()) {
             $queryBuilder->whereIn('leads.user_id', $userIds);
         }
 
         if (! is_null(request()->input('rotten_lead.in'))) {
-            $queryBuilder->havingRaw($tablePrefix.'rotten_lead = '.request()->input('rotten_lead.in'));
+            $queryBuilder->havingRaw($tablePrefix.'rotten_lead = ?', [
+                (int) request()->input('rotten_lead.in'),
+            ]);
         }
 
         $this->addFilter('id', 'leads.id');
@@ -110,24 +137,24 @@ class LeadDataGrid extends DataGrid
     public function prepareColumns(): void
     {
         $this->addColumn([
-            'index'      => 'id',
-            'label'      => trans('admin::app.leads.index.datagrid.id'),
-            'type'       => 'integer',
-            'sortable'   => true,
+            'index' => 'id',
+            'label' => trans('admin::app.leads.index.datagrid.id'),
+            'type' => 'integer',
+            'sortable' => true,
             'filterable' => true,
         ]);
 
         $this->addColumn([
-            'index'              => 'sales_person',
-            'label'              => trans('admin::app.leads.index.datagrid.sales-person'),
-            'type'               => 'string',
-            'searchable'         => false,
-            'sortable'           => true,
-            'filterable'         => true,
-            'filterable_type'    => 'searchable_dropdown',
+            'index' => 'sales_person',
+            'label' => trans('admin::app.leads.index.datagrid.sales-person'),
+            'type' => 'string',
+            'searchable' => false,
+            'sortable' => true,
+            'filterable' => true,
+            'filterable_type' => 'searchable_dropdown',
             'filterable_options' => [
                 'repository' => UserRepository::class,
-                'column'     => [
+                'column' => [
                     'label' => 'name',
                     'value' => 'name',
                 ],
@@ -135,57 +162,57 @@ class LeadDataGrid extends DataGrid
         ]);
 
         $this->addColumn([
-            'index'      => 'title',
-            'label'      => trans('admin::app.leads.index.datagrid.subject'),
-            'type'       => 'string',
+            'index' => 'title',
+            'label' => trans('admin::app.leads.index.datagrid.subject'),
+            'type' => 'string',
             'searchable' => true,
-            'sortable'   => true,
+            'sortable' => true,
         ]);
 
         $this->addColumn([
-            'index'              => 'lead_source_name',
-            'label'              => trans('admin::app.leads.index.datagrid.source'),
-            'type'               => 'string',
-            'searchable'         => false,
-            'sortable'           => true,
-            'filterable'         => true,
-            'filterable_type'    => 'dropdown',
+            'index' => 'lead_source_name',
+            'label' => trans('admin::app.leads.index.datagrid.source'),
+            'type' => 'string',
+            'searchable' => false,
+            'sortable' => true,
+            'filterable' => true,
+            'filterable_type' => 'dropdown',
             'filterable_options' => $this->sourceRepository->all(['name as label', 'id as value'])->toArray(),
         ]);
 
         $this->addColumn([
-            'index'      => 'lead_value',
-            'label'      => trans('admin::app.leads.index.datagrid.lead-value'),
-            'type'       => 'string',
-            'sortable'   => true,
+            'index' => 'lead_value',
+            'label' => trans('admin::app.leads.index.datagrid.lead-value'),
+            'type' => 'string',
+            'sortable' => true,
             'searchable' => false,
             'filterable' => true,
-            'closure'    => fn ($row) => core()->formatBasePrice($row->lead_value, 2),
+            'closure' => fn ($row) => core()->formatBasePrice($row->lead_value, 2),
         ]);
 
         $this->addColumn([
-            'index'              => 'lead_type_name',
-            'label'              => trans('admin::app.leads.index.datagrid.lead-type'),
-            'type'               => 'string',
-            'searchable'         => false,
-            'sortable'           => true,
-            'filterable'         => true,
-            'filterable_type'    => 'dropdown',
+            'index' => 'lead_type_name',
+            'label' => trans('admin::app.leads.index.datagrid.lead-type'),
+            'type' => 'string',
+            'searchable' => false,
+            'sortable' => true,
+            'filterable' => true,
+            'filterable_type' => 'dropdown',
             'filterable_options' => $this->typeRepository->all(['name as label', 'id as value'])->toArray(),
         ]);
 
         $this->addColumn([
-            'index'              => 'tag_name',
-            'label'              => trans('admin::app.leads.index.datagrid.tag-name'),
-            'type'               => 'string',
-            'searchable'         => false,
-            'sortable'           => true,
-            'filterable'         => true,
-            'filterable_type'    => 'searchable_dropdown',
-            'closure'            => fn ($row) => $row->tag_name ?? '--',
+            'index' => 'tag_name',
+            'label' => trans('admin::app.leads.index.datagrid.tag-name'),
+            'type' => 'string',
+            'searchable' => false,
+            'sortable' => true,
+            'filterable' => true,
+            'filterable_type' => 'searchable_dropdown',
+            'closure' => fn ($row) => $row->tag_name ?? '--',
             'filterable_options' => [
                 'repository' => TagRepository::class,
-                'column'     => [
+                'column' => [
                     'label' => 'name',
                     'value' => 'name',
                 ],
@@ -193,21 +220,25 @@ class LeadDataGrid extends DataGrid
         ]);
 
         $this->addColumn([
-            'index'              => 'person_name',
-            'label'              => trans('admin::app.leads.index.datagrid.contact-person'),
-            'type'               => 'string',
-            'searchable'         => false,
-            'sortable'           => true,
-            'filterable'         => true,
-            'filterable_type'    => 'searchable_dropdown',
+            'index' => 'person_name',
+            'label' => trans('admin::app.leads.index.datagrid.contact-person'),
+            'type' => 'string',
+            'searchable' => false,
+            'sortable' => true,
+            'filterable' => true,
+            'filterable_type' => 'searchable_dropdown',
             'filterable_options' => [
-                'repository' => \Webkul\Contact\Repositories\PersonRepository::class,
-                'column'     => [
+                'repository' => PersonRepository::class,
+                'column' => [
                     'label' => 'name',
                     'value' => 'name',
                 ],
             ],
-            'closure'    => function ($row) {
+            'closure' => function ($row) {
+                if (! $row->person_id) {
+                    return '--';
+                }
+
                 $route = route('admin.contacts.persons.view', $row->person_id);
 
                 return "<a class=\"text-brandColor transition-all hover:underline\" href='".$route."'>".$row->person_name.'</a>';
@@ -215,13 +246,13 @@ class LeadDataGrid extends DataGrid
         ]);
 
         $this->addColumn([
-            'index'              => 'stage',
-            'label'              => trans('admin::app.leads.index.datagrid.stage'),
-            'type'               => 'string',
-            'searchable'         => false,
-            'sortable'           => true,
-            'filterable'         => true,
-            'filterable_type'    => 'dropdown',
+            'index' => 'stage',
+            'label' => trans('admin::app.leads.index.datagrid.stage'),
+            'type' => 'string',
+            'searchable' => false,
+            'sortable' => true,
+            'filterable' => true,
+            'filterable_type' => 'dropdown',
             'filterable_options' => $this->pipeline->stages->pluck('name', 'id')
                 ->map(function ($name, $id) {
                     return ['value' => $id, 'label' => $name];
@@ -231,12 +262,12 @@ class LeadDataGrid extends DataGrid
         ]);
 
         $this->addColumn([
-            'index'      => 'rotten_lead',
-            'label'      => trans('admin::app.leads.index.datagrid.rotten-lead'),
-            'type'       => 'string',
-            'sortable'   => true,
+            'index' => 'rotten_lead',
+            'label' => trans('admin::app.leads.index.datagrid.rotten-lead'),
+            'type' => 'string',
+            'sortable' => true,
             'searchable' => false,
-            'closure'    => function ($row) {
+            'closure' => function ($row) {
                 if (! $row->rotten_lead) {
                     return trans('admin::app.leads.index.datagrid.no');
                 }
@@ -250,14 +281,14 @@ class LeadDataGrid extends DataGrid
         ]);
 
         $this->addColumn([
-            'index'           => 'expected_close_date',
-            'label'           => trans('admin::app.leads.index.datagrid.date-to'),
-            'type'            => 'date',
-            'searchable'      => false,
-            'sortable'        => true,
-            'filterable'      => true,
+            'index' => 'expected_close_date',
+            'label' => trans('admin::app.leads.index.datagrid.date-to'),
+            'type' => 'date',
+            'searchable' => false,
+            'sortable' => true,
+            'filterable' => true,
             'filterable_type' => 'date_range',
-            'closure'         => function ($row) {
+            'closure' => function ($row) {
                 if (! $row->expected_close_date) {
                     return '--';
                 }
@@ -267,14 +298,45 @@ class LeadDataGrid extends DataGrid
         ]);
 
         $this->addColumn([
-            'index'           => 'created_at',
-            'label'           => trans('admin::app.leads.index.datagrid.created-at'),
-            'type'            => 'date',
-            'searchable'      => false,
-            'sortable'        => true,
-            'filterable'      => true,
+            'index' => 'created_at',
+            'label' => trans('admin::app.leads.index.datagrid.created-at'),
+            'type' => 'date',
+            'searchable' => false,
+            'sortable' => true,
+            'filterable' => true,
             'filterable_type' => 'date_range',
         ]);
+
+        /**
+         * User defined attributes are hidden from the grid but included in the export so the data
+         * entered into custom fields can be exported alongside the built-in columns.
+         */
+        if (request()->boolean('export')) {
+            foreach ($this->getCustomAttributes() as $attribute) {
+                $this->addColumn([
+                    'index' => $attribute->code,
+                    'label' => $attribute->name,
+                    'type' => 'string',
+                    'searchable' => false,
+                    'sortable' => false,
+                    'filterable' => false,
+                    'visibility' => false,
+                ]);
+            }
+        }
+    }
+
+    /**
+     * Retrieve the user defined attributes for leads.
+     */
+    protected function getCustomAttributes(): Collection
+    {
+        static $attributes;
+
+        return $attributes ??= Attribute::query()
+            ->where('entity_type', 'leads')
+            ->where('is_user_defined', 1)
+            ->get();
     }
 
     /**
@@ -284,19 +346,19 @@ class LeadDataGrid extends DataGrid
     {
         if (bouncer()->hasPermission('leads.view')) {
             $this->addAction([
-                'icon'   => 'icon-eye',
-                'title'  => trans('admin::app.leads.index.datagrid.view'),
+                'icon' => 'icon-eye',
+                'title' => trans('admin::app.leads.index.datagrid.view'),
                 'method' => 'GET',
-                'url'    => fn ($row) => route('admin.leads.view', $row->id),
+                'url' => fn ($row) => route('admin.leads.view', $row->id),
             ]);
         }
 
         if (bouncer()->hasPermission('leads.delete')) {
             $this->addAction([
-                'icon'   => 'icon-delete',
-                'title'  => trans('admin::app.leads.index.datagrid.delete'),
+                'icon' => 'icon-delete',
+                'title' => trans('admin::app.leads.index.datagrid.delete'),
                 'method' => 'delete',
-                'url'    => fn ($row) => route('admin.leads.delete', $row->id),
+                'url' => fn ($row) => route('admin.leads.delete', $row->id),
             ]);
         }
     }
@@ -307,16 +369,16 @@ class LeadDataGrid extends DataGrid
     public function prepareMassActions(): void
     {
         $this->addMassAction([
-            'icon'   => 'icon-delete',
-            'title'  => trans('admin::app.leads.index.datagrid.mass-delete'),
+            'icon' => 'icon-delete',
+            'title' => trans('admin::app.leads.index.datagrid.mass-delete'),
             'method' => 'POST',
-            'url'    => route('admin.leads.mass_delete'),
+            'url' => route('admin.leads.mass_delete'),
         ]);
 
         $this->addMassAction([
-            'title'   => trans('admin::app.leads.index.datagrid.mass-update'),
-            'url'     => route('admin.leads.mass_update'),
-            'method'  => 'POST',
+            'title' => trans('admin::app.leads.index.datagrid.mass-update'),
+            'url' => route('admin.leads.mass_update'),
+            'method' => 'POST',
             'options' => $this->pipeline->stages->map(fn ($stage) => [
                 'label' => $stage->name,
                 'value' => $stage->id,

@@ -4,7 +4,7 @@
     </x-slot>
 
     <div class="flex flex-col gap-4"> 
-        <div class="flex items-center justify-between rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
+        <div class="scroll-reactive-sticky sticky top-[60px] z-[1000] flex items-center justify-between rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm shadow-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
             <div class="flex flex-col gap-2">
                 {!! view_render_event('admin.settings.data_transfers.index.breadcrumbs.before') !!}
 
@@ -23,7 +23,7 @@
                 <div class="flex items-center gap-x-2.5">
                     {!! view_render_event('admin.settings.data_transfers.index.create_button.before') !!}
 
-                    @if (bouncer()->hasPermission('settings.data_transfer.imports.create'))
+                    @if (bouncer()->hasPermission('settings.automation.data_transfer.imports.create'))
                         <a 
                             href="{{ route('admin.settings.data_transfer.imports.create') }}" 
                             class="primary-button"

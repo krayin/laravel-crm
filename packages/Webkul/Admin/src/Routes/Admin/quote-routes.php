@@ -20,5 +20,7 @@ Route::controller(QuoteController::class)->prefix('quotes')->group(function () {
 
     Route::get('search', 'search')->name('admin.quotes.search');
 
+    Route::get('lead-products/{lead_id}', 'leadProducts')->name('admin.quotes.lead_products');
+
     Route::post('mass-destroy', 'massDestroy')->name('admin.quotes.mass_delete');
 });

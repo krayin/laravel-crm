@@ -1,9 +1,9 @@
 @props([
-    'name'           => 'images',
-    'allowMultiple'  => false,
+    'name' => 'images',
+    'allowMultiple' => false,
     'uploadedVideos' => [],
-    'width'          => '210px',
-    'height'         => '120px'
+    'width' => '210px',
+    'height' => '120px'
 ])
 
 <v-media-videos
