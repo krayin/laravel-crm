@@ -338,7 +338,7 @@
                             });
 
                             if (filteredStages.length > 1) {
-                                return "{!! trans('admin::app.settings.pipelines.create.duplicate-name') !!}";
+                                return @json(trans('admin::app.settings.pipelines.create.duplicate-name'));
                             }
 
                             this.removeUniqueNameErrors();
