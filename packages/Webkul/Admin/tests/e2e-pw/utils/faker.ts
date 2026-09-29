@@ -854,3 +854,46 @@ export function generateLocation() {
 
     return location[Math.floor(Math.random() * location.length)];
 }
+
+export function generateCampaignName() {
+    const prefixes = [
+        "Summer",
+        "Winter",
+        "Spring",
+        "Autumn",
+        "Annual",
+        "Seasonal",
+        "Flash",
+        "Holiday",
+    ];
+
+    const subjects = [
+        "Sale",
+        "Promo",
+        "Outreach",
+        "Newsletter",
+        "Launch",
+        "Offer",
+        "Update",
+        "Announcement",
+    ];
+
+    const prefix = prefixes[Math.floor(Math.random() * prefixes.length)];
+    const subject = subjects[Math.floor(Math.random() * subjects.length)];
+
+    return `${prefix} ${subject} ${Date.now()}`;
+}
+
+export function generateUniqueWebhookUrl() {
+    return `${generateHostname()}/webhook/${Date.now()}${Math.floor(Math.random() * 1000)}`;
+}
+
+export function generateDate(end = new Date(new Date().setFullYear(new Date().getFullYear() + 1))) {
+    const start = new Date();
+    const date = new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+
+    return `${year}-${month}-${day}`;
+}

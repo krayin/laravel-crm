@@ -1,4 +1,4 @@
-import { expect, test } from "../../../setup";
+import { expect, test } from "../../../fixtures/AdminFixtures";
 import { generateCampaignName, generateDate, generateDescription, generateFullName } from "../../../utils/faker";
 
 test.describe("campaign management", () => {

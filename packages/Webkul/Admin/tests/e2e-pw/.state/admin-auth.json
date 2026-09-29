@@ -2,20 +2,20 @@
   "cookies": [
     {
       "name": "XSRF-TOKEN",
-      "value": "eyJpdiI6IlAzOTFCLzFpTWxrdEswSzM4QmNOUkE9PSIsInZhbHVlIjoiNzZTUGNXeDYwWjJSVlRCbnd5NkU3dlg3NHAwZGM2ajlpTnBlMWQvRStHTkNQWkZjYml5NnFUUGpoTFFuZ3Jna01BUXRoSENFSVN5Y05RdjFvNU5IWjJYZStOTHJiNTNWVVZmbWpmMWVFaE1xWG5xTjkrZW9tZ2ZOU3J5QnNhRmMiLCJtYWMiOiI3MTJhZDM1MzZhMDU2OTVkYmRjZTEwOTRkMjkzYTIyNjcxZTk4MThiNjkwZjQ2NzIzZmUzYTJhM2Y5ZjkyMGE0IiwidGFnIjoiIn0%3D",
-      "domain": "192.168.15.131",
+      "value": "eyJpdiI6IjF6NGdsdnJUMXRqRW84QXUvd0pTRFE9PSIsInZhbHVlIjoiTUlRTjFJaWliTVJidm1vbG9HZjhjUUZhT1hQWktmd2Uvek0yRUp5ZHk1aExBQTNib3Zjb1Q5MUwxNlNrQm1kTXFmUExUaUczZ3JHY083UzBqYys3cWIxM3k4c09DanNtUlA3RWpHRkdFbTM0M0t1V0N4WDlyTU1KT2FEWVU2Z3oiLCJtYWMiOiJhOTVmMWNjNjlkMWNjODk3ZTQzM2JiN2M5NTRjNmVlYTRmMTNlODVjODlhOTFlOGU5MWNjZjA5MDU3Mzk0ODJiIiwidGFnIjoiIn0%3D",
+      "domain": "krayin-local.com",
       "path": "/",
-      "expires": 1787127131.04971,
+      "expires": 1790671545.371213,
       "httpOnly": false,
       "secure": false,
       "sameSite": "Lax"
     },
     {
       "name": "krayin_crm_session",
-      "value": "eyJpdiI6IktDWkpDVEZRcFRwYkViTzd3bXZVZlE9PSIsInZhbHVlIjoiajRTQlpyQ1BobjArZWo1dlFmMy81eXZyUGJXNW5LR2xKOWFiVGd2c0t5dWZ6V0hmdFBGQ0VpVDFyUkFraFBZa0NHbWpxMjdxdkpaWENnTldZenNFN2htSzQ2ajh3YkdmMUJMeEthK0l5YzU3cFhvcWw1aktPMVpBYjZVM0tXQ1YiLCJtYWMiOiI2NmY4Y2Q5OWQ4Yjc2YjU3ZDAwMDI5ODMyOTE0YjY3ZTM5NGJkNzYwZTdiNGVjMmQ5M2U4NjM5ZGIxNzUwZjk2IiwidGFnIjoiIn0%3D",
-      "domain": "192.168.15.131",
+      "value": "eyJpdiI6IlFPai8yaE9JU1NWb2hMdjBkQzVleWc9PSIsInZhbHVlIjoiM2xoR0IydW9yNFNhTTNLdmdHQWF5MGFRVG9tcy9DUkUzblcvYXlPTVBqS1J1UWVNZjZaYlViT2kyZjBxYXBCeGFtSENRQ2JISjJhZmxCSnZkNkl1aFlsTkVMZWdXSTBkWHhuMFF4enZJbzgzSkQ5WnhTays1eEtBa0VJem1yd1IiLCJtYWMiOiJlMzA3MjgyNTI4Yjg3NTM2MjI3NTM1MDQzNDFkMGJjOTc3OTEwMjA0ZTVhMTM3YTVmODJlN2VkYjM3Y2ZiYTM3IiwidGFnIjoiIn0%3D",
+      "domain": "krayin-local.com",
       "path": "/",
-      "expires": 1787127131.049837,
+      "expires": 1790671545.371473,
       "httpOnly": true,
       "secure": false,
       "sameSite": "Lax"
@@ -23,7 +23,16 @@
   ],
   "origins": [
     {
-      "origin": "http://192.168.15.131",
+      "origin": "http://localhost",
+      "localStorage": [
+        {
+          "name": "phpdebugbar-height",
+          "value": "300"
+        }
+      ]
+    },
+    {
+      "origin": "http://localhost",
       "localStorage": [
         {
           "name": "phpdebugbar-height",
