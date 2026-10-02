@@ -90,6 +90,10 @@ class Validator
      */
     public function validateAttribute($condition, $attributeValue)
     {
+        if (! isset($condition['operator'])) {
+            return false;
+        }
+
         switch ($condition['operator']) {
             case '==': case '!=':
                 if (is_array($condition['value'])) {
