@@ -732,13 +732,13 @@ return [
             ],
 
             'inventory' => [
-                'source'     => 'Source',
+                'source'     => 'Warehouse',
                 'in-stock'   => 'In Stock',
                 'allocated'  => 'Allocated',
                 'on-hand'    => 'On Hand',
                 'actions'    => 'Actions',
                 'assign'     => 'Assign',
-                'add-source' => 'Add Source',
+                'add-source' => 'Add Warehouse',
                 'location'   => 'Location',
                 'add-more'   => 'Add More',
                 'save'       => 'Save',
