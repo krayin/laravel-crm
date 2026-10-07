@@ -130,7 +130,7 @@ class LeadForm extends FormRequest
         return [
             ...$this->rules,
             'products' => 'array',
-            'products.*.product_id' => 'sometimes|required|exists:products,id',
+            'products.*.product_id' => 'required|exists:products,id',
             'products.*.name' => 'required_with:products.*.product_id',
             'products.*.price' => 'required_with:products.*.product_id',
             'products.*.quantity' => 'required_with:products.*.product_id',
