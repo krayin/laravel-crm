@@ -178,9 +178,20 @@ class QuoteController extends Controller
      */
     public function search(): AnonymousResourceCollection
     {
-        $quotes = $this->quoteRepository
-            ->pushCriteria(app(RequestCriteria::class))
-            ->all();
+        $quoteRepository = $this->quoteRepository
+            ->pushCriteria(app(RequestCriteria::class));
+
+        /**
+         * Scope the result to the acting user's data scope, the same way the listing and the data
+         * grid already are. Without it this endpoint returned every quote — subject, description,
+         * billing and shipping address, totals, and the linked person's contact details — to any
+         * user with quote access, regardless of who owned the record.
+         */
+        if ($userIds = bouncer()->getAuthorizedUserIds()) {
+            $quotes = $quoteRepository->findWhereIn('user_id', $userIds);
+        } else {
+            $quotes = $quoteRepository->all();
+        }
 
         return QuoteResource::collection($quotes);
     }
@@ -191,6 +202,12 @@ class QuoteController extends Controller
     public function leadProducts(int $leadId): JsonResponse
     {
         $lead = $this->leadRepository->findOrFail($leadId);
+
+        /**
+         * The products on a lead carry that deal's pricing — product, quantity, unit price and line
+         * total — so the endpoint is bound to the lead's owner rather than to quote access alone.
+         */
+        $this->preventUnauthorizedAccess($lead->user_id);
 
         return response()->json([
             'data' => $this->getLeadProductsForQuote($lead),

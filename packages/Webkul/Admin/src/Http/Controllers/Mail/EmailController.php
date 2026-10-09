@@ -58,6 +58,58 @@ class EmailController extends Controller
     }
 
     /**
+     * Resolve the user ids a mail is scoped to, through the lead or person it is linked to.
+     *
+     * An unlinked mail returns an empty list: the mailbox itself is shared, so mail that belongs to
+     * no lead or person stays available to everyone with mail access.
+     */
+    private function emailOwnerIds($email): array
+    {
+        return array_values(array_filter([
+            $email?->lead?->user_id,
+            $email?->person?->user_id,
+        ]));
+    }
+
+    /**
+     * Deny a write against a mail that is linked to a lead or person outside the acting user's data
+     * scope. Unlinked mail is left alone, matching the read path in `view()`.
+     *
+     * `preventUnauthorizedAccess()` is not used directly because it denies on an empty owner list,
+     * which would make shared, unlinked mail unwritable for restricted users.
+     */
+    private function preventUnauthorizedMailAccess($email): void
+    {
+        $ownerIds = $this->emailOwnerIds($email);
+
+        if (! $ownerIds) {
+            return;
+        }
+
+        $this->preventUnauthorizedAccess($ownerIds);
+    }
+
+    /**
+     * Reduce a set of mails to the ones the acting user may write to, keeping unlinked (shared)
+     * mail. Mass actions silently skip what is out of scope instead of failing the whole batch,
+     * matching the other mass endpoints.
+     */
+    private function filterAuthorizedMails($mails)
+    {
+        $userIds = bouncer()->getAuthorizedUserIds();
+
+        if ($userIds === null) {
+            return $mails;
+        }
+
+        return $mails->filter(function ($email) use ($userIds) {
+            $ownerIds = $this->emailOwnerIds($email);
+
+            return ! $ownerIds || ! empty(array_intersect($ownerIds, $userIds));
+        })->values();
+    }
+
+    /**
      * Display a resource.
      *
      * @return View
@@ -87,16 +139,7 @@ class EmailController extends Controller
          * outright, rather than merely hiding its `lead_id` while still returning the subject,
          * body, thread and attachments.
          */
-        if ($userIds = bouncer()->getAuthorizedUserIds()) {
-            $ownerIds = array_filter([
-                $email->lead?->user_id,
-                $email->person?->user_id,
-            ]);
-
-            if ($ownerIds && empty(array_intersect($ownerIds, $userIds))) {
-                abort(401, trans('admin::app.errors.unauthorized'));
-            }
-        }
+        $this->preventUnauthorizedMailAccess($email);
 
         if ($route == SupportedFolderEnum::DRAFT->value) {
             return response()->json([
@@ -165,15 +208,23 @@ class EmailController extends Controller
      */
     public function update($id)
     {
+        /**
+         * The path id is authoritative. Honouring `request('id')` let a body parameter override it,
+         * so a request to one mail could be redirected to update another.
+         */
+        $this->preventUnauthorizedMailAccess($this->emailRepository->findOrFail($id));
+
         Event::dispatch('email.update.before', $id);
 
         $data = request()->all();
+
+        unset($data['id']);
 
         if (! is_null(request('is_draft'))) {
             $data['folders'] = request('is_draft') ? [SupportedFolderEnum::DRAFT->value] : [SupportedFolderEnum::OUTBOX->value];
         }
 
-        $email = $this->emailRepository->update($data, request('id') ?? $id);
+        $email = $this->emailRepository->update($data, $id);
 
         Event::dispatch('email.update.after', $email);
 
@@ -247,18 +298,7 @@ class EmailController extends Controller
          * an attachment on a lead/person-linked mail outside that scope is refused, so an
          * unauthorized mail id can no longer be turned into an unauthorized file download.
          */
-        if ($userIds = bouncer()->getAuthorizedUserIds()) {
-            $email = $attachment->email;
-
-            $ownerIds = array_filter([
-                $email?->lead?->user_id,
-                $email?->person?->user_id,
-            ]);
-
-            if ($ownerIds && empty(array_intersect($ownerIds, $userIds))) {
-                abort(401, trans('admin::app.errors.unauthorized'));
-            }
-        }
+        $this->preventUnauthorizedMailAccess($attachment->email);
 
         try {
             return Storage::disk(AttachmentRepository::resolveDisk($attachment->path))
@@ -275,7 +315,9 @@ class EmailController extends Controller
      */
     public function massUpdate(MassUpdateRequest $massUpdateRequest): JsonResponse
     {
-        $emails = $this->emailRepository->findWhereIn('id', $massUpdateRequest->input('indices'));
+        $emails = $this->filterAuthorizedMails(
+            $this->emailRepository->findWhereIn('id', $massUpdateRequest->input('indices'))
+        );
 
         try {
             foreach ($emails as $email) {
@@ -304,6 +346,8 @@ class EmailController extends Controller
     public function destroy(int $id): JsonResponse|RedirectResponse
     {
         $email = $this->emailRepository->findOrFail($id);
+
+        $this->preventUnauthorizedMailAccess($email);
 
         try {
             Event::dispatch('email.'.request('type').'.before', $id);
@@ -351,7 +395,9 @@ class EmailController extends Controller
      */
     public function massDestroy(MassDestroyRequest $massDestroyRequest): JsonResponse
     {
-        $mails = $this->emailRepository->findWhereIn('id', $massDestroyRequest->input('indices'));
+        $mails = $this->filterAuthorizedMails(
+            $this->emailRepository->findWhereIn('id', $massDestroyRequest->input('indices'))
+        );
 
         try {
             foreach ($mails as $email) {

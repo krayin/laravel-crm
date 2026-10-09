@@ -4,6 +4,8 @@ This changelog consists of the bug & security fixes and new features being inclu
 
 ## **v2.2.6 (10th of Sept 2026)**
 
+* [security] Improved in Security.
+
 * [feature] Added MariaDB support.
 
 * [feature] Added customizable lead card information. Datagrid columns and Kanban lead card fields can now be chosen per user through new column and card settings components.

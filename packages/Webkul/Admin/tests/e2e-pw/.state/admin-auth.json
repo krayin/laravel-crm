@@ -1,25 +1,5 @@
 {
   "cookies": [
-    {
-      "name": "XSRF-TOKEN",
-      "value": "eyJpdiI6IjF6NGdsdnJUMXRqRW84QXUvd0pTRFE9PSIsInZhbHVlIjoiTUlRTjFJaWliTVJidm1vbG9HZjhjUUZhT1hQWktmd2Uvek0yRUp5ZHk1aExBQTNib3Zjb1Q5MUwxNlNrQm1kTXFmUExUaUczZ3JHY083UzBqYys3cWIxM3k4c09DanNtUlA3RWpHRkdFbTM0M0t1V0N4WDlyTU1KT2FEWVU2Z3oiLCJtYWMiOiJhOTVmMWNjNjlkMWNjODk3ZTQzM2JiN2M5NTRjNmVlYTRmMTNlODVjODlhOTFlOGU5MWNjZjA5MDU3Mzk0ODJiIiwidGFnIjoiIn0%3D",
-      "domain": "krayin-local.com",
-      "path": "/",
-      "expires": 1790671545.371213,
-      "httpOnly": false,
-      "secure": false,
-      "sameSite": "Lax"
-    },
-    {
-      "name": "krayin_crm_session",
-      "value": "eyJpdiI6IlFPai8yaE9JU1NWb2hMdjBkQzVleWc9PSIsInZhbHVlIjoiM2xoR0IydW9yNFNhTTNLdmdHQWF5MGFRVG9tcy9DUkUzblcvYXlPTVBqS1J1UWVNZjZaYlViT2kyZjBxYXBCeGFtSENRQ2JISjJhZmxCSnZkNkl1aFlsTkVMZWdXSTBkWHhuMFF4enZJbzgzSkQ5WnhTays1eEtBa0VJem1yd1IiLCJtYWMiOiJlMzA3MjgyNTI4Yjg3NTM2MjI3NTM1MDQzNDFkMGJjOTc3OTEwMjA0ZTVhMTM3YTVmODJlN2VkYjM3Y2ZiYTM3IiwidGFnIjoiIn0%3D",
-      "domain": "krayin-local.com",
-      "path": "/",
-      "expires": 1790671545.371473,
-      "httpOnly": true,
-      "secure": false,
-      "sameSite": "Lax"
-    }
   ],
   "origins": [
     {
