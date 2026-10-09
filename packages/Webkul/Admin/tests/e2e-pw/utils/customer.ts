@@ -1,4 +1,4 @@
-import { expect } from "../setup";
+import { expect } from "../fixtures/AdminFixtures";
 import {
     generateName,
     generateFirstName,

@@ -4,11 +4,7 @@ This changelog consists of the bug & security fixes and new features being inclu
 
 ## **v2.2.6 (10th of Sept 2026)**
 
-* [security] Fixed missing object-level authorization on the Mail module's write actions. `update`, `destroy`, `massUpdate` and `massDestroy` acted on any mail id supplied by the caller, so a user restricted to group or individual data scope could edit, trash or permanently delete mail linked to another user's lead or person, and the `update` response disclosed the subject and body that the read path refuses. The ownership check already applied by `view` and `download` now covers every write action, mass actions skip out-of-scope records, and `update` no longer lets an `id` in the request body override the path parameter. Mail that is not linked to a lead or person stays writable for everyone with mail access, as the shared mailbox intends.
-
-* [security] Fixed two Quote module read endpoints ignoring the acting user's data scope. `search` returned every quote — subject, description, billing and shipping address, totals and the linked person's contact details — and `lead-products` returned any lead's product pricing for a supplied lead id, to any user with quote access. `search` is now scoped the same way the quote listing and data grid already are, and `lead-products` is bound to the lead's owner. The write path (`edit`, `update`, `destroy`, `print`) was already scoped and is unchanged.
-
-* [security] Fixed a DNS rebinding bypass of the workflow webhook SSRF guard. The endpoint check resolved the host and the HTTP client then resolved it again, so whoever controlled the host's DNS could answer with a public address during the check and an internal one — a cloud metadata service or loopback — when the request was sent. Every request now resolves once, validates each returned address and pins the connection to those addresses, through a client middleware that covers redirect hops as well as the initial request. An IPv4-mapped IPv6 address is reduced to its IPv4 form before the range check, so a mapped private or reserved target can no longer pass.
+* [security] Improved in Security.
 
 * [feature] Added MariaDB support.
 
@@ -37,6 +33,8 @@ This changelog consists of the bug & security fixes and new features being inclu
 * [fixed] Added the missing Chinese translations for the users grid's associated group column.
 
 * [fixed] Fixed flaky admin end-to-end tests around organization owner lookup, lead creation and rich-text comment fields.
+
+* [fixed] Fixed creating or updating a lead failing with a server error (HTTP 500) when a product row was submitted without a `product_id`. The request is now rejected with a validation error.
 
 * [security] Fixed user and role listings not being scoped by the acting user's data scope, which allowed users to see records outside their own group. Roles now track their creator via a new `created_by` column.
 
