@@ -2,26 +2,35 @@
   "cookies": [
     {
       "name": "XSRF-TOKEN",
-      "value": "eyJpdiI6IlAzOTFCLzFpTWxrdEswSzM4QmNOUkE9PSIsInZhbHVlIjoiNzZTUGNXeDYwWjJSVlRCbnd5NkU3dlg3NHAwZGM2ajlpTnBlMWQvRStHTkNQWkZjYml5NnFUUGpoTFFuZ3Jna01BUXRoSENFSVN5Y05RdjFvNU5IWjJYZStOTHJiNTNWVVZmbWpmMWVFaE1xWG5xTjkrZW9tZ2ZOU3J5QnNhRmMiLCJtYWMiOiI3MTJhZDM1MzZhMDU2OTVkYmRjZTEwOTRkMjkzYTIyNjcxZTk4MThiNjkwZjQ2NzIzZmUzYTJhM2Y5ZjkyMGE0IiwidGFnIjoiIn0%3D",
-      "domain": "192.168.15.131",
+      "value": "eyJpdiI6ImRJaUlHNVc3a1NsODQ2T1FLR1hEY2c9PSIsInZhbHVlIjoiQWU5UWVUV1lYRWV0MjZkWGRIb2lWZS90RUd2NTlhV08vSjVONGgzWS9mM0NXUDMrZ0ZETGFoRnF0aFNTYXoyZmVqTGppNWFMRE55YlFJV1ZmNWVDWGc1bVl5UEJOa0pPcS9WeTVybDRlQXNsU2h4ajZ3OVh2NU1uZzVJUDRKbDYiLCJtYWMiOiJmYmZiZDI3OTg1ZWRmYTljNjVjNjhjNmVlYjA5YTc4N2I1MmQ4MjYxNDQ5MGVkOGQzZWYwMDIwMDdhYjcwYTg3IiwidGFnIjoiIn0%3D",
+      "domain": "krayin-local.com",
       "path": "/",
-      "expires": 1787127131.04971,
+      "expires": 1791558196.564022,
       "httpOnly": false,
       "secure": false,
       "sameSite": "Lax"
     },
     {
       "name": "krayin_crm_session",
-      "value": "eyJpdiI6IktDWkpDVEZRcFRwYkViTzd3bXZVZlE9PSIsInZhbHVlIjoiajRTQlpyQ1BobjArZWo1dlFmMy81eXZyUGJXNW5LR2xKOWFiVGd2c0t5dWZ6V0hmdFBGQ0VpVDFyUkFraFBZa0NHbWpxMjdxdkpaWENnTldZenNFN2htSzQ2ajh3YkdmMUJMeEthK0l5YzU3cFhvcWw1aktPMVpBYjZVM0tXQ1YiLCJtYWMiOiI2NmY4Y2Q5OWQ4Yjc2YjU3ZDAwMDI5ODMyOTE0YjY3ZTM5NGJkNzYwZTdiNGVjMmQ5M2U4NjM5ZGIxNzUwZjk2IiwidGFnIjoiIn0%3D",
-      "domain": "192.168.15.131",
+      "value": "eyJpdiI6IlZuMTluRVRNaTdMaEVEeUd4S0t6V1E9PSIsInZhbHVlIjoiK0hUemgzaDVLdHhmWm00WndoYU9YK2J5dGE5WlA0WUZTQlFnczBPTE9nTk52L2lSbFQ5bzJzOStUeHM3NmZZM0l4U1dmR0VyTTFCL0lvTE1zOWJabFp4dXJGY3pFdnEzaUlQNXRkK0Q3bzZUTzV1V3JDRG5vNUFNcjBJSlBlNUYiLCJtYWMiOiI5MjU3ZGRlYzZhYjAyZjBlZGFhNDk3NTUxMmRkODExNDU3OGJiZDkyNjFhMDNkMTQ1ODMyZDMxNDdkYWZlYmM4IiwidGFnIjoiIn0%3D",
+      "domain": "krayin-local.com",
       "path": "/",
-      "expires": 1787127131.049837,
+      "expires": 1791558196.564183,
       "httpOnly": true,
       "secure": false,
       "sameSite": "Lax"
     }
   ],
   "origins": [
+    {
+      "origin": "http://krayin-local.com",
+      "localStorage": [
+        {
+          "name": "phpdebugbar-height",
+          "value": "300"
+        }
+      ]
+    },
     {
       "origin": "http://192.168.15.131",
       "localStorage": [
