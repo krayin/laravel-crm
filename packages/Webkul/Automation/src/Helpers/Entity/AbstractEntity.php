@@ -96,9 +96,35 @@ abstract class AbstractEntity
     }
 
     /**
-     * Replace placeholders with values.
+     * Escape a substituted value for the context the placeholder sits in.
+     *
+     * A placeholder's value is entity data, and on the public web-form path it is supplied by an
+     * anonymous submitter, so it is never safe to splice in raw:
+     *
+     * - `html`: the email templates are rendered with `{!! $body !!}`, so an unescaped value becomes
+     *   markup in the delivered mail — forged content, phishing links, tracking pixels.
+     * - `url`: the webhook endpoint is a URL template, so an unencoded value can introduce `?`, `&`,
+     *   `#` or `/../` and restructure the path and query the server then requests.
+     * - `json`: the query params, payload and headers are encoded first and substituted after, so an
+     *   unescaped quote or backslash breaks out of its JSON string.
      */
-    public function replacePlaceholders(mixed $entity, string $content): string
+    protected function escapePlaceholderValue(string $value, string $context): string
+    {
+        return match ($context) {
+            'url' => rawurlencode($value),
+            'json' => substr(json_encode($value, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES), 1, -1),
+            'html' => htmlspecialchars($value, ENT_QUOTES, 'UTF-8'),
+            default => $value,
+        };
+    }
+
+    /**
+     * Replace placeholders with values.
+     *
+     * `$context` says how a substituted value is escaped — see `escapePlaceholderValue()`. It
+     * defaults to `html` because every caller but the webhook renders into an email body.
+     */
+    public function replacePlaceholders(mixed $entity, string $content, string $context = 'html'): string
     {
         foreach ($this->getAttributes($this->entityType, []) as $attribute) {
             $value = '';
@@ -201,6 +227,8 @@ abstract class AbstractEntity
                     break;
             }
 
+            $value = $this->escapePlaceholderValue((string) $value, $context);
+
             $content = strtr($content, [
                 '{%'.$this->entityType.'.'.$attribute['id'].'%}' => $value,
                 '{% '.$this->entityType.'.'.$attribute['id'].' %}' => $value,
@@ -219,12 +247,16 @@ abstract class AbstractEntity
     {
         $webhook = $this->webhookRepository->findOrFail($webhookId);
 
+        /**
+         * The endpoint is a URL and the other three are already-encoded JSON, so each is escaped
+         * for its own context rather than substituted raw.
+         */
         $payload = [
             'method' => $webhook->method,
-            'query_params' => $this->replacePlaceholders($entity, json_encode($webhook->query_params)),
-            'end_point' => $this->replacePlaceholders($entity, $webhook->end_point),
-            'payload' => $this->replacePlaceholders($entity, json_encode($webhook->payload)),
-            'headers' => $this->replacePlaceholders($entity, json_encode($webhook->headers)),
+            'query_params' => $this->replacePlaceholders($entity, json_encode($webhook->query_params), 'json'),
+            'end_point' => $this->replacePlaceholders($entity, $webhook->end_point, 'url'),
+            'payload' => $this->replacePlaceholders($entity, json_encode($webhook->payload), 'json'),
+            'headers' => $this->replacePlaceholders($entity, json_encode($webhook->headers), 'json'),
         ];
 
         $this->webhookService->triggerWebhook($payload);

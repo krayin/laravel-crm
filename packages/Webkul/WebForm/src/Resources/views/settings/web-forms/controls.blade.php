@@ -11,9 +11,9 @@
         <x-web_form::form.control-group.label
             :for="$fieldName"
             class="{{ $validations }}"
-            style="color: {{ $webForm->attribute_label_color }} !important;"
+            style="color: @vueSafe($webForm->attribute_label_color) !important;"
         >
-            {{ $attribute->name ?? $parentAttribute->name }}
+            @vueSafe($attribute->name ?? $parentAttribute->name)
         </x-web_form::form.control-group.label>
 
         @switch($parentAttribute->type)

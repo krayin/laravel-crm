@@ -127,14 +127,20 @@ class Activity extends AbstractEntity
     /**
      * Replace placeholders with values.
      */
-    public function replacePlaceholders(mixed $entity, string $content): string
+    public function replacePlaceholders(mixed $entity, string $content, string $context = 'html'): string
     {
-        $content = parent::replacePlaceholders($entity, $content);
+        $content = parent::replacePlaceholders($entity, $content, $context);
 
+        /**
+         * The list markup is built here, so it stays raw; the participant names come from user and
+         * contact records and are escaped for the context they land in.
+         */
         $value = '<ul style="padding-left: 18px;margin: 0;">';
 
         foreach ($entity->participants as $participant) {
-            $value .= '<li>'.($participant->user ? $participant->user->name : $participant->person->name).'</li>';
+            $name = $participant->user ? $participant->user->name : $participant->person->name;
+
+            $value .= '<li>'.$this->escapePlaceholderValue((string) $name, $context).'</li>';
         }
 
         $value .= '</ul>';
@@ -284,6 +290,26 @@ class Activity extends AbstractEntity
     /**
      * Returns .ics file for attachments.
      */
+    /**
+     * Escape a value for an iCalendar property, per RFC 5545 section 3.3.11.
+     *
+     * The file is built by concatenating properties and joining them with CRLF, so a newline in a
+     * stored title, location, comment or participant name would terminate its property early and
+     * let the rest be read as further iCalendar lines — a substituted ORGANIZER, an injected URL or
+     * ATTACH, or an extra VEVENT that silently lands on the recipient's calendar.
+     */
+    protected function escapeICSValue(?string $value): string
+    {
+        return strtr((string) $value, [
+            '\\' => '\\\\',
+            "\r\n" => '\\n',
+            "\r" => '\\n',
+            "\n" => '\\n',
+            ';' => '\\;',
+            ',' => '\\,',
+        ]);
+    }
+
     public function getICSContent(ContractsActivity $activity): string
     {
         $content = [
@@ -296,15 +322,15 @@ class Activity extends AbstractEntity
             'DTSTAMP:'.Carbon::now()->utc()->format('Ymd\THis\Z'),
             'CREATED:'.$activity->created_at->copy()->utc()->format('Ymd\THis\Z'),
             'SEQUENCE:1',
-            'ORGANIZER;CN='.$activity->user->name.':MAILTO:'.$activity->user->email,
+            'ORGANIZER;CN='.$this->escapeICSValue($activity->user->name).':MAILTO:'.$this->escapeICSValue($activity->user->email),
         ];
 
         foreach ($activity->participants as $participant) {
             if ($participant->user) {
-                $content[] = 'ATTENDEE;ROLE=REQ-PARTICIPANT;CN='.$participant->user->name.';PARTSTAT=NEEDS-ACTION:MAILTO:'.$participant->user->email;
+                $content[] = 'ATTENDEE;ROLE=REQ-PARTICIPANT;CN='.$this->escapeICSValue($participant->user->name).';PARTSTAT=NEEDS-ACTION:MAILTO:'.$this->escapeICSValue($participant->user->email);
             } else {
                 foreach (data_get($participant->person->emails, '*.value') as $email) {
-                    $content[] = 'ATTENDEE;ROLE=REQ-PARTICIPANT;CN='.$participant->person->name.';PARTSTAT=NEEDS-ACTION:MAILTO:'.$email;
+                    $content[] = 'ATTENDEE;ROLE=REQ-PARTICIPANT;CN='.$this->escapeICSValue($participant->person->name).';PARTSTAT=NEEDS-ACTION:MAILTO:'.$this->escapeICSValue($email);
                 }
             }
         }
@@ -312,9 +338,9 @@ class Activity extends AbstractEntity
         $content = array_merge($content, [
             'DTSTART:'.$activity->schedule_from->copy()->utc()->format('Ymd\THis\Z'),
             'DTEND:'.$activity->schedule_to->copy()->utc()->format('Ymd\THis\Z'),
-            'SUMMARY:'.$activity->title,
-            'LOCATION:'.$activity->location,
-            'DESCRIPTION:'.$activity->comment,
+            'SUMMARY:'.$this->escapeICSValue($activity->title),
+            'LOCATION:'.$this->escapeICSValue($activity->location),
+            'DESCRIPTION:'.$this->escapeICSValue($activity->comment),
             'END:VEVENT',
             'END:VCALENDAR',
         ]);

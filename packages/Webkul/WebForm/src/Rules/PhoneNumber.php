@@ -15,10 +15,20 @@ class PhoneNumber implements Rule
      */
     public function passes($attribute, $value)
     {
+        /**
+         * Laravel hands a custom rule whatever the request carried, so an array arrives here
+         * unchanged. `preg_match()` then throws an uncaught TypeError and the unauthenticated web
+         * form answers 500 — disclosing a stack trace wherever `APP_DEBUG` is on — instead of
+         * reporting a validation failure. A non-scalar value is simply not a phone number.
+         */
+        if (! is_scalar($value)) {
+            return false;
+        }
+
         // This regular expression allows phone numbers with the following conditions:
         // - The phone number can start with an optional "+" sign.
         // - After the "+" sign, there should be one or more digits.
-        return preg_match('/^\+?\d+$/', $value);
+        return preg_match('/^\+?\d+$/', (string) $value);
     }
 
     /**

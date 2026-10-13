@@ -1,0 +1,179 @@
+<?php
+
+use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Illuminate\Validation\ValidationException;
+use Webkul\Attribute\Models\Attribute;
+use Webkul\Attribute\Repositories\AttributeValueRepository;
+use Webkul\Contact\Repositories\PersonRepository;
+use Webkul\User\Models\Role;
+use Webkul\User\Models\User;
+use Webkul\WebForm\Http\Requests\WebForm as WebFormRequest;
+
+/**
+ * `emails` and `contact_numbers` are seeded `is_unique`, and both are legitimately placed on public
+ * web forms. The submission's uniqueness rule therefore answered a question an anonymous caller
+ * should not be able to ask: a 422 carrying "The value has already been taken." meant the address
+ * or number is already a contact, anything else meant it is not. The route is unauthenticated and
+ * unthrottled, so the whole contact list could be probed one value at a time.
+ *
+ * A repeat value on a public form is a returning visitor rather than an error — the controller
+ * resolves them by email and merges — so the check is dropped on this path. The admin forms, which
+ * are authenticated and where a duplicate genuinely is a mistake, keep it.
+ */
+uses(DatabaseTransactions::class);
+
+function enumerationUser(): User
+{
+    $role = Role::create([
+        'name' => 'Enumeration Role '.bin2hex(random_bytes(6)),
+        'description' => 'Created by the web form enumeration tests.',
+        'permission_type' => 'all',
+    ]);
+
+    return User::create([
+        'name' => 'Enumeration Owner',
+        'email' => 'enumeration-'.bin2hex(random_bytes(6)).'@example.invalid',
+        'password' => bcrypt('correct-horse-battery-staple'),
+        'status' => 1,
+        'role_id' => $role->id,
+        'view_permission' => 'global',
+    ]);
+}
+
+/**
+ * Create a contact the way the application does. Creating the model directly leaves
+ * `attribute_values` empty, and that table — not `persons` — is what the uniqueness rule queries,
+ * so a directly-created contact does not reproduce the oracle at all.
+ */
+function makeEnumerationContact(User $owner, string $name, string $email, ?string $phone = null)
+{
+    $data = [
+        'name' => $name,
+        'user_id' => $owner->id,
+        'entity_type' => 'persons',
+        'emails' => [['value' => $email, 'label' => 'work']],
+    ];
+
+    if ($phone) {
+        $data['contact_numbers'] = [['value' => $phone, 'label' => 'work']];
+    }
+
+    return app(PersonRepository::class)->create($data);
+}
+
+/**
+ * Run the public submission's validation over a payload, returning the messages it produced.
+ *
+ * The request is exercised directly because the controller resolves a matching contact and puts
+ * its id in the request before validating, which exempts that one record — the probe below is for
+ * every value that does NOT get that exemption, which is where the oracle lived.
+ */
+function validationErrorsFor(array $payload): array
+{
+    request()->replace($payload);
+
+    try {
+        app(WebFormRequest::class);
+    } catch (ValidationException $e) {
+        return $e->errors();
+    }
+
+    return [];
+}
+
+it('does not report an existing email as already taken', function () {
+    $owner = enumerationUser();
+
+    $email = 'existing-'.bin2hex(random_bytes(4)).'@example.invalid';
+
+    makeEnumerationContact($owner, 'Existing Customer', $email);
+
+    $errors = validationErrorsFor([
+        'leads' => ['title' => 'Enquiry'],
+        'persons' => [
+            'name' => 'Visitor',
+            'emails' => [['value' => $email, 'label' => 'work']],
+        ],
+    ]);
+
+    expect($errors)->toBe([]);
+});
+
+it('does not report an existing phone number as already taken', function () {
+    $owner = enumerationUser();
+
+    $phone = '+1555'.random_int(1000000, 9999999);
+
+    makeEnumerationContact(
+        $owner,
+        'Existing Customer',
+        'phone-owner-'.bin2hex(random_bytes(4)).'@example.invalid',
+        $phone,
+    );
+
+    $errors = validationErrorsFor([
+        'leads' => ['title' => 'Enquiry'],
+        'persons' => [
+            'name' => 'Visitor',
+            'contact_numbers' => [['value' => $phone, 'label' => 'work']],
+        ],
+    ]);
+
+    expect($errors)->toBe([]);
+});
+
+/**
+ * The response for a value that exists must be indistinguishable from one that does not — that
+ * equivalence is the property the oracle broke.
+ */
+it('answers identically whether or not the email already exists', function () {
+    $owner = enumerationUser();
+
+    $existing = 'existing-'.bin2hex(random_bytes(4)).'@example.invalid';
+
+    makeEnumerationContact($owner, 'Existing Customer', $existing);
+
+    $known = validationErrorsFor([
+        'leads' => ['title' => 'Enquiry'],
+        'persons' => ['name' => 'Visitor', 'emails' => [['value' => $existing, 'label' => 'work']]],
+    ]);
+
+    $absent = validationErrorsFor([
+        'leads' => ['title' => 'Enquiry'],
+        'persons' => ['name' => 'Visitor', 'emails' => [['value' => 'absent-'.bin2hex(random_bytes(4)).'@example.invalid', 'label' => 'work']]],
+    ]);
+
+    expect($known)->toBe($absent);
+});
+
+/**
+ * Dropping the uniqueness rule must not drop the rest of the validation with it.
+ */
+it('still rejects a malformed email', function () {
+    $errors = validationErrorsFor([
+        'leads' => ['title' => 'Enquiry'],
+        'persons' => [
+            'name' => 'Visitor',
+            'emails' => [['value' => 'not-an-email', 'label' => 'work']],
+        ],
+    ]);
+
+    expect($errors)->toHaveKey('persons.emails.0.value');
+});
+
+/**
+ * The repository check itself is untouched — it is the public form that stops consulting it, not
+ * the uniqueness logic that stops working.
+ */
+it('leaves the underlying uniqueness check intact for the admin forms', function () {
+    $owner = enumerationUser();
+
+    $email = 'admin-side-'.bin2hex(random_bytes(4)).'@example.invalid';
+
+    makeEnumerationContact($owner, 'Existing Customer', $email);
+
+    $attribute = Attribute::where('entity_type', 'persons')->where('code', 'emails')->first();
+
+    expect(app(AttributeValueRepository::class)->isValueUnique(null, 'persons', $attribute, $email))
+        ->toBeFalse();
+});

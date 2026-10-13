@@ -345,10 +345,19 @@ class Installer extends Command
             }
         );
 
-        $adminPassword = text(
+        /**
+         * The administrator password is prompted for with `password()` rather than `text()`, so it
+         * is not echoed into terminal scrollback or a CI log, and it carries no default: a
+         * pre-filled value that an operator can accept with Enter is a published credential on
+         * every installation that takes it.
+         */
+        $adminPassword = password(
             label: 'Configure the password for the admin user',
-            default: 'admin123',
-            required: true
+            required: true,
+            validate: fn (string $value) => match (true) {
+                strlen($value) < 8 => 'The password must be at least 8 characters.',
+                default => null
+            }
         );
 
         $password = password_hash($adminPassword, PASSWORD_BCRYPT, ['cost' => 10]);
@@ -382,7 +391,7 @@ class Installer extends Command
             $this->info('The installation has been finished and you can now use Krayin.');
             $this->info('Go to '.env('APP_URL').'/admin/dashboard'.' and authenticate with:');
             $this->info('Email: '.$adminEmail);
-            $this->info('Password: '.$adminPassword);
+            $this->info('Password: the one you just set.');
             $this->info('Cheers!');
 
             Event::dispatch('krayin.installed');

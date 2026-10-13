@@ -2,6 +2,10 @@
 
 This changelog consists of the bug & security fixes and new features being included in the releases listed below.
 
+## **v2.2.7 (XX of XX 202X)**
+
+* [security] Improved in Security.
+
 ## **v2.2.6 (10th of Sept 2026)**
 
 * [security] Improved in Security.

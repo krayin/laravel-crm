@@ -101,23 +101,16 @@ class WebForm extends FormRequest
                     }
                 }
 
-                if ($attribute->is_unique) {
-                    array_push($validations[in_array($attribute->type, ['email', 'phone'])
-                        ? $attribute->code.'.*.value'
-                        : $attribute->code
-                    ], function ($field, $value, $fail) use ($attribute, $entityType) {
-                        if (! $this->attributeValueRepository->isValueUnique(
-                            $entityType == 'persons' ? request('persons.id') : null,
-                            $attribute->entity_type,
-                            $attribute,
-                            request($field)
-                        )
-                        ) {
-                            $fail('The value has already been taken.');
-                        }
-                    });
-                }
-
+                /**
+                 * Uniqueness is deliberately not enforced on this route.
+                 *
+                 * The submission is unauthenticated and unthrottled, so a rule that answers "this
+                 * value already exists" turns the endpoint into an oracle: a caller can walk a list
+                 * of addresses or phone numbers and learn which ones belong to the CRM's contacts.
+                 * A repeat value here is a returning visitor rather than an error — the controller
+                 * resolves them by email and merges the submission into that contact — so the check
+                 * is dropped instead of being reported. The admin forms keep it.
+                 */
                 $this->rules = array_merge($this->rules, $validations);
             }
         }
