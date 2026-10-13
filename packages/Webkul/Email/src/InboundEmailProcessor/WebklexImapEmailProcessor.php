@@ -123,6 +123,8 @@ class WebklexImapEmailProcessor implements InboundEmailProcessor
         $parentEmail = null;
 
         if ($email) {
+            $email = $this->emailRepository->findThreadRoot($email);
+
             $parentEmail = $this->emailRepository->update([
                 'folders' => array_unique(array_merge($email->folders, [$folderName])),
                 'reference_ids' => array_merge($email->reference_ids ?? [], [$references]),

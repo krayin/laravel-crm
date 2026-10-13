@@ -26,6 +26,32 @@ class EmailRepository extends Repository
     }
 
     /**
+     * Get the root email of the thread the given email belongs to.
+     *
+     * The mail list and the thread view only read one level of children, so every message of a
+     * conversation has to be attached to the root, never to another reply.
+     *
+     * @param  Email  $email
+     * @return Email
+     */
+    public function findThreadRoot($email)
+    {
+        $visitedIds = [$email->id];
+
+        while ($email->parent_id && ! in_array($email->parent_id, $visitedIds)) {
+            if (! $parent = parent::find($email->parent_id)) {
+                break;
+            }
+
+            $email = $parent;
+
+            $visitedIds[] = $email->id;
+        }
+
+        return $email;
+    }
+
+    /**
      * Create.
      *
      * @return Email
