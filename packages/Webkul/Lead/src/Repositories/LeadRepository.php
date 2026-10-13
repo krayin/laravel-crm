@@ -201,7 +201,7 @@ class LeadRepository extends Repository
             }
         }
 
-        if (empty($data['expected_close_date'])) {
+        if (array_key_exists('expected_close_date', $data) && empty($data['expected_close_date'])) {
             $data['expected_close_date'] = null;
         }
 
