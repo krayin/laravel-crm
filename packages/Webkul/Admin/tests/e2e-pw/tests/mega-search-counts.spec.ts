@@ -22,7 +22,59 @@ test.describe("mega search section counts", () => {
     const badge = (adminPage: any, section: string) =>
         adminPage.locator(`[data-section-count="${section}"]`);
 
+    /**
+     * A term guaranteed to match, and the records that make it so.
+     *
+     * The tests previously searched for words that happened to exist in a developer's own database
+     * — "need", "an" — which matched nothing on a freshly installed one, leaving the sections
+     * uncounted and the assertions with nothing to read. Each run now creates what it searches for.
+     */
+    const term = "megasearchseed";
+
+    async function seedSearchableRecords(adminPage: any) {
+        const token = await adminPage.evaluate(
+            () =>
+                document
+                    .querySelector('meta[name="csrf-token"]')
+                    ?.getAttribute("content") ?? ""
+        );
+
+        const unique = Date.now();
+
+        await adminPage.request.post("admin/contacts/persons/create", {
+            failOnStatusCode: false,
+            headers: { "X-Requested-With": "XMLHttpRequest", "X-CSRF-TOKEN": token },
+            form: {
+                name: `${term} person ${unique}`,
+                "emails[0][value]": `${term}${unique}@example.invalid`,
+                "emails[0][label]": "work",
+                entity_type: "persons",
+            },
+        });
+
+        /**
+         * A lead as well as a person: the leads section is the one the explore-all link belongs to,
+         * and a section holding nothing offers no link to follow.
+         */
+        await adminPage.request.post("admin/leads/create", {
+            failOnStatusCode: false,
+            headers: { "X-Requested-With": "XMLHttpRequest", "X-CSRF-TOKEN": token },
+            form: {
+                title: `${term} lead ${unique}`,
+                description: "seeded for the mega search counts",
+                lead_value: "1000",
+                "person[name]": `${term} contact ${unique}`,
+                "person[emails][0][value]": `${term}lead${unique}@example.invalid`,
+                "person[emails][0][label]": "work",
+            },
+        });
+    }
+
     test.beforeEach(async ({ adminPage }) => {
+        await adminPage.goto("admin/dashboard");
+
+        await seedSearchableRecords(adminPage);
+
         await adminPage.goto("admin/dashboard");
     });
 
@@ -46,7 +98,7 @@ test.describe("mega search section counts", () => {
     });
 
     test("searching shows a count on every section", async ({ adminPage }) => {
-        await searchBox(adminPage).fill("an");
+        await searchBox(adminPage).fill(term);
 
         /**
          * Each section is counted by its own request, so they arrive independently; waiting for one
@@ -72,7 +124,7 @@ test.describe("mega search section counts", () => {
     });
 
     test("the count matches the number of rows its own tab lists", async ({ adminPage }) => {
-        await searchBox(adminPage).fill("an");
+        await searchBox(adminPage).fill(term);
 
         await expect(badge(adminPage, "persons")).toBeVisible();
 
@@ -103,7 +155,7 @@ test.describe("mega search section counts", () => {
     });
 
     test("counts update when the term changes", async ({ adminPage }) => {
-        await searchBox(adminPage).fill("an");
+        await searchBox(adminPage).fill(term);
 
         await expect(badge(adminPage, "persons")).toBeVisible();
 
@@ -134,7 +186,7 @@ test.describe("mega search section counts", () => {
      * lead — contradicting the link's own count.
      */
     test("exploring all leads carries the search into the leads listing", async ({ adminPage }) => {
-        await searchBox(adminPage).fill("need");
+        await searchBox(adminPage).fill(term);
 
         await expect(badge(adminPage, "leads")).toBeVisible();
 
@@ -153,7 +205,7 @@ test.describe("mega search section counts", () => {
 
         await exploreLink.click();
 
-        await expect(adminPage).toHaveURL(/view_type=table&search=need/);
+        await expect(adminPage).toHaveURL(new RegExp(`view_type=table&search=${term}`));
 
         /**
          * The listing's own search box is seeded from the URL, which is what applies the filter.
@@ -182,7 +234,7 @@ test.describe("mega search section counts", () => {
     });
 
     test("clearing the search removes the counts", async ({ adminPage }) => {
-        await searchBox(adminPage).fill("an");
+        await searchBox(adminPage).fill(term);
 
         await expect(badge(adminPage, "persons")).toBeVisible();
 

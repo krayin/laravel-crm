@@ -348,7 +348,11 @@ export default class CoreLocators {
         this.organizationCityTextbox = page.getByRole('textbox', { name: 'City' });
         this.organizationAddressTextarea = page.locator('textarea[name="address\\[address\\]"]');
         this.organizationPostcodeTextbox = page.getByRole('textbox', { name: 'Postcode' });
-        this.organizationCountryCombobox = page.getByRole('combobox');
+        /**
+         * By name, as the state select beneath it already is: any combobox on the page also matched
+         * the debug bar's own folder switcher.
+         */
+        this.organizationCountryCombobox = page.locator('select[name="address\\[country\\]"]');
         this.organizationStateSelect = page.locator('select[name="address\\[state\\]"]');
 
         // Textboxes - date or specialized text input
@@ -424,7 +428,7 @@ export default class CoreLocators {
         this.createOrgLink = page.getByRole('link', { name: 'Create Organization' });
         this.orgNameTextbox = page.getByRole('textbox', { name: 'Name *' });
         this.orgAddressTextarea = page.locator('textarea[name="address\\[address\\]"]');
-        this.orgCountryCombobox = page.getByRole('combobox');
+        this.orgCountryCombobox = page.locator('select[name="address\\[country\\]"]');
         this.orgStateSelect = page.locator('select[name="address\\[state\\]"]');
         this.orgCityTextbox = page.getByRole('textbox', { name: 'City' });
         this.orgPostcodeTextbox = page.getByRole('textbox', { name: 'Postcode' });

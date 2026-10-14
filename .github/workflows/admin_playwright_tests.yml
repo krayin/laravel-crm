@@ -68,6 +68,10 @@ jobs:
           sed -i "s|^\(DB_PASSWORD=\s*\).*$|\1root|" .env
           sed -i "s|^\(APP_DEBUG=\s*\).*$|\1true|" .env
           sed -i "s|^\(APP_URL=\s*\).*$|\1http://127.0.0.1:8000|" .env
+
+          # The debug bar renders its own controls into every page, and its folder
+          # switcher is a second combobox that makes the forms' own selects ambiguous.
+          echo "DEBUGBAR_ENABLED=false" >> .env
           cat .env
 
       - name: Install Composer Dependencies

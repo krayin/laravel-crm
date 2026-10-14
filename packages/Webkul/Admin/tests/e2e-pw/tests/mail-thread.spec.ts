@@ -51,8 +51,16 @@ test.describe.serial("mail thread and reply", () => {
 
         const id = record.id;
 
-        const cookie = (await adminPage.context().cookies()).find(
-            (candidate: any) => candidate.name === "XSRF-TOKEN"
+        /**
+         * The token is taken from the page itself rather than the `XSRF-TOKEN` cookie: the cookie
+         * is only set once a response has carried it, so on a fresh session the header went out
+         * empty and the request was rejected as a token mismatch.
+         */
+        const token = await adminPage.evaluate(
+            () =>
+                document
+                    .querySelector('meta[name="csrf-token"]')
+                    ?.getAttribute("content") ?? ""
         );
 
         /**
@@ -64,7 +72,7 @@ test.describe.serial("mail thread and reply", () => {
             failOnStatusCode: false,
             headers: {
                 "X-Requested-With": "XMLHttpRequest",
-                "X-XSRF-TOKEN": cookie ? decodeURIComponent(cookie.value) : "",
+                "X-CSRF-TOKEN": token,
             },
             multipart: {
                 "indices[0]": String(id),

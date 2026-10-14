@@ -20,7 +20,42 @@ test.describe("mega search modal", () => {
 
     const hint = (adminPage: any) => adminPage.locator("kbd").first();
 
+    /**
+     * A term guaranteed to match, and the record that makes it so.
+     *
+     * The tests previously searched for a word that happened to exist in a developer's own database
+     * — "need" — which matched nothing on a freshly installed one, so the modal listed no results
+     * and the assertion had nothing to count. Each run now creates what it searches for.
+     */
+    const term = "megasearchseed";
+
+    async function seedSearchableRecord(adminPage: any) {
+        const token = await adminPage.evaluate(
+            () =>
+                document
+                    .querySelector('meta[name="csrf-token"]')
+                    ?.getAttribute("content") ?? ""
+        );
+
+        const unique = Date.now();
+
+        await adminPage.request.post("admin/contacts/persons/create", {
+            failOnStatusCode: false,
+            headers: { "X-Requested-With": "XMLHttpRequest", "X-CSRF-TOKEN": token },
+            form: {
+                name: `${term} person ${unique}`,
+                "emails[0][value]": `${term}${unique}@example.invalid`,
+                "emails[0][label]": "work",
+                entity_type: "persons",
+            },
+        });
+    }
+
     test.beforeEach(async ({ adminPage }) => {
+        await adminPage.goto("admin/dashboard");
+
+        await seedSearchableRecord(adminPage);
+
         await adminPage.goto("admin/dashboard");
     });
 
@@ -73,7 +108,7 @@ test.describe("mega search modal", () => {
     test("searching in the modal shows results and per-section counts", async ({ adminPage }) => {
         await adminPage.keyboard.press("Control+k");
 
-        await modalInput(adminPage).fill("need");
+        await modalInput(adminPage).fill(term);
 
         await expect
             .poll(() => adminPage.locator("[data-modal-section-count]").count(), {
@@ -210,7 +245,7 @@ test.describe("mega search modal", () => {
             .getByRole("textbox", { name: "Mega Search" })
             .first();
 
-        await headerInput.fill("need");
+        await headerInput.fill(term);
 
         const dropdown = adminPage.locator("[data-section-count]").first();
 
@@ -229,7 +264,7 @@ test.describe("mega search modal", () => {
     test("typing in the modal does not reopen the header dropdown", async ({ adminPage }) => {
         await adminPage.keyboard.press("Control+k");
 
-        await modalInput(adminPage).fill("need");
+        await modalInput(adminPage).fill(term);
 
         await expect
             .poll(() => adminPage.locator("[data-modal-section-count]").count(), {
@@ -256,7 +291,7 @@ test.describe("mega search modal", () => {
 
         await expect(modalInput(adminPage)).toBeHidden();
 
-        await adminPage.getByRole("textbox", { name: "Mega Search" }).first().fill("need");
+        await adminPage.getByRole("textbox", { name: "Mega Search" }).first().fill(term);
 
         await expect(
             adminPage.locator("[data-section-count]").first(),
@@ -289,7 +324,7 @@ test.describe("mega search modal", () => {
         await adminPage
             .getByRole("textbox", { name: "Mega Search" })
             .first()
-            .fill("need");
+            .fill(term);
 
         /**
          * The badge sits inside the field, so leaving it visible would put it on top of the text.
