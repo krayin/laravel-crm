@@ -177,39 +177,39 @@ return [
                 'empty-placeholders' => [
                     'all' => [
                         'title' => 'No Activities Found',
-                        'description' => 'No activities found for this. You can add activities by clicking on the Activity button on the left panel.',
+                        'description' => 'Bunun için etkinlik bulunamadı. Sol paneldeki Etkinlik düğmesine tıklayarak etkinlik ekleyebilirsiniz.',
                     ],
                     'planned' => [
                         'title' => 'No Planned Activities Found',
-                        'description' => 'No planned activities found for this. You can add planned activities by clicking on the Activity button on the left panel.',
+                        'description' => 'Bunun için planlanmış etkinlik bulunamadı. Sol paneldeki Etkinlik düğmesine tıklayarak planlanmış etkinlik ekleyebilirsiniz.',
                     ],
                     'notes' => [
                         'title' => 'No Notes Found',
-                        'description' => 'No notes found for this. You can add notes by clicking on the Note button on the left panel.',
+                        'description' => 'Bunun için not bulunamadı. Sol paneldeki Not düğmesine tıklayarak not ekleyebilirsiniz.',
                     ],
                     'calls' => [
                         'title' => 'No Calls Found',
-                        'description' => 'No calls found for this. You can add calls by clicking on the Activity button on the left panel and selecting the Call type.',
+                        'description' => 'Bunun için arama bulunamadı. Sol paneldeki Etkinlik düğmesine tıklayıp Arama türünü seçerek arama ekleyebilirsiniz.',
                     ],
                     'meetings' => [
                         'title' => 'No Meetings Found',
-                        'description' => 'No meetings found for this. You can add meetings by clicking on the Activity button on the left panel and selecting the Meeting type.',
+                        'description' => 'Bunun için toplantı bulunamadı. Sol paneldeki Etkinlik düğmesine tıklayıp Toplantı türünü seçerek toplantı ekleyebilirsiniz.',
                     ],
                     'lunches' => [
                         'title' => 'No Lunches Found',
-                        'description' => 'No lunches found for this. You can add lunches by clicking on the Activity button on the left panel and selecting the Lunch type.',
+                        'description' => 'Bunun için öğle yemeği bulunamadı. Sol paneldeki Etkinlik düğmesine tıklayıp Öğle Yemeği türünü seçerek ekleyebilirsiniz.',
                     ],
                     'files' => [
                         'title' => 'No Files Found',
-                        'description' => 'No files found for this. You can add files by clicking on the File button on the left panel.',
+                        'description' => 'Bunun için dosya bulunamadı. Sol paneldeki Dosya düğmesine tıklayarak dosya ekleyebilirsiniz.',
                     ],
                     'emails' => [
                         'title' => 'No Emails Found',
-                        'description' => 'No emails found for this. You can add emails by clicking on the Mail button on the left panel.',
+                        'description' => 'Bunun için e-posta bulunamadı. Sol paneldeki Posta düğmesine tıklayarak e-posta ekleyebilirsiniz.',
                     ],
                     'system' => [
                         'title' => 'No Changelogs Found',
-                        'description' => 'No changelogs found for this.',
+                        'description' => 'Bunun için değişiklik kaydı bulunamadı.',
                     ],
                 ],
             ],
@@ -342,6 +342,8 @@ return [
             'header' => [
                 'mega-search' => [
                     'title' => 'Mega Arama',
+                    'shortcut-hint' => 'Aramak için yazmaya başlayın veya başlıkta gösterilen kısayola basın.',
+                    'empty-results' => 'Aramanızla eşleşen kayıt yok.',
                     'tabs' => [
                         'leads' => 'Müşteriler',
                         'quotes' => 'Teklifler',
@@ -684,6 +686,33 @@ return [
                 'add-more' => 'Daha Fazla Ekle',
                 'save' => 'Kaydet',
             ],
+        ],
+    ],
+    'notifications' => [
+        'title' => 'Bildirimler',
+        'empty' => 'Henüz bildirim yok.',
+        'mark-all-as-read' => 'Tümünü okundu olarak işaretle',
+        'marked-as-read' => 'Bildirim okundu olarak işaretlendi.',
+        'marked-all-as-read' => 'Tüm bildirimler okundu olarak işaretlendi.',
+        'not-found' => 'Bildirim bulunamadı.',
+        'view-all' => 'Tümünü görüntüle',
+        'fallback' => [
+            'missing-keys' => 'Yoklamaya dönülüyor: :driver seçili ancak :keys ayarlanmamış.',
+            'broadcast-mismatch' => 'Yoklamaya dönülüyor: :driver seçili ancak BROADCAST_DRIVER \':broadcast\' durumunda.',
+        ],
+        'titles' => [
+            'lead-created' => 'Yeni potansiyel müşteri oluşturuldu',
+            'lead-updated' => 'Potansiyel müşteri güncellendi',
+            'quote-created' => 'Yeni teklif oluşturuldu',
+            'quote-updated' => 'Teklif güncellendi',
+            'person-created' => 'Yeni kişi eklendi',
+            'person-updated' => 'Kişi güncellendi',
+            'product-created' => 'Yeni ürün eklendi',
+            'product-updated' => 'Ürün güncellendi',
+            'activity-created' => 'Yeni etkinlik planlandı',
+            'activity-updated' => 'Etkinlik güncellendi',
+            'email-created' => 'Yeni e-posta alındı',
+            'email-updated' => 'E-posta güncellendi',
         ],
     ],
     'settings' => [
@@ -1562,7 +1591,7 @@ return [
                     'invalid-attribute' => 'Başlık geçersiz öznitelikler içeriyor: "%s".',
                     'system' => 'Beklenmeyen bir sistem hatası oluştu.',
                     'wrong-quotes' => 'Doğru olmayan tırnak işaretleri kullanıldı.',
-                    'already-exists' => 'The :attribute already exists.',
+                    'already-exists' => ':attribute zaten mevcut.',
                 ],
             ],
             'imports' => [
@@ -2001,7 +2030,7 @@ return [
                 'quote-not-found' => 'Bu lead için teklif bulunamadı.',
                 'person-email-unavailable' => 'Lead kişisinin e-posta adresi mevcut değil.',
                 'mail-subject' => 'Teklif: :subject',
-                'mail-body' => 'Please find the attached quote PDF. Mail Generated by System.',
+                'mail-body' => 'Ekteki teklif PDF\'ini bulabilirsiniz. Bu e-posta sistem tarafından oluşturulmuştur.',
                 'mail-send-failed' => 'Teklif e-postası gönderilemedi.',
             ],
             'products' => [
@@ -2115,6 +2144,23 @@ return [
                             'custom' => 'Özel',
                         ],
                     ],
+                    'notifications' => [
+                        'title' => 'Bildirim Yapılandırmaları',
+                        'info' => 'Kullanıcıların yeni kayıtlar hakkında bilgilendirilip bilgilendirilmeyeceğini ve bu bildirimlerin tarayıcıya nasıl ulaşacağını seçin.',
+                        'enabled' => 'Bildirimleri Etkinleştir',
+                        'enabled-info' => 'Kullanıcıları kendi veri kapsamlarındaki yeni potansiyel müşteriler, teklifler, kişiler, ürünler, etkinlikler ve postalar hakkında bilgilendirin.',
+                        'driver' => 'Teslim Yöntemi',
+                        'driver-info' => 'Yoklama ek hizmet gerektirmez ve her barındırmada çalışır. Reverb ve Pusher anında teslim eder ancak her ikisi de çalışan bir WebSocket sunucusuna ihtiyaç duyar.',
+                        'drivers' => [
+                            'polling' => 'Yoklama (ek kurulum yok)',
+                            'reverb' => 'Laravel Reverb (kendi barındırdığınız WebSocket)',
+                            'pusher' => 'Pusher (barındırılan WebSocket)',
+                        ],
+                        'poll-interval' => 'Kontrol Aralığı (saniye)',
+                        'poll-interval-info' => 'Tarayıcının yeni bildirimleri ne sıklıkla isteyeceği. Daha kısa aralık daha hızlı hissettirir ama daha çok istek oluşturur.',
+                        'sound' => 'Ses Çal',
+                        'sound-info' => 'Yeni bir bildirim geldiğinde kısa bir ses çal.',
+                    ],
                     'menu-color' => [
                         'brand-color' => 'Marka Rengi',
                         'info' => 'Menü öğelerinin renklerini burada değiştirebiliriz.',
@@ -2169,6 +2215,17 @@ return [
     'dashboard' => [
         'index' => [
             'title' => 'Gösterge Paneli',
+            'date-presets' => [
+                'today' => 'Bugün',
+                'yesterday' => 'Dün',
+                'last-30-days' => 'Son 30 Gün',
+                'this-week' => 'Bu Hafta',
+                'this-month' => 'Bu Ay',
+                'last-month' => 'Geçen Ay',
+                'last-3-months' => 'Son 3 Ay',
+                'last-6-months' => 'Son 6 Ay',
+                'this-year' => 'Bu Yıl',
+            ],
             'start-date' => 'Başlangıç Tarihi',
             'end-date' => 'Bitiş Tarihi',
             'export-pdf' => 'PDF Dışa Aktar',
@@ -2435,12 +2492,12 @@ return [
         'go-back' => 'Geri Dön',
         'support' => 'Sorun devam ederse, yardım için bize <a href=":link" class=":class">:email</a> adresinden ulaşın.',
         'unauthorized' => 'Bu işlem için yetkiniz yok.',
-        'role-exceeds-own' => 'You can only assign a role whose permissions are the same as or fewer than your own.',
-        'user-exceeds-own' => 'You can only manage users whose permissions are the same as or fewer than your own.',
-        'own-privileges' => 'You cannot change your own role or data scope.',
-        'scope-exceeds-own' => 'You cannot grant a data scope wider than your own.',
-        'primary-admin-protected' => 'The primary administrator account is protected and cannot be modified here.',
-        'role-permissions-exceed-own' => 'You can only create or edit roles whose permissions are the same as or fewer than your own.',
+        'role-exceeds-own' => 'Yalnızca kendi izinlerinizle aynı veya daha az izne sahip bir rol atayabilirsiniz.',
+        'user-exceeds-own' => 'Yalnızca kendi izinlerinizle aynı veya daha az izne sahip kullanıcıları yönetebilirsiniz.',
+        'own-privileges' => 'Kendi rolünüzü veya veri kapsamınızı değiştiremezsiniz.',
+        'scope-exceeds-own' => 'Kendi veri kapsamınızdan daha geniş bir kapsam veremezsiniz.',
+        'primary-admin-protected' => 'Birincil yönetici hesabı korunmaktadır ve buradan değiştirilemez.',
+        'role-permissions-exceed-own' => 'Yalnızca kendi izinlerinizle aynı veya daha az izne sahip rolleri oluşturabilir veya düzenleyebilirsiniz.',
 
         '404' => [
             'description' => 'Oops! Aradığınız sayfa tatilde. Aradığınız şeyi bulamadık gibi görünüyor.',

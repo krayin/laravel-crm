@@ -51,6 +51,13 @@ test.describe.serial("acl action authorization", () => {
     let readerSession: Session | undefined;
 
     test.beforeAll(async ({ browser, baseURL }) => {
+        /**
+         * Provisioning the whole fixture — users, roles, groups and the records they own — is many
+         * actions, not one, so it gets its own budget rather than the per-test timeout. Without
+         * this the suite fails in setup, which reports nothing about the behaviour under test.
+         */
+        test.setTimeout(180 * 1000);
+
         const admin = await signInExpectingSuccess(browser, baseURL, ADMIN_EMAIL, ADMIN_PASSWORD);
 
         try {

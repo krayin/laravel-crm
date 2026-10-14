@@ -14,7 +14,7 @@ test.describe("group managment",async()=>{
             name: groupData.name+" Updated",
             description: groupData.description+" Updated"
         }
-        await groupPage.updateGroup(updatedGroupData);
+        await groupPage.updateGroup(updatedGroupData, groupData.name);
     })
     test("verify delete group",async({adminPage})=>{
         const groupPage=new GroupPage(adminPage);

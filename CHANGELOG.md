@@ -4,6 +4,16 @@ This changelog consists of the bug & security fixes and new features being inclu
 
 ## **v2.2.7 (XX of XX 202X)**
 
+* [fixed] Fixed the leads settings control moving when switching between the kanban and table views.
+
+* [feature] Added notifications. A bell in the header, beside the dark mode toggle, reports new leads, quotes, contacts, products, activities and mail as they are created, including leads arriving from a web form. Each user is told only about records their own data scope covers: an administrator sees everything, a user restricted to their group sees that group's records, and an individual user sees only their own. 
+
+* [feature] Replaced the dashboard's pair of start and end date inputs with a single range control. Choosing a period such as "last 30 days" or "this month" previously meant picking two dates and knowing today's, and neither input showed the range as a whole. The control now carries both ends on its face and opens a panel holding the common periods beside a two-month calendar, so a range crossing a month boundary is picked in one go. Translations were added for all supported locales.
+
+* [feature] Added a keyboard shortcut and modal to the mega search. Pressing `Ctrl + K` anywhere in the admin opens the search as a modal with the field already focused, so it is reachable without first finding the header; `Escape` or a click outside closes it. 
+
+* [feature] Added a per-section record count to the mega search. Each tab in the search dropdown now shows how many records that section holds for the term being searched, so the whole result set is visible without opening every tab in turn. A section that has not been counted yet shows no badge rather than a zero, so an in-flight request is never mistaken for an empty result.
+
 * [security] Improved in Security.
 
 ## **v2.2.6 (10th of Sept 2026)**

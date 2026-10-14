@@ -44,6 +44,13 @@ test.describe.serial("public web form submission hardening", () => {
      * "contact us" form, and enough for a submission to be accepted.
      */
     test.beforeAll(async ({ adminPage }) => {
+        /**
+         * Provisioning the whole fixture — users, roles, groups and the records they own — is many
+         * actions, not one, so it gets its own budget rather than the per-test timeout. Without
+         * this the suite fails in setup, which reports nothing about the behaviour under test.
+         */
+        test.setTimeout(180 * 1000);
+
         const attributes = await adminPage.request.get(
             "admin/settings/attributes?pagination[page]=1&pagination[per_page]=200",
             {

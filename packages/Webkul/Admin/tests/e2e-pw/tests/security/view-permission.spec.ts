@@ -34,6 +34,8 @@ import {
  *   individualUser  -> view_permission = individual  -> sees only their own
  */
 test.describe.serial("view permission data scoping", () => {
+    test.describe.configure({ timeout: 120 * 1000 });
+
     const suffix = runSuffix();
 
     /**
@@ -84,6 +86,19 @@ test.describe.serial("view permission data scoping", () => {
     let individualSession: Session | undefined;
 
     test.beforeAll(async ({ browser, baseURL }) => {
+        /**
+         * Provisioning the whole fixture — users, roles, groups and the records they own — is many
+         * actions, not one, so it gets its own budget rather than the per-test timeout. Without
+         * this the suite fails in setup, which reports nothing about the behaviour under test.
+         */
+        test.setTimeout(180 * 1000);
+
+        /**
+         * Every test in this suite checks a scope by running several grid searches in turn — each a
+         * navigation plus a filtered reload — so they legitimately take longer than the per-test
+         * default, which is sized for a single action.
+         */
+
         const admin = await signInExpectingSuccess(browser, baseURL, ADMIN_EMAIL, ADMIN_PASSWORD);
 
         try {

@@ -15,7 +15,10 @@
         type="text/x-template"
         id="v-mega-search-template"
     >
-        <div class="relative flex w-[550px] max-w-[550px] items-center max-lg:w-[400px] ltr:ml-2.5 rtl:mr-2.5">
+        <div
+            class="relative flex w-[550px] max-w-[550px] items-center max-lg:w-[400px] ltr:ml-2.5 rtl:mr-2.5"
+            ref="headerSearch"
+        >
             <i class="icon-search absolute top-2 flex items-center text-2xl ltr:left-3 rtl:right-3"></i>
 
             <input
@@ -25,22 +28,40 @@
                 placeholder="@lang('admin::app.components.layouts.header.mega-search.title')"
                 v-model.lazy="searchTerm"
                 @click="searchTerm.length >= 2 ? isDropdownOpen = true : {}"
+                ref="searchInput"
                 v-debounce="500"
             >
 
+            <kbd
+                class="pointer-events-none absolute select-none rounded border border-gray-300 bg-gray-100 px-1.5 py-0.5 text-xs font-semibold text-gray-500 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 ltr:right-3 rtl:left-3"
+                v-if="! searchTerm"
+                v-text="shortcutLabel"
+            ></kbd>
+
             <div
                 class="absolute top-10 z-10 w-full rounded-lg border border-gray-300 bg-white shadow-[0px_0px_0px_0px_rgba(0,0,0,0.10),0px_1px_3px_0px_rgba(0,0,0,0.10),0px_5px_5px_0px_rgba(0,0,0,0.09),0px_12px_7px_0px_rgba(0,0,0,0.05),0px_22px_9px_0px_rgba(0,0,0,0.01),0px_34px_9px_0px_rgba(0,0,0,0.00)] dark:border-gray-800 dark:bg-gray-900"
-                v-if="isDropdownOpen"
+                v-if="isDropdownOpen && ! isModalOpen"
             >
                 <!-- Search Tabs -->
                 <div class="flex overflow-x-auto border-b text-sm text-gray-600 dark:border-gray-800 dark:text-gray-300">
                     <div
-                        class="cursor-pointer p-4 hover:bg-gray-100 dark:hover:bg-gray-950"
-                        :class="{ 'border-b-2 border-brandColor': activeTab == tab.key }"
+                        class="flex cursor-pointer items-center gap-2 whitespace-nowrap px-4 py-3.5 hover:bg-gray-100 dark:hover:bg-gray-950"
+                        :class="{ 'border-b-2 border-brandColor font-semibold text-gray-800 dark:text-white': activeTab == tab.key }"
                         v-for="tab in tabs"
                         @click="activeTab = tab.key; search();"
                     >
                         @{{ tab.title }}
+                        <span
+                            class="inline-flex h-5 min-w-[1.25rem] items-center justify-center rounded-full px-1.5 text-xs font-semibold leading-none transition-colors"
+                            :class="resultCounts[tab.key]
+                                ? (activeTab == tab.key
+                                    ? 'bg-brandColor text-white'
+                                    : 'bg-sky-100 text-sky-600 dark:bg-brandColor dark:text-white')
+                                : 'bg-gray-100 text-gray-400 dark:bg-gray-800 dark:text-gray-500'"
+                            v-if="resultCounts[tab.key] !== null"
+                            :data-section-count="tab.key"
+                            v-text="resultCounts[tab.key] > 99 ? '99+' : resultCounts[tab.key]"
+                        ></span>
                     </div>
                 </div>
 
@@ -86,7 +107,7 @@
                         <div class="flex border-t p-3 dark:border-gray-800">
                             <template v-if="searchedResults.products.length">
                                 <a
-                                    :href="'{{ route('admin.products.index') }}?search=:query'.replace(':query', searchTerm)"
+                                    :href="'{{ route('admin.products.index') }}?search=:query'.replace(':query', encodeURIComponent(searchTerm))"
                                     class="cursor-pointer text-xs font-semibold text-brandColor transition-all hover:underline"
                                 >
 
@@ -146,7 +167,14 @@
                         <div class="flex border-t p-3 dark:border-gray-800">
                             <template v-if="searchedResults.leads.length">
                                 <a
-                                    :href="'{{ route('admin.leads.index') }}?search=:query'.replace(':query', searchTerm)"
+                                    {{--
+                                        `view_type=table` is requested explicitly because the leads
+                                        listing defaults to the kanban board, and only the datagrid
+                                        reads `?search=` — following this link to the default view
+                                        landed on the board showing every lead, which contradicted
+                                        the count the link itself advertises.
+                                    --}}
+                                    :href="'{{ route('admin.leads.index') }}?view_type=table&search=:query'.replace(':query', encodeURIComponent(searchTerm))"
                                     class="cursor-pointer text-xs font-semibold text-brandColor transition-all hover:underline"
                                 >
                                     @{{ `@lang('admin::app.components.layouts.header.mega-search.explore-all-matching-leads')`.replace(':query', searchTerm).replace(':count', searchedResults.leads.length) }}
@@ -197,7 +225,7 @@
                         <div class="flex border-t p-3 dark:border-gray-800">
                             <template v-if="searchedResults.persons.length">
                                 <a
-                                    :href="'{{ route('admin.contacts.persons.index') }}?search=:query'.replace(':query', searchTerm)"
+                                    :href="'{{ route('admin.contacts.persons.index') }}?search=:query'.replace(':query', encodeURIComponent(searchTerm))"
                                     class="cursor-pointer text-xs font-semibold text-brandColor transition-all hover:underline"
                                 >
                                     @{{ `@lang('admin::app.components.layouts.header.mega-search.explore-all-matching-contacts')`.replace(':query', searchTerm).replace(':count', searchedResults.persons.length) }}
@@ -248,7 +276,7 @@
                         <div class="flex border-t p-3 dark:border-gray-800">
                             <template v-if="searchedResults.quotes.length">
                                 <a
-                                    :href="'{{ route('admin.quotes.index') }}?search=:query'.replace(':query', searchTerm)"
+                                    :href="'{{ route('admin.quotes.index') }}?search=:query'.replace(':query', encodeURIComponent(searchTerm))"
                                     class="cursor-pointer text-xs font-semibold text-brandColor transition-all hover:underline"
                                 >
                                     @{{ `@lang('admin::app.components.layouts.header.mega-search.explore-all-matching-quotes')`.replace(':query', searchTerm).replace(':count', searchedResults.quotes.length) }}
@@ -344,6 +372,87 @@
                 </template>
             </div>
         </div>
+
+        <Teleport to="body">
+            <div
+                class="fixed inset-0 z-[10004] flex items-start justify-center bg-gray-500 bg-opacity-50 p-4 pt-[10vh]"
+                style="backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);"
+                v-if="isModalOpen"
+                @click.self="closeModal"
+            >
+                <div class="w-full max-w-[640px] overflow-hidden rounded-xl bg-white shadow-xl dark:bg-gray-900">
+                    <div class="relative flex items-center border-b border-gray-200 dark:border-gray-800">
+                        <i class="icon-search absolute flex items-center text-2xl text-gray-400 ltr:left-4 rtl:right-4"></i>
+
+                        <input
+                            type="text"
+                            class="w-full bg-transparent px-12 py-4 text-base leading-6 text-gray-700 outline-none placeholder:text-gray-400 dark:text-gray-200"
+                            placeholder="@lang('admin::app.components.layouts.header.mega-search.title')"
+                            v-model.lazy="searchTerm"
+                            ref="modalSearchInput"
+                            v-debounce="500"
+                        >
+
+                        <kbd
+                            class="pointer-events-none absolute select-none rounded border border-gray-300 bg-gray-50 px-1.5 py-0.5 font-sans text-xs font-medium text-gray-500 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 ltr:right-4 rtl:left-4"
+                            @click="closeModal"
+                        >
+                            Esc
+                        </kbd>
+                    </div>
+
+                    <!-- Section tabs, carrying the same counts as the header dropdown. -->
+                    <div class="flex overflow-x-auto border-b border-gray-200 text-sm text-gray-600 dark:border-gray-800 dark:text-gray-300">
+                        <div
+                            class="flex cursor-pointer items-center gap-2 whitespace-nowrap px-4 py-3 hover:bg-gray-100 dark:hover:bg-gray-950"
+                            :class="{ 'border-b-2 border-brandColor font-semibold text-gray-800 dark:text-white': activeTab == tab.key }"
+                            v-for="tab in tabs"
+                            @click="activeTab = tab.key; search();"
+                        >
+                            @{{ tab.title }}
+
+                            <span
+                                class="inline-flex h-5 min-w-[1.25rem] items-center justify-center rounded-full px-1.5 text-xs font-semibold leading-none transition-colors"
+                                :class="resultCounts[tab.key]
+                                    ? (activeTab == tab.key
+                                        ? 'bg-brandColor text-white'
+                                        : 'bg-sky-100 text-sky-600 dark:bg-brandColor dark:text-white')
+                                    : 'bg-gray-100 text-gray-400 dark:bg-gray-800 dark:text-gray-500'"
+                                v-if="resultCounts[tab.key] !== null"
+                                :data-modal-section-count="tab.key"
+                                v-text="resultCounts[tab.key] > 99 ? '99+' : resultCounts[tab.key]"
+                            ></span>
+                        </div>
+                    </div>
+
+                    <!-- Results for the active section. -->
+                    <div class="max-h-[50vh] overflow-y-auto">
+                        <template v-if="searchTerm.length <= 1">
+                            <p class="p-6 text-center text-sm text-gray-500 dark:text-gray-400">
+                                @lang('admin::app.components.layouts.header.mega-search.shortcut-hint')
+                            </p>
+                        </template>
+
+                        <template v-else-if="! (searchedResults[activeTab] || []).length">
+                            <p class="p-6 text-center text-sm text-gray-500 dark:text-gray-400">
+                                @lang('admin::app.components.layouts.header.mega-search.empty-results')
+                            </p>
+                        </template>
+
+                        <template v-else>
+                            <a
+                                class="flex items-center gap-2.5 border-b border-gray-100 px-4 py-3 text-sm text-gray-700 last:border-b-0 hover:bg-gray-50 dark:border-gray-800 dark:text-gray-300 dark:hover:bg-gray-950"
+                                v-for="record in searchedResults[activeTab]"
+                                :href="recordUrl(record)"
+                                :data-modal-result="activeTab"
+                            >
+                                <span v-text="record.name || record.title || record.subject || record.id"></span>
+                            </a>
+                        </template>
+                    </div>
+                </div>
+            </div>
+        </Teleport>
     </script>
 
     <script type="module">
@@ -355,6 +464,13 @@
                     activeTab: 'leads',
 
                     isDropdownOpen: false,
+
+                    /**
+                     * Whether the search is open as a modal, which is what Ctrl/⌘ K opens. The
+                     * header field stays where it is; the modal is a second way in, so the search
+                     * is reachable from any page without first finding the header.
+                     */
+                    isModalOpen: false,
 
                     tabs: {
                         leads: {
@@ -479,6 +595,22 @@
                         configurations: [],
                     },
 
+                    /**
+                     * How many records each section holds for the current term.
+                     *
+                     * `null` means "not counted yet" and is deliberately distinct from `0`: the
+                     * badge is hidden while a count is unknown, so an in-flight section never reads
+                     * as an empty one.
+                     */
+                    resultCounts: {
+                        leads: null,
+                        quotes: null,
+                        products: null,
+                        persons: null,
+                        settings: null,
+                        configurations: null,
+                    },
+
                     params: {
                         search: '',
                         searchFields: '',
@@ -487,17 +619,40 @@
             },
 
             watch: {
-                searchTerm: 'updateSearchParams',
+                searchTerm(...args) {
+                    this.updateSearchParams(...args);
+
+                    /**
+                     * Counting is driven by the term alone. Switching tabs re-runs the active
+                     * section's own search, but it does not change how many records any section
+                     * holds, so the counts are not refetched for it.
+                     */
+                    this.countAllSections();
+                },
 
                 activeTab: 'updateSearchParams',
             },
 
+            computed: {
+                /**
+                 * The shortcut as shown in the field. `Ctrl + K` is written out in full rather than
+                 * abbreviated, so it reads the same way it is spoken.
+                 */
+                shortcutLabel() {
+                    return 'Ctrl + K';
+                },
+            },
+
             created() {
                 window.addEventListener('click', this.handleFocusOut);
+
+                window.addEventListener('keydown', this.handleShortcut);
             },
 
             beforeDestroy() {
                 window.removeEventListener('click', this.handleFocusOut);
+
+                window.removeEventListener('keydown', this.handleShortcut);
             },
 
             methods: {
@@ -514,7 +669,12 @@
                         return;
                     }
 
-                    this.isDropdownOpen = true;
+                    /**
+                     * The modal runs the same search, so opening the dropdown here would put both
+                     * on screen at once showing identical results. Only the header's own search
+                     * opens it.
+                     */
+                    this.isDropdownOpen = ! this.isModalOpen;
 
                     this.$axios.get(endpoint, {
                             params: {
@@ -528,8 +688,177 @@
                         .finally(() => this.isLoading = false);
                 },
 
+                /**
+                 * Count every section for the current term, not just the one on screen.
+                 *
+                 * The dropdown only ever fetched the active tab, so the other sections gave no sign
+                 * of whether they held anything — a user had to open each one to find out. Each
+                 * section is counted with the same query its own tab would issue, so a badge always
+                 * agrees with the list that tab shows.
+                 */
+                countAllSections() {
+                    const term = this.searchTerm;
+
+                    if (term.length <= 1) {
+                        this.resetResultCounts();
+
+                        return;
+                    }
+
+                    Object.values(this.tabs).forEach((tab) => {
+                        const request = this.buildSectionRequest(tab, term);
+
+                        this.$axios.get(request.endpoint, { params: request.params })
+                            .then((response) => {
+                                /**
+                                 * A slower reply for an earlier term would otherwise overwrite the
+                                 * count for the term now in the box.
+                                 */
+                                if (this.searchTerm !== term) {
+                                    return;
+                                }
+
+                                this.resultCounts[tab.key] = (response.data.data || []).length;
+                            })
+                            .catch(() => {
+                                /**
+                                 * A section that cannot be counted shows no badge rather than a
+                                 * misleading zero.
+                                 */
+                                if (this.searchTerm === term) {
+                                    this.resultCounts[tab.key] = null;
+                                }
+                            });
+                    });
+                },
+
+                /**
+                 * The endpoint and query one section would use for `term`, mirroring how
+                 * `updateSearchParams` builds the active tab's request.
+                 */
+                buildSectionRequest(tab, term) {
+                    if (
+                        tab.key === 'settings'
+                        || tab.key === 'configurations'
+                    ) {
+                        return {
+                            endpoint: `${tab.endpoint}?query=${encodeURIComponent(term)}`,
+                            params: null,
+                        };
+                    }
+
+                    return {
+                        endpoint: tab.endpoint,
+                        params: {
+                            search: tab.query_params
+                                .map((param) => `${param.search}:${term};`)
+                                .join(''),
+                            searchFields: tab.query_params
+                                .map((param) => `${param.searchFields};`)
+                                .join(''),
+                        },
+                    };
+                },
+
+                resetResultCounts() {
+                    Object.keys(this.resultCounts).forEach((key) => {
+                        this.resultCounts[key] = null;
+                    });
+                },
+
+                /**
+                 * Open the search on Ctrl/⌘ K, and close it on Escape.
+                 *
+                 * The browser binds Ctrl/⌘ K to its own address bar, so the default is prevented —
+                 * without that the page would never see the key. Escape is only handled while the
+                 * modal is open, so it does not interfere with anything else on the page.
+                 */
+                handleShortcut(e) {
+                    if (
+                        (e.ctrlKey || e.metaKey)
+                        && e.key?.toLowerCase() === 'k'
+                    ) {
+                        e.preventDefault();
+
+                        this.openModal();
+
+                        return;
+                    }
+
+                    if (
+                        e.key === 'Escape'
+                        && this.isModalOpen
+                    ) {
+                        this.closeModal();
+                    }
+                },
+
+                /**
+                 * Where a result links to, by the section it came from. The dropdown builds these
+                 * hrefs inline per section; the modal renders one list, so the mapping lives here.
+                 */
+                recordUrl(record) {
+                    const routes = {
+                        leads: "{{ route('admin.leads.view', ':id') }}",
+                        quotes: "{{ route('admin.quotes.edit', ':id') }}",
+                        persons: "{{ route('admin.contacts.persons.view', ':id') }}",
+                        products: "{{ route('admin.products.edit', ':id') }}",
+                    };
+
+                    /**
+                     * Settings and configuration results already carry their own destination.
+                     */
+                    if (! routes[this.activeTab]) {
+                        return record.url || record.route || '#';
+                    }
+
+                    return routes[this.activeTab].replace(':id', record.id);
+                },
+
+                openModal() {
+                    this.isModalOpen = true;
+
+                    /**
+                     * Only one of the two is ever on screen. Closing the dropdown here means the
+                     * shortcut can be pressed with the header search already open without leaving
+                     * the same results showing twice.
+                     */
+                    this.isDropdownOpen = false;
+
+                    /**
+                     * Focus lands in the field so the shortcut leads straight into typing, which is
+                     * the whole point of reaching for it.
+                     */
+                    this.$nextTick(() => this.$refs.modalSearchInput?.focus());
+                },
+
+                closeModal() {
+                    this.isModalOpen = false;
+
+                    this.isDropdownOpen = false;
+                },
+
                 handleFocusOut(e) {
-                    if (! this.$el.contains(e.target)) {
+                    /**
+                     * The modal has its own dismissal (Escape, the close control, the backdrop), so
+                     * a click inside it must not be treated as clicking away from the header field.
+                     */
+                    if (this.isModalOpen) {
+                        return;
+                    }
+
+                    /**
+                     * The component has two roots now — the header field and the modal — so `$el`
+                     * no longer stands for the whole component and `$el.contains()` stopped
+                     * matching clicks inside the dropdown, closing it on its own results. The
+                     * header container is tested directly instead.
+                     */
+                    const header = this.$refs.headerSearch;
+
+                    if (
+                        header
+                        && ! header.contains(e.target)
+                    ) {
                         this.isDropdownOpen = false;
                     }
                 },

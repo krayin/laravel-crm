@@ -71,7 +71,13 @@ test.describe("data transfer lead management",async()=>{
       
         const dataTransferPage=new DataTransferPage(adminPage );
         await dataTransferPage.updateCsv(csvPath, 'person_id', personId?.toString() || '1' );
+
+        /**
+         * The `product` column carries its own `id=`, which the importer validates against the
+         * products table, so it is pointed at a product that exists on this installation.
+         */
         await dataTransferPage.navigateToDataTransfer();
+        await dataTransferPage.updateCsvProductId(csvPath, await dataTransferPage.firstProductId());
         await dataTransferPage.createImport(csvPath,'leads');
     }
     )
@@ -83,7 +89,9 @@ test.describe("data transfer lead management",async()=>{
          personId = await person.firstPerson.textContent();
 
         await dataTransferPage.updateCsv(updatedCsvPath, 'person_id', personId?.toString() || '1' );
+
         await dataTransferPage.navigateToDataTransfer();
+        await dataTransferPage.updateCsvProductId(updatedCsvPath, await dataTransferPage.firstProductId());
         await dataTransferPage.updateImport(updatedCsvPath);
         await expect(dataTransferPage.successMessage.first()).toBeVisible();    
     }

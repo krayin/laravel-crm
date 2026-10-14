@@ -46,8 +46,22 @@ export class GroupPage extends SettingsPage {
         await this.searchGroup(groupData.name);
         await expect(this.page.getByText(groupData.name).first()).toBeVisible();
     }
-    async updateGroup(groupData:GroupData): Promise<void>
+    /**
+     * `searchFor` is the group to edit; `groupData` is what it becomes.
+     *
+     * Clicking the first edit icon on an unfiltered grid edited whichever group happened to sort
+     * first — not the one the create test made — so the update either hit a record the suite does
+     * not own or raced the grid's own load and found no icon at all. Searching first pins the edit
+     * to the intended record.
+     */
+    async updateGroup(groupData:GroupData, searchFor?:string): Promise<void>
     {
+        if (searchFor) {
+            await this.searchGroup(searchFor);
+        }
+
+        await expect(this.firstEditIcon).toBeVisible();
+
         await this.firstEditIcon.click();
         await this.nameInput.fill(groupData.name);
         await this.descriptionTextarea.fill(groupData.description);

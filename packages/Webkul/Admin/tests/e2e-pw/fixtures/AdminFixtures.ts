@@ -73,7 +73,18 @@ export const test = base.extend<AdminFixtures>({
 
         await use(page as AdminPage);
 
-        await context.close();
+        /**
+         * A close error is swallowed on purpose. With `trace: "retain-on-failure"` the context's
+         * trace is still being written as it closes, and the two race — the loser throws `ENOENT`
+         * on a recording file that has already been moved. That is teardown noise: it says nothing
+         * about the behaviour under test, but thrown from a fixture it fails a test whose
+         * assertions all passed, and hides the real result.
+         */
+        try {
+            await context.close();
+        } catch {
+            // The context is going away regardless; a cleanup failure is not a test failure.
+        }
     },
 });
 

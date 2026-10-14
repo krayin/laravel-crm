@@ -104,6 +104,12 @@ abstract class AbstractReporting
     {
         $this->endDate = ($endDate && $endDate->endOfDay() <= now()) ? $endDate->endOfDay() : now();
 
+        if (isset($this->startDate) && $this->startDate->greaterThan($this->endDate)) {
+            $this->startDate = $this->endDate->clone()->startOfDay();
+
+            $this->setLastStartDate();
+        }
+
         $this->setLastEndDate();
 
         return $this;

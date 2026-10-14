@@ -118,29 +118,16 @@
                     </select>
                 @endif
 
-                <x-admin::flat-picker.date
-                    class="!w-[140px]"
-                    ::allow-input="false"
-                    ::max-date="filters.end"
-                >
-                    <input
-                        class="flex min-h-[39px] w-full rounded-md border border-gray-300 px-3 py-2 text-sm text-gray-600 transition-all hover:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400"
-                        v-model="filters.start"
-                        placeholder="@lang('admin::app.dashboard.index.start-date')"
-                    />
-                </x-admin::flat-picker.date>
-
-                <x-admin::flat-picker.date
-                    class="!w-[140px]"
-                    ::allow-input="false"
-                    ::max-date="filters.end"
-                >
-                    <input
-                        class="flex min-h-[39px] w-full rounded-md border border-gray-300 px-3 py-2 text-sm text-gray-600 transition-all hover:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400"
-                        v-model="filters.end"
-                        placeholder="@lang('admin::app.dashboard.index.end-date')"
-                    />
-                </x-admin::flat-picker.date>
+                {{--
+                    One range control in place of the previous pair of start/end inputs: picking
+                    "last 30 days" or "this month" was otherwise a manual job of choosing two dates
+                    and knowing today's, and neither input showed the range as a whole.
+                --}}
+                <x-admin::flat-picker.date-range
+                    ::start-date="filters.start"
+                    ::end-date="filters.end"
+                    @change="applyDateRange"
+                />
 
                 <!-- Export PDF -->
                 <a
@@ -186,6 +173,19 @@
 
                         return "{{ route('admin.dashboard.export_pdf') }}?" + params.toString();
                     }
+                },
+
+                methods: {
+                    /**
+                     * The range picker reports both ends together, so they are applied in one go —
+                     * setting them separately would emit an intermediate range (the new start with
+                     * the old end) and send every report a query nobody asked for.
+                     */
+                    applyDateRange({ start, end }) {
+                        this.filters.start = start;
+
+                        this.filters.end = end;
+                    },
                 },
 
                 watch: {

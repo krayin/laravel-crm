@@ -342,6 +342,8 @@ return [
             'header' => [
                 'mega-search' => [
                     'title' => 'Búsqueda Mega',
+                    'shortcut-hint' => 'Empiece a escribir para buscar o pulse el atajo que se muestra en la cabecera.',
+                    'empty-results' => 'Ningún registro coincide con su búsqueda.',
                     'tabs' => [
                         'leads' => 'Oportunidades',
                         'quotes' => 'Cotizaciones',
@@ -684,6 +686,33 @@ return [
                 'add-more' => 'Agregar Más',
                 'save' => 'Guardar',
             ],
+        ],
+    ],
+    'notifications' => [
+        'title' => 'Notificaciones',
+        'empty' => 'Aún no hay notificaciones.',
+        'mark-all-as-read' => 'Marcar todo como leído',
+        'marked-as-read' => 'Notificación marcada como leída.',
+        'marked-all-as-read' => 'Todas las notificaciones marcadas como leídas.',
+        'not-found' => 'Notificación no encontrada.',
+        'view-all' => 'Ver todo',
+        'fallback' => [
+            'missing-keys' => 'Volviendo al sondeo: :driver está seleccionado pero :keys no está configurado.',
+            'broadcast-mismatch' => 'Volviendo al sondeo: :driver está seleccionado pero BROADCAST_DRIVER es \':broadcast\'.',
+        ],
+        'titles' => [
+            'lead-created' => 'Nuevo cliente potencial creado',
+            'lead-updated' => 'Cliente potencial actualizado',
+            'quote-created' => 'Nuevo presupuesto creado',
+            'quote-updated' => 'Presupuesto actualizado',
+            'person-created' => 'Nuevo contacto añadido',
+            'person-updated' => 'Contacto actualizado',
+            'product-created' => 'Nuevo producto añadido',
+            'product-updated' => 'Producto actualizado',
+            'activity-created' => 'Nueva actividad programada',
+            'activity-updated' => 'Actividad actualizada',
+            'email-created' => 'Nuevo correo recibido',
+            'email-updated' => 'Correo actualizado',
         ],
     ],
     'settings' => [
@@ -1562,7 +1591,7 @@ return [
                     'invalid-attribute' => 'El encabezado contiene atributos no válidos: "%s".',
                     'system' => 'Ocurrió un error inesperado en el sistema.',
                     'wrong-quotes' => 'Se usaron comillas curvas en lugar de comillas rectas.',
-                    'already-exists' => 'The :attribute already exists.',
+                    'already-exists' => 'El campo :attribute ya existe.',
                 ],
             ],
             'imports' => [
@@ -2115,6 +2144,23 @@ return [
                             'custom' => 'Personalizado',
                         ],
                     ],
+                    'notifications' => [
+                        'title' => 'Configuración de notificaciones',
+                        'info' => 'Elija si se notifica a los usuarios sobre nuevos registros y cómo llegan esas notificaciones al navegador.',
+                        'enabled' => 'Activar notificaciones',
+                        'enabled-info' => 'Notificar a los usuarios sobre nuevos clientes potenciales, presupuestos, contactos, productos, actividades y correos dentro de su ámbito de datos.',
+                        'driver' => 'Método de entrega',
+                        'driver-info' => 'El sondeo no necesita servicios adicionales y funciona en cualquier alojamiento. Reverb y Pusher entregan al instante, pero ambos requieren un servidor WebSocket en ejecución.',
+                        'drivers' => [
+                            'polling' => 'Sondeo (sin configuración adicional)',
+                            'reverb' => 'Laravel Reverb (WebSocket autoalojado)',
+                            'pusher' => 'Pusher (WebSocket alojado)',
+                        ],
+                        'poll-interval' => 'Comprobar cada (segundos)',
+                        'poll-interval-info' => 'Con qué frecuencia el navegador pide nuevas notificaciones. Un intervalo más corto parece más rápido pero genera más peticiones.',
+                        'sound' => 'Reproducir sonido',
+                        'sound-info' => 'Reproducir un tono breve cuando llega una nueva notificación.',
+                    ],
                     'menu-color' => [
                         'brand-color' => 'Color de Marca',
                         'info' => 'Podemos cambiar los colores de los elementos del menú aquí.',
@@ -2169,6 +2215,17 @@ return [
     'dashboard' => [
         'index' => [
             'title' => 'Tablero',
+            'date-presets' => [
+                'today' => 'Hoy',
+                'yesterday' => 'Ayer',
+                'last-30-days' => 'Últimos 30 días',
+                'this-week' => 'Esta semana',
+                'this-month' => 'Este mes',
+                'last-month' => 'Mes pasado',
+                'last-3-months' => 'Últimos 3 meses',
+                'last-6-months' => 'Últimos 6 meses',
+                'this-year' => 'Este año',
+            ],
             'start-date' => 'Start Date',
             'end-date' => 'End Date',
             'export-pdf' => 'Exportar PDF',
@@ -2435,12 +2492,12 @@ return [
         'go-back' => 'Volver',
         'support' => 'Si el problema persiste, contáctanos en <a href=":link" class=":class">:email</a> para obtener ayuda.',
         'unauthorized' => 'Esta acción no está autorizada.',
-        'role-exceeds-own' => 'You can only assign a role whose permissions are the same as or fewer than your own.',
-        'user-exceeds-own' => 'You can only manage users whose permissions are the same as or fewer than your own.',
-        'own-privileges' => 'You cannot change your own role or data scope.',
-        'scope-exceeds-own' => 'You cannot grant a data scope wider than your own.',
-        'primary-admin-protected' => 'The primary administrator account is protected and cannot be modified here.',
-        'role-permissions-exceed-own' => 'You can only create or edit roles whose permissions are the same as or fewer than your own.',
+        'role-exceeds-own' => 'Solo puede asignar un rol cuyos permisos sean iguales o inferiores a los suyos.',
+        'user-exceeds-own' => 'Solo puede gestionar usuarios cuyos permisos sean iguales o inferiores a los suyos.',
+        'own-privileges' => 'No puede cambiar su propio rol ni su ámbito de datos.',
+        'scope-exceeds-own' => 'No puede conceder un ámbito de datos más amplio que el suyo.',
+        'primary-admin-protected' => 'La cuenta del administrador principal está protegida y no puede modificarse aquí.',
+        'role-permissions-exceed-own' => 'Solo puede crear o editar roles cuyos permisos sean iguales o inferiores a los suyos.',
 
         '404' => [
             'description' => '¡Ups! La página que estás buscando está de vacaciones. Parece que no pudimos encontrar lo que estabas buscando.',

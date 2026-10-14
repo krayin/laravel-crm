@@ -342,6 +342,8 @@ return [
             'header' => [
                 'mega-search' => [
                     'title' => 'جستجوی بزرگ',
+                    'shortcut-hint' => 'برای جستجو تایپ کنید، یا میان‌بر نشان‌داده‌شده در سربرگ را بفشارید.',
+                    'empty-results' => 'هیچ رکوردی با جستجوی شما مطابقت ندارد.',
                     'tabs' => [
                         'leads' => 'سرنخ‌ها',
                         'quotes' => 'پیشنهادات',
@@ -684,6 +686,33 @@ return [
                 'add-more' => 'افزودن بیشتر',
                 'save' => 'ذخیره',
             ],
+        ],
+    ],
+    'notifications' => [
+        'title' => 'اعلان‌ها',
+        'empty' => 'هنوز اعلانی وجود ندارد.',
+        'mark-all-as-read' => 'علامت‌گذاری همه به عنوان خوانده‌شده',
+        'marked-as-read' => 'اعلان به عنوان خوانده‌شده علامت‌گذاری شد.',
+        'marked-all-as-read' => 'همه اعلان‌ها به عنوان خوانده‌شده علامت‌گذاری شدند.',
+        'not-found' => 'اعلان یافت نشد.',
+        'view-all' => 'مشاهده همه',
+        'fallback' => [
+            'missing-keys' => 'بازگشت به استعلام: :driver انتخاب شده اما :keys تنظیم نشده است.',
+            'broadcast-mismatch' => 'بازگشت به استعلام: :driver انتخاب شده اما BROADCAST_DRIVER برابر \':broadcast\' است.',
+        ],
+        'titles' => [
+            'lead-created' => 'سرنخ جدید ایجاد شد',
+            'lead-updated' => 'سرنخ به‌روزرسانی شد',
+            'quote-created' => 'پیش‌فاکتور جدید ایجاد شد',
+            'quote-updated' => 'پیش‌فاکتور به‌روزرسانی شد',
+            'person-created' => 'مخاطب جدید افزوده شد',
+            'person-updated' => 'مخاطب به‌روزرسانی شد',
+            'product-created' => 'محصول جدید افزوده شد',
+            'product-updated' => 'محصول به‌روزرسانی شد',
+            'activity-created' => 'فعالیت جدید زمان‌بندی شد',
+            'activity-updated' => 'فعالیت به‌روزرسانی شد',
+            'email-created' => 'ایمیل جدید دریافت شد',
+            'email-updated' => 'ایمیل به‌روزرسانی شد',
         ],
     ],
     'settings' => [
@@ -1562,7 +1591,7 @@ return [
                     'invalid-attribute' => 'سرصفحه شامل ویژگی‌های نامعتبر است: "%s".',
                     'system' => 'خطای غیرمنتظره‌ای در سیستم رخ داد.',
                     'wrong-quotes' => 'به جای گیومه‌های مستقیم از گیومه‌های خمیده استفاده شده است.',
-                    'already-exists' => 'The :attribute already exists.',
+                    'already-exists' => 'مقدار :attribute از قبل وجود دارد.',
                 ],
             ],
             'imports' => [
@@ -2115,6 +2144,23 @@ return [
                             'custom' => 'سفارشی',
                         ],
                     ],
+                    'notifications' => [
+                        'title' => 'پیکربندی اعلان‌ها',
+                        'info' => 'انتخاب کنید که آیا کاربران از رکوردهای جدید مطلع شوند و این اعلان‌ها چگونه به مرورگر برسند.',
+                        'enabled' => 'فعال‌سازی اعلان‌ها',
+                        'enabled-info' => 'اطلاع‌رسانی به کاربران درباره سرنخ‌ها، پیش‌فاکتورها، مخاطبان، محصولات، فعالیت‌ها و ایمیل‌های جدید در دامنه داده آن‌ها.',
+                        'driver' => 'روش تحویل',
+                        'driver-info' => 'روش استعلام به سرویس اضافی نیاز ندارد و روی هر میزبانی کار می‌کند. Reverb و Pusher فوری تحویل می‌دهند اما هر دو به یک سرور WebSocket در حال اجرا نیاز دارند.',
+                        'drivers' => [
+                            'polling' => 'استعلام (بدون راه‌اندازی اضافی)',
+                            'reverb' => 'Laravel Reverb (وب‌سوکت خودمیزبان)',
+                            'pusher' => 'Pusher (وب‌سوکت میزبانی‌شده)',
+                        ],
+                        'poll-interval' => 'بررسی هر (ثانیه)',
+                        'poll-interval-info' => 'هر چند وقت یک‌بار مرورگر اعلان‌های جدید را درخواست کند. بازه کوتاه‌تر سریع‌تر به نظر می‌رسد اما درخواست‌های بیشتری می‌سازد.',
+                        'sound' => 'پخش صدا',
+                        'sound-info' => 'پخش یک نوای کوتاه هنگام رسیدن اعلان جدید.',
+                    ],
                     'menu-color' => [
                         'brand-color' => 'رنگ برند',
                         'info' => 'ما می‌توانیم رنگ آیتم‌های منو را اینجا تغییر دهیم.',
@@ -2169,6 +2215,17 @@ return [
     'dashboard' => [
         'index' => [
             'title' => 'داشبورد',
+            'date-presets' => [
+                'today' => 'امروز',
+                'yesterday' => 'دیروز',
+                'last-30-days' => '۳۰ روز گذشته',
+                'this-week' => 'این هفته',
+                'this-month' => 'این ماه',
+                'last-month' => 'ماه گذشته',
+                'last-3-months' => '۳ ماه گذشته',
+                'last-6-months' => '۶ ماه گذشته',
+                'this-year' => 'امسال',
+            ],
             'start-date' => 'تاریخ شروع',
             'end-date' => 'تاریخ پایان',
             'export-pdf' => 'خروجی PDF',
@@ -2435,12 +2492,12 @@ return [
         'go-back' => 'بازگشت',
         'support' => 'اگر مشکل ادامه داشت، برای کمک با ما از طریق <a href=":link" class=":class">:email</a> تماس بگیرید.',
         'unauthorized' => 'این عملیات مجاز نیست.',
-        'role-exceeds-own' => 'You can only assign a role whose permissions are the same as or fewer than your own.',
-        'user-exceeds-own' => 'You can only manage users whose permissions are the same as or fewer than your own.',
-        'own-privileges' => 'You cannot change your own role or data scope.',
-        'scope-exceeds-own' => 'You cannot grant a data scope wider than your own.',
-        'primary-admin-protected' => 'The primary administrator account is protected and cannot be modified here.',
-        'role-permissions-exceed-own' => 'You can only create or edit roles whose permissions are the same as or fewer than your own.',
+        'role-exceeds-own' => 'شما تنها می‌توانید نقشی را اختصاص دهید که دسترسی‌های آن برابر یا کمتر از دسترسی‌های شما باشد.',
+        'user-exceeds-own' => 'شما تنها می‌توانید کاربرانی را مدیریت کنید که دسترسی‌های آن‌ها برابر یا کمتر از دسترسی‌های شما باشد.',
+        'own-privileges' => 'شما نمی‌توانید نقش یا دامنه داده خود را تغییر دهید.',
+        'scope-exceeds-own' => 'شما نمی‌توانید دامنه داده‌ای گسترده‌تر از دامنه خود اعطا کنید.',
+        'primary-admin-protected' => 'حساب مدیر اصلی محافظت‌شده است و از اینجا قابل تغییر نیست.',
+        'role-permissions-exceed-own' => 'شما تنها می‌توانید نقش‌هایی را ایجاد یا ویرایش کنید که دسترسی‌های آن‌ها برابر یا کمتر از دسترسی‌های شما باشد.',
 
         '404' => [
             'description' => 'اوه! به نظر می‌رسد صفحه‌ای که دنبال آن بودید، در دسترس نیست. نتوانستیم چیزی که دنبالش بودید را پیدا کنیم.',

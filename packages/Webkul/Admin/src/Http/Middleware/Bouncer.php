@@ -146,6 +146,14 @@ class Bouncer
             'admin.reset_password.store',
             'admin.user.account.edit',
             'admin.user.account.update',
+
+            /**
+             * Every user has notifications, whatever their role, and each request is scoped to the
+             * acting user's own id inside the controller rather than by a permission.
+             */
+            'admin.notifications.index',
+            'admin.notifications.read',
+            'admin.notifications.read_all',
             'admin.datagrid.look_up',
             'admin.datagrid.saved_filters.index',
             'admin.datagrid.saved_filters.store',

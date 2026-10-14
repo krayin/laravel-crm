@@ -49,9 +49,18 @@ test.describe("campaign management", () => {
         await adminPage.getByRole('textbox', { name: 'Subject *' }).click(); // Trigger validation (if needed)
         await adminPage.getByRole('textbox', { name: 'Subject *' }).fill(generateCampaignName()); // Second subject fill with description
 
-        /* Select an email template */
+        /**
+         * Select the first email template the dropdown actually offers.
+         *
+         * Selecting by the hardcoded value "1" waited for an option that does not exist on an
+         * installation where template id 1 has been deleted — the ids here start at 2 — so the
+         * action retried until the test timed out. Picking by index uses whatever the install has.
+         */
         await adminPage.getByText('Email Template').click();
-        await adminPage.getByLabel('Email Template').selectOption('1');
+        await expect(
+            adminPage.locator('select#marketing_template_id option')
+        ).not.toHaveCount(0);
+        await adminPage.selectOption('select#marketing_template_id', { index: 0 });
 
         /* Select an event from the dropdown */
         await adminPage.getByLabel('Event').click();
@@ -84,9 +93,12 @@ test.describe("campaign management", () => {
         await adminPage.getByRole('textbox', { name: 'Subject *' }).click();
         await adminPage.getByRole('textbox', { name: 'Subject *' }).fill('subject');
 
-        /* Update the email template */
+        /* Update the email template — by index, for the reason given in the create test. */
         await adminPage.getByText('Email Template').click();
-        await adminPage.getByLabel('Email Template').selectOption('1');
+        await expect(
+            adminPage.locator('select#marketing_template_id option')
+        ).not.toHaveCount(0);
+        await adminPage.selectOption('select#marketing_template_id', { index: 0 });
 
         /* Update the associated event */
         await adminPage.getByLabel('Event').click();

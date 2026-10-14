@@ -206,14 +206,14 @@ class LeadController extends Controller
 
         $lead = $this->leadRepository->create($data);
 
+        Event::dispatch('lead.create.after', $lead);
+
         if (request()->ajax()) {
             return response()->json([
                 'message' => trans('admin::app.leads.create-success'),
                 'data' => new LeadResource($lead),
             ]);
         }
-
-        Event::dispatch('lead.create.after', $lead);
 
         session()->flash('success', trans('admin::app.leads.create-success'));
 
