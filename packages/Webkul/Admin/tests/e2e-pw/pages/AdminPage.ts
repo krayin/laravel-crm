@@ -17,7 +17,7 @@ export class AdminPage extends CoreLocators {
         this.passwordInput = page.getByPlaceholder("Password");
         this.signInButton = page.getByRole("button", { name: "Sign In" });
         this.megaSearchInput = page.getByPlaceholder("Mega Search").first();
-        this.profileButton = page.getByRole("button", { name: "E" });
+        this.profileButton = page.locator("header button.h-9.w-9.rounded-full").last();
         this.signOutLink = page.getByRole("link", { name: "Sign Out" });
     }
 
