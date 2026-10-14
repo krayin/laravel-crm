@@ -48,10 +48,18 @@ class WebFormController extends Controller
      */
     public function formStore(int $id): JsonResponse
     {
-        $person = $this->personRepository
-            ->getModel()
-            ->where('emails', 'like', '%'.request('persons.emails.0.value').'%')
-            ->first();
+        /**
+         * The email identifies the person the submission belongs to, so it is validated before
+         * the lookup. The attribute based validation runs after it, because the uniqueness check
+         * of the email needs the id of the matched person.
+         */
+        request()->validate([
+            'persons' => 'required|array',
+            'persons.emails' => 'required|array',
+            'persons.emails.0.value' => 'required|email',
+        ]);
+
+        $person = $this->findPersonByEmail(request('persons.emails.0.value'));
 
         if ($person) {
             request()->request->add(['persons' => array_merge(request('persons'), ['id' => $person->id])]);
@@ -166,5 +174,24 @@ class WebFormController extends Controller
         }
 
         return view('web_form::settings.web-forms.preview', compact('webForm'));
+    }
+
+    /**
+     * Find the person having exactly the given email, ignoring the case.
+     *
+     * The query only narrows down the candidates, the exact comparison is done on the decoded
+     * emails so a part of an address (or a domain) never matches somebody else's contact.
+     */
+    protected function findPersonByEmail(string $email)
+    {
+        $email = mb_strtolower(trim($email));
+
+        return $this->personRepository
+            ->getModel()
+            ->whereRaw('LOWER(emails) LIKE ?', ['%'.addcslashes($email, '\\%_').'%'])
+            ->get()
+            ->first(fn ($person) => collect($person->emails)->contains(
+                fn ($personEmail) => mb_strtolower(trim($personEmail['value'] ?? '')) === $email
+            ));
     }
 }
