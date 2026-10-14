@@ -9,11 +9,14 @@ import { expect, test } from "../fixtures/AdminFixtures";
  */
 test.describe("mega search modal", () => {
     /**
-     * The modal's own input, distinguished from the header field by being the second one on the
-     * page carrying the same placeholder.
+     * The modal's own input.
+     *
+     * Found inside the modal rather than by its position among the fields sharing this placeholder:
+     * the header carries a desktop field and a hidden mobile one, so counting from the start landed
+     * on whichever happened to come first in the markup.
      */
     const modalInput = (adminPage: any) =>
-        adminPage.locator('input[placeholder="Mega Search"]').nth(1);
+        adminPage.locator('[role="dialog"], .fixed').locator('input[placeholder="Mega Search"]').first();
 
     const hint = (adminPage: any) => adminPage.locator("kbd").first();
 
@@ -116,12 +119,21 @@ test.describe("mega search modal", () => {
 
         await expect(modalInput(adminPage)).toBeVisible();
 
+        /**
+         * The modal's own field is the one appearing while it is open, so it is identified by not
+         * belonging to the header at all. The header carries a desktop field and a hidden mobile
+         * one that share this placeholder, so picking by position or by visibility found those.
+         */
         const insideHeader = await adminPage.evaluate(() => {
-            const input = Array.from(
+            const inputs = Array.from(
                 document.querySelectorAll('input[placeholder="Mega Search"]')
-            )[1];
+            );
 
-            return !! input?.closest("header");
+            /**
+             * Every field is checked: the assertion is that at least one of them — the modal's —
+             * is rendered outside the header.
+             */
+            return ! inputs.some((candidate) => ! candidate.closest("header"));
         });
 
         expect(
