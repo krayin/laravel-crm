@@ -62,7 +62,12 @@ class QuoteRepository extends Repository
             'entity_id' => $quote->id,
         ]));
 
-        foreach ($data['items'] as $itemData) {
+        /**
+         * A quote can be started without its line items — the quick add form collects only the
+         * subject, owner and totals, and the products are added on the quote's own page afterwards.
+         * `update()` already allows for this; creating one without them threw on a missing key.
+         */
+        foreach ($data['items'] ?? [] as $itemData) {
             $this->quoteItemRepository->create(array_merge($itemData, [
                 'quote_id' => $quote->id,
             ]));

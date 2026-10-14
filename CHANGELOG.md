@@ -4,6 +4,10 @@ This changelog consists of the bug & security fixes and new features being inclu
 
 ## **v2.2.7 (XX of XX 202X)**
 
+* [feature] Added quotes to Quick Add. A quote can now be started from the header alongside leads, people, organizations and products, carrying the subject, owner, person, billing address, total and expiry; the products are added afterwards on the quote's own page. The option appears for users whose role grants the new `quotes.create.quick-create` permission.
+
+* [fixed] Fixed creating a quote without line items failing with `Undefined array key "items"`. The quote controller already relaxed its line-item validation for a quick add, but the repository iterated the items unconditionally, so a quote started without products was never created. Updating a quote already allowed for this; creating one now does too.
+
 * [fixed] Fixed the leads settings control moving when switching between the kanban and table views.
 
 * [feature] Added notifications. A bell in the header, beside the dark mode toggle, reports new leads, quotes, contacts, products, activities and mail as they are created, including leads arriving from a web form. Each user is told only about records their own data scope covers: an administrator sees everything, a user restricted to their group sees that group's records, and an individual user sees only their own. 

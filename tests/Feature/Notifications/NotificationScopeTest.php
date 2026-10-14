@@ -14,7 +14,7 @@ use Webkul\User\Models\User;
  */
 uses(DatabaseTransactions::class);
 
-function makeUser(string $scope, string $permissionType, array $permissions = [], int $status = 1): User
+function makeNotificationScopeUser(string $scope, string $permissionType, array $permissions = [], int $status = 1): User
 {
     $role = Role::create([
         'name' => 'role-'.uniqid(),
@@ -34,7 +34,7 @@ function makeUser(string $scope, string $permissionType, array $permissions = []
 }
 
 it('does not tell a user about records their role cannot reach', function () {
-    $contactsOnly = makeUser('global', 'custom', ['contacts', 'contacts.persons']);
+    $contactsOnly = makeNotificationScopeUser('global', 'custom', ['contacts', 'contacts.persons']);
 
     $recipients = app(NotificationRepository::class)->resolveRecipients('lead', 1, null);
 
@@ -42,7 +42,7 @@ it('does not tell a user about records their role cannot reach', function () {
 });
 
 it('tells a user about records their role does reach', function () {
-    $contactsOnly = makeUser('global', 'custom', ['contacts', 'contacts.persons']);
+    $contactsOnly = makeNotificationScopeUser('global', 'custom', ['contacts', 'contacts.persons']);
 
     $recipients = app(NotificationRepository::class)->resolveRecipients('person', 1, null);
 
@@ -50,7 +50,7 @@ it('tells a user about records their role does reach', function () {
 });
 
 it('tells a user holding every permission about every kind of record', function () {
-    $admin = makeUser('global', 'all');
+    $admin = makeNotificationScopeUser('global', 'all');
 
     $repository = app(NotificationRepository::class);
 
@@ -60,7 +60,7 @@ it('tells a user holding every permission about every kind of record', function 
 });
 
 it('does not address a deactivated account', function () {
-    $inactive = makeUser('global', 'all', [], 0);
+    $inactive = makeNotificationScopeUser('global', 'all', [], 0);
 
     $recipients = app(NotificationRepository::class)->resolveRecipients('lead', 1, null);
 
@@ -68,7 +68,7 @@ it('does not address a deactivated account', function () {
 });
 
 it('tells nobody about an entity it has no permission mapped for', function () {
-    makeUser('global', 'all');
+    makeNotificationScopeUser('global', 'all');
 
     $recipients = app(NotificationRepository::class)->resolveRecipients('widget', 1, null);
 
@@ -76,9 +76,9 @@ it('tells nobody about an entity it has no permission mapped for', function () {
 });
 
 it('keeps a group user to their own group', function () {
-    $owner = makeUser('global', 'all');
+    $owner = makeNotificationScopeUser('global', 'all');
 
-    $outsider = makeUser('group', 'all');
+    $outsider = makeNotificationScopeUser('group', 'all');
 
     $recipients = app(NotificationRepository::class)->resolveRecipients('lead', $owner->id, null);
 
@@ -86,7 +86,7 @@ it('keeps a group user to their own group', function () {
 });
 
 it('never tells a user about their own action', function () {
-    $actor = makeUser('global', 'all');
+    $actor = makeNotificationScopeUser('global', 'all');
 
     $recipients = app(NotificationRepository::class)->resolveRecipients('lead', $actor->id, $actor->id);
 
@@ -94,7 +94,7 @@ it('never tells a user about their own action', function () {
 });
 
 it('only tells global-scope users about a record nobody owns', function () {
-    $individual = makeUser('individual', 'all');
+    $individual = makeNotificationScopeUser('individual', 'all');
 
     $recipients = app(NotificationRepository::class)->resolveRecipients('lead', null, null);
 

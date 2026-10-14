@@ -9,7 +9,7 @@ use Webkul\Admin\Services\NotificationDriver;
  * missing, or whose broadcast connection points somewhere else, would publish into the void and
  * leave the bell silently dead — so anything short of a complete setup resolves to polling.
  */
-function configureReverb(bool $complete = true, string $broadcast = 'reverb'): void
+function configureNotificationReverb(bool $complete = true, string $broadcast = 'reverb'): void
 {
     config([
         'notifications.driver' => 'reverb',
@@ -40,7 +40,7 @@ it('uses polling when the driver is not one it knows', function () {
 });
 
 it('uses polling when a socket driver is missing its credentials', function () {
-    configureReverb(complete: false);
+    configureNotificationReverb(complete: false);
 
     expect(NotificationDriver::resolve())->toBe('polling');
 });
@@ -49,13 +49,13 @@ it('uses polling when a socket driver is missing its credentials', function () {
  * The application has to publish to the same service the browser is listening on.
  */
 it('uses polling when broadcasting points somewhere else', function () {
-    configureReverb(broadcast: 'log');
+    configureNotificationReverb(broadcast: 'log');
 
     expect(NotificationDriver::resolve())->toBe('polling');
 });
 
 it('uses reverb once it is completely set up', function () {
-    configureReverb();
+    configureNotificationReverb();
 
     expect(NotificationDriver::resolve())->toBe('reverb');
 });
@@ -74,19 +74,19 @@ it('uses pusher once it is completely set up', function () {
 });
 
 it('tells the administrator which variables are missing', function () {
-    configureReverb(complete: false);
+    configureNotificationReverb(complete: false);
 
     expect(NotificationDriver::fallbackReason())->toContain('REVERB_APP_KEY');
 });
 
 it('tells the administrator when broadcasting points somewhere else', function () {
-    configureReverb(broadcast: 'log');
+    configureNotificationReverb(broadcast: 'log');
 
     expect(NotificationDriver::fallbackReason())->toContain('BROADCAST_DRIVER');
 });
 
 it('says nothing when the chosen driver is the one in use', function () {
-    configureReverb();
+    configureNotificationReverb();
 
     expect(NotificationDriver::fallbackReason())->toBeNull();
 });
@@ -106,13 +106,13 @@ it('gives the browser nothing while polling', function () {
 });
 
 it('gives the browser nothing when the driver is not usable', function () {
-    configureReverb(complete: false);
+    configureNotificationReverb(complete: false);
 
     expect(NotificationDriver::clientConfig())->toBeNull();
 });
 
 it('never puts the application secret in front of the browser', function () {
-    configureReverb();
+    configureNotificationReverb();
 
     config(['broadcasting.connections.reverb.secret' => 'super-secret-value']);
 
@@ -122,7 +122,7 @@ it('never puts the application secret in front of the browser', function () {
 });
 
 it('gives the browser only what it needs to subscribe', function () {
-    configureReverb();
+    configureNotificationReverb();
 
     expect(array_keys(NotificationDriver::clientConfig()))
         ->toBe(['connection', 'key', 'host', 'port', 'forceTLS', 'cluster']);
@@ -167,7 +167,7 @@ it('gives the browser nothing when there is no address to reach', function () {
  * assuming TLS the way Pusher can.
  */
 it('honours reverb running without tls', function () {
-    configureReverb();
+    configureNotificationReverb();
 
     config(['broadcasting.connections.reverb.options.scheme' => 'http']);
 
