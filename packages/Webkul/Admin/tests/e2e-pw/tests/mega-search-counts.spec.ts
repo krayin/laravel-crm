@@ -1,4 +1,5 @@
 import { expect, test } from "../fixtures/AdminFixtures";
+import { csrfHeaders } from "../utils/acl";
 
 /**
  * The mega search dropdown shows a per-section record count.
@@ -32,18 +33,17 @@ test.describe("mega search section counts", () => {
     const term = "megasearchseed";
 
     async function seedSearchableRecords(adminPage: any) {
-        const token = await adminPage.evaluate(
-            () =>
-                document
-                    .querySelector('meta[name="csrf-token"]')
-                    ?.getAttribute("content") ?? ""
-        );
+        /**
+         * The admin layout renders no csrf meta tag; Laravel accepts the `XSRF-TOKEN` cookie
+         * echoed back as a header, which is how the panel's own requests pass verification.
+         */
+        const headers = await csrfHeaders(adminPage.context());
 
         const unique = Date.now();
 
         await adminPage.request.post("admin/contacts/persons/create", {
             failOnStatusCode: false,
-            headers: { "X-Requested-With": "XMLHttpRequest", "X-CSRF-TOKEN": token },
+            headers,
             form: {
                 name: `${term} person ${unique}`,
                 "emails[0][value]": `${term}${unique}@example.invalid`,
@@ -58,7 +58,7 @@ test.describe("mega search section counts", () => {
          */
         await adminPage.request.post("admin/leads/create", {
             failOnStatusCode: false,
-            headers: { "X-Requested-With": "XMLHttpRequest", "X-CSRF-TOKEN": token },
+            headers,
             form: {
                 title: `${term} lead ${unique}`,
                 description: "seeded for the mega search counts",

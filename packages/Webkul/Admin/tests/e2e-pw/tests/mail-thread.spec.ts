@@ -1,7 +1,7 @@
 import { expect, test } from "../fixtures/AdminFixtures";
 
 import { MailPage, mailData } from "../pages/MailPage";
-import { runSuffix } from "../utils/acl";
+import { csrfHeaders, runSuffix } from "../utils/acl";
 
 /**
  * A mail body is attacker-supplied — it arrives from whoever sent the mail, not from the CRM — and
@@ -52,16 +52,10 @@ test.describe.serial("mail thread and reply", () => {
         const id = record.id;
 
         /**
-         * The token is taken from the page itself rather than the `XSRF-TOKEN` cookie: the cookie
-         * is only set once a response has carried it, so on a fresh session the header went out
-         * empty and the request was rejected as a token mismatch.
+         * Laravel accepts the `XSRF-TOKEN` cookie echoed back as a header, which is how the panel's
+         * own requests pass verification; the admin layout renders no csrf meta tag to read instead.
          */
-        const token = await adminPage.evaluate(
-            () =>
-                document
-                    .querySelector('meta[name="csrf-token"]')
-                    ?.getAttribute("content") ?? ""
-        );
+        const headers = await csrfHeaders(adminPage.context());
 
         /**
          * `mass-update` moves the record into the inbox, which is the folder whose view renders
@@ -70,10 +64,7 @@ test.describe.serial("mail thread and reply", () => {
          */
         const response = await adminPage.request.post("admin/mail/mass-update", {
             failOnStatusCode: false,
-            headers: {
-                "X-Requested-With": "XMLHttpRequest",
-                "X-CSRF-TOKEN": token,
-            },
+            headers,
             multipart: {
                 "indices[0]": String(id),
                 "folders[0]": "inbox",

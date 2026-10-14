@@ -248,4 +248,23 @@ class WebFormController extends Controller
 
         return view('web_form::settings.web-forms.preview', compact('webForm'));
     }
+
+    /**
+     * Find the person having exactly the given email, ignoring the case.
+     *
+     * The query only narrows down the candidates, the exact comparison is done on the decoded
+     * emails so a part of an address (or a domain) never matches somebody else's contact.
+     */
+    protected function findPersonByEmail(string $email)
+    {
+        $email = mb_strtolower(trim($email));
+
+        return $this->personRepository
+            ->getModel()
+            ->whereRaw('LOWER(emails) LIKE ?', ['%'.addcslashes($email, '\\%_').'%'])
+            ->get()
+            ->first(fn ($person) => collect($person->emails)->contains(
+                fn ($personEmail) => mb_strtolower(trim($personEmail['value'] ?? '')) === $email
+            ));
+    }
 }
