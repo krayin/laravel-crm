@@ -47,6 +47,14 @@ function enumerationUser(): User
  */
 function makeEnumerationContact(User $owner, string $name, string $email, ?string $phone = null)
 {
+    /**
+     * The parallel databases are migrated but not seeded, so the person attributes a contact is
+     * saved against have to be in place before one is created.
+     */
+    foreach (['name', 'emails', 'contact_numbers'] as $code) {
+        webFormAttributeFor('persons', $code);
+    }
+
     $data = [
         'name' => $name,
         'user_id' => $owner->id,
@@ -70,6 +78,19 @@ function makeEnumerationContact(User $owner, string $name, string $email, ?strin
  */
 function validationErrorsFor(array $payload): array
 {
+    /**
+     * The rules are built from the attributes named in the payload, so those have to exist: the
+     * parallel databases are migrated but not seeded, and without the `emails` attribute no email
+     * rule is produced and a malformed address passes unchallenged.
+     */
+    foreach (array_keys($payload['persons'] ?? []) as $code) {
+        webFormAttributeFor('persons', $code);
+    }
+
+    foreach (array_keys($payload['leads'] ?? []) as $code) {
+        webFormAttributeFor('leads', $code);
+    }
+
     request()->replace($payload);
 
     try {
@@ -172,7 +193,7 @@ it('leaves the underlying uniqueness check intact for the admin forms', function
 
     makeEnumerationContact($owner, 'Existing Customer', $email);
 
-    $attribute = Attribute::where('entity_type', 'persons')->where('code', 'emails')->first();
+    $attribute = webFormAttributeFor('persons', 'emails');
 
     expect(app(AttributeValueRepository::class)->isValueUnique(null, 'persons', $attribute, $email))
         ->toBeFalse();

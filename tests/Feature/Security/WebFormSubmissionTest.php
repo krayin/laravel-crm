@@ -54,6 +54,12 @@ function webFormUser(): User
  */
 function makeWebForm(array $exposedCodes = ['leads.title', 'persons.name', 'persons.emails']): WebForm
 {
+    /**
+     * A submission that creates a lead needs a default pipeline with a stage to put it in, and the
+     * parallel databases are migrated but not seeded.
+     */
+    securityTestPipeline();
+
     $webForm = WebForm::create([
         'form_id' => bin2hex(random_bytes(8)),
         'title' => 'Contact us',
@@ -67,11 +73,7 @@ function makeWebForm(array $exposedCodes = ['leads.title', 'persons.name', 'pers
     foreach ($exposedCodes as $sortOrder => $qualified) {
         [$entityType, $code] = explode('.', $qualified, 2);
 
-        $attribute = Attribute::where('entity_type', $entityType)->where('code', $code)->first();
-
-        if (! $attribute) {
-            continue;
-        }
+        $attribute = webFormAttributeFor($entityType, $code);
 
         WebFormAttribute::create([
             'name' => $code,
