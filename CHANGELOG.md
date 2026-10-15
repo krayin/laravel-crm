@@ -26,6 +26,8 @@ This changelog consists of the bug & security fixes and new features being inclu
 
 * [fixed] Fixed saving a contact with the phone left blank answering with a server error.
 
+* [fixed] Fixed picking a lead on a quote leaving the quote unsaveable and unlinked from that lead.
+
 * [security] Improved in Security.
 
 ## **v2.2.6 (10th of Sept 2026)**

@@ -73,6 +73,8 @@ class QuoteRepository extends Repository
             ]));
         }
 
+        $this->syncLeadProducts($quote, $data['lead_id'] ?? null);
+
         return $quote;
     }
 
@@ -164,7 +166,84 @@ class QuoteRepository extends Repository
             $this->quoteItemRepository->delete($itemId);
         }
 
+        $this->syncLeadProducts($quote, $data['lead_id'] ?? $originalLeadId);
+
         return $quote;
+    }
+
+    /**
+     * Give a quote and the lead it is linked to the same products.
+     *
+     * The quote's items were copied onto the lead, but never the other way about, so a lead
+     * holding products of its own kept them to itself: linking a quote of four products to a lead
+     * of two left the quote with four and the lead with six. Both now hold all six.
+     *
+     * A product already on the other side is left as it is rather than overwritten, so the
+     * quantity and price entered against a quote item are not replaced by the lead's figures.
+     *
+     * @param  Quote  $quote
+     * @param  int|null  $leadId
+     */
+    protected function syncLeadProducts($quote, $leadId): void
+    {
+        if (empty($leadId)) {
+            return;
+        }
+
+        $quote = $quote->refresh();
+
+        $quoteProductIds = $quote->items->pluck('product_id')->filter();
+
+        $leadProducts = $this->productRepository->findWhere(['lead_id' => $leadId]);
+
+        /**
+         * The quote's items onto the lead.
+         */
+        foreach ($quote->items as $item) {
+            if (! $item->product_id) {
+                continue;
+            }
+
+            if ($leadProducts->contains('product_id', $item->product_id)) {
+                continue;
+            }
+
+            $this->productRepository->create([
+                'lead_id' => $leadId,
+                'product_id' => $item->product_id,
+                'quantity' => $item->quantity,
+                'price' => $item->price,
+                'amount' => $item->price * $item->quantity,
+            ]);
+        }
+
+        /**
+         * And the lead's products onto the quote.
+         */
+        foreach ($leadProducts as $leadProduct) {
+            if (! $leadProduct->product_id) {
+                continue;
+            }
+
+            if ($quoteProductIds->contains($leadProduct->product_id)) {
+                continue;
+            }
+
+            $quantity = $leadProduct->quantity ?: 1;
+            $price = $leadProduct->price ?: 0;
+
+            $this->quoteItemRepository->create([
+                'quote_id' => $quote->id,
+                'product_id' => $leadProduct->product_id,
+                'name' => $leadProduct->product?->name ?? '',
+                'sku' => $leadProduct->product?->sku ?? '',
+                'quantity' => $quantity,
+                'price' => $price,
+                'discount_amount' => 0,
+                'tax_amount' => 0,
+                'total' => $price * $quantity,
+            ]);
+        }
     }
 
     /**

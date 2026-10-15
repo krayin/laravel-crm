@@ -540,7 +540,7 @@
                                     </template>
 
                                     <!-- Contact Numbers -->
-                                    <template v-for="contactNumber in email.person?.contact_numbers.map(item => item.value)">
+                                    <template v-for="contactNumber in (email.person?.contact_numbers ?? []).map(item => item.value)">
                                         <a
                                             class="text-brandColor"
                                             :href="`tel:${contactNumber}`"

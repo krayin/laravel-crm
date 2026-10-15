@@ -62,7 +62,7 @@
 
                         {!! view_render_event('admin.leads.view.person.email.before', ['lead' => $lead]) !!}
 
-                        @foreach ($lead->person->emails as $email)
+                        @foreach ($lead->person->emails ?? [] as $email)
                             <div class="flex gap-1">
                                 <a
                                     class="text-brandColor"
@@ -81,7 +81,7 @@
 
                         {!! view_render_event('admin.leads.view.person.contact_numbers.before', ['lead' => $lead]) !!}
 
-                        @foreach ($lead->person->contact_numbers as $contactNumber)
+                        @foreach ($lead->person->contact_numbers ?? [] as $contactNumber)
                             <div class="flex gap-1">
                                 <a
                                     class="text-brandColor"
