@@ -110,10 +110,33 @@ class WebFormController extends Controller
             return null;
         }
 
+        /**
+         * Matched without regard to case: an address is the same address however it is typed, and
+         * `whereJsonContains` compares the stored json byte for byte. A submission differing only
+         * in case therefore found nobody and went on to create a second contact for the same
+         * person — which the unique id built from that address then rejected outright.
+         *
+         * The comparison is narrowed by the json search first so the lower-casing is applied to
+         * the candidates rather than to every contact in the table.
+         */
+        $needle = mb_strtolower($email);
+
+        /**
+         * The candidates are narrowed in the database and then compared in PHP.
+         *
+         * The comparison is not left to SQL because the obvious way to write it, `JSON_SEARCH`,
+         * takes its argument as a LIKE pattern: an address containing `%` would match every
+         * contact sharing the rest of it, letting an unauthenticated caller merge their submission
+         * into someone else's record and learn that the record exists. Comparing the decoded
+         * values here keeps the match exact, whatever the address contains.
+         */
         return $this->personRepository
             ->getModel()
-            ->whereJsonContains('emails', [['value' => $email]])
-            ->first();
+            ->whereRaw('LOWER(CAST(emails AS CHAR)) LIKE ?', ['%'.addcslashes($needle, '%_\\').'%'])
+            ->get()
+            ->first(fn ($person) => collect($person->emails)->contains(
+                fn ($personEmail) => mb_strtolower($personEmail['value'] ?? '') === $needle
+            ));
     }
 
     /**

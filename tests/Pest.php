@@ -7,6 +7,7 @@ use Webkul\Attribute\Models\Attribute;
 use Webkul\Lead\Models\Pipeline;
 use Webkul\Lead\Models\Source;
 use Webkul\Lead\Models\Type;
+use Webkul\User\Models\Role;
 use Webkul\User\Models\User;
 
 /*
@@ -62,13 +63,36 @@ expect()->extend('toBeOne', function () {
 /**
  * Get default admin which is created on fresh instance.
  *
+ * The parallel test databases are migrated but not seeded, so the seeded administrator is not
+ * always there to find; one is created when it is missing, rather than handing back null and
+ * failing the caller on a property read.
+ *
  * @return User
  */
 function getDefaultAdmin()
 {
-    $admin = User::find(1);
+    $admin = User::find(1) ?? User::query()->whereHas(
+        'role',
+        fn ($query) => $query->where('permission_type', 'all')
+    )->first();
 
-    return $admin;
+    if ($admin) {
+        return $admin;
+    }
+
+    $role = Role::query()->firstOrCreate(
+        ['name' => 'Administrator'],
+        ['description' => 'Administrator role', 'permission_type' => 'all']
+    );
+
+    return User::create([
+        'name' => 'Example',
+        'email' => 'admin@example.com',
+        'password' => bcrypt('admin123'),
+        'status' => 1,
+        'view_permission' => 'global',
+        'role_id' => $role->id,
+    ]);
 }
 
 /**

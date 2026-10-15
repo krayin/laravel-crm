@@ -7,6 +7,7 @@ use Webkul\Attribute\Repositories\AttributeValueRepository;
 use Webkul\Contact\Repositories\PersonRepository;
 use Webkul\User\Models\Role;
 use Webkul\User\Models\User;
+use Webkul\WebForm\Http\Controllers\WebFormController;
 use Webkul\WebForm\Http\Requests\WebForm as WebFormRequest;
 
 /**
@@ -170,6 +171,41 @@ it('answers identically whether or not the email already exists', function () {
 /**
  * Dropping the uniqueness rule must not drop the rest of the validation with it.
  */
+/**
+ * The lookup must not treat the submitted address as a pattern.
+ *
+ * Matching it with `JSON_SEARCH` took it as a LIKE pattern, so an address carrying `%` matched
+ * every contact sharing the rest of it: an unauthenticated caller could merge their submission
+ * into someone else's record, and learn from the merge that the record exists.
+ */
+it('does not let a wildcard address match another contact', function () {
+    $owner = enumerationUser();
+
+    $email = 'wildcard-'.bin2hex(random_bytes(4)).'@mail.invalid';
+
+    makeEnumerationContact($owner, 'Wildcard Victim', $email);
+
+    $controller = app(WebFormController::class);
+
+    $lookup = new ReflectionMethod($controller, 'findPersonBySubmittedEmail');
+
+    $lookup->setAccessible(true);
+
+    foreach (['%@mail.invalid', '_'.substr($email, 1), '%'] as $pattern) {
+        request()->replace(['persons' => ['emails' => [['value' => $pattern]]]]);
+
+        expect($lookup->invoke($controller))->toBeNull();
+    }
+
+    /**
+     * The address itself still matches however it is typed, which is what the pattern was
+     * reached for in the first place.
+     */
+    request()->replace(['persons' => ['emails' => [['value' => mb_strtoupper($email)]]]]);
+
+    expect($lookup->invoke($controller))->not->toBeNull();
+});
+
 it('still rejects a malformed email', function () {
     $errors = validationErrorsFor([
         'leads' => ['title' => 'Enquiry'],

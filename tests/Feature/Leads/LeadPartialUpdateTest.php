@@ -8,19 +8,41 @@ uses(DatabaseTransactions::class);
 
 function makeLeadWithExpectedCloseDate(): Lead
 {
+    /**
+     * The pipeline is resolved rather than assumed to be id 1: the parallel test databases are
+     * migrated but not seeded, so that row is not always there and the insert failed on its
+     * foreign key.
+     */
+    $pipeline = securityTestPipeline();
+
     return Lead::create([
         'title' => 'Partial Update Lead '.bin2hex(random_bytes(4)),
         'user_id' => getDefaultAdmin()->id,
         'lead_value' => 500,
         'expected_close_date' => '2030-01-15',
-        'lead_pipeline_id' => 1,
-        'lead_pipeline_stage_id' => 1,
+        'lead_pipeline_id' => $pipeline->id,
+        'lead_pipeline_stage_id' => $pipeline->stages()->value('id'),
     ]);
 }
 
+/**
+ * A stage of the test's own pipeline, created when it is absent.
+ *
+ * The pipeline was assumed to be id 1 and to carry every stage the seeders install; the parallel
+ * test databases are migrated but not seeded, so neither held.
+ */
 function stageByCode(string $code): Stage
 {
-    return Stage::where('lead_pipeline_id', 1)->where('code', $code)->firstOrFail();
+    $pipeline = securityTestPipeline();
+
+    return Stage::query()->firstOrCreate(
+        ['lead_pipeline_id' => $pipeline->id, 'code' => $code],
+        [
+            'name' => ucfirst(str_replace('-', ' ', $code)),
+            'probability' => 50,
+            'sort_order' => 2,
+        ]
+    );
 }
 
 it('keeps the expected close date when the stage is changed', function () {

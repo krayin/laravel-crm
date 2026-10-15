@@ -4,6 +4,12 @@ This changelog consists of the bug & security fixes and new features being inclu
 
 ## **v2.2.7 (XX of XX 202X)**
 
+* [security] Fixed a web form submission matching another visitor's contact through a wildcard in the submitted address. The lookup is exact, so an address is matched as itself rather than as a pattern.
+
+* [fixed] Fixed a web form submission creating a duplicate contact when the address differed only in case. The lookup compared the stored json byte for byte, so `Person@Example.com` matched nobody and a second contact was created for the same person — which the unique id built from that address then rejected, answering the visitor with a server error. The address is now matched without regard to case.
+
+* [fixed] Fixed an empty web form submission answering with a server error. The rules are derived from the fields the payload names, so a submission naming none was validated against nothing and failed on the database instead. A submission must now carry a contact, and an address is required of it when no other way to reach them is given.
+
 * [feature] Added quotes to Quick Add. A quote can now be started from the header alongside leads, people, organizations and products, carrying the subject, owner, person, billing address, total and expiry; the products are added afterwards on the quote's own page. The option appears for users whose role grants the new `quotes.create.quick-create` permission.
 
 * [fixed] Fixed creating a quote without line items failing with `Undefined array key "items"`. The quote controller already relaxed its line-item validation for a quick add, but the repository iterated the items unconditionally, so a quote started without products was never created. Updating a quote already allowed for this; creating one now does too.
