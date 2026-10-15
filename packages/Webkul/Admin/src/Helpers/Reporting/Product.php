@@ -36,6 +36,10 @@ class Product extends AbstractReporting
             ->select('*')
             ->addSelect(DB::raw('SUM('.$tablePrefix.'lead_products.amount) as revenue'))
             ->whereBetween('leads.closed_at', [$this->startDate, $this->endDate])
+            ->when(
+                ($userIds = bouncer()->getAuthorizedUserIds()) !== null,
+                fn ($query) => $query->whereIn('leads.user_id', $userIds)
+            )
             ->having(DB::raw('SUM('.$tablePrefix.'lead_products.amount)'), '>', 0)
             ->groupBy('product_id')
             ->orderBy('revenue', 'DESC')

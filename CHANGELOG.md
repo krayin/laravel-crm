@@ -4,10 +4,6 @@ This changelog consists of the bug & security fixes and new features being inclu
 
 ## **v2.2.7 (XX of XX 202X)**
 
-* [security] Fixed a record's activity timeline ignoring the reader's data scope. The timeline was built from the id in the url alone, so a user restricted to their own or their group's records could still read another user's activity notes and, for leads and people, the subject, body and recipients of their correspondence — content the record's own page and the mailbox both already refused to show them. The timeline is now held to the same scope as the record it belongs to. Products and warehouses are unaffected: they belong to no one and are not scoped anywhere else either.
-
-* [security] Fixed a web form submission matching another visitor's contact through a wildcard in the submitted address. The lookup is exact, so an address is matched as itself rather than as a pattern.
-
 * [fixed] Fixed a web form submission creating a duplicate contact when the address differed only in case. The lookup compared the stored json byte for byte, so `Person@Example.com` matched nobody and a second contact was created for the same person — which the unique id built from that address then rejected, answering the visitor with a server error. The address is now matched without regard to case.
 
 * [fixed] Fixed an empty web form submission answering with a server error. The rules are derived from the fields the payload names, so a submission naming none was validated against nothing and failed on the database instead. A submission must now carry a contact, and an address is required of it when no other way to reach them is given.
