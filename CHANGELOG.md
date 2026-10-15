@@ -4,8 +4,6 @@ This changelog consists of the bug & security fixes and new features being inclu
 
 ## **v2.2.7 (XX of XX 202X)**
 
-* [security] Fixed a web form submission matching another visitor's contact through a wildcard in the submitted address. The lookup is exact, so an address is matched as itself rather than as a pattern.
-
 * [fixed] Fixed a web form submission creating a duplicate contact when the address differed only in case. The lookup compared the stored json byte for byte, so `Person@Example.com` matched nobody and a second contact was created for the same person — which the unique id built from that address then rejected, answering the visitor with a server error. The address is now matched without regard to case.
 
 * [fixed] Fixed an empty web form submission answering with a server error. The rules are derived from the fields the payload names, so a submission naming none was validated against nothing and failed on the database instead. A submission must now carry a contact, and an address is required of it when no other way to reach them is given.
@@ -23,6 +21,8 @@ This changelog consists of the bug & security fixes and new features being inclu
 * [feature] Added a keyboard shortcut and modal to the mega search. Pressing `Ctrl + K` anywhere in the admin opens the search as a modal with the field already focused, so it is reachable without first finding the header; `Escape` or a click outside closes it. 
 
 * [feature] Added a per-section record count to the mega search. Each tab in the search dropdown now shows how many records that section holds for the term being searched, so the whole result set is visible without opening every tab in turn. A section that has not been counted yet shows no badge rather than a zero, so an in-flight request is never mistaken for an empty result.
+
+* [fixed] Fixed the lookup field's search returning the same unfiltered list whatever was typed, so a person could not be found when creating a quote. Three faults combined: the debounce directive compared its own delay against its previous value to decide whether to restart the timer, so after the first keystroke the search term was never committed; a keystroke handler ran the search in parallel with the debounce and so always queried with the term as it stood before the key, overwriting the matching results with the unfiltered list; and the results the server had already filtered were filtered a second time in the browser, hiding matches beyond the first few. The term is now committed once, the search runs only when it changes, a late response can no longer replace a newer one, and each debounced field keeps its own timer.
 
 * [security] Improved in Security.
 

@@ -7,6 +7,7 @@ use Webklex\IMAP\Facades\Client;
 use Webklex\IMAP\Support\FolderCollection;
 use Webklex\PHPIMAP\Message;
 use Webkul\Email\Enums\SupportedFolderEnum;
+use Webkul\Email\Helpers\HtmlFilter;
 use Webkul\Email\InboundEmailProcessor\Contracts\InboundEmailProcessor;
 use Webkul\Email\Repositories\AttachmentRepository;
 use Webkul\Email\Repositories\EmailRepository;
@@ -25,7 +26,8 @@ class WebklexImapEmailProcessor implements InboundEmailProcessor
      */
     public function __construct(
         protected EmailRepository $emailRepository,
-        protected AttachmentRepository $attachmentRepository
+        protected AttachmentRepository $attachmentRepository,
+        protected HtmlFilter $htmlFilter
     ) {
         $this->client = Client::make($this->getDefaultConfigs());
 
@@ -135,7 +137,14 @@ class WebklexImapEmailProcessor implements InboundEmailProcessor
             'from' => $attributes['from']->first()->mail,
             'subject' => $attributes['subject']->first(),
             'name' => $attributes['from']->first()->personal,
-            'reply' => $message->bodies['html'] ?? $message->bodies['text'],
+            /**
+             * Filtered on the way in, as the other inbound processor's bodies are: the message
+             * comes from outside the installation, and the mailbox renders what is stored.
+             */
+            'reply' => $this->htmlFilter->process(
+                $message->bodies['html'] ?? $message->bodies['text'] ?? '',
+                ''
+            ),
             'is_read' => (int) $message->flags()->has('seen'),
             'folders' => [$folderName],
             'reply_to' => $this->getEmailsByAttributeCode($attributes, 'to'),

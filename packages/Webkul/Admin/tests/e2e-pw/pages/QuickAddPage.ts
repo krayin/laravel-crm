@@ -180,7 +180,19 @@ export class QuickAddPage extends CoreLocators {
         await this.quickAddMailReplyToInput.press("Enter");
 
         await this.quickAddMailSubjectInput.fill(mailData.subject);
-        await this.quickAddMailEditorFrame.locator("body").fill(mailData.body);
+
+        /**
+         * The body is required, and it is typed into the editor's own document rather than a form
+         * field: the editor copies it across to the field the form submits, so the text is waited
+         * for in the frame before the modal is submitted.
+         */
+        const editorBody = this.quickAddMailEditorFrame.locator("body");
+
+        await editorBody.waitFor({ state: "visible" });
+
+        await editorBody.fill(mailData.body);
+
+        await expect(editorBody).toContainText(mailData.body);
 
         await this.submitQuickAdd();
 

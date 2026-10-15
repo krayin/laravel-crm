@@ -60,6 +60,10 @@ class Person extends AbstractReporting
             ->select('*', 'persons.id as id')
             ->addSelect(DB::raw('SUM('.$tablePrefix.'leads.lead_value) as revenue'))
             ->whereBetween('leads.closed_at', [$this->startDate, $this->endDate])
+            ->when(
+                ($userIds = bouncer()->getAuthorizedUserIds()) !== null,
+                fn ($query) => $query->whereIn('leads.user_id', $userIds)
+            )
             ->having(DB::raw('SUM('.$tablePrefix.'leads.lead_value)'), '>', 0)
             ->groupBy('person_id')
             ->orderBy('revenue', 'DESC')

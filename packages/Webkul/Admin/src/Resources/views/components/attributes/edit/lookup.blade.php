@@ -101,7 +101,6 @@
                         class="w-full rounded border border-gray-300 px-2.5 py-2 text-sm font-normal text-gray-800 transition-all hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 dark:focus:border-gray-400"
                         placeholder="@lang('admin::app.components.attributes.lookup.search')"
                         ref="searchInput"
-                        @keyup="search"
                     />
 
                     <!-- Search Icon (absolute positioned) -->
@@ -119,7 +118,7 @@
                 <!-- Results List -->
                 <ul class="max-h-40 divide-y divide-gray-100 overflow-y-auto">
                     <li
-                        v-for="item in filteredResults"
+                        v-for="item in searchedResults"
                         :key="item.id"
                         class="flex cursor-pointer gap-2 p-2 transition-colors hover:bg-blue-100 dark:text-gray-300 dark:hover:bg-gray-900"
                         @click="handleResult(item)"
@@ -128,7 +127,7 @@
                         <span>@{{ item.name }}</span>
                     </li>
 
-                    <template v-if="filteredResults.length === 0">
+                    <template v-if="! isSearching && searchedResults.length === 0">
                         <li class="px-4 py-2 text-center text-gray-500">
                             @lang('admin::app.components.attributes.lookup.no-result-found')
                         </li>
@@ -174,6 +173,8 @@
                     lookupEntityRoute: `{{ route('admin.settings.attributes.lookup_entity') }}/${this.attribute.lookup_type}`,
 
                     isSearching: false,
+
+                    lastRequestId: 0,
                 };
             },
 
@@ -189,19 +190,6 @@
                 searchTerm(newVal, oldVal) {
                     this.search();
                 },
-            },
-
-            computed: {
-                /**
-                 * Filter the searchedResults based on the search query.
-                 *
-                 * @return {Array}
-                 */
-                filteredResults() {
-                    return this.searchedResults.filter(item =>
-                        item.name.toLowerCase().includes(this.searchTerm.toLowerCase())
-                    );
-                }
             },
 
             methods: {
@@ -240,6 +228,8 @@
                 },
 
                 fetchLookupResults(query = '', limit = null) {
+                    const requestId = ++this.lastRequestId;
+
                     this.isSearching = true;
 
                     const params = { query };
@@ -250,6 +240,10 @@
 
                     this.$axios.get(this.searchRoute, { params })
                         .then(response => {
+                            if (requestId !== this.lastRequestId) {
+                                return;
+                            }
+
                             const data = Array.isArray(response.data)
                                 ? response.data
                                 : [];
@@ -259,9 +253,17 @@
                                 : data;
                         })
                         .catch(error => {
+                            if (requestId !== this.lastRequestId) {
+                                return;
+                            }
+
                             this.searchedResults = [];
                         })
-                        .finally(() => this.isSearching = false);
+                        .finally(() => {
+                            if (requestId === this.lastRequestId) {
+                                this.isSearching = false;
+                            }
+                        });
                 },
 
                 getLookUpEntity() {

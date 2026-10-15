@@ -2,20 +2,20 @@
   "cookies": [
     {
       "name": "XSRF-TOKEN",
-      "value": "eyJpdiI6ImFLSCtIQ2RlY2lRb1BnYzFFZlhvZ1E9PSIsInZhbHVlIjoiNktDZ00ycFBvQ0xUdFY1ajhmVmRBUWlabFVtSXlqYW9ieTgydVdiTUNIQ1lKWjFyV29TRjNEUkloUFIybGl0U0o5Q3QwMFVOUlpDd21HQXd6T0dkSVMxdmo4MnhlbzVOUE5qNm9JU2RqNDQwRG9FZkNJU3FhZmcvSTh6M3FEaVYiLCJtYWMiOiI0YWRjZjk4MTEyMTUwNzgwMmExM2U3OTVlZDgyMTgzNWZjMGUwNWJkMDlkZWQ2NjMzNTg0YjNlMTQ3NTA1ODY0IiwidGFnIjoiIn0%3D",
+      "value": "eyJpdiI6ImlLME1jRmhuQVBkMDdJMDViaGlpQ3c9PSIsInZhbHVlIjoiWTNoRFhtL0ZlSHNyTmJhbUltYm9lWWVycXFtVkR5b0s2Wk8zcUJEMmpvRzB1bDBwam9QVktFMjBQSitTTC9YODhHQ0hIQklnZ0VkTlhNcDhFZ0liQVhPMlArdFZ1QXFBSFZ6UDIrc1JYMWgxb25ETC9NbGhWRTREcC9HUTA0MC8iLCJtYWMiOiI2N2Q3NmJmYmEzZDc0MWY1NGJkMTMyMGI1YTc4MTM3YzI4MmU2N2RlYzFmNmJkYWU4NjdmNmY0MjkwN2VhYzVlIiwidGFnIjoiIn0%3D",
       "domain": "krayin-local.com",
       "path": "/",
-      "expires": 1792048213.488718,
+      "expires": 1792073911.086013,
       "httpOnly": false,
       "secure": false,
       "sameSite": "Lax"
     },
     {
       "name": "krayin_crm_session",
-      "value": "eyJpdiI6Ik5GQUsyeVgxVkc5V1BBY09USi9qT0E9PSIsInZhbHVlIjoieFBkT3V3NXgyZEdvK0dST2VCZEY2THVYWGxXVW1GNUJzSTVzZTM3L1hBT0tmRnJmL0hwbUJjekNNaHlsdnREeVN5TDJtK3UxdnZneFU2N01Xd2NJK1ZaV1NqV1V2MXZZQXpTWEdwZHduaytERmJlZU1uTDYzckFZWStNc1dsMEwiLCJtYWMiOiJmY2U1M2M4M2ExMDkwM2Y3NWM2MTAyODY0YTI2NTNhZDhlY2NjMmNmYjFmZWIwZjQ2ZDIyMDQxN2ZjMjllMzFkIiwidGFnIjoiIn0%3D",
+      "value": "eyJpdiI6InJINUloK0h6NW5OZnFRVHZ1NnArQ0E9PSIsInZhbHVlIjoiWnJFVFdDMWx2M2xRVFZtTS9nWmhzd0VnUHJkY3VFcGtYS2UvcWlEVGtzVlkwYTZoZVMvVjVjM29Qa0R6RTdqV3ZjWlhGekpRQ0NRNXh5U1F1dUhQRG1DS2FMQnB3Y0RCV3QySFcvZDg1SXBVNlA5dFhhWFpTcWx1QTVrOHpKT3YiLCJtYWMiOiI4Y2UwYjE5MDVkODI1MWFlYTRmMjZhOTQ4Zjc4NjYyY2U2ZWM2MWI5MGQ4N2JjYzkxZWNhNTkzY2M2ZGEyYTRhIiwidGFnIjoiIn0%3D",
       "domain": "krayin-local.com",
       "path": "/",
-      "expires": 1792048213.488946,
+      "expires": 1792073911.086103,
       "httpOnly": true,
       "secure": false,
       "sameSite": "Lax"

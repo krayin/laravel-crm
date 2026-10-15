@@ -39,6 +39,42 @@ trait HandlesActivityTimeline
     }
 
     /**
+     * The table holding the record whose timeline this is, when that record has an owner.
+     *
+     * A timeline carries the record's notes and, for leads and people, the subject, body and
+     * recipients of its correspondence — the same content the record's own page and the mailbox
+     * both refuse to show outside the reader's data scope. Naming the table here applies that
+     * scope to the timeline as well.
+     *
+     * Null for a record nobody owns, such as a product or a warehouse: those are shared across
+     * the installation and are not scoped anywhere else either.
+     */
+    protected function timelineOwnerTable(): ?string
+    {
+        return null;
+    }
+
+    /**
+     * Refuse a timeline for a record outside the reader's data scope.
+     */
+    protected function authorizeTimeline($id): void
+    {
+        $table = $this->timelineOwnerTable();
+
+        if (! $table) {
+            return;
+        }
+
+        $ownerId = DB::table($table)->where('id', $id)->value('user_id');
+
+        /**
+         * A record that does not exist, or that nobody owns, is treated as out of scope rather
+         * than open: answering differently for the two would report whether the record exists.
+         */
+        $this->preventUnauthorizedAccess($ownerId ? [$ownerId] : []);
+    }
+
+    /**
      * Display a paginated listing of the record's activity timeline.
      *
      * @param  int  $id
@@ -46,6 +82,8 @@ trait HandlesActivityTimeline
      */
     public function index($id)
     {
+        $this->authorizeTimeline($id);
+
         $type = request()->input('type', 'all');
 
         // Clamp so a crafted request can't defeat pagination and pull the whole history.

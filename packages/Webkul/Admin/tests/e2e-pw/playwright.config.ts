@@ -13,7 +13,12 @@ export const ADMIN_AUTH_STATE_PATH = `${ STATE_DIR_PATH }/admin-auth.json`;
 dotenv.config({ path: path.resolve(__dirname, "../../../../../.env") });
 
 export default defineConfig({
-    testDir: "./tests",
+    /**
+     * Resolved from this file rather than from the directory the command was run in: a relative
+     * path sent Playwright looking for specs beside whatever happened to be the working
+     * directory, which is how an editor or a root-level invocation found none.
+     */
+    testDir: path.resolve(__dirname, "tests"),
 
     /**
      * A failing test should report quickly rather than hold the run for two minutes.

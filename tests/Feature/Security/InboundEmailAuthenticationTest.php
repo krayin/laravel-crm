@@ -45,6 +45,24 @@ function forgedEmail(): string
     ]);
 }
 
+/**
+ * A forged reply: the same message, carrying the headers that attach it to an existing
+ * conversation. Nothing about the body gives it away — the threading is what makes it dangerous.
+ */
+function forgedReplyTo(string $messageId): string
+{
+    return implode("\r\n", [
+        'From: "Chief Executive" <ceo@victim.test>',
+        'To: sales@victim.test',
+        'Subject: Re: Enterprise pricing',
+        'Message-ID: <'.bin2hex(random_bytes(8)).'@attacker.test>',
+        'In-Reply-To: <'.$messageId.'>',
+        'References: <'.$messageId.'>',
+        '',
+        'I approve the revised pricing. Send the contract.',
+    ]);
+}
+
 function inboundParseUrl(): string
 {
     return '/'.trim(config('app.admin_path'), '/').'/mail/inbound-parse';
@@ -64,6 +82,24 @@ it('rejects an inbound parse request that carries the wrong token', function () 
 
     $response = test()->withHeader('X-Inbound-Token', 'not-the-token')
         ->post(inboundParseUrl(), ['email' => forgedEmail()]);
+
+    expect($response->getStatusCode())->toBe(403);
+    expect($this->processorReached)->toBeFalse();
+});
+
+/**
+ * A message naming an existing conversation is refused like any other.
+ *
+ * Threading is decided by the `In-Reply-To` header the sender supplies, so a message accepted
+ * without a token could be attached to a conversation it was never part of — appearing in the
+ * owner's thread as a reply from whoever the forger chose to name.
+ */
+it('rejects a forged reply that names an existing conversation', function () {
+    config(['mail-receiver.inbound_token' => 'the-configured-token']);
+
+    $response = test()->post(inboundParseUrl(), [
+        'email' => forgedReplyTo('genuine-message@victim.test'),
+    ]);
 
     expect($response->getStatusCode())->toBe(403);
     expect($this->processorReached)->toBeFalse();

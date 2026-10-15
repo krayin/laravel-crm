@@ -65,7 +65,7 @@
                             @lang('admin::app.components.datagrid.toolbar.of')
                         </span>
 
-                        <span>
+                        <span data-pagination-total>
                             @{{ available.meta.total }}
                         </span>
                        

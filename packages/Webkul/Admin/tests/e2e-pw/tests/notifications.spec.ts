@@ -241,10 +241,18 @@ test.describe("notifications", () => {
 
         await bell(adminPage).click();
 
-        const box = await adminPage
-            .locator('div[style*="fixed"], div.absolute.top-full')
-            .first()
-            .boundingBox();
+        /**
+         * The panel is waited for rather than measured straight away: it is built when the bell is
+         * opened, and `boundingBox()` on an element that is not there yet waits out the whole test
+         * timeout before reporting anything.
+         */
+        const panel = adminPage
+            .locator('div[style*="position: fixed"], div.absolute.top-full')
+            .first();
+
+        await expect(panel, "the panel should open").toBeVisible();
+
+        const box = await panel.boundingBox();
 
         expect(box, "the panel should be on screen").not.toBeNull();
         expect(box!.x, "the panel should not run off the left edge").toBeGreaterThanOrEqual(0);

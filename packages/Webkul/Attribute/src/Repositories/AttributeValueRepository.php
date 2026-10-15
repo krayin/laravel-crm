@@ -9,9 +9,12 @@ use Illuminate\Support\Facades\Storage;
 use Webkul\Attribute\Contracts\Attribute;
 use Webkul\Attribute\Contracts\AttributeValue;
 use Webkul\Core\Eloquent\Repository;
+use Webkul\Core\Traits\Sanitizer;
 
 class AttributeValueRepository extends Repository
 {
+    use Sanitizer;
+
     /**
      * Create a new repository instance.
      *
@@ -80,9 +83,17 @@ class AttributeValueRepository extends Repository
             }
 
             if ($attribute->type === 'image' || $attribute->type === 'file') {
-                $data[$attribute->code] = $data[$attribute->code] instanceof UploadedFile
-                    ? $data[$attribute->code]->store($data['entity_type'].'/'.$data['entity_id'])
+                $file = $data[$attribute->code] instanceof UploadedFile
+                    ? $data[$attribute->code]
                     : null;
+
+                $data[$attribute->code] = $file
+                    ? $file->store($data['entity_type'].'/'.$data['entity_id'])
+                    : null;
+
+                if ($file && $data[$attribute->code]) {
+                    $this->sanitizeSvg($data[$attribute->code], $file);
+                }
             }
 
             $attributeValue = $this->findOneWhere([

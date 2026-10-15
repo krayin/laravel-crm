@@ -34,11 +34,20 @@ class EmailController extends BaseEmailController
      */
     public function detach($id)
     {
-        Event::dispatch('email.update.before', request()->input('email_id'));
+        $emailId = request()->input('email_id');
+
+        /**
+         * The mail to unlink is named by the request rather than the route, so it is checked
+         * against the acting user's data scope before being written to: without this, a user who
+         * cannot read a lead's correspondence could still cut it loose from the lead.
+         */
+        $this->preventUnauthorizedMailAccess($this->emailRepository->findOrFail($emailId));
+
+        Event::dispatch('email.update.before', $emailId);
 
         $email = $this->emailRepository->update([
             'lead_id' => null,
-        ], request()->input('email_id'));
+        ], $emailId);
 
         Event::dispatch('email.update.after', $email);
 

@@ -30,6 +30,15 @@ class ActivityController extends Controller
     }
 
     /**
+     * The timeline carries the record's notes and correspondence, so it is held to the same data
+     * scope as the record's own page.
+     */
+    protected function timelineOwnerTable(): ?string
+    {
+        return 'leads';
+    }
+
+    /**
      * Emails are linked to the lead through the `lead_id` column.
      */
     protected function timelineEmailColumn(): ?string

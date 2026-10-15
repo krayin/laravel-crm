@@ -85,6 +85,15 @@ class WebForm extends FormRequest
                         $attribute->code.'.*.value' => [$attribute->is_required ? 'required' : 'nullable', new PhoneNumber],
                         $attribute->code.'.*.label' => $attribute->is_required ? 'required' : 'nullable',
                     ];
+                } elseif (in_array($attribute->type, ['file', 'image'], true)) {
+                    $validations[$attribute->code] = [
+                        $attribute->is_required ? 'required' : 'nullable',
+                        'file',
+                        'mimes:'.($attribute->type === 'image'
+                            ? 'bmp,gif,jpeg,jpg,png,svg,webp'
+                            : 'bmp,gif,jpeg,jpg,png,svg,webp,pdf,doc,docx,xls,xlsx,csv,txt'),
+                        'max:2048',
+                    ];
                 } else {
                     $validations[$attribute->code] = [$attribute->is_required ? 'required' : 'nullable'];
 
