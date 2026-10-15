@@ -11,7 +11,7 @@
         "php": "^8.3",
         "barryvdh/laravel-dompdf": "^3.1",
         "diglactic/laravel-breadcrumbs": "^10.0",
-        "enshrined/svg-sanitize": "^0.22.0",
+        "enshrined/svg-sanitize": "^1.0.0",
         "google/apiclient": "^2.18",
         "guzzlehttp/guzzle": "^7.8",
         "khaled.alshamaa/ar-php": "^6.3",
