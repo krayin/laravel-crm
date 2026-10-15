@@ -7,7 +7,7 @@
   },
   "devDependencies": {
     "@fast-csv/format": "^5.0.7",
-    "@playwright/test": "^1.63.0",
+    "@playwright/test": "^1.64.0",
     "axios": "^1.6.4",
     "dotenv": "^18.0.4",
     "fast-csv": "^5.0.7",

@@ -63,7 +63,7 @@ class EmailController extends Controller
      * An unlinked mail returns an empty list: the mailbox itself is shared, so mail that belongs to
      * no lead or person stays available to everyone with mail access.
      */
-    private function emailOwnerIds($email): array
+    protected function emailOwnerIds($email): array
     {
         return array_values(array_filter([
             $email?->lead?->user_id,
@@ -78,7 +78,7 @@ class EmailController extends Controller
      * `preventUnauthorizedAccess()` is not used directly because it denies on an empty owner list,
      * which would make shared, unlinked mail unwritable for restricted users.
      */
-    private function preventUnauthorizedMailAccess($email): void
+    protected function preventUnauthorizedMailAccess($email): void
     {
         $ownerIds = $this->emailOwnerIds($email);
 
@@ -94,7 +94,7 @@ class EmailController extends Controller
      * mail. Mass actions silently skip what is out of scope instead of failing the whole batch,
      * matching the other mass endpoints.
      */
-    private function filterAuthorizedMails($mails)
+    protected function filterAuthorizedMails($mails)
     {
         $userIds = bouncer()->getAuthorizedUserIds();
 

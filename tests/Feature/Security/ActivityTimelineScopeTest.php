@@ -3,6 +3,7 @@
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Webkul\Activity\Models\Activity;
 use Webkul\Contact\Repositories\PersonRepository;
+use Webkul\Email\Models\Email;
 use Webkul\Lead\Models\Lead;
 use Webkul\Product\Models\Product;
 use Webkul\User\Models\Role;
@@ -140,6 +141,50 @@ it('serves the timeline to a user whose scope covers everything', function () {
     expect($response->status())->toBe(200);
 
     expect($response->getContent())->toContain($note);
+});
+
+/**
+ * The timeline carries correspondence as well as notes, and the email entries expose the most:
+ * the subject, the body, and every address the message was sent from and to.
+ */
+it('does not leak a lead\'s correspondence to a user outside its scope', function () {
+    $owner = timelineScopeUser('global');
+
+    $outsider = timelineScopeUser('individual');
+
+    $lead = timelineLeadOwnedBy($owner, 'TIMELINE-NOTE-'.bin2hex(random_bytes(4)));
+
+    $subject = 'CONFIDENTIAL pricing '.bin2hex(random_bytes(4));
+
+    $reply = 'The agreed figure is 48,000 for the year.';
+
+    $correspondent = 'client-'.bin2hex(random_bytes(4)).'@example.invalid';
+
+    Email::create([
+        'subject' => $subject,
+        'reply' => $reply,
+        'source' => 'email',
+        'user_type' => 'admin',
+        'folders' => ['outbox'],
+        'lead_id' => $lead->id,
+        'from' => ['owner@example.invalid'],
+        'reply_to' => [$correspondent],
+        'unique_id' => uniqid().'@example.invalid',
+    ]);
+
+    $response = $this->actingAs($outsider, 'user')
+        ->withHeaders(['X-Requested-With' => 'XMLHttpRequest'])
+        ->get(route('admin.leads.activities.index', $lead->id).'?type=all');
+
+    expect($response->status())->toBe(401);
+
+    /**
+     * Each part is checked separately: a refusal that still carried the correspondent's address
+     * would leak who the record deals with even without the message itself.
+     */
+    expect($response->getContent())->not->toContain($subject)
+        ->and($response->getContent())->not->toContain($reply)
+        ->and($response->getContent())->not->toContain($correspondent);
 });
 
 /**

@@ -22,6 +22,8 @@ This changelog consists of the bug & security fixes and new features being inclu
 
 * [feature] Added a per-section record count to the mega search. Each tab in the search dropdown now shows how many records that section holds for the term being searched, so the whole result set is visible without opening every tab in turn. A section that has not been counted yet shows no badge rather than a zero, so an in-flight request is never mistaken for an empty result.
 
+* [fixed] Fixed the lookup field's search returning the same unfiltered list whatever was typed, so a person could not be found when creating a quote. Three faults combined: the debounce directive compared its own delay against its previous value to decide whether to restart the timer, so after the first keystroke the search term was never committed; a keystroke handler ran the search in parallel with the debounce and so always queried with the term as it stood before the key, overwriting the matching results with the unfiltered list; and the results the server had already filtered were filtered a second time in the browser, hiding matches beyond the first few. The term is now committed once, the search runs only when it changes, a late response can no longer replace a newer one, and each debounced field keeps its own timer.
+
 * [security] Improved in Security.
 
 ## **v2.2.6 (10th of Sept 2026)**
