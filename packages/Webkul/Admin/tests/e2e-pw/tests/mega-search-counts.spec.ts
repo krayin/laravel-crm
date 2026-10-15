@@ -1,5 +1,4 @@
 import { expect, test } from "../fixtures/AdminFixtures";
-import { csrfHeaders } from "../utils/acl";
 
 /**
  * The mega search dropdown shows a per-section record count.
@@ -32,42 +31,65 @@ test.describe("mega search section counts", () => {
      */
     const term = "megasearchseed";
 
-    async function seedSearchableRecords(adminPage: any) {
-        /**
-         * The admin layout renders no csrf meta tag; Laravel accepts the `XSRF-TOKEN` cookie
-         * echoed back as a header, which is how the panel's own requests pass verification.
-         */
-        const headers = await csrfHeaders(adminPage.context());
+    /**
+     * Post a form from inside the page, so the browser attaches the session's current csrf token.
+     *
+     * Reading the token through the api context worked only while it was fresh: the saved sign-in
+     * state carries one from an earlier session, and a stale token is refused — leaving the record
+     * uncreated and the assertions searching for something that was never there.
+     */
+    async function postForm(adminPage: any, path: string, fields: Record<string, string>) {
+        return adminPage.evaluate(
+            async ([url, values]: [string, Record<string, string>]) => {
+                const body = new FormData();
 
+                Object.entries(values).forEach(([key, value]) => body.append(key, value));
+
+                const token = decodeURIComponent(
+                    document.cookie
+                        .split("; ")
+                        .find((entry) => entry.startsWith("XSRF-TOKEN="))
+                        ?.split("=")[1] ?? ""
+                );
+
+                const response = await fetch(url, {
+                    method: "POST",
+                    headers: {
+                        "X-Requested-With": "XMLHttpRequest",
+                        "X-XSRF-TOKEN": token,
+                    },
+                    credentials: "same-origin",
+                    body,
+                });
+
+                return response.status;
+            },
+            [path, fields]
+        );
+    }
+
+    async function seedSearchableRecords(adminPage: any) {
         const unique = Date.now();
 
-        await adminPage.request.post("admin/contacts/persons/create", {
-            failOnStatusCode: false,
-            headers,
-            form: {
+        await postForm(adminPage, "/admin/contacts/persons/create", {
                 name: `${term} person ${unique}`,
                 "emails[0][value]": `${term}${unique}@example.invalid`,
                 "emails[0][label]": "work",
                 entity_type: "persons",
-            },
-        });
+            });
 
         /**
          * A lead as well as a person: the leads section is the one the explore-all link belongs to,
          * and a section holding nothing offers no link to follow.
          */
-        await adminPage.request.post("admin/leads/create", {
-            failOnStatusCode: false,
-            headers,
-            form: {
+        await postForm(adminPage, "/admin/leads/create", {
                 title: `${term} lead ${unique}`,
                 description: "seeded for the mega search counts",
                 lead_value: "1000",
                 "person[name]": `${term} contact ${unique}`,
                 "person[emails][0][value]": `${term}lead${unique}@example.invalid`,
                 "person[emails][0][label]": "work",
-            },
-        });
+            });
     }
 
     test.beforeEach(async ({ adminPage }) => {
