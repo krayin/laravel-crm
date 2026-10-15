@@ -68,12 +68,14 @@ function makeOwnedLeadWithProduct(User $owner): Lead
         'emails' => [['value' => 'lead-contact-'.bin2hex(random_bytes(4)).'@example.invalid', 'label' => 'work']],
     ]);
 
+    $pipeline = securityTestPipeline();
+
     $lead = Lead::create([
         'title' => 'Owned Lead '.bin2hex(random_bytes(4)),
         'user_id' => $owner->id,
         'person_id' => $person->id,
-        'lead_pipeline_id' => 1,
-        'lead_pipeline_stage_id' => 1,
+        'lead_pipeline_id' => $pipeline->id,
+        'lead_pipeline_stage_id' => $pipeline->stages()->value('id'),
     ]);
 
     $product = Product::create([

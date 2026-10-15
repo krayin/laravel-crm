@@ -342,6 +342,8 @@ return [
             'header' => [
                 'mega-search' => [
                     'title' => 'Mega Search',
+                    'shortcut-hint' => 'Start typing to search, or press the shortcut shown in the header.',
+                    'empty-results' => 'No records match your search.',
                     'tabs' => [
                         'leads' => 'Leads',
                         'quotes' => 'Quotes',
@@ -685,6 +687,33 @@ return [
                 'add-more' => 'Add More',
                 'save' => 'Save',
             ],
+        ],
+    ],
+    'notifications' => [
+        'title' => 'Notifications',
+        'empty' => 'No notifications yet.',
+        'mark-all-as-read' => 'Mark all as read',
+        'marked-as-read' => 'Notification marked as read.',
+        'marked-all-as-read' => 'All notifications marked as read.',
+        'not-found' => 'Notification not found.',
+        'view-all' => 'View all',
+        'fallback' => [
+            'missing-keys' => 'Falling back to polling: :driver is selected but :keys is not set.',
+            'broadcast-mismatch' => 'Falling back to polling: :driver is selected but BROADCAST_DRIVER is \':broadcast\'.',
+        ],
+        'titles' => [
+            'lead-created' => 'New lead created',
+            'lead-updated' => 'Lead updated',
+            'quote-created' => 'New quote created',
+            'quote-updated' => 'Quote updated',
+            'person-created' => 'New contact added',
+            'person-updated' => 'Contact updated',
+            'product-created' => 'New product added',
+            'product-updated' => 'Product updated',
+            'activity-created' => 'New activity scheduled',
+            'activity-updated' => 'Activity updated',
+            'email-created' => 'New email received',
+            'email-updated' => 'Email updated',
         ],
     ],
     'settings' => [
@@ -2117,6 +2146,23 @@ return [
                             'custom' => 'Custom',
                         ],
                     ],
+                    'notifications' => [
+                        'title' => 'Notification Configurations',
+                        'info' => 'Choose whether users are notified about new records, and how those notifications reach the browser.',
+                        'enabled' => 'Enable Notifications',
+                        'enabled-info' => 'Notify users about new leads, quotes, contacts, products, activities and mail within their data scope.',
+                        'driver' => 'Delivery Method',
+                        'driver-info' => 'Polling needs no extra services and works on any hosting. Reverb and Pusher deliver instantly but each need a WebSocket server running.',
+                        'drivers' => [
+                            'polling' => 'Polling (no extra setup)',
+                            'reverb' => 'Laravel Reverb (self-hosted WebSocket)',
+                            'pusher' => 'Pusher (hosted WebSocket)',
+                        ],
+                        'poll-interval' => 'Check Every (seconds)',
+                        'poll-interval-info' => 'How often the browser asks for new notifications. A shorter interval feels faster but makes more requests.',
+                        'sound' => 'Play Sound',
+                        'sound-info' => 'Play a short sound when a new notification arrives.',
+                    ],
                     'menu-color' => [
                         'brand-color' => 'Brand Color',
                         'info' => 'We can change the menu items colors here.',
@@ -2174,6 +2220,22 @@ return [
             'start-date' => 'Start Date',
             'end-date' => 'End Date',
             'export-pdf' => 'Export PDF',
+
+            /**
+             * Shortcuts on the dashboard's date range picker. Each is resolved against today when
+             * it is clicked, so the labels describe a period rather than a fixed range.
+             */
+            'date-presets' => [
+                'today' => 'Today',
+                'yesterday' => 'Yesterday',
+                'last-30-days' => 'Last 30 Days',
+                'this-week' => 'This Week',
+                'this-month' => 'This Month',
+                'last-month' => 'Last Month',
+                'last-3-months' => 'Last 3 Months',
+                'last-6-months' => 'Last 6 Months',
+                'this-year' => 'This Year',
+            ],
             'pdf' => [
                 'title' => 'Dashboard Report',
                 'filtered-date' => 'Filtered Date',

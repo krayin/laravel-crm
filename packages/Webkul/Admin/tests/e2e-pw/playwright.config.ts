@@ -15,9 +15,21 @@ dotenv.config({ path: path.resolve(__dirname, "../../../../../.env") });
 export default defineConfig({
     testDir: "./tests",
 
-    timeout: 120 * 1000,
+    /**
+     * A failing test should report quickly rather than hold the run for two minutes.
+     *
+     * The budget covers fixture setup as well as the test body: `adminPage` opens a browser
+     * context, navigates to the dashboard and may sign in, which on its own can take several
+     * seconds. Below about 30s that setup alone starts timing out, so healthy tests fail for a
+     * reason that has nothing to do with what they assert.
+     */
+    timeout: 30 * 1000,
 
-    expect: { timeout: 20 * 1000 },
+    /**
+     * Kept well below the test timeout so a failed assertion surfaces its own message and locator
+     * rather than being cut off by the test timeout, which reports nothing about what was expected.
+     */
+    expect: { timeout: 7 * 1000 },
 
     outputDir: "./test-results",
 

@@ -884,8 +884,20 @@ export function generateCampaignName() {
     return `${prefix} ${subject} ${Date.now()}`;
 }
 
+/**
+ * A webhook endpoint the application will accept.
+ *
+ * The host is a reserved example domain rather than an invented one: webhook endpoints are checked
+ * against the addresses their host resolves to, so that an internal service cannot be reached
+ * through one, and a made-up name resolves to nothing and is refused. Only the path varies, which
+ * is what keeps each generated endpoint distinct.
+ */
 export function generateUniqueWebhookUrl() {
-    return `${generateHostname()}/webhook/${Date.now()}${Math.floor(Math.random() * 1000)}`;
+    const domains = ["example.com", "example.net", "example.org"];
+
+    const domain = domains[Math.floor(Math.random() * domains.length)];
+
+    return `https://${domain}/webhook/${Date.now()}${Math.floor(Math.random() * 1000)}`;
 }
 
 export function generateDate(end = new Date(new Date().setFullYear(new Date().getFullYear() + 1))) {

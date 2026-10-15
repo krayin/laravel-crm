@@ -219,6 +219,26 @@ return [
             ],
         ],
     ], [
+        'key' => 'general.settings.notifications',
+        'name' => 'admin::app.configuration.index.general.settings.notifications.title',
+        'info' => 'admin::app.configuration.index.general.settings.notifications.info',
+        'sort' => 5,
+        'fields' => [
+            [
+                'name' => 'enabled',
+                'title' => 'admin::app.configuration.index.general.settings.notifications.enabled',
+                'info' => 'admin::app.configuration.index.general.settings.notifications.enabled-info',
+                'type' => 'boolean',
+                'default' => 1,
+            ], [
+                'name' => 'sound',
+                'title' => 'admin::app.configuration.index.general.settings.notifications.sound',
+                'info' => 'admin::app.configuration.index.general.settings.notifications.sound-info',
+                'type' => 'boolean',
+                'default' => 0,
+            ],
+        ],
+    ], [
         'key' => 'general.magic_ai',
         'name' => 'admin::app.configuration.index.magic-ai.title',
         'info' => 'admin::app.configuration.index.magic-ai.info',

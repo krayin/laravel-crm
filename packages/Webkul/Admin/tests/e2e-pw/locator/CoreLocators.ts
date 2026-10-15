@@ -348,7 +348,11 @@ export default class CoreLocators {
         this.organizationCityTextbox = page.getByRole('textbox', { name: 'City' });
         this.organizationAddressTextarea = page.locator('textarea[name="address\\[address\\]"]');
         this.organizationPostcodeTextbox = page.getByRole('textbox', { name: 'Postcode' });
-        this.organizationCountryCombobox = page.getByRole('combobox');
+        /**
+         * By name, as the state select beneath it already is: any combobox on the page also matched
+         * the debug bar's own folder switcher.
+         */
+        this.organizationCountryCombobox = page.locator('select[name="address\\[country\\]"]');
         this.organizationStateSelect = page.locator('select[name="address\\[state\\]"]');
 
         // Textboxes - date or specialized text input
@@ -424,7 +428,7 @@ export default class CoreLocators {
         this.createOrgLink = page.getByRole('link', { name: 'Create Organization' });
         this.orgNameTextbox = page.getByRole('textbox', { name: 'Name *' });
         this.orgAddressTextarea = page.locator('textarea[name="address\\[address\\]"]');
-        this.orgCountryCombobox = page.getByRole('combobox');
+        this.orgCountryCombobox = page.locator('select[name="address\\[country\\]"]');
         this.orgStateSelect = page.locator('select[name="address\\[state\\]"]');
         this.orgCityTextbox = page.getByRole('textbox', { name: 'City' });
         this.orgPostcodeTextbox = page.getByRole('textbox', { name: 'Postcode' });
@@ -439,10 +443,9 @@ export default class CoreLocators {
         this.personEmailTextbox = page.getByRole('textbox', { name: 'Emails *' });
         this.personPhoneTextbox = page.getByRole('textbox', { name: 'Contact Numbers' });
         this.personJobTitleTextbox = page.getByRole('textbox', { name: 'Job Title' });
-        this.personOrgSelectDiv = page.locator('.relative > div > .relative').first();
+        this.personOrgSelectDiv = page.locator('main .relative > div > .relative, form .relative > div > .relative').first();
 
         this.personOrgListItem = (text: string) => page.getByRole('listitem').filter({ hasText: text });
-
 
         // Lead
         this.createLeadButton = page.getByRole('link', { name: 'Create Lead' });
@@ -474,12 +477,10 @@ export default class CoreLocators {
         // Add organization
         this.addOrganizationButton = page.locator('div', { hasText: /^Click to add$/ }).nth(2);
 
-
         this.saveLeadButton = page.getByRole('button', { name: 'Save' });
         this.organizationCreateSuccessMessage = page.getByText('Organization created successfully');
 
         // General
-
         this.leadSuccessToast = page.getByText('Success', { exact: true });
         this.editLeadButton = page.getByRole('link', { name: '' }).first();
         this.listViewButton = page.getByRole('link', { name: '' });
@@ -489,7 +490,6 @@ export default class CoreLocators {
         ).first();
         this.searchInputField = page.getByRole("textbox", { name: "Search..." });
         this.searchInputExact = page.getByRole("textbox", { name: "Search", exact: true });
-
 
         // Tabs
         this.mailButton = page.getByRole('button', { name: ' Mail' });
@@ -523,7 +523,6 @@ export default class CoreLocators {
 
         // Validation message
         this.expectedCloseDateMustBeDateAfter = page.getByText('The expected close date must be a date after');
-
 
         // Other
         this.appLocator = page.locator("#app");
@@ -586,12 +585,10 @@ export default class CoreLocators {
     async massDelete() {
         await this.multiSelectCheckbox.click();
         if(await this.deleteButton.isVisible())  {
-        await this.deleteButton.click();
-        await this.agreeButton.click();
+            await this.deleteButton.click();
+            await this.agreeButton.click();
         }
 
         await expect(this.noRecordsAvailable).toBeVisible();
-
     }
-
 }

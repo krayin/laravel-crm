@@ -101,25 +101,35 @@ class WebForm extends FormRequest
                     }
                 }
 
-                if ($attribute->is_unique) {
-                    array_push($validations[in_array($attribute->type, ['email', 'phone'])
-                        ? $attribute->code.'.*.value'
-                        : $attribute->code
-                    ], function ($field, $value, $fail) use ($attribute, $entityType) {
-                        if (! $this->attributeValueRepository->isValueUnique(
-                            $entityType == 'persons' ? request('persons.id') : null,
-                            $attribute->entity_type,
-                            $attribute,
-                            request($field)
-                        )
-                        ) {
-                            $fail('The value has already been taken.');
-                        }
-                    });
-                }
-
+                /**
+                 * Uniqueness is deliberately not enforced on this route.
+                 *
+                 * The submission is unauthenticated and unthrottled, so a rule that answers "this
+                 * value already exists" turns the endpoint into an oracle: a caller can walk a list
+                 * of addresses or phone numbers and learn which ones belong to the CRM's contacts.
+                 * A repeat value here is a returning visitor rather than an error — the controller
+                 * resolves them by email and merges the submission into that contact — so the check
+                 * is dropped instead of being reported. The admin forms keep it.
+                 */
                 $this->rules = array_merge($this->rules, $validations);
             }
+        }
+
+        /**
+         * A submission has to carry a contact.
+         *
+         * The rules above are derived from the fields the payload names, so an empty body produced
+         * no rules at all: it passed validation untouched and failed instead on the database, as a
+         * server error, while trying to store a contact with nothing in it.
+         *
+         * Only the contact itself is required. A form may collect a phone number and no address,
+         * so an email is demanded only once the payload offers one — and the loop above has
+         * already given it the `email` rule in that case.
+         */
+        $this->rules['persons'] = ['required', 'array'];
+
+        if (blank(request('persons.emails.0.value')) && blank(request('persons.contact_numbers.0.value'))) {
+            $this->rules['persons.emails.0.value'] = ['required', 'email'];
         }
 
         return $this->rules;

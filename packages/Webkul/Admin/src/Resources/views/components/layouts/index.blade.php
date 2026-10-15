@@ -41,6 +41,22 @@
         "
     >
 
+    {{--
+        Broadcasting settings for the javascript client, rendered only when a socket driver is
+        fully configured. Nothing is baked into the asset bundle, so rotating a key or switching
+        driver takes effect on the next page load; the values here are the ones a client must
+        present to subscribe, never the application secret.
+    --}}
+    @if ($broadcasting = \Webkul\Admin\Services\NotificationDriver::clientConfig())
+        <meta
+            name="broadcasting"
+            content="{{ json_encode($broadcasting) }}"
+        >
+
+        {{-- Echo and its websocket client are only fetched when there is a socket to open. --}}
+        {{ vite()->set(['src/Resources/assets/js/echo.js']) }}
+    @endif
+
     @stack('meta')
 
     {{

@@ -342,6 +342,8 @@ return [
             'header' => [
                 'mega-search' => [
                     'title' => 'メガ検索',
+                    'shortcut-hint' => '入力して検索するか、ヘッダーに表示されているショートカットを押してください。',
+                    'empty-results' => '検索に一致するレコードはありません。',
                     'tabs' => [
                         'leads' => 'リード',
                         'quotes' => '見積',
@@ -685,6 +687,33 @@ return [
                 'add-more' => 'さらに追加',
                 'save' => '保存',
             ],
+        ],
+    ],
+    'notifications' => [
+        'title' => '通知',
+        'empty' => '通知はまだありません。',
+        'mark-all-as-read' => 'すべて既読にする',
+        'marked-as-read' => '通知を既読にしました。',
+        'marked-all-as-read' => 'すべての通知を既読にしました。',
+        'not-found' => '通知が見つかりません。',
+        'view-all' => 'すべて表示',
+        'fallback' => [
+            'missing-keys' => 'ポーリングに戻ります：:driver が選択されていますが :keys が設定されていません。',
+            'broadcast-mismatch' => 'ポーリングに戻ります：:driver が選択されていますが BROADCAST_DRIVER は \':broadcast\' です。',
+        ],
+        'titles' => [
+            'lead-created' => '新しいリードが作成されました',
+            'lead-updated' => 'リードが更新されました',
+            'quote-created' => '新しい見積が作成されました',
+            'quote-updated' => '見積が更新されました',
+            'person-created' => '新しい連絡先が追加されました',
+            'person-updated' => '連絡先が更新されました',
+            'product-created' => '新しい商品が追加されました',
+            'product-updated' => '商品が更新されました',
+            'activity-created' => '新しい活動が予定されました',
+            'activity-updated' => '活動が更新されました',
+            'email-created' => '新しいメールを受信しました',
+            'email-updated' => 'メールが更新されました',
         ],
     ],
     'settings' => [
@@ -2117,6 +2146,23 @@ return [
                             'custom' => 'カスタム',
                         ],
                     ],
+                    'notifications' => [
+                        'title' => '通知の設定',
+                        'info' => '新しいレコードについてユーザーに通知するかどうか、またその通知をブラウザへどのように届けるかを選択します。',
+                        'enabled' => '通知を有効にする',
+                        'enabled-info' => '各ユーザーのデータ範囲内で、新しいリード、見積、連絡先、商品、活動、メールについて通知します。',
+                        'driver' => '配信方法',
+                        'driver-info' => 'ポーリングは追加のサービスを必要とせず、どのホスティングでも動作します。Reverb と Pusher は即時に配信しますが、どちらも WebSocket サーバーの稼働が必要です。',
+                        'drivers' => [
+                            'polling' => 'ポーリング（追加設定不要）',
+                            'reverb' => 'Laravel Reverb（セルフホスト型 WebSocket）',
+                            'pusher' => 'Pusher（ホスト型 WebSocket）',
+                        ],
+                        'poll-interval' => '確認間隔（秒）',
+                        'poll-interval-info' => 'ブラウザが新しい通知を要求する頻度です。間隔を短くすると速く感じられますが、リクエストは増えます。',
+                        'sound' => '音を鳴らす',
+                        'sound-info' => '新しい通知が届いたときに短い音を鳴らします。',
+                    ],
                     'menu-color' => [
                         'brand-color' => 'ブランドカラー',
                         'info' => 'メニュー項目の色をここで変更できます。',
@@ -2171,6 +2217,17 @@ return [
     'dashboard' => [
         'index' => [
             'title' => 'ダッシュボード',
+            'date-presets' => [
+                'today' => '今日',
+                'yesterday' => '昨日',
+                'last-30-days' => '過去30日間',
+                'this-week' => '今週',
+                'this-month' => '今月',
+                'last-month' => '先月',
+                'last-3-months' => '過去3ヶ月',
+                'last-6-months' => '過去6ヶ月',
+                'this-year' => '今年',
+            ],
             'start-date' => '開始日',
             'end-date' => '終了日',
             'revenue' => [

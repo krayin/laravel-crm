@@ -2,6 +2,30 @@
 
 This changelog consists of the bug & security fixes and new features being included in the releases listed below.
 
+## **v2.2.7 (XX of XX 202X)**
+
+* [security] Fixed a web form submission matching another visitor's contact through a wildcard in the submitted address. The lookup is exact, so an address is matched as itself rather than as a pattern.
+
+* [fixed] Fixed a web form submission creating a duplicate contact when the address differed only in case. The lookup compared the stored json byte for byte, so `Person@Example.com` matched nobody and a second contact was created for the same person — which the unique id built from that address then rejected, answering the visitor with a server error. The address is now matched without regard to case.
+
+* [fixed] Fixed an empty web form submission answering with a server error. The rules are derived from the fields the payload names, so a submission naming none was validated against nothing and failed on the database instead. A submission must now carry a contact, and an address is required of it when no other way to reach them is given.
+
+* [feature] Added quotes to Quick Add. A quote can now be started from the header alongside leads, people, organizations and products, carrying the subject, owner, person, billing address, total and expiry; the products are added afterwards on the quote's own page. The option appears for users whose role grants the new `quotes.create.quick-create` permission.
+
+* [fixed] Fixed creating a quote without line items failing with `Undefined array key "items"`. The quote controller already relaxed its line-item validation for a quick add, but the repository iterated the items unconditionally, so a quote started without products was never created. Updating a quote already allowed for this; creating one now does too.
+
+* [fixed] Fixed the leads settings control moving when switching between the kanban and table views.
+
+* [feature] Added notifications. A bell in the header, beside the dark mode toggle, reports new leads, quotes, contacts, products, activities and mail as they are created, including leads arriving from a web form. Each user is told only about records their own data scope covers: an administrator sees everything, a user restricted to their group sees that group's records, and an individual user sees only their own. 
+
+* [feature] Replaced the dashboard's pair of start and end date inputs with a single range control. Choosing a period such as "last 30 days" or "this month" previously meant picking two dates and knowing today's, and neither input showed the range as a whole. The control now carries both ends on its face and opens a panel holding the common periods beside a two-month calendar, so a range crossing a month boundary is picked in one go. Translations were added for all supported locales.
+
+* [feature] Added a keyboard shortcut and modal to the mega search. Pressing `Ctrl + K` anywhere in the admin opens the search as a modal with the field already focused, so it is reachable without first finding the header; `Escape` or a click outside closes it. 
+
+* [feature] Added a per-section record count to the mega search. Each tab in the search dropdown now shows how many records that section holds for the term being searched, so the whole result set is visible without opening every tab in turn. A section that has not been counted yet shows no badge rather than a zero, so an in-flight request is never mistaken for an empty result.
+
+* [security] Improved in Security.
+
 ## **v2.2.6 (10th of Sept 2026)**
 
 * [security] Improved in Security.

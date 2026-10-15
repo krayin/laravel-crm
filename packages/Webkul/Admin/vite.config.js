@@ -6,8 +6,6 @@ import path from "path";
 export default defineConfig(({ mode }) => {
     const envDir = "../../../";
 
-    Object.assign(process.env, loadEnv(mode, envDir));
-
     return {
         build: {
             emptyOutDir: true,
@@ -32,6 +30,7 @@ export default defineConfig(({ mode }) => {
                     "src/Resources/assets/css/app.css",
                     "src/Resources/assets/js/app.js",
                     "src/Resources/assets/js/chart.js",
+                    "src/Resources/assets/js/echo.js",
                 ],
                 refresh: true,
             }),

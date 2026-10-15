@@ -47,6 +47,11 @@ return [
         'route' => ['admin.quotes.create', 'admin.quotes.store'],
         'sort' => 1,
     ], [
+        'key' => 'quotes.create.quick-create',
+        'name' => 'admin::app.acl.quick_add',
+        'route' => ['admin.quotes.create', 'admin.quotes.store'],
+        'sort' => 1,
+    ], [
         'key' => 'quotes.mail',
         'name' => 'admin::app.acl.mail',
         'route' => ['admin.quotes.mail', 'admin.leads.quotes.mail'],

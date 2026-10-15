@@ -210,10 +210,20 @@ export function expectAllowed(response: APIResponse, label: string): void {
 
 /**
  * Close every session opened by a test, tolerating one that failed to open.
+ *
+ * A close error is swallowed on purpose. With `trace: "retain-on-failure"` several contexts share
+ * one artifact directory, and closing them in turn races Playwright's own trace writer — the loser
+ * throws `ENOENT` on a recording file that has already been moved. That is teardown noise: it says
+ * nothing about the behaviour under test, but thrown from here it fails a test whose assertions
+ * all passed, and masks the real result.
  */
 export async function closeSessions(...sessions: Array<Session | undefined>): Promise<void> {
     for (const session of sessions) {
-        await session?.context.close();
+        try {
+            await session?.context.close();
+        } catch {
+            // The context is going away regardless; a cleanup failure is not a test failure.
+        }
     }
 }
 

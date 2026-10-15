@@ -19,7 +19,7 @@
         >
             <div
                 class="flex h-[100vh] items-center justify-center"
-                style="background-color: {{ $webForm->background_color }}"
+                style="background-color: @vueSafe($webForm->background_color)"
             >
                 <div class="flex flex-col items-center gap-5">
                     <!-- Logo -->
@@ -39,16 +39,16 @@
 
                     <h1
                         class="text-2xl font-bold"
-                        style="color: {{ $webForm->form_title_color }} !important;"
+                        style="color: @vueSafe($webForm->form_title_color) !important;"
                     >
-                        {{ $webForm->title }}
+                        @vueSafe($webForm->title)
                     </h1>
 
-                    <p class="mt-2 text-base text-gray-600">{{ $webForm->description }}</p>
+                    <p class="mt-2 text-base text-gray-600">@vueSafe($webForm->description)</p>
 
                     <div
                         class="box-shadow flex min-w-[300px] flex-col rounded-lg border border-gray-300 bg-white p-4 dark:bg-gray-900"
-                        style="background-color: {{ $webForm->form_background_color }}"
+                        style="background-color: @vueSafe($webForm->form_background_color)"
                     >
                         {!! view_render_event('web_forms.web_forms.form_controls.before', ['webForm' => $webForm]) !!}
 
@@ -70,7 +70,7 @@
                                         :title="$webForm->submit_button_label"
                                         ::loading="isStoring"
                                         ::disabled="isStoring"
-                                        style="background-color: {{ $webForm->form_submit_button_color }} !important"
+                                        style="background-color: @vueSafe($webForm->form_submit_button_color) !important"
                                     />
                                 </div>
                             </form>

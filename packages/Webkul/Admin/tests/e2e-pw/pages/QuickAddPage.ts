@@ -177,6 +177,8 @@ export class QuickAddPage extends CoreLocators {
         await this.selectQuickAddTab("Email");
 
         await this.quickAddMailReplyToInput.fill(mailData.replyTo);
+        await this.quickAddMailReplyToInput.press("Enter");
+
         await this.quickAddMailSubjectInput.fill(mailData.subject);
         await this.quickAddMailEditorFrame.locator("body").fill(mailData.body);
 

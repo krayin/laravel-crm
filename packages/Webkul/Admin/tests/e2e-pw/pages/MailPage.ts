@@ -9,9 +9,16 @@ export type MailData = {
     subject: string;
     body: string;
 };
+/**
+ * `generateName()` draws from a 12x12 word list, so it repeats a subject roughly every dozen runs
+ * and the mailbox already holds several copies of each. Every step here searches by subject and
+ * acts on the first match, so a repeated subject makes a test trash or delete some earlier run's
+ * mail and then fail to find its own — which is what made the trash tests flaky rather than
+ * broken. The run suffix makes each run's subject its own.
+ */
 export const mailData: MailData = {
     replyTo: generateEmail(),
-    subject: generateName(),
+    subject: `${generateName()} ${Date.now().toString().slice(-6)}${Math.floor(Math.random() * 1000)}`,
     body: generateDescription().slice(0, 50),
 };
 export type emailType = 'bcc' | 'cc' | 'normal'|'both';
@@ -117,11 +124,19 @@ export class MailPage extends CoreLocators {
         await expect(this.page.getByRole('paragraph').filter({ hasText: mailData.subject }).first()).toBeVisible();
     }
     async movedEmailToTrash() {
-        await this.page.waitForTimeout(500);
+        /**
+         * The caller has just searched, so wait for the checkbox the reloaded grid renders rather
+         * than for a fixed delay — clicking it mid-reload selects nothing.
+         */
+        await expect(this.multiSelectCheckbox).toBeVisible();
+
         await this.multiSelectCheckbox.click();
-        await this.page.waitForTimeout(500);
+
         await this.moveToTrashButton.click();
+
         await this.agreeButton.click();
+
+        await expect(this.page.getByText(/deleted successfully/i).first()).toBeVisible();
     }
     async searchEmail(subject: string) {
         await this.searchInputExact.fill(subject);
@@ -129,11 +144,27 @@ export class MailPage extends CoreLocators {
     }
     async deleteEmailFromTrash(subject: string) {
         await this.searchEmail(subject);
-        await this.page.waitForTimeout(500);
+
+        /**
+         * Wait for the row itself rather than a fixed delay: the grid reloads over XHR after the
+         * search, and clicking the select-all checkbox before it settles selects nothing, so the
+         * delete then applies to no record and the caller's assertion fails for the wrong reason.
+         */
+        await expect(
+            this.page.getByRole('paragraph').filter({ hasText: subject }).first()
+        ).toBeVisible();
+
         await this.multiSelectCheckbox.click();
-        await this.page.waitForTimeout(500);
+
         await this.deleteButton.click();
+
         await this.agreeButton.click();
+
+        /**
+         * The delete is confirmed before the caller asserts the row is gone, so the assertion is
+         * not racing the request that removes it.
+         */
+        await expect(this.page.getByText(/deleted successfully/i).first()).toBeVisible();
     }
 
 }

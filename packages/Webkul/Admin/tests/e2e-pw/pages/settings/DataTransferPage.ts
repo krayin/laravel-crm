@@ -42,30 +42,53 @@ export class DataTransferPage extends SettingsPage {
     }
 
 
-    async createImport(csvFilePath: string, entityType: EntityType) {
+    /**
+     * Click Validate and wait for the result to come back.
+     *
+     * Validation runs over XHR and the "Your import is valid" banner is rendered behind `v-if`,
+     * so it does not exist until the response lands. Clicking Import straight after Validate
+     * raced that request: the Import button was still disabled (or the banner absent), and the
+     * step failed on whichever of the two the caller happened to assert.
+     */
+    private async validateImport() {
+        await this.validateButton.click();
 
+        await expect(this.page.getByText('Your import is valid. Click')).toBeVisible();
+    }
+
+    async createImport(csvFilePath: string, entityType: EntityType) {
         await this.createImportLink.click();
+
+        /**
+         * The create screen is a full page load, so the form is waited for rather than assumed —
+         * `setInputFiles` against a form that has not rendered yet fails on a missing input.
+         */
+        await expect(this.saveImportButton).toBeVisible();
+
         await this.setInputFiles('input[name="file"]', csvFilePath);
         await this.uncheckProcessQueue();
 
         await this.entityTypeSelect.selectOption(entityType);
         await this.saveImportButton.click();
 
-        await this.page.locator('//button[contains(.,"Validate")]').click();
+        await this.validateImport();
+
         await this.runImportButton.click();
 
         // Wait for success record appearance
         await expect(this.successMessage.first()).toBeVisible();
     }
+
     async updateImport(csvFilePath: string) {
         await this.editIcon.click();
+
+        await expect(this.saveImportButton).toBeVisible();
+
         await this.setInputFiles('input[name="file"]', csvFilePath);
         await this.uncheckProcessQueue();
         await this.saveImportButton.click();
 
-        // Validation and import
-        await this.page.locator('//button[@class="primary-button place-self-start"]').click();
-        await expect(this.page.getByText('Your import is valid. Click')).toBeVisible();
+        await this.validateImport();
 
         await this.runImportButton.click();
 
@@ -102,6 +125,59 @@ export class DataTransferPage extends SettingsPage {
     async setInputFiles(selector: string, filePath: string) {
         await this.page.setInputFiles(selector, filePath);
     }
+
+/**
+ * Rewrite the product id embedded in the leads CSV's `product` column.
+ *
+ * That column holds a compound value — `price=45,quantity=2,id=1` — and the importer validates its
+ * `id` with `exists:products,id`. The fixture ships `id=1` and `id=2`, which do not exist on an
+ * installation whose product ids start higher (ours start at 5), so validation fails with "The
+ * selected id is invalid.", `is_valid` stays false, and the success banner the test waits for is
+ * never rendered. Pointing the column at a product that actually exists is what makes the import
+ * valid; `person_id` is already rewritten the same way for the same reason.
+ */
+async updateCsvProductId(filePath: string, productId: string): Promise<void> {
+  return new Promise((resolve, reject) => {
+    const rows: any[] = [];
+
+    fs.createReadStream(filePath)
+      .pipe(parse({ headers: true }))
+      .on('error', reject)
+      .on('data', (row) => {
+        if (row.product) {
+          row.product = String(row.product).replace(/\bid=\d+/, `id=${productId}`);
+        }
+
+        rows.push(row);
+      })
+      .on('end', () => {
+        const writeStream = fs.createWriteStream(filePath);
+        const csvStream = format({ headers: true });
+
+        csvStream
+          .pipe(writeStream)
+          .on('finish', resolve)
+          .on('error', reject);
+
+        rows.forEach(row => csvStream.write(row));
+        csvStream.end();
+      });
+  });
+}
+
+/**
+ * The id of a product that exists, read from the grid the admin UI itself uses.
+ */
+async firstProductId(): Promise<string> {
+  const response = await this.page.request.get(
+    'admin/products?pagination[page]=1&pagination[per_page]=1',
+    { headers: { 'X-Requested-With': 'XMLHttpRequest', Accept: 'application/json' } }
+  );
+
+  const records = (await response.json()).records ?? [];
+
+  return String(records[0]?.id ?? '');
+}
 
 async updateCsv(filePath: string,column:string, newOrgId: string): Promise<void> {
   return new Promise((resolve, reject) => {

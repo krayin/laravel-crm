@@ -13,5 +13,9 @@
     "fast-csv": "^5.0.7",
     "laravel-vite-plugin": "^1.0.0",
     "vite": "^6.4.3"
+  },
+  "dependencies": {
+    "laravel-echo": "^2.6.1",
+    "pusher-js": "^8.6.0"
   }
 }

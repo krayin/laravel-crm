@@ -61,6 +61,22 @@ export class CampaignsPage extends SettingsPage {
         await this.page.goto("admin/settings/marketing/campaigns");
     }
 
+    /**
+     * Pick the first option each dropdown actually offers.
+     *
+     * Both selects are filled over XHR after the modal opens, so the options have to be waited for
+     * rather than assumed. Choosing by a fixed value or label is what made these tests fail:
+     * `value: "1"` named an email template that does not exist on an installation where template
+     * id 1 was deleted (the ids here start at 2), and the event label only exists when the create
+     * test has just made that event, so the update test never found it. Picking by index uses
+     * whatever the install has.
+     */
+    private async selectFirstOption(dropdown: Locator) {
+        await expect(dropdown.locator('option')).not.toHaveCount(0);
+
+        await dropdown.selectOption({ index: 0 });
+    }
+
     async createCampaign(data: CampaignData) {
         await this.createCampaignButton.click();
         await this.campaignNameInput.fill(data.name);
@@ -68,8 +84,8 @@ export class CampaignsPage extends SettingsPage {
         await this.campaignSubjectInput.click(); // For validation if needed
         await this.campaignSubjectInput.fill(data.subject);
 
-        await this.eventDropdown.selectOption({ label: data.event.name });
-        await this.emailTemplateDropdown.selectOption({ value: "1" });
+        await this.selectFirstOption(this.eventDropdown);
+        await this.selectFirstOption(this.emailTemplateDropdown);
 
 
         if (data.active) {
@@ -90,8 +106,8 @@ export class CampaignsPage extends SettingsPage {
         await this.campaignSubjectInput.click(); // For validation if needed
         await this.campaignSubjectInput.fill(data.subject);
 
-        await this.eventDropdown.selectOption({ label: data.event.name });
-        await this.emailTemplateDropdown.selectOption({ value: "1" });
+        await this.selectFirstOption(this.eventDropdown);
+        await this.selectFirstOption(this.emailTemplateDropdown);
 
 
         if (data.active) {

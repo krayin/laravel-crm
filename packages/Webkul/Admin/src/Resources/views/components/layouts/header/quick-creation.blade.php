@@ -1,11 +1,13 @@
 @php
     $canCreateLead = bouncer()->hasPermission('leads.create.quick-create');
+    $canCreateQuote = bouncer()->hasPermission('quotes.create.quick-create');
     $canCreateMail = bouncer()->hasPermission('mail.compose.quick-create');
     $canCreatePerson = bouncer()->hasPermission('contacts.persons.create.quick-create');
     $canCreateOrganization = bouncer()->hasPermission('contacts.organizations.create.quick-create');
     $canCreateProduct = bouncer()->hasPermission('products.create.quick-create');
 
     $hasAnyQuickAddPermission = $canCreateLead
+        || $canCreateQuote
         || $canCreateMail
         || $canCreatePerson
         || $canCreateOrganization
@@ -13,6 +15,7 @@
 
     $defaultQuickAddTab = match (true) {
         $canCreateLead => 'lead',
+        $canCreateQuote => 'quote',
         $canCreatePerson => 'person',
         $canCreateOrganization => 'organization',
         $canCreateProduct => 'product',
@@ -94,6 +97,38 @@
                                                     <x-admin::attributes
                                                         :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
                                                             'entity_type' => 'leads',
+                                                            'quick_add' => 1,
+                                                        ])"
+                                                    />
+                                                </div>
+                                            </form>
+                                        </x-admin::form>
+                                    </div>
+                                @endif
+
+                                @if ($canCreateQuote)
+                                    <div v-show="selectedType == 'quote'">
+                                        <x-admin::form
+                                            v-slot="{ meta, errors, handleSubmit }"
+                                            as="div"
+                                            ref="quoteFormWrapper"
+                                        >
+                                            <form
+                                                @submit="handleSubmit($event, createQuote)"
+                                                ref="quoteForm"
+                                            >
+                                                {{--
+                                                    The controller relaxes its line-item validation
+                                                    when this is present: a quote added from here
+                                                    carries no products yet, and they are added on
+                                                    the quote's own page afterwards.
+                                                --}}
+                                                <input type="hidden" name="quick_add" value="quote" />
+
+                                                <div class="grid gap-4 max-sm:flex-wrap">
+                                                    <x-admin::attributes
+                                                        :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
+                                                            'entity_type' => 'quotes',
                                                             'quick_add' => 1,
                                                         ])"
                                                     />
@@ -344,6 +379,9 @@
                             @if ($canCreateLead)
                                 { name: 'lead',         label: "@lang('admin::app.layouts.lead')" },
                             @endif
+                            @if ($canCreateQuote)
+                                { name: 'quote',        label: "@lang('admin::app.layouts.quotes')" },
+                            @endif
                             @if ($canCreatePerson)
                                 { name: 'person',       label: "@lang('admin::app.layouts.person')" },
                             @endif
@@ -360,6 +398,7 @@
 
                         endpoints: {
                             lead:         "{{ route('admin.leads.store') }}",
+                            quote:        "{{ route('admin.quotes.store') }}",
                             person:       "{{ route('admin.contacts.persons.store') }}",
                             organization: "{{ route('admin.contacts.organizations.store') }}",
                             product:      "{{ route('admin.products.store') }}",
@@ -392,6 +431,7 @@
                     },
 
                     createLead(params, { setErrors })         { this.store('lead', setErrors); },
+                    createQuote(params, { setErrors })        { this.store('quote', setErrors); },
                     createPerson(params, { setErrors })       { this.store('person', setErrors); },
                     createOrganization(params, { setErrors }) { this.store('organization', setErrors); },
                     createProduct(params, { setErrors })      { this.store('product', setErrors); },

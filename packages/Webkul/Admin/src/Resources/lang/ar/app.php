@@ -337,11 +337,13 @@ return [
         ],
         'layouts' => [
             'powered-by' => [
-                'description' => 'Powered by :krayin, an open-source project by :webkul.',
+                'description' => 'مدعوم من :krayin، وهو مشروع مفتوح المصدر من :webkul.',
             ],
             'header' => [
                 'mega-search' => [
                     'title' => 'البحث الشامل',
+                    'shortcut-hint' => 'ابدأ الكتابة للبحث، أو اضغط الاختصار الظاهر في الرأس.',
+                    'empty-results' => 'لا توجد سجلات تطابق بحثك.',
                     'tabs' => [
                         'leads' => 'العملاء المحتملين',
                         'quotes' => 'عروض الأسعار',
@@ -684,6 +686,33 @@ return [
                 'add-more' => 'إضافة المزيد',
                 'save' => 'حفظ',
             ],
+        ],
+    ],
+    'notifications' => [
+        'title' => 'الإشعارات',
+        'empty' => 'لا توجد إشعارات بعد.',
+        'mark-all-as-read' => 'تعليم الكل كمقروء',
+        'marked-as-read' => 'تم تعليم الإشعار كمقروء.',
+        'marked-all-as-read' => 'تم تعليم جميع الإشعارات كمقروءة.',
+        'not-found' => 'الإشعار غير موجود.',
+        'view-all' => 'عرض الكل',
+        'fallback' => [
+            'missing-keys' => 'العودة إلى الاستقصاء: تم اختيار :driver لكن :keys غير مضبوط.',
+            'broadcast-mismatch' => 'العودة إلى الاستقصاء: تم اختيار :driver لكن BROADCAST_DRIVER هو \':broadcast\'.',
+        ],
+        'titles' => [
+            'lead-created' => 'تم إنشاء عميل محتمل جديد',
+            'lead-updated' => 'تم تحديث العميل المحتمل',
+            'quote-created' => 'تم إنشاء عرض سعر جديد',
+            'quote-updated' => 'تم تحديث عرض السعر',
+            'person-created' => 'تمت إضافة جهة اتصال جديدة',
+            'person-updated' => 'تم تحديث جهة الاتصال',
+            'product-created' => 'تمت إضافة منتج جديد',
+            'product-updated' => 'تم تحديث المنتج',
+            'activity-created' => 'تم جدولة نشاط جديد',
+            'activity-updated' => 'تم تحديث النشاط',
+            'email-created' => 'تم استلام بريد إلكتروني جديد',
+            'email-updated' => 'تم تحديث البريد الإلكتروني',
         ],
     ],
     'settings' => [
@@ -1562,7 +1591,7 @@ return [
                     'invalid-attribute' => 'الرأس يحتوي على سمة غير صالحة: "%s".',
                     'system' => 'حدث خطأ غير متوقع في النظام.',
                     'wrong-quotes' => 'تم استخدام علامات الاقتباس الملتوية بدلاً من الاقتباسات المستقيمة.',
-                    'already-exists' => 'The :attribute already exists.',
+                    'already-exists' => 'الحقل :attribute موجود بالفعل.',
                 ],
             ],
             'imports' => [
@@ -2115,6 +2144,23 @@ return [
                             'custom' => 'مخصص',
                         ],
                     ],
+                    'notifications' => [
+                        'title' => 'إعدادات الإشعارات',
+                        'info' => 'اختر ما إذا كان سيتم إعلام المستخدمين بالسجلات الجديدة، وكيفية وصول هذه الإشعارات إلى المتصفح.',
+                        'enabled' => 'تفعيل الإشعارات',
+                        'enabled-info' => 'إعلام المستخدمين بالعملاء المحتملين وعروض الأسعار وجهات الاتصال والمنتجات والأنشطة والبريد ضمن نطاق بياناتهم.',
+                        'driver' => 'طريقة التسليم',
+                        'driver-info' => 'الاستقصاء لا يحتاج إلى خدمات إضافية ويعمل على أي استضافة. يوفر Reverb وPusher تسليمًا فوريًا لكن كلاهما يحتاج إلى خادم WebSocket قيد التشغيل.',
+                        'drivers' => [
+                            'polling' => 'الاستقصاء (بدون إعداد إضافي)',
+                            'reverb' => 'Laravel Reverb (خادم WebSocket ذاتي الاستضافة)',
+                            'pusher' => 'Pusher (خادم WebSocket مستضاف)',
+                        ],
+                        'poll-interval' => 'التحقق كل (ثانية)',
+                        'poll-interval-info' => 'عدد المرات التي يطلب فيها المتصفح إشعارات جديدة. الفترة الأقصر تبدو أسرع لكنها تُنشئ طلبات أكثر.',
+                        'sound' => 'تشغيل صوت',
+                        'sound-info' => 'تشغيل نغمة قصيرة عند وصول إشعار جديد.',
+                    ],
                     'menu-color' => [
                         'brand-color' => 'لون العلامة التجارية',
                         'info' => 'يمكننا تغيير ألوان عناصر القائمة هنا.',
@@ -2169,6 +2215,17 @@ return [
     'dashboard' => [
         'index' => [
             'title' => 'لوحة القيادة',
+            'date-presets' => [
+                'today' => 'اليوم',
+                'yesterday' => 'أمس',
+                'last-30-days' => 'آخر 30 يومًا',
+                'this-week' => 'هذا الأسبوع',
+                'this-month' => 'هذا الشهر',
+                'last-month' => 'الشهر الماضي',
+                'last-3-months' => 'آخر 3 أشهر',
+                'last-6-months' => 'آخر 6 أشهر',
+                'this-year' => 'هذه السنة',
+            ],
             'start-date' => 'تاريخ البدء',
             'end-date' => 'تاريخ الانتهاء',
             'export-pdf' => 'تصدير PDF',
@@ -2435,12 +2492,12 @@ return [
         'go-back' => 'العودة',
         'support' => 'إذا استمرت المشكلة، تواصل معنا على <a href=":link" class=":class">:email</a> للحصول على المساعدة.',
         'unauthorized' => 'هذا الإجراء غير مصرح به.',
-        'role-exceeds-own' => 'You can only assign a role whose permissions are the same as or fewer than your own.',
-        'user-exceeds-own' => 'You can only manage users whose permissions are the same as or fewer than your own.',
-        'own-privileges' => 'You cannot change your own role or data scope.',
-        'scope-exceeds-own' => 'You cannot grant a data scope wider than your own.',
-        'primary-admin-protected' => 'The primary administrator account is protected and cannot be modified here.',
-        'role-permissions-exceed-own' => 'You can only create or edit roles whose permissions are the same as or fewer than your own.',
+        'role-exceeds-own' => 'يمكنك فقط تعيين دور صلاحياته مماثلة لصلاحياتك أو أقل منها.',
+        'user-exceeds-own' => 'يمكنك فقط إدارة المستخدمين الذين تكون صلاحياتهم مماثلة لصلاحياتك أو أقل منها.',
+        'own-privileges' => 'لا يمكنك تغيير دورك أو نطاق بياناتك.',
+        'scope-exceeds-own' => 'لا يمكنك منح نطاق بيانات أوسع من نطاقك.',
+        'primary-admin-protected' => 'حساب المسؤول الرئيسي محمي ولا يمكن تعديله من هنا.',
+        'role-permissions-exceed-own' => 'يمكنك فقط إنشاء أو تعديل الأدوار التي تكون صلاحياتها مماثلة لصلاحياتك أو أقل منها.',
 
         '404' => [
             'description' => 'عذرًا! الصفحة التي تبحث عنها في إجازة. يبدو أننا لم نجد ما كنت تبحث عنه.',
