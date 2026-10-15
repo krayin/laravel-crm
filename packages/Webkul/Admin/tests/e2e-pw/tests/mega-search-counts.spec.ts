@@ -29,7 +29,7 @@ test.describe("mega search section counts", () => {
      * — "need", "an" — which matched nothing on a freshly installed one, leaving the sections
      * uncounted and the assertions with nothing to read. Each run now creates what it searches for.
      */
-    const term = "megasearchfresh01";
+    const term = "megasearchseed";
 
     /**
      * Post a form from inside the page, so the browser attaches the session's current csrf token.
