@@ -49,6 +49,23 @@ test.describe("mega search modal", () => {
                 entity_type: "persons",
             },
         });
+
+        /**
+         * A lead as well as a person: the modal opens on the leads tab, and it is that tab's rows
+         * the results assertion counts, so a run seeding only a person found nothing to list.
+         */
+        await adminPage.request.post("admin/leads/create", {
+            failOnStatusCode: false,
+            headers,
+            form: {
+                title: `${term} lead ${unique}`,
+                description: "seeded for the mega search modal",
+                lead_value: "1000",
+                "person[name]": `${term} contact ${unique}`,
+                "person[emails][0][value]": `${term}lead${unique}@example.invalid`,
+                "person[emails][0][label]": "work",
+            },
+        });
     }
 
     test.beforeEach(async ({ adminPage }) => {

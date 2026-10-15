@@ -220,7 +220,7 @@ test.describe("mega search section counts", () => {
                         .catch(() => ""),
                 { message: "the listing should be filtered by the searched term" }
             )
-            .toBe("need");
+            .toBe(term);
 
         /**
          * And the rows it renders agree with the count the link advertised. The grid draws a header
