@@ -1,7 +1,7 @@
 import { expect, test } from "../fixtures/AdminFixtures";
 
 import { MailPage, mailData } from "../pages/MailPage";
-import { csrfHeaders, runSuffix } from "../utils/acl";
+import { runSuffix } from "../utils/acl";
 
 /**
  * A mail body is attacker-supplied — it arrives from whoever sent the mail, not from the CRM — and
@@ -52,27 +52,43 @@ test.describe.serial("mail thread and reply", () => {
         const id = record.id;
 
         /**
-         * Laravel accepts the `XSRF-TOKEN` cookie echoed back as a header, which is how the panel's
-         * own requests pass verification; the admin layout renders no csrf meta tag to read instead.
-         */
-        const headers = await csrfHeaders(adminPage.context());
-
-        /**
          * `mass-update` moves the record into the inbox, which is the folder whose view renders
          * HTML — the draft route answers with JSON and would expose no rendered body to inspect.
-         * `multipart` is used so `indices` arrives as the array the request rules require.
+         *
+         * The request is issued from the page rather than through the api context, so the browser
+         * attaches the session's current csrf cookie itself. Reading that cookie and replaying it
+         * as a header worked only while it was fresh: the saved sign-in state carries one from an
+         * earlier session, and a stale token is refused.
          */
-        const response = await adminPage.request.post("admin/mail/mass-update", {
-            failOnStatusCode: false,
-            headers,
-            multipart: {
-                "indices[0]": String(id),
-                "folders[0]": "inbox",
-                value: "inbox",
-            },
-        });
+        const status = await adminPage.evaluate(async (mailId: number) => {
+            const body = new FormData();
 
-        expect(response.status(), "the mail should move into the inbox").toBeLessThan(400);
+            body.append("indices[0]", String(mailId));
+            body.append("folders[0]", "inbox");
+            body.append("value", "inbox");
+
+            /**
+             * Read from `document.cookie` so the token is the one this session currently holds,
+             * whatever the saved sign-in state was carrying.
+             */
+            const token = decodeURIComponent(
+                document.cookie.split("; ").find((entry) => entry.startsWith("XSRF-TOKEN="))?.split("=")[1] ?? ""
+            );
+
+            const response = await fetch("/admin/mail/mass-update", {
+                method: "POST",
+                headers: {
+                    "X-Requested-With": "XMLHttpRequest",
+                    "X-XSRF-TOKEN": token,
+                },
+                credentials: "same-origin",
+                body,
+            });
+
+            return response.status;
+        }, id);
+
+        expect(status, "the mail should move into the inbox").toBeLessThan(400);
     }
 
     async function openInboxMail(adminPage: any, subject: string) {
