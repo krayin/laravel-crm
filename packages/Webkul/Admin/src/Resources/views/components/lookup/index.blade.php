@@ -189,8 +189,6 @@
                 if (this.value) {
                     this.selectedItem = this.value;
                 }
-
-                console.log(this.placeholder);
             },
 
             created() {
@@ -204,6 +202,18 @@
             watch: {
                 searchTerm(newVal, oldVal) {
                     this.search();
+                },
+
+                value: {
+                    deep: true,
+
+                    handler(newValue) {
+                        if ((newValue?.id ?? null) === (this.selectedItem?.id ?? null)) {
+                            return;
+                        }
+
+                        this.selectedItem = newValue ? { ...newValue } : {};
+                    },
                 },
             },
 

@@ -61,6 +61,6 @@ Route::controller(LeadController::class)->prefix('leads')->group(function () {
     Route::controller(QuoteController::class)->prefix('quotes')->group(function () {
         Route::post('{quote_id}/mail', 'mail')->name('admin.leads.quotes.mail');
 
-        Route::delete('{quote_id?}', 'delete')->name('admin.leads.quotes.delete');
+        Route::delete('{quote_id}', 'delete')->name('admin.leads.quotes.delete');
     });
 });

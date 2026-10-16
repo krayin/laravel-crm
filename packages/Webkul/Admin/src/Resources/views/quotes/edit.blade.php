@@ -355,7 +355,7 @@
                             <!-- Quote Item Vue component -->
                             <template
                                 v-for='(product, index) in products'
-                                :key="index"
+                                :key="product.key ?? product.id ?? index"
                             >
                                 <v-quote-item
                                     :product="product"
@@ -652,6 +652,8 @@
                         adjustmentAmount: '0.0000',
 
                         products: @json($initialQuoteItems),
+
+                        rowKeySequence: 0,
                     }
                 },
 
@@ -788,13 +790,36 @@
                             .then((response) => {
                                 const leadProducts = response.data?.data ?? [];
 
-                                this.products = leadProducts;
+                                /**
+                                 * The lead's products are appended, and each row arrives unsaved so
+                                 * it is given its own identity: without one the rows would be told
+                                 * apart by position alone and the components already on screen
+                                 * would be reused for them.
+                                 */
+                                const addedProducts = leadProducts
+                                    .filter((product) => ! this.hasProduct(product.product_id))
+                                    .map((product) => ({
+                                        ...product,
+                                        key: this.nextRowKey(),
+                                    }));
+
+                                if (addedProducts.length) {
+                                    /**
+                                     * An empty row is dropped as the lead's products take its
+                                     * place: it carries no product, and leaving it would fail the
+                                     * save the admin is being handed.
+                                     */
+                                    this.products = this.products
+                                        .filter((product) => product.product_id)
+                                        .concat(addedProducts);
+                                }
 
                                 this.$emitter.emit('add-flash', {
-                                    type: leadProducts.length ? 'success' : 'info',
-                                    message: leadProducts.length
-                                        ? 'Lead products assigned to quote. See items section.'
-                                        : 'No products found for selected lead.',
+                                    type: addedProducts.length ? 'success' : 'info',
+                                    message: this.leadProductsMessage(
+                                        leadProducts.length,
+                                        addedProducts.length
+                                    ),
                                 });
                             })
                             .catch((error) => {
@@ -812,6 +837,7 @@
                      */
                     addProduct() {
                         this.products.push({
+                            key: this.nextRowKey(),
                             id: null,
                             product_id: null,
                             name: '',
@@ -824,6 +850,53 @@
                     },
 
                     /**
+                     * An identity for a row that has not been saved yet, so the rows keep their
+                     * own components when the list around them changes.
+                     */
+                    nextRowKey() {
+                        return `row_${++this.rowKeySequence}`;
+                    },
+
+                    /**
+                     * Whether an item for this product is already on the quote, so that picking a
+                     * lead does not add a second row for something the quote already carries.
+                     *
+                     * @param {Number|String} productId
+                     *
+                     * @returns {Boolean}
+                     */
+                    hasProduct(productId) {
+                        if (! productId) {
+                            return false;
+                        }
+
+                        return this.products.some(
+                            (product) => String(product.product_id) === String(productId)
+                        );
+                    },
+
+                    /**
+                     * What to report after a lead's products were added, which depends on whether
+                     * the lead had any and whether the quote already held them.
+                     *
+                     * @param {Number} found
+                     * @param {Number} added
+                     *
+                     * @returns {String}
+                     */
+                    leadProductsMessage(found, added) {
+                        if (! found) {
+                            return 'No products found for selected lead.';
+                        }
+
+                        if (! added) {
+                            return "The lead's products are already on this quote.";
+                        }
+
+                        return 'Lead products added to the quote. See items section.';
+                    },
+
+                    /**
                      * Remove the product.
                      *
                      * @param {Object} product
@@ -833,6 +906,7 @@
                             agree: () => {
                                 if (this.products.length === 1) {
                                     this.products = [{
+                                        key: this.nextRowKey(),
                                         id: null,
                                         product_id: null,
                                         name: '',
