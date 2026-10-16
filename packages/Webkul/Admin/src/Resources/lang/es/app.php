@@ -1211,7 +1211,7 @@ return [
                     'status' => 'Estado',
                     'title' => 'Crear Usuario',
                     'view-permission' => 'Ver Permiso',
-                    'select-at-lest-one-group' => 'Select at least one group',
+                    'select-at-lest-one-group' => 'Seleccione al menos un grupo',
                 ],
                 'edit' => [
                     'title' => 'Editar Usuario',
@@ -2000,7 +2000,7 @@ return [
             ],
         ],
         'view' => [
-            'title' => 'Lead: :title',
+            'title' => 'Oportunidad: :title',
             'rotten-days' => ':days Días',
             'tabs' => [
                 'description' => 'Descripción',
@@ -2226,8 +2226,8 @@ return [
                 'last-6-months' => 'Últimos 6 meses',
                 'this-year' => 'Este año',
             ],
-            'start-date' => 'Start Date',
-            'end-date' => 'End Date',
+            'start-date' => 'Fecha de inicio',
+            'end-date' => 'Fecha de fin',
             'export-pdf' => 'Exportar PDF',
             'pdf' => [
                 'title' => 'Informe del Tablero',

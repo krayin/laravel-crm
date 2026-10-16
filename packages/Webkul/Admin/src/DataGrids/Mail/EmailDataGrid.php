@@ -157,8 +157,17 @@ class EmailDataGrid extends DataGrid
     public function prepareActions(): void
     {
         if (bouncer()->hasPermission('mail.view')) {
+            /**
+             * Only a draft opens in the compose modal; every other folder opens the mail's own
+             * page. The page told the two apart by the action's title, which is translated, so
+             * under any locale but English the title never matched and a mail outside drafts was
+             * fetched as though it were a draft — answering with a page rather than the record the
+             * modal expected. The index names the behaviour instead, and is not translated.
+             */
             $this->addAction([
-                'index' => 'edit',
+                'index' => request('route') == 'draft'
+                    ? 'edit'
+                    : 'view',
                 'icon' => request('route') == 'draft'
                     ? 'icon-edit'
                     : 'icon-eye',
