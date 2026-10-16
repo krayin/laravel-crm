@@ -3,14 +3,24 @@
 it('shows the help page to an authenticated admin', function () {
     $admin = getDefaultAdmin();
 
-    test()->actingAs($admin)
+    $response = test()->actingAs($admin)
         ->get(route('admin.help.index'))
-        ->assertOk()
-        ->assertSee('Help & Resources')
-        ->assertSee('Cloud Hosting')
-        ->assertSee('Extensions')
-        ->assertSee('krayincrm.com/cloud-hosting')
-        ->assertSee('Still need a hand?')
-        ->assertSee('Community Forums')
-        ->assertSee('Video Tutorials');
+        ->assertOk();
+
+    foreach ([
+        'admin::app.help.index.title',
+        'admin::app.help.index.description',
+        'admin::app.help.index.contact-us',
+        'admin::app.help.index.services.title',
+        'admin::app.help.index.resources.title',
+        'admin::app.help.index.still-need-help-title',
+    ] as $key) {
+        $translation = trans($key);
+
+        expect($translation)->not->toBe($key, "{$key} should be translated");
+
+        $response->assertSee($translation, false);
+    }
+
+    $response->assertSee('krayincrm.com/cloud-hosting', false);
 });

@@ -158,7 +158,9 @@ class EmailDataGrid extends DataGrid
     {
         if (bouncer()->hasPermission('mail.view')) {
             $this->addAction([
-                'index' => 'edit',
+                'index' => request('route') == 'draft'
+                    ? 'edit'
+                    : 'view',
                 'icon' => request('route') == 'draft'
                     ? 'icon-edit'
                     : 'icon-eye',

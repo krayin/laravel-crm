@@ -172,14 +172,7 @@ class QuoteRepository extends Repository
     }
 
     /**
-     * Give a quote and the lead it is linked to the same products.
-     *
-     * The quote's items were copied onto the lead, but never the other way about, so a lead
-     * holding products of its own kept them to itself: linking a quote of four products to a lead
-     * of two left the quote with four and the lead with six. Both now hold all six.
-     *
-     * A product already on the other side is left as it is rather than overwritten, so the
-     * quantity and price entered against a quote item are not replaced by the lead's figures.
+     * Sync products between a quote and its lead.
      *
      * @param  Quote  $quote
      * @param  int|null  $leadId
@@ -196,9 +189,6 @@ class QuoteRepository extends Repository
 
         $leadProducts = $this->productRepository->findWhere(['lead_id' => $leadId]);
 
-        /**
-         * The quote's items onto the lead.
-         */
         foreach ($quote->items as $item) {
             if (! $item->product_id) {
                 continue;
@@ -217,9 +207,6 @@ class QuoteRepository extends Repository
             ]);
         }
 
-        /**
-         * And the lead's products onto the quote.
-         */
         foreach ($leadProducts as $leadProduct) {
             if (! $leadProduct->product_id) {
                 continue;

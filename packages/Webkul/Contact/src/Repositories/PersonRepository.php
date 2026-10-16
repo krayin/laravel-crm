@@ -174,20 +174,11 @@ class PersonRepository extends Repository
         $data['unique_id'] = implode('|', $uniqueIdParts);
 
         if (isset($data['contact_numbers'])) {
-            /**
-             * The keys are reset after filtering: `filter()` keeps the original ones, so a blank
-             * row followed by a filled one left the survivor at index 1 and the first number was
-             * read from an index that no longer existed.
-             */
             $data['contact_numbers'] = collect($data['contact_numbers'])
                 ->filter(fn ($number) => ! is_null($number['value'] ?? null))
                 ->values()
                 ->toArray();
 
-            /**
-             * A number is optional, and the phone field always submits one row, so a person saved
-             * without a phone arrives here with nothing left after filtering.
-             */
             if (! empty($data['contact_numbers'])) {
                 $data['unique_id'] .= '|'.$data['contact_numbers'][0]['value'];
             }

@@ -1211,7 +1211,7 @@ return [
                     'status' => 'Status',
                     'title' => 'Adicionar Usuário',
                     'view-permission' => 'Visualizar Permissão',
-                    'select-at-lest-one-group' => 'Select at least one group',
+                    'select-at-lest-one-group' => 'Selecione pelo menos um grupo',
                 ],
                 'edit' => [
                     'title' => 'Editar Usuário',
@@ -2226,8 +2226,8 @@ return [
                 'last-6-months' => 'Últimos 6 meses',
                 'this-year' => 'Este ano',
             ],
-            'start-date' => 'Start Date',
-            'end-date' => 'End Date',
+            'start-date' => 'Data de início',
+            'end-date' => 'Data de término',
             'export-pdf' => 'Exportar PDF',
             'pdf' => [
                 'title' => 'Relatório do Painel',

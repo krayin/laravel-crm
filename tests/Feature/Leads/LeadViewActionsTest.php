@@ -12,23 +12,8 @@ use Webkul\Quote\Models\QuoteItem;
 use Webkul\Quote\Repositories\QuoteRepository;
 use Webkul\Tag\Models\Tag;
 
-/**
- * The actions a lead's own page offers: opening it, moving its stage, editing its attributes,
- * attaching and detaching tags, adding and removing products, severing a quote, and deleting the
- * lead itself.
- *
- * Detaching a quote is the one that was broken. The route names a quote and the page sends a
- * quote's id, but the controller read it as a lead's and looked a lead up under it, so removing a
- * quote from a lead answered "No query results for model [Lead]" and the link survived.
- */
 uses(DatabaseTransactions::class);
 
-/**
- * A lead owned by the signed-in admin, with the pipeline, stage, source and type it needs.
- *
- * The parallel test databases are migrated but not seeded, so none of those rows can be assumed;
- * the shared helper creates whatever is missing.
- */
 function leadViewActionsLead(): Lead
 {
     $pipeline = securityTestPipeline();
@@ -46,9 +31,6 @@ function leadViewActionsLead(): Lead
     ]);
 }
 
-/**
- * A contact for a quote to be made out to, which a quote cannot be stored without.
- */
 function leadViewActionsPerson(): Person
 {
     return Person::create([
@@ -58,9 +40,6 @@ function leadViewActionsPerson(): Person
     ]);
 }
 
-/**
- * A quote owned by the signed-in admin.
- */
 function leadViewActionsQuote(string $subject): Quote
 {
     return Quote::create([
@@ -76,9 +55,6 @@ function leadViewActionsQuote(string $subject): Quote
     ]);
 }
 
-/**
- * A product to attach, created when the database carries none.
- */
 function leadViewActionsProduct(string $suffix = ''): Product
 {
     return Product::create([
@@ -101,10 +77,6 @@ it('opens a lead page', function () {
 it('moves a lead to another stage', function () {
     $lead = leadViewActionsLead();
 
-    /**
-     * A code of its own: the pipeline this runs against may already carry the usual stages, and
-     * the code is unique per pipeline.
-     */
     $stage = $lead->pipeline->stages()->create([
         'name' => 'Lead view actions stage',
         'code' => 'lva-'.uniqid(),
@@ -174,9 +146,6 @@ it('adds and removes a product', function () {
 
     expect($leadProduct)->not->toBeNull();
 
-    /**
-     * The amount is derived rather than submitted, so it is checked against the two it is made of.
-     */
     expect((float) $leadProduct->amount)->toBe(300.0);
 
     $this->actingAs(getDefaultAdmin(), 'user')
@@ -199,18 +168,12 @@ it('detaches a quote from a lead', function () {
 
     expect($lead->refresh()->quotes->pluck('id'))->toContain($quote->id);
 
-    /**
-     * The quote's own id is what the page sends, as a segment of the url.
-     */
     $this->actingAs(getDefaultAdmin(), 'user')
         ->deleteJson(route('admin.leads.quotes.delete', $quote->id))
         ->assertOk();
 
     expect($lead->refresh()->quotes->pluck('id'))->not->toContain($quote->id);
 
-    /**
-     * The quote itself is kept: only its link to the lead is severed.
-     */
     expect(Quote::find($quote->id))->not->toBeNull();
 });
 
@@ -223,12 +186,6 @@ it('answers with not found when detaching a quote that does not exist', function
 });
 
 it('detaches a quote whose id does not name a lead', function () {
-    /**
-     * The id in the url is a quote's and is looked up as one. Reading it as a lead's is what broke
-     * this: the ids of the two are unrelated, so detaching a quote whose id happens to name no lead
-     * answered "no query results for model Lead" and the link survived. The quote here is given an
-     * id that is deliberately not a lead's.
-     */
     $lead = leadViewActionsLead();
 
     $quote = leadViewActionsQuote('Quote with no matching lead id');
@@ -255,10 +212,6 @@ it('deletes a lead', function () {
 });
 
 it('gives a lead and its quote the same products when they are linked', function () {
-    /**
-     * A quote of four products linked to a lead of two leaves both holding all six: the quote's
-     * items were copied onto the lead, but the lead's products were never copied onto the quote.
-     */
     $lead = leadViewActionsLead();
 
     $quote = leadViewActionsQuote('Lead view actions sync');
@@ -303,9 +256,6 @@ it('gives a lead and its quote the same products when they are linked', function
 
     expect(LeadProduct::where('lead_id', $lead->id)->count())->toBe(6);
 
-    /**
-     * Saving again must not add the same products a second time.
-     */
     $sync->invoke($repository, $quote, $lead->id);
 
     expect($quote->refresh()->items)->toHaveCount(6);

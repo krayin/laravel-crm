@@ -800,12 +800,6 @@
                             .then((response) => {
                                 const leadProducts = response.data?.data ?? [];
 
-                                /**
-                                 * The lead's products are appended, and each row arrives unsaved so
-                                 * it is given its own identity: without one the rows would be told
-                                 * apart by position alone and the components already on screen
-                                 * would be reused for them.
-                                 */
                                 const addedProducts = leadProducts
                                     .filter((product) => ! this.hasProduct(product.product_id))
                                     .map((product) => ({
@@ -814,11 +808,6 @@
                                     }));
 
                                 if (addedProducts.length) {
-                                    /**
-                                     * An empty row is dropped as the lead's products take its
-                                     * place: it carries no product, and leaving it would fail the
-                                     * save the admin is being handed.
-                                     */
                                     this.products = this.products
                                         .filter((product) => product.product_id)
                                         .concat(addedProducts);
@@ -863,14 +852,6 @@
                         return `row_${++this.rowKeySequence}`;
                     },
 
-                    /**
-                     * Whether an item for this product is already on the quote, so that picking a
-                     * lead does not add a second row for something the quote already carries.
-                     *
-                     * @param {Number|String} productId
-                     *
-                     * @returns {Boolean}
-                     */
                     hasProduct(productId) {
                         if (! productId) {
                             return false;
@@ -881,15 +862,6 @@
                         );
                     },
 
-                    /**
-                     * What to report after a lead's products were added, which depends on whether
-                     * the lead had any and whether the quote already held them.
-                     *
-                     * @param {Number} found
-                     * @param {Number} added
-                     *
-                     * @returns {String}
-                     */
                     leadProductsMessage(found, added) {
                         if (! found) {
                             return 'No products found for selected lead.';
