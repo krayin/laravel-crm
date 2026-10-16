@@ -53,10 +53,6 @@ class QuoteController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * The route names a quote, and that is what the page sends: the id was read as a lead's,
-     * so detaching a quote looked a lead up under the quote's id and failed with no such lead.
-     * The quote id was then taken from the request, where it had never been put.
-     *
      * @param  int  $quoteId
      * @return Response
      */

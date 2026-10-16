@@ -674,12 +674,6 @@
                     },
         
                     editModal(row) {
-                        /**
-                         * Only a draft opens in this modal. The action's own index says which it
-                         * is; the title was compared before, and a translated title never matched
-                         * 'View', so under any locale but English a mail outside drafts was
-                         * fetched as a draft and answered with a page instead of a record.
-                         */
                         if (! row?.url) {
                             return;
                         }
@@ -694,10 +688,6 @@
                             .then(response => {
                                 const draft = response.data?.data;
 
-                                /**
-                                 * A folder that answers with its own page rather than a record
-                                 * leaves nothing to compose with, so the mail is opened instead.
-                                 */
                                 if (! draft?.id) {
                                     window.location.href = row.url;
 

@@ -2,7 +2,7 @@
 
 This changelog consists of the bug & security fixes and new features being included in the releases listed below.
 
-## **v2.2.7 (15th of Oct 2026)**
+## **v2.2.7 (16th of Oct 2026)**
 
 * [fixed] Fixed a web form submission creating a duplicate contact when the address differed only in case.
 
@@ -27,6 +27,20 @@ This changelog consists of the bug & security fixes and new features being inclu
 * [fixed] Fixed saving a contact with the phone left blank answering with a server error.
 
 * [fixed] Fixed picking a lead on a quote leaving the quote unsaveable and unlinked from that lead.
+
+* [fixed] Fixed picking a lead on a quote replacing the existing items instead of adding to them.
+
+* [fixed] Fixed a lead's page erroring when its contact had no phone number.
+
+* [fixed] Fixed removing a quote from a lead failing with no such lead.
+
+* [fixed] Fixed a lead and its quote not holding the same products.
+
+* [fixed] Fixed opening a mail outside drafts erroring under any locale but English.
+
+* [fixed] Added the missing Spanish and Brazilian Portuguese translations.
+
+* [fixed] Fixed the language file test passing while a translation was missing.
 
 * [security] Improved in Security.
 
