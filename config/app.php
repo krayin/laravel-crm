@@ -106,6 +106,7 @@ return [
 
     'available_locales' => [
         'ar' => 'Arabic',
+        'de' => 'Deutsch',
         'en' => 'English',
         'es' => 'Español',
         'fa' => 'Persian',
