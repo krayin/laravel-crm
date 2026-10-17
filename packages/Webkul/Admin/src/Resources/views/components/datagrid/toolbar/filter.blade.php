@@ -325,7 +325,11 @@
                                                     </div>
 
                                                     <div class="mt-1.5 grid gap-1.5">
-                                                        <x-admin::flat-picker.date ::allow-input="false">
+                                                        <x-admin::flat-picker.date 
+                                                            ::allow-input="false"
+                                                            ::min-date="getMinDate(column)"
+                                                            ::max-date="getMaxDate(column)"
+                                                        >
                                                             <input
                                                                 type="date"
                                                                 :name="column.index"
@@ -1398,6 +1402,30 @@
                     this.filters.columns = this.filters.columns.filter(column => column.index !== columnIndex);
 
                     this.isFilterDirty = true;
+                },
+
+                getMinDate(column) {
+                    if (column.index === 'schedule_to') {
+                        let fromColumn = this.findAppliedColumn('schedule_from');
+
+                        if (fromColumn) {
+                            return fromColumn.value;
+                        }
+                    }
+
+                    return '';
+                },
+
+                getMaxDate(column) {
+                    if (column.index === 'schedule_from') {
+                        let toColumn = this.findAppliedColumn('schedule_to');
+
+                        if (toColumn) {
+                            return toColumn.value;
+                        }
+                    }
+
+                    return '';
                 },
             },
         });
