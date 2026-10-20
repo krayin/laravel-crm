@@ -62,6 +62,14 @@ Take advantage of two of the hottest frameworks used in this project -- Laravel 
 
 #### Krayin Documentation [https://devdocs.krayincrm.com](https://devdocs.krayincrm.com)
 
+Person CSV imports accept a single plain value in the `emails` and `contact_numbers` cells
+(for example, `person@example.com` and `00123456789`), with the label `work`.
+Surrounding whitespace is trimmed and phone numbers retain their leading zeros.
+For multiple values or another label, keep using JSON, such as
+`[{"value":"person@example.com","label":"home"}]`, quoted as a CSV cell.
+The existing email and numeric phone validation still applies; separator-delimited lists
+and formatted phone numbers are not added by this shortcut.
+
 ### Requirements
 
 -   **SERVER**: Apache 2 or NGINX.
