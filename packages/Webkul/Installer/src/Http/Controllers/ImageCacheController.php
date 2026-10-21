@@ -109,7 +109,7 @@ class ImageCacheController
         ]);
     }
 
-        /**
+    /**
      * Header lines naming the installer's admin, the lowest id, url encoded so that no
      * name can break the header block.
      */
