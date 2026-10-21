@@ -166,6 +166,7 @@ class Importer extends AbstractImporter
      */
     public function validateRow(array $rowData, int $rowNumber): bool
     {
+        $rowData = $this->normalizeContactValues($rowData);
         $rowData = $this->parsedRowData($rowData);
 
         /**
@@ -397,7 +398,8 @@ class Importer extends AbstractImporter
         foreach ($emails as $email) {
             $contactNumber = json_decode($rowData['contact_numbers'], true);
 
-            $rowData['unique_id'] = "{$rowData['user_id']}|{$rowData['organization_id']}|{$email}|{$contactNumber[0]['value']}";
+            $phone = $contactNumber[0]['value'] ?? '';
+            $rowData['unique_id'] = "{$rowData['user_id']}|{$rowData['organization_id']}|{$email}|{$phone}";
 
             /**
              * Custom (user defined) attribute values are not columns on the persons table; they are
@@ -664,6 +666,34 @@ class Importer extends AbstractImporter
         }
 
         return $type === 'datetime' ? $date->format('Y-m-d H:i:s') : $date->format('Y-m-d');
+    }
+
+    /**
+     * Persist the same JSON representation used during validation so matching, updates,
+     * deletion and attribute storage continue to use the existing import format.
+     */
+    protected function prepareRowForDb(array $rowData): array
+    {
+        return parent::prepareRowForDb($this->normalizeContactValues($rowData));
+    }
+
+    /**
+     * Accept one plain email or phone per cell. Lists and explicit labels use the
+     * existing JSON format; leave JSON-looking values intact for normal validation.
+     */
+    private function normalizeContactValues(array $rowData): array
+    {
+        foreach (['emails', 'contact_numbers'] as $field) {
+            $value = trim((string) ($rowData[$field] ?? ''));
+
+            if ($value === '' || $value === 'null' || str_starts_with($value, '[') || str_starts_with($value, '{')) {
+                continue;
+            }
+
+            $rowData[$field] = json_encode([['value' => $value, 'label' => 'work']]);
+        }
+
+        return $rowData;
     }
 
     /**

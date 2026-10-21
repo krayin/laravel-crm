@@ -2,6 +2,10 @@
 
 This changelog consists of the bug & security fixes and new features being included in the releases listed below.
 
+## **v2.2.8 (Upcoming)**
+
+* [enhancement] Added support for a single plain email address or phone number in person CSV imports, while preserving existing JSON lists and labels.
+
 ## **v2.2.7 (16th of Oct 2026)**
 
 * [fixed] Fixed a web form submission creating a duplicate contact when the address differed only in case.
