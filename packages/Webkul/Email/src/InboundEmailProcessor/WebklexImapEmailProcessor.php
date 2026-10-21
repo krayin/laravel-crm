@@ -177,11 +177,13 @@ class WebklexImapEmailProcessor implements InboundEmailProcessor
         $rootFoldersCollection->each(function ($folder) {
             if (! $folder->children->isEmpty()) {
                 $this->processMessagesFromLeafFolders($folder->children);
-
-                return;
             }
 
-            if (in_array($folder->name, ['All Mail'])) {
+            /**
+             * A folder with subfolders can still hold messages of its own, such as `INBOX` on
+             * servers that list `INBOX.Sent` under it. Only containers that cannot be opened are skipped.
+             */
+            if ($folder->no_select || in_array($folder->name, ['All Mail'])) {
                 return;
             }
 
