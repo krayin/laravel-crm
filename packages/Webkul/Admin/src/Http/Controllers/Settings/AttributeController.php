@@ -6,6 +6,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Validation\Rule;
 use Illuminate\View\View;
 use Webkul\Admin\DataGrids\Settings\AttributeDataGrid;
 use Webkul\Admin\Http\Controllers\Controller;
@@ -52,7 +53,7 @@ class AttributeController extends Controller
     public function store(): RedirectResponse|JsonResponse
     {
         $this->validate(request(), [
-            'code' => ['required', 'unique:attributes,code,NULL,NULL,entity_type,'.request('entity_type'), new Code],
+            'code' => ['required', Rule::unique('attributes', 'code')->where('entity_type', request('entity_type')), new Code],
             'name' => 'required',
             'type' => 'required',
             'validation' => 'nullable|in:numeric,email,decimal,url',
@@ -92,7 +93,7 @@ class AttributeController extends Controller
     public function update($id): RedirectResponse
     {
         $this->validate(request(), [
-            'code' => ['required', 'unique:attributes,code,NULL,NULL,entity_type,'.$id, new Code],
+            'code' => ['required', Rule::unique('attributes', 'code')->where('entity_type', $id), new Code],
             'name' => 'required',
             'type' => 'required',
             'validation' => 'nullable|in:numeric,email,decimal,url',
