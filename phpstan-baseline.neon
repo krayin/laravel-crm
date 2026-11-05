@@ -1,0 +1,3757 @@
+parameters:
+	ignoreErrors:
+		-
+			message: '#^PHPDoc type array of property Webkul\\Activity\\Models\\Activity\:\:\$casts is not covariant with PHPDoc type array\<string, string\> of overridden property Illuminate\\Database\\Eloquent\\Model\:\:\$casts\.$#'
+			identifier: property.phpDocType
+			count: 1
+			path: packages/Webkul/Activity/src/Models/Activity.php
+
+		-
+			message: '#^PHPDoc type array of property Webkul\\Activity\\Models\\Activity\:\:\$fillable is not covariant with PHPDoc type list\<string\> of overridden property Illuminate\\Database\\Eloquent\\Model\:\:\$fillable\.$#'
+			identifier: property.phpDocType
+			count: 1
+			path: packages/Webkul/Activity/src/Models/Activity.php
+
+		-
+			message: '#^PHPDoc type array of property Webkul\\Activity\\Models\\Activity\:\:\$with is not covariant with PHPDoc type list\<string\> of overridden property Illuminate\\Database\\Eloquent\\Model\:\:\$with\.$#'
+			identifier: property.phpDocType
+			count: 1
+			path: packages/Webkul/Activity/src/Models/Activity.php
+
+		-
+			message: '#^Relation ''user'' is not found in Webkul\\Activity\\Models\\Activity model\.$#'
+			identifier: larastan.relationExistence
+			count: 1
+			path: packages/Webkul/Activity/src/Models/Activity.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Activity\\Models\\File\:\:\$path\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Activity/src/Models/File.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Activity\\Models\\File\:\:\$url\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Activity/src/Models/File.php
+
+		-
+			message: '#^PHPDoc type array of property Webkul\\Activity\\Models\\File\:\:\$appends is not covariant with PHPDoc type list\<string\> of overridden property Illuminate\\Database\\Eloquent\\Model\:\:\$appends\.$#'
+			identifier: property.phpDocType
+			count: 1
+			path: packages/Webkul/Activity/src/Models/File.php
+
+		-
+			message: '#^PHPDoc type array of property Webkul\\Activity\\Models\\File\:\:\$fillable is not covariant with PHPDoc type list\<string\> of overridden property Illuminate\\Database\\Eloquent\\Model\:\:\$fillable\.$#'
+			identifier: property.phpDocType
+			count: 1
+			path: packages/Webkul/Activity/src/Models/File.php
+
+		-
+			message: '#^Property ''url'' does not exist in model\.$#'
+			identifier: rules.modelAppends
+			count: 1
+			path: packages/Webkul/Activity/src/Models/File.php
+
+		-
+			message: '#^PHPDoc type array of property Webkul\\Activity\\Models\\Participant\:\:\$fillable is not covariant with PHPDoc type list\<string\> of overridden property Illuminate\\Database\\Eloquent\\Model\:\:\$fillable\.$#'
+			identifier: property.phpDocType
+			count: 1
+			path: packages/Webkul/Activity/src/Models/Participant.php
+
+		-
+			message: '#^Relation ''person'' is not found in Webkul\\Activity\\Models\\Participant model\.$#'
+			identifier: larastan.relationExistence
+			count: 1
+			path: packages/Webkul/Activity/src/Models/Participant.php
+
+		-
+			message: '#^Relation ''user'' is not found in Webkul\\Activity\\Models\\Participant model\.$#'
+			identifier: larastan.relationExistence
+			count: 1
+			path: packages/Webkul/Activity/src/Models/Participant.php
+
+		-
+			message: '#^Call to an undefined method Webkul\\Activity\\Repositories\\ActivityRepository\:\:leftJoin\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: packages/Webkul/Activity/src/Repositories/ActivityRepository.php
+
+		-
+			message: '#^Call to an undefined method Webkul\\Activity\\Repositories\\ActivityRepository\:\:select\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: packages/Webkul/Activity/src/Repositories/ActivityRepository.php
+
+		-
+			message: '#^Call to function is_null\(\) with array will always evaluate to false\.$#'
+			identifier: function.impossibleType
+			count: 1
+			path: packages/Webkul/Activity/src/Repositories/ActivityRepository.php
+
+		-
+			message: '#^Call to function is_null\(\) with int will always evaluate to false\.$#'
+			identifier: function.impossibleType
+			count: 1
+			path: packages/Webkul/Activity/src/Repositories/ActivityRepository.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\User\\Models\\User\:\:\$role\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Admin/src/Bouncer.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\User\\Models\\User\:\:\$view_permission\.$#'
+			identifier: property.notFound
+			count: 2
+			path: packages/Webkul/Admin/src/Bouncer.php
+
+		-
+			message: '#^Method Webkul\\Admin\\Bouncer\:\:hasPermission\(\) with return type void returns false but should not return anything\.$#'
+			identifier: return.void
+			count: 1
+			path: packages/Webkul/Admin/src/Bouncer.php
+
+		-
+			message: '#^Method Webkul\\Admin\\Bouncer\:\:hasPermission\(\) with return type void returns true but should not return anything\.$#'
+			identifier: return.void
+			count: 2
+			path: packages/Webkul/Admin/src/Bouncer.php
+
+		-
+			message: '#^Access to property \$id on an unknown class Webkul\\Contract\\Repositories\\Pipeline\.$#'
+			identifier: class.notFound
+			count: 1
+			path: packages/Webkul/Admin/src/DataGrids/Lead/LeadDataGrid.php
+
+		-
+			message: '#^Access to property \$stages on an unknown class Webkul\\Contract\\Repositories\\Pipeline\.$#'
+			identifier: class.notFound
+			count: 2
+			path: packages/Webkul/Admin/src/DataGrids/Lead/LeadDataGrid.php
+
+		-
+			message: '#^Method Webkul\\Core\\Core\:\:formatBasePrice\(\) invoked with 2 parameters, 1 required\.$#'
+			identifier: arguments.count
+			count: 1
+			path: packages/Webkul/Admin/src/DataGrids/Lead/LeadDataGrid.php
+
+		-
+			message: '#^Property Webkul\\Admin\\DataGrids\\Lead\\LeadDataGrid\:\:\$pipeline \(Webkul\\Contract\\Repositories\\Pipeline\) does not accept Webkul\\Lead\\Contracts\\Pipeline\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: packages/Webkul/Admin/src/DataGrids/Lead/LeadDataGrid.php
+
+		-
+			message: '#^Property Webkul\\Admin\\DataGrids\\Lead\\LeadDataGrid\:\:\$pipeline has unknown class Webkul\\Contract\\Repositories\\Pipeline as its type\.$#'
+			identifier: class.notFound
+			count: 1
+			path: packages/Webkul/Admin/src/DataGrids/Lead/LeadDataGrid.php
+
+		-
+			message: '#^Method Webkul\\Core\\Core\:\:formatBasePrice\(\) invoked with 2 parameters, 1 required\.$#'
+			identifier: arguments.count
+			count: 1
+			path: packages/Webkul/Admin/src/DataGrids/Product/ProductDataGrid.php
+
+		-
+			message: '#^Method Webkul\\Core\\Core\:\:formatBasePrice\(\) invoked with 2 parameters, 1 required\.$#'
+			identifier: arguments.count
+			count: 5
+			path: packages/Webkul/Admin/src/DataGrids/Quote/QuoteDataGrid.php
+
+		-
+			message: '#^Call to an undefined method Webkul\\Attribute\\Repositories\\AttributeRepository\:\:select\(\)\.$#'
+			identifier: method.notFound
+			count: 2
+			path: packages/Webkul/Admin/src/DataGrids/Settings/AttributeDataGrid.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\User\\Models\\User\:\:\$role_id\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Admin/src/DataGrids/Settings/RoleDataGrid.php
+
+		-
+			message: '#^PHPDoc tag @return with type void is incompatible with native type Illuminate\\Database\\Query\\Builder\.$#'
+			identifier: return.phpDocType
+			count: 1
+			path: packages/Webkul/Admin/src/DataGrids/Settings/WarehouseDataGrid.php
+
+		-
+			message: '#^Method Webkul\\Admin\\Exceptions\\Handler\:\:render\(\) should return Illuminate\\Http\\Response but returns Symfony\\Component\\HttpFoundation\\Response\.$#'
+			identifier: return.type
+			count: 1
+			path: packages/Webkul/Admin/src/Exceptions/Handler.php
+
+		-
+			message: '#^Method Webkul\\Admin\\Exceptions\\Handler\:\:renderCustomResponse\(\) should return Illuminate\\Http\\Response\|null but returns Symfony\\Component\\HttpFoundation\\Response\.$#'
+			identifier: return.type
+			count: 1
+			path: packages/Webkul/Admin/src/Exceptions/Handler.php
+
+		-
+			message: '#^Method Webkul\\Admin\\Exceptions\\Handler\:\:unauthenticated\(\) should return Illuminate\\Http\\Response but returns Illuminate\\Http\\JsonResponse\.$#'
+			identifier: return.type
+			count: 1
+			path: packages/Webkul/Admin/src/Exceptions/Handler.php
+
+		-
+			message: '#^Method Webkul\\Admin\\Exceptions\\Handler\:\:unauthenticated\(\) should return Illuminate\\Http\\Response but returns Illuminate\\Http\\RedirectResponse\.$#'
+			identifier: return.type
+			count: 1
+			path: packages/Webkul/Admin/src/Exceptions/Handler.php
+
+		-
+			message: '#^PHPDoc tag @param references unknown parameter\: \$path$#'
+			identifier: parameter.notFound
+			count: 1
+			path: packages/Webkul/Admin/src/Exceptions/Handler.php
+
+		-
+			message: '#^Parameter \#1 \$errorCode of method Webkul\\Admin\\Exceptions\\Handler\:\:response\(\) expects string, int given\.$#'
+			identifier: argument.type
+			count: 4
+			path: packages/Webkul/Admin/src/Exceptions/Handler.php
+
+		-
+			message: '#^Parameter \#2 \$status of method Illuminate\\Contracts\\Routing\\ResponseFactory\:\:json\(\) expects int, string given\.$#'
+			identifier: argument.type
+			count: 1
+			path: packages/Webkul/Admin/src/Exceptions/Handler.php
+
+		-
+			message: '#^PHPDoc tag @return with type Carbon\\Carbon is not subtype of native type Illuminate\\Support\\Carbon\.$#'
+			identifier: return.phpDocType
+			count: 2
+			path: packages/Webkul/Admin/src/Helpers/Dashboard.php
+
+		-
+			message: '#^PHPDoc tag @param for parameter \$endDate with type Carbon\\Carbon\|null is not subtype of native type Illuminate\\Support\\Carbon\|null\.$#'
+			identifier: parameter.phpDocType
+			count: 1
+			path: packages/Webkul/Admin/src/Helpers/Reporting/AbstractReporting.php
+
+		-
+			message: '#^PHPDoc tag @param for parameter \$startDate with type Carbon\\Carbon\|null is not subtype of native type Illuminate\\Support\\Carbon\|null\.$#'
+			identifier: parameter.phpDocType
+			count: 1
+			path: packages/Webkul/Admin/src/Helpers/Reporting/AbstractReporting.php
+
+		-
+			message: '#^PHPDoc tag @return with type Carbon\\Carbon is not subtype of native type Illuminate\\Support\\Carbon\.$#'
+			identifier: return.phpDocType
+			count: 5
+			path: packages/Webkul/Admin/src/Helpers/Reporting/AbstractReporting.php
+
+		-
+			message: '#^PHPDoc tag @return with type void is incompatible with native type Webkul\\Admin\\Helpers\\Reporting\\AbstractReporting\.$#'
+			identifier: return.phpDocType
+			count: 2
+			path: packages/Webkul/Admin/src/Helpers/Reporting/AbstractReporting.php
+
+		-
+			message: '#^Property Webkul\\Admin\\Helpers\\Reporting\\AbstractReporting\:\:\$endDate in isset\(\) is not nullable nor uninitialized\.$#'
+			identifier: isset.initializedProperty
+			count: 1
+			path: packages/Webkul/Admin/src/Helpers/Reporting/AbstractReporting.php
+
+		-
+			message: '#^Property Webkul\\Admin\\Helpers\\Reporting\\AbstractReporting\:\:\$startDate in isset\(\) is not nullable nor uninitialized\.$#'
+			identifier: isset.initializedProperty
+			count: 2
+			path: packages/Webkul/Admin/src/Helpers/Reporting/AbstractReporting.php
+
+		-
+			message: '#^PHPDoc tag @return with type array is incompatible with native type float\|null\.$#'
+			identifier: return.phpDocType
+			count: 2
+			path: packages/Webkul/Admin/src/Helpers/Reporting/Lead.php
+
+		-
+			message: '#^Call to an undefined method Webkul\\Activity\\Contracts\\Activity\:\:leads\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Controllers/Activity/ActivityController.php
+
+		-
+			message: '#^Iterating over an object of an unknown class Webkul\\Admin\\Http\\Controllers\\Collection\.$#'
+			identifier: class.notFound
+			count: 2
+			path: packages/Webkul/Admin/src/Http/Controllers/Activity/ActivityController.php
+
+		-
+			message: '#^Parameter \#1 \$dateRange of method Webkul\\Activity\\Repositories\\ActivityRepository\:\:getActivities\(\) expects string, array\<int, Carbon\\Carbon\|string\> given\.$#'
+			identifier: argument.type
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Controllers/Activity/ActivityController.php
+
+		-
+			message: '#^Method Webkul\\Admin\\Http\\Controllers\\Configuration\\ConfigurationController\:\:download\(\) should return Illuminate\\Http\\Response but returns Symfony\\Component\\HttpFoundation\\StreamedResponse\.$#'
+			identifier: return.type
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Controllers/Configuration/ConfigurationController.php
+
+		-
+			message: '#^Iterating over an object of an unknown class Webkul\\Admin\\Http\\Controllers\\Collection\.$#'
+			identifier: class.notFound
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Controllers/Contact/OrganizationController.php
+
+		-
+			message: '#^Comparison operation "\>" between int\<1, max\> and 0 is always true\.$#'
+			identifier: greater.alwaysTrue
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Controllers/Contact/Persons/PersonController.php
+
+		-
+			message: '#^Iterating over an object of an unknown class Webkul\\Admin\\Http\\Controllers\\Collection\.$#'
+			identifier: class.notFound
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Controllers/Contact/Persons/PersonController.php
+
+		-
+			message: '#^Strict comparison using \=\=\= between 0 and 0 will always evaluate to true\.$#'
+			identifier: identical.alwaysTrue
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Controllers/Contact/Persons/PersonController.php
+
+		-
+			message: '#^Call to method filter\(\) on an unknown class Webkul\\Admin\\Http\\Controllers\\Collection\.$#'
+			identifier: class.notFound
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Controllers/Controller.php
+
+		-
+			message: '#^Method Webkul\\Admin\\Http\\Controllers\\Controller\:\:filterAuthorizedRecords\(\) has invalid return type Webkul\\Admin\\Http\\Controllers\\Collection\.$#'
+			identifier: class.notFound
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Controllers/Controller.php
+
+		-
+			message: '#^Method Webkul\\Admin\\Http\\Controllers\\Controller\:\:redirectToLogin\(\) should return Illuminate\\Http\\Response but returns Illuminate\\Http\\RedirectResponse\.$#'
+			identifier: return.type
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Controllers/Controller.php
+
+		-
+			message: '#^Parameter \$records of method Webkul\\Admin\\Http\\Controllers\\Controller\:\:filterAuthorizedRecords\(\) has invalid type Webkul\\Admin\\Http\\Controllers\\Collection\.$#'
+			identifier: class.notFound
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Controllers/Controller.php
+
+		-
+			message: '#^Call to an undefined method Barryvdh\\DomPDF\\PDF\:\:set_option\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Controllers/DashboardController.php
+
+		-
+			message: '#^Method Webkul\\Admin\\Http\\Controllers\\DashboardController\:\:downloadPDF\(\) should return Illuminate\\Http\\Response but returns Symfony\\Component\\HttpFoundation\\StreamedResponse\.$#'
+			identifier: return.type
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Controllers/DashboardController.php
+
+		-
+			message: '#^Method Webkul\\Admin\\Http\\Controllers\\Lead\\EmailController\:\:detach\(\) should return Illuminate\\Http\\Response but returns Illuminate\\Http\\JsonResponse\.$#'
+			identifier: return.type
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Controllers/Lead/EmailController.php
+
+		-
+			message: '#^Method Webkul\\Admin\\Http\\Controllers\\Lead\\EmailController\:\:store\(\) should return Illuminate\\Http\\Response but returns Illuminate\\Http\\JsonResponse\.$#'
+			identifier: return.type
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Controllers/Lead/EmailController.php
+
+		-
+			message: '#^Unreachable statement \- code above always terminates\.$#'
+			identifier: deadCode.unreachable
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Controllers/Lead/EmailController.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Lead\\Contracts\\Pipeline\:\:\$id\.$#'
+			identifier: property.notFound
+			count: 3
+			path: packages/Webkul/Admin/src/Http/Controllers/Lead/LeadController.php
+
+		-
+			message: '#^Call to an undefined method Webkul\\Attribute\\Repositories\\AttributeRepository\:\:where\(\)\.$#'
+			identifier: method.notFound
+			count: 2
+			path: packages/Webkul/Admin/src/Http/Controllers/Lead/LeadController.php
+
+		-
+			message: '#^Call to an undefined method Webkul\\Contact\\Repositories\\PersonRepository\:\:whereJsonContains\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Controllers/Lead/LeadController.php
+
+		-
+			message: '#^Call to an undefined method Webkul\\Lead\\Contracts\\Pipeline\:\:stages\(\)\.$#'
+			identifier: method.notFound
+			count: 2
+			path: packages/Webkul/Admin/src/Http/Controllers/Lead/LeadController.php
+
+		-
+			message: '#^Call to an undefined method Webkul\\Lead\\Repositories\\LeadRepository\:\:where\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Controllers/Lead/LeadController.php
+
+		-
+			message: '#^Iterating over an object of an unknown class Webkul\\Admin\\Http\\Controllers\\Collection\.$#'
+			identifier: class.notFound
+			count: 2
+			path: packages/Webkul/Admin/src/Http/Controllers/Lead/LeadController.php
+
+		-
+			message: '#^Parameter \#1 \$id of method Webkul\\Core\\Eloquent\\Repository\:\:find\(\) expects int, \(array\|string\) given\.$#'
+			identifier: argument.type
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Controllers/Lead/LeadController.php
+
+		-
+			message: '#^Variable \$data might not be defined\.$#'
+			identifier: variable.undefined
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Controllers/Lead/LeadController.php
+
+		-
+			message: '#^Call to an undefined method Barryvdh\\DomPDF\\PDF\:\:set_option\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Controllers/Lead/QuoteController.php
+
+		-
+			message: '#^Method Webkul\\Admin\\Http\\Controllers\\Lead\\QuoteController\:\:delete\(\) should return Illuminate\\Http\\Response but returns Illuminate\\Http\\JsonResponse\.$#'
+			identifier: return.type
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Controllers/Lead/QuoteController.php
+
+		-
+			message: '#^Method Webkul\\Admin\\Http\\Controllers\\Lead\\QuoteController\:\:mail\(\) should return Illuminate\\Http\\Response but returns Illuminate\\Http\\JsonResponse\.$#'
+			identifier: return.type
+			count: 4
+			path: packages/Webkul/Admin/src/Http/Controllers/Lead/QuoteController.php
+
+		-
+			message: '#^Method Webkul\\Admin\\Http\\Controllers\\Lead\\QuoteController\:\:store\(\) should return Illuminate\\Http\\Response but returns Illuminate\\Http\\JsonResponse\.$#'
+			identifier: return.type
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Controllers/Lead/QuoteController.php
+
+		-
+			message: '#^PHPDoc tag @param references unknown parameter\: \$leadId$#'
+			identifier: parameter.notFound
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Controllers/Lead/QuoteController.php
+
+		-
+			message: '#^Using nullsafe property access on non\-nullable type mixed\. Use \-\> instead\.$#'
+			identifier: nullsafe.neverNull
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Controllers/Lead/QuoteController.php
+
+		-
+			message: '#^Method Webkul\\Admin\\Http\\Controllers\\Lead\\TagController\:\:attach\(\) should return Illuminate\\Http\\Response but returns Illuminate\\Http\\JsonResponse\.$#'
+			identifier: return.type
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Controllers/Lead/TagController.php
+
+		-
+			message: '#^Method Webkul\\Admin\\Http\\Controllers\\Lead\\TagController\:\:detach\(\) should return Illuminate\\Http\\Response but returns Illuminate\\Http\\JsonResponse\.$#'
+			identifier: return.type
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Controllers/Lead/TagController.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Email\\Contracts\\Email\:\:\$id\.$#'
+			identifier: property.notFound
+			count: 2
+			path: packages/Webkul/Admin/src/Http/Controllers/Mail/EmailController.php
+
+		-
+			message: '#^Call to an undefined method Webkul\\Email\\Contracts\\Email\:\:refresh\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Controllers/Mail/EmailController.php
+
+		-
+			message: '#^Method Webkul\\Admin\\Http\\Controllers\\Mail\\EmailController\:\:download\(\) should return Illuminate\\View\\View but returns Illuminate\\Http\\RedirectResponse\.$#'
+			identifier: return.type
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Controllers/Mail/EmailController.php
+
+		-
+			message: '#^Method Webkul\\Admin\\Http\\Controllers\\Mail\\EmailController\:\:download\(\) should return Illuminate\\View\\View but returns Symfony\\Component\\HttpFoundation\\StreamedResponse\.$#'
+			identifier: return.type
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Controllers/Mail/EmailController.php
+
+		-
+			message: '#^Method Webkul\\Admin\\Http\\Controllers\\Mail\\EmailController\:\:inboundParse\(\) should return Illuminate\\Http\\Response but returns Illuminate\\Http\\JsonResponse\.$#'
+			identifier: return.type
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Controllers/Mail/EmailController.php
+
+		-
+			message: '#^Method Webkul\\Admin\\Http\\Controllers\\Mail\\EmailController\:\:store\(\) should return Illuminate\\Http\\Response but returns Illuminate\\Http\\JsonResponse\.$#'
+			identifier: return.type
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Controllers/Mail/EmailController.php
+
+		-
+			message: '#^Method Webkul\\Admin\\Http\\Controllers\\Mail\\EmailController\:\:store\(\) should return Illuminate\\Http\\Response but returns Illuminate\\Http\\RedirectResponse\.$#'
+			identifier: return.type
+			count: 2
+			path: packages/Webkul/Admin/src/Http/Controllers/Mail/EmailController.php
+
+		-
+			message: '#^Method Webkul\\Admin\\Http\\Controllers\\Mail\\EmailController\:\:update\(\) should return Illuminate\\Http\\Response but returns Illuminate\\Http\\JsonResponse\.$#'
+			identifier: return.type
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Controllers/Mail/EmailController.php
+
+		-
+			message: '#^Method Webkul\\Admin\\Http\\Controllers\\Mail\\EmailController\:\:update\(\) should return Illuminate\\Http\\Response but returns Illuminate\\Http\\RedirectResponse\.$#'
+			identifier: return.type
+			count: 3
+			path: packages/Webkul/Admin/src/Http/Controllers/Mail/EmailController.php
+
+		-
+			message: '#^Method Webkul\\Admin\\Http\\Controllers\\Mail\\EmailController\:\:view\(\) should return Illuminate\\View\\View but returns Illuminate\\Http\\JsonResponse\.$#'
+			identifier: return.type
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Controllers/Mail/EmailController.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Admin\\Http\\Controllers\\Products\\ActivityController\:\:\$attachmentRepository\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Controllers/Products/ActivityController.php
+
+		-
+			message: '#^Call to an undefined method Webkul\\Product\\Repositories\\ProductRepository\:\:whereNotIn\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Controllers/Products/ProductController.php
+
+		-
+			message: '#^Method Webkul\\Admin\\Http\\Controllers\\Products\\TagController\:\:attach\(\) should return Illuminate\\Http\\Response but returns Illuminate\\Http\\JsonResponse\.$#'
+			identifier: return.type
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Controllers/Products/TagController.php
+
+		-
+			message: '#^Method Webkul\\Admin\\Http\\Controllers\\Products\\TagController\:\:detach\(\) should return Illuminate\\Http\\Response but returns Illuminate\\Http\\JsonResponse\.$#'
+			identifier: return.type
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Controllers/Products/TagController.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Lead\\Contracts\\Lead\:\:\$id\.$#'
+			identifier: property.notFound
+			count: 2
+			path: packages/Webkul/Admin/src/Http/Controllers/Quote/QuoteController.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Lead\\Contracts\\Lead\:\:\$person_id\.$#'
+			identifier: property.notFound
+			count: 2
+			path: packages/Webkul/Admin/src/Http/Controllers/Quote/QuoteController.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Quote\\Contracts\\Quote\:\:\$id\.$#'
+			identifier: property.notFound
+			count: 2
+			path: packages/Webkul/Admin/src/Http/Controllers/Quote/QuoteController.php
+
+		-
+			message: '#^Call to an undefined method Barryvdh\\DomPDF\\PDF\:\:set_option\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Controllers/Quote/QuoteController.php
+
+		-
+			message: '#^Call to an undefined method Webkul\\Lead\\Contracts\\Lead\:\:quotes\(\)\.$#'
+			identifier: method.notFound
+			count: 2
+			path: packages/Webkul/Admin/src/Http/Controllers/Quote/QuoteController.php
+
+		-
+			message: '#^Call to an undefined method Webkul\\Quote\\Contracts\\Quote\:\:leads\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Controllers/Quote/QuoteController.php
+
+		-
+			message: '#^Iterating over an object of an unknown class Webkul\\Admin\\Http\\Controllers\\Collection\.$#'
+			identifier: class.notFound
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Controllers/Quote/QuoteController.php
+
+		-
+			message: '#^Method Webkul\\Admin\\Http\\Controllers\\Quote\\QuoteController\:\:downloadPDF\(\) should return Illuminate\\Http\\Response but returns Symfony\\Component\\HttpFoundation\\StreamedResponse\.$#'
+			identifier: return.type
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Controllers/Quote/QuoteController.php
+
+		-
+			message: '#^Method Webkul\\Admin\\Http\\Controllers\\Settings\\AttributeController\:\:checkUniqueValidation\(\) with return type void returns Illuminate\\Http\\JsonResponse but should not return anything\.$#'
+			identifier: return.void
+			count: 2
+			path: packages/Webkul/Admin/src/Http/Controllers/Settings/AttributeController.php
+
+		-
+			message: '#^Call to an undefined method Webkul\\DataTransfer\\Contracts\\Import\:\:unsetRelations\(\)\.$#'
+			identifier: method.notFound
+			count: 5
+			path: packages/Webkul/Admin/src/Http/Controllers/Settings/DataTransfer/ImportController.php
+
+		-
+			message: '#^Unreachable statement \- code above always terminates\.$#'
+			identifier: deadCode.unreachable
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Controllers/Settings/EmailTemplateController.php
+
+		-
+			message: '#^PHPDoc tag @return with type Illuminate\\Http\\Response is incompatible with native type Illuminate\\Http\\JsonResponse\.$#'
+			identifier: return.phpDocType
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Controllers/Settings/GroupController.php
+
+		-
+			message: '#^Method Webkul\\Admin\\Http\\Controllers\\Settings\\LocationController\:\:search\(\) should return Illuminate\\Http\\Response but returns Illuminate\\Http\\JsonResponse\.$#'
+			identifier: return.type
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Controllers/Settings/LocationController.php
+
+		-
+			message: '#^PHPDoc tag @return with type Illuminate\\Http\\Response is incompatible with native type Illuminate\\Http\\JsonResponse\.$#'
+			identifier: return.phpDocType
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Controllers/Settings/LocationController.php
+
+		-
+			message: '#^Comparison operation "\>" between int\<1, max\> and 0 is always true\.$#'
+			identifier: greater.alwaysTrue
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Controllers/Settings/Marketing/EventController.php
+
+		-
+			message: '#^Strict comparison using \=\=\= between 0 and 0 will always evaluate to true\.$#'
+			identifier: identical.alwaysTrue
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Controllers/Settings/Marketing/EventController.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Lead\\Contracts\\Pipeline\:\:\$id\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Controllers/Settings/PipelineController.php
+
+		-
+			message: '#^Call to an undefined method Webkul\\Lead\\Contracts\\Pipeline\:\:stages\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Controllers/Settings/PipelineController.php
+
+		-
+			message: '#^Unreachable statement \- code above always terminates\.$#'
+			identifier: deadCode.unreachable
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Controllers/Settings/PipelineController.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\User\\Contracts\\Role\:\:\$permission_type\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Controllers/Settings/RoleController.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\User\\Models\\User\:\:\$role\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Controllers/Settings/RoleController.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\User\\Models\\User\:\:\$role_id\.$#'
+			identifier: property.notFound
+			count: 3
+			path: packages/Webkul/Admin/src/Http/Controllers/Settings/RoleController.php
+
+		-
+			message: '#^Using nullsafe property access "\?\-\>permissions" on left side of \?\? is unnecessary\. Use \-\> instead\.$#'
+			identifier: nullsafe.neverNull
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Controllers/Settings/RoleController.php
+
+		-
+			message: '#^Iterating over an object of an unknown class Webkul\\Admin\\Http\\Controllers\\Collection\.$#'
+			identifier: class.notFound
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Controllers/Settings/TagController.php
+
+		-
+			message: '#^Method Webkul\\Admin\\Http\\Controllers\\Settings\\TagController\:\:search\(\) should return Illuminate\\Http\\Response but returns Illuminate\\Http\\Resources\\Json\\AnonymousResourceCollection\.$#'
+			identifier: return.type
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Controllers/Settings/TagController.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\User\\Contracts\\User\:\:\$role\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Controllers/Settings/UserController.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\User\\Models\\User\:\:\$role\.$#'
+			identifier: property.notFound
+			count: 5
+			path: packages/Webkul/Admin/src/Http/Controllers/Settings/UserController.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\User\\Models\\User\:\:\$role_id\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Controllers/Settings/UserController.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\User\\Models\\User\:\:\$view_permission\.$#'
+			identifier: property.notFound
+			count: 2
+			path: packages/Webkul/Admin/src/Http/Controllers/Settings/UserController.php
+
+		-
+			message: '#^Using nullsafe property access "\?\-\>permissions" on left side of \?\? is unnecessary\. Use \-\> instead\.$#'
+			identifier: nullsafe.neverNull
+			count: 4
+			path: packages/Webkul/Admin/src/Http/Controllers/Settings/UserController.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Admin\\Http\\Controllers\\Settings\\Warehouse\\ActivityController\:\:\$attachmentRepository\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Controllers/Settings/Warehouse/ActivityController.php
+
+		-
+			message: '#^Method Webkul\\Admin\\Http\\Controllers\\Settings\\Warehouse\\TagController\:\:attach\(\) should return Illuminate\\Http\\Response but returns Illuminate\\Http\\JsonResponse\.$#'
+			identifier: return.type
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Controllers/Settings/Warehouse/TagController.php
+
+		-
+			message: '#^Method Webkul\\Admin\\Http\\Controllers\\Settings\\Warehouse\\TagController\:\:detach\(\) should return Illuminate\\Http\\Response but returns Illuminate\\Http\\JsonResponse\.$#'
+			identifier: return.type
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Controllers/Settings/Warehouse/TagController.php
+
+		-
+			message: '#^Parameter \#1 \$view of function view expects view\-string\|null, string given\.$#'
+			identifier: argument.type
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Controllers/Settings/Warehouse/WarehouseController.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Lead\\Contracts\\Pipeline\:\:\$id\.$#'
+			identifier: property.notFound
+			count: 2
+			path: packages/Webkul/Admin/src/Http/Controllers/Settings/WebFormController.php
+
+		-
+			message: '#^Using nullsafe property access on non\-nullable type Webkul\\Lead\\Contracts\\Pipeline\. Use \-\> instead\.$#'
+			identifier: nullsafe.neverNull
+			count: 2
+			path: packages/Webkul/Admin/src/Http/Controllers/Settings/WebFormController.php
+
+		-
+			message: '#^Unreachable statement \- code above always terminates\.$#'
+			identifier: deadCode.unreachable
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Controllers/Settings/WorkflowController.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\User\\Models\\User\:\:\$image\.$#'
+			identifier: property.notFound
+			count: 2
+			path: packages/Webkul/Admin/src/Http/Controllers/User/AccountController.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\User\\Models\\User\:\:\$password\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Controllers/User/AccountController.php
+
+		-
+			message: '#^Method Webkul\\Admin\\Http\\Controllers\\User\\AccountController\:\:update\(\) should return Illuminate\\Http\\Response but returns Illuminate\\Http\\RedirectResponse\.$#'
+			identifier: return.type
+			count: 3
+			path: packages/Webkul/Admin/src/Http/Controllers/User/AccountController.php
+
+		-
+			message: '#^Method Webkul\\Admin\\Http\\Controllers\\User\\ForgotPasswordController\:\:store\(\) should return Illuminate\\Http\\Response but returns Illuminate\\Http\\RedirectResponse\.$#'
+			identifier: return.type
+			count: 2
+			path: packages/Webkul/Admin/src/Http/Controllers/User/ForgotPasswordController.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Contracts\\Auth\\CanResetPassword\:\:\$password\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Controllers/User/ResetPasswordController.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Contracts\\Auth\\CanResetPassword\:\:\$status\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Controllers/User/ResetPasswordController.php
+
+		-
+			message: '#^Method Webkul\\Admin\\Http\\Controllers\\User\\ResetPasswordController\:\:store\(\) should return Illuminate\\Http\\Response but returns Illuminate\\Http\\RedirectResponse\.$#'
+			identifier: return.type
+			count: 3
+			path: packages/Webkul/Admin/src/Http/Controllers/User/ResetPasswordController.php
+
+		-
+			message: '#^Parameter \#1 \$user of class Illuminate\\Auth\\Events\\PasswordReset constructor expects Illuminate\\Contracts\\Auth\\Authenticatable, Illuminate\\Contracts\\Auth\\CanResetPassword given\.$#'
+			identifier: argument.type
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Controllers/User/ResetPasswordController.php
+
+		-
+			message: '#^Parameter \#1 \$user of method Illuminate\\Auth\\SessionGuard\:\:login\(\) expects Illuminate\\Contracts\\Auth\\Authenticatable, Illuminate\\Contracts\\Auth\\CanResetPassword given\.$#'
+			identifier: argument.type
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Controllers/User/ResetPasswordController.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\User\\Models\\User\:\:\$status\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Controllers/User/SessionController.php
+
+		-
+			message: '#^Using nullsafe method call on non\-nullable type Illuminate\\Support\\Collection\. Use \-\> instead\.$#'
+			identifier: nullsafe.neverNull
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Controllers/User/SessionController.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\User\\Models\\User\:\:\$role\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Middleware/Bouncer.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\User\\Models\\User\:\:\$status\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Middleware/Bouncer.php
+
+		-
+			message: '#^Strict comparison using \!\=\= between mixed~''all'' and ''all'' will always evaluate to true\.$#'
+			identifier: notIdentical.alwaysTrue
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Middleware/Bouncer.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Admin\\Http\\Middleware\\Locale\:\:\$app\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Middleware/Locale.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Admin\\Http\\Middleware\\Locale\:\:\$request\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Middleware/Locale.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Admin\\Http\\Resources\\ActivityFileResource\:\:\$created_at\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Resources/ActivityFileResource.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Admin\\Http\\Resources\\ActivityFileResource\:\:\$id\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Resources/ActivityFileResource.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Admin\\Http\\Resources\\ActivityFileResource\:\:\$name\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Resources/ActivityFileResource.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Admin\\Http\\Resources\\ActivityFileResource\:\:\$path\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Resources/ActivityFileResource.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Admin\\Http\\Resources\\ActivityFileResource\:\:\$updated_at\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Resources/ActivityFileResource.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Admin\\Http\\Resources\\ActivityFileResource\:\:\$url\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Resources/ActivityFileResource.php
+
+		-
+			message: '#^PHPDoc tag @param has invalid value \(Request\)\: Unexpected token "\\n     \* ", expected variable at offset 78 on line 4$#'
+			identifier: phpDoc.parseError
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Resources/ActivityFileResource.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Admin\\Http\\Resources\\ActivityParticipantResource\:\:\$person\.$#'
+			identifier: property.notFound
+			count: 2
+			path: packages/Webkul/Admin/src/Http/Resources/ActivityParticipantResource.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Admin\\Http\\Resources\\ActivityParticipantResource\:\:\$user\.$#'
+			identifier: property.notFound
+			count: 2
+			path: packages/Webkul/Admin/src/Http/Resources/ActivityParticipantResource.php
+
+		-
+			message: '#^PHPDoc tag @param has invalid value \(Request\)\: Unexpected token "\\n     \* ", expected variable at offset 78 on line 4$#'
+			identifier: phpDoc.parseError
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Resources/ActivityParticipantResource.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Admin\\Http\\Resources\\ActivityResource\:\:\$comment\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Resources/ActivityResource.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Admin\\Http\\Resources\\ActivityResource\:\:\$created_at\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Resources/ActivityResource.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Admin\\Http\\Resources\\ActivityResource\:\:\$files\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Resources/ActivityResource.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Admin\\Http\\Resources\\ActivityResource\:\:\$id\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Resources/ActivityResource.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Admin\\Http\\Resources\\ActivityResource\:\:\$is_done\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Resources/ActivityResource.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Admin\\Http\\Resources\\ActivityResource\:\:\$location\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Resources/ActivityResource.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Admin\\Http\\Resources\\ActivityResource\:\:\$participants\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Resources/ActivityResource.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Admin\\Http\\Resources\\ActivityResource\:\:\$schedule_from\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Resources/ActivityResource.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Admin\\Http\\Resources\\ActivityResource\:\:\$schedule_to\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Resources/ActivityResource.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Admin\\Http\\Resources\\ActivityResource\:\:\$title\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Resources/ActivityResource.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Admin\\Http\\Resources\\ActivityResource\:\:\$type\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Resources/ActivityResource.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Admin\\Http\\Resources\\ActivityResource\:\:\$updated_at\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Resources/ActivityResource.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Admin\\Http\\Resources\\ActivityResource\:\:\$user\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Resources/ActivityResource.php
+
+		-
+			message: '#^PHPDoc tag @param has invalid value \(Request\)\: Unexpected token "\\n     \* ", expected variable at offset 78 on line 4$#'
+			identifier: phpDoc.parseError
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Resources/ActivityResource.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Admin\\Http\\Resources\\EmailAttachmentResource\:\:\$content_id\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Resources/EmailAttachmentResource.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Admin\\Http\\Resources\\EmailAttachmentResource\:\:\$content_type\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Resources/EmailAttachmentResource.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Admin\\Http\\Resources\\EmailAttachmentResource\:\:\$created_at\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Resources/EmailAttachmentResource.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Admin\\Http\\Resources\\EmailAttachmentResource\:\:\$id\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Resources/EmailAttachmentResource.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Admin\\Http\\Resources\\EmailAttachmentResource\:\:\$name\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Resources/EmailAttachmentResource.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Admin\\Http\\Resources\\EmailAttachmentResource\:\:\$path\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Resources/EmailAttachmentResource.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Admin\\Http\\Resources\\EmailAttachmentResource\:\:\$size\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Resources/EmailAttachmentResource.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Admin\\Http\\Resources\\EmailAttachmentResource\:\:\$updated_at\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Resources/EmailAttachmentResource.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Admin\\Http\\Resources\\EmailAttachmentResource\:\:\$url\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Resources/EmailAttachmentResource.php
+
+		-
+			message: '#^PHPDoc tag @param has invalid value \(Request\)\: Unexpected token "\\n     \* ", expected variable at offset 78 on line 4$#'
+			identifier: phpDoc.parseError
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Resources/EmailAttachmentResource.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Admin\\Http\\Resources\\EmailResource\:\:\$attachments\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Resources/EmailResource.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Admin\\Http\\Resources\\EmailResource\:\:\$bcc\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Resources/EmailResource.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Admin\\Http\\Resources\\EmailResource\:\:\$cc\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Resources/EmailResource.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Admin\\Http\\Resources\\EmailResource\:\:\$created_at\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Resources/EmailResource.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Admin\\Http\\Resources\\EmailResource\:\:\$folders\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Resources/EmailResource.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Admin\\Http\\Resources\\EmailResource\:\:\$from\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Resources/EmailResource.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Admin\\Http\\Resources\\EmailResource\:\:\$id\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Resources/EmailResource.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Admin\\Http\\Resources\\EmailResource\:\:\$is_read\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Resources/EmailResource.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Admin\\Http\\Resources\\EmailResource\:\:\$lead\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Resources/EmailResource.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Admin\\Http\\Resources\\EmailResource\:\:\$message_id\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Resources/EmailResource.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Admin\\Http\\Resources\\EmailResource\:\:\$name\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Resources/EmailResource.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Admin\\Http\\Resources\\EmailResource\:\:\$parent\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Resources/EmailResource.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Admin\\Http\\Resources\\EmailResource\:\:\$parent_id\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Resources/EmailResource.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Admin\\Http\\Resources\\EmailResource\:\:\$person\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Resources/EmailResource.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Admin\\Http\\Resources\\EmailResource\:\:\$reference_ids\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Resources/EmailResource.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Admin\\Http\\Resources\\EmailResource\:\:\$reply\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Resources/EmailResource.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Admin\\Http\\Resources\\EmailResource\:\:\$reply_to\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Resources/EmailResource.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Admin\\Http\\Resources\\EmailResource\:\:\$sender\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Resources/EmailResource.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Admin\\Http\\Resources\\EmailResource\:\:\$source\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Resources/EmailResource.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Admin\\Http\\Resources\\EmailResource\:\:\$subject\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Resources/EmailResource.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Admin\\Http\\Resources\\EmailResource\:\:\$unique_id\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Resources/EmailResource.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Admin\\Http\\Resources\\EmailResource\:\:\$updated_at\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Resources/EmailResource.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Admin\\Http\\Resources\\EmailResource\:\:\$user_type\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Resources/EmailResource.php
+
+		-
+			message: '#^PHPDoc tag @param has invalid value \(Request\)\: Unexpected token "\\n     \* ", expected variable at offset 78 on line 4$#'
+			identifier: phpDoc.parseError
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Resources/EmailResource.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Admin\\Http\\Resources\\LeadResource\:\:\$closed_at\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Resources/LeadResource.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Admin\\Http\\Resources\\LeadResource\:\:\$created_at\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Resources/LeadResource.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Admin\\Http\\Resources\\LeadResource\:\:\$expected_close_date\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Resources/LeadResource.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Admin\\Http\\Resources\\LeadResource\:\:\$id\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Resources/LeadResource.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Admin\\Http\\Resources\\LeadResource\:\:\$lead_value\.$#'
+			identifier: property.notFound
+			count: 2
+			path: packages/Webkul/Admin/src/Http/Resources/LeadResource.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Admin\\Http\\Resources\\LeadResource\:\:\$person\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Resources/LeadResource.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Admin\\Http\\Resources\\LeadResource\:\:\$pipeline\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Resources/LeadResource.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Admin\\Http\\Resources\\LeadResource\:\:\$rotten_days\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Resources/LeadResource.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Admin\\Http\\Resources\\LeadResource\:\:\$source\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Resources/LeadResource.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Admin\\Http\\Resources\\LeadResource\:\:\$stage\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Resources/LeadResource.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Admin\\Http\\Resources\\LeadResource\:\:\$status\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Resources/LeadResource.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Admin\\Http\\Resources\\LeadResource\:\:\$tags\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Resources/LeadResource.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Admin\\Http\\Resources\\LeadResource\:\:\$title\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Resources/LeadResource.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Admin\\Http\\Resources\\LeadResource\:\:\$type\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Resources/LeadResource.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Admin\\Http\\Resources\\LeadResource\:\:\$updated_at\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Resources/LeadResource.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Admin\\Http\\Resources\\LeadResource\:\:\$user\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Resources/LeadResource.php
+
+		-
+			message: '#^PHPDoc tag @param has invalid value \(Request\)\: Unexpected token "\\n     \* ", expected variable at offset 78 on line 4$#'
+			identifier: phpDoc.parseError
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Resources/LeadResource.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Admin\\Http\\Resources\\OrganizationResource\:\:\$address\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Resources/OrganizationResource.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Admin\\Http\\Resources\\OrganizationResource\:\:\$created_at\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Resources/OrganizationResource.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Admin\\Http\\Resources\\OrganizationResource\:\:\$id\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Resources/OrganizationResource.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Admin\\Http\\Resources\\OrganizationResource\:\:\$name\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Resources/OrganizationResource.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Admin\\Http\\Resources\\OrganizationResource\:\:\$updated_at\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Resources/OrganizationResource.php
+
+		-
+			message: '#^PHPDoc tag @param has invalid value \(Request\)\: Unexpected token "\\n     \* ", expected variable at offset 78 on line 4$#'
+			identifier: phpDoc.parseError
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Resources/OrganizationResource.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Admin\\Http\\Resources\\PersonResource\:\:\$contact_numbers\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Resources/PersonResource.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Admin\\Http\\Resources\\PersonResource\:\:\$created_at\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Resources/PersonResource.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Admin\\Http\\Resources\\PersonResource\:\:\$emails\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Resources/PersonResource.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Admin\\Http\\Resources\\PersonResource\:\:\$id\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Resources/PersonResource.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Admin\\Http\\Resources\\PersonResource\:\:\$name\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Resources/PersonResource.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Admin\\Http\\Resources\\PersonResource\:\:\$organization\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Resources/PersonResource.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Admin\\Http\\Resources\\PersonResource\:\:\$updated_at\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Resources/PersonResource.php
+
+		-
+			message: '#^PHPDoc tag @param has invalid value \(Request\)\: Unexpected token "\\n     \* ", expected variable at offset 78 on line 4$#'
+			identifier: phpDoc.parseError
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Resources/PersonResource.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Admin\\Http\\Resources\\PipelineResource\:\:\$created_at\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Resources/PipelineResource.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Admin\\Http\\Resources\\PipelineResource\:\:\$id\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Resources/PipelineResource.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Admin\\Http\\Resources\\PipelineResource\:\:\$is_default\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Resources/PipelineResource.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Admin\\Http\\Resources\\PipelineResource\:\:\$name\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Resources/PipelineResource.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Admin\\Http\\Resources\\PipelineResource\:\:\$rotten_days\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Resources/PipelineResource.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Admin\\Http\\Resources\\PipelineResource\:\:\$stages\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Resources/PipelineResource.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Admin\\Http\\Resources\\PipelineResource\:\:\$updated_at\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Resources/PipelineResource.php
+
+		-
+			message: '#^PHPDoc tag @param has invalid value \(Request\)\: Unexpected token "\\n     \* ", expected variable at offset 78 on line 4$#'
+			identifier: phpDoc.parseError
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Resources/PipelineResource.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Admin\\Http\\Resources\\ProductResource\:\:\$created_at\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Resources/ProductResource.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Admin\\Http\\Resources\\ProductResource\:\:\$description\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Resources/ProductResource.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Admin\\Http\\Resources\\ProductResource\:\:\$id\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Resources/ProductResource.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Admin\\Http\\Resources\\ProductResource\:\:\$name\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Resources/ProductResource.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Admin\\Http\\Resources\\ProductResource\:\:\$price\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Resources/ProductResource.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Admin\\Http\\Resources\\ProductResource\:\:\$sku\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Resources/ProductResource.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Admin\\Http\\Resources\\ProductResource\:\:\$updated_at\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Resources/ProductResource.php
+
+		-
+			message: '#^PHPDoc tag @param has invalid value \(Request\)\: Unexpected token "\\n     \* ", expected variable at offset 78 on line 4$#'
+			identifier: phpDoc.parseError
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Resources/ProductResource.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Admin\\Http\\Resources\\QuoteResource\:\:\$adjustment_amount\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Resources/QuoteResource.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Admin\\Http\\Resources\\QuoteResource\:\:\$billing_address\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Resources/QuoteResource.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Admin\\Http\\Resources\\QuoteResource\:\:\$description\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Resources/QuoteResource.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Admin\\Http\\Resources\\QuoteResource\:\:\$discount_amount\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Resources/QuoteResource.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Admin\\Http\\Resources\\QuoteResource\:\:\$discount_percent\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Resources/QuoteResource.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Admin\\Http\\Resources\\QuoteResource\:\:\$expired_at\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Resources/QuoteResource.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Admin\\Http\\Resources\\QuoteResource\:\:\$grand_total\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Resources/QuoteResource.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Admin\\Http\\Resources\\QuoteResource\:\:\$id\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Resources/QuoteResource.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Admin\\Http\\Resources\\QuoteResource\:\:\$leads\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Resources/QuoteResource.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Admin\\Http\\Resources\\QuoteResource\:\:\$person\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Resources/QuoteResource.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Admin\\Http\\Resources\\QuoteResource\:\:\$shipping_address\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Resources/QuoteResource.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Admin\\Http\\Resources\\QuoteResource\:\:\$sub_total\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Resources/QuoteResource.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Admin\\Http\\Resources\\QuoteResource\:\:\$subject\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Resources/QuoteResource.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Admin\\Http\\Resources\\QuoteResource\:\:\$tax_amount\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Resources/QuoteResource.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Admin\\Http\\Resources\\QuoteResource\:\:\$user\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Resources/QuoteResource.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Admin\\Http\\Resources\\SourceResource\:\:\$created_at\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Resources/SourceResource.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Admin\\Http\\Resources\\SourceResource\:\:\$id\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Resources/SourceResource.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Admin\\Http\\Resources\\SourceResource\:\:\$name\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Resources/SourceResource.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Admin\\Http\\Resources\\SourceResource\:\:\$updated_at\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Resources/SourceResource.php
+
+		-
+			message: '#^PHPDoc tag @param has invalid value \(Request\)\: Unexpected token "\\n     \* ", expected variable at offset 78 on line 4$#'
+			identifier: phpDoc.parseError
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Resources/SourceResource.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Admin\\Http\\Resources\\StageResource\:\:\$code\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Resources/StageResource.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Admin\\Http\\Resources\\StageResource\:\:\$created_at\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Resources/StageResource.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Admin\\Http\\Resources\\StageResource\:\:\$id\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Resources/StageResource.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Admin\\Http\\Resources\\StageResource\:\:\$is_user_defined\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Resources/StageResource.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Admin\\Http\\Resources\\StageResource\:\:\$lead_pipeline_id\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Resources/StageResource.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Admin\\Http\\Resources\\StageResource\:\:\$lead_value\.$#'
+			identifier: property.notFound
+			count: 2
+			path: packages/Webkul/Admin/src/Http/Resources/StageResource.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Admin\\Http\\Resources\\StageResource\:\:\$name\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Resources/StageResource.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Admin\\Http\\Resources\\StageResource\:\:\$sort_order\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Resources/StageResource.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Admin\\Http\\Resources\\StageResource\:\:\$updated_at\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Resources/StageResource.php
+
+		-
+			message: '#^PHPDoc tag @param has invalid value \(Request\)\: Unexpected token "\\n     \* ", expected variable at offset 78 on line 4$#'
+			identifier: phpDoc.parseError
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Resources/StageResource.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Admin\\Http\\Resources\\TagResource\:\:\$color\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Resources/TagResource.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Admin\\Http\\Resources\\TagResource\:\:\$created_at\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Resources/TagResource.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Admin\\Http\\Resources\\TagResource\:\:\$id\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Resources/TagResource.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Admin\\Http\\Resources\\TagResource\:\:\$name\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Resources/TagResource.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Admin\\Http\\Resources\\TagResource\:\:\$updated_at\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Resources/TagResource.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Admin\\Http\\Resources\\TagResource\:\:\$user\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Resources/TagResource.php
+
+		-
+			message: '#^PHPDoc tag @param has invalid value \(Request\)\: Unexpected token "\\n     \* ", expected variable at offset 78 on line 4$#'
+			identifier: phpDoc.parseError
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Resources/TagResource.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Admin\\Http\\Resources\\TypeResource\:\:\$created_at\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Resources/TypeResource.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Admin\\Http\\Resources\\TypeResource\:\:\$id\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Resources/TypeResource.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Admin\\Http\\Resources\\TypeResource\:\:\$name\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Resources/TypeResource.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Admin\\Http\\Resources\\TypeResource\:\:\$updated_at\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Resources/TypeResource.php
+
+		-
+			message: '#^PHPDoc tag @param has invalid value \(Request\)\: Unexpected token "\\n     \* ", expected variable at offset 78 on line 4$#'
+			identifier: phpDoc.parseError
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Resources/TypeResource.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Admin\\Http\\Resources\\UserResource\:\:\$created_at\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Resources/UserResource.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Admin\\Http\\Resources\\UserResource\:\:\$email\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Resources/UserResource.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Admin\\Http\\Resources\\UserResource\:\:\$id\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Resources/UserResource.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Admin\\Http\\Resources\\UserResource\:\:\$image\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Resources/UserResource.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Admin\\Http\\Resources\\UserResource\:\:\$name\.$#'
+			identifier: property.notFound
+			count: 2
+			path: packages/Webkul/Admin/src/Http/Resources/UserResource.php
+
+		-
+			message: '#^PHPDoc tag @param has invalid value \(Request\)\: Unexpected token "\\n     \* ", expected variable at offset 78 on line 4$#'
+			identifier: phpDoc.parseError
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Resources/UserResource.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Activity\\Contracts\\Activity\:\:\$id\.$#'
+			identifier: property.notFound
+			count: 8
+			path: packages/Webkul/Admin/src/Listeners/Activity.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Lead\\Models\\Lead\:\:\$user_id\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Admin/src/Listeners/Lead.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Contact\\Models\\Person\:\:\$user_id\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Admin/src/Listeners/Person.php
+
+		-
+			message: '#^PHPDoc type array of property Webkul\\Admin\\Models\\Notification\:\:\$casts is not covariant with PHPDoc type array\<string, string\> of overridden property Illuminate\\Database\\Eloquent\\Model\:\:\$casts\.$#'
+			identifier: property.phpDocType
+			count: 1
+			path: packages/Webkul/Admin/src/Models/Notification.php
+
+		-
+			message: '#^PHPDoc type array of property Webkul\\Admin\\Models\\Notification\:\:\$fillable is not covariant with PHPDoc type list\<string\> of overridden property Illuminate\\Database\\Eloquent\\Model\:\:\$fillable\.$#'
+			identifier: property.phpDocType
+			count: 1
+			path: packages/Webkul/Admin/src/Models/Notification.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\User\\Contracts\\User\:\:\$email\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Admin/src/Notifications/User/UserUpdatePassword.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\User\\Contracts\\User\:\:\$name\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Admin/src/Notifications/User/UserUpdatePassword.php
+
+		-
+			message: '#^Call to an undefined method Webkul\\Core\\Core\:\:getSenderEmailDetails\(\)\.$#'
+			identifier: method.notFound
+			count: 2
+			path: packages/Webkul/Admin/src/Notifications/User/UserUpdatePassword.php
+
+		-
+			message: '#^Parameter \#1 \$view of method Illuminate\\Mail\\Mailable\:\:view\(\) expects view\-string, string given\.$#'
+			identifier: argument.type
+			count: 1
+			path: packages/Webkul/Admin/src/Notifications/User/UserUpdatePassword.php
+
+		-
+			message: '#^PHPDoc type array of property Webkul\\Admin\\Providers\\EventServiceProvider\:\:\$listen is not covariant with PHPDoc type array\<string, array\<int, string\>\> of overridden property Illuminate\\Foundation\\Support\\Providers\\EventServiceProvider\:\:\$listen\.$#'
+			identifier: property.phpDocType
+			count: 1
+			path: packages/Webkul/Admin/src/Providers/EventServiceProvider.php
+
+		-
+			message: '#^Variable \$attribute might not be defined\.$#'
+			identifier: variable.undefined
+			count: 1
+			path: packages/Webkul/Admin/src/Resources/views/components/attributes/edit/boolean.blade.php
+
+		-
+			message: '#^Variable \$value might not be defined\.$#'
+			identifier: variable.undefined
+			count: 1
+			path: packages/Webkul/Admin/src/Resources/views/components/attributes/edit/boolean.blade.php
+
+		-
+			message: '#^PHPDoc type array of property Webkul\\Attribute\\Models\\Attribute\:\:\$fillable is not covariant with PHPDoc type list\<string\> of overridden property Illuminate\\Database\\Eloquent\\Model\:\:\$fillable\.$#'
+			identifier: property.phpDocType
+			count: 1
+			path: packages/Webkul/Attribute/src/Models/Attribute.php
+
+		-
+			message: '#^PHPDoc type array of property Webkul\\Attribute\\Models\\AttributeOption\:\:\$fillable is not covariant with PHPDoc type list\<string\> of overridden property Illuminate\\Database\\Eloquent\\Model\:\:\$fillable\.$#'
+			identifier: property.phpDocType
+			count: 1
+			path: packages/Webkul/Attribute/src/Models/AttributeOption.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Activity\\Contracts\\Activity\:\:\$id\.$#'
+			identifier: property.notFound
+			count: 3
+			path: packages/Webkul/Attribute/src/Models/AttributeValue.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Attribute\\Contracts\\AttributeValue\:\:\$entity\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Attribute/src/Models/AttributeValue.php
+
+		-
+			message: '#^PHPDoc type array of property Webkul\\Attribute\\Models\\AttributeValue\:\:\$casts is not covariant with PHPDoc type array\<string, string\> of overridden property Illuminate\\Database\\Eloquent\\Model\:\:\$casts\.$#'
+			identifier: property.phpDocType
+			count: 1
+			path: packages/Webkul/Attribute/src/Models/AttributeValue.php
+
+		-
+			message: '#^PHPDoc type array of property Webkul\\Attribute\\Models\\AttributeValue\:\:\$fillable is not covariant with PHPDoc type list\<string\> of overridden property Illuminate\\Database\\Eloquent\\Model\:\:\$fillable\.$#'
+			identifier: property.phpDocType
+			count: 1
+			path: packages/Webkul/Attribute/src/Models/AttributeValue.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$id\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Attribute/src/Repositories/AttributeRepository.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$type\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Attribute/src/Repositories/AttributeRepository.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\User\\Models\\User\:\:\$view_permission\.$#'
+			identifier: property.notFound
+			count: 2
+			path: packages/Webkul/Attribute/src/Repositories/AttributeRepository.php
+
+		-
+			message: '#^Method Webkul\\Attribute\\Repositories\\AttributeRepository\:\:create\(\) should return Webkul\\Attribute\\Contracts\\Attribute but returns Illuminate\\Database\\Eloquent\\Model\.$#'
+			identifier: return.type
+			count: 1
+			path: packages/Webkul/Attribute/src/Repositories/AttributeRepository.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Attribute\\Contracts\\Attribute\:\:\$id\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Attribute/src/Repositories/AttributeValueRepository.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Attribute\\Contracts\\Attribute\:\:\$type\.$#'
+			identifier: property.notFound
+			count: 2
+			path: packages/Webkul/Attribute/src/Repositories/AttributeValueRepository.php
+
+		-
+			message: '#^Access to an undefined static property Illuminate\\Database\\Eloquent\\Model\:\:\$attributeTypeFields\.$#'
+			identifier: staticProperty.notFound
+			count: 3
+			path: packages/Webkul/Attribute/src/Repositories/AttributeValueRepository.php
+
+		-
+			message: '#^Call to an undefined method Webkul\\Attribute\\Repositories\\AttributeRepository\:\:where\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: packages/Webkul/Attribute/src/Repositories/AttributeValueRepository.php
+
+		-
+			message: '#^Called ''count'' on Laravel collection, but could have been retrieved as a query\.$#'
+			identifier: larastan.noUnnecessaryCollectionCall
+			count: 1
+			path: packages/Webkul/Attribute/src/Repositories/AttributeValueRepository.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Automation\\Helpers\\Entity\\AbstractEntity\:\:\$entityType\.$#'
+			identifier: property.notFound
+			count: 6
+			path: packages/Webkul/Automation/src/Helpers/Entity/AbstractEntity.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Activity\\Contracts\\Activity\:\:\$comment\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Automation/src/Helpers/Entity/Activity.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Activity\\Contracts\\Activity\:\:\$created_at\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Automation/src/Helpers/Entity/Activity.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Activity\\Contracts\\Activity\:\:\$id\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Automation/src/Helpers/Entity/Activity.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Activity\\Contracts\\Activity\:\:\$location\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Automation/src/Helpers/Entity/Activity.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Activity\\Contracts\\Activity\:\:\$participants\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Automation/src/Helpers/Entity/Activity.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Activity\\Contracts\\Activity\:\:\$schedule_from\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Automation/src/Helpers/Entity/Activity.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Activity\\Contracts\\Activity\:\:\$schedule_to\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Automation/src/Helpers/Entity/Activity.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Activity\\Contracts\\Activity\:\:\$title\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Automation/src/Helpers/Entity/Activity.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Activity\\Contracts\\Activity\:\:\$user\.$#'
+			identifier: property.notFound
+			count: 2
+			path: packages/Webkul/Automation/src/Helpers/Entity/Activity.php
+
+		-
+			message: '#^Parameter \#1 \$lookup of method Webkul\\Attribute\\Repositories\\AttributeRepository\:\:getLookUpOptions\(\) expects int, string given\.$#'
+			identifier: argument.type
+			count: 1
+			path: packages/Webkul/Automation/src/Helpers/Entity/Activity.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Activity\\Contracts\\Activity\:\:\$id\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Automation/src/Helpers/Entity/Lead.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Automation\\Contracts\\Workflow\:\:\$condition_type\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Automation/src/Helpers/Validator.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Automation\\Contracts\\Workflow\:\:\$conditions\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Automation/src/Helpers/Validator.php
+
+		-
+			message: '#^Method Webkul\\Automation\\Helpers\\Validator\:\:getAttributeValue\(\) should return bool but returns list\<string\>\.$#'
+			identifier: return.type
+			count: 1
+			path: packages/Webkul/Automation/src/Helpers/Validator.php
+
+		-
+			message: '#^Right side of \|\| is always false\.$#'
+			identifier: booleanOr.rightAlwaysFalse
+			count: 1
+			path: packages/Webkul/Automation/src/Helpers/Validator.php
+
+		-
+			message: '#^Variable \$result might not be defined\.$#'
+			identifier: variable.undefined
+			count: 2
+			path: packages/Webkul/Automation/src/Helpers/Validator.php
+
+		-
+			message: '#^PHPDoc type array\<int, string\> of property Webkul\\Automation\\Models\\Webhook\:\:\$fillable is not covariant with PHPDoc type list\<string\> of overridden property Illuminate\\Database\\Eloquent\\Model\:\:\$fillable\.$#'
+			identifier: property.phpDocType
+			count: 1
+			path: packages/Webkul/Automation/src/Models/Webhook.php
+
+		-
+			message: '#^PHPDoc type string of property Webkul\\Contact\\Database\\Factories\\PersonFactory\:\:\$model is not covariant with PHPDoc type class\-string\<Illuminate\\Database\\Eloquent\\Model\> of overridden property Illuminate\\Database\\Eloquent\\Factories\\Factory\<Illuminate\\Database\\Eloquent\\Model\>\:\:\$model\.$#'
+			identifier: property.phpDocType
+			count: 1
+			path: packages/Webkul/Contact/src/Database/Factories/PersonFactory.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Contact\\Models\\Organization\:\:\$attribute_values\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Contact/src/Models/Organization.php
+
+		-
+			message: '#^Call to an undefined method Webkul\\Attribute\\Repositories\\AttributeRepository\:\:where\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: packages/Webkul/Contact/src/Models/Organization.php
+
+		-
+			message: '#^Method Webkul\\Contact\\Models\\Organization\:\:getLookUpAttributes\(\) has invalid return type Webkul\\Attribute\\Traits\\Collection\.$#'
+			identifier: class.notFound
+			count: 1
+			path: packages/Webkul/Contact/src/Models/Organization.php
+
+		-
+			message: '#^PHPDoc type array of property Webkul\\Contact\\Models\\Organization\:\:\$fillable is not covariant with PHPDoc type list\<string\> of overridden property Illuminate\\Database\\Eloquent\\Model\:\:\$fillable\.$#'
+			identifier: property.phpDocType
+			count: 1
+			path: packages/Webkul/Contact/src/Models/Organization.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Activity\\Contracts\\Activity\:\:\$id\.$#'
+			identifier: property.notFound
+			count: 3
+			path: packages/Webkul/Contact/src/Models/Person.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Attribute\\Contracts\\AttributeValue\:\:\$entity\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Contact/src/Models/Person.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Contact\\Models\\Person\:\:\$attribute_values\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Contact/src/Models/Person.php
+
+		-
+			message: '#^Call to an undefined method Webkul\\Attribute\\Repositories\\AttributeRepository\:\:where\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: packages/Webkul/Contact/src/Models/Person.php
+
+		-
+			message: '#^Method Webkul\\Contact\\Models\\Person\:\:getLookUpAttributes\(\) has invalid return type Webkul\\Attribute\\Traits\\Collection\.$#'
+			identifier: class.notFound
+			count: 1
+			path: packages/Webkul/Contact/src/Models/Person.php
+
+		-
+			message: '#^PHPDoc type array of property Webkul\\Contact\\Models\\Person\:\:\$casts is not covariant with PHPDoc type array\<string, string\> of overridden property Illuminate\\Database\\Eloquent\\Model\:\:\$casts\.$#'
+			identifier: property.phpDocType
+			count: 1
+			path: packages/Webkul/Contact/src/Models/Person.php
+
+		-
+			message: '#^PHPDoc type array of property Webkul\\Contact\\Models\\Person\:\:\$fillable is not covariant with PHPDoc type list\<string\> of overridden property Illuminate\\Database\\Eloquent\\Model\:\:\$fillable\.$#'
+			identifier: property.phpDocType
+			count: 1
+			path: packages/Webkul/Contact/src/Models/Person.php
+
+		-
+			message: '#^PHPDoc type string of property Webkul\\Contact\\Models\\Person\:\:\$with is not covariant with PHPDoc type list\<string\> of overridden property Illuminate\\Database\\Eloquent\\Model\:\:\$with\.$#'
+			identifier: property.phpDocType
+			count: 1
+			path: packages/Webkul/Contact/src/Models/Person.php
+
+		-
+			message: '#^Call to an undefined method Webkul\\Attribute\\Repositories\\AttributeRepository\:\:where\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: packages/Webkul/Contact/src/Repositories/OrganizationRepository.php
+
+		-
+			message: '#^Method Webkul\\Contact\\Repositories\\OrganizationRepository\:\:delete\(\) should return int but return statement is missing\.$#'
+			identifier: return.missing
+			count: 1
+			path: packages/Webkul/Contact/src/Repositories/OrganizationRepository.php
+
+		-
+			message: '#^PHPDoc tag @param references unknown parameter\: \$attribute$#'
+			identifier: parameter.notFound
+			count: 1
+			path: packages/Webkul/Contact/src/Repositories/OrganizationRepository.php
+
+		-
+			message: '#^PHPDoc tag @return has invalid value \(@void\)\: Unexpected token "@void", expected type at offset 95 on line 5$#'
+			identifier: phpDoc.parseError
+			count: 1
+			path: packages/Webkul/Contact/src/Repositories/OrganizationRepository.php
+
+		-
+			message: '#^Call to an undefined method Webkul\\Attribute\\Repositories\\AttributeRepository\:\:where\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: packages/Webkul/Contact/src/Repositories/PersonRepository.php
+
+		-
+			message: '#^Call to an undefined method Webkul\\Contact\\Repositories\\PersonRepository\:\:whereBetween\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: packages/Webkul/Contact/src/Repositories/PersonRepository.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\User\\Models\\User\:\:\$role\.$#'
+			identifier: property.notFound
+			count: 2
+			path: packages/Webkul/Core/src/Acl.php
+
+		-
+			message: '#^Using nullsafe property access "\?\-\>permissions" on left side of \?\? is unnecessary\. Use \-\> instead\.$#'
+			identifier: nullsafe.neverNull
+			count: 1
+			path: packages/Webkul/Core/src/Acl.php
+
+		-
+			message: '#^Called ''env'' outside of the config directory which returns null when the config is cached, use ''config''\.$#'
+			identifier: larastan.noEnvCallsOutsideOfConfig
+			count: 3
+			path: packages/Webkul/Core/src/Config/sanctum.php
+
+		-
+			message: '#^Call to function is_null\(\) with float will always evaluate to false\.$#'
+			identifier: function.impossibleType
+			count: 1
+			path: packages/Webkul/Core/src/Core.php
+
+		-
+			message: '#^Method Webkul\\Core\\Core\:\:findStateByCountryCode\(\) should return Illuminate\\Support\\Collection but returns false\.$#'
+			identifier: return.type
+			count: 1
+			path: packages/Webkul/Core/src/Core.php
+
+		-
+			message: '#^Method Webkul\\Core\\Core\:\:groupedStatesByCountries\(\) should return Illuminate\\Support\\Collection but returns array\<list\>\.$#'
+			identifier: return.type
+			count: 1
+			path: packages/Webkul/Core/src/Core.php
+
+		-
+			message: '#^PHPDoc tag @param references unknown parameter\: \$price$#'
+			identifier: parameter.notFound
+			count: 1
+			path: packages/Webkul/Core/src/Core.php
+
+		-
+			message: '#^PHPDoc tag @param references unknown parameter\: \$field$#'
+			identifier: parameter.notFound
+			count: 1
+			path: packages/Webkul/Core/src/Eloquent/Repository.php
+
+		-
+			message: '#^PHPDoc tag @param references unknown parameter\: \$value$#'
+			identifier: parameter.notFound
+			count: 1
+			path: packages/Webkul/Core/src/Eloquent/Repository.php
+
+		-
+			message: '#^PHPDoc tag @throws with type Webkul\\Core\\Eloquent\\RepositoryException is not subtype of Throwable$#'
+			identifier: throws.notThrowable
+			count: 1
+			path: packages/Webkul/Core/src/Eloquent/Repository.php
+
+		-
+			message: '#^PHPDoc tag @param references unknown parameter\: \$theme$#'
+			identifier: parameter.notFound
+			count: 1
+			path: packages/Webkul/Core/src/Exceptions/ViterNotFound.php
+
+		-
+			message: '#^Call to function is_string\(\) with non\-falsy\-string will always evaluate to true\.$#'
+			identifier: function.alreadyNarrowedType
+			count: 1
+			path: packages/Webkul/Core/src/Helpers/Helper.php
+
+		-
+			message: '#^PHPDoc type array of property Webkul\\Core\\Models\\CoreConfig\:\:\$table is not covariant with PHPDoc type string\|null of overridden property Illuminate\\Database\\Eloquent\\Model\:\:\$table\.$#'
+			identifier: property.phpDocType
+			count: 1
+			path: packages/Webkul/Core/src/Models/CoreConfig.php
+
+		-
+			message: '#^Property Webkul\\Core\\Models\\CoreConfig\:\:\$table \(array\) does not accept default value of type string\.$#'
+			identifier: property.defaultValue
+			count: 1
+			path: packages/Webkul/Core/src/Models/CoreConfig.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$id\.$#'
+			identifier: property.notFound
+			count: 2
+			path: packages/Webkul/Core/src/Repositories/CoreConfigRepository.php
+
+		-
+			message: '#^Cannot call method getKey\(\) on class\-string\|object\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: packages/Webkul/Core/src/Repositories/CoreConfigRepository.php
+
+		-
+			message: '#^Cannot call method haveChildren\(\) on class\-string\|object\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: packages/Webkul/Core/src/Repositories/CoreConfigRepository.php
+
+		-
+			message: '#^PHPDoc tag @param for parameter \$items with type array is incompatible with native type Illuminate\\Support\\Collection\.$#'
+			identifier: parameter.phpDocType
+			count: 1
+			path: packages/Webkul/Core/src/Repositories/CoreConfigRepository.php
+
+		-
+			message: '#^Expression on left side of \?\? is not nullable\.$#'
+			identifier: nullCoalesce.expr
+			count: 2
+			path: packages/Webkul/Core/src/SystemConfig.php
+
+		-
+			message: '#^Property Webkul\\Core\\SystemConfig\\Item\:\:\$name on left side of \?\? is not nullable nor uninitialized\.$#'
+			identifier: nullCoalesce.initializedProperty
+			count: 1
+			path: packages/Webkul/Core/src/SystemConfig/Item.php
+
+		-
+			message: '#^Property Webkul\\Core\\SystemConfig\\ItemField\:\:\$title on left side of \?\? is not nullable nor uninitialized\.$#'
+			identifier: nullCoalesce.initializedProperty
+			count: 1
+			path: packages/Webkul/Core/src/SystemConfig/ItemField.php
+
+		-
+			message: '#^Method Webkul\\Core\\ViewRenderEventManager\:\:handleRenderEvent\(\) should return string but returns array\.$#'
+			identifier: return.type
+			count: 1
+			path: packages/Webkul/Core/src/ViewRenderEventManager.php
+
+		-
+			message: '#^Method Carbon\\Carbon\:\:subMonth\(\) invoked with 1 parameter, 0 required\.$#'
+			identifier: arguments.count
+			count: 6
+			path: packages/Webkul/DataGrid/src/Enums/DateRangeOptionEnum.php
+
+		-
+			message: '#^Method Carbon\\Carbon\:\:subSecond\(\) invoked with 1 parameter, 0 required\.$#'
+			identifier: arguments.count
+			count: 1
+			path: packages/Webkul/DataGrid/src/Enums/DateRangeOptionEnum.php
+
+		-
+			message: '#^Method Webkul\\DataGrid\\Exports\\DataGridExport\:\:query\(\) has invalid return type Laravel\\Scout\\Builder\.$#'
+			identifier: class.notFound
+			count: 1
+			path: packages/Webkul/DataGrid/src/Exports/DataGridExport.php
+
+		-
+			message: '#^PHPDoc type array of property Webkul\\DataGrid\\Models\\SavedFilter\:\:\$casts is not covariant with PHPDoc type array\<string, string\> of overridden property Illuminate\\Database\\Eloquent\\Model\:\:\$casts\.$#'
+			identifier: property.phpDocType
+			count: 1
+			path: packages/Webkul/DataGrid/src/Models/SavedFilter.php
+
+		-
+			message: '#^PHPDoc type array of property Webkul\\DataGrid\\Models\\SavedFilter\:\:\$fillable is not covariant with PHPDoc type list\<string\> of overridden property Illuminate\\Database\\Eloquent\\Model\:\:\$fillable\.$#'
+			identifier: property.phpDocType
+			count: 1
+			path: packages/Webkul/DataGrid/src/Models/SavedFilter.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\DataTransfer\\Contracts\\Import\:\:\$allowed_errors\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/DataTransfer/src/Helpers/Import.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\DataTransfer\\Contracts\\Import\:\:\$batches\.$#'
+			identifier: property.notFound
+			count: 2
+			path: packages/Webkul/DataTransfer/src/Helpers/Import.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\DataTransfer\\Contracts\\Import\:\:\$error_file_path\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/DataTransfer/src/Helpers/Import.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\DataTransfer\\Contracts\\Import\:\:\$errors_count\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/DataTransfer/src/Helpers/Import.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\DataTransfer\\Contracts\\Import\:\:\$field_separator\.$#'
+			identifier: property.notFound
+			count: 3
+			path: packages/Webkul/DataTransfer/src/Helpers/Import.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\DataTransfer\\Contracts\\Import\:\:\$file_path\.$#'
+			identifier: property.notFound
+			count: 4
+			path: packages/Webkul/DataTransfer/src/Helpers/Import.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\DataTransfer\\Contracts\\Import\:\:\$id\.$#'
+			identifier: property.notFound
+			count: 7
+			path: packages/Webkul/DataTransfer/src/Helpers/Import.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\DataTransfer\\Contracts\\Import\:\:\$invalid_rows_count\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/DataTransfer/src/Helpers/Import.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\DataTransfer\\Contracts\\Import\:\:\$process_in_queue\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/DataTransfer/src/Helpers/Import.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\DataTransfer\\Contracts\\Import\:\:\$processed_rows_count\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/DataTransfer/src/Helpers/Import.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\DataTransfer\\Contracts\\Import\:\:\$started_at\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/DataTransfer/src/Helpers/Import.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\DataTransfer\\Contracts\\Import\:\:\$state\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/DataTransfer/src/Helpers/Import.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\DataTransfer\\Contracts\\Import\:\:\$type\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/DataTransfer/src/Helpers/Import.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\DataTransfer\\Contracts\\Import\:\:\$validation_strategy\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/DataTransfer/src/Helpers/Import.php
+
+		-
+			message: '#^Call to an undefined method Webkul\\DataTransfer\\Contracts\\Import\:\:batches\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: packages/Webkul/DataTransfer/src/Helpers/Import.php
+
+		-
+			message: '#^Call to an undefined method Webkul\\DataTransfer\\Repositories\\ImportBatchRepository\:\:select\(\)\.$#'
+			identifier: method.notFound
+			count: 2
+			path: packages/Webkul/DataTransfer/src/Helpers/Import.php
+
+		-
+			message: '#^Call to method current\(\) on an unknown class Webkul\\DataTransfer\\Helpers\\Source\.$#'
+			identifier: class.notFound
+			count: 1
+			path: packages/Webkul/DataTransfer/src/Helpers/Import.php
+
+		-
+			message: '#^Call to method getColumnNames\(\) on an unknown class Webkul\\DataTransfer\\Helpers\\Source\.$#'
+			identifier: class.notFound
+			count: 1
+			path: packages/Webkul/DataTransfer/src/Helpers/Import.php
+
+		-
+			message: '#^Call to method getCurrentRowNumber\(\) on an unknown class Webkul\\DataTransfer\\Helpers\\Source\.$#'
+			identifier: class.notFound
+			count: 1
+			path: packages/Webkul/DataTransfer/src/Helpers/Import.php
+
+		-
+			message: '#^Call to method next\(\) on an unknown class Webkul\\DataTransfer\\Helpers\\Source\.$#'
+			identifier: class.notFound
+			count: 2
+			path: packages/Webkul/DataTransfer/src/Helpers/Import.php
+
+		-
+			message: '#^Call to method rewind\(\) on an unknown class Webkul\\DataTransfer\\Helpers\\Source\.$#'
+			identifier: class.notFound
+			count: 1
+			path: packages/Webkul/DataTransfer/src/Helpers/Import.php
+
+		-
+			message: '#^Call to method valid\(\) on an unknown class Webkul\\DataTransfer\\Helpers\\Source\.$#'
+			identifier: class.notFound
+			count: 1
+			path: packages/Webkul/DataTransfer/src/Helpers/Import.php
+
+		-
+			message: '#^Class Webkul\\DataTransfer\\Helpers\\Sources\\Excel constructor invoked with 2 parameters, 1 required\.$#'
+			identifier: arguments.count
+			count: 1
+			path: packages/Webkul/DataTransfer/src/Helpers/Import.php
+
+		-
+			message: '#^Method Webkul\\DataTransfer\\Helpers\\Import\:\:getTypeImporter\(\) should return Webkul\\DataTransfer\\Helpers\\Importers\\AbstractImporter but returns Webkul\\DataTransfer\\Helpers\\Error\.$#'
+			identifier: return.type
+			count: 1
+			path: packages/Webkul/DataTransfer/src/Helpers/Import.php
+
+		-
+			message: '#^Negated boolean expression is always false\.$#'
+			identifier: booleanNot.alwaysFalse
+			count: 1
+			path: packages/Webkul/DataTransfer/src/Helpers/Import.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\DataTransfer\\Contracts\\Import\:\:\$action\.$#'
+			identifier: property.notFound
+			count: 2
+			path: packages/Webkul/DataTransfer/src/Helpers/Importers/AbstractImporter.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\DataTransfer\\Contracts\\Import\:\:\$batches\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/DataTransfer/src/Helpers/Importers/AbstractImporter.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\DataTransfer\\Contracts\\Import\:\:\$id\.$#'
+			identifier: property.notFound
+			count: 2
+			path: packages/Webkul/DataTransfer/src/Helpers/Importers/AbstractImporter.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\DataTransfer\\Helpers\\Importers\\AbstractImporter\:\:\$permanentAttributes\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/DataTransfer/src/Helpers/Importers/AbstractImporter.php
+
+		-
+			message: '#^Call to an undefined method Webkul\\DataTransfer\\Helpers\\Importers\\AbstractImporter\:\:indexBatch\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: packages/Webkul/DataTransfer/src/Helpers/Importers/AbstractImporter.php
+
+		-
+			message: '#^Call to an undefined method Webkul\\DataTransfer\\Helpers\\Importers\\AbstractImporter\:\:linkBatch\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: packages/Webkul/DataTransfer/src/Helpers/Importers/AbstractImporter.php
+
+		-
+			message: '#^Call to method current\(\) on an unknown class Webkul\\DataTransfer\\Helpers\\Source\.$#'
+			identifier: class.notFound
+			count: 1
+			path: packages/Webkul/DataTransfer/src/Helpers/Importers/AbstractImporter.php
+
+		-
+			message: '#^Call to method getColumnNames\(\) on an unknown class Webkul\\DataTransfer\\Helpers\\Source\.$#'
+			identifier: class.notFound
+			count: 1
+			path: packages/Webkul/DataTransfer/src/Helpers/Importers/AbstractImporter.php
+
+		-
+			message: '#^Call to method getCurrentRowNumber\(\) on an unknown class Webkul\\DataTransfer\\Helpers\\Source\.$#'
+			identifier: class.notFound
+			count: 1
+			path: packages/Webkul/DataTransfer/src/Helpers/Importers/AbstractImporter.php
+
+		-
+			message: '#^Call to method next\(\) on an unknown class Webkul\\DataTransfer\\Helpers\\Source\.$#'
+			identifier: class.notFound
+			count: 1
+			path: packages/Webkul/DataTransfer/src/Helpers/Importers/AbstractImporter.php
+
+		-
+			message: '#^Call to method rewind\(\) on an unknown class Webkul\\DataTransfer\\Helpers\\Source\.$#'
+			identifier: class.notFound
+			count: 1
+			path: packages/Webkul/DataTransfer/src/Helpers/Importers/AbstractImporter.php
+
+		-
+			message: '#^Call to method valid\(\) on an unknown class Webkul\\DataTransfer\\Helpers\\Source\.$#'
+			identifier: class.notFound
+			count: 3
+			path: packages/Webkul/DataTransfer/src/Helpers/Importers/AbstractImporter.php
+
+		-
+			message: '#^Method Webkul\\DataTransfer\\Helpers\\Importers\\AbstractImporter\:\:getSource\(\) has invalid return type Webkul\\DataTransfer\\Helpers\\Source\.$#'
+			identifier: class.notFound
+			count: 1
+			path: packages/Webkul/DataTransfer/src/Helpers/Importers/AbstractImporter.php
+
+		-
+			message: '#^PHPDoc tag @param references unknown parameter\: \$errorHelper$#'
+			identifier: parameter.notFound
+			count: 1
+			path: packages/Webkul/DataTransfer/src/Helpers/Importers/AbstractImporter.php
+
+		-
+			message: '#^Parameter \#1 \$entityId of method Webkul\\Attribute\\Repositories\\AttributeValueRepository\:\:isValueUnique\(\) expects int, null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: packages/Webkul/DataTransfer/src/Helpers/Importers/AbstractImporter.php
+
+		-
+			message: '#^Property Webkul\\DataTransfer\\Helpers\\Importers\\AbstractImporter\:\:\$source has unknown class Webkul\\DataTransfer\\Helpers\\Source as its type\.$#'
+			identifier: class.notFound
+			count: 1
+			path: packages/Webkul/DataTransfer/src/Helpers/Importers/AbstractImporter.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\DataTransfer\\Contracts\\Import\:\:\$action\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/DataTransfer/src/Helpers/Importers/Leads/Importer.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\DataTransfer\\Contracts\\ImportBatch\:\:\$data\.$#'
+			identifier: property.notFound
+			count: 6
+			path: packages/Webkul/DataTransfer/src/Helpers/Importers/Leads/Importer.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\DataTransfer\\Contracts\\ImportBatch\:\:\$id\.$#'
+			identifier: property.notFound
+			count: 2
+			path: packages/Webkul/DataTransfer/src/Helpers/Importers/Leads/Importer.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\DataTransfer\\Contracts\\ImportBatch\:\:\$import\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/DataTransfer/src/Helpers/Importers/Leads/Importer.php
+
+		-
+			message: '#^Binary operation "\*" between string and string results in an error\.$#'
+			identifier: binaryOp.invalid
+			count: 1
+			path: packages/Webkul/DataTransfer/src/Helpers/Importers/Leads/Importer.php
+
+		-
+			message: '#^Call to an undefined method Webkul\\Attribute\\Repositories\\AttributeValueRepository\:\:upsert\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: packages/Webkul/DataTransfer/src/Helpers/Importers/Leads/Importer.php
+
+		-
+			message: '#^Call to an undefined method Webkul\\Lead\\Repositories\\LeadRepository\:\:insert\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: packages/Webkul/DataTransfer/src/Helpers/Importers/Leads/Importer.php
+
+		-
+			message: '#^Call to an undefined method Webkul\\Lead\\Repositories\\LeadRepository\:\:upsert\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: packages/Webkul/DataTransfer/src/Helpers/Importers/Leads/Importer.php
+
+		-
+			message: '#^Call to an undefined method Webkul\\Lead\\Repositories\\ProductRepository\:\:upsert\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: packages/Webkul/DataTransfer/src/Helpers/Importers/Leads/Importer.php
+
+		-
+			message: '#^Parameter \#1 \$entityId of method Webkul\\Attribute\\Repositories\\AttributeValueRepository\:\:isValueUnique\(\) expects int, null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: packages/Webkul/DataTransfer/src/Helpers/Importers/Leads/Importer.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\DataTransfer\\Contracts\\Import\:\:\$action\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/DataTransfer/src/Helpers/Importers/Persons/Importer.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\DataTransfer\\Contracts\\ImportBatch\:\:\$data\.$#'
+			identifier: property.notFound
+			count: 4
+			path: packages/Webkul/DataTransfer/src/Helpers/Importers/Persons/Importer.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\DataTransfer\\Contracts\\ImportBatch\:\:\$id\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/DataTransfer/src/Helpers/Importers/Persons/Importer.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\DataTransfer\\Contracts\\ImportBatch\:\:\$import\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/DataTransfer/src/Helpers/Importers/Persons/Importer.php
+
+		-
+			message: '#^Call to an undefined method Webkul\\Attribute\\Repositories\\AttributeValueRepository\:\:upsert\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: packages/Webkul/DataTransfer/src/Helpers/Importers/Persons/Importer.php
+
+		-
+			message: '#^Call to an undefined method Webkul\\Contact\\Repositories\\PersonRepository\:\:insert\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: packages/Webkul/DataTransfer/src/Helpers/Importers/Persons/Importer.php
+
+		-
+			message: '#^Call to an undefined method Webkul\\Contact\\Repositories\\PersonRepository\:\:upsert\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: packages/Webkul/DataTransfer/src/Helpers/Importers/Persons/Importer.php
+
+		-
+			message: '#^Call to an undefined method Webkul\\Contact\\Repositories\\PersonRepository\:\:where\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: packages/Webkul/DataTransfer/src/Helpers/Importers/Persons/Importer.php
+
+		-
+			message: '#^Method Webkul\\DataTransfer\\Helpers\\Importers\\Persons\\Storage\:\:isEmpty\(\) should return int but returns bool\.$#'
+			identifier: return.type
+			count: 1
+			path: packages/Webkul/DataTransfer/src/Helpers/Importers/Persons/Storage.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\DataTransfer\\Contracts\\Import\:\:\$action\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/DataTransfer/src/Helpers/Importers/Products/Importer.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\DataTransfer\\Contracts\\ImportBatch\:\:\$data\.$#'
+			identifier: property.notFound
+			count: 4
+			path: packages/Webkul/DataTransfer/src/Helpers/Importers/Products/Importer.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\DataTransfer\\Contracts\\ImportBatch\:\:\$id\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/DataTransfer/src/Helpers/Importers/Products/Importer.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\DataTransfer\\Contracts\\ImportBatch\:\:\$import\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/DataTransfer/src/Helpers/Importers/Products/Importer.php
+
+		-
+			message: '#^Call to an undefined method Webkul\\Product\\Repositories\\ProductRepository\:\:insert\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: packages/Webkul/DataTransfer/src/Helpers/Importers/Products/Importer.php
+
+		-
+			message: '#^Call to an undefined method Webkul\\Product\\Repositories\\ProductRepository\:\:upsert\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: packages/Webkul/DataTransfer/src/Helpers/Importers/Products/Importer.php
+
+		-
+			message: '#^Call to method current\(\) on an unknown class Webkul\\DataTransfer\\Helpers\\Source\.$#'
+			identifier: class.notFound
+			count: 1
+			path: packages/Webkul/DataTransfer/src/Helpers/Importers/Products/Importer.php
+
+		-
+			message: '#^Call to method getCurrentRowNumber\(\) on an unknown class Webkul\\DataTransfer\\Helpers\\Source\.$#'
+			identifier: class.notFound
+			count: 1
+			path: packages/Webkul/DataTransfer/src/Helpers/Importers/Products/Importer.php
+
+		-
+			message: '#^Call to method next\(\) on an unknown class Webkul\\DataTransfer\\Helpers\\Source\.$#'
+			identifier: class.notFound
+			count: 2
+			path: packages/Webkul/DataTransfer/src/Helpers/Importers/Products/Importer.php
+
+		-
+			message: '#^Call to method rewind\(\) on an unknown class Webkul\\DataTransfer\\Helpers\\Source\.$#'
+			identifier: class.notFound
+			count: 1
+			path: packages/Webkul/DataTransfer/src/Helpers/Importers/Products/Importer.php
+
+		-
+			message: '#^Call to method valid\(\) on an unknown class Webkul\\DataTransfer\\Helpers\\Source\.$#'
+			identifier: class.notFound
+			count: 1
+			path: packages/Webkul/DataTransfer/src/Helpers/Importers/Products/Importer.php
+
+		-
+			message: '#^Method Webkul\\DataTransfer\\Helpers\\Importers\\Products\\SKUStorage\:\:isEmpty\(\) should return int but returns bool\.$#'
+			identifier: return.type
+			count: 1
+			path: packages/Webkul/DataTransfer/src/Helpers/Importers/Products/SKUStorage.php
+
+		-
+			message: '#^Variable \$rowData might not be defined\.$#'
+			identifier: variable.undefined
+			count: 2
+			path: packages/Webkul/DataTransfer/src/Helpers/Sources/Excel.php
+
+		-
+			message: '#^Call to an undefined method Webkul\\DataTransfer\\Helpers\\Importers\\AbstractImporter\:\:indexBatch\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: packages/Webkul/DataTransfer/src/Jobs/Import/IndexBatch.php
+
+		-
+			message: '#^Call to an undefined method Webkul\\DataTransfer\\Helpers\\Importers\\AbstractImporter\:\:linkBatch\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: packages/Webkul/DataTransfer/src/Jobs/Import/LinkBatch.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\DataTransfer\\Models\\Import\:\:\$file_path\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/DataTransfer/src/Models/Import.php
+
+		-
+			message: '#^PHPDoc type array of property Webkul\\DataTransfer\\Models\\Import\:\:\$casts is not covariant with PHPDoc type array\<string, string\> of overridden property Illuminate\\Database\\Eloquent\\Model\:\:\$casts\.$#'
+			identifier: property.phpDocType
+			count: 1
+			path: packages/Webkul/DataTransfer/src/Models/Import.php
+
+		-
+			message: '#^PHPDoc type array of property Webkul\\DataTransfer\\Models\\Import\:\:\$fillable is not covariant with PHPDoc type list\<string\> of overridden property Illuminate\\Database\\Eloquent\\Model\:\:\$fillable\.$#'
+			identifier: property.phpDocType
+			count: 1
+			path: packages/Webkul/DataTransfer/src/Models/Import.php
+
+		-
+			message: '#^PHPDoc type array of property Webkul\\DataTransfer\\Models\\ImportBatch\:\:\$casts is not covariant with PHPDoc type array\<string, string\> of overridden property Illuminate\\Database\\Eloquent\\Model\:\:\$casts\.$#'
+			identifier: property.phpDocType
+			count: 1
+			path: packages/Webkul/DataTransfer/src/Models/ImportBatch.php
+
+		-
+			message: '#^PHPDoc type array of property Webkul\\DataTransfer\\Models\\ImportBatch\:\:\$fillable is not covariant with PHPDoc type list\<string\> of overridden property Illuminate\\Database\\Eloquent\\Model\:\:\$fillable\.$#'
+			identifier: property.phpDocType
+			count: 1
+			path: packages/Webkul/DataTransfer/src/Models/ImportBatch.php
+
+		-
+			message: '#^Method Webkul\\Email\\Helpers\\Attachment\:\:getContent\(\) should return string but returns Webkul\\Email\\Helpers\\File\.$#'
+			identifier: return.type
+			count: 1
+			path: packages/Webkul/Email/src/Helpers/Attachment.php
+
+		-
+			message: '#^Property Webkul\\Email\\Helpers\\Attachment\:\:\$content \(Webkul\\Email\\Helpers\\File\) does not accept string\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: packages/Webkul/Email/src/Helpers/Attachment.php
+
+		-
+			message: '#^Property Webkul\\Email\\Helpers\\Attachment\:\:\$content has unknown class Webkul\\Email\\Helpers\\File as its type\.$#'
+			identifier: class.notFound
+			count: 1
+			path: packages/Webkul/Email/src/Helpers/Attachment.php
+
+		-
+			message: '#^Strict comparison using \!\=\= between string and false will always evaluate to true\.$#'
+			identifier: notIdentical.alwaysTrue
+			count: 1
+			path: packages/Webkul/Email/src/Helpers/Attachment.php
+
+		-
+			message: '#^Method Webkul\\Email\\Helpers\\Charset\:\:getCharsetAlias\(\) should return string but returns null\.$#'
+			identifier: return.type
+			count: 1
+			path: packages/Webkul/Email/src/Helpers/Charset.php
+
+		-
+			message: '#^Call to function is_array\(\) with array will always evaluate to true\.$#'
+			identifier: function.alreadyNarrowedType
+			count: 2
+			path: packages/Webkul/Email/src/Helpers/HtmlFilter.php
+
+		-
+			message: '#^Call to function is_array\(\) with array\<list\<string\>\> will always evaluate to true\.$#'
+			identifier: function.alreadyNarrowedType
+			count: 1
+			path: packages/Webkul/Email/src/Helpers/HtmlFilter.php
+
+		-
+			message: '#^Cannot use array destructuring on null\.$#'
+			identifier: offsetAccess.nonArray
+			count: 1
+			path: packages/Webkul/Email/src/Helpers/HtmlFilter.php
+
+		-
+			message: '#^If condition is always true\.$#'
+			identifier: if.alwaysTrue
+			count: 1
+			path: packages/Webkul/Email/src/Helpers/HtmlFilter.php
+
+		-
+			message: '#^Left side of \|\| is always false\.$#'
+			identifier: booleanOr.leftAlwaysFalse
+			count: 1
+			path: packages/Webkul/Email/src/Helpers/HtmlFilter.php
+
+		-
+			message: '#^Method Webkul\\Email\\Helpers\\HtmlFilter\:\:process\(\) with return type void returns string but should not return anything\.$#'
+			identifier: return.void
+			count: 1
+			path: packages/Webkul/Email/src/Helpers/HtmlFilter.php
+
+		-
+			message: '#^Method Webkul\\Email\\Helpers\\HtmlFilter\:\:tln_body2div\(\) with return type void returns array\<string, string\> but should not return anything\.$#'
+			identifier: return.void
+			count: 1
+			path: packages/Webkul/Email/src/Helpers/HtmlFilter.php
+
+		-
+			message: '#^Method Webkul\\Email\\Helpers\\HtmlFilter\:\:tln_fixstyle\(\) with return type void returns array\<int, float\|int\|string\> but should not return anything\.$#'
+			identifier: return.void
+			count: 1
+			path: packages/Webkul/Email/src/Helpers/HtmlFilter.php
+
+		-
+			message: '#^Method Webkul\\Email\\Helpers\\HtmlFilter\:\:tln_fixstyle\(\) with return type void returns array\<int, float\|int\|string\|null\> but should not return anything\.$#'
+			identifier: return.void
+			count: 1
+			path: packages/Webkul/Email/src/Helpers/HtmlFilter.php
+
+		-
+			message: '#^Method Webkul\\Email\\Helpers\\HtmlFilter\:\:tln_fixstyle\(\) with return type void returns array\<int, int\<0, max\>\|false\> but should not return anything\.$#'
+			identifier: return.void
+			count: 1
+			path: packages/Webkul/Email/src/Helpers/HtmlFilter.php
+
+		-
+			message: '#^Parameter \#2 \$attary of method Webkul\\Email\\Helpers\\HtmlFilter\:\:tln_tagprint\(\) expects array, false given\.$#'
+			identifier: argument.type
+			count: 1
+			path: packages/Webkul/Email/src/Helpers/HtmlFilter.php
+
+		-
+			message: '#^Result of method Webkul\\Email\\Helpers\\HtmlFilter\:\:tln_body2div\(\) \(void\) is used\.$#'
+			identifier: method.void
+			count: 1
+			path: packages/Webkul/Email/src/Helpers/HtmlFilter.php
+
+		-
+			message: '#^Result of method Webkul\\Email\\Helpers\\HtmlFilter\:\:tln_fixstyle\(\) \(void\) is used\.$#'
+			identifier: method.void
+			count: 1
+			path: packages/Webkul/Email/src/Helpers/HtmlFilter.php
+
+		-
+			message: '#^Unreachable statement \- code above always terminates\.$#'
+			identifier: deadCode.unreachable
+			count: 2
+			path: packages/Webkul/Email/src/Helpers/HtmlFilter.php
+
+		-
+			message: '#^Variable \$newpos might not be defined\.$#'
+			identifier: variable.undefined
+			count: 2
+			path: packages/Webkul/Email/src/Helpers/HtmlFilter.php
+
+		-
+			message: '#^Array has 2 duplicate keys with value ''text'' \(''text'', ''text''\)\.$#'
+			identifier: array.duplicateKey
+			count: 1
+			path: packages/Webkul/Email/src/Helpers/Parser.php
+
+		-
+			message: '#^Method Webkul\\Email\\Helpers\\Parser\:\:getAttachmentStream\(\) should return string but returns resource\.$#'
+			identifier: return.type
+			count: 1
+			path: packages/Webkul/Email/src/Helpers/Parser.php
+
+		-
+			message: '#^Method Webkul\\Email\\Helpers\\Parser\:\:getHeader\(\) should return string but returns false\.$#'
+			identifier: return.type
+			count: 1
+			path: packages/Webkul/Email/src/Helpers/Parser.php
+
+		-
+			message: '#^Negated boolean expression is always false\.$#'
+			identifier: booleanNot.alwaysFalse
+			count: 1
+			path: packages/Webkul/Email/src/Helpers/Parser.php
+
+		-
+			message: '#^PHPDoc tag @param has invalid value \(string\)\: Unexpected token "\\n     \* ", expected variable at offset 75 on line 4$#'
+			identifier: phpDoc.parseError
+			count: 1
+			path: packages/Webkul/Email/src/Helpers/Parser.php
+
+		-
+			message: '#^Strict comparison using \=\=\= between string and false will always evaluate to false\.$#'
+			identifier: identical.alwaysFalse
+			count: 1
+			path: packages/Webkul/Email/src/Helpers/Parser.php
+
+		-
+			message: '#^Strict comparison using \=\=\= between true and true will always evaluate to true\.$#'
+			identifier: identical.alwaysTrue
+			count: 1
+			path: packages/Webkul/Email/src/Helpers/Parser.php
+
+		-
+			message: '#^Variable \$attachmentParts in empty\(\) always exists and is not falsy\.$#'
+			identifier: empty.variable
+			count: 1
+			path: packages/Webkul/Email/src/Helpers/Parser.php
+
+		-
+			message: '#^Variable \$filename in isset\(\) always exists and is not nullable\.$#'
+			identifier: isset.variable
+			count: 1
+			path: packages/Webkul/Email/src/Helpers/Parser.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Email\\Contracts\\Email\:\:\$folders\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Email/src/InboundEmailProcessor/SendgridEmailProcessor.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Email\\Contracts\\Email\:\:\$id\.$#'
+			identifier: property.notFound
+			count: 2
+			path: packages/Webkul/Email/src/InboundEmailProcessor/SendgridEmailProcessor.php
+
+		-
+			message: '#^Result of method Webkul\\Email\\Helpers\\HtmlFilter\:\:process\(\) \(void\) is used\.$#'
+			identifier: method.void
+			count: 2
+			path: packages/Webkul/Email/src/InboundEmailProcessor/SendgridEmailProcessor.php
+
+		-
+			message: '#^Variable \$messageID on left side of \?\? always exists and is not nullable\.$#'
+			identifier: nullCoalesce.variable
+			count: 1
+			path: packages/Webkul/Email/src/InboundEmailProcessor/SendgridEmailProcessor.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Email\\Contracts\\Email\:\:\$folders\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Email/src/InboundEmailProcessor/WebklexImapEmailProcessor.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Email\\Contracts\\Email\:\:\$id\.$#'
+			identifier: property.notFound
+			count: 2
+			path: packages/Webkul/Email/src/InboundEmailProcessor/WebklexImapEmailProcessor.php
+
+		-
+			message: '#^Call to method each\(\) on an unknown class Webklex\\IMAP\\Support\\FolderCollection\.$#'
+			identifier: class.notFound
+			count: 1
+			path: packages/Webkul/Email/src/InboundEmailProcessor/WebklexImapEmailProcessor.php
+
+		-
+			message: '#^Parameter \$rootFoldersCollection of method Webkul\\Email\\InboundEmailProcessor\\WebklexImapEmailProcessor\:\:processMessagesFromLeafFolders\(\) has invalid type Webklex\\IMAP\\Support\\FolderCollection\.$#'
+			identifier: class.notFound
+			count: 1
+			path: packages/Webkul/Email/src/InboundEmailProcessor/WebklexImapEmailProcessor.php
+
+		-
+			message: '#^Result of method Webkul\\Email\\Helpers\\HtmlFilter\:\:process\(\) \(void\) is used\.$#'
+			identifier: method.void
+			count: 1
+			path: packages/Webkul/Email/src/InboundEmailProcessor/WebklexImapEmailProcessor.php
+
+		-
+			message: '#^PHPDoc type array of property Webkul\\Email\\Models\\Attachment\:\:\$appends is not covariant with PHPDoc type list\<string\> of overridden property Illuminate\\Database\\Eloquent\\Model\:\:\$appends\.$#'
+			identifier: property.phpDocType
+			count: 1
+			path: packages/Webkul/Email/src/Models/Attachment.php
+
+		-
+			message: '#^PHPDoc type array of property Webkul\\Email\\Models\\Attachment\:\:\$fillable is not covariant with PHPDoc type list\<string\> of overridden property Illuminate\\Database\\Eloquent\\Model\:\:\$fillable\.$#'
+			identifier: property.phpDocType
+			count: 1
+			path: packages/Webkul/Email/src/Models/Attachment.php
+
+		-
+			message: '#^Property ''url'' does not exist in model\.$#'
+			identifier: rules.modelAppends
+			count: 1
+			path: packages/Webkul/Email/src/Models/Attachment.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Email\\Models\\Email\:\:\$created_at\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Email/src/Models/Email.php
+
+		-
+			message: '#^PHPDoc type array of property Webkul\\Email\\Models\\Email\:\:\$appends is not covariant with PHPDoc type list\<string\> of overridden property Illuminate\\Database\\Eloquent\\Model\:\:\$appends\.$#'
+			identifier: property.phpDocType
+			count: 1
+			path: packages/Webkul/Email/src/Models/Email.php
+
+		-
+			message: '#^PHPDoc type array of property Webkul\\Email\\Models\\Email\:\:\$casts is not covariant with PHPDoc type array\<string, string\> of overridden property Illuminate\\Database\\Eloquent\\Model\:\:\$casts\.$#'
+			identifier: property.phpDocType
+			count: 1
+			path: packages/Webkul/Email/src/Models/Email.php
+
+		-
+			message: '#^PHPDoc type array of property Webkul\\Email\\Models\\Email\:\:\$fillable is not covariant with PHPDoc type list\<string\> of overridden property Illuminate\\Database\\Eloquent\\Model\:\:\$fillable\.$#'
+			identifier: property.phpDocType
+			count: 1
+			path: packages/Webkul/Email/src/Models/Email.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Email\\Contracts\\Email\:\:\$id\.$#'
+			identifier: property.notFound
+			count: 2
+			path: packages/Webkul/Email/src/Repositories/AttachmentRepository.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Email\\Contracts\\Email\:\:\$id\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Email/src/Repositories/EmailRepository.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\GoogleContact\\Models\\ContactExportBatch\:\:\$state\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/GoogleContact/src/Models/ContactExportBatch.php
+
+		-
+			message: '#^PHPDoc type array of property Webkul\\GoogleContact\\Models\\ContactExportBatch\:\:\$casts is not covariant with PHPDoc type array\<string, string\> of overridden property Illuminate\\Database\\Eloquent\\Model\:\:\$casts\.$#'
+			identifier: property.phpDocType
+			count: 1
+			path: packages/Webkul/GoogleContact/src/Models/ContactExportBatch.php
+
+		-
+			message: '#^PHPDoc type array of property Webkul\\GoogleContact\\Models\\ContactExportBatch\:\:\$fillable is not covariant with PHPDoc type list\<string\> of overridden property Illuminate\\Database\\Eloquent\\Model\:\:\$fillable\.$#'
+			identifier: property.phpDocType
+			count: 1
+			path: packages/Webkul/GoogleContact/src/Models/ContactExportBatch.php
+
+		-
+			message: '#^PHPDoc type array of property Webkul\\GoogleContact\\Models\\ContactExportBatchItem\:\:\$fillable is not covariant with PHPDoc type list\<string\> of overridden property Illuminate\\Database\\Eloquent\\Model\:\:\$fillable\.$#'
+			identifier: property.phpDocType
+			count: 1
+			path: packages/Webkul/GoogleContact/src/Models/ContactExportBatchItem.php
+
+		-
+			message: '#^PHPDoc type array of property Webkul\\GoogleContact\\Models\\GoogleContactAccount\:\:\$casts is not covariant with PHPDoc type array\<string, string\> of overridden property Illuminate\\Database\\Eloquent\\Model\:\:\$casts\.$#'
+			identifier: property.phpDocType
+			count: 1
+			path: packages/Webkul/GoogleContact/src/Models/GoogleContactAccount.php
+
+		-
+			message: '#^PHPDoc type array of property Webkul\\GoogleContact\\Models\\GoogleContactAccount\:\:\$fillable is not covariant with PHPDoc type list\<string\> of overridden property Illuminate\\Database\\Eloquent\\Model\:\:\$fillable\.$#'
+			identifier: property.phpDocType
+			count: 1
+			path: packages/Webkul/GoogleContact/src/Models/GoogleContactAccount.php
+
+		-
+			message: '#^PHPDoc type array of property Webkul\\GoogleContact\\Models\\GoogleContactAccount\:\:\$hidden is not covariant with PHPDoc type list\<string\> of overridden property Illuminate\\Database\\Eloquent\\Model\:\:\$hidden\.$#'
+			identifier: property.phpDocType
+			count: 1
+			path: packages/Webkul/GoogleContact/src/Models/GoogleContactAccount.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$name\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/GoogleContact/src/Services/GoogleContactsService.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Contact\\Models\\Person\:\:\$contact_numbers\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/GoogleContact/src/Services/GoogleContactsService.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Contact\\Models\\Person\:\:\$emails\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/GoogleContact/src/Services/GoogleContactsService.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Contact\\Models\\Person\:\:\$job_title\.$#'
+			identifier: property.notFound
+			count: 2
+			path: packages/Webkul/GoogleContact/src/Services/GoogleContactsService.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Contact\\Models\\Person\:\:\$name\.$#'
+			identifier: property.notFound
+			count: 2
+			path: packages/Webkul/GoogleContact/src/Services/GoogleContactsService.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\GoogleContact\\Models\\GoogleContactAccount\:\:\$access_token\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/GoogleContact/src/Services/TokenRefresher.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\GoogleContact\\Models\\GoogleContactAccount\:\:\$expires_at\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/GoogleContact/src/Services/TokenRefresher.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\GoogleContact\\Models\\GoogleContactAccount\:\:\$refresh_token\.$#'
+			identifier: property.notFound
+			count: 2
+			path: packages/Webkul/GoogleContact/src/Services/TokenRefresher.php
+
+		-
+			message: '#^Called ''env'' outside of the config directory which returns null when the config is cached, use ''config''\.$#'
+			identifier: larastan.noEnvCallsOutsideOfConfig
+			count: 9
+			path: packages/Webkul/Installer/src/Console/Commands/Installer.php
+
+		-
+			message: '#^Comparison operation "\<" between int\<1, max\> and 1 is always false\.$#'
+			identifier: smaller.alwaysFalse
+			count: 1
+			path: packages/Webkul/Installer/src/Console/Commands/Installer.php
+
+		-
+			message: '#^Method Webkul\\Installer\\Console\\Commands\\Installer\:\:askForApplicationDetails\(\) with return type void returns array\<string, string\> but should not return anything\.$#'
+			identifier: return.void
+			count: 1
+			path: packages/Webkul/Installer/src/Console/Commands/Installer.php
+
+		-
+			message: '#^Method Webkul\\Installer\\Console\\Commands\\Installer\:\:createEnvFile\(\) should return array\|null but return statement is missing\.$#'
+			identifier: return.missing
+			count: 1
+			path: packages/Webkul/Installer/src/Console/Commands/Installer.php
+
+		-
+			message: '#^Parameter \#1 \$string of method Illuminate\\Console\\Command\:\:info\(\) expects string, int given\.$#'
+			identifier: argument.type
+			count: 1
+			path: packages/Webkul/Installer/src/Console/Commands/Installer.php
+
+		-
+			message: '#^Parameter \#1 \$string of method Illuminate\\Console\\Command\:\:info\(\) expects string, null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: packages/Webkul/Installer/src/Console/Commands/Installer.php
+
+		-
+			message: '#^Result of method Illuminate\\Console\\Command\:\:error\(\) \(void\) is used\.$#'
+			identifier: method.void
+			count: 2
+			path: packages/Webkul/Installer/src/Console/Commands/Installer.php
+
+		-
+			message: '#^Result of method Webkul\\Installer\\Console\\Commands\\Installer\:\:askForApplicationDetails\(\) \(void\) is used\.$#'
+			identifier: method.void
+			count: 1
+			path: packages/Webkul/Installer/src/Console/Commands/Installer.php
+
+		-
+			message: '#^Result of method Webkul\\Installer\\Database\\Seeders\\DatabaseSeeder\:\:run\(\) \(void\) is used\.$#'
+			identifier: method.void
+			count: 1
+			path: packages/Webkul/Installer/src/Console/Commands/Installer.php
+
+		-
+			message: '#^Method Webkul\\Installer\\Helpers\\EnvironmentManager\:\:setEnvConfiguration\(\) should return string but returns false\.$#'
+			identifier: return.type
+			count: 1
+			path: packages/Webkul/Installer/src/Helpers/EnvironmentManager.php
+
+		-
+			message: '#^Method Webkul\\Installer\\Helpers\\EnvironmentManager\:\:setEnvConfiguration\(\) should return string but returns true\.$#'
+			identifier: return.type
+			count: 1
+			path: packages/Webkul/Installer/src/Helpers/EnvironmentManager.php
+
+		-
+			message: '#^Offset ''app_name'' on non\-empty\-array on left side of \?\? always exists and is not nullable\.$#'
+			identifier: nullCoalesce.offset
+			count: 1
+			path: packages/Webkul/Installer/src/Helpers/EnvironmentManager.php
+
+		-
+			message: '#^PHPDoc tag @param has invalid value \(\[object\] \$request\)\: Unexpected token "\[", expected type at offset 68 on line 4$#'
+			identifier: phpDoc.parseError
+			count: 1
+			path: packages/Webkul/Installer/src/Helpers/EnvironmentManager.php
+
+		-
+			message: '#^Method Webkul\\Installer\\Http\\Controllers\\ImageCacheController\:\:buildResponse\(\) has invalid return type Webkul\\Installer\\Http\\Controllers\\Illuminate\\Http\\Response\.$#'
+			identifier: class.notFound
+			count: 1
+			path: packages/Webkul/Installer/src/Http/Controllers/ImageCacheController.php
+
+		-
+			message: '#^Method Webkul\\Installer\\Http\\Controllers\\ImageCacheController\:\:buildResponse\(\) should return Webkul\\Installer\\Http\\Controllers\\Illuminate\\Http\\Response but returns Illuminate\\Http\\Response\.$#'
+			identifier: return.type
+			count: 1
+			path: packages/Webkul/Installer/src/Http/Controllers/ImageCacheController.php
+
+		-
+			message: '#^Method Webkul\\Installer\\Http\\Controllers\\ImageCacheController\:\:getImage\(\) has invalid return type Webkul\\Installer\\Http\\Controllers\\Illuminate\\Http\\Response\.$#'
+			identifier: class.notFound
+			count: 1
+			path: packages/Webkul/Installer/src/Http/Controllers/ImageCacheController.php
+
+		-
+			message: '#^Method Webkul\\Installer\\Http\\Controllers\\ImageCacheController\:\:getImageFromUrl\(\) has invalid return type Intervention\\Image\\Image\.$#'
+			identifier: class.notFound
+			count: 1
+			path: packages/Webkul/Installer/src/Http/Controllers/ImageCacheController.php
+
+		-
+			message: '#^Method Webkul\\Installer\\Http\\Controllers\\ImageCacheController\:\:getImageFromUrl\(\) should return Intervention\\Image\\Image but returns string\.$#'
+			identifier: return.type
+			count: 1
+			path: packages/Webkul/Installer/src/Http/Controllers/ImageCacheController.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$code\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Lead/src/Models/Lead.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$rotten_days\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Lead/src/Models/Lead.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Activity\\Contracts\\Activity\:\:\$id\.$#'
+			identifier: property.notFound
+			count: 3
+			path: packages/Webkul/Lead/src/Models/Lead.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Attribute\\Contracts\\AttributeValue\:\:\$entity\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Lead/src/Models/Lead.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Lead\\Models\\Lead\:\:\$attribute_values\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Lead/src/Models/Lead.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Lead\\Models\\Lead\:\:\$created_at\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Lead/src/Models/Lead.php
+
+		-
+			message: '#^Call to an undefined method Webkul\\Attribute\\Repositories\\AttributeRepository\:\:where\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: packages/Webkul/Lead/src/Models/Lead.php
+
+		-
+			message: '#^Method Webkul\\Lead\\Models\\Lead\:\:getLookUpAttributes\(\) has invalid return type Webkul\\Attribute\\Traits\\Collection\.$#'
+			identifier: class.notFound
+			count: 1
+			path: packages/Webkul/Lead/src/Models/Lead.php
+
+		-
+			message: '#^PHPDoc type array of property Webkul\\Lead\\Models\\Lead\:\:\$appends is not covariant with PHPDoc type list\<string\> of overridden property Illuminate\\Database\\Eloquent\\Model\:\:\$appends\.$#'
+			identifier: property.phpDocType
+			count: 1
+			path: packages/Webkul/Lead/src/Models/Lead.php
+
+		-
+			message: '#^PHPDoc type array of property Webkul\\Lead\\Models\\Lead\:\:\$casts is not covariant with PHPDoc type array\<string, string\> of overridden property Illuminate\\Database\\Eloquent\\Model\:\:\$casts\.$#'
+			identifier: property.phpDocType
+			count: 1
+			path: packages/Webkul/Lead/src/Models/Lead.php
+
+		-
+			message: '#^PHPDoc type array of property Webkul\\Lead\\Models\\Lead\:\:\$fillable is not covariant with PHPDoc type list\<string\> of overridden property Illuminate\\Database\\Eloquent\\Model\:\:\$fillable\.$#'
+			identifier: property.phpDocType
+			count: 1
+			path: packages/Webkul/Lead/src/Models/Lead.php
+
+		-
+			message: '#^PHPDoc type array of property Webkul\\Lead\\Models\\Pipeline\:\:\$fillable is not covariant with PHPDoc type list\<string\> of overridden property Illuminate\\Database\\Eloquent\\Model\:\:\$fillable\.$#'
+			identifier: property.phpDocType
+			count: 1
+			path: packages/Webkul/Lead/src/Models/Pipeline.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Lead\\Models\\Product\:\:\$product\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Lead/src/Models/Product.php
+
+		-
+			message: '#^PHPDoc type array of property Webkul\\Lead\\Models\\Product\:\:\$fillable is not covariant with PHPDoc type list\<string\> of overridden property Illuminate\\Database\\Eloquent\\Model\:\:\$fillable\.$#'
+			identifier: property.phpDocType
+			count: 1
+			path: packages/Webkul/Lead/src/Models/Product.php
+
+		-
+			message: '#^PHPDoc type array of property Webkul\\Lead\\Models\\Source\:\:\$fillable is not covariant with PHPDoc type list\<string\> of overridden property Illuminate\\Database\\Eloquent\\Model\:\:\$fillable\.$#'
+			identifier: property.phpDocType
+			count: 1
+			path: packages/Webkul/Lead/src/Models/Source.php
+
+		-
+			message: '#^PHPDoc type array of property Webkul\\Lead\\Models\\Stage\:\:\$fillable is not covariant with PHPDoc type list\<string\> of overridden property Illuminate\\Database\\Eloquent\\Model\:\:\$fillable\.$#'
+			identifier: property.phpDocType
+			count: 1
+			path: packages/Webkul/Lead/src/Models/Stage.php
+
+		-
+			message: '#^PHPDoc type array of property Webkul\\Lead\\Models\\Type\:\:\$fillable is not covariant with PHPDoc type list\<string\> of overridden property Illuminate\\Database\\Eloquent\\Model\:\:\$fillable\.$#'
+			identifier: property.phpDocType
+			count: 1
+			path: packages/Webkul/Lead/src/Models/Type.php
+
+		-
+			message: '#^Call to an undefined method Webkul\\Attribute\\Repositories\\AttributeRepository\:\:where\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: packages/Webkul/Lead/src/Repositories/LeadRepository.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$id\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Lead/src/Repositories/PipelineRepository.php
+
+		-
+			message: '#^Method Webkul\\Lead\\Repositories\\PipelineRepository\:\:create\(\) should return Webkul\\Lead\\Contracts\\Pipeline but returns Illuminate\\Database\\Eloquent\\Model\.$#'
+			identifier: return.type
+			count: 1
+			path: packages/Webkul/Lead/src/Repositories/PipelineRepository.php
+
+		-
+			message: '#^Parameter \#2 \$value of method Webkul\\Core\\Eloquent\\Repository\:\:findOneByField\(\) expects string\|null, int given\.$#'
+			identifier: argument.type
+			count: 1
+			path: packages/Webkul/Lead/src/Repositories/PipelineRepository.php
+
+		-
+			message: '#^Parameter \#2 \$start of function mb_substr expects int, float given\.$#'
+			identifier: argument.type
+			count: 1
+			path: packages/Webkul/Lead/src/Services/MagicAIService.php
+
+		-
+			message: '#^Parameter \#3 \$length of function mb_substr expects int\|null, float given\.$#'
+			identifier: argument.type
+			count: 1
+			path: packages/Webkul/Lead/src/Services/MagicAIService.php
+
+		-
+			message: '#^Variable \$data in empty\(\) always exists and is not falsy\.$#'
+			identifier: empty.variable
+			count: 1
+			path: packages/Webkul/Lead/src/Services/MagicAIService.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Marketing\\Contracts\\Campaign\:\:\$email_template\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Marketing/src/Mail/CampaignMail.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Marketing\\Contracts\\Campaign\:\:\$subject\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Marketing/src/Mail/CampaignMail.php
+
+		-
+			message: '#^PHPDoc type array of property Webkul\\Marketing\\Models\\Campaign\:\:\$fillable is not covariant with PHPDoc type list\<string\> of overridden property Illuminate\\Database\\Eloquent\\Model\:\:\$fillable\.$#'
+			identifier: property.phpDocType
+			count: 1
+			path: packages/Webkul/Marketing/src/Models/Campaign.php
+
+		-
+			message: '#^PHPDoc type array of property Webkul\\Marketing\\Models\\Event\:\:\$fillable is not covariant with PHPDoc type list\<string\> of overridden property Illuminate\\Database\\Eloquent\\Model\:\:\$fillable\.$#'
+			identifier: property.phpDocType
+			count: 1
+			path: packages/Webkul/Marketing/src/Models/Event.php
+
+		-
+			message: '#^Parameter \#1 \$action of method Illuminate\\Database\\Schema\\ForeignKeyDefinition\:\:onDelete\(\) expects ''cascade''\|''no action''\|''restrict''\|''set null'', ''SET NULL'' given\.$#'
+			identifier: argument.type
+			count: 1
+			path: packages/Webkul/Product/src/Database/Migrations/2024_06_28_154009_create_product_inventories_table.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Activity\\Contracts\\Activity\:\:\$id\.$#'
+			identifier: property.notFound
+			count: 3
+			path: packages/Webkul/Product/src/Models/Product.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Attribute\\Contracts\\AttributeValue\:\:\$entity\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Product/src/Models/Product.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Product\\Models\\Product\:\:\$attribute_values\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Product/src/Models/Product.php
+
+		-
+			message: '#^Call to an undefined method Webkul\\Attribute\\Repositories\\AttributeRepository\:\:where\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: packages/Webkul/Product/src/Models/Product.php
+
+		-
+			message: '#^Method Webkul\\Product\\Models\\Product\:\:getLookUpAttributes\(\) has invalid return type Webkul\\Attribute\\Traits\\Collection\.$#'
+			identifier: class.notFound
+			count: 1
+			path: packages/Webkul/Product/src/Models/Product.php
+
+		-
+			message: '#^PHPDoc type array of property Webkul\\Product\\Models\\Product\:\:\$fillable is not covariant with PHPDoc type list\<string\> of overridden property Illuminate\\Database\\Eloquent\\Model\:\:\$fillable\.$#'
+			identifier: property.phpDocType
+			count: 1
+			path: packages/Webkul/Product/src/Models/Product.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Product\\Models\\ProductInventory\:\:\$allocated\.$#'
+			identifier: property.notFound
+			count: 2
+			path: packages/Webkul/Product/src/Models/ProductInventory.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Product\\Models\\ProductInventory\:\:\$in_stock\.$#'
+			identifier: property.notFound
+			count: 2
+			path: packages/Webkul/Product/src/Models/ProductInventory.php
+
+		-
+			message: '#^PHPDoc type array of property Webkul\\Product\\Models\\ProductInventory\:\:\$fillable is not covariant with PHPDoc type list\<string\> of overridden property Illuminate\\Database\\Eloquent\\Model\:\:\$fillable\.$#'
+			identifier: property.phpDocType
+			count: 1
+			path: packages/Webkul/Product/src/Models/ProductInventory.php
+
+		-
+			message: '#^Call to an undefined method Webkul\\Attribute\\Repositories\\AttributeRepository\:\:where\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: packages/Webkul/Product/src/Repositories/ProductRepository.php
+
+		-
+			message: '#^Call to an undefined method Webkul\\Product\\Repositories\\ProductInventoryRepository\:\:where\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: packages/Webkul/Product/src/Repositories/ProductRepository.php
+
+		-
+			message: '#^Call to an undefined method Webkul\\Product\\Repositories\\ProductRepository\:\:whereBetween\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: packages/Webkul/Product/src/Repositories/ProductRepository.php
+
+		-
+			message: '#^PHPDoc tag @param references unknown parameter\: \$attribute$#'
+			identifier: parameter.notFound
+			count: 1
+			path: packages/Webkul/Product/src/Repositories/ProductRepository.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Quote\\Models\\Quote\:\:\$attribute_values\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Quote/src/Models/Quote.php
+
+		-
+			message: '#^Call to an undefined method Webkul\\Attribute\\Repositories\\AttributeRepository\:\:where\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: packages/Webkul/Quote/src/Models/Quote.php
+
+		-
+			message: '#^Method Webkul\\Quote\\Models\\Quote\:\:getLookUpAttributes\(\) has invalid return type Webkul\\Attribute\\Traits\\Collection\.$#'
+			identifier: class.notFound
+			count: 1
+			path: packages/Webkul/Quote/src/Models/Quote.php
+
+		-
+			message: '#^PHPDoc type array of property Webkul\\Quote\\Models\\Quote\:\:\$fillable is not covariant with PHPDoc type list\<string\> of overridden property Illuminate\\Database\\Eloquent\\Model\:\:\$fillable\.$#'
+			identifier: property.phpDocType
+			count: 1
+			path: packages/Webkul/Quote/src/Models/Quote.php
+
+		-
+			message: '#^PHPDoc type array of property Webkul\\Quote\\Models\\QuoteItem\:\:\$fillable is not covariant with PHPDoc type list\<string\> of overridden property Illuminate\\Database\\Eloquent\\Model\:\:\$fillable\.$#'
+			identifier: property.phpDocType
+			count: 1
+			path: packages/Webkul/Quote/src/Models/QuoteItem.php
+
+		-
+			message: '#^Call to an undefined method Webkul\\Attribute\\Repositories\\AttributeRepository\:\:where\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: packages/Webkul/Quote/src/Repositories/QuoteRepository.php
+
+		-
+			message: '#^Call to an undefined method Webkul\\Quote\\Contracts\\Quote\:\:refresh\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: packages/Webkul/Quote/src/Repositories/QuoteRepository.php
+
+		-
+			message: '#^Call to an undefined method Webkul\\Quote\\Repositories\\QuoteRepository\:\:whereBetween\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: packages/Webkul/Quote/src/Repositories/QuoteRepository.php
+
+		-
+			message: '#^PHPDoc tag @param references unknown parameter\: \$attribute$#'
+			identifier: parameter.notFound
+			count: 1
+			path: packages/Webkul/Quote/src/Repositories/QuoteRepository.php
+
+		-
+			message: '#^Using nullsafe property access "\?\-\>name" on left side of \?\? is unnecessary\. Use \-\> instead\.$#'
+			identifier: nullsafe.neverNull
+			count: 1
+			path: packages/Webkul/Quote/src/Repositories/QuoteRepository.php
+
+		-
+			message: '#^Using nullsafe property access "\?\-\>sku" on left side of \?\? is unnecessary\. Use \-\> instead\.$#'
+			identifier: nullsafe.neverNull
+			count: 1
+			path: packages/Webkul/Quote/src/Repositories/QuoteRepository.php
+
+		-
+			message: '#^PHPDoc type array of property Webkul\\Tag\\Models\\Tag\:\:\$fillable is not covariant with PHPDoc type list\<string\> of overridden property Illuminate\\Database\\Eloquent\\Model\:\:\$fillable\.$#'
+			identifier: property.phpDocType
+			count: 1
+			path: packages/Webkul/Tag/src/Models/Tag.php
+
+		-
+			message: '#^PHPDoc type array of property Webkul\\User\\Models\\Group\:\:\$fillable is not covariant with PHPDoc type list\<string\> of overridden property Illuminate\\Database\\Eloquent\\Model\:\:\$fillable\.$#'
+			identifier: property.phpDocType
+			count: 1
+			path: packages/Webkul/User/src/Models/Group.php
+
+		-
+			message: '#^PHPDoc type array of property Webkul\\User\\Models\\Role\:\:\$fillable is not covariant with PHPDoc type list\<string\> of overridden property Illuminate\\Database\\Eloquent\\Model\:\:\$fillable\.$#'
+			identifier: property.phpDocType
+			count: 1
+			path: packages/Webkul/User/src/Models/Role.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\User\\Models\\User\:\:\$image\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/User/src/Models/User.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\User\\Models\\User\:\:\$role\.$#'
+			identifier: property.notFound
+			count: 3
+			path: packages/Webkul/User/src/Models/User.php
+
+		-
+			message: '#^PHPDoc type array of property Webkul\\User\\Models\\User\:\:\$fillable is not covariant with PHPDoc type list\<string\> of overridden property Illuminate\\Database\\Eloquent\\Model\:\:\$fillable\.$#'
+			identifier: property.phpDocType
+			count: 1
+			path: packages/Webkul/User/src/Models/User.php
+
+		-
+			message: '#^PHPDoc type array of property Webkul\\User\\Models\\User\:\:\$hidden is not covariant with PHPDoc type list\<string\> of overridden property Illuminate\\Database\\Eloquent\\Model\:\:\$hidden\.$#'
+			identifier: property.phpDocType
+			count: 1
+			path: packages/Webkul/User/src/Models/User.php
+
+		-
+			message: '#^PHPDoc type array of property Webkul\\Warehouse\\Models\\Location\:\:\$fillable is not covariant with PHPDoc type list\<string\> of overridden property Illuminate\\Database\\Eloquent\\Model\:\:\$fillable\.$#'
+			identifier: property.phpDocType
+			count: 1
+			path: packages/Webkul/Warehouse/src/Models/Location.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Activity\\Contracts\\Activity\:\:\$id\.$#'
+			identifier: property.notFound
+			count: 3
+			path: packages/Webkul/Warehouse/src/Models/Warehouse.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Attribute\\Contracts\\AttributeValue\:\:\$entity\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Warehouse/src/Models/Warehouse.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\Warehouse\\Models\\Warehouse\:\:\$attribute_values\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Warehouse/src/Models/Warehouse.php
+
+		-
+			message: '#^Call to an undefined method Webkul\\Attribute\\Repositories\\AttributeRepository\:\:where\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: packages/Webkul/Warehouse/src/Models/Warehouse.php
+
+		-
+			message: '#^Method Webkul\\Warehouse\\Models\\Warehouse\:\:getLookUpAttributes\(\) has invalid return type Webkul\\Attribute\\Traits\\Collection\.$#'
+			identifier: class.notFound
+			count: 1
+			path: packages/Webkul/Warehouse/src/Models/Warehouse.php
+
+		-
+			message: '#^PHPDoc type array of property Webkul\\Warehouse\\Models\\Warehouse\:\:\$casts is not covariant with PHPDoc type array\<string, string\> of overridden property Illuminate\\Database\\Eloquent\\Model\:\:\$casts\.$#'
+			identifier: property.phpDocType
+			count: 1
+			path: packages/Webkul/Warehouse/src/Models/Warehouse.php
+
+		-
+			message: '#^PHPDoc type array of property Webkul\\Warehouse\\Models\\Warehouse\:\:\$fillable is not covariant with PHPDoc type list\<string\> of overridden property Illuminate\\Database\\Eloquent\\Model\:\:\$fillable\.$#'
+			identifier: property.phpDocType
+			count: 1
+			path: packages/Webkul/Warehouse/src/Models/Warehouse.php
+
+		-
+			message: '#^Call to an undefined method Webkul\\Attribute\\Repositories\\AttributeRepository\:\:where\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: packages/Webkul/Warehouse/src/Repositories/WarehouseRepository.php
+
+		-
+			message: '#^PHPDoc tag @param references unknown parameter\: \$attribute$#'
+			identifier: parameter.notFound
+			count: 1
+			path: packages/Webkul/Warehouse/src/Repositories/WarehouseRepository.php
+
+		-
+			message: '#^Method Webkul\\WebForm\\Http\\Controllers\\Controller\:\:redirectToLogin\(\) should return Illuminate\\Http\\Response but returns Illuminate\\Http\\RedirectResponse\.$#'
+			identifier: return.type
+			count: 1
+			path: packages/Webkul/WebForm/src/Http/Controllers/Controller.php
+
+		-
+			message: '#^Parameter \#2 \$value of method Webkul\\Core\\Eloquent\\Repository\:\:findOneByField\(\) expects string\|null, int given\.$#'
+			identifier: argument.type
+			count: 1
+			path: packages/Webkul/WebForm/src/Http/Controllers/WebFormController.php
+
+		-
+			message: '#^PHPDoc type array of property Webkul\\WebForm\\Models\\WebFormAttribute\:\:\$fillable is not covariant with PHPDoc type list\<string\> of overridden property Illuminate\\Database\\Eloquent\\Model\:\:\$fillable\.$#'
+			identifier: property.phpDocType
+			count: 1
+			path: packages/Webkul/WebForm/src/Models/WebFormAttribute.php
+
+		-
+			message: '#^PHPDoc type string of property Webkul\\WebForm\\Models\\WebFormAttribute\:\:\$timestamps is not covariant with PHPDoc type bool of overridden property Illuminate\\Database\\Eloquent\\Model\:\:\$timestamps\.$#'
+			identifier: property.phpDocType
+			count: 1
+			path: packages/Webkul/WebForm/src/Models/WebFormAttribute.php
+
+		-
+			message: '#^Property Webkul\\WebForm\\Models\\WebFormAttribute\:\:\$timestamps \(string\) does not accept default value of type false\.$#'
+			identifier: property.defaultValue
+			count: 1
+			path: packages/Webkul/WebForm/src/Models/WebFormAttribute.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$id\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/WebForm/src/Repositories/WebFormRepository.php
+
+		-
+			message: '#^Method Webkul\\WebForm\\Repositories\\WebFormRepository\:\:create\(\) should return Webkul\\WebForm\\Contracts\\WebForm but returns Illuminate\\Database\\Eloquent\\Model\.$#'
+			identifier: return.type
+			count: 1
+			path: packages/Webkul/WebForm/src/Repositories/WebFormRepository.php

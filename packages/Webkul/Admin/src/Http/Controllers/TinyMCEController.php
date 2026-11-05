@@ -62,9 +62,7 @@ class TinyMCEController extends Controller
             return [];
         }
 
-        $filename = md5($file->getClientOriginalName().time()).'.'.$extension;
-
-        $path = $file->storeAs($this->storagePath, $filename);
+        $path = $file->store($this->storagePath);
 
         $this->sanitizeSVG($path, $file);
 

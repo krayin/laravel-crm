@@ -31,7 +31,7 @@ version.
 Report security issues privately. Do **not** open a public GitHub
 issue, pull request or discussion.
 
-**Email** — [support@krayincrm.com](mailto:support@krayincrm.com)
+**Email** — [support@webkul.com](mailto:support@webkul.com)
 
 Please include:
 

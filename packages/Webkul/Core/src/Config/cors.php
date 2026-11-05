@@ -4,36 +4,43 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Laravel CORS Options
+    | Cross-Origin Resource Sharing (CORS)
     |--------------------------------------------------------------------------
     |
-    | The allowed_methods and allowed_headers options are case-insensitive.
+    | CORS is enabled only for the public web form endpoints, so a form embedded
+    | on another website can load and submit. Every other route, including the
+    | whole admin panel, stays same-origin only.
     |
-    | You don't need to provide both allowed_origins and allowed_origins_patterns.
-    | If one of the strings passed matches, it is considered a valid origin.
+    | No origin is trusted by default. List the websites that embed your web
+    | forms in CORS_ALLOWED_ORIGINS, comma separated, as exact origins:
     |
-    | If ['*'] is provided to allowed_methods, allowed_origins or allowed_headers
-    | all methods / origins / headers are allowed.
+    |     CORS_ALLOWED_ORIGINS=https://www.example.com,https://shop.example.com
+    |
+    | A bare "*" is ignored: it would let any website call these endpoints
+    | from a visitor's browser and read the responses.
     |
     */
 
     /*
-     * You can enable CORS for 1 or multiple paths.
-     * Example: ['api/*']
+     * The public web form endpoints (form.js, form.html and the submission).
+     * The authenticated admin preview at web-forms/form/{id} is not matched.
      */
     'paths' => [
-        'admin/web-forms/forms/*',
+        'web-forms/forms/*',
     ],
 
     /*
-    * Matches the request method. `['*']` allows all methods.
-    */
-    'allowed_methods' => ['*'],
+     * The web form loads with GET and submits with POST.
+     */
+    'allowed_methods' => ['GET', 'POST'],
 
     /*
-     * Matches the request origin. `['*']` allows all origins. Wildcards can be used, eg `*.mydomain.com`
+     * Exact trusted origins (scheme, host and optional port), read from CORS_ALLOWED_ORIGINS.
      */
-    'allowed_origins' => ['*'],
+    'allowed_origins' => array_values(array_filter(
+        array_map('trim', explode(',', (string) env('CORS_ALLOWED_ORIGINS', ''))),
+        fn (string $origin) => $origin !== '' && $origin !== '*'
+    )),
 
     /*
      * Patterns that can be used with `preg_match` to match the origin.
@@ -41,9 +48,9 @@ return [
     'allowed_origins_patterns' => [],
 
     /*
-     * Sets the Access-Control-Allow-Headers response header. `['*']` allows all headers.
+     * The request headers the web form sends.
      */
-    'allowed_headers' => ['*'],
+    'allowed_headers' => ['Accept', 'Content-Type', 'X-Requested-With'],
 
     /*
      * Sets the Access-Control-Expose-Headers response header with these headers.
@@ -56,7 +63,8 @@ return [
     'max_age' => 0,
 
     /*
-     * Sets the Access-Control-Allow-Credentials header.
+     * Cookies and HTTP authentication are never sent with cross-origin requests, so a trusted
+     * origin can still only reach what an anonymous visitor could.
      */
     'supports_credentials' => false,
 ];

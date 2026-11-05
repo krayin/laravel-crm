@@ -1,6 +1,7 @@
 
 includes:
     - vendor/larastan/larastan/extension.neon
+    - phpstan-baseline.neon
 
 parameters:
     paths:
@@ -8,6 +9,12 @@ parameters:
         - packages
 
     level: 5
+
+    ignoreErrors:
+        # Publishable config template, copied into config/ by vendor:publish, where env() is expected.
+        -
+            identifier: larastan.noEnvCallsOutsideOfConfig
+            path: packages/Webkul/Core/src/Config/cors.php
 
     bootstrapFiles:
         - vendor/autoload.php
@@ -17,3 +24,5 @@ parameters:
             - vendor
             - storage
             - bootstrap/cache
+            # Unused legacy base class; its astrotomic/laravel-translatable dependency is not installed.
+            - packages/Webkul/Core/src/Eloquent/TranslatableModel.php
