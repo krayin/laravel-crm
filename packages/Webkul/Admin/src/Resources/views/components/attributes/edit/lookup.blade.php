@@ -1,6 +1,6 @@
 @if (isset($attribute))
     @php
-        $lookUpEntityData = app('Webkul\Attribute\Repositories\AttributeRepository')->getLookUpEntity($attribute->lookup_type, old($attribute->code) ?: $value);
+        $lookUpEntityData = app('Webkul\Attribute\Repositories\AttributeRepository')->getLookUpEntity($attribute->lookup_type, old($attribute->code) ?: $value)?->only(['id', 'name']);
     @endphp
 
     <v-lookup-component
@@ -179,7 +179,12 @@
             },
 
             mounted() {
-                if (this.value) {
+                if (this.value?.id && this.value?.name) {
+                    this.selectedItem = {
+                        id: this.value.id,
+                        name: this.value.name,
+                    };
+                } else if (this.value) {
                     this.getLookUpEntity();
                 }
 
@@ -271,11 +276,11 @@
                             params: { query: this.value?.id ?? ""}
                         })
                         .then (response => {
-                            this.selectedItem = Object.keys(response.data).length
+                            this.selectedItem = Object.keys(response.data ?? {}).length
                                 ? response.data
                                 : {
-                                    id: '',
-                                    name: ''
+                                    id: this.value?.id ?? '',
+                                    name: this.value?.id ? '#' + this.value.id : ''
                                 };
                         })
                         .catch (error => {});

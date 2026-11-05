@@ -46,6 +46,21 @@ class EmailDataGrid extends DataGrid
             ->where('folders', 'like', '%"'.request('route').'"%')
             ->whereNull('parent_id');
 
+        $userIds = bouncer()->getAuthorizedUserIds();
+
+        if ($userIds !== null) {
+            foreach (['leads' => 'lead_id', 'persons' => 'person_id'] as $table => $column) {
+                $queryBuilder->whereNotExists(function ($query) use ($table, $column, $userIds) {
+                    $query->select(DB::raw(1))
+                        ->from($table)
+                        ->whereColumn($table.'.id', 'emails.'.$column)
+                        ->where(fn ($owner) => $owner
+                            ->whereNull($table.'.user_id')
+                            ->orWhereNotIn($table.'.user_id', $userIds));
+                });
+            }
+        }
+
         $this->addFilter('id', 'emails.id');
         $this->addFilter('name', 'emails.name');
         $this->addFilter('tags', 'tags.name');
@@ -125,7 +140,11 @@ class EmailDataGrid extends DataGrid
             'sortable' => true,
             'filterable' => true,
             'filterable_type' => 'searchable_dropdown',
-            'closure' => fn ($row) => $this->emailTags[$row->id] ?? [],
+            'closure' => fn ($row) => array_map(function ($tag) {
+                $tag->name = strip_tags($tag->name);
+
+                return $tag;
+            }, $this->emailTags[$row->id] ?? []),
             'filterable_options' => [
                 'repository' => TagRepository::class,
                 'column' => [
