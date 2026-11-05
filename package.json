@@ -4,7 +4,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "test:js": "node --test tests/js/*.test.js"
+    "test:js": "node --experimental-strip-types --test tests/js/*.test.ts"
   },
   "devDependencies": {
     "@fast-csv/format": "^5.0.7",
