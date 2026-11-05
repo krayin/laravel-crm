@@ -398,6 +398,12 @@ function scopedPersonPair(User $owner, User $agent, string $token): array
 }
 
 it('lists only in-scope records in a datagrid filter look-up', function () {
+    /**
+     * The lead grid reads the default pipeline's stages when it prepares its columns, and the
+     * parallel test databases are migrated but not seeded.
+     */
+    securityTestPipeline();
+
     $owner = makeQuoteScopeUser('global');
     $agent = makeQuoteScopeUser('individual');
 
