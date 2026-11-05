@@ -1,0 +1,97 @@
+# =============================================================================
+# Krayin CRM - Docker Compose (Autocontenido para Coolify)
+# =============================================================================
+# Solo añade este archivo y funcionará automaticamente
+# Servicios: PHP-FPM + MySQL + Nginx
+# =============================================================================
+
+services:
+  # -------------------------------------------------------------------------
+  # PHP-FPM Application
+  # -------------------------------------------------------------------------
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: krayin-crm-app
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      # APP
+      - APP_ENV=production
+      - APP_DEBUG=false
+      - APP_URL=${APP_URL:-http://localhost}
+      - APP_KEY=${APP_KEY:-}
+      - APP_TIMEZONE=UTC
+      - APP_LOCALE=en
+      - APP_CURRENCY=USD
+      
+      # Database (autocontenido)
+      - DB_CONNECTION=mysql
+      - DB_HOST=db
+      - DB_PORT=3306
+      - DB_DATABASE=krayin_crm
+      - DB_USERNAME=krayin
+      - DB_PASSWORD=krayin_crm_secure_2024
+      
+      # Cache & Queue
+      - CACHE_DRIVER=file
+      - QUEUE_CONNECTION=sync
+      - SESSION_DRIVER=file
+      
+      # Log
+      - LOG_CHANNEL=stderr
+      - LOG_LEVEL=warning
+    volumes:
+      - storage:/app/storage
+    networks:
+      - krayin-network
+
+  # -------------------------------------------------------------------------
+  # Nginx Web Server (Puerto 80)
+  # -------------------------------------------------------------------------
+  nginx:
+    image: nginx:alpine
+    container_name: krayin-crm-nginx
+    restart: unless-stopped
+    depends_on:
+      - app
+    ports:
+      - "${NGINX_PORT:-80}:80"
+    volumes:
+      - ./docker/nginx.conf:/etc/nginx/http.d/default.conf:ro
+      - ./public:/usr/share/nginx/html:ro
+    networks:
+      - krayin-network
+
+  # -------------------------------------------------------------------------
+  # MySQL 8.0
+  # -------------------------------------------------------------------------
+  db:
+    image: mysql:8.0
+    container_name: krayin-crm-db
+    restart: unless-stopped
+    environment:
+      - MYSQL_ROOT_PASSWORD=root_secure_2024
+      - MYSQL_DATABASE=krayin_crm
+      - MYSQL_USER=krayin
+      - MYSQL_PASSWORD=krayin_crm_secure_2024
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - krayin-network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+networks:
+  krayin-network:
+    driver: bridge
+
+volumes:
+  mysql_data:
+  storage:
