@@ -14,7 +14,7 @@
         "enshrined/svg-sanitize": "^1.0.0",
         "google/apiclient": "^2.18",
         "guzzlehttp/guzzle": "^7.8",
-        "khaled.alshamaa/ar-php": "^7.0",
+        "khaled.alshamaa/ar-php": "^6.3",
         "konekt/concord": "^1.17",
         "laravel/framework": "^12.0",
         "laravel/reverb": "^1.12",
