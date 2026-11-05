@@ -31,7 +31,7 @@
         "webklex/laravel-imap": "^6.0"
     },
     "require-dev": {
-        "barryvdh/laravel-debugbar": "^3.14",
+        "barryvdh/laravel-debugbar": "^4.4",
         "fakerphp/faker": "^1.23",
         "krayin/krayin-package-generator": "dev-master",
         "laravel/pint": "^1.18",
