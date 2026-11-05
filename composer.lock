@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "8552a94893a217e642e6785e935d4104",
+    "content-hash": "00f0c1310d0288bcaab45e60b312916e",
     "packages": [
         {
             "name": "barryvdh/laravel-dompdf",
@@ -2098,16 +2098,16 @@
         },
         {
             "name": "khaled.alshamaa/ar-php",
-            "version": "v6.3.4",
+            "version": "v7.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/khaled-alshamaa/ar-php.git",
-                "reference": "36550a0d805dc50fcede0132cd8b83c80fe1fd6c"
+                "reference": "1e2d3fa335ce57ff261920228dd6e73fe7e49e19"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/khaled-alshamaa/ar-php/zipball/36550a0d805dc50fcede0132cd8b83c80fe1fd6c",
-                "reference": "36550a0d805dc50fcede0132cd8b83c80fe1fd6c",
+                "url": "https://api.github.com/repos/khaled-alshamaa/ar-php/zipball/1e2d3fa335ce57ff261920228dd6e73fe7e49e19",
+                "reference": "1e2d3fa335ce57ff261920228dd6e73fe7e49e19",
                 "shasum": ""
             },
             "require": {
@@ -2149,7 +2149,7 @@
             ],
             "support": {
                 "issues": "https://github.com/khaled-alshamaa/ar-php/issues",
-                "source": "https://github.com/khaled-alshamaa/ar-php/tree/v6.3.4"
+                "source": "https://github.com/khaled-alshamaa/ar-php/tree/v7.0.0"
             },
             "funding": [
                 {
@@ -2157,7 +2157,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2023-04-04T22:05:31+00:00"
+            "time": "2025-03-07T22:46:10+00:00"
         },
         {
             "name": "konekt/concord",
