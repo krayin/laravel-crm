@@ -88,12 +88,6 @@ class Bouncer
     /**
      * Check authorization.
      *
-     * The middleware fails closed: an administrative route that is not covered by the ACL map is
-     * denied rather than allowed. A route without its own mapping inherits the permission of the
-     * nearest mapped ancestor feature (so, for example, an unmapped `admin.leads.search` still
-     * requires the `leads` permission), while a small allow-list covers authentication, self-service
-     * account management, and generic UI helpers that expose no privileged data.
-     *
      * @return void
      */
     public function checkIfAuthorized()

@@ -703,7 +703,25 @@ parameters:
 			path: packages/Webkul/Admin/src/Http/Controllers/Settings/TagController.php
 
 		-
+			message: '#^Access to an undefined property Webkul\\User\\Contracts\\User\:\:\$created_by\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Controllers/Settings/UserController.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\User\\Contracts\\User\:\:\$id\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Controllers/Settings/UserController.php
+
+		-
 			message: '#^Access to an undefined property Webkul\\User\\Contracts\\User\:\:\$role\.$#'
+			identifier: property.notFound
+			count: 1
+			path: packages/Webkul/Admin/src/Http/Controllers/Settings/UserController.php
+
+		-
+			message: '#^Access to an undefined property Webkul\\User\\Contracts\\User\:\:\$view_permission\.$#'
 			identifier: property.notFound
 			count: 1
 			path: packages/Webkul/Admin/src/Http/Controllers/Settings/UserController.php
@@ -723,7 +741,7 @@ parameters:
 		-
 			message: '#^Access to an undefined property Webkul\\User\\Models\\User\:\:\$view_permission\.$#'
 			identifier: property.notFound
-			count: 2
+			count: 3
 			path: packages/Webkul/Admin/src/Http/Controllers/Settings/UserController.php
 
 		-

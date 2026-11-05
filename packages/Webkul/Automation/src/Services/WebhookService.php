@@ -7,10 +7,24 @@ use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Message;
 use Psr\Http\Message\RequestInterface;
+use Symfony\Component\HttpFoundation\IpUtils;
 use Webkul\Contact\Repositories\PersonRepository;
 
 class WebhookService
 {
+    /**
+     * Non-public ranges that the PHP private/reserved range flags do not cover.
+     */
+    protected const NON_PUBLIC_RANGES = [
+        '100.64.0.0/10',
+        '192.0.0.0/24',
+        '198.18.0.0/15',
+        '224.0.0.0/4',
+        '2001::/32',
+        '64:ff9b:1::/48',
+        'ff00::/8',
+    ];
+
     /**
      * The GuzzleHttp client instance.
      */
@@ -147,6 +161,14 @@ class WebhookService
     }
 
     /**
+     * Whether a webhook may be saved with this endpoint, using the same check as sending.
+     */
+    public function isAllowedEndpoint(string $endPoint): bool
+    {
+        return $this->isSafeEndpoint($endPoint);
+    }
+
+    /**
      * Resolve an endpoint's host and validate every address it answers with, returning the host,
      * port and vetted addresses — or null when the endpoint must not be requested.
      *
@@ -216,13 +238,42 @@ class WebhookService
             return false;
         }
 
-        $mapped = $this->unmapIpv4($ip);
+        $ip = $this->embeddedIpv4($ip) ?? $ip;
 
-        if ($mapped !== null) {
-            $ip = $mapped;
+        if (! filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE)) {
+            return false;
         }
 
-        return (bool) filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE);
+        return ! IpUtils::checkIp($ip, self::NON_PUBLIC_RANGES);
+    }
+
+    /**
+     * Return the IPv4 address carried inside an IPv6 address (mapped, NAT64, 6to4 or
+     * IPv4-compatible), or null when there is none.
+     */
+    protected function embeddedIpv4(string $ip): ?string
+    {
+        if (($mapped = $this->unmapIpv4($ip)) !== null) {
+            return $mapped;
+        }
+
+        $packed = @inet_pton($ip);
+
+        if (
+            $packed === false
+            || strlen($packed) !== 16
+        ) {
+            return null;
+        }
+
+        $ipv4 = match (true) {
+            str_starts_with($packed, "\x00\x64\xff\x9b".str_repeat("\0", 8)) => substr($packed, 12, 4),
+            str_starts_with($packed, "\x20\x02") => substr($packed, 2, 4),
+            str_starts_with($packed, str_repeat("\0", 12)) => substr($packed, 12, 4),
+            default => null,
+        };
+
+        return $ipv4 === null ? null : (inet_ntop($ipv4) ?: null);
     }
 
     /**

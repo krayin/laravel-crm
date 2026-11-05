@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Illuminate\Http\Request;
 use Webkul\Admin\DataGrids\Mail\EmailDataGrid;
 
 uses(DatabaseTransactions::class);
@@ -9,7 +10,11 @@ function mailGridActionsFor(string $route): array
 {
     auth()->guard('user')->setUser(getDefaultAdmin());
 
-    request()->merge(['route' => $route]);
+    $mailRoute = clone app('router')->getRoutes()->getByName('admin.mail.index');
+
+    $mailRoute->bind(Request::create("/admin/mail/{$route}"));
+
+    request()->setRouteResolver(fn () => $mailRoute);
 
     $payload = json_decode(app(EmailDataGrid::class)->process()->getContent(), true);
 
