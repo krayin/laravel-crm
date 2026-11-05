@@ -4,6 +4,7 @@ namespace Webkul\Admin\Http\Controllers\Settings;
 
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
@@ -172,7 +173,7 @@ class AttributeController extends Controller
     {
         $results = $this->attributeRepository->getLookUpOptions($lookup, request()->input('query'));
 
-        return response()->json($results);
+        return response()->json($this->onlyAuthorizedLookUpResults($lookup, $results));
     }
 
     /**
@@ -180,9 +181,51 @@ class AttributeController extends Controller
      */
     public function lookupEntity(string $lookup): JsonResponse
     {
-        $result = $this->attributeRepository->getLookUpEntity($lookup, request()->input('query'));
+        $result = $this->onlyAuthorizedLookUpResults(
+            $lookup,
+            $this->attributeRepository->getLookUpEntity($lookup, request()->input('query'))
+        );
 
-        return response()->json($result);
+        /**
+         * Only what a lookup field displays. The repository hands back the whole record — a lead's
+         * value and description, a person's emails and phone numbers — and this endpoint takes any
+         * id. Forms name the value a record already holds when they render, so an out-of-scope
+         * value still shows there; this endpoint only serves fields given a bare id.
+         */
+        $nameOnly = fn ($record) => $record->only(['id', 'name']);
+
+        return response()->json(match (true) {
+            $result instanceof Collection => $result->map($nameOnly),
+            (bool) $result => $nameOnly($result),
+            default => null,
+        });
+    }
+
+    /**
+     * Drop look-up results outside the acting user's data scope.
+     *
+     * A lookup field offers leads, persons, organizations or users by name, and may not offer one
+     * the user cannot open. The repository methods are left unscoped because web forms,
+     * automations and attribute storage call them with no user signed in.
+     *
+     * @param  mixed  $results  A collection, a single record, or null.
+     * @return mixed
+     */
+    protected function onlyAuthorizedLookUpResults(string $lookup, $results)
+    {
+        if (! $results) {
+            return $results;
+        }
+
+        $items = $results instanceof Collection ? $results : collect([$results]);
+
+        $authorizedIds = bouncer()->scopeToAuthorizedUsers(
+            app(config('attribute_lookups.'.$lookup.'.repository'))->whereIn('id', $items->pluck('id')->all())
+        )->pluck('id')->all();
+
+        $authorized = $items->filter(fn ($item) => in_array($item->id, $authorizedIds))->values();
+
+        return $results instanceof Collection ? $authorized : $authorized->first();
     }
 
     /**

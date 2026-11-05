@@ -3,6 +3,7 @@
 namespace Webkul\DataTransfer\Helpers\Sources;
 
 use Illuminate\Support\Facades\Storage;
+use Webkul\DataTransfer\Helpers\Import;
 
 class CSV extends AbstractSource
 {
@@ -21,7 +22,7 @@ class CSV extends AbstractSource
         protected string $delimiter = ','
     ) {
         try {
-            $this->reader = fopen(Storage::disk('public')->path($filePath), 'r');
+            $this->reader = fopen(Storage::disk(Import::STORAGE_DISK)->path($filePath), 'r');
 
             $this->columnNames = fgetcsv($this->reader, 4096, $delimiter);
 

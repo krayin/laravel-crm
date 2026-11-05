@@ -541,10 +541,12 @@ class LeadController extends Controller
         $column = collect($this->getKanbanColumns())->where('index', $params['column'])->firstOrFail();
 
         /**
-         * Fetching on the basis of column options.
+         * Fetching on the basis of column options, limited to the records the user may open.
          */
-        return app($column['filterable_options']['repository'])
-            ->select([$column['filterable_options']['column']['label'].' as label', $column['filterable_options']['column']['value'].' as value'])
+        return bouncer()->scopeToAuthorizedUsers(
+            app($column['filterable_options']['repository'])
+                ->select([$column['filterable_options']['column']['label'].' as label', $column['filterable_options']['column']['value'].' as value'])
+        )
             ->where($column['filterable_options']['column']['label'], 'LIKE', '%'.$params['search'].'%')
             ->get()
             ->map

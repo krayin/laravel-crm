@@ -5,10 +5,13 @@ namespace Webkul\Admin\Http\Controllers\Mail;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Event;
 use Webkul\Admin\Http\Controllers\Controller;
+use Webkul\Admin\Traits\ScopesMailAccess;
 use Webkul\Email\Repositories\EmailRepository;
 
 class TagController extends Controller
 {
+    use ScopesMailAccess;
+
     /**
      * Create a new controller instance.
      *
@@ -21,9 +24,14 @@ class TagController extends Controller
      */
     public function attach(int $id): JsonResponse
     {
-        Event::dispatch('mails.tag.create.before', $id);
+        $mail = $this->emailRepository->findOrFail($id);
 
-        $mail = $this->emailRepository->find($id);
+        /**
+         * Tagging writes to the mail, so it takes the same check as updating it.
+         */
+        $this->preventUnauthorizedMailAccess($mail);
+
+        Event::dispatch('mails.tag.create.before', $id);
 
         if (! $mail->tags->contains(request()->input('tag_id'))) {
             $mail->tags()->attach(request()->input('tag_id'));
@@ -41,9 +49,11 @@ class TagController extends Controller
      */
     public function detach(int $mailId): JsonResponse
     {
-        Event::dispatch('mails.tag.delete.before', $mailId);
+        $mail = $this->emailRepository->findOrFail($mailId);
 
-        $mail = $this->emailRepository->find($mailId);
+        $this->preventUnauthorizedMailAccess($mail);
+
+        Event::dispatch('mails.tag.delete.before', $mailId);
 
         $mail->tags()->detach(request()->input('tag_id'));
 

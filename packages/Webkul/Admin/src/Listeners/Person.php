@@ -2,10 +2,13 @@
 
 namespace Webkul\Admin\Listeners;
 
+use Webkul\Admin\Traits\ScopesMailAccess;
 use Webkul\Email\Repositories\EmailRepository;
 
 class Person
 {
+    use ScopesMailAccess;
+
     /**
      * Create a new controller instance.
      *
@@ -19,12 +22,12 @@ class Person
      */
     public function linkToEmail($person)
     {
-        if (! request('email_id')) {
+        if (! $email = $this->linkableRequestedEmail($person->user_id)) {
             return;
         }
 
         $this->emailRepository->update([
             'person_id' => $person->id,
-        ], request('email_id'));
+        ], $email->id);
     }
 }

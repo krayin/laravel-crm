@@ -94,6 +94,16 @@ class Import
     public const ACTION_DELETE = 'delete';
 
     /**
+     * Disk holding import source files and error reports.
+     */
+    public const STORAGE_DISK = 'local';
+
+    /**
+     * Directory, on the storage disk, holding import source files and error reports.
+     */
+    public const STORAGE_DIRECTORY = 'imports';
+
+    /**
      * Import instance.
      */
     protected ImportContract $import;
@@ -182,6 +192,10 @@ class Import
                 null,
                 $e->getMessage()
             );
+        }
+
+        if ($this->import->error_file_path) {
+            Storage::disk(self::STORAGE_DISK)->delete($this->import->error_file_path);
         }
 
         $import = $this->importRepository->update([
@@ -568,9 +582,16 @@ class Import
                 throw new \InvalidArgumentException("Unsupported file type: $fileType");
         }
 
-        $errorFilePath = 'imports/'.time().'-error-report.'.$fileType;
+        /**
+         * A random name, rather than a timestamp, so the report cannot be found by guessing.
+         */
+        $errorFilePath = self::STORAGE_DIRECTORY.'/'.Str::random(40).'.'.$fileType;
 
-        $writer->save(Storage::disk('public')->path($errorFilePath));
+        $disk = Storage::disk(self::STORAGE_DISK);
+
+        $disk->makeDirectory(self::STORAGE_DIRECTORY);
+
+        $writer->save($disk->path($errorFilePath));
 
         return $errorFilePath;
     }

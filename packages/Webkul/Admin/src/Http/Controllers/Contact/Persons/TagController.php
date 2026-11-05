@@ -21,9 +21,11 @@ class TagController extends Controller
      */
     public function attach(int $id): JsonResponse
     {
-        Event::dispatch('persons.tag.create.before', $id);
+        $person = $this->personRepository->findOrFail($id);
 
-        $person = $this->personRepository->find($id);
+        $this->preventUnauthorizedAccess($person->user_id);
+
+        Event::dispatch('persons.tag.create.before', $id);
 
         if (! $person->tags->contains(request()->input('tag_id'))) {
             $person->tags()->attach(request()->input('tag_id'));
@@ -41,9 +43,11 @@ class TagController extends Controller
      */
     public function detach(int $personId): JsonResponse
     {
-        Event::dispatch('persons.tag.delete.before', $personId);
+        $person = $this->personRepository->findOrFail($personId);
 
-        $person = $this->personRepository->find($personId);
+        $this->preventUnauthorizedAccess($person->user_id);
+
+        Event::dispatch('persons.tag.delete.before', $personId);
 
         $person->tags()->detach(request()->input('tag_id'));
 

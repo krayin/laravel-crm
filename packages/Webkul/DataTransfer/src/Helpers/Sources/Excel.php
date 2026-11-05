@@ -5,6 +5,7 @@ namespace Webkul\DataTransfer\Helpers\Sources;
 use Illuminate\Support\Facades\Storage;
 use PhpOffice\PhpSpreadsheet\Cell\Coordinate;
 use PhpOffice\PhpSpreadsheet\IOFactory;
+use Webkul\DataTransfer\Helpers\Import;
 
 class Excel extends AbstractSource
 {
@@ -26,7 +27,7 @@ class Excel extends AbstractSource
     public function __construct(string $filePath)
     {
         try {
-            $factory = IOFactory::load(Storage::disk('public')->path($filePath));
+            $factory = IOFactory::load(Storage::disk(Import::STORAGE_DISK)->path($filePath));
 
             $this->reader = $factory->getActiveSheet();
 
