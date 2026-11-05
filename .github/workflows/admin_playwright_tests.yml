@@ -118,7 +118,7 @@ jobs:
         working-directory: packages/Webkul/Admin
 
       - name: Upload Test Results
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         if: always()
         with:
           name: test-results-${{ matrix.shard-index }}-${{ github.run_id }}-${{ github.run_number }}
