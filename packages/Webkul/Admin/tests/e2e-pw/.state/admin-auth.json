@@ -2,20 +2,20 @@
   "cookies": [
     {
       "name": "XSRF-TOKEN",
-      "value": "eyJpdiI6IjI0RGJyOHJSL0xKMnZtUHFTWUtFZEE9PSIsInZhbHVlIjoidGNLZUF6YU42bktMdUVhTTRVb3RVYnNDOEI0dmVNYjdHUEpneUtNZTJmbGhjR3JWd3BKNFpZOXUzbytZbkRBRjZablJJK3RQSm0vR2xyWG1HbEYvQmRiTG9sTTZaOUFud3Bkb3FVNnRkVjB5b2x2R2hFRGxMbkFTQ3VMRmRibWoiLCJtYWMiOiJlYjQ1OTZjMzUzZjQzMWY1NGFjOGIyMGRmNzhhOTRjZjRmNzMwOGE1ZTJjZDI1ODcwZjA0NGMwMjZkODFiNGUyIiwidGFnIjoiIn0%3D",
-      "domain": "krayin-local.com",
+      "value": "eyJpdiI6IndqZm1haHovc1ltYStjeVF3MTFRcUE9PSIsInZhbHVlIjoiYlNTRk5oVlBwcWQ2NGhEZ3k1QTlLRHdGMnFxTWljSGM0NXRZbFR0RDV4Sk54NjZzcE1QeFlBZFBYdkY5L0hMQW9wQmVyNGRYUEdmeFdOVVN3TGJ4MXpUZkpkV0JaRFd3dFFZNUZ3YTRzdGNneTE2R2lXUWk4TnlUK2Zadkd5ZTIiLCJtYWMiOiIxY2Y3YWNiYTdjYWZjZTczNmE4ZTEzN2NhY2IwYTNjZjZmODFkN2EyMWRjYjZjZTU2ZTYzNGRmNDQ4MjQ3YzNjIiwidGFnIjoiIn0%3D",
+      "domain": "192.168.15.214",
       "path": "/",
-      "expires": 1792079594.150633,
+      "expires": 1793863111.80595,
       "httpOnly": false,
       "secure": false,
       "sameSite": "Lax"
     },
     {
       "name": "krayin_crm_session",
-      "value": "eyJpdiI6IjZ4RzBlYUZXczNpbDlOTVJsMEZYU0E9PSIsInZhbHVlIjoiUGJHbmg3eGZyWjNqY0RQNDJQanltWUNySnRpRzl1S1dyS3MyUU9KUGl2VVJ1UXI1N2V4a05xK2wyU2F0QXhSdWVzV0ZXK1NHR0VmVVVCRnFJald5WVBJelI3dnhuekpSZlhIcWdEanRhcEM2Qlo1a0J6d0p3Z085eXZXNFQvMGUiLCJtYWMiOiI3NWIwOGJjNjVlNzYxMWE2Zjg5MDhmMTkxNWJlZTJhYjhlOGE3NmEwMWQ1NzdjMzIxYWVlMTY0MzkzNzQ1NDBiIiwidGFnIjoiIn0%3D",
-      "domain": "krayin-local.com",
+      "value": "eyJpdiI6IlE4QWJ3R2ZJRktucis4ZUdPMW5aVkE9PSIsInZhbHVlIjoiZUxQenhrY0NoM0hTbElxVTdMay9HS0ZjZ0NoRGdsT2xNU2hXMHoxb3F4bjV0UTR1ZDk3V0FhZWxUUVBKUVpISWE4bWF2aFRObjgySEZnVkRmN0tETWxnVzZqcmtMVDEwQTdyYURkbG1jYjhwQXhMUklxRTVpUEZyYVk0QnlLckYiLCJtYWMiOiI3ZDk0ZTdlOTMyN2Y1M2IxYmNjM2M2OGMxMDhjN2NlYTBlZDQ5Y2UyYzQ0OTgxMWVhMGU0NjYxYzI3NzNhNDE0IiwidGFnIjoiIn0%3D",
+      "domain": "192.168.15.214",
       "path": "/",
-      "expires": 1792079594.150746,
+      "expires": 1793863111.806107,
       "httpOnly": true,
       "secure": false,
       "sameSite": "Lax"

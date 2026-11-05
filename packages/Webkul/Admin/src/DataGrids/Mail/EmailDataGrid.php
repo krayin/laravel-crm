@@ -140,7 +140,11 @@ class EmailDataGrid extends DataGrid
             'sortable' => true,
             'filterable' => true,
             'filterable_type' => 'searchable_dropdown',
-            'closure' => fn ($row) => $this->emailTags[$row->id] ?? [],
+            'closure' => fn ($row) => array_map(function ($tag) {
+                $tag->name = strip_tags($tag->name);
+
+                return $tag;
+            }, $this->emailTags[$row->id] ?? []),
             'filterable_options' => [
                 'repository' => TagRepository::class,
                 'column' => [
