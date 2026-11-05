@@ -44,7 +44,7 @@ class EmailController extends Controller
      */
     public function index(): View|JsonResponse|RedirectResponse
     {
-        $route = request('route');
+        $route = $this->mailFolder();
 
         if (! $route) {
             return redirect()->route('admin.mail.index', ['route' => SupportedFolderEnum::INBOX->value]);
@@ -59,6 +59,18 @@ class EmailController extends Controller
         }
 
         return view('admin::mail.index', compact('route'));
+    }
+
+    /**
+     * The mail folder being browsed, taken only from the `{route}` URL segment.
+     *
+     * The sanitize_url middleware whitelists that segment. `request('route')` must not be used: it
+     * returns query-string or body input before the route segment, so `?route=…` slipped any value
+     * past the whitelist and into pages that Vue compiles.
+     */
+    protected function mailFolder(): ?string
+    {
+        return request()->route('route');
     }
 
     /**
@@ -106,7 +118,7 @@ class EmailController extends Controller
      */
     public function view()
     {
-        $route = request('route');
+        $route = $this->mailFolder();
 
         $email = $this->emailRepository
             ->with([

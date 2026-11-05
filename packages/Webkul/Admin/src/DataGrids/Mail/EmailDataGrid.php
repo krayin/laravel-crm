@@ -43,7 +43,7 @@ class EmailDataGrid extends DataGrid
             ->leftJoin('email_tags', 'emails.id', '=', 'email_tags.email_id')
             ->leftJoin('tags', 'tags.id', '=', 'email_tags.tag_id')
             ->groupBy('emails.id')
-            ->where('folders', 'like', '%"'.request('route').'"%')
+            ->where('folders', 'like', '%"'.request()->route('route').'"%')
             ->whereNull('parent_id');
 
         $userIds = bouncer()->getAuthorizedUserIds();
@@ -177,22 +177,22 @@ class EmailDataGrid extends DataGrid
     {
         if (bouncer()->hasPermission('mail.view')) {
             $this->addAction([
-                'index' => request('route') == 'draft'
+                'index' => request()->route('route') == 'draft'
                     ? 'edit'
                     : 'view',
-                'icon' => request('route') == 'draft'
+                'icon' => request()->route('route') == 'draft'
                     ? 'icon-edit'
                     : 'icon-eye',
-                'title' => request('route') == 'draft'
+                'title' => request()->route('route') == 'draft'
                     ? trans('admin::app.mail.index.datagrid.edit')
                     : trans('admin::app.mail.index.datagrid.view'),
                 'method' => 'GET',
                 'params' => [
-                    'type' => request('route') == 'trash'
+                    'type' => request()->route('route') == 'trash'
                         ? 'delete'
                         : 'trash',
                 ],
-                'url' => fn ($row) => route('admin.mail.view', [request('route'), $row->id]),
+                'url' => fn ($row) => route('admin.mail.view', [request()->route('route'), $row->id]),
             ]);
         }
 
@@ -203,7 +203,7 @@ class EmailDataGrid extends DataGrid
                 'title' => trans('admin::app.mail.index.datagrid.delete'),
                 'method' => 'DELETE',
                 'params' => [
-                    'type' => request('route') == 'trash'
+                    'type' => request()->route('route') == 'trash'
                         ? 'delete'
                         : 'trash',
                 ],
@@ -217,7 +217,7 @@ class EmailDataGrid extends DataGrid
      */
     public function prepareMassActions(): void
     {
-        if (request('route') == 'trash') {
+        if (request()->route('route') == 'trash') {
             $this->addMassAction([
                 'title' => trans('admin::app.mail.index.datagrid.move-to-inbox'),
                 'method' => 'POST',
@@ -233,12 +233,12 @@ class EmailDataGrid extends DataGrid
 
         $this->addMassAction([
             'icon' => 'icon-delete',
-            'title' => request('route') == 'trash'
+            'title' => request()->route('route') == 'trash'
                     ? trans('admin::app.mail.index.datagrid.delete')
                     : trans('admin::app.mail.index.datagrid.move-to-trash'),
             'method' => 'POST',
             'url' => route('admin.mail.mass_delete', [
-                'type' => request('route') == 'trash'
+                'type' => request()->route('route') == 'trash'
                     ? 'delete'
                     : 'trash',
             ]),
