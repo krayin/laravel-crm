@@ -1,0 +1,36 @@
+
+name: Linting Tests
+
+on:
+  push:
+    branches: [2.2]
+
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: linting-${{ github.head_ref || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  linting:
+    runs-on: ubuntu-latest
+    name: Laravel Pint Code Style
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          coverage: none
+
+      - name: Install Composer dependencies
+        run: composer install --prefer-dist --no-interaction --no-progress
+
+      - name: Run Pint
+        run: vendor/bin/pint --test
