@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Illuminate\Support\Facades\Event;
 use Webkul\Lead\Models\Lead;
 use Webkul\Lead\Models\Stage;
 
@@ -73,4 +74,39 @@ it('keeps the expected close date when another attribute is edited inline', func
 
     expect((float) $lead->lead_value)->toBe(900.0)
         ->and($lead->expected_close_date->toDateString())->toBe('2030-01-15');
+});
+
+it('sets the closed date when leads are mass updated to a won stage', function () {
+    $lead = makeLeadWithExpectedCloseDate();
+
+    test()
+        ->actingAs(getDefaultAdmin(), 'user')
+        ->postJson('/admin/leads/mass-update', [
+            'indices' => [$lead->id],
+            'value' => stageByCode('won')->id,
+        ])
+        ->assertOk();
+
+    $lead->refresh();
+
+    expect($lead->lead_pipeline_stage_id)->toBe(stageByCode('won')->id)
+        ->and($lead->closed_at)->not->toBeNull()
+        ->and($lead->expected_close_date->toDateString())->toBe('2030-01-15');
+});
+
+it('dispatches the update after event when leads are mass updated', function () {
+    $lead = makeLeadWithExpectedCloseDate();
+
+    Event::fake(['lead.update.before', 'lead.update.after']);
+
+    test()
+        ->actingAs(getDefaultAdmin(), 'user')
+        ->postJson('/admin/leads/mass-update', [
+            'indices' => [$lead->id],
+            'value' => stageByCode('follow-up')->id,
+        ])
+        ->assertOk();
+
+    Event::assertDispatchedTimes('lead.update.before', 1);
+    Event::assertDispatched('lead.update.after', fn ($event, $updatedLead) => $updatedLead->id === $lead->id);
 });
