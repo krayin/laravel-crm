@@ -16,12 +16,6 @@
         </testsuite>
     </testsuites>
 
-    <groups>
-        <exclude>
-            <group>fuzz</group>
-        </exclude>
-    </groups>
-
     <source>
         <include>
             <directory suffix=".php">./app</directory>

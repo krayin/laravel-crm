@@ -1,6 +1,10 @@
+import { slugify } from "../utils/code";
+
 export default {
     install(app) {
         app.config.globalProperties.$admin = {
+            slugify,
+
             /**
              * Generates a formatted price.
              *
