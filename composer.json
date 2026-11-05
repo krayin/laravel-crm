@@ -19,7 +19,7 @@
         "laravel/framework": "^12.0",
         "laravel/reverb": "^1.12",
         "laravel/sanctum": "^4.0",
-        "laravel/tinker": "^2.10",
+        "laravel/tinker": "^3.0",
         "laravel/ui": "^4.6",
         "league/fractal": "^0.21.0",
         "maatwebsite/excel": "^3.1",
