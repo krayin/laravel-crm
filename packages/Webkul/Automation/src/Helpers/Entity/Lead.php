@@ -173,7 +173,7 @@ class Lead extends AbstractEntity
                     if (! $tag = $this->tagRepository->findOneByField('name', $action['value'])) {
                         $tag = $this->tagRepository->create([
                             'name' => $action['value'],
-                            'color' => $colors[rand(0, 5)],
+                            'color' => $colors[random_int(0, count($colors) - 1)],
                             'user_id' => auth()->guard('user')->user()->id,
                         ]);
                     }

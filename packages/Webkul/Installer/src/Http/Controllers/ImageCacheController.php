@@ -90,7 +90,7 @@ class ImageCacheController
         /**
          * Respond with 304 not modified if browser has the image cached
          */
-        $eTag = md5($content);
+        $eTag = hash('sha256', $content);
 
         $notModified = isset($_SERVER['HTTP_IF_NONE_MATCH']) && $_SERVER['HTTP_IF_NONE_MATCH'] == $eTag;
 

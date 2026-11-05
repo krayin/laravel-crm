@@ -9,6 +9,7 @@
     -->
     <script
         src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/6.6.2/tinymce.min.js"
+        integrity="sha384-NjD7Hj+XpRBVk0A/j+d7Kh0xbyxAq95RK6cAaDiV4U04K8h8paDAQFpsXJzt7ZwC"
         crossorigin="anonymous"
         referrerpolicy="no-referrer"
     ></script>

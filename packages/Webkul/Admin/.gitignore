@@ -1,5 +1,4 @@
 /node_modules
-/package-lock.json
 npm-debug.log
 /playwright-report
 /test-results
