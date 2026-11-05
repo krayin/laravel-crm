@@ -14,6 +14,10 @@
 <a href="https://packagist.org/packages/krayin/laravel-crm"><img src="https://poser.pugx.org/krayin/laravel-crm/license.svg" alt="License"></a>
 </p>
 
+<p align="center">
+<a href="https://sonarcloud.io/summary/new_code?id=krayin_laravel-crm"><img src="https://sonarcloud.io/api/project_badges/measure?project=krayin_laravel-crm&metric=alert_status" alt="Quality Gate Status"></a>
+<a href="https://scorecard.dev/viewer/?uri=github.com/krayin/laravel-crm"><img src="https://api.scorecard.dev/projects/github.com/krayin/laravel-crm/badge" alt="OpenSSF Scorecard"></a>
+</p>
 
 ![enter image description here](https://raw.githubusercontent.com/krayin/temp-media/master/dashboard.png)
 
