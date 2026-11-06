@@ -35,6 +35,7 @@ class ImportDataGrid extends DataGrid
             'index'      => 'id',
             'label'      => trans('admin::app.settings.data-transfer.imports.index.datagrid.id'),
             'type'       => 'integer',
+            'searchable' => true,
             'filterable' => true,
             'sortable'   => true,
         ]);
@@ -43,6 +44,7 @@ class ImportDataGrid extends DataGrid
             'index'      => 'type',
             'label'      => trans('admin::app.settings.data-transfer.imports.index.datagrid.type'),
             'type'       => 'string',
+            'searchable' => true,
             'filterable' => true,
             'sortable'   => true,
         ]);
@@ -51,6 +53,7 @@ class ImportDataGrid extends DataGrid
             'index'      => 'state',
             'label'      => trans('admin::app.settings.data-transfer.imports.index.datagrid.state'),
             'type'       => 'string',
+            'searchable' => true,
             'filterable' => true,
             'sortable'   => true,
         ]);
@@ -59,6 +62,7 @@ class ImportDataGrid extends DataGrid
             'index'      => 'file_path',
             'label'      => trans('admin::app.settings.data-transfer.imports.index.datagrid.uploaded-file'),
             'type'       => 'string',
+            'searchable' => true,
             'closure'    => function ($row) {
                 return '<a href="'.route('admin.settings.data_transfer.imports.download', $row->id).'" class="cursor-pointer text-blue-600 hover:underline">'.$row->file_path.'<a>';
             },
@@ -68,6 +72,7 @@ class ImportDataGrid extends DataGrid
             'index'      => 'error_file_path',
             'label'      => trans('admin::app.settings.data-transfer.imports.index.datagrid.error-file'),
             'type'       => 'string',
+            'searchable' => true,
             'closure'    => function ($row) {
                 if (empty($row->error_file_path)) {
                     return '';
