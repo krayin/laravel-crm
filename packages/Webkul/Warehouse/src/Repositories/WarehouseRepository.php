@@ -47,7 +47,7 @@ class WarehouseRepository extends Repository
     /**
      * Create.
      *
-     * @return \Webkul\Warehouse\Contracts\Warehouse
+     * @return Warehouse
      */
     public function create(array $data)
     {
@@ -65,7 +65,7 @@ class WarehouseRepository extends Repository
      *
      * @param  int  $id
      * @param  array  $attribute
-     * @return \Webkul\Warehouse\Contracts\Warehouse
+     * @return Warehouse
      */
     public function update(array $data, $id, $attributes = [])
     {

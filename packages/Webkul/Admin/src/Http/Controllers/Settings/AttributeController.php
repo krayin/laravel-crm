@@ -213,7 +213,7 @@ class AttributeController extends Controller
     /**
      * Get attribute options associated with attribute.
      *
-     * @return \Illuminate\View\View
+     * @return View
      */
     public function getAttributeOptions(int $id)
     {

@@ -34,7 +34,7 @@ class WebFormRepository extends Repository
     /**
      * Create Web Form.
      *
-     * @return \Webkul\WebForm\Contracts\WebForm
+     * @return WebForm
      */
     public function create(array $data)
     {
@@ -56,7 +56,7 @@ class WebFormRepository extends Repository
      *
      * @param  int  $id
      * @param  string  $attribute
-     * @return \Webkul\WebForm\Contracts\WebForm
+     * @return WebForm
      */
     public function update(array $data, $id, $attribute = 'id')
     {

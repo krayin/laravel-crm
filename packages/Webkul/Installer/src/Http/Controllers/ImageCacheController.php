@@ -4,6 +4,7 @@ namespace Webkul\Installer\Http\Controllers;
 
 use Illuminate\Http\Response as IlluminateResponse;
 use Illuminate\Support\Facades\Cache;
+use Intervention\Image\Image;
 
 class ImageCacheController
 {
@@ -44,7 +45,7 @@ class ImageCacheController
      * Init from given URL
      *
      * @param  string  $url
-     * @return \Intervention\Image\Image
+     * @return Image
      */
     public function getImageFromUrl($url)
     {

@@ -2,6 +2,7 @@
 
 namespace Webkul\Admin\Http\Controllers\Lead;
 
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Event;
 use Webkul\Admin\Http\Controllers\Mail\EmailController as BaseEmailController;
 use Webkul\Admin\Http\Resources\ActivityResource;
@@ -11,7 +12,7 @@ class EmailController extends BaseEmailController
     /**
      * Store a newly created resource in storage.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function store()
     {
@@ -29,7 +30,7 @@ class EmailController extends BaseEmailController
      * Store a newly created resource in storage.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function detach($id)
     {
@@ -50,7 +51,7 @@ class EmailController extends BaseEmailController
      * Transform the email data to activity resource.
      *
      * @param  array  $data
-     * @return \Webkul\Admin\Http\Resources\ActivityResource
+     * @return ActivityResource
      */
     public function transformToActivity($data)
     {

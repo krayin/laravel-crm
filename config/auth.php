@@ -1,5 +1,7 @@
 <?php
 
+use Webkul\User\Models\User;
+
 return [
 
     /*
@@ -62,7 +64,7 @@ return [
     'providers' => [
         'users' => [
             'driver' => 'eloquent',
-            'model'  => Webkul\User\Models\User::class,
+            'model'  => User::class,
         ],
     ],
 

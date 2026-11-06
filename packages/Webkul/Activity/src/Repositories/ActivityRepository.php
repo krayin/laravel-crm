@@ -3,6 +3,7 @@
 namespace Webkul\Activity\Repositories;
 
 use Illuminate\Container\Container;
+use Webkul\Activity\Contracts\Activity;
 use Webkul\Core\Eloquent\Repository;
 
 class ActivityRepository extends Repository
@@ -32,7 +33,7 @@ class ActivityRepository extends Repository
     /**
      * Create pipeline.
      *
-     * @return \Webkul\Activity\Contracts\Activity
+     * @return Activity
      */
     public function create(array $data)
     {
@@ -70,7 +71,7 @@ class ActivityRepository extends Repository
      *
      * @param  int  $id
      * @param  string  $attribute
-     * @return \Webkul\Activity\Contracts\Activity
+     * @return Activity
      */
     public function update(array $data, $id, $attribute = 'id')
     {

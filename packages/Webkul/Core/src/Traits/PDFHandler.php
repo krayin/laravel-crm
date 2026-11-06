@@ -2,7 +2,9 @@
 
 namespace Webkul\Core\Traits;
 
+use ArPHP\I18N\Arabic;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Http\Response;
 use Illuminate\Support\Str;
 use Mpdf\Mpdf;
 
@@ -11,7 +13,7 @@ trait PDFHandler
     /**
      * Download PDF.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     protected function downloadPDF(string $html, ?string $fileName = null)
     {
@@ -38,7 +40,7 @@ trait PDFHandler
             return response()->streamDownload(fn () => print ($mPDF->Output('', 'S')), $fileName.'.pdf');
         }
 
-        return PDF::loadHTML($this->adjustArabicAndPersianContent($html))
+        return Pdf::loadHTML($this->adjustArabicAndPersianContent($html))
             ->setPaper('A4', 'portrait')
             ->set_option('defaultFont', 'Courier')
             ->download($fileName.'.pdf');
@@ -51,7 +53,7 @@ trait PDFHandler
      */
     protected function adjustArabicAndPersianContent(string $html)
     {
-        $arabic = new \ArPHP\I18N\Arabic;
+        $arabic = new Arabic;
 
         $p = $arabic->arIdentify($html);
 

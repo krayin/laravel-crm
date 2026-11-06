@@ -5,6 +5,7 @@ namespace Webkul\Quote\Repositories;
 use Illuminate\Container\Container;
 use Webkul\Core\Eloquent\Repository;
 use Webkul\Product\Repositories\ProductRepository;
+use Webkul\Quote\Contracts\QuoteItem;
 
 class QuoteItemRepository extends Repository
 {
@@ -52,7 +53,7 @@ class QuoteItemRepository extends Repository
     /**
      * @param  int  $id
      * @param  string  $attribute
-     * @return \Webkul\Quote\Contracts\QuoteItem
+     * @return QuoteItem
      */
     public function update(array $data, $id, $attribute = 'id')
     {

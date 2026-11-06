@@ -4,6 +4,7 @@ namespace Webkul\Email\Repositories;
 
 use Illuminate\Container\Container;
 use Webkul\Core\Eloquent\Repository;
+use Webkul\Email\Contracts\Email;
 use Webkul\Email\Helpers\Htmlfilter;
 use Webkul\Email\Helpers\Parser;
 
@@ -34,7 +35,7 @@ class EmailRepository extends Repository
     }
 
     /**
-     * @return \Webkul\Email\Contracts\Email
+     * @return Email
      */
     public function create(array $data)
     {
@@ -72,7 +73,7 @@ class EmailRepository extends Repository
     /**
      * @param  int  $id
      * @param  string  $attribute
-     * @return \Webkul\Email\Contracts\Email
+     * @return Email
      */
     public function update(array $data, $id, $attribute = 'id')
     {

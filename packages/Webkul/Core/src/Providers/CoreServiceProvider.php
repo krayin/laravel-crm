@@ -2,6 +2,7 @@
 
 namespace Webkul\Core\Providers;
 
+use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\ServiceProvider;
 use Webkul\Core\Acl;
@@ -21,7 +22,7 @@ class CoreServiceProvider extends ServiceProvider
      *
      * @return void
      *
-     * @throws \Illuminate\Contracts\Container\BindingResolutionException
+     * @throws BindingResolutionException
      */
     public function boot()
     {

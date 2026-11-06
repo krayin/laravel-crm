@@ -3,6 +3,7 @@
 namespace Webkul\Core;
 
 use Carbon\Carbon;
+use Illuminate\Support\Collection;
 use Webkul\Core\Repositories\CoreConfigRepository;
 use Webkul\Core\Repositories\CountryRepository;
 use Webkul\Core\Repositories\CountryStateRepository;
@@ -71,7 +72,7 @@ class Core
     /**
      * Retrieve all countries.
      *
-     * @return \Illuminate\Support\Collection
+     * @return Collection
      */
     public function countries()
     {
@@ -101,7 +102,7 @@ class Core
     /**
      * Retrieve all country states.
      *
-     * @return \Illuminate\Support\Collection
+     * @return Collection
      */
     public function states(string $countryCode)
     {
@@ -111,7 +112,7 @@ class Core
     /**
      * Retrieve all grouped states by country code.
      *
-     * @return \Illuminate\Support\Collection
+     * @return Collection
      */
     public function groupedStatesByCountries()
     {
@@ -127,7 +128,7 @@ class Core
     /**
      * Retrieve all grouped states by country code.
      *
-     * @return \Illuminate\Support\Collection
+     * @return Collection
      */
     public function findStateByCountryCode($countryCode = null, $stateCode = null)
     {

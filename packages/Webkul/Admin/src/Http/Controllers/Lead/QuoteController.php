@@ -2,6 +2,7 @@
 
 namespace Webkul\Admin\Http\Controllers\Lead;
 
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Event;
 use Webkul\Admin\Http\Controllers\Controller;
 use Webkul\Lead\Repositories\LeadRepository;
@@ -23,7 +24,7 @@ class QuoteController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function store($id)
     {
@@ -47,7 +48,7 @@ class QuoteController extends Controller
      *
      * @param  int  $leadId
      * @param  int  $tagId
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function delete($leadId)
     {

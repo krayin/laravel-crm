@@ -6,6 +6,8 @@ use App\Exceptions\Handler as AppExceptionHandler;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Container\Container;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Validation\ValidationException;
 use PDOException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
@@ -40,8 +42,8 @@ class Handler extends AppExceptionHandler
     /**
      * Render an exception into an HTTP response.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param  Request  $request
+     * @return Response
      */
     public function render($request, Throwable $exception)
     {
@@ -55,8 +57,8 @@ class Handler extends AppExceptionHandler
     /**
      * Convert an authentication exception into a response.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param  Request  $request
+     * @return Response
      */
     protected function unauthenticated($request, AuthenticationException $exception)
     {
@@ -70,7 +72,7 @@ class Handler extends AppExceptionHandler
     /**
      * Render custom HTTP response.
      *
-     * @return \Illuminate\Http\Response|null
+     * @return Response|null
      */
     private function renderCustomResponse(Throwable $exception)
     {

@@ -2,6 +2,7 @@
 
 namespace Webkul\Attribute\Traits;
 
+use Illuminate\Database\Eloquent\MassAssignmentException;
 use Webkul\Attribute\Models\AttributeValueProxy;
 use Webkul\Attribute\Repositories\AttributeRepository;
 
@@ -154,7 +155,7 @@ trait CustomAttribute
      *
      * @return $this
      *
-     * @throws \Illuminate\Database\Eloquent\MassAssignmentException
+     * @throws MassAssignmentException
      */
     public function fill(array $attributes)
     {
