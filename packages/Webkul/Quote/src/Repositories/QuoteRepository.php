@@ -50,7 +50,7 @@ class QuoteRepository extends Repository
     /**
      * Create.
      *
-     * @return \Webkul\Quote\Contracts\Quote
+     * @return Quote
      */
     public function create(array $data)
     {
@@ -74,7 +74,7 @@ class QuoteRepository extends Repository
      *
      * @param  int  $id
      * @param  array  $attribute
-     * @return \Webkul\Quote\Contracts\Quote
+     * @return Quote
      */
     public function update(array $data, $id, $attributes = [])
     {

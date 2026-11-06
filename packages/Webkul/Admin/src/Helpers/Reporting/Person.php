@@ -2,6 +2,7 @@
 
 namespace Webkul\Admin\Helpers\Reporting;
 
+use Carbon\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Webkul\Contact\Repositories\PersonRepository;
@@ -33,8 +34,8 @@ class Person extends AbstractReporting
     /**
      * Retrieves total persons by date
      *
-     * @param  \Carbon\Carbon  $startDate
-     * @param  \Carbon\Carbon  $endDate
+     * @param  Carbon  $startDate
+     * @param  Carbon  $endDate
      */
     public function getTotalPersons($startDate, $endDate): int
     {

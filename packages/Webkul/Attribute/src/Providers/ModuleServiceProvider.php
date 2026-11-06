@@ -2,13 +2,16 @@
 
 namespace Webkul\Attribute\Providers;
 
+use Webkul\Attribute\Models\Attribute;
+use Webkul\Attribute\Models\AttributeOption;
+use Webkul\Attribute\Models\AttributeValue;
 use Webkul\Core\Providers\BaseModuleServiceProvider;
 
 class ModuleServiceProvider extends BaseModuleServiceProvider
 {
     protected $models = [
-        \Webkul\Attribute\Models\Attribute::class,
-        \Webkul\Attribute\Models\AttributeOption::class,
-        \Webkul\Attribute\Models\AttributeValue::class,
+        Attribute::class,
+        AttributeOption::class,
+        AttributeValue::class,
     ];
 }

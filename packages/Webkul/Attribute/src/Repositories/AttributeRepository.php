@@ -4,6 +4,7 @@ namespace Webkul\Attribute\Repositories;
 
 use Illuminate\Container\Container;
 use Illuminate\Support\Str;
+use Webkul\Attribute\Contracts\Attribute;
 use Webkul\Core\Eloquent\Repository;
 
 class AttributeRepository extends Repository
@@ -31,7 +32,7 @@ class AttributeRepository extends Repository
     }
 
     /**
-     * @return \Webkul\Attribute\Contracts\Attribute
+     * @return Attribute
      */
     public function create(array $data)
     {
@@ -56,7 +57,7 @@ class AttributeRepository extends Repository
     /**
      * @param  int  $id
      * @param  string  $attribute
-     * @return \Webkul\Attribute\Contracts\Attribute
+     * @return Attribute
      */
     public function update(array $data, $id, $attribute = 'id')
     {
@@ -95,7 +96,7 @@ class AttributeRepository extends Repository
 
     /**
      * @param  string  $code
-     * @return \Webkul\Attribute\Contracts\Attribute
+     * @return Attribute
      */
     public function getAttributeByCode($code)
     {

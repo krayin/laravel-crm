@@ -4,6 +4,8 @@ namespace Webkul\Admin\DataGrids\Lead;
 
 use Illuminate\Contracts\Database\Query\Builder;
 use Illuminate\Support\Facades\DB;
+use Webkul\Contact\Repositories\PersonRepository;
+use Webkul\Contract\Repositories\Pipeline;
 use Webkul\DataGrid\DataGrid;
 use Webkul\Lead\Repositories\PipelineRepository;
 use Webkul\Lead\Repositories\SourceRepository;
@@ -17,7 +19,7 @@ class LeadDataGrid extends DataGrid
     /**
      * Pipeline instance.
      *
-     * @var \Webkul\Contract\Repositories\Pipeline
+     * @var Pipeline
      */
     protected $pipeline;
 
@@ -201,7 +203,7 @@ class LeadDataGrid extends DataGrid
             'filterable'         => true,
             'filterable_type'    => 'searchable_dropdown',
             'filterable_options' => [
-                'repository' => \Webkul\Contact\Repositories\PersonRepository::class,
+                'repository' => PersonRepository::class,
                 'column'     => [
                     'label' => 'name',
                     'value' => 'name',

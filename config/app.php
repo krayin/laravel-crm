@@ -1,7 +1,30 @@
 <?php
 
+use App\Providers\AppServiceProvider;
+use App\Providers\AuthServiceProvider;
+use App\Providers\EventServiceProvider;
+use App\Providers\RouteServiceProvider;
 use Illuminate\Support\Facades\Facade;
 use Illuminate\Support\ServiceProvider;
+use Konekt\Concord\ConcordServiceProvider;
+use Prettus\Repository\Providers\RepositoryServiceProvider;
+use Webkul\Activity\Providers\ActivityServiceProvider;
+use Webkul\Admin\Providers\AdminServiceProvider;
+use Webkul\Attribute\Providers\AttributeServiceProvider;
+use Webkul\Automation\Providers\WorkflowServiceProvider;
+use Webkul\Contact\Providers\ContactServiceProvider;
+use Webkul\Core\Providers\CoreServiceProvider;
+use Webkul\DataGrid\Providers\DataGridServiceProvider;
+use Webkul\Email\Providers\EmailServiceProvider;
+use Webkul\EmailTemplate\Providers\EmailTemplateServiceProvider;
+use Webkul\Installer\Providers\InstallerServiceProvider;
+use Webkul\Lead\Providers\LeadServiceProvider;
+use Webkul\Product\Providers\ProductServiceProvider;
+use Webkul\Quote\Providers\QuoteServiceProvider;
+use Webkul\Tag\Providers\TagServiceProvider;
+use Webkul\User\Providers\UserServiceProvider;
+use Webkul\Warehouse\Providers\WarehouseServiceProvider;
+use Webkul\WebForm\Providers\WebFormServiceProvider;
 
 return [
 
@@ -185,38 +208,38 @@ return [
          * Package Service Providers...
          */
         Barryvdh\DomPDF\ServiceProvider::class,
-        Konekt\Concord\ConcordServiceProvider::class,
-        Prettus\Repository\Providers\RepositoryServiceProvider::class,
+        ConcordServiceProvider::class,
+        RepositoryServiceProvider::class,
 
         /*
          * Application Service Providers...
          */
-        App\Providers\AppServiceProvider::class,
-        App\Providers\AuthServiceProvider::class,
+        AppServiceProvider::class,
+        AuthServiceProvider::class,
         // App\Providers\BroadcastServiceProvider::class,
-        App\Providers\EventServiceProvider::class,
-        App\Providers\RouteServiceProvider::class,
+        EventServiceProvider::class,
+        RouteServiceProvider::class,
 
         /*
          * Webkul Service Providers...
          */
-        Webkul\Activity\Providers\ActivityServiceProvider::class,
-        Webkul\Admin\Providers\AdminServiceProvider::class,
-        Webkul\Attribute\Providers\AttributeServiceProvider::class,
-        Webkul\Automation\Providers\WorkflowServiceProvider::class,
-        Webkul\Contact\Providers\ContactServiceProvider::class,
-        Webkul\Core\Providers\CoreServiceProvider::class,
-        Webkul\DataGrid\Providers\DataGridServiceProvider::class,
-        Webkul\EmailTemplate\Providers\EmailTemplateServiceProvider::class,
-        Webkul\Email\Providers\EmailServiceProvider::class,
-        Webkul\Installer\Providers\InstallerServiceProvider::class,
-        Webkul\Lead\Providers\LeadServiceProvider::class,
-        Webkul\Product\Providers\ProductServiceProvider::class,
-        Webkul\Quote\Providers\QuoteServiceProvider::class,
-        Webkul\Tag\Providers\TagServiceProvider::class,
-        Webkul\User\Providers\UserServiceProvider::class,
-        Webkul\Warehouse\Providers\WarehouseServiceProvider::class,
-        Webkul\WebForm\Providers\WebFormServiceProvider::class,
+        ActivityServiceProvider::class,
+        AdminServiceProvider::class,
+        AttributeServiceProvider::class,
+        WorkflowServiceProvider::class,
+        ContactServiceProvider::class,
+        CoreServiceProvider::class,
+        DataGridServiceProvider::class,
+        EmailTemplateServiceProvider::class,
+        EmailServiceProvider::class,
+        InstallerServiceProvider::class,
+        LeadServiceProvider::class,
+        ProductServiceProvider::class,
+        QuoteServiceProvider::class,
+        TagServiceProvider::class,
+        UserServiceProvider::class,
+        WarehouseServiceProvider::class,
+        WebFormServiceProvider::class,
     ])->toArray(),
 
     /*

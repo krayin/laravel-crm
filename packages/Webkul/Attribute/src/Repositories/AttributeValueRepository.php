@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Container\Container;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
+use Webkul\Attribute\Contracts\Attribute;
 use Webkul\Attribute\Contracts\AttributeValue;
 use Webkul\Core\Eloquent\Repository;
 
@@ -116,7 +117,7 @@ class AttributeValueRepository extends Repository
      *
      * @param  int  $entityId
      * @param  string  $entityType
-     * @param  \Webkul\Attribute\Contracts\Attribute  $attribute
+     * @param  Attribute  $attribute
      * @param  string  $value
      * @return bool
      */

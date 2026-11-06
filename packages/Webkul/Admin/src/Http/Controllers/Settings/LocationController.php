@@ -3,6 +3,7 @@
 namespace Webkul\Admin\Http\Controllers\Settings;
 
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Event;
 use Prettus\Repository\Criteria\RequestCriteria;
 use Webkul\Admin\Http\Controllers\Controller;
@@ -21,7 +22,7 @@ class LocationController extends Controller
     /**
      * Search location results
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function search()
     {
@@ -54,7 +55,7 @@ class LocationController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function destroy(int $id): JsonResponse
     {

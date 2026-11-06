@@ -3,6 +3,7 @@
 namespace Webkul\Admin\Http\Controllers\Settings;
 
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Event;
 use Illuminate\View\View;
 use Prettus\Repository\Criteria\RequestCriteria;
@@ -122,7 +123,7 @@ class TagController extends Controller
     /**
      * Search tag results
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function search()
     {

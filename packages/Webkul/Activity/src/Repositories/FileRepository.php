@@ -2,6 +2,7 @@
 
 namespace Webkul\Activity\Repositories;
 
+use Webkul\Activity\Contracts\File;
 use Webkul\Core\Eloquent\Repository;
 
 class FileRepository extends Repository
@@ -13,6 +14,6 @@ class FileRepository extends Repository
      */
     public function model()
     {
-        return \Webkul\Activity\Contracts\File::class;
+        return File::class;
     }
 }
