@@ -2,6 +2,10 @@
 
 This changelog consists of the bug & security fixes and new features being included in the releases listed below.
 
+## **v2.2.9 (Upcoming)**
+
+* #2669[fixed] Fixed IMAP mail not being imported from the inbox when the inbox has subfolders.
+
 ## **v2.2.8 (5th of Nov 2026)**
 
 * [security] Fixed Sercurity issue.
