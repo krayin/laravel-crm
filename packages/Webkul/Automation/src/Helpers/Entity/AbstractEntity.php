@@ -52,7 +52,7 @@ abstract class AbstractEntity
     {
         $attributes = [];
 
-        foreach ($this->attributeRepository->findByField('entity_type', $entityType) as $attribute) {
+        foreach ($this->attributeRepository->with('options')->findByField('entity_type', $entityType) as $attribute) {
             if (in_array($attribute->type, $skipAttributes)) {
                 continue;
             }
