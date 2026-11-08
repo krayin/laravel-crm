@@ -37,6 +37,8 @@ class QuoteController extends Controller
 
         $this->preventUnauthorizedAccess($lead->user_id);
 
+        $this->preventUnauthorizedAccess($this->quoteRepository->findOrFail(request('id'))->user_id);
+
         Event::dispatch('leads.quote.create.before');
 
         if (! $lead->quotes->contains(request('id'))) {
@@ -62,9 +64,7 @@ class QuoteController extends Controller
 
         $leads = $quote->leads;
 
-        $this->preventUnauthorizedAccess(
-            $leads->pluck('user_id')->push($quote->user_id)->filter()->unique()->all()
-        );
+        $this->preventUnauthorizedAccess($quote->user_id);
 
         Event::dispatch('leads.quote.delete.before', $quoteId);
 

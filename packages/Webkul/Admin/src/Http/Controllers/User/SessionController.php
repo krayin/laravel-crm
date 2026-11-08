@@ -133,12 +133,12 @@ class SessionController extends Controller
 
     protected function credentialRateLimitKey(): string
     {
-        return 'admin-login|'.sha1(Str::lower((string) request('email')).'|'.request()->ip());
+        return 'admin-login|'.hash('sha256', Str::lower((string) request('email')).'|'.request()->ip());
     }
 
     protected function addressRateLimitKey(): string
     {
-        return 'admin-login-address|'.sha1((string) request()->ip());
+        return 'admin-login-address|'.hash('sha256', (string) request()->ip());
     }
 
     /**

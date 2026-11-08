@@ -7,18 +7,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\RateLimiter;
 
-/**
- * Authenticates the inbound parse webhook.
- *
- * The route drops the `user` middleware and is exempt from CSRF, because the request comes
- * from the mail provider rather than from a signed-in admin. Without a check of its own the
- * endpoint accepts a raw message from anyone who can reach the host, and that message is
- * stored as a genuine email: any sender, any subject, any body.
- *
- * Providers that POST here let you choose the URL, so a shared secret can travel with the
- * request. SendGrid's Inbound Parse accepts credentials embedded in the destination URL;
- * other providers offer a custom header. Both are supported below.
- */
 class VerifyInboundEmailToken
 {
     /**
@@ -44,11 +32,6 @@ class VerifyInboundEmailToken
         if (blank($expected)) {
             $this->log($request, 'Rejected an inbound parse request because MAIL_RECEIVER_INBOUND_TOKEN is not set.');
 
-            /**
-             * 503, not 403. Providers retry a 5xx and drop the message on a 4xx, so an
-             * installation that upgrades before setting the token holds its mail in the
-             * provider's retry queue instead of losing it.
-             */
             return response()->json([
                 'message' => 'Inbound parsing is not configured.',
             ], 503);

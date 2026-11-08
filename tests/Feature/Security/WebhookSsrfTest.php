@@ -4,6 +4,7 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Response;
+use Webkul\Admin\Requests\WebhookRequest;
 use Webkul\Automation\Services\WebhookService;
 use Webkul\Contact\Repositories\PersonRepository;
 
@@ -91,6 +92,43 @@ it('rejects an ipv4 mapped ipv6 address that maps into a blocked range', functio
 it('still accepts a public ipv4 mapped ipv6 address', function () {
     expect(webhookService()->callIsPublicAddress('::ffff:93.184.216.34'))->toBeTrue();
 });
+
+it('rejects internal ranges the php range flags do not cover', function (string $ip) {
+    expect(webhookService()->callIsPublicAddress($ip))->toBeFalse();
+})->with([
+    '100.100.100.200',
+    '100.64.0.1',
+    '198.18.0.1',
+    '192.0.0.1',
+    '224.0.0.1',
+    '64:ff9b::7f00:1',
+    '64:ff9b::a00:1',
+    '2002:7f00:1::',
+    '::7f00:1',
+    '2001::1',
+    '64:ff9b:1::a00:1',
+    'ff02::1',
+]);
+
+it('still accepts public addresses next to those ranges', function (string $ip) {
+    expect(webhookService()->callIsPublicAddress($ip))->toBeTrue();
+})->with([
+    '100.128.0.1',
+    '198.20.0.1',
+    '64:ff9b::5db8:d822',
+    '2002:5db8:d822::',
+    '2606:4700:4700::1111',
+]);
+
+it('applies the same check when a webhook is saved', function (string $endPoint, bool $rejected) {
+    $validator = validator(['end_point' => $endPoint], (new WebhookRequest)->rules());
+
+    expect($validator->errors()->has('end_point'))->toBe($rejected);
+})->with([
+    'alibaba metadata' => ['http://100.100.100.200/latest/meta-data/', true],
+    'nat64 loopback' => ['http://[64:ff9b::7f00:1]/hook', true],
+    'public address' => ['http://93.184.216.34/hook', false],
+]);
 
 it('accepts a public literal address', function () {
     expect(webhookService()->callIsSafeEndpoint('http://93.184.216.34/hook'))->toBeTrue();

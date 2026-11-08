@@ -173,9 +173,7 @@ class CoreConfigRepository extends Repository
                     if (request()->hasFile($fieldName)) {
                         $file = request()->file($fieldName);
 
-                        $filename = md5($file->getClientOriginalName().time()).'.'.$file->getClientOriginalExtension();
-
-                        $path = $file->storeAs('configuration', $filename);
+                        $path = $file->store('configuration');
 
                         $this->sanitizeSVG($path, $file);
                     }

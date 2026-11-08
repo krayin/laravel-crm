@@ -501,7 +501,21 @@ class UserController extends Controller
             return false;
         }
 
-        return empty(array_diff($targetUser->role?->permissions ?? [], $authUser->role?->permissions ?? []));
+        if (! empty(array_diff($targetUser->role?->permissions ?? [], $authUser->role?->permissions ?? []))) {
+            return false;
+        }
+
+        $rank = ['individual' => 0, 'group' => 1, 'global' => 2];
+
+        if (($rank[$targetUser->view_permission] ?? 0) > ($rank[$authUser->view_permission] ?? 0)) {
+            return false;
+        }
+
+        $userIds = bouncer()->getAuthorizedUserIds();
+
+        return $userIds === null
+            || in_array($targetUser->id, $userIds)
+            || in_array($targetUser->created_by, $userIds);
     }
 
     /**

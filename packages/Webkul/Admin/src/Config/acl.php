@@ -119,7 +119,7 @@ return [
     ], [
         'key' => 'mail.edit',
         'name' => 'admin::app.acl.edit',
-        'route' => 'admin.mail.update',
+        'route' => ['admin.mail.update', 'admin.mail.mass_update', 'admin.mail.tags.attach', 'admin.mail.tags.detach'],
         'sort' => 8,
     ], [
         'key' => 'mail.delete',
@@ -534,17 +534,28 @@ return [
     ], [
         'key' => 'settings.automation.data_transfer.imports',
         'name' => 'admin::app.acl.imports',
-        'route' => 'admin.settings.data_transfer.imports.index',
+        'route' => [
+            'admin.settings.data_transfer.imports.index',
+            'admin.settings.data_transfer.imports.download',
+            'admin.settings.data_transfer.imports.download_error_report',
+        ],
         'sort' => 1,
     ], [
         'key' => 'settings.automation.data_transfer.imports.create',
         'name' => 'admin::app.acl.create',
-        'route' => 'admin.settings.data_transfer.imports.create',
+        'route' => [
+            'admin.settings.data_transfer.imports.create',
+            'admin.settings.data_transfer.imports.store',
+            'admin.settings.data_transfer.imports.download_sample',
+        ],
         'sort' => 1,
     ], [
         'key' => 'settings.automation.data_transfer.imports.edit',
         'name' => 'admin::app.acl.edit',
-        'route' => 'admin.settings.data_transfer.imports.edit',
+        'route' => [
+            'admin.settings.data_transfer.imports.edit',
+            'admin.settings.data_transfer.imports.update',
+        ],
         'sort' => 2,
     ], [
         'key' => 'settings.automation.data_transfer.imports.delete',
@@ -554,7 +565,14 @@ return [
     ], [
         'key' => 'settings.automation.data_transfer.imports.import',
         'name' => 'admin::app.acl.import',
-        'route' => 'admin.settings.data_transfer.imports.imports',
+        'route' => [
+            'admin.settings.data_transfer.imports.import',
+            'admin.settings.data_transfer.imports.validate',
+            'admin.settings.data_transfer.imports.start',
+            'admin.settings.data_transfer.imports.link',
+            'admin.settings.data_transfer.imports.index_data',
+            'admin.settings.data_transfer.imports.stats',
+        ],
         'sort' => 4,
     ], [
         'key' => 'settings.other_settings',

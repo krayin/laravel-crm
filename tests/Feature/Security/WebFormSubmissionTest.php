@@ -5,6 +5,7 @@ use Webkul\Attribute\Models\Attribute;
 use Webkul\Attribute\Repositories\AttributeRepository;
 use Webkul\Contact\Models\Person;
 use Webkul\Contact\Repositories\PersonRepository;
+use Webkul\Email\Models\Email;
 use Webkul\Lead\Models\Lead;
 use Webkul\Lead\Repositories\LeadRepository;
 use Webkul\Lead\Repositories\PipelineRepository;
@@ -297,4 +298,35 @@ it('still writes the attributes the form does expose', function () {
     expect($lead->person)->not->toBeNull();
 
     expect($lead->person->name)->toBe('Jane Visitor');
+});
+
+/**
+ * `email_id` made the lead create listener file an existing mail under the submitted lead. The
+ * route skips CSRF, so it is dropped even when the submitting browser has an admin session.
+ */
+it('ignores an email_id in a submission, even with an admin session open', function () {
+    $email = Email::create([
+        'subject' => 'Someone else\'s thread',
+        'reply' => 'Not for the web form.',
+        'source' => 'email',
+        'user_type' => 'person',
+        'folders' => ['inbox'],
+        'name' => 'Sender',
+        'unique_id' => bin2hex(random_bytes(8)),
+        'message_id' => bin2hex(random_bytes(8)).'@example.invalid',
+    ]);
+
+    test()->actingAs(getDefaultAdmin(), 'user');
+
+    submitWebForm(makeWebForm(), [
+        'email_id' => $email->id,
+        'leads' => ['title' => 'Enquiry naming a mail'],
+        'persons' => [
+            'name' => 'Visitor',
+            'emails' => [['value' => 'visitor-'.bin2hex(random_bytes(4)).'@example.invalid', 'label' => 'work']],
+        ],
+    ])->assertOk();
+
+    expect(Lead::where('title', 'Enquiry naming a mail')->exists())->toBeTrue()
+        ->and($email->fresh()->lead_id)->toBeNull();
 });

@@ -1,0 +1,57 @@
+
+name: Static Analysis
+
+on:
+  push:
+    branches: [2.2]
+
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: static-analysis-${{ github.head_ref || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  phpstan:
+    runs-on: ubuntu-latest
+    name: PHPStan (Larastan)
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          coverage: none
+
+      - name: Install Composer dependencies
+        run: composer install --prefer-dist --no-interaction --no-progress
+
+      - name: Run PHPStan
+        run: vendor/bin/phpstan analyse --memory-limit=2G --no-progress
+
+  rector:
+    runs-on: ubuntu-latest
+    name: Rector (Dry Run)
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          coverage: none
+
+      - name: Install Composer dependencies
+        run: composer install --prefer-dist --no-interaction --no-progress
+
+      - name: Run Rector
+        continue-on-error: true
+        run: vendor/bin/rector process --dry-run --no-progress-bar

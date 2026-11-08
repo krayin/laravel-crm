@@ -4,9 +4,12 @@ namespace Webkul\Admin\Http\Controllers\Settings\DataTransfer;
 
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Illuminate\View\View;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 use Webkul\Admin\DataGrids\Settings\DataTransfer\ImportDataGrid;
 use Webkul\Admin\Http\Controllers\Controller;
 use Webkul\Attribute\Repositories\AttributeRepository;
@@ -15,6 +18,11 @@ use Webkul\DataTransfer\Repositories\ImportRepository;
 
 class ImportController extends Controller
 {
+    /**
+     * Extensions an import file may be uploaded and stored with.
+     */
+    protected const ALLOWED_EXTENSIONS = ['csv', 'xls', 'xlsx'];
+
     /**
      * Create a new controller instance.
      *
@@ -55,11 +63,11 @@ class ImportController extends Controller
 
         $this->validate(request(), [
             'type' => 'required|in:'.implode(',', $importers),
-            'action' => 'required:in:append,delete',
-            'validation_strategy' => 'required:in:stop-on-errors,skip-errors',
+            'action' => 'required|in:'.Import::ACTION_APPEND.','.Import::ACTION_DELETE,
+            'validation_strategy' => 'required|in:'.Import::VALIDATION_STRATEGY_STOP_ON_ERROR.','.Import::VALIDATION_STRATEGY_SKIP_ERRORS,
             'allowed_errors' => 'required|integer|min:0',
             'field_separator' => 'required',
-            'file' => 'required|mimes:csv,xls,xlsx,txt',
+            'file' => 'required|'.$this->importFileRules(),
         ]);
 
         Event::dispatch('data_transfer.imports.create.before');
@@ -84,11 +92,7 @@ class ImportController extends Controller
         $import = $this->importRepository->create(
             array_merge(
                 [
-                    'file_path' => request()->file('file')->storeAs(
-                        'imports',
-                        time().'-'.request()->file('file')->getClientOriginalName(),
-                        'public'
-                    ),
+                    'file_path' => $this->storeImportFile(request()->file('file')),
                 ],
                 $data
             )
@@ -122,11 +126,11 @@ class ImportController extends Controller
 
         $this->validate(request(), [
             'type' => 'required|in:'.implode(',', $importers),
-            'action' => 'required:in:append,delete',
-            'validation_strategy' => 'required:in:stop-on-errors,skip-errors',
+            'action' => 'required|in:'.Import::ACTION_APPEND.','.Import::ACTION_DELETE,
+            'validation_strategy' => 'required|in:'.Import::VALIDATION_STRATEGY_STOP_ON_ERROR.','.Import::VALIDATION_STRATEGY_SKIP_ERRORS,
             'allowed_errors' => 'required|integer|min:0',
             'field_separator' => 'required',
-            'file' => 'mimes:csv,xls,xlsx,txt',
+            'file' => $this->importFileRules(),
         ]);
 
         Event::dispatch('data_transfer.imports.update.before');
@@ -154,16 +158,12 @@ class ImportController extends Controller
             ]
         );
 
-        Storage::disk('public')->delete($import->error_file_path ?? '');
+        Storage::disk(Import::STORAGE_DISK)->delete($import->error_file_path ?? '');
 
         if (request()->file('file') && request()->file('file')->isValid()) {
-            Storage::disk('public')->delete($import->file_path);
+            Storage::disk(Import::STORAGE_DISK)->delete($import->file_path);
 
-            $data['file_path'] = request()->file('file')->storeAs(
-                'imports',
-                time().'-'.request()->file('file')->getClientOriginalName(),
-                'public'
-            );
+            $data['file_path'] = $this->storeImportFile(request()->file('file'));
         }
 
         $data['process_in_queue'] = request()->boolean('process_in_queue');
@@ -185,9 +185,9 @@ class ImportController extends Controller
         $import = $this->importRepository->findOrFail($id);
 
         try {
-            Storage::disk('public')->delete($import->file_path);
+            Storage::disk(Import::STORAGE_DISK)->delete($import->file_path);
 
-            Storage::disk('public')->delete($import->error_file_path ?? '');
+            Storage::disk(Import::STORAGE_DISK)->delete($import->error_file_path ?? '');
 
             $this->importRepository->delete($id);
 
@@ -510,22 +510,74 @@ class ImportController extends Controller
     }
 
     /**
-     * Download import error report
+     * Download import source file
      */
-    public function download(int $id)
+    public function download(int $id): StreamedResponse
     {
         $import = $this->importRepository->findOrFail($id);
 
-        return Storage::disk('public')->download($import->file_path);
+        return $this->downloadImportFile($import->file_path);
     }
 
     /**
      * Download import error report
      */
-    public function downloadErrorReport(int $id)
+    public function downloadErrorReport(int $id): StreamedResponse
     {
         $import = $this->importRepository->findOrFail($id);
 
-        return Storage::disk('public')->download($import->file_path);
+        return $this->downloadImportFile($import->error_file_path);
+    }
+
+    /**
+     * Validation rules for an uploaded import file.
+     *
+     * Both rules are needed. `mimes` checks only the type sniffed from the content, so a file whose
+     * first line is plain text passes it under any name, `report.html` included; `extensions` checks
+     * the name the client sent.
+     */
+    protected function importFileRules(): string
+    {
+        $extensions = implode(',', self::ALLOWED_EXTENSIONS);
+
+        /**
+         * `txt` stays acceptable as content: a header-only, single-column or semicolon-delimited CSV
+         * is sniffed as `text/plain`, which guesses to `txt`. The `extensions` rule is what keeps
+         * `.txt` and `.html` names out.
+         */
+        $contentTypes = implode(',', [...self::ALLOWED_EXTENSIONS, 'txt']);
+
+        return "extensions:{$extensions}|mimes:{$contentTypes}";
+    }
+
+    /**
+     * Store an uploaded import file on the private disk under a random name.
+     *
+     * The client's file name is never used on disk: it is attacker controlled, and a name derived
+     * from it (or from a timestamp) can be guessed. Only the extension is kept, because it selects
+     * the reader and the error report format; the `extensions` rule has already limited it to the
+     * types the importer accepts.
+     */
+    protected function storeImportFile(UploadedFile $file): string
+    {
+        $extension = strtolower($file->getClientOriginalExtension());
+
+        return $file->storeAs(
+            Import::STORAGE_DIRECTORY,
+            Str::random(40).'.'.$extension,
+            Import::STORAGE_DISK
+        );
+    }
+
+    /**
+     * Stream an import file from the private disk, or answer 404 when it is gone.
+     */
+    protected function downloadImportFile(?string $path): StreamedResponse
+    {
+        $disk = Storage::disk(Import::STORAGE_DISK);
+
+        abort_if(empty($path) || ! $disk->exists($path), 404);
+
+        return $disk->download($path);
     }
 }

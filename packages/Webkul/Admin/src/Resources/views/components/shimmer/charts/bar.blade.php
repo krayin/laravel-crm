@@ -13,7 +13,7 @@
                 @foreach (range(1, $count) as $i)
                     <div
                         class="shimmer flex w-full"
-                        style="height: {{ rand(10, 100) }}%"
+                        @style(['height: '.random_int(10, 100).'%'])
                     ></div>
                 @endforeach
             </div>

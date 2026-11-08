@@ -58,6 +58,6 @@ class Import extends Model implements ImportContract
      */
     public function getFileNameAttribute(): string
     {
-        return preg_replace('/^.*?\/\d+-/', '', $this->file_path);
+        return preg_replace('/^\d+-/', '', basename((string) $this->file_path));
     }
 }

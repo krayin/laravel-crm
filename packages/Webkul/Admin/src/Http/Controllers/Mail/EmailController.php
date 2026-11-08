@@ -15,6 +15,8 @@ use Webkul\Admin\Http\Controllers\Controller;
 use Webkul\Admin\Http\Requests\MassDestroyRequest;
 use Webkul\Admin\Http\Requests\MassUpdateRequest;
 use Webkul\Admin\Http\Resources\EmailResource;
+use Webkul\Admin\Traits\ScopesMailAccess;
+use Webkul\Contact\Repositories\PersonRepository;
 use Webkul\Email\Enums\SupportedFolderEnum;
 use Webkul\Email\InboundEmailProcessor\Contracts\InboundEmailProcessor;
 use Webkul\Email\Mails\Email;
@@ -24,6 +26,8 @@ use Webkul\Lead\Repositories\LeadRepository;
 
 class EmailController extends Controller
 {
+    use ScopesMailAccess;
+
     /**
      * Create a new controller instance.
      *
@@ -40,7 +44,7 @@ class EmailController extends Controller
      */
     public function index(): View|JsonResponse|RedirectResponse
     {
-        $route = request('route');
+        $route = $this->mailFolder();
 
         if (! $route) {
             return redirect()->route('admin.mail.index', ['route' => SupportedFolderEnum::INBOX->value]);
@@ -58,35 +62,37 @@ class EmailController extends Controller
     }
 
     /**
-     * Resolve the user ids a mail is scoped to, through the lead or person it is linked to.
+     * The mail folder being browsed, taken only from the `{route}` URL segment.
      *
-     * An unlinked mail returns an empty list: the mailbox itself is shared, so mail that belongs to
-     * no lead or person stays available to everyone with mail access.
+     * The sanitize_url middleware whitelists that segment. `request('route')` must not be used: it
+     * returns query-string or body input before the route segment, so `?route=…` slipped any value
+     * past the whitelist and into pages that Vue compiles.
      */
-    protected function emailOwnerIds($email): array
+    protected function mailFolder(): ?string
     {
-        return array_values(array_filter([
-            $email?->lead?->user_id,
-            $email?->person?->user_id,
-        ]));
+        return request()->route('route');
     }
 
     /**
-     * Deny a write against a mail that is linked to a lead or person outside the acting user's data
-     * scope. Unlinked mail is left alone, matching the read path in `view()`.
+     * Deny linking a mail to a lead, person or parent mail outside the acting user's data scope.
      *
-     * `preventUnauthorizedAccess()` is not used directly because it denies on an empty owner list,
-     * which would make shared, unlinked mail unwritable for restricted users.
+     * The ids come straight from the request and are mass assignable, so without this a user could
+     * file a mail under any record and read that record back through the mail resource. Each link
+     * is held to the same check as opening the record it names.
      */
-    protected function preventUnauthorizedMailAccess($email): void
+    protected function preventUnauthorizedMailLinks(array $data): void
     {
-        $ownerIds = $this->emailOwnerIds($email);
-
-        if (! $ownerIds) {
-            return;
+        if (! empty($data['lead_id'])) {
+            $this->preventUnauthorizedAccess($this->leadRepository->findOrFail($data['lead_id'])->user_id);
         }
 
-        $this->preventUnauthorizedAccess($ownerIds);
+        if (! empty($data['person_id'])) {
+            $this->preventUnauthorizedAccess(app(PersonRepository::class)->findOrFail($data['person_id'])->user_id);
+        }
+
+        if (! empty($data['parent_id'])) {
+            $this->preventUnauthorizedMailAccess($this->emailRepository->findOrFail($data['parent_id']));
+        }
     }
 
     /**
@@ -102,11 +108,7 @@ class EmailController extends Controller
             return $mails;
         }
 
-        return $mails->filter(function ($email) use ($userIds) {
-            $ownerIds = $this->emailOwnerIds($email);
-
-            return ! $ownerIds || ! empty(array_intersect($ownerIds, $userIds));
-        })->values();
+        return $mails->filter(fn ($email) => $this->isMailInScope($email, $userIds))->values();
     }
 
     /**
@@ -116,7 +118,7 @@ class EmailController extends Controller
      */
     public function view()
     {
-        $route = request('route');
+        $route = $this->mailFolder();
 
         $email = $this->emailRepository
             ->with([
@@ -164,6 +166,8 @@ class EmailController extends Controller
             'attachments' => 'sometimes|array',
             'attachments.*' => 'file|max:20480',
         ]);
+
+        $this->preventUnauthorizedMailLinks(request()->all());
 
         Event::dispatch('email.create.before');
 
@@ -214,11 +218,13 @@ class EmailController extends Controller
          */
         $this->preventUnauthorizedMailAccess($this->emailRepository->findOrFail($id));
 
-        Event::dispatch('email.update.before', $id);
-
         $data = request()->all();
 
         unset($data['id']);
+
+        $this->preventUnauthorizedMailLinks($data);
+
+        Event::dispatch('email.update.before', $id);
 
         if (! is_null(request('is_draft'))) {
             $data['folders'] = request('is_draft') ? [SupportedFolderEnum::DRAFT->value] : [SupportedFolderEnum::OUTBOX->value];

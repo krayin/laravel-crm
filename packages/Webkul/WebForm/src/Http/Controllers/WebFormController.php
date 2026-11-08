@@ -157,6 +157,10 @@ class WebFormController extends Controller
 
         $this->restrictSubmissionToExposedAttributes($exposedAttributes);
 
+        request()->query->remove('email_id');
+
+        request()->request->remove('email_id');
+
         $person = $this->findPersonBySubmittedEmail();
 
         if ($person) {

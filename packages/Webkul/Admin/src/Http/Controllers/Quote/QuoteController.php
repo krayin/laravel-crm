@@ -16,7 +16,9 @@ use Webkul\Admin\Http\Requests\AttributeForm;
 use Webkul\Admin\Http\Requests\MassDestroyRequest;
 use Webkul\Admin\Http\Resources\QuoteResource;
 use Webkul\Attribute\Repositories\AttributeRepository;
+use Webkul\Contact\Repositories\PersonRepository;
 use Webkul\Core\Traits\PDFHandler;
+use Webkul\Lead\Contracts\Lead;
 use Webkul\Lead\Repositories\LeadRepository;
 use Webkul\Quote\Repositories\QuoteRepository;
 
@@ -58,6 +60,14 @@ class QuoteController extends Controller
 
         $lead = $leadId ? $this->leadRepository->find($leadId) : null;
 
+        /**
+         * The form is filled from the lead — its contact, owner, billing address and product
+         * pricing — so the lead is held to the same check as `leadProducts()`.
+         */
+        if ($lead) {
+            $this->preventUnauthorizedAccess($lead->user_id);
+        }
+
         $quote = $this->quoteRepository->getModel();
 
         if ($lead) {
@@ -71,7 +81,7 @@ class QuoteController extends Controller
 
         $leadProducts = $this->getLeadProductsForQuote($lead);
 
-        $lookUpEntityData = $this->attributeRepository->getLookUpEntity('leads', $leadId);
+        $lookUpEntityData = $this->attributeRepository->getLookUpEntity('leads', $leadId)?->only(['id', 'name']);
 
         return view('admin::quotes.create', compact('lead', 'quote', 'leadProducts', 'lookUpEntityData'));
     }
@@ -81,6 +91,10 @@ class QuoteController extends Controller
      */
     public function store(AttributeForm $request): RedirectResponse|JsonResponse
     {
+        $lead = $this->requestedLead();
+
+        $this->preventUnauthorizedQuotePerson([$lead?->person_id]);
+
         if (! request()->has('quick_add')) {
             $this->additionalValidation();
         }
@@ -91,13 +105,9 @@ class QuoteController extends Controller
 
         $quote = $this->quoteRepository->create($request->all());
 
-        $leadId = request('lead_id');
+        $lead?->quotes()->attach($quote->id);
 
-        if ($leadId) {
-            $lead = $this->leadRepository->find($leadId);
-
-            $lead->quotes()->attach($quote->id);
-        }
+        $leadId = $lead?->id;
 
         Event::dispatch('quote.create.after', $quote);
 
@@ -124,17 +134,39 @@ class QuoteController extends Controller
 
         $this->preventUnauthorizedAccess($quote->user_id);
 
-        $leadId = old('lead_id') ?? optional($quote->leads->first())->id;
+        $currentLeadId = optional($quote->leads->first())->id;
+
+        $leadId = old('lead_id') ?? $currentLeadId;
 
         $linkedLead = $leadId ? $this->leadRepository->find($leadId) : null;
 
+        /**
+         * `old('lead_id')` is the caller's own previous submission, flashed back when validation
+         * failed, so it may name any lead. Only a lead in the caller's scope replaces the current
+         * one, and only such a lead fills the items with its product pricing.
+         */
+        if (
+            $linkedLead
+            && $linkedLead->id != $currentLeadId
+            && ! $this->isLeadInScope($linkedLead)
+        ) {
+            $leadId = $currentLeadId;
+
+            $linkedLead = $leadId ? $this->leadRepository->find($leadId) : null;
+        }
+
         $initialQuoteItems = $quote->items;
 
-        if ($initialQuoteItems->isEmpty() && $linkedLead?->products?->isNotEmpty()) {
+        if (
+            $initialQuoteItems->isEmpty()
+            && $linkedLead
+            && $this->isLeadInScope($linkedLead)
+            && $linkedLead->products?->isNotEmpty()
+        ) {
             $initialQuoteItems = collect($this->getLeadProductsForQuote($linkedLead));
         }
 
-        $lookUpEntityData = $this->attributeRepository->getLookUpEntity('leads', $leadId);
+        $lookUpEntityData = $this->attributeRepository->getLookUpEntity('leads', $leadId)?->only(['id', 'name']);
 
         return view('admin::quotes.edit', compact('quote', 'linkedLead', 'initialQuoteItems', 'lookUpEntityData'));
     }
@@ -144,7 +176,13 @@ class QuoteController extends Controller
      */
     public function update(AttributeForm $request, int $id): RedirectResponse
     {
-        $this->preventUnauthorizedAccess($this->quoteRepository->findOrFail($id)->user_id);
+        $quote = $this->quoteRepository->findOrFail($id);
+
+        $this->preventUnauthorizedAccess($quote->user_id);
+
+        $lead = $this->requestedLead($quote->leads->pluck('id')->all());
+
+        $this->preventUnauthorizedQuotePerson([$quote->person_id, $lead?->person_id]);
 
         $this->additionalValidation();
 
@@ -156,13 +194,9 @@ class QuoteController extends Controller
 
         $quote->leads()->detach();
 
-        $leadId = request('lead_id');
+        $lead?->quotes()->attach($quote->id);
 
-        if ($leadId) {
-            $lead = $this->leadRepository->find($leadId);
-
-            $lead->quotes()->attach($quote->id);
-        }
+        $leadId = $lead?->id;
 
         Event::dispatch('quote.update.after', $quote);
 
@@ -194,6 +228,62 @@ class QuoteController extends Controller
         }
 
         return QuoteResource::collection($quotes);
+    }
+
+    /**
+     * The lead named by the request's `lead_id`, or `null` when none is named.
+     *
+     * Attaching a quote files it under the lead, so the lead is held to the same check as opening
+     * it. A lead already linked to the quote being updated is exempt: keeping a link grants nothing
+     * new, and refusing it would silently drop the link once the lead moved out of the user's scope.
+     *
+     * @return Lead|null
+     */
+    protected function requestedLead(array $linkedLeadIds = [])
+    {
+        if (! $leadId = request('lead_id')) {
+            return null;
+        }
+
+        $lead = $this->leadRepository->findOrFail($leadId);
+
+        if (! in_array($lead->id, $linkedLeadIds)) {
+            $this->preventUnauthorizedAccess($lead->user_id);
+        }
+
+        return $lead;
+    }
+
+    /**
+     * Deny filing a quote under a contact outside the acting user's data scope.
+     *
+     * The quote resource returns its person in full, so a person the user could not otherwise open
+     * would be read back through their own quote. The person of the quote's lead, and the one the
+     * quote already has, are exempt: the form fills the first in from the lead, and keeping the
+     * second grants nothing new.
+     */
+    protected function preventUnauthorizedQuotePerson(array $allowedPersonIds = []): void
+    {
+        $personId = request('person_id');
+
+        if (
+            ! $personId
+            || in_array($personId, array_filter($allowedPersonIds))
+        ) {
+            return;
+        }
+
+        $this->preventUnauthorizedAccess(app(PersonRepository::class)->findOrFail($personId)->user_id);
+    }
+
+    /**
+     * Whether the acting user may open the given lead.
+     */
+    protected function isLeadInScope($lead): bool
+    {
+        $userIds = bouncer()->getAuthorizedUserIds();
+
+        return $userIds === null || in_array($lead->user_id, $userIds);
     }
 
     /**
