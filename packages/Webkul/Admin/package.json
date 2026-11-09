@@ -9,7 +9,7 @@
         "@playwright/test": "^1.50.1",
         "@types/node": "^22.7.8",
         "autoprefixer": "^10.4.16",
-        "axios": "^1.7.4",
+        "axios": "^1.21.0",
         "laravel-vite-plugin": "^1.0",
         "postcss": "^8.4.23",
         "tailwindcss": "^3.3.2",
