@@ -13,7 +13,7 @@
     "dotenv": "^18.0.4",
     "fast-check": "^4.10.2",
     "fast-csv": "^5.0.7",
-    "laravel-vite-plugin": "^1.0.0",
+    "laravel-vite-plugin": "^3.2.1",
     "vite": "^6.4.3"
   },
   "dependencies": {
