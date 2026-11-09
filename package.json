@@ -7,7 +7,7 @@
     "test:js": "node --experimental-strip-types --test tests/js/*.test.ts"
   },
   "devDependencies": {
-    "@fast-csv/format": "^5.0.7",
+    "@fast-csv/format": "^5.0.8",
     "@playwright/test": "^1.64.0",
     "axios": "^1.6.4",
     "dotenv": "^18.0.4",
