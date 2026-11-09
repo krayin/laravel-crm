@@ -35,6 +35,6 @@ jobs:
         run: ${{ runner.temp }}/composer/vendor/bin/pint
 
       - name: Commit Linted Files
-        uses: stefanzweifel/git-auto-commit-action@v5
+        uses: stefanzweifel/git-auto-commit-action@v7
         with:
           commit_message: "chore: applied pint changes"
