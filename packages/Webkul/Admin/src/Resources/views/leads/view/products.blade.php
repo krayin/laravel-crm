@@ -67,17 +67,19 @@
             {!! view_render_event('admin.leads.view.products.table.add_more.before', ['lead' => $lead]) !!}
 
             <!-- Add New Product Item -->
-            <div>
-                <button
-                    type="button"
-                    class="flex max-w-max items-center gap-2 text-brandColor"
-                    @click="addProduct"
-                >
-                    <i class="icon-add text-md !text-brandColor"></i>
+            @if (bouncer()->hasPermission('leads.edit'))
+                <div>
+                    <button
+                        type="button"
+                        class="flex max-w-max items-center gap-2 text-brandColor"
+                        @click="addProduct"
+                    >
+                        <i class="icon-add text-md !text-brandColor"></i>
 
-                    @lang('admin::app.leads.view.products.add-more')
-                </button>
-            </div>
+                        @lang('admin::app.leads.view.products.add-more')
+                    </button>
+                </div>
+            @endif
 
             {!! view_render_event('admin.leads.view.products.table.add_more.after', ['lead' => $lead]) !!}
         </div>
@@ -99,12 +101,14 @@
                     </p>
                 </div>
 
-                <div
-                    class="secondary-button"
-                    @click="addProduct"
-                >
-                     @lang('admin::app.leads.view.products.add-product')
-                </div>
+                @if (bouncer()->hasPermission('leads.edit'))
+                    <div
+                        class="secondary-button"
+                        @click="addProduct"
+                    >
+                         @lang('admin::app.leads.view.products.add-product')
+                    </div>
+                @endif
             </div>
         </div>
     </script>
@@ -118,15 +122,19 @@
             <x-admin::table.td class="!px-4">
                 <v-form v-slot="{ errors }" @keydown.enter.prevent>
                     <x-admin::form.control-group class="!mb-0">
-                        <x-admin::lookup
-                            ::key="product.product_id"
-                            ::src="src"
-                            name="name"
-                            ::params="params"
-                            :placeholder="trans('admin::app.leads.view.products.product-name')"
-                            @on-selected="(product) => addProduct(product)"
-                            ::value="{ id: product.product_id, name: product.name }"
-                        />
+                        @if (bouncer()->hasPermission('leads.edit'))
+                            <x-admin::lookup
+                                ::key="product.product_id"
+                                ::src="src"
+                                name="name"
+                                ::params="params"
+                                :placeholder="trans('admin::app.leads.view.products.product-name')"
+                                @on-selected="(product) => addProduct(product)"
+                                ::value="{ id: product.product_id, name: product.name }"
+                            />
+                        @else
+                            <p class="py-2 text-sm dark:text-white">@{{ product.name }}</p>
+                        @endif
 
                         <x-admin::form.control-group.control
                             type="hidden"
@@ -155,6 +163,7 @@
                             :label="trans('admin::app.leads.view.products.quantity')"
                             :placeholder="trans('admin::app.leads.view.products.quantity')"
                             @on-change="handleQuantityChange"
+                            :allowEdit="bouncer()->hasPermission('leads.edit')"
                             ::url="url(product)"
                             ::params="{product_id: product.product_id, price: product.price}"
                             position="left"
@@ -176,6 +185,7 @@
                             :label="trans('admin::app.leads.view.products.price')"
                             :placeholder="trans('admin::app.leads.view.products.price')"
                             @on-change="handlePriceChange"
+                            :allowEdit="bouncer()->hasPermission('leads.edit')"
                             ::url="url(product)"
                             ::params="{product_id: product.product_id, quantity: product.quantity}"
                             position="left"
@@ -209,12 +219,14 @@
 
             <!-- Action -->
             <x-admin::table.td class="ltr:text-right rtl:text-left">
-                <x-admin::form.control-group class="!mb-0">
-                    <i
-                        @click="removeProduct"
-                        class="cursor-pointer icon-delete text-black text-2xl"
-                    ></i>
-                </x-admin::form.control-group>
+                @if (bouncer()->hasPermission('leads.edit'))
+                    <x-admin::form.control-group class="!mb-0">
+                        <i
+                            @click="removeProduct"
+                            class="cursor-pointer icon-delete text-black text-2xl"
+                        ></i>
+                    </x-admin::form.control-group>
+                @endif
             </x-admin::table.td>
         </x-admin::table.tbody.tr>
     </script>

@@ -14,7 +14,7 @@ return [
     ], [
         'key' => 'leads.create',
         'name' => 'admin::app.acl.create',
-        'route' => ['admin.leads.create', 'admin.leads.store'],
+        'route' => ['admin.leads.create', 'admin.leads.store', 'admin.leads.create_by_ai'],
         'sort' => 1,
     ], [
         'key' => 'leads.create.quick-create',
@@ -29,7 +29,7 @@ return [
     ], [
         'key' => 'leads.edit',
         'name' => 'admin::app.acl.edit',
-        'route' => ['admin.leads.edit', 'admin.leads.update', 'admin.leads.mass_update'],
+        'route' => ['admin.leads.edit', 'admin.leads.update', 'admin.leads.mass_update', 'admin.leads.attributes.update', 'admin.leads.stage.update', 'admin.leads.product.add', 'admin.leads.product.remove', 'admin.leads.emails.detach'],
         'sort' => 3,
     ], [
         'key' => 'leads.delete',
@@ -69,7 +69,7 @@ return [
     ], [
         'key' => 'quotes.delete',
         'name' => 'admin::app.acl.delete',
-        'route' => ['admin.quotes.delete', 'admin.quotes.mass_delete'],
+        'route' => ['admin.quotes.delete', 'admin.quotes.mass_delete', 'admin.leads.quotes.delete'],
         'sort' => 4,
     ], [
         'key' => 'mail',
@@ -104,7 +104,7 @@ return [
     ], [
         'key' => 'mail.compose',
         'name' => 'admin::app.acl.create',
-        'route' => ['admin.mail.store'],
+        'route' => ['admin.mail.store', 'admin.leads.emails.store'],
         'sort' => 6,
     ], [
         'key' => 'mail.compose.quick-create',
@@ -169,7 +169,7 @@ return [
     ], [
         'key' => 'contacts.persons.edit',
         'name' => 'admin::app.acl.edit',
-        'route' => ['admin.contacts.persons.edit', 'admin.contacts.persons.update'],
+        'route' => ['admin.contacts.persons.edit', 'admin.contacts.persons.update', 'admin.contacts.persons.tags.attach', 'admin.contacts.persons.tags.detach'],
         'sort' => 3,
     ], [
         'key' => 'contacts.persons.delete',
@@ -229,7 +229,7 @@ return [
     ], [
         'key' => 'products.edit',
         'name' => 'admin::app.acl.edit',
-        'route' => ['admin.products.edit', 'admin.products.update'],
+        'route' => ['admin.products.edit', 'admin.products.update', 'admin.products.tags.attach', 'admin.products.tags.detach', 'admin.products.inventories.store'],
         'sort' => 2,
     ], [
         'key' => 'products.delete',
@@ -394,7 +394,7 @@ return [
     ], [
         'key' => 'settings.inventory.warehouse.edit',
         'name' => 'admin::app.acl.edit',
-        'route' => ['admin.settings.warehouses.edit', 'admin.settings.warehouses.update'],
+        'route' => ['admin.settings.warehouses.edit', 'admin.settings.warehouses.update', 'admin.settings.warehouses.tags.attach', 'admin.settings.warehouses.tags.detach', 'admin.settings.locations.store', 'admin.settings.locations.update', 'admin.settings.locations.delete'],
         'sort' => 2,
     ], [
         'key' => 'settings.inventory.warehouse.delete',
@@ -424,7 +424,7 @@ return [
     ], [
         'key' => 'settings.automation.attributes.delete',
         'name' => 'admin::app.acl.delete',
-        'route' => 'admin.settings.attributes.delete',
+        'route' => ['admin.settings.attributes.delete', 'admin.settings.attributes.mass_delete'],
         'sort' => 3,
     ], [
         'key' => 'settings.automation.email_templates',

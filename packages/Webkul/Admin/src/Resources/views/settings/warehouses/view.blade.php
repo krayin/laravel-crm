@@ -25,6 +25,7 @@
                     :attach-endpoint="route('admin.settings.warehouses.tags.attach', $warehouse->id)"
                     :detach-endpoint="route('admin.settings.warehouses.tags.detach', $warehouse->id)"
                     :added-tags="$warehouse->tags"
+                    :editable="bouncer()->hasPermission('settings.inventory.warehouse.edit')"
                 />
 
                 {!! view_render_event('admin.settings.warehouses.view.left.tags.after', ['warehouse' => $warehouse]) !!}

@@ -65,12 +65,14 @@
                                     </x-admin::table.td>
 
                                     <x-admin::table.td>
-                                        <div
-                                            @click="selectWarehouse(warehouse)"
-                                            class="cursor-pointer text-brandColor"
-                                        >
-                                            @lang('admin::app.products.view.inventory.assign')
-                                        </div>
+                                        @if (bouncer()->hasPermission('products.edit'))
+                                            <div
+                                                @click="selectWarehouse(warehouse)"
+                                                class="cursor-pointer text-brandColor"
+                                            >
+                                                @lang('admin::app.products.view.inventory.assign')
+                                            </div>
+                                        @endif
                                     </x-admin::table.td>
                                 </x-admin::table.tbody.tr>
 
@@ -105,35 +107,37 @@
                 {!! view_render_event('admin.products.view.inventory.source.before', ['product' => $product]) !!}
 
                 <!-- Add Source dropdown -->
-                <div v-if="notAddedWarehouses.length" class="relative">
-                    <x-admin::dropdown
-                        position="bottom-right"
-                    >
-                        <x-slot:toggle>
-                            <button
-                                type="button"
-                                class="flex max-w-max items-center gap-2 text-brandColor"
-                            >
-                                <i class="icon-add text-md !text-brandColor"></i>
+                @if (bouncer()->hasPermission('products.edit'))
+                    <div v-if="notAddedWarehouses.length" class="relative">
+                        <x-admin::dropdown
+                            position="bottom-right"
+                        >
+                            <x-slot:toggle>
+                                <button
+                                    type="button"
+                                    class="flex max-w-max items-center gap-2 text-brandColor"
+                                >
+                                    <i class="icon-add text-md !text-brandColor"></i>
 
-                                @lang('admin::app.products.view.inventory.add-warehouse')
-                            </button>
-                        </x-slot:toggle>
-                        <x-slot:menu class="max-h-[200px] overflow-auto">
-                            {!! view_render_event('admin.products.view.inventory.source.menu.item.before', ['product' => $product]) !!}
+                                    @lang('admin::app.products.view.inventory.add-warehouse')
+                                </button>
+                            </x-slot:toggle>
+                            <x-slot:menu class="max-h-[200px] overflow-auto">
+                                {!! view_render_event('admin.products.view.inventory.source.menu.item.before', ['product' => $product]) !!}
 
-                            <x-admin::dropdown.menu.item
-                                v-for="warehouse in notAddedWarehouses"
-                                @click="addWarehouse(warehouse)"
-                            >
-                                @{{ warehouse.name }}
+                                <x-admin::dropdown.menu.item
+                                    v-for="warehouse in notAddedWarehouses"
+                                    @click="addWarehouse(warehouse)"
+                                >
+                                    @{{ warehouse.name }}
 
-                            </x-admin::dropdown.menu.item>
+                                </x-admin::dropdown.menu.item>
 
-                            {!! view_render_event('admin.products.view.inventory.source.menu.item.after', ['product' => $product]) !!}
-                        </x-slot>
-                    </x-admin::dropdown>
-                </div>
+                                {!! view_render_event('admin.products.view.inventory.source.menu.item.after', ['product' => $product]) !!}
+                            </x-slot>
+                        </x-admin::dropdown>
+                    </div>
+                @endif
 
                 {!! view_render_event('admin.products.view.inventory.source.after', ['product' => $product]) !!}
             </div>
