@@ -93,6 +93,9 @@
 
             <!-- Contact Person -->
             @include ('admin::leads.view.person')
+
+            {{-- Google Drive --}}
+            @include ('admin::leads.view.google-drive')
         </div>
 
         {!! view_render_event('admin.leads.view.left.after', ['lead' => $lead]) !!}
@@ -115,6 +118,7 @@
                     ['name' => 'description', 'label' => trans('admin::app.leads.view.tabs.description')],
                     ['name' => 'products', 'label' => trans('admin::app.leads.view.tabs.products')],
                     ['name' => 'quotes', 'label' => trans('admin::app.leads.view.tabs.quotes')],
+                    ['name' => 'google-drive', 'label' => 'Google Drive'],
                 ]"
             >
                 <!-- Products -->
@@ -132,6 +136,11 @@
                     <div class="p-4 dark:text-white">
                         {{ $lead->description }}
                     </div>
+                </x-slot>
+
+                <!-- Google Drive Files (New Vue Component) -->
+                <x-slot:google-drive>
+                    @include ('admin::leads.view.google-drive-files-vue')
                 </x-slot>
             </x-admin::activities>
 

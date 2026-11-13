@@ -2097,8 +2097,19 @@ return [
             ],
 
             'tags' => [
-                'create-success'  => 'Tag created successfully.',
+        'create-success'  => 'Tag created successfully.',
                 'destroy-success' => 'Tag deleted successfully.',
+            ],
+
+            'google-drive' => [
+                'create-folder'         => 'Создать папку Drive',
+                'open-drive'            => 'Открыть в Google Drive',
+                'move-to-projects'      => 'Переместить в Проекты',
+                'projects'              => 'Проекты',
+                'add-project'           => 'Добавить проект',
+                'confirm-create'        => 'Создать папку Google Drive для этого лида?',
+                'confirm-move'          => 'Переместить папку в Projects? Это действие нельзя отменить.',
+                'project-name-prompt'   => 'Введите название проекта:',
             ],
         ],
     ],
