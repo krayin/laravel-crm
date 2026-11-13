@@ -4,7 +4,7 @@ This changelog consists of the bug & security fixes and new features being inclu
 
 ## **v2.2.9 (Upcoming)**
 
-* [fixed] Fixed Arabic, Persian and Hebrew text printing reversed and unjoined in quote PDFs when the interface language is English.
+* #2770[fixed] Fixed Arabic, Persian and Hebrew text printing reversed and unjoined in quote PDFs when the interface language is English.
 
 ## **v2.2.8 (5th of Nov 2026)**
 
