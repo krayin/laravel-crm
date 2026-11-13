@@ -130,6 +130,7 @@
 
             .summary table {
                 float: right;
+                margin-left: auto;
                 width: 250px;
                 padding-top: 5px;
                 padding-bottom: 5px;
@@ -187,7 +188,7 @@
                                 </b>
 
                                 <span>
-                                    {{ $quote->person->name }}
+                                    <bdi>{{ $quote->person->name }}</bdi>
                                 </span>
                             </td>
                         </tr>
@@ -209,7 +210,7 @@
                                 </b>
 
                                 <span>
-                                    {{ $quote->subject }}
+                                    <bdi>{{ $quote->subject }}</bdi>
                                 </span>
                             </td>
                         </tr>
@@ -276,7 +277,7 @@
                         <tr>
                             @if ($quote->billing_address)
                                 <td style="width: 50%">
-                                    <div>{{ $quote->billing_address['address'] ?? '' }}</div>
+                                    <div><bdi>{{ $quote->billing_address['address'] ?? '' }}</bdi></div>
 
                                     <div>{{ $quote->billing_address['postcode'] ?? '' . ' ' .$quote->billing_address['city'] ?? '' }} </div>
 
@@ -288,7 +289,7 @@
                             
                             @if ($quote->shipping_address)
                                 <td style="width: 50%">
-                                    <div>{{ $quote->shipping_address['address'] ?? ''}}</div>
+                                    <div><bdi>{{ $quote->shipping_address['address'] ?? '' }}</bdi></div>
 
                                     <div>{{ $quote->shipping_address['postcode'] ?? '' . ' ' .$quote->shipping_address['city'] ?? '' }} </div>
 
@@ -316,7 +317,7 @@
                         <tbody>
                             <tr>
                                 <td style="padding: 9px 18px;">
-                                    {{ $quote->description }}
+                                    <bdi>{{ $quote->description }}</bdi>
                                 </td>
                             </tr>
                         </tbody>
@@ -368,7 +369,7 @@
                                     <td>{{ $item->sku }}</td>
 
                                     <td>
-                                        {{ $item->name }}
+                                        <bdi>{{ $item->name }}</bdi>
                                     </td>
 
                                     <td>{!! core()->formatBasePrice($item->price, true) !!}</td>

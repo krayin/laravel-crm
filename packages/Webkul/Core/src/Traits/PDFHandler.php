@@ -21,9 +21,18 @@ trait PDFHandler
             $fileName = Str::random(32);
         }
 
+        $isRtlLocale = in_array(app()->getLocale(), ['ar', 'fa', 'he']);
+
+        /**
+         * Dompdf has no bidi or Arabic shaping support, so any document carrying right-to-left
+         * text has to go through mPDF. Checking the locale alone is not enough: an English
+         * interface routinely prints Arabic, Persian or Hebrew customer and product names.
+         */
+        $useMpdf = $isRtlLocale || $this->containsRightToLeftText($html);
+
         $html = mb_convert_encoding($html, 'HTML-ENTITIES', 'UTF-8');
 
-        if (in_array($direction = app()->getLocale(), ['ar', 'he'])) {
+        if ($useMpdf) {
             $mPDF = new Mpdf([
                 'margin_left' => 0,
                 'margin_right' => 0,
@@ -31,7 +40,7 @@ trait PDFHandler
                 'margin_bottom' => 0,
             ]);
 
-            $mPDF->SetDirectionality($direction);
+            $mPDF->SetDirectionality($isRtlLocale ? 'rtl' : 'ltr');
 
             $mPDF->SetDisplayMode('fullpage');
 
@@ -44,6 +53,14 @@ trait PDFHandler
             ->setPaper('A4', 'portrait')
             ->set_option('defaultFont', 'Courier')
             ->download($fileName.'.pdf');
+    }
+
+    /**
+     * Whether the content contains Arabic-script (Arabic, Persian, Urdu) or Hebrew text.
+     */
+    protected function containsRightToLeftText(string $html): bool
+    {
+        return (bool) preg_match('/[\p{Arabic}\p{Hebrew}]/u', strip_tags($html));
     }
 
     /**
