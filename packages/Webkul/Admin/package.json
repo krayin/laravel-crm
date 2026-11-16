@@ -27,7 +27,7 @@
         "flatpickr": "^4.6.13",
         "laravel-echo": "^2.6.1",
         "mitt": "^3.0.1",
-        "playwright": "^1.48.1",
+        "playwright": "^1.65.0",
         "pusher-js": "^8.6.0",
         "readline-sync": "^1.4.10",
         "vee-validate": "^4.9.1",
