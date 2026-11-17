@@ -17,6 +17,7 @@ use Webkul\Admin\Http\Requests\MassUpdateRequest;
 use Webkul\Admin\Http\Resources\EmailResource;
 use Webkul\Admin\Traits\ScopesMailAccess;
 use Webkul\Contact\Repositories\PersonRepository;
+use Webkul\Core\Traits\Sanitizer;
 use Webkul\Email\Enums\SupportedFolderEnum;
 use Webkul\Email\InboundEmailProcessor\Contracts\InboundEmailProcessor;
 use Webkul\Email\Mails\Email;
@@ -26,7 +27,7 @@ use Webkul\Lead\Repositories\LeadRepository;
 
 class EmailController extends Controller
 {
-    use ScopesMailAccess;
+    use Sanitizer, ScopesMailAccess;
 
     /**
      * Create a new controller instance.
@@ -167,11 +168,13 @@ class EmailController extends Controller
             'attachments.*' => 'file|max:20480',
         ]);
 
-        $this->preventUnauthorizedMailLinks(request()->all());
+        $data = $this->sanitizeMailBody(request()->all());
+
+        $this->preventUnauthorizedMailLinks($data);
 
         Event::dispatch('email.create.before');
 
-        $email = $this->emailRepository->create(request()->all());
+        $email = $this->emailRepository->create($data);
 
         if (! request('is_draft')) {
             try {
@@ -218,7 +221,7 @@ class EmailController extends Controller
          */
         $this->preventUnauthorizedMailAccess($this->emailRepository->findOrFail($id));
 
-        $data = request()->all();
+        $data = $this->sanitizeMailBody(request()->all());
 
         unset($data['id']);
 
@@ -267,6 +270,23 @@ class EmailController extends Controller
         session()->flash('success', trans('admin::app.mail.update-success'));
 
         return redirect()->back();
+    }
+
+    /**
+     * Sanitize the composed mail body before it is stored.
+     *
+     * The body is rich text from the compose editor, but its source-code view (or a direct request)
+     * lets a user submit any markup, which every user with mail access is later shown. It is reduced
+     * to the core rich-text allowlist so media players, forms and positioned overlays cannot be
+     * planted in the admin panel, while the formatting the editor produces is kept.
+     */
+    protected function sanitizeMailBody(array $data): array
+    {
+        if (isset($data['reply']) && is_string($data['reply'])) {
+            $data['reply'] = $this->sanitizeHtml($data['reply']);
+        }
+
+        return $data;
     }
 
     /**

@@ -243,7 +243,7 @@
                     <!-- Mail Body -->
                     <div
                         class="dark:text-gray-300"
-                        v-safe-html="email.reply"
+                        v-safe-html:mail="email.reply"
                     ></div>
 
                     {!! view_render_event('admin.mail.view.mail_body.after', ['email' => $email]) !!}
