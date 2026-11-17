@@ -4,6 +4,7 @@ namespace Webkul\Admin\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Factory as ValidationFactory;
+use Illuminate\Validation\Rule;
 
 class PipelineForm extends FormRequest
 {
@@ -36,7 +37,7 @@ class PipelineForm extends FormRequest
     {
         if (request('id')) {
             return [
-                'name' => 'required|unique:lead_pipelines,name,'.request('id'),
+                'name' => ['required', Rule::unique('lead_pipelines', 'name')->ignore(request('id'))],
                 'stages.*.name' => 'unique_key',
                 'stages.*.code' => 'unique_key',
             ];

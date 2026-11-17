@@ -3,6 +3,7 @@
 namespace Webkul\Admin\Http\Controllers\DataGrid;
 
 use Illuminate\Support\Facades\Event;
+use Illuminate\Validation\Rule;
 use Webkul\Admin\Http\Controllers\Controller;
 use Webkul\DataGrid\Repositories\SavedFilterRepository;
 
@@ -21,7 +22,12 @@ class SavedFilterController extends Controller
         $userId = auth()->guard()->user()->id;
 
         $this->validate(request(), [
-            'name' => 'required|unique:datagrid_saved_filters,name,NULL,id,src,'.request('src').',user_id,'.$userId,
+            'name' => [
+                'required',
+                Rule::unique('datagrid_saved_filters', 'name')
+                    ->where('src', request('src'))
+                    ->where('user_id', $userId),
+            ],
         ]);
 
         Event::dispatch('datagrid.saved_filter.create.before');
@@ -62,7 +68,13 @@ class SavedFilterController extends Controller
         $userId = auth()->guard()->user()->id;
 
         $this->validate(request(), [
-            'name' => 'required|unique:datagrid_saved_filters,name,'.$id.',id,src,'.request('src').',user_id,'.$userId,
+            'name' => [
+                'required',
+                Rule::unique('datagrid_saved_filters', 'name')
+                    ->ignore($id)
+                    ->where('src', request('src'))
+                    ->where('user_id', $userId),
+            ],
         ]);
 
         $savedFilter = $this->savedFilterRepository->findOneWhere([
