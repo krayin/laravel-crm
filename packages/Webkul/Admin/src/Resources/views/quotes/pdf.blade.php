@@ -278,7 +278,7 @@
                                 <td style="width: 50%">
                                     <div>{{ $quote->billing_address['address'] ?? '' }}</div>
 
-                                    <div>{{ $quote->billing_address['postcode'] ?? '' . ' ' .$quote->billing_address['city'] ?? '' }} </div>
+                                    <div>{{ trim(($quote->billing_address['postcode'] ?? '').' '.($quote->billing_address['city'] ?? '')) }}</div>
 
                                     <div>{{ $quote->billing_address['state'] ?? '' }}</div>
 
@@ -290,7 +290,7 @@
                                 <td style="width: 50%">
                                     <div>{{ $quote->shipping_address['address'] ?? ''}}</div>
 
-                                    <div>{{ $quote->shipping_address['postcode'] ?? '' . ' ' .$quote->shipping_address['city'] ?? '' }} </div>
+                                    <div>{{ trim(($quote->shipping_address['postcode'] ?? '').' '.($quote->shipping_address['city'] ?? '')) }}</div>
 
                                     <div>{{ $quote->shipping_address['state'] ?? '' }}</div>
 
