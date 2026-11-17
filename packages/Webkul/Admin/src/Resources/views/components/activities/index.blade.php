@@ -311,7 +311,10 @@
                                                         </x-admin::dropdown.menu.item>
                                                     @endif
 
-                                                    <x-admin::dropdown.menu.item @click="unlinkEmail(activity)">
+                                                    <x-admin::dropdown.menu.item
+                                                        v-if="emailDetachEndpoint"
+                                                        @click="unlinkEmail(activity)"
+                                                    >
                                                         <div class="flex items-center gap-2">
                                                             <span class="icon-attachment text-2xl"></span>
 

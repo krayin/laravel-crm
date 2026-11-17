@@ -2,12 +2,14 @@
     'attachEndpoint',
     'detachEndpoint',
     'addedTags' => [],
+    'editable' => true,
 ])
 
 <v-tags
     attach-endpoint="{{ $attachEndpoint }}"
     detach-endpoint="{{ $detachEndpoint }}"
     :added-tags='@json($addedTags)'
+    :editable="{{ $editable ? 'true' : 'false' }}"
 >
     <x-admin::shimmer.tags count="3" />
 </v-tags>
@@ -28,161 +30,163 @@
             </span>
 
             <!-- Add Button -->
-            <x-admin::dropdown
-                ::close-on-click="false"
-                position="bottom-{{ in_array(app()->getLocale(), ['fa', 'ar']) ? 'right' : 'left' }}"
-            >
-                <x-slot:toggle>
-                    <button class="icon-settings-tag rounded-md p-1 text-xl transition-all hover:bg-gray-200 dark:hover:bg-gray-950"></button>
-                </x-slot>
+            <template v-if="editable">
+                <x-admin::dropdown
+                    ::close-on-click="false"
+                    position="bottom-{{ in_array(app()->getLocale(), ['fa', 'ar']) ? 'right' : 'left' }}"
+                >
+                    <x-slot:toggle>
+                        <button class="icon-settings-tag rounded-md p-1 text-xl transition-all hover:bg-gray-200 dark:hover:bg-gray-950"></button>
+                    </x-slot>
 
-                <x-slot:content class="!p-0">
-                    <!-- Dropdown Container !-->
-                    <div class="flex flex-col gap-2">
-                        <!-- Search Input -->
-                        <div class="flex flex-col gap-1 px-4 py-2">
-                            <label class="font-semibold text-gray-600 dark:text-gray-300">
-                                @lang('admin::app.components.tags.index.title')
-                            </label>
+                    <x-slot:content class="!p-0">
+                        <!-- Dropdown Container !-->
+                        <div class="flex flex-col gap-2">
+                            <!-- Search Input -->
+                            <div class="flex flex-col gap-1 px-4 py-2">
+                                <label class="font-semibold text-gray-600 dark:text-gray-300">
+                                    @lang('admin::app.components.tags.index.title')
+                                </label>
 
-                            <!-- Search Button -->
-                            <div class="relative">
-                                <div class="relative rounded border border-gray-300 p-2 hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:hover:border-gray-400 dark:focus:border-gray-400" role="button">
-                                    <input
-                                        type="text"
-                                        class="w-full cursor-pointer pr-6 dark:bg-gray-900 dark:text-gray-300"
-                                        placeholder="@lang('admin::app.components.tags.index.placeholder')"
-                                        v-model.lazy="searchTerm"
-                                        v-debounce="500"
-                                    />
+                                <!-- Search Button -->
+                                <div class="relative">
+                                    <div class="relative rounded border border-gray-300 p-2 hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:hover:border-gray-400 dark:focus:border-gray-400" role="button">
+                                        <input
+                                            type="text"
+                                            class="w-full cursor-pointer pr-6 dark:bg-gray-900 dark:text-gray-300"
+                                            placeholder="@lang('admin::app.components.tags.index.placeholder')"
+                                            v-model.lazy="searchTerm"
+                                            v-debounce="500"
+                                        />
 
-                                    <template v-if="! isSearching">
-                                        <span
-                                            class="absolute right-1.5 top-1.5 text-2xl"
-                                            :class="[searchTerm.length >= 2 ? 'icon-up-arrow' : 'icon-down-arrow']"
-                                        ></span>
-                                    </template>
+                                        <template v-if="! isSearching">
+                                            <span
+                                                class="absolute right-1.5 top-1.5 text-2xl"
+                                                :class="[searchTerm.length >= 2 ? 'icon-up-arrow' : 'icon-down-arrow']"
+                                            ></span>
+                                        </template>
 
-                                    <template v-else>
-                                        <x-admin::spinner class="absolute right-2 top-2" />
-                                    </template>
-                                </div>
+                                        <template v-else>
+                                            <x-admin::spinner class="absolute right-2 top-2" />
+                                        </template>
+                                    </div>
 
-                                <!-- Search Tags Dropdown -->
-                                <div
-                                    class="absolute z-10 w-full rounded bg-white shadow-[0px_10px_20px_0px_#0000001F] dark:bg-gray-800"
-                                    v-if="searchTerm.length >= 2"
-                                >
-                                    <ul class="p-2">
-                                        <li
-                                            class="cursor-pointer break-all rounded-sm px-5 py-2 text-sm text-gray-800 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-950"
-                                            v-for="tag in searchedTags"
-                                            @click="attachToEntity(tag)"
-                                        >
-                                            @{{ tag.name }}
-                                        </li>
+                                    <!-- Search Tags Dropdown -->
+                                    <div
+                                        class="absolute z-10 w-full rounded bg-white shadow-[0px_10px_20px_0px_#0000001F] dark:bg-gray-800"
+                                        v-if="searchTerm.length >= 2"
+                                    >
+                                        <ul class="p-2">
+                                            <li
+                                                class="cursor-pointer break-all rounded-sm px-5 py-2 text-sm text-gray-800 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-950"
+                                                v-for="tag in searchedTags"
+                                                @click="attachToEntity(tag)"
+                                            >
+                                                @{{ tag.name }}
+                                            </li>
 
-                                        @if (bouncer()->hasPermission('settings.other_settings.tags.create'))
-                                            <template v-if="! searchedTags.length && ! isSearching">
-                                                <li
-                                                    class="cursor-pointer rounded-sm bg-gray-100 px-5 py-2 text-sm text-gray-800 dark:bg-gray-950 dark:text-white"
-                                                    @click="create"
-                                                >
-                                                    @{{ `@lang('admin::app.components.tags.index.add-tag', ['term' => 'replaceTerm'])`.replace('replaceTerm', searchTerm) }}
-                                                </li>
-                                            </template>
-                                        @endif
-                                    </ul>
+                                            @if (bouncer()->hasPermission('settings.other_settings.tags.create'))
+                                                <template v-if="! searchedTags.length && ! isSearching">
+                                                    <li
+                                                        class="cursor-pointer rounded-sm bg-gray-100 px-5 py-2 text-sm text-gray-800 dark:bg-gray-950 dark:text-white"
+                                                        @click="create"
+                                                    >
+                                                        @{{ `@lang('admin::app.components.tags.index.add-tag', ['term' => 'replaceTerm'])`.replace('replaceTerm', searchTerm) }}
+                                                    </li>
+                                                </template>
+                                            @endif
+                                        </ul>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
 
-                        <!-- Tags -->
-                        <div
-                            class="flex flex-col gap-2 px-4 py-1.5"
-                            v-if="tags.length"
-                        >
-                            <label class="text-gray-600 dark:text-gray-300">
-                                @lang('admin::app.components.tags.index.added-tags')
-                            </label>
+                            <!-- Tags -->
+                            <div
+                                class="flex flex-col gap-2 px-4 py-1.5"
+                                v-if="tags.length"
+                            >
+                                <label class="text-gray-600 dark:text-gray-300">
+                                    @lang('admin::app.components.tags.index.added-tags')
+                                </label>
 
-                            <!-- Added Tags List -->
-                            <ul class="flex flex-col">
-                                <template v-for="tag in tags">
-                                    <li
-                                        class="flex items-center justify-between gap-2.5 rounded-sm p-2 text-sm text-gray-800 dark:text-white"
-                                        v-if="tag.id"
-                                    >
-                                        <!-- Name -->
-                                        <span
-                                            class="break-all rounded-md bg-rose-100 px-3 py-1.5 text-xs font-medium"
-                                            :style="{
-                                                'background-color': tag.color,
-                                                'color': backgroundColors.find(color => color.background === tag.color)?.text
-                                            }"
+                                <!-- Added Tags List -->
+                                <ul class="flex flex-col">
+                                    <template v-for="tag in tags">
+                                        <li
+                                            class="flex items-center justify-between gap-2.5 rounded-sm p-2 text-sm text-gray-800 dark:text-white"
+                                            v-if="tag.id"
                                         >
-                                            @{{ tag.name }}
-                                        </span>
+                                            <!-- Name -->
+                                            <span
+                                                class="break-all rounded-md bg-rose-100 px-3 py-1.5 text-xs font-medium"
+                                                :style="{
+                                                    'background-color': tag.color,
+                                                    'color': backgroundColors.find(color => color.background === tag.color)?.text
+                                                }"
+                                            >
+                                                @{{ tag.name }}
+                                            </span>
 
-                                        <!-- Action -->
-                                        <div class="flex items-center gap-1">
-                                            @if (bouncer()->hasPermission('settings.other_settings.tags.edit'))
-                                                <x-admin::dropdown position="bottom-right">
-                                                    <x-slot:toggle>
-                                                        <button class="flex cursor-pointer items-center gap-1 rounded border border-gray-300 px-2 py-0.5 transition-all hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:hover:border-gray-400 dark:focus:border-gray-400">
-                                                            <span
-                                                                class="h-4 w-4 break-all rounded-full"
-                                                                :style="'background-color: ' + (tag.color ? tag.color : '#546E7A')"
+                                            <!-- Action -->
+                                            <div class="flex items-center gap-1">
+                                                @if (bouncer()->hasPermission('settings.other_settings.tags.edit'))
+                                                    <x-admin::dropdown position="bottom-right">
+                                                        <x-slot:toggle>
+                                                            <button class="flex cursor-pointer items-center gap-1 rounded border border-gray-300 px-2 py-0.5 transition-all hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:hover:border-gray-400 dark:focus:border-gray-400">
+                                                                <span
+                                                                    class="h-4 w-4 break-all rounded-full"
+                                                                    :style="'background-color: ' + (tag.color ? tag.color : '#546E7A')"
+                                                                >
+                                                                </span>
+
+                                                                <span class="icon-down-arrow text-xl"></span>
+                                                            </button>
+                                                        </x-slot>
+
+                                                        <x-slot:menu class="!top-7 !p-0">
+                                                            <x-admin::dropdown.menu.item
+                                                                class="top-5 flex gap-2"
+                                                                ::class="{ 'bg-gray-100 dark:bg-gray-950': tag.color === color.background }"
+                                                                v-for="color in backgroundColors"
+                                                                @click="update(tag, color)"
                                                             >
-                                                            </span>
+                                                                <span
+                                                                    class="flex h-4 w-4 break-all rounded-full"
+                                                                    :style="'background-color: ' + color.background"
+                                                                >
+                                                                </span>
 
-                                                            <span class="icon-down-arrow text-xl"></span>
-                                                        </button>
-                                                    </x-slot>
+                                                                @{{ color.label }}
+                                                            </x-admin::dropdown.menu.item>
+                                                        </x-slot>
+                                                    </x-admin::dropdown>
+                                                @endif
 
-                                                    <x-slot:menu class="!top-7 !p-0">
-                                                        <x-admin::dropdown.menu.item
-                                                            class="top-5 flex gap-2"
-                                                            ::class="{ 'bg-gray-100 dark:bg-gray-950': tag.color === color.background }"
-                                                            v-for="color in backgroundColors"
-                                                            @click="update(tag, color)"
+                                                @if (bouncer()->hasPermission('settings.other_settings.tags.delete'))
+                                                    <div class="flex items-center">
+                                                        <span
+                                                            class="icon-cross-large flex cursor-pointer rounded-md p-1 text-xl text-gray-600 transition-all hover:bg-gray-200 dark:text-gray-300 dark:hover:bg-gray-800"
+                                                            v-show="! isRemoving[tag.id]"
+                                                            @click="detachFromEntity(tag)"
+                                                        ></span>
+
+                                                        <span
+                                                            class="p-1"
+                                                            v-show="isRemoving[tag.id]"
                                                         >
-                                                            <span
-                                                                class="flex h-4 w-4 break-all rounded-full"
-                                                                :style="'background-color: ' + color.background"
-                                                            >
-                                                            </span>
-
-                                                            @{{ color.label }}
-                                                        </x-admin::dropdown.menu.item>
-                                                    </x-slot>
-                                                </x-admin::dropdown>
-                                            @endif
-
-                                            @if (bouncer()->hasPermission('settings.other_settings.tags.delete'))
-                                                <div class="flex items-center">
-                                                    <span
-                                                        class="icon-cross-large flex cursor-pointer rounded-md p-1 text-xl text-gray-600 transition-all hover:bg-gray-200 dark:text-gray-300 dark:hover:bg-gray-800"
-                                                        v-show="! isRemoving[tag.id]"
-                                                        @click="detachFromEntity(tag)"
-                                                    ></span>
-
-                                                    <span
-                                                        class="p-1"
-                                                        v-show="isRemoving[tag.id]"
-                                                    >
-                                                        <x-admin::spinner />
-                                                    </span>
-                                                </div>
-                                            @endif
-                                        </div>
-                                    </li>
-                                </template>
-                            </ul>
+                                                            <x-admin::spinner />
+                                                        </span>
+                                                    </div>
+                                                @endif
+                                            </div>
+                                        </li>
+                                    </template>
+                                </ul>
+                            </div>
                         </div>
-                    </div>
-                </x-slot>
-            </x-admin::dropdown>
+                    </x-slot>
+                </x-admin::dropdown>
+            </template>
         </div>
     </script>
 
@@ -204,6 +208,11 @@
                 addedTags: {
                     type: Array,
                     default: () => [],
+                },
+
+                editable: {
+                    type: Boolean,
+                    default: true,
                 },
             },
 

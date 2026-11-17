@@ -26,6 +26,7 @@
                     :attach-endpoint="route('admin.contacts.persons.tags.attach', $person->id)"
                     :detach-endpoint="route('admin.contacts.persons.tags.detach', $person->id)"
                     :added-tags="$person->tags"
+                    :editable="bouncer()->hasPermission('contacts.persons.edit')"
                 />
 
                 {!! view_render_event('admin.contact.persons.view.tags.after', ['person' => $person]) !!}

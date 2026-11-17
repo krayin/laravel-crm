@@ -13,7 +13,7 @@
         <!-- Stages Container -->
         <div
             class="flex w-full max-w-full"
-            :class="{'opacity-50 pointer-events-none': isUpdating}"
+            :class="{'opacity-50 pointer-events-none': isUpdating, 'pointer-events-none': ! canUpdate}"
         >
             <!-- Stages Item -->
             <template v-for="stage in stages">
@@ -183,6 +183,8 @@
             data() {
                 return {
                     isUpdating: false,
+
+                    canUpdate: @json(bouncer()->hasPermission('leads.edit')),
 
                     currentStage: @json($lead->stage),
 

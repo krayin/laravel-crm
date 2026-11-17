@@ -31,29 +31,33 @@
                         </x-admin::table.td>
 
                         <x-admin::table.td>
-                            <div class="inline-block">
-                                <p
-                                    @click="remove(location)"
-                                    class="cursor-pointer text-brandColor"
-                                >
-                                    @lang('admin::app.settings.warehouses.view.locations.delete')
-                                </p>
-                            </div>
+                            @if (bouncer()->hasPermission('settings.inventory.warehouse.edit'))
+                                <div class="inline-block">
+                                    <p
+                                        @click="remove(location)"
+                                        class="cursor-pointer text-brandColor"
+                                    >
+                                        @lang('admin::app.settings.warehouses.view.locations.delete')
+                                    </p>
+                                </div>
+                            @endif
                         </x-admin::table.td>
                     </x-admin::table.tbody.tr>
                 </x-admin::table.tbody>
             </x-admin::table>
 
             <!-- Add Location -->
-            <button
-                type="button"
-                class="flex max-w-max items-center gap-2 text-brandColor"
-                @click="openModal()"
-            >
-                <i class="icon-add text-md !text-brandColor"></i>
+            @if (bouncer()->hasPermission('settings.inventory.warehouse.edit'))
+                <button
+                    type="button"
+                    class="flex max-w-max items-center gap-2 text-brandColor"
+                    @click="openModal()"
+                >
+                    <i class="icon-add text-md !text-brandColor"></i>
 
-                @lang('admin::app.settings.warehouses.view.locations.add-location')
-            </button>
+                    @lang('admin::app.settings.warehouses.view.locations.add-location')
+                </button>
+            @endif
 
             <x-admin::form
                 v-slot="{ meta, errors, handleSubmit }"

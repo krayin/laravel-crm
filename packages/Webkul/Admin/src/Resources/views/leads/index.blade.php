@@ -24,7 +24,10 @@
 
         <div class="flex items-center gap-x-2.5">
             <!-- Upload File for Lead Creation -->
-            @if(core()->getConfigData('general.magic_ai.doc_generation.enabled'))
+            @if (
+                core()->getConfigData('general.magic_ai.doc_generation.enabled')
+                && bouncer()->hasPermission('leads.create')
+            )
                 @include('admin::leads.index.upload')
             @endif
 

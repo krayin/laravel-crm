@@ -110,7 +110,7 @@
 
             <x-admin::activities
                 :endpoint="route('admin.leads.activities.index', $lead->id)"
-                :email-detach-endpoint="route('admin.leads.emails.detach', $lead->id)"
+                :email-detach-endpoint="bouncer()->hasPermission('leads.edit') ? route('admin.leads.emails.detach', $lead->id) : null"
                 :activeType="request()->query('tab') ?? (request()->query('from') === 'quotes' ? 'quotes' : 'all')"
                 :extra-types="[
                     ['name' => 'description', 'label' => trans('admin::app.leads.view.tabs.description')],

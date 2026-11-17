@@ -23,6 +23,7 @@
                     :attach-endpoint="route('admin.products.tags.attach', $product->id)"
                     :detach-endpoint="route('admin.products.tags.detach', $product->id)"
                     :added-tags="$product->tags"
+                    :editable="bouncer()->hasPermission('products.edit')"
                 />
 
                 {!! view_render_event('admin.products.view.left.tags.after', ['product' => $product]) !!}

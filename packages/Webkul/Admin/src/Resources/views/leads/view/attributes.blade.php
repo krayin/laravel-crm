@@ -34,7 +34,7 @@
                         ])"
                         :entity="$lead"
                         :url="route('admin.leads.attributes.update', $lead->id)"
-                        :allow-edit="true"
+                        :allow-edit="bouncer()->hasPermission('leads.edit')"
                     />
         
                     {!! view_render_event('admin.leads.view.attributes.form_controls.attributes.view.after', ['lead' => $lead]) !!}

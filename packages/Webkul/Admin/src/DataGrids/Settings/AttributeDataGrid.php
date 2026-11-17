@@ -155,11 +155,13 @@ class AttributeDataGrid extends DataGrid
      */
     public function prepareMassActions(): void
     {
-        $this->addMassAction([
-            'icon' => 'icon-delete',
-            'title' => trans('admin::app.settings.attributes.index.datagrid.delete'),
-            'method' => 'POST',
-            'url' => route('admin.settings.attributes.mass_delete'),
-        ]);
+        if (bouncer()->hasPermission('settings.automation.attributes.delete')) {
+            $this->addMassAction([
+                'icon' => 'icon-delete',
+                'title' => trans('admin::app.settings.attributes.index.datagrid.delete'),
+                'method' => 'POST',
+                'url' => route('admin.settings.attributes.mass_delete'),
+            ]);
+        }
     }
 }
