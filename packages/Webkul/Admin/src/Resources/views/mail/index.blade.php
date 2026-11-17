@@ -285,7 +285,7 @@
                                             <!-- Reply (Content) -->
                                             <p
                                                 class="!font-normal"
-                                                v-safe-html="truncatedReply(record.reply)"
+                                                v-safe-html:mail="truncatedReply(record.reply)"
                                             >
                                             </p>
                                         </div>
