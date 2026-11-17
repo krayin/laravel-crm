@@ -383,7 +383,7 @@
                             </h3>
                         </x-slot>
 
-                        <x-slot:content>
+                        <x-slot:content style="max-height: calc(100vh - 10rem); max-height: calc(100dvh - 10rem); overflow-y: auto;">
                             <x-admin::form.control-group.control
                                 type="hidden"
                                 name="id"
