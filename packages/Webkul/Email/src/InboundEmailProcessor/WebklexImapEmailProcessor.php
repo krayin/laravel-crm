@@ -3,6 +3,7 @@
 namespace Webkul\Email\InboundEmailProcessor;
 
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Log;
 use Webklex\IMAP\Facades\Client;
 use Webklex\IMAP\Support\FolderCollection;
 use Webklex\PHPIMAP\Message;
@@ -69,7 +70,18 @@ class WebklexImapEmailProcessor implements InboundEmailProcessor
     {
         $attributes = $message->getAttributes();
 
-        $messageId = $attributes['message_id']->first();
+        $messageId = isset($attributes['message_id'])
+            ? trim((string) $attributes['message_id']->first())
+            : '';
+
+        if ($messageId === '') {
+            $messageId = $this->generateFallbackMessageId($message, $attributes);
+
+            Log::warning('Inbound email has no message_id, using a generated one.', [
+                'message_id' => $messageId,
+                'folder' => $message->getFolder()->name,
+            ]);
+        }
 
         $email = $this->emailRepository->findOneByField('message_id', $messageId);
 
@@ -165,6 +177,26 @@ class WebklexImapEmailProcessor implements InboundEmailProcessor
                 'attachments' => $message->getAttachments(),
             ]);
         }
+    }
+
+    /**
+     * Derive a stable message id for a message that arrived without one.
+     *
+     * @param  Message  $message
+     */
+    protected function generateFallbackMessageId($message, array $attributes): string
+    {
+        $from = isset($attributes['from']) ? (string) ($attributes['from']->first()->mail ?? '') : '';
+
+        $to = collect($this->getEmailsByAttributeCode($attributes, 'to'))->sort()->implode(',');
+
+        $date = isset($attributes['date']) ? (string) $attributes['date']->toDate()->getTimestamp() : '';
+
+        $subject = isset($attributes['subject']) ? (string) $attributes['subject']->first() : '';
+
+        $body = (string) ($message->bodies['text'] ?? $message->bodies['html'] ?? '');
+
+        return sha1(implode("\n", [$from, $to, $date, $subject, $body])).'@krayin.invalid';
     }
 
     /**
