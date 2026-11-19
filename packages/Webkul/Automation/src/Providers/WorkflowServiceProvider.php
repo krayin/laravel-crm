@@ -4,6 +4,7 @@ namespace Webkul\Automation\Providers;
 
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\ServiceProvider;
+use Webkul\Automation\Helpers\Entity as EntityHelper;
 use Webkul\Automation\Listeners\Entity;
 
 class WorkflowServiceProvider extends ServiceProvider
@@ -34,6 +35,14 @@ class WorkflowServiceProvider extends ServiceProvider
     public function register()
     {
         $this->registerConfig();
+
+        /**
+         * Scoped so one request or job builds the placeholder list once and Octane/queue workers
+         * start each one fresh; the alias matches the leading-backslash string the Blade views resolve.
+         */
+        $this->app->scoped(EntityHelper::class);
+
+        $this->app->alias(EntityHelper::class, '\Webkul\Automation\Helpers\Entity');
     }
 
     /**

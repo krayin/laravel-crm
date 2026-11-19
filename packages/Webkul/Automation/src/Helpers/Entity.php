@@ -8,6 +8,11 @@ use Webkul\EmailTemplate\Repositories\EmailTemplateRepository;
 class Entity
 {
     /**
+     * Placeholders built for the current request.
+     */
+    protected ?array $emailTemplatePlaceholders = null;
+
+    /**
      * Create a new repository instance.
      *
      * @return void
@@ -88,6 +93,10 @@ class Entity
      */
     public function getEmailTemplatePlaceholders()
     {
+        if ($this->emailTemplatePlaceholders !== null) {
+            return $this->emailTemplatePlaceholders;
+        }
+
         $entities = config('workflows.trigger_entities');
 
         $placeholders = [];
@@ -98,6 +107,6 @@ class Entity
             $placeholders[] = $object->getEmailTemplatePlaceholders($entity);
         }
 
-        return $placeholders;
+        return $this->emailTemplatePlaceholders = $placeholders;
     }
 }
