@@ -5,6 +5,7 @@ namespace Webkul\Admin\Providers;
 use Illuminate\Contracts\Debug\ExceptionHandler;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Foundation\AliasLoader;
+use Illuminate\Foundation\Http\Middleware\ValidateCsrfToken;
 use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Route;
@@ -42,6 +43,20 @@ class AdminServiceProvider extends ServiceProvider
         Route::middleware(['web', 'admin_locale', 'user'])
             ->prefix(config('app.admin_path'))
             ->group(__DIR__.'/../Routes/Admin/web.php');
+
+        /**
+         * The admin path is configurable, so these exemptions have to follow it. They are
+         * registered here rather than in bootstrap/app.php because its middleware callback
+         * runs before .env and the configuration are loaded, so an APP_ADMIN_PATH set in
+         * .env (or in a cached config) was never seen there and the exemptions stayed on
+         * "admin/".
+         */
+        $adminPath = trim(config('app.admin_path'), '/');
+
+        ValidateCsrfToken::except([
+            $adminPath.'/mail/inbound-parse',
+            $adminPath.'/web-forms/forms/*',
+        ]);
 
         Route::middleware(['web', 'admin_locale'])
             ->group(__DIR__.'/../Routes/Front/web.php');
