@@ -1,11 +1,16 @@
 <?php
 
+use Illuminate\Container\Container;
+use Illuminate\Contracts\Http\Kernel as HttpKernel;
+use Illuminate\Foundation\Bootstrap\LoadConfiguration;
+use Illuminate\Foundation\Http\Middleware\ValidateCsrfToken;
+use Illuminate\Support\Facades\Facade;
 use Illuminate\Support\Facades\RateLimiter;
 use Webkul\Email\InboundEmailProcessor\Contracts\InboundEmailProcessor;
 
 /**
  * The inbound parse endpoint is reachable without a session: the route drops the `user`
- * middleware and bootstrap/app.php exempts it from CSRF. Whatever the endpoint checks for
+ * middleware and AdminServiceProvider exempts it from CSRF. Whatever the endpoint checks for
  * itself is therefore the only thing between the public internet and the CRM inbox.
  *
  * These tests assert the boundary rather than the parsing, so they do not need the
@@ -141,7 +146,7 @@ it('accepts the token as basic auth, which is what SendGrid allows in the URL', 
 
 /**
  * The route is registered under config('app.admin_path'), so the CSRF exemption in
- * bootstrap/app.php has to be built from the same value.
+ * AdminServiceProvider has to be built from the same value.
  *
  * Note this test cannot prove the exemption itself: Laravel's ValidateCsrfToken returns
  * early when runningUnitTests() is true, so CSRF never fires in this suite whatever the
@@ -157,4 +162,37 @@ it('serves the webhook on the configured admin path', function () {
 
     expect($response->getStatusCode())->toBe(200);
     expect($this->processorReached)->toBeTrue();
+});
+
+/**
+ * public/index.php resolves the HTTP kernel before .env and the configuration are loaded,
+ * and bootstrap/app.php's middleware callback runs at that moment. Exemptions built there
+ * with env('APP_ADMIN_PATH') therefore stayed on "admin/" whenever the path came from .env
+ * or a cached config. This boots a fresh application in that same order, with the admin
+ * path only present in the loaded configuration.
+ */
+it('builds the CSRF exemption from the loaded admin path configuration', function () {
+    ValidateCsrfToken::flushState();
+
+    $testApp = app();
+
+    try {
+        $app = require base_path('bootstrap/app.php');
+
+        $app->afterBootstrapping(LoadConfiguration::class, function ($app) {
+            $app['config']->set('app.admin_path', 'backoffice');
+        });
+
+        $app->make(HttpKernel::class)->bootstrap();
+
+        $excluded = $app->make(ValidateCsrfToken::class)->getExcludedPaths();
+    } finally {
+        Container::setInstance($testApp);
+        Facade::clearResolvedInstances();
+        Facade::setFacadeApplication($testApp);
+    }
+
+    expect($excluded)
+        ->toContain('backoffice/mail/inbound-parse')
+        ->not->toContain('admin/mail/inbound-parse');
 });
