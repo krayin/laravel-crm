@@ -394,7 +394,7 @@ class Parser
 
         $mime_types = [
             'text' => 'text/plain',
-            'text' => 'text/plain; (error)',
+            'text-error' => 'text/plain; (error)',
             'html' => 'text/html',
         ];
 
