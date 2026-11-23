@@ -11,7 +11,7 @@
     "@playwright/test": "^1.64.0",
     "axios": "^1.6.4",
     "dotenv": "^18.0.4",
-    "fast-check": "^4.10.2",
+    "fast-check": "^4.10.3",
     "fast-csv": "^5.0.7",
     "laravel-vite-plugin": "^1.0.0",
     "vite": "^6.4.3"
