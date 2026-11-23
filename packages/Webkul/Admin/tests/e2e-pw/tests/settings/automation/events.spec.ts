@@ -47,7 +47,8 @@ test.describe("event management", () => {
         /**
          * Clicking on the edit button for the first event opens the modal.
          */
-        await adminPage.locator('.row > div:nth-child(6) > a').first().click();
+        const editIcon = adminPage.locator('.row > div:nth-child(6) > a').first();
+        await editIcon.click();
 
         /**
          * Fill the form with the event details.
@@ -80,7 +81,10 @@ test.describe("event management", () => {
         /**
          * Delete the first event.
          */
-        await adminPage.locator('div:nth-child(6) > a:nth-child(2)').first().click();
+        const deleteIcon = adminPage.locator('div:nth-child(6) > a:nth-child(2)').first();
+        
+
+        await deleteIcon.click();
 
         /**
          * Delete confirmation modal.
