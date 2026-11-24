@@ -350,6 +350,7 @@ class Lead extends AbstractReporting
                 DB::raw('COUNT(lead_value) as total')
             )
             ->leftJoin('lead_pipeline_stages', 'leads.lead_pipeline_stage_id', '=', 'lead_pipeline_stages.id')
+            ->where('leads.lead_pipeline_id', $this->pipeline->id)
             ->whereNotIn('lead_pipeline_stage_id', $this->wonStageIds)
             ->whereNotIn('lead_pipeline_stage_id', $this->lostStageIds)
             ->whereBetween('leads.created_at', [$this->startDate, $this->endDate])
