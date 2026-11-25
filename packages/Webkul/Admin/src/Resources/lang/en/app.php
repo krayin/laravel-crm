@@ -2576,6 +2576,7 @@ return [
             'register-btn' => 'Register Webhook',
             'https-required' => 'Firma delivers webhooks over HTTPS only, and this CRM answers at :url. Set APP_URL to the public https address of this CRM first.',
             'register-failed' => 'Could not register the webhook: :message',
+            'secret-required' => 'Store the Webhook Signing Secret first: copy it from Settings > Webhook Configuration in the Firma dashboard into the field above and save, then register the webhook. Without it this CRM refuses every delivery, and Firma disables a webhook whose deliveries keep failing.',
             'webhook-registered' => 'Webhook registered.',
             'webhook-exists' => 'A Firma webhook for :url already exists and is enabled.',
             'webhook-reenabled' => 'The Firma webhook for :url was disabled and has been re-enabled.',
@@ -2610,6 +2611,7 @@ return [
             'uncertain-info' => 'Check the Firma dashboard before sending again.',
             'signed-attached' => 'The signed document is attached to the activities.',
             'send-unknown' => 'The CRM could not confirm whether the request was sent. Check the Signatures tab and the Firma dashboard before sending again.',
+            'send-refused' => 'Nothing was sent: the CRM refused the request before contacting Firma (the page may have expired, or you may not have access to this lead or quote). Reload the page and try again.',
         ],
 
         'send' => [
@@ -2650,6 +2652,7 @@ return [
             'choose-template' => 'Choose a Firma template.',
             'quote-not-on-lead' => 'The quote does not belong to this lead.',
             'unreadable-pdf' => 'The quote could not be turned into a readable PDF.',
+            'prepare-failed' => 'The document could not be prepared for Firma, so nothing was sent.',
             'name-required' => 'The signing request needs a name.',
             'expiration' => 'Expiration must be a whole number of hours, 1 or more.',
             'recipient-name' => 'The recipient\'s name is required.',

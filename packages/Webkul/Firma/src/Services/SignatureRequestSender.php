@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Log;
 use Throwable;
 use Webkul\Firma\Jobs\FetchSignedDocument;
 use Webkul\Firma\Models\SignatureRequest;
+use Webkul\Firma\Repositories\SignatureRequestRepository;
 use Webkul\Lead\Models\Lead;
 
 /**
@@ -33,6 +34,7 @@ class SignatureRequestSender
      * Create a new sender instance.
      */
     public function __construct(
+        protected SignatureRequestRepository $signatureRequestRepository,
         protected FirmaSettings $firmaSettings,
         protected LeadTimeline $leadTimeline,
         protected QuotePdfRenderer $quotePdfRenderer,
@@ -48,7 +50,7 @@ class SignatureRequestSender
      */
     public function send(Lead $lead, array $data, ?int $userId): array
     {
-        if ($existing = SignatureRequest::query()->where('idempotency_key', $data['idempotency_key'])->first()) {
+        if ($existing = $this->signatureRequestRepository->findOneByField('idempotency_key', $data['idempotency_key'])) {
             return $this->duplicate($existing);
         }
 
@@ -65,7 +67,8 @@ class SignatureRequestSender
         }
 
         try {
-            $marker = SignatureRequest::query()->create([
+            /** @var SignatureRequest $marker */
+            $marker = $this->signatureRequestRepository->create([
                 'idempotency_key' => $data['idempotency_key'],
                 'lead_id' => $lead->id,
                 'quote_id' => $quote?->getKey(),
@@ -78,7 +81,7 @@ class SignatureRequestSender
                 'status' => SignatureRequest::STATUS_SENDING,
             ]);
         } catch (UniqueConstraintViolationException) {
-            return $this->duplicate(SignatureRequest::query()->where('idempotency_key', $data['idempotency_key'])->firstOrFail());
+            return $this->duplicate($this->signatureRequestRepository->getModel()->newQuery()->where('idempotency_key', $data['idempotency_key'])->firstOrFail());
         }
 
         try {
@@ -89,7 +92,21 @@ class SignatureRequestSender
              */
             $marker->delete();
 
-            throw $exception;
+            if ($exception instanceof FirmaApiException) {
+                throw $exception;
+            }
+
+            /**
+             * A failure inside the CRM (the quote PDF renderer, for example) is still a refusal
+             * before any request to Firma, so the user is told nothing was sent.
+             */
+            Log::warning('Firma send not prepared', [
+                'lead_id' => $lead->id,
+                'source' => $data['source'],
+                'error' => class_basename($exception),
+            ]);
+
+            throw FirmaApiException::invalidInput(trans('admin::app.firma.errors.prepare-failed'));
         }
 
         try {
@@ -226,7 +243,7 @@ class SignatureRequestSender
                 $status = $client->recoverSentRequest($firmaId)['status'];
             }
 
-            $request = SignatureRequest::query()->where('firma_id', $firmaId)->first();
+            $request = $this->signatureRequestRepository->findOneByField('firma_id', $firmaId);
 
             if ($request) {
                 /**

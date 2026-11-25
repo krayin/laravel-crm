@@ -2565,6 +2565,7 @@ return [
             'register-btn' => '注册 Webhook',
             'https-required' => 'Firma 只通过 HTTPS 推送 Webhook，而此 CRM 的地址为 :url。请先将 APP_URL 设置为此 CRM 的公开 https 地址。',
             'register-failed' => '无法注册 Webhook：:message',
+            'secret-required' => '请先保存 Webhook 签名密钥：从 Firma 控制台的 Settings > Webhook Configuration 复制到上方字段并保存，然后再注册 Webhook。没有该密钥，此 CRM 会拒绝所有推送，而 Firma 会停用推送持续失败的 Webhook。',
             'webhook-registered' => 'Webhook 已注册。',
             'webhook-exists' => ':url 的 Firma Webhook 已存在且已启用。',
             'webhook-reenabled' => ':url 的 Firma Webhook 之前已停用，现已重新启用。',
@@ -2599,6 +2600,7 @@ return [
             'uncertain-info' => '再次发送前请先查看 Firma 控制台。',
             'signed-attached' => '已签署的文档已附加到活动中。',
             'send-unknown' => 'CRM 无法确认请求是否已发送。再次发送前请查看签署标签页和 Firma 控制台。',
+            'send-refused' => '未发送任何内容：CRM 在联系 Firma 之前拒绝了该请求（页面可能已过期，或您无权访问此线索或报价）。请刷新页面后重试。',
         ],
 
         'send' => [
@@ -2639,6 +2641,7 @@ return [
             'choose-template' => '请选择一个 Firma 模板。',
             'quote-not-on-lead' => '该报价不属于此线索。',
             'unreadable-pdf' => '无法将报价转换为可读的 PDF。',
+            'prepare-failed' => '无法为 Firma 准备文档，因此未发送任何内容。',
             'name-required' => '签署请求需要一个名称。',
             'expiration' => '过期时间必须是大于等于 1 的整数小时。',
             'recipient-name' => '收件人姓名为必填项。',

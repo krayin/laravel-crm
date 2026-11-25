@@ -92,6 +92,16 @@ class FirmaController extends Controller
             return redirect()->route('admin.settings.firma.index');
         }
 
+        /**
+         * Without the secret this CRM refuses every delivery with 401, and Firma retries each
+         * one and in the end disables the webhook, losing the events in between.
+         */
+        if (is_null($this->firmaSettings->webhookSecret())) {
+            session()->flash('error', trans('admin::app.firma.settings.secret-required'));
+
+            return redirect()->route('admin.settings.firma.index');
+        }
+
         try {
             $client = $this->firmaSettings->client();
 

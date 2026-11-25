@@ -5,6 +5,7 @@ namespace Webkul\Firma\Services;
 use Illuminate\Support\Carbon;
 use Throwable;
 use Webkul\Firma\Models\SignatureRequest;
+use Webkul\Firma\Repositories\SignatureRequestRepository;
 
 /**
  * Applies one verified Firma webhook payload. Only records the change: slow work (the signed
@@ -23,7 +24,10 @@ class WebhookProcessor
     /**
      * Create a new processor instance.
      */
-    public function __construct(protected LeadTimeline $leadTimeline) {}
+    public function __construct(
+        protected SignatureRequestRepository $signatureRequestRepository,
+        protected LeadTimeline $leadTimeline,
+    ) {}
 
     /**
      * Returns the outcome and, for a request that just completed, its id to download.
@@ -42,7 +46,8 @@ class WebhookProcessor
             return ['outcome' => 'ignored', 'fetch' => null];
         }
 
-        $request = SignatureRequest::query()->where('firma_id', $firmaId)->first();
+        /** @var SignatureRequest|null $request */
+        $request = $this->signatureRequestRepository->findOneByField('firma_id', $firmaId);
 
         if (! $request) {
             return ['outcome' => 'unknown_request', 'fetch' => null];

@@ -113,6 +113,27 @@ it('registers the webhook only over https', function () {
     Http::assertNothingSent();
 });
 
+it('refuses to register the webhook before the signing secret is stored', function () {
+    firmaConfigure(secret: null);
+
+    firmaHttpsRoot();
+
+    Http::fake();
+
+    $this->actingAs(getDefaultAdmin(), 'user')
+        ->post(route('admin.settings.firma.register_webhook'))
+        ->assertSessionHas('error', fn ($message) => str_contains($message, 'Webhook Signing Secret'));
+
+    Http::assertNothingSent();
+
+    expect(app(FirmaSettings::class)->webhookId())->toBeNull();
+
+    $this->actingAs(getDefaultAdmin(), 'user')
+        ->get(route('admin.settings.firma.index'))
+        ->assertOk()
+        ->assertSee(trans('admin::app.firma.settings.secret-required'), false);
+});
+
 it('creates the webhook when none exists and states the Enable Webhooks step', function () {
     firmaConfigure();
 

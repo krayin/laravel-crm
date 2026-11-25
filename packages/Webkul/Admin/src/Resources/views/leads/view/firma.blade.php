@@ -234,7 +234,7 @@
     </script>
 
     @php
-        $firmaQuotes = bouncer()->hasPermission('quotes')
+        $firmaQuotes = bouncer()->hasPermission('quotes.mail')
             ? $lead->quotes->map(fn ($quote) => ['id' => $quote->id, 'subject' => $quote->subject])->values()
             : [];
 
@@ -379,15 +379,22 @@
                         })
                         .catch(error => {
                             /**
-                             * The key is kept: a 422 means nothing was sent, and any other failure
-                             * may hide a send, which the same key then refuses to repeat.
+                             * The key is kept. A 422, and a 401, 403, 404 or 419 refused before
+                             * anything reached Firma, mean nothing was sent. Any other failure (a
+                             * 5xx or no answer) may hide a send, which the same key then refuses
+                             * to repeat.
                              */
-                            this.$emitter.emit('add-flash', {
-                                type: 'error',
-                                message: error.response?.status == 422
-                                    ? (error.response.data.message ?? Object.values(error.response.data.errors ?? {}).flat().join(' '))
-                                    : @json(trans('admin::app.firma.lead.send-unknown')),
-                            });
+                            const status = error.response?.status;
+
+                            let message = @json(trans('admin::app.firma.lead.send-unknown'));
+
+                            if (status == 422) {
+                                message = error.response.data.message ?? Object.values(error.response.data.errors ?? {}).flat().join(' ');
+                            } else if ([401, 403, 404, 419].includes(status)) {
+                                message = @json(trans('admin::app.firma.lead.send-refused'));
+                            }
+
+                            this.$emitter.emit('add-flash', { type: 'error', message });
 
                             this.load();
                         })

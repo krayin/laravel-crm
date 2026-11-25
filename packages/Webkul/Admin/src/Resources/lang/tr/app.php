@@ -2569,6 +2569,7 @@ return [
             'register-btn' => 'Webhook Kaydet',
             'https-required' => 'Firma webhookları yalnızca HTTPS üzerinden teslim eder ve bu CRM :url adresinde yanıt veriyor. Önce APP_URL değerini bu CRM\'in herkese açık https adresine ayarlayın.',
             'register-failed' => 'Webhook kaydedilemedi: :message',
+            'secret-required' => 'Önce webhook imzalama gizli anahtarını kaydedin: Firma panelindeki Settings > Webhook Configuration sayfasından yukarıdaki alana kopyalayıp kaydedin, ardından webhook kaydını yapın. Bu anahtar olmadan bu CRM her teslimatı reddeder ve Firma teslimatları sürekli başarısız olan bir webhook\'u devre dışı bırakır.',
             'webhook-registered' => 'Webhook kaydedildi.',
             'webhook-exists' => ':url için bir Firma webhooku zaten var ve etkin.',
             'webhook-reenabled' => ':url için Firma webhooku devre dışıydı ve yeniden etkinleştirildi.',
@@ -2603,6 +2604,7 @@ return [
             'uncertain-info' => 'Tekrar göndermeden önce Firma panelini kontrol edin.',
             'signed-attached' => 'İmzalı belge etkinliklere eklendi.',
             'send-unknown' => 'CRM talebin gönderilip gönderilmediğini doğrulayamadı. Tekrar göndermeden önce İmzalar sekmesini ve Firma panelini kontrol edin.',
+            'send-refused' => 'Hiçbir şey gönderilmedi: CRM, Firma ile iletişime geçmeden önce isteği reddetti (sayfanın süresi dolmuş olabilir veya bu potansiyel müşteriye ya da teklife erişiminiz olmayabilir). Sayfayı yenileyip tekrar deneyin.',
         ],
 
         'send' => [
@@ -2643,6 +2645,7 @@ return [
             'choose-template' => 'Bir Firma şablonu seçin.',
             'quote-not-on-lead' => 'Teklif bu potansiyel müşteriye ait değil.',
             'unreadable-pdf' => 'Teklif okunabilir bir PDF\'e dönüştürülemedi.',
+            'prepare-failed' => 'Belge Firma için hazırlanamadı, bu nedenle hiçbir şey gönderilmedi.',
             'name-required' => 'İmza talebinin bir adı olmalıdır.',
             'expiration' => 'Süre sonu 1 veya daha büyük tam sayı saat olmalıdır.',
             'recipient-name' => 'Alıcının adı zorunludur.',

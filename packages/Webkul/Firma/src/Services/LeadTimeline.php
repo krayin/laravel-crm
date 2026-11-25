@@ -9,6 +9,7 @@ use Webkul\Activity\Models\Activity;
 use Webkul\Activity\Repositories\ActivityRepository;
 use Webkul\Activity\Repositories\FileRepository;
 use Webkul\Firma\Models\SignatureRequest;
+use Webkul\Firma\Repositories\SignatureRequestRepository;
 
 /**
  * Writes Firma events onto the lead's activity timeline.
@@ -21,6 +22,7 @@ class LeadTimeline
     public function __construct(
         protected ActivityRepository $activityRepository,
         protected FileRepository $fileRepository,
+        protected SignatureRequestRepository $signatureRequestRepository,
     ) {}
 
     /**
@@ -53,7 +55,8 @@ class LeadTimeline
     public function attachSignedDocument(SignatureRequest $request, string $content): bool
     {
         return DB::transaction(function () use ($request, $content) {
-            $locked = SignatureRequest::query()->whereKey($request->id)->lockForUpdate()->first();
+            /** @var SignatureRequest|null $locked */
+            $locked = $this->signatureRequestRepository->getModel()->newQuery()->whereKey($request->id)->lockForUpdate()->first();
 
             if (! $locked || $locked->signed_activity_id || ! $locked->lead) {
                 return false;

@@ -9,7 +9,7 @@ use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Webkul\Firma\Jobs\FetchSignedDocument;
-use Webkul\Firma\Models\WebhookEvent;
+use Webkul\Firma\Repositories\WebhookEventRepository;
 use Webkul\Firma\Services\FirmaSettings;
 use Webkul\Firma\Services\WebhookProcessor;
 use Webkul\Firma\Services\WebhookSignature;
@@ -25,8 +25,11 @@ class WebhookController extends Controller
     public const RETENTION_DAYS = 14;
 
     /**
-     * Outcomes that acted on a tracked request; only these are kept for de-duplication, so a
-     * retry of an event that arrived before the CRM stored its request is processed.
+     * Outcomes that acted on a tracked request; only these are kept for de-duplication. Events
+     * for requests this CRM does not track are acknowledged and not stored, which bounds the
+     * table. Firma marks an acknowledged delivery as delivered and never sends it again, so
+     * such an event is not processed later: a send whose outcome stayed unknown (no Firma id)
+     * is not followed here and is checked in Firma.
      */
     protected const STORED_OUTCOMES = ['updated', 'unchanged'];
 
@@ -36,6 +39,7 @@ class WebhookController extends Controller
     public function __construct(
         protected FirmaSettings $firmaSettings,
         protected WebhookProcessor $webhookProcessor,
+        protected WebhookEventRepository $webhookEventRepository,
     ) {}
 
     /**
@@ -72,7 +76,7 @@ class WebhookController extends Controller
             return new JsonResponse(['error' => 'missing event id'], 400);
         }
 
-        if (WebhookEvent::query()->where('event_id', $eventId)->exists()) {
+        if ($this->webhookEventRepository->getModel()->newQuery()->where('event_id', $eventId)->exists()) {
             return new JsonResponse(['status' => 'duplicate']);
         }
 
@@ -81,7 +85,7 @@ class WebhookController extends Controller
                 $result = $this->webhookProcessor->process($payload);
 
                 if (in_array($result['outcome'], self::STORED_OUTCOMES, true)) {
-                    WebhookEvent::query()->create([
+                    $this->webhookEventRepository->create([
                         'event_id' => $eventId,
                         'event_type' => mb_substr((string) ($payload['type'] ?? ''), 0, 128),
                         'firma_id' => mb_substr((string) data_get($payload, 'data.signing_request.id', ''), 0, 64),
@@ -103,7 +107,7 @@ class WebhookController extends Controller
         }
 
         if (random_int(1, 100) === 1) {
-            WebhookEvent::query()->where('created_at', '<', now()->subDays(self::RETENTION_DAYS))->delete();
+            $this->webhookEventRepository->getModel()->newQuery()->where('created_at', '<', now()->subDays(self::RETENTION_DAYS))->delete();
         }
 
         return new JsonResponse(['status' => $result['outcome']]);

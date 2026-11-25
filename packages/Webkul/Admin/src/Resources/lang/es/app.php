@@ -2569,6 +2569,7 @@ return [
             'register-btn' => 'Registrar webhook',
             'https-required' => 'Firma solo entrega webhooks por HTTPS, y este CRM responde en :url. Primero configure APP_URL con la dirección https pública de este CRM.',
             'register-failed' => 'No se pudo registrar el webhook: :message',
+            'secret-required' => 'Guarde primero el secreto de firma del webhook: cópielo de Settings > Webhook Configuration en el panel de Firma en el campo de arriba, guarde y después registre el webhook. Sin él, este CRM rechaza cada entrega y Firma desactiva un webhook cuyas entregas siguen fallando.',
             'webhook-registered' => 'Webhook registrado.',
             'webhook-exists' => 'Ya existe un webhook de Firma para :url y está activado.',
             'webhook-reenabled' => 'El webhook de Firma para :url estaba desactivado y se ha vuelto a activar.',
@@ -2603,6 +2604,7 @@ return [
             'uncertain-info' => 'Revise el panel de Firma antes de volver a enviar.',
             'signed-attached' => 'El documento firmado está adjunto en las actividades.',
             'send-unknown' => 'El CRM no pudo confirmar si la solicitud se envió. Revise la pestaña Firmas y el panel de Firma antes de volver a enviar.',
+            'send-refused' => 'No se envió nada: el CRM rechazó la solicitud antes de contactar con Firma (puede que la página haya caducado o que no tenga acceso a este lead o presupuesto). Recargue la página e inténtelo de nuevo.',
         ],
 
         'send' => [
@@ -2643,6 +2645,7 @@ return [
             'choose-template' => 'Elija una plantilla de Firma.',
             'quote-not-on-lead' => 'El presupuesto no pertenece a este lead.',
             'unreadable-pdf' => 'No se pudo convertir el presupuesto en un PDF legible.',
+            'prepare-failed' => 'No se pudo preparar el documento para Firma, así que no se envió nada.',
             'name-required' => 'La solicitud de firma necesita un nombre.',
             'expiration' => 'La caducidad debe ser un número entero de horas, 1 o más.',
             'recipient-name' => 'El nombre del destinatario es obligatorio.',

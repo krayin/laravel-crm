@@ -6,6 +6,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Webkul\Admin\Http\Controllers\Controller;
 use Webkul\Firma\Models\SignatureRequest;
+use Webkul\Firma\Repositories\SignatureRequestRepository;
 use Webkul\Firma\Services\FirmaApiException;
 use Webkul\Firma\Services\FirmaSettings;
 use Webkul\Firma\Services\SignatureRequestSender;
@@ -20,6 +21,7 @@ class FirmaController extends Controller
      */
     public function __construct(
         protected LeadRepository $leadRepository,
+        protected SignatureRequestRepository $signatureRequestRepository,
         protected FirmaSettings $firmaSettings,
         protected SignatureRequestSender $signatureRequestSender,
     ) {}
@@ -32,7 +34,7 @@ class FirmaController extends Controller
         $lead = $this->authorizedLead($id);
 
         return new JsonResponse([
-            'data' => SignatureRequest::query()
+            'data' => $this->signatureRequestRepository->getModel()->newQuery()
                 ->where('lead_id', $lead->id)
                 ->latest('id')
                 ->get()
@@ -81,6 +83,14 @@ class FirmaController extends Controller
         ]);
 
         if ($data['source'] === 'quote') {
+            /**
+             * Sending a quote e-mails its PDF to an address the user types, which core allows
+             * only with the quote mail permission.
+             */
+            if (! bouncer()->hasPermission('quotes.mail')) {
+                abort(401, trans('admin::app.errors.unauthorized'));
+            }
+
             $quote = $lead->quotes()->where('quotes.id', $data['quote_id'])->first();
 
             if ($quote) {
@@ -112,7 +122,7 @@ class FirmaController extends Controller
     {
         $lead = $this->authorizedLead($id);
 
-        $request = SignatureRequest::query()->where('lead_id', $lead->id)->findOrFail($requestId);
+        $request = $this->signatureRequestRepository->getModel()->newQuery()->where('lead_id', $lead->id)->findOrFail($requestId);
 
         try {
             $request = $this->signatureRequestSender->refresh($request);
@@ -143,6 +153,8 @@ class FirmaController extends Controller
      */
     protected function present(SignatureRequest $request): array
     {
+        $status = $request->displayStatus();
+
         return [
             'id' => $request->id,
             'firma_id' => $request->firma_id,
@@ -152,8 +164,8 @@ class FirmaController extends Controller
             'quote_id' => $request->quote_id,
             'recipient_name' => $request->recipient_name,
             'recipient_email' => $request->recipient_email,
-            'status' => $request->status,
-            'status_label' => trans('admin::app.firma.statuses.'.$request->status),
+            'status' => $status,
+            'status_label' => trans('admin::app.firma.statuses.'.$status),
             'no_invitation_email' => $request->no_invitation_email,
             'has_signed_document' => ! is_null($request->signed_activity_id),
             'fetch_failed' => $request->fetch_failed,

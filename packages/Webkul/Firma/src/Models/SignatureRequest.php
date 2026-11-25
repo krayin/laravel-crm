@@ -33,6 +33,7 @@ use Webkul\User\Models\UserProxy;
  * @property bool $fetch_failed
  * @property Carbon|null $sent_at
  * @property Carbon|null $completed_at
+ * @property Carbon|null $updated_at
  * @property-read Lead|null $lead
  */
 class SignatureRequest extends Model implements SignatureRequestContract
@@ -73,6 +74,12 @@ class SignatureRequest extends Model implements SignatureRequestContract
         self::STATUS_CANCELLED => 3,
         self::STATUS_EXPIRED => 3,
     ];
+
+    /**
+     * A send takes at most a few minutes (the quote path allows 30 + 120 + 30 seconds of HTTP).
+     * A row still `sending` after this long outlived the worker that wrote it.
+     */
+    public const SENDING_TIMEOUT_MINUTES = 10;
 
     /**
      * Table name.
@@ -148,6 +155,24 @@ class SignatureRequest extends Model implements SignatureRequestContract
         $this->save();
 
         return true;
+    }
+
+    /**
+     * The status shown to users. A row left in `sending` past the timeout belongs to a worker
+     * that stopped after the request to Firma (a timeout, a crash or a restart), so Firma may
+     * have sent it: it is shown as uncertain. The stored row is not changed.
+     */
+    public function displayStatus(): string
+    {
+        if (
+            $this->status === self::STATUS_SENDING
+            && $this->updated_at
+            && $this->updated_at->lt(now()->subMinutes(self::SENDING_TIMEOUT_MINUTES))
+        ) {
+            return self::STATUS_UNCERTAIN;
+        }
+
+        return $this->status;
     }
 
     /**

@@ -2571,6 +2571,7 @@ return [
             'register-btn' => 'Webhook を登録',
             'https-required' => 'Firma は HTTPS でのみ Webhook を配信しますが、この CRM は :url で応答しています。先に APP_URL をこの CRM の公開 https アドレスに設定してください。',
             'register-failed' => 'Webhook を登録できませんでした: :message',
+            'secret-required' => '先に Webhook 署名シークレットを保存してください。Firma のダッシュボードの Settings > Webhook Configuration からコピーして上のフィールドに貼り付けて保存し、その後で Webhook を登録してください。シークレットがないとこの CRM はすべての配信を拒否し、配信の失敗が続く Webhook は Firma によって無効にされます。',
             'webhook-registered' => 'Webhook を登録しました。',
             'webhook-exists' => ':url の Firma Webhook はすでに存在し、有効になっています。',
             'webhook-reenabled' => ':url の Firma Webhook は無効になっていたため、再度有効にしました。',
@@ -2605,6 +2606,7 @@ return [
             'uncertain-info' => '再送信する前に Firma のダッシュボードを確認してください。',
             'signed-attached' => '署名済みドキュメントはアクティビティに添付されています。',
             'send-unknown' => 'CRM は依頼が送信されたかどうかを確認できませんでした。再送信する前に署名タブと Firma のダッシュボードを確認してください。',
+            'send-refused' => '何も送信されていません。CRM は Firma に接続する前に依頼を拒否しました (ページの有効期限が切れたか、このリードまたは見積へのアクセス権がない可能性があります)。ページを再読み込みしてもう一度お試しください。',
         ],
 
         'send' => [
@@ -2645,6 +2647,7 @@ return [
             'choose-template' => 'Firma テンプレートを選択してください。',
             'quote-not-on-lead' => 'この見積はこのリードに属していません。',
             'unreadable-pdf' => '見積を読み取り可能な PDF に変換できませんでした。',
+            'prepare-failed' => 'Firma に送る文書を準備できなかったため、何も送信されていません。',
             'name-required' => '署名依頼には名前が必要です。',
             'expiration' => '有効期限は 1 以上の整数の時間で指定してください。',
             'recipient-name' => '受信者名は必須です。',

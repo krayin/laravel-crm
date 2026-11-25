@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
 use Illuminate\Testing\TestResponse;
 use Webkul\Firma\Models\SignatureRequest;
+use Webkul\Firma\Services\QuotePdfRenderer;
 use Webkul\Lead\Models\Lead;
 use Webkul\Quote\Models\Quote;
 
@@ -36,6 +37,25 @@ function firmaFakeTemplate(array $recipients): array
     return [
         'https://api.firma.dev/*/templates/tpl_1' => Http::response(['id' => 'tpl_1', 'name' => 'MSA', 'recipients' => $recipients]),
     ];
+}
+
+function firmaQuote(Lead $lead, ?int $userId = null, string $subject = 'Firma quote'): Quote
+{
+    $quote = Quote::create([
+        'subject' => $subject,
+        'user_id' => $userId ?? getDefaultAdmin()->id,
+        'person_id' => $lead->person_id,
+        'expired_at' => now()->addWeek(),
+        'sub_total' => 0,
+        'discount_amount' => 0,
+        'tax_amount' => 0,
+        'adjustment_amount' => 0,
+        'grand_total' => 0,
+    ]);
+
+    $lead->quotes()->attach($quote->id);
+
+    return $quote;
 }
 
 const FIRMA_ONE_SIGNER = [['id' => 'tu_1', 'designation' => 'Signer', 'order' => 1], ['id' => 'cc_1', 'designation' => 'CC', 'order' => 2]];
@@ -308,6 +328,126 @@ it('keeps users to the leads they may see', function () {
     firmaSend(firmaLead(), firmaSendPayload(), $user)->assertStatus(401);
 
     Http::assertNothingSent();
+});
+
+it('refuses a quote send without the quote mail permission', function () {
+    firmaConfigure();
+
+    $lead = firmaLead();
+
+    $quote = firmaQuote($lead);
+
+    Http::fake();
+
+    $user = firmaProbeUser(['leads', 'leads.view', 'leads.firma', 'quotes']);
+
+    firmaSend($lead, firmaSendPayload(['source' => 'quote', 'template_id' => null, 'quote_id' => $quote->id]), $user)
+        ->assertStatus(401);
+
+    Http::assertNothingSent();
+
+    expect(SignatureRequest::where('lead_id', $lead->id)->exists())->toBeFalse();
+});
+
+it('refuses a quote owned by a user outside the sender scope, even on the sender own lead', function () {
+    firmaConfigure();
+
+    $user = firmaProbeUser(['leads', 'leads.view', 'leads.firma', 'quotes', 'quotes.mail'], 'individual');
+
+    $lead = firmaLead($user->id);
+
+    $quote = firmaQuote($lead, getDefaultAdmin()->id);
+
+    Http::fake();
+
+    firmaSend($lead, firmaSendPayload(['source' => 'quote', 'template_id' => null, 'quote_id' => $quote->id]), $user)
+        ->assertStatus(401);
+
+    Http::assertNothingSent();
+
+    expect(SignatureRequest::where('lead_id', $lead->id)->exists())->toBeFalse();
+});
+
+it('keeps the request list and refresh to the leads the user may see', function () {
+    firmaConfigure();
+
+    $lead = firmaLead();
+
+    $request = firmaSignatureRequest($lead);
+
+    Http::fake();
+
+    $user = firmaProbeUser(['leads', 'leads.view', 'leads.firma'], 'individual');
+
+    $this->actingAs($user, 'user')
+        ->getJson(route('admin.leads.firma.index', $lead->id))
+        ->assertStatus(401);
+
+    $this->actingAs($user, 'user')
+        ->postJson(route('admin.leads.firma.refresh', [$lead->id, $request->id]))
+        ->assertStatus(401);
+
+    Http::assertNothingSent();
+});
+
+it('answers 422 and frees the dialog key when the document cannot be prepared', function () {
+    firmaConfigure();
+
+    $lead = firmaLead();
+
+    $quote = firmaQuote($lead);
+
+    $this->mock(QuotePdfRenderer::class, fn ($mock) => $mock->shouldReceive('render')->andThrow(new RuntimeException('dompdf failed')));
+
+    Http::fake();
+
+    firmaSend($lead, firmaSendPayload(['source' => 'quote', 'template_id' => null, 'quote_id' => $quote->id]))
+        ->assertStatus(422)
+        ->assertJson(['message' => trans('admin::app.firma.errors.prepare-failed')]);
+
+    Http::assertNothingSent();
+
+    expect(SignatureRequest::where('lead_id', $lead->id)->exists())->toBeFalse();
+});
+
+it('reports a send left in sending for too long as outcome unknown', function () {
+    firmaConfigure();
+
+    $lead = firmaLead();
+
+    $stale = firmaSignatureRequest($lead, ['firma_id' => null, 'status' => 'sending', 'sent_at' => null]);
+
+    $fresh = firmaSignatureRequest($lead, ['firma_id' => null, 'status' => 'sending', 'sent_at' => null]);
+
+    SignatureRequest::whereKey($stale->id)->update(['updated_at' => now()->subMinutes(11)]);
+
+    $rows = collect($this->actingAs(getDefaultAdmin(), 'user')
+        ->getJson(route('admin.leads.firma.index', $lead->id))
+        ->assertOk()
+        ->json('data'))->keyBy('id');
+
+    expect($rows[$stale->id]['status'])->toBe('uncertain')
+        ->and($rows[$stale->id]['status_label'])->toBe(trans('admin::app.firma.statuses.uncertain'))
+        ->and($rows[$fresh->id]['status'])->toBe('sending')
+        ->and($stale->fresh()->status)->toBe('sending');
+});
+
+it('offers quotes in the send dialog only with the quote mail permission', function () {
+    $lead = firmaLead();
+
+    firmaQuote($lead, subject: 'Quote subject only for mailers');
+
+    $this->actingAs(getDefaultAdmin(), 'user')
+        ->get(route('admin.leads.view', $lead->id))
+        ->assertOk()
+        ->assertSee('Quote subject only for mailers', false)
+        ->assertSee(trans('admin::app.firma.lead.send-refused'), false);
+
+    $this->actingAs(firmaProbeUser(['leads', 'leads.view', 'leads.firma', 'quotes']), 'user')
+        ->get(route('admin.leads.view', $lead->id))
+        ->assertOk()
+        ->assertSee('v-lead-firma', false)
+        ->assertDontSee('Quote subject only for mailers', false);
 });
 
 it('lists single role templates for the send dialog', function () {

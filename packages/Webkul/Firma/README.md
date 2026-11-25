@@ -20,14 +20,16 @@ status on the lead timeline, and receive the signed PDF as a file on the lead.
 1. Run `php artisan migrate` (tables `firma_signature_requests` and `firma_webhook_events`).
 2. In the Firma dashboard create an API key, then paste it in Settings > Other Settings >
    Firma E-Signature and click **Test Connection**.
-3. Make sure `APP_URL` is the public `https://` address of the CRM (Firma delivers webhooks over
+3. In the Firma dashboard open **Settings > Webhook Configuration**, copy the **Webhook Signing
+   Secret** into the settings and save. Deliveries are refused until the secret is stored, so
+   **Register Webhook** stays unavailable until then.
+4. Make sure `APP_URL` is the public `https://` address of the CRM (Firma delivers webhooks over
    HTTPS only), then click **Register Webhook**. The endpoint is `POST /firma/webhook`.
-4. In the Firma dashboard open **Settings > Webhook Configuration** and turn on **Enable
-   Webhooks**. It is off by default, and Firma delivers nothing until it is on. Copy the
-   **Webhook Signing Secret** from that page into the settings and save. Deliveries are refused
-   until the secret is stored.
-5. Grant the **Leads > Send for Signature** permission to the roles that may send, and
+5. On the same Firma page turn on **Enable Webhooks**. It is off by default, and Firma delivers
+   nothing until it is on.
+6. Grant the **Leads > Send for Signature** permission to the roles that may send, and
    **Settings > Other Settings > Firma E-Signature** to the roles that manage the connection.
+   Sending a quote also needs **Quotes > Mail**, the permission core requires to e-mail a quote.
 
 The signed PDF is downloaded by the `FetchSignedDocument` job. With `QUEUE_CONNECTION=sync` it
 runs after the webhook has answered; with a real queue, run a worker.
@@ -37,8 +39,14 @@ runs after the webhook has answered; with a real queue, run a worker.
 A send is never retried automatically. Each send dialog carries a key that is stored before the
 request to Firma, so a repeated submission does not send twice. When Firma does not confirm the
 outcome (a gateway error, a timeout, a network failure), the request is shown as "Outcome
-unknown" and the user is asked to check the Firma dashboard before sending again. When Firma
-reports that the request was already sent or kept, that request is tracked instead.
+unknown" and the user is asked to check the Firma dashboard before sending again. A send still
+shown as sending after 10 minutes (the worker stopped after the request to Firma) is shown the
+same way. When Firma reports that the request was already sent or kept, that request is tracked
+instead.
+
+A request with an unknown outcome has no Firma id in the CRM, so it is not followed in Krayin:
+webhook events for it are acknowledged and not stored, its status and signed PDF do not reach
+the lead, and it is followed in the Firma dashboard.
 
 ## Webhook verification
 

@@ -9,6 +9,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Sleep;
 use Webkul\Firma\Models\SignatureRequest;
+use Webkul\Firma\Repositories\SignatureRequestRepository;
 use Webkul\Firma\Services\FirmaApiException;
 use Webkul\Firma\Services\FirmaSettings;
 use Webkul\Firma\Services\LeadTimeline;
@@ -68,7 +69,8 @@ class FetchSignedDocument implements ShouldQueue
      */
     public function handle(): void
     {
-        $request = SignatureRequest::query()->find($this->signatureRequestId);
+        /** @var SignatureRequest|null $request */
+        $request = app(SignatureRequestRepository::class)->find($this->signatureRequestId);
 
         if (
             ! $request

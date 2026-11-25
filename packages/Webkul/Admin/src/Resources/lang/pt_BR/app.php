@@ -2569,6 +2569,7 @@ return [
             'register-btn' => 'Registrar webhook',
             'https-required' => 'O Firma só entrega webhooks por HTTPS, e este CRM responde em :url. Primeiro defina APP_URL com o endereço https público deste CRM.',
             'register-failed' => 'Não foi possível registrar o webhook: :message',
+            'secret-required' => 'Salve primeiro o segredo de assinatura do webhook: copie-o de Settings > Webhook Configuration no painel do Firma para o campo acima, salve e depois registre o webhook. Sem ele, este CRM recusa todas as entregas, e o Firma desativa um webhook cujas entregas continuam falhando.',
             'webhook-registered' => 'Webhook registrado.',
             'webhook-exists' => 'Já existe um webhook do Firma para :url e ele está ativado.',
             'webhook-reenabled' => 'O webhook do Firma para :url estava desativado e foi reativado.',
@@ -2603,6 +2604,7 @@ return [
             'uncertain-info' => 'Verifique o painel do Firma antes de enviar novamente.',
             'signed-attached' => 'O documento assinado está anexado às atividades.',
             'send-unknown' => 'O CRM não conseguiu confirmar se a solicitação foi enviada. Verifique a aba Assinaturas e o painel do Firma antes de enviar novamente.',
+            'send-refused' => 'Nada foi enviado: o CRM recusou a solicitação antes de contatar o Firma (a página pode ter expirado ou você pode não ter acesso a este lead ou orçamento). Recarregue a página e tente novamente.',
         ],
 
         'send' => [
@@ -2643,6 +2645,7 @@ return [
             'choose-template' => 'Escolha um modelo do Firma.',
             'quote-not-on-lead' => 'O orçamento não pertence a este lead.',
             'unreadable-pdf' => 'Não foi possível transformar o orçamento em um PDF legível.',
+            'prepare-failed' => 'Não foi possível preparar o documento para o Firma, então nada foi enviado.',
             'name-required' => 'A solicitação de assinatura precisa de um nome.',
             'expiration' => 'A expiração deve ser um número inteiro de horas, 1 ou mais.',
             'recipient-name' => 'O nome do destinatário é obrigatório.',

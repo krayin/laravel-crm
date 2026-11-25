@@ -143,7 +143,7 @@ it('never moves a finished request back', function () {
     expect($request->fresh()->status)->toBe('completed');
 });
 
-it('does not keep events for requests this CRM does not know, so a retry is processed', function () {
+it('acknowledges events for requests this CRM does not track and does not store them', function () {
     firmaConfigure();
 
     $event = firmaEvent('signing_request.completed', 'sr_unknown');

@@ -20,13 +20,13 @@ class SendSafety
     public const ALREADY_SENT = 'already_sent';
 
     /**
-     * 409 SEND_EFFECTS_EXIST or SEND_IN_PROGRESS: the request exists and may be out.
+     * 409 SEND_EFFECTS_EXIST with an id, or SEND_IN_PROGRESS: the request exists and may be out.
      */
     public const KEPT = 'kept';
 
     /**
-     * No usable answer, or any other 5xx (Firma's own 500 included, its rollback can fail):
-     * the request may have been created and sent.
+     * No usable answer, any other 5xx (Firma's own 500 included, its rollback can fail), or a
+     * 409 ALREADY_SENT without an id: the request may have been created and sent.
      */
     public const UNKNOWN = 'unknown';
 
@@ -57,14 +57,29 @@ class SendSafety
         }
 
         if ($error->status === 409) {
-            if ($error->errorCode === 'ALREADY_SENT' && $error->signingRequestId) {
-                return $result(self::ALREADY_SENT, $error->signingRequestId);
+            /**
+             * Firma answers ALREADY_SENT from create-and-send only with the id of the request it
+             * kept. Without the id the answer is not one Firma gives, and the code itself says a
+             * request was sent, so the outcome is unknown.
+             */
+            if ($error->errorCode === 'ALREADY_SENT') {
+                return $error->signingRequestId
+                    ? $result(self::ALREADY_SENT, $error->signingRequestId)
+                    : $result(self::UNKNOWN);
             }
 
+            /**
+             * SEND_EFFECTS_EXIST names the request Firma could not roll back. Without the id it is
+             * the send step's refusal passed on after the rollback deleted the request, so nothing
+             * is left.
+             */
             if ($error->errorCode === 'SEND_EFFECTS_EXIST' && $error->signingRequestId) {
                 return $result(self::KEPT, $error->signingRequestId);
             }
 
+            /**
+             * Another attempt holds the send; Firma did not roll the request back.
+             */
             if ($error->errorCode === 'SEND_IN_PROGRESS') {
                 return $result(self::KEPT, $error->signingRequestId);
             }

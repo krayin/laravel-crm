@@ -2569,6 +2569,7 @@ return [
             'register-btn' => 'Đăng ký webhook',
             'https-required' => 'Firma chỉ gửi webhook qua HTTPS, và CRM này đang phản hồi tại :url. Trước tiên hãy đặt APP_URL thành địa chỉ https công khai của CRM này.',
             'register-failed' => 'Không thể đăng ký webhook: :message',
+            'secret-required' => 'Hãy lưu khóa bí mật ký webhook trước: sao chép nó từ Settings > Webhook Configuration trong bảng điều khiển Firma vào trường ở trên, lưu lại rồi mới đăng ký webhook. Không có khóa này, CRM sẽ từ chối mọi lần gửi, và Firma sẽ tắt một webhook có các lần gửi liên tục thất bại.',
             'webhook-registered' => 'Đã đăng ký webhook.',
             'webhook-exists' => 'Đã có webhook Firma cho :url và đang được bật.',
             'webhook-reenabled' => 'Webhook Firma cho :url đã bị tắt và đã được bật lại.',
@@ -2603,6 +2604,7 @@ return [
             'uncertain-info' => 'Kiểm tra bảng điều khiển Firma trước khi gửi lại.',
             'signed-attached' => 'Tài liệu đã ký được đính kèm vào hoạt động.',
             'send-unknown' => 'CRM không thể xác nhận yêu cầu đã được gửi hay chưa. Kiểm tra tab Chữ ký và bảng điều khiển Firma trước khi gửi lại.',
+            'send-refused' => 'Không có gì được gửi: CRM đã từ chối yêu cầu trước khi liên hệ với Firma (trang có thể đã hết hạn, hoặc bạn không có quyền truy cập khách hàng tiềm năng hay báo giá này). Hãy tải lại trang và thử lại.',
         ],
 
         'send' => [
@@ -2643,6 +2645,7 @@ return [
             'choose-template' => 'Chọn một mẫu Firma.',
             'quote-not-on-lead' => 'Báo giá không thuộc khách hàng tiềm năng này.',
             'unreadable-pdf' => 'Không thể chuyển báo giá thành PDF đọc được.',
+            'prepare-failed' => 'Không thể chuẩn bị tài liệu cho Firma, vì vậy không có gì được gửi.',
             'name-required' => 'Yêu cầu ký cần có tên.',
             'expiration' => 'Thời hạn phải là số giờ nguyên, từ 1 trở lên.',
             'recipient-name' => 'Tên người nhận là bắt buộc.',

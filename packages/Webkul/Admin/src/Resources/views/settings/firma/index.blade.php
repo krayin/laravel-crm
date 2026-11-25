@@ -155,11 +155,18 @@
                     <button
                         type="submit"
                         class="secondary-button"
+                        @disabled(! $hasWebhookSecret)
                     >
                         @lang('admin::app.firma.settings.register-btn')
                     </button>
                 </form>
             </div>
+
+            @if (! $hasWebhookSecret)
+                <p class="mt-2 text-gray-600 dark:text-gray-300">
+                    @lang('admin::app.firma.settings.secret-required')
+                </p>
+            @endif
         </div>
 
         {!! view_render_event('admin.settings.firma.index.form.after') !!}

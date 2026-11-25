@@ -2565,6 +2565,7 @@ return [
             'register-btn' => '웹훅 등록',
             'https-required' => 'Firma는 HTTPS로만 웹훅을 전송하는데, 이 CRM은 :url에서 응답합니다. 먼저 APP_URL을 이 CRM의 공개 https 주소로 설정하세요.',
             'register-failed' => '웹훅을 등록할 수 없습니다: :message',
+            'secret-required' => '먼저 웹훅 서명 시크릿을 저장하세요. Firma 대시보드의 Settings > Webhook Configuration에서 복사하여 위 필드에 붙여 넣고 저장한 다음 웹훅을 등록하세요. 시크릿이 없으면 이 CRM은 모든 전송을 거부하며, 전송 실패가 계속되는 웹훅은 Firma가 비활성화합니다.',
             'webhook-registered' => '웹훅이 등록되었습니다.',
             'webhook-exists' => ':url에 대한 Firma 웹훅이 이미 있으며 활성화되어 있습니다.',
             'webhook-reenabled' => ':url에 대한 Firma 웹훅이 비활성화되어 있어 다시 활성화했습니다.',
@@ -2599,6 +2600,7 @@ return [
             'uncertain-info' => '다시 보내기 전에 Firma 대시보드를 확인하세요.',
             'signed-attached' => '서명된 문서가 활동에 첨부되었습니다.',
             'send-unknown' => 'CRM이 요청이 전송되었는지 확인하지 못했습니다. 다시 보내기 전에 서명 탭과 Firma 대시보드를 확인하세요.',
+            'send-refused' => '아무것도 전송되지 않았습니다. CRM이 Firma에 연결하기 전에 요청을 거부했습니다 (페이지가 만료되었거나 이 리드 또는 견적에 대한 접근 권한이 없을 수 있습니다). 페이지를 새로 고친 후 다시 시도하세요.',
         ],
 
         'send' => [
@@ -2639,6 +2641,7 @@ return [
             'choose-template' => 'Firma 템플릿을 선택하세요.',
             'quote-not-on-lead' => '이 견적은 이 리드에 속하지 않습니다.',
             'unreadable-pdf' => '견적을 읽을 수 있는 PDF로 변환하지 못했습니다.',
+            'prepare-failed' => 'Firma로 보낼 문서를 준비하지 못해 아무것도 전송되지 않았습니다.',
             'name-required' => '서명 요청에는 이름이 필요합니다.',
             'expiration' => '만료 시간은 1 이상의 정수 시간이어야 합니다.',
             'recipient-name' => '수신자 이름은 필수입니다.',
