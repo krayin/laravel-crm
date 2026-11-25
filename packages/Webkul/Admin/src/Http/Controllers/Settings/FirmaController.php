@@ -116,7 +116,7 @@ class FirmaController extends Controller
             return redirect()->route('admin.settings.firma.index');
         }
 
-        session()->flash('success', trans('admin::app.firma.settings.webhook-registered').' '.trans('admin::app.firma.settings.enable-webhooks'));
+        session()->flash('success', trans('admin::app.firma.settings.webhook-registered').' '.trans('admin::app.firma.settings.enable-webhooks-short'));
 
         return redirect()->route('admin.settings.firma.index');
     }
@@ -138,7 +138,7 @@ class FirmaController extends Controller
         $this->firmaSettings->setWebhookId((string) $webhook['id']);
 
         if (! $missing && ! $disabled) {
-            session()->flash('success', trans('admin::app.firma.settings.webhook-exists', ['url' => $url]).' '.trans('admin::app.firma.settings.enable-webhooks'));
+            session()->flash('success', trans('admin::app.firma.settings.webhook-exists', ['url' => $url]).' '.trans('admin::app.firma.settings.enable-webhooks-short'));
 
             return redirect()->route('admin.settings.firma.index');
         }
@@ -156,7 +156,7 @@ class FirmaController extends Controller
             $message .= ' '.trans('admin::app.firma.settings.events-added', ['events' => implode(', ', $missing)]);
         }
 
-        session()->flash('warning', $message.' '.trans('admin::app.firma.settings.enable-webhooks'));
+        session()->flash('warning', $message.' '.trans('admin::app.firma.settings.enable-webhooks-short'));
 
         return redirect()->route('admin.settings.firma.index');
     }

@@ -2572,6 +2572,7 @@ return [
             'webhook-updated' => ':url에 대한 Firma 웹훅을 업데이트했습니다.',
             'events-added' => '추가된 이벤트: :events.',
             'enable-webhooks' => 'Firma 대시보드에서 Settings > Webhook Configuration을 열고 Enable Webhooks를 켜세요 (기본값은 꺼짐이며, 켜기 전까지 Firma는 아무것도 전송하지 않습니다). 그런 다음 해당 페이지의 Webhook Signing Secret을 위 필드에 복사하고 저장하세요.',
+            'enable-webhooks-short' => 'Firma 대시보드에서 Settings > Webhook Configuration을 열고 Enable Webhooks를 켜세요 (기본값은 꺼짐이며, 켜기 전까지 Firma는 아무것도 전송하지 않습니다).',
         ],
 
         'lead' => [

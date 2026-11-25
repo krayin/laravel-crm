@@ -2576,6 +2576,7 @@ return [
             'webhook-updated' => 'وب‌هوک Firma برای :url به‌روزرسانی شد.',
             'events-added' => 'رویدادهای اضافه شده: :events.',
             'enable-webhooks' => 'در داشبورد Firma صفحه Settings > Webhook Configuration را باز کنید و Enable Webhooks را روشن کنید (به طور پیش‌فرض خاموش است و تا روشن نشود Firma چیزی نمی‌فرستد). سپس Webhook Signing Secret را از همان صفحه در فیلد بالا کپی کنید و ذخیره کنید.',
+            'enable-webhooks-short' => 'در داشبورد Firma صفحه Settings > Webhook Configuration را باز کنید و Enable Webhooks را روشن کنید (به طور پیش‌فرض خاموش است و تا روشن نشود Firma چیزی نمی‌فرستد).',
         ],
 
         'lead' => [

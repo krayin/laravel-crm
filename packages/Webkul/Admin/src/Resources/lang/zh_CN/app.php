@@ -2572,6 +2572,7 @@ return [
             'webhook-updated' => ':url 的 Firma Webhook 已更新。',
             'events-added' => '已添加的事件：:events。',
             'enable-webhooks' => '请在 Firma 控制台打开 Settings > Webhook Configuration 并开启 Enable Webhooks（默认关闭，开启前 Firma 不会推送任何内容）。然后将该页面上的 Webhook Signing Secret 复制到上方字段并保存。',
+            'enable-webhooks-short' => '请在 Firma 控制台打开 Settings > Webhook Configuration 并开启 Enable Webhooks（默认关闭，开启前 Firma 不会推送任何内容）。',
         ],
 
         'lead' => [

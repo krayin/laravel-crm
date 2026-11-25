@@ -2576,6 +2576,7 @@ return [
             'webhook-updated' => 'Đã cập nhật webhook Firma cho :url.',
             'events-added' => 'Sự kiện đã thêm: :events.',
             'enable-webhooks' => 'Trong bảng điều khiển Firma, mở Settings > Webhook Configuration và bật Enable Webhooks (mặc định đang tắt, và Firma không gửi gì cho đến khi bật). Sau đó sao chép Webhook Signing Secret từ trang đó vào trường ở trên và lưu.',
+            'enable-webhooks-short' => 'Trong bảng điều khiển Firma, mở Settings > Webhook Configuration và bật Enable Webhooks (mặc định đang tắt, và Firma không gửi gì cho đến khi bật).',
         ],
 
         'lead' => [

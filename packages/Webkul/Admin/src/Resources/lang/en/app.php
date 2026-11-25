@@ -2583,6 +2583,7 @@ return [
             'webhook-updated' => 'The Firma webhook for :url has been updated.',
             'events-added' => 'Events added: :events.',
             'enable-webhooks' => 'In the Firma dashboard open Settings > Webhook Configuration and turn on Enable Webhooks (it is off by default, and Firma delivers nothing until it is on). Then copy the Webhook Signing Secret from that page into the field above and save.',
+            'enable-webhooks-short' => 'In the Firma dashboard open Settings > Webhook Configuration and turn on Enable Webhooks (it is off by default, and Firma delivers nothing until it is on).',
         ],
 
         'lead' => [

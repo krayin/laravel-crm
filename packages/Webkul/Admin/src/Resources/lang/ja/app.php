@@ -2578,6 +2578,7 @@ return [
             'webhook-updated' => ':url の Firma Webhook を更新しました。',
             'events-added' => '追加したイベント: :events。',
             'enable-webhooks' => 'Firma のダッシュボードで Settings > Webhook Configuration を開き、Enable Webhooks をオンにしてください (初期状態はオフで、オンにするまで Firma は何も配信しません)。次に、そのページの Webhook Signing Secret を上のフィールドにコピーして保存してください。',
+            'enable-webhooks-short' => 'Firma のダッシュボードで Settings > Webhook Configuration を開き、Enable Webhooks をオンにしてください (初期状態はオフで、オンにするまで Firma は何も配信しません)。',
         ],
 
         'lead' => [

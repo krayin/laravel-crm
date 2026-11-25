@@ -2576,6 +2576,7 @@ return [
             'webhook-updated' => ':url için Firma webhooku güncellendi.',
             'events-added' => 'Eklenen olaylar: :events.',
             'enable-webhooks' => 'Firma panelinde Settings > Webhook Configuration sayfasını açın ve Enable Webhooks seçeneğini açın (varsayılan olarak kapalıdır ve açılana kadar Firma hiçbir şey teslim etmez). Ardından o sayfadaki Webhook Signing Secret değerini yukarıdaki alana kopyalayıp kaydedin.',
+            'enable-webhooks-short' => 'Firma panelinde Settings > Webhook Configuration sayfasını açın ve Enable Webhooks seçeneğini açın (varsayılan olarak kapalıdır ve açılana kadar Firma hiçbir şey teslim etmez).',
         ],
 
         'lead' => [

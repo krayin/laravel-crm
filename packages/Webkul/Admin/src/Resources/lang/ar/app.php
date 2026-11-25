@@ -2576,6 +2576,7 @@ return [
             'webhook-updated' => 'تم تحديث ويب هوك Firma لـ :url.',
             'events-added' => 'الأحداث المضافة: :events.',
             'enable-webhooks' => 'في لوحة تحكم Firma افتح Settings > Webhook Configuration وفعّل Enable Webhooks (يكون معطلًا افتراضيًا، ولا يرسل Firma شيئًا حتى يتم تفعيله). ثم انسخ Webhook Signing Secret من تلك الصفحة إلى الحقل أعلاه واحفظ.',
+            'enable-webhooks-short' => 'في لوحة تحكم Firma افتح Settings > Webhook Configuration وفعّل Enable Webhooks (يكون معطلًا افتراضيًا، ولا يرسل Firma شيئًا حتى يتم تفعيله).',
         ],
 
         'lead' => [

@@ -2576,6 +2576,7 @@ return [
             'webhook-updated' => 'O webhook do Firma para :url foi atualizado.',
             'events-added' => 'Eventos adicionados: :events.',
             'enable-webhooks' => 'No painel do Firma abra Settings > Webhook Configuration e ative Enable Webhooks (fica desativado por padrão, e o Firma não entrega nada até que seja ativado). Depois copie o Webhook Signing Secret dessa página para o campo acima e salve.',
+            'enable-webhooks-short' => 'No painel do Firma abra Settings > Webhook Configuration e ative Enable Webhooks (fica desativado por padrão, e o Firma não entrega nada até que seja ativado).',
         ],
 
         'lead' => [
