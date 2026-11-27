@@ -397,7 +397,11 @@ class Importer extends AbstractImporter
         foreach ($emails as $email) {
             $contactNumber = json_decode($rowData['contact_numbers'], true);
 
-            $rowData['unique_id'] = "{$rowData['user_id']}|{$rowData['organization_id']}|{$email}|{$contactNumber[0]['value']}";
+            $rowData['unique_id'] = "{$rowData['user_id']}|{$rowData['organization_id']}|{$email}";
+
+            if (! empty($contactNumber[0]['value'])) {
+                $rowData['unique_id'] .= '|'.$contactNumber[0]['value'];
+            }
 
             /**
              * Custom (user defined) attribute values are not columns on the persons table; they are
