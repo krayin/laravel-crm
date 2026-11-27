@@ -1741,6 +1741,12 @@ return [
         ],
         'updated' => 'تم تحديث :attribute',
         'created' => 'تم الإنشاء',
+        'calendar' => [
+            'drag-to-change-start-time' => 'اسحب لتغيير وقت البدء',
+            'drag-to-change-end-time' => 'اسحب لتغيير وقت الانتهاء',
+            'untitled-activity' => 'نشاط',
+            'new-time-range' => 'جديد',
+        ],
         'duration-overlapping' => 'لدى المشاركين اجتماع آخر في هذا الوقت. هل تريد المتابعة؟',
         'create-success' => 'تم إنشاء النشاط بنجاح.',
         'update-success' => 'تم تحديث النشاط بنجاح.',

@@ -10,6 +10,8 @@ This changelog consists of the bug & security fixes and new features being inclu
 
 * [fixed] Fixed importing persons failing with `Trying to access array offset on null` when a row has no contact number.
 
+* [fixed] Fixed activity dates and calendar tooltips staying in English when the admin locale is set to another language.
+
 ## **v2.2.8 (5th of Nov 2026)**
 
 * [security] Fixed Sercurity issue.
