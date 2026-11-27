@@ -1741,6 +1741,12 @@ return [
         ],
         'updated' => 'به‌روزرسانی شد :attribute',
         'created' => 'ایجاد شد',
+        'calendar' => [
+            'drag-to-change-start-time' => 'برای تغییر زمان شروع بکشید',
+            'drag-to-change-end-time' => 'برای تغییر زمان پایان بکشید',
+            'untitled-activity' => 'فعالیت',
+            'new-time-range' => 'جدید',
+        ],
         'duration-overlapping' => 'شرکت‌کنندگان در این زمان جلسه دیگری دارند. آیا می‌خواهید ادامه دهید؟',
         'create-success' => 'فعالیت با موفقیت ایجاد شد.',
         'update-success' => 'فعالیت با موفقیت به‌روزرسانی شد.',

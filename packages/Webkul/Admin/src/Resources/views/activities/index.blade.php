@@ -432,7 +432,7 @@
                     <template #event="{ event }">
                         <div
                             class="event-resize-handle event-resize-handle--top"
-                            title="Drag to change start time"
+                            title="{{ trans('admin::app.activities.calendar.drag-to-change-start-time') }}"
                             @mousedown.stop.prevent="beginResize($event, event, 'start')"
                         >
                             <span class="event-resize-handle__grip"></span>
@@ -466,7 +466,7 @@
 
                         <div
                             class="event-resize-handle event-resize-handle--bottom"
-                            title="Drag to change end time"
+                            title="{{ trans('admin::app.activities.calendar.drag-to-change-end-time') }}"
                             @mousedown.stop.prevent="beginResize($event, event, 'end')"
                         >
                             <span class="event-resize-handle__grip"></span>
@@ -540,6 +540,12 @@
                         lastDragUpdateAt: 0,
                         isUpdatingTimeline: false,
                         resizeContext: null,
+                        translations: {
+                            untitledActivity: @js(trans('admin::app.activities.calendar.untitled-activity')),
+                            newTimeRange: @js(trans('admin::app.activities.calendar.new-time-range')),
+                            dragToChangeStartTime: @js(trans('admin::app.activities.calendar.drag-to-change-start-time')),
+                            dragToChangeEndTime: @js(trans('admin::app.activities.calendar.drag-to-change-end-time')),
+                        },
                         dragPreview: {
                             visible: false,
                             x: 0,
@@ -672,16 +678,16 @@
                             originalStart: fullOriginalStart,
                             originalEnd: fullOriginalEnd,
                             nextValue: null,
-                            title: event.title || 'Activity',
+                            title: event.title || this.translations.untitledActivity,
                         };
 
-                        const label = mode === 'start' ? 'start time' : 'end time';
+                        const label = mode === 'start' ? this.translations.dragToChangeStartTime : this.translations.dragToChangeEndTime;
 
                         this.dragPreview.visible = true;
                         this.dragPreview.title = this.resizeContext.title;
                         this.dragPreview.currentLabel = `${this.formatDayTime(fullOriginalStart)} - ${this.formatDayTime(fullOriginalEnd)}`;
                         this.dragPreview.targetLabel = '';
-                        this.dragPreview.actionLabel = `Drag to change ${label}`;
+                        this.dragPreview.actionLabel = label;
 
                         this.updateDragPreviewPosition(domEvent.clientX, domEvent.clientY);
 
@@ -714,13 +720,13 @@
                             const clamped = new window['Date'](Math.min(slotTime.getTime(), maxMs));
 
                             ctx.nextValue = clamped;
-                            this.dragPreview.targetLabel = `New: ${this.formatDayTime(clamped)} - ${this.formatDayTime(ctx.originalEnd)}`;
+                            this.dragPreview.targetLabel = `${this.translations.newTimeRange}: ${this.formatDayTime(clamped)} - ${this.formatDayTime(ctx.originalEnd)}`;
                         } else {
                             const minMs = ctx.originalStart.getTime() + (15 * 60 * 1000);
                             const clamped = new window['Date'](Math.max(slotTime.getTime(), minMs));
 
                             ctx.nextValue = clamped;
-                            this.dragPreview.targetLabel = `New: ${this.formatDayTime(ctx.originalStart)} - ${this.formatDayTime(clamped)}`;
+                            this.dragPreview.targetLabel = `${this.translations.newTimeRange}: ${this.formatDayTime(ctx.originalStart)} - ${this.formatDayTime(clamped)}`;
                         }
                     },
 
@@ -858,7 +864,7 @@
                     },
 
                     formatDayTime(date) {
-                        const day = date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+                        const day = date.toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
 
                         return `${day} ${this.formatTime(date)}`;
                     },

@@ -1743,6 +1743,12 @@ return [
         ],
         'updated' => 'Updated :attribute',
         'created' => 'Created',
+        'calendar' => [
+            'drag-to-change-start-time' => 'Drag to change start time',
+            'drag-to-change-end-time' => 'Drag to change end time',
+            'untitled-activity' => 'Activity',
+            'new-time-range' => 'New',
+        ],
         'duration-overlapping' => 'Participants have another meeting at this time. Do you want to continue?',
         'create-success' => 'Activity created successfully.',
         'update-success' => 'Activity updated successfully.',

@@ -169,11 +169,15 @@ class Core
     /**
      * Format date
      *
+     * The month and meridiem words follow the current UI locale, so a Spanish or Japanese admin
+     * is not shown English month names. Numeric formats such as `d-m-Y` have no words to
+     * translate and come out unchanged.
+     *
      * @return string
      */
     public function formatDate($date, $format = 'd M Y h:iA')
     {
-        return Carbon::parse($date)->format($format);
+        return Carbon::parse($date)->locale(app()->getLocale())->translatedFormat($format);
     }
 
     /**

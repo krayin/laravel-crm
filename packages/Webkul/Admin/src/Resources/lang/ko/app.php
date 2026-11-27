@@ -1741,6 +1741,12 @@ return [
         ],
         'updated' => ':attribute 수정됨',
         'created' => '생성됨',
+        'calendar' => [
+            'drag-to-change-start-time' => '드래그하여 시작 시간 변경',
+            'drag-to-change-end-time' => '드래그하여 종료 시간 변경',
+            'untitled-activity' => '활동',
+            'new-time-range' => '신규',
+        ],
         'duration-overlapping' => '참가자에게 이 시간에 예정된 다른 회의가 있습니다. 계속하시겠습니까?',
         'create-success' => '활동이 성공적으로 생성되었습니다.',
         'update-success' => '활동이 성공적으로 수정되었습니다.',

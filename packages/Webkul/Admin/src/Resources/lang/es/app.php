@@ -1741,6 +1741,12 @@ return [
         ],
         'updated' => 'Actualizado :attribute',
         'created' => 'Creado',
+        'calendar' => [
+            'drag-to-change-start-time' => 'Arrastra para cambiar la hora de inicio',
+            'drag-to-change-end-time' => 'Arrastra para cambiar la hora de fin',
+            'untitled-activity' => 'Actividad',
+            'new-time-range' => 'Nuevo',
+        ],
         'duration-overlapping' => 'Los participantes tienen otra reunión en este momento. ¿Deseas continuar?',
         'create-success' => 'Actividad creada con éxito.',
         'update-success' => 'Actividad actualizada con éxito.',

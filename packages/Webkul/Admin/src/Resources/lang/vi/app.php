@@ -1741,6 +1741,12 @@ return [
         ],
         'updated' => 'Đã cập nhật :attribute',
         'created' => 'Đã tạo',
+        'calendar' => [
+            'drag-to-change-start-time' => 'Kéo để thay đổi thời gian bắt đầu',
+            'drag-to-change-end-time' => 'Kéo để thay đổi thời gian kết thúc',
+            'untitled-activity' => 'Hoạt động',
+            'new-time-range' => 'Mới',
+        ],
         'duration-overlapping' => 'Người tham gia có một cuộc họp khác vào thời điểm này. Bạn có muốn tiếp tục không?',
         'create-success' => 'Hoạt động được tạo thành công.',
         'update-success' => 'Hoạt động được cập nhật thành công.',

@@ -1741,6 +1741,12 @@ return [
         ],
         'updated' => 'Güncellendi :attribute',
         'created' => 'Oluşturuldu',
+        'calendar' => [
+            'drag-to-change-start-time' => 'Başlangıç saatini değiştirmek için sürükleyin',
+            'drag-to-change-end-time' => 'Bitiş saatini değiştirmek için sürükleyin',
+            'untitled-activity' => 'Etkinlik',
+            'new-time-range' => 'Yeni',
+        ],
         'duration-overlapping' => 'Katılımcıların bu saatte başka bir toplantısı var. Devam etmek istiyor musunuz?',
         'create-success' => 'Etkinlik başarıyla oluşturuldu.',
         'update-success' => 'Etkinlik başarıyla güncellendi.',

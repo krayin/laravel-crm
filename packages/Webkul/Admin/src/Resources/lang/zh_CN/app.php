@@ -1741,6 +1741,12 @@ return [
         ],
         'updated' => '已更新 :attribute',
         'created' => '已创建',
+        'calendar' => [
+            'drag-to-change-start-time' => '拖动以更改开始时间',
+            'drag-to-change-end-time' => '拖动以更改结束时间',
+            'untitled-activity' => '活动',
+            'new-time-range' => '新建',
+        ],
         'duration-overlapping' => '参与者在该时间段还有另一场会议，是否继续？',
         'create-success' => '活动创建成功。',
         'update-success' => '活动更新成功。',

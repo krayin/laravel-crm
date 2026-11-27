@@ -1743,6 +1743,12 @@ return [
         ],
         'updated' => ':attribute を更新しました',
         'created' => '作成しました',
+        'calendar' => [
+            'drag-to-change-start-time' => 'ドラッグして開始時刻を変更',
+            'drag-to-change-end-time' => 'ドラッグして終了時刻を変更',
+            'untitled-activity' => '活動',
+            'new-time-range' => '新規',
+        ],
         'duration-overlapping' => 'この時間帯に参加者の別の会議があります。続行しますか？',
         'create-success' => '活動を作成しました。',
         'update-success' => '活動を更新しました。',
