@@ -355,6 +355,12 @@ Breadcrumbs::for('settings.google_contacts', function (BreadcrumbTrail $trail) {
     $trail->push(trans('admin::app.settings.google-contacts.index.title'), route('admin.settings.google_contacts.index'));
 });
 
+// Settings > Firma
+Breadcrumbs::for('settings.firma', function (BreadcrumbTrail $trail) {
+    $trail->parent('settings');
+    $trail->push(trans('admin::app.firma.settings.title'), route('admin.settings.firma.index'));
+});
+
 // Settings > Web Form
 Breadcrumbs::for('settings.web_forms', function (BreadcrumbTrail $trail) {
     $trail->parent('settings');

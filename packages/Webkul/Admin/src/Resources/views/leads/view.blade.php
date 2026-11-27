@@ -112,11 +112,13 @@
                 :endpoint="route('admin.leads.activities.index', $lead->id)"
                 :email-detach-endpoint="bouncer()->hasPermission('leads.edit') ? route('admin.leads.emails.detach', $lead->id) : null"
                 :activeType="request()->query('tab') ?? (request()->query('from') === 'quotes' ? 'quotes' : 'all')"
-                :extra-types="[
+                :extra-types="array_merge([
                     ['name' => 'description', 'label' => trans('admin::app.leads.view.tabs.description')],
                     ['name' => 'products', 'label' => trans('admin::app.leads.view.tabs.products')],
                     ['name' => 'quotes', 'label' => trans('admin::app.leads.view.tabs.quotes')],
-                ]"
+                ], bouncer()->hasPermission('leads.firma') ? [
+                    ['name' => 'firma', 'label' => trans('admin::app.firma.lead.tab')],
+                ] : [])"
             >
                 <!-- Products -->
                 <x-slot:products>
@@ -126,6 +128,13 @@
                 <!-- Quotes -->
                 <x-slot:quotes>
                     @include ('admin::leads.view.quotes')
+                </x-slot>
+
+                <!-- Firma -->
+                <x-slot:firma>
+                    @if (bouncer()->hasPermission('leads.firma'))
+                        @include ('admin::leads.view.firma')
+                    @endif
                 </x-slot>
 
                 <!-- Description -->

@@ -4,6 +4,8 @@ This changelog consists of the bug & security fixes and new features being inclu
 
 ## **v2.2.9 (Upcoming)**
 
+* [feature] Added Firma e-signature: send a Firma template or a lead's quote for signature from the lead page, follow its status on the lead timeline, and receive the signed PDF as a lead file.
+
 * #2771[fixed] Fixed the city missing from the billing and shipping addresses on quote PDFs.
 
 * [fixed] Fixed importing persons failing with `Trying to access array offset on null` when a row has no contact number.

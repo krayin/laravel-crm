@@ -9,6 +9,7 @@ use Webkul\DataGrid\Providers\ModuleServiceProvider as DataGridModuleServiceProv
 use Webkul\DataTransfer\Providers\ModuleServiceProvider as DataTransferModuleServiceProvider;
 use Webkul\Email\Providers\ModuleServiceProvider as EmailModuleServiceProvider;
 use Webkul\EmailTemplate\Providers\ModuleServiceProvider as EmailTemplateModuleServiceProvider;
+use Webkul\Firma\Providers\ModuleServiceProvider as FirmaModuleServiceProvider;
 use Webkul\Lead\Providers\ModuleServiceProvider as LeadModuleServiceProvider;
 use Webkul\Product\Providers\ModuleServiceProvider as ProductModuleServiceProvider;
 use Webkul\Quote\Providers\ModuleServiceProvider as QuoteModuleServiceProvider;
@@ -28,6 +29,7 @@ return [
         DataGridModuleServiceProvider::class,
         EmailTemplateModuleServiceProvider::class,
         EmailModuleServiceProvider::class,
+        FirmaModuleServiceProvider::class,
         LeadModuleServiceProvider::class,
         ProductModuleServiceProvider::class,
         QuoteModuleServiceProvider::class,

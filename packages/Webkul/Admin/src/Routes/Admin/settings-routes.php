@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use Webkul\Admin\Http\Controllers\Settings\AttributeController;
 use Webkul\Admin\Http\Controllers\Settings\DataTransfer\ImportController;
 use Webkul\Admin\Http\Controllers\Settings\EmailTemplateController;
+use Webkul\Admin\Http\Controllers\Settings\FirmaController;
 use Webkul\Admin\Http\Controllers\Settings\GoogleContactController;
 use Webkul\Admin\Http\Controllers\Settings\GroupController;
 use Webkul\Admin\Http\Controllers\Settings\LocationController;
@@ -94,6 +95,19 @@ Route::prefix('settings')->group(function () {
         Route::get('callback', 'callback')->name('admin.settings.google_contacts.callback');
 
         Route::post('disconnect', 'disconnect')->name('admin.settings.google_contacts.disconnect');
+    });
+
+    /**
+     * Firma Routes.
+     */
+    Route::controller(FirmaController::class)->prefix('firma')->group(function () {
+        Route::get('', 'index')->name('admin.settings.firma.index');
+
+        Route::post('', 'update')->name('admin.settings.firma.update');
+
+        Route::post('test', 'test')->name('admin.settings.firma.test');
+
+        Route::post('register-webhook', 'registerWebhook')->name('admin.settings.firma.register_webhook');
     });
 
     /**

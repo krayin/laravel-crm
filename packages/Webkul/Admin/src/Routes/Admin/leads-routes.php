@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use Webkul\Admin\Http\Controllers\Lead\ActivityController;
 use Webkul\Admin\Http\Controllers\Lead\EmailController;
+use Webkul\Admin\Http\Controllers\Lead\FirmaController;
 use Webkul\Admin\Http\Controllers\Lead\LeadController;
 use Webkul\Admin\Http\Controllers\Lead\QuoteController;
 use Webkul\Admin\Http\Controllers\Lead\TagController;
@@ -63,4 +64,17 @@ Route::controller(LeadController::class)->prefix('leads')->group(function () {
 
         Route::delete('{quote_id}', 'delete')->name('admin.leads.quotes.delete');
     });
+});
+
+/**
+ * Firma e-signature routes.
+ */
+Route::controller(FirmaController::class)->prefix('leads')->group(function () {
+    Route::get('firma/templates', 'templates')->name('admin.leads.firma.templates');
+
+    Route::get('{id}/firma', 'index')->name('admin.leads.firma.index');
+
+    Route::post('{id}/firma', 'store')->name('admin.leads.firma.store');
+
+    Route::post('{id}/firma/{request_id}/refresh', 'refresh')->name('admin.leads.firma.refresh');
 });
