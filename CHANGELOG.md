@@ -4,6 +4,8 @@ This changelog consists of the bug & security fixes and new features being inclu
 
 ## **v2.2.9 (Upcoming)**
 
+* #2798[fixed] Fixed the dashboard open leads by stages chart including leads from other pipelines when a pipeline is selected.
+
 * #2771[fixed] Fixed the city missing from the billing and shipping addresses on quote PDFs.
 
 * [fixed] Fixed importing persons failing with `Trying to access array offset on null` when a row has no contact number.
